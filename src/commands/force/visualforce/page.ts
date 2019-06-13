@@ -1,6 +1,6 @@
-import { SfdxCommand } from './node_modules/@salesforce/command';
-import { Messages } from './node_modules/@salesforce/core';
-import { AnyJson } from './node_modules/@salesforce/ts-types';
+import { SfdxCommand } from '@salesforce/command';
+import { Messages } from '@salesforce/core';
+import { AnyJson } from '@salesforce/ts-types';
 
 Messages.importMessagesDirectory(__dirname);
 

@@ -2,6 +2,8 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import ApexClassCreateGenerator from './ApexClassCreateGenerator';
+import * as yoEnvironment from 'yeoman-environment';
 
 Messages.importMessagesDirectory(__dirname);
 
@@ -17,11 +19,18 @@ export default class Class extends SfdxCommand {
   };
     public async run(): Promise<AnyJson> {
       const apiName = this.flags.name;
+      const generator = new ApexClassCreateGenerator();
 
-      const outputString = `Test. Your api-name is ${apiName}`;
-      this.ux.log(outputString);
+     // const outputString = `Test. This is the test api name ${apiName}`;
+     // this.ux.log(outputString);
 
-      return {outputString};
+      const classgen = generator.writing(apiName);
+      const env: any = undefined;
+      env.registerStub(classgen, 'force:apex:class');
+      return env.run('force:apex:class');
+      // return {outputString};
     }
+    // return Classgen.create();
+   // }
 
 }

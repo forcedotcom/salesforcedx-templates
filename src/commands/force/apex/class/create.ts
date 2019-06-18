@@ -1,15 +1,16 @@
-// File to create an Apex class.
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import ApexClassCreateGenerator from './ApexClassCreateGenerator';
 import * as yoEnvironment from 'yeoman-environment';
+import { generators } from 'yeoman-generator';
+import ApexClassCreateGenerator from '../../../../ApexClassCreateGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
 
-export default class Class extends SfdxCommand {
+export default class ApexClass extends SfdxCommand {
+  public static help = 'test';
   public static description = messages.getMessage('commandDescription');
   public static args = [{name: 'file'}];
   protected static flagsConfig = {
@@ -19,18 +20,12 @@ export default class Class extends SfdxCommand {
   };
     public async run(): Promise<AnyJson> {
       const apiName = this.flags.name;
-      const generator = new ApexClassCreateGenerator();
 
-     // const outputString = `Test. This is the test api name ${apiName}`;
-     // this.ux.log(outputString);
+      const yeoman = require('yeoman-environment');
+      const env = yeoman.createEnv();
 
-      const classgen = generator.writing(apiName);
-      const env: any = undefined;
-      env.registerStub(classgen, 'force:apex:class');
-      return env.run('force:apex:class');
-      // return {outputString};
+      env.registerStub(ApexClassCreateGenerator, 'apexclassgenerator');
+      env.run('apexclassgenerator', );
+      return;
     }
-    // return Classgen.create();
-   // }
-
 }

@@ -1,8 +1,6 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import * as yoEnvironment from 'yeoman-environment';
-import { generators } from 'yeoman-generator';
 import ApexClassCreateGenerator from '../../../../ApexClassCreateGenerator';
 
 Messages.importMessagesDirectory(__dirname);
@@ -14,7 +12,6 @@ export default class ApexClass extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
   public static args = [{name: 'file'}];
   protected static flagsConfig = {
-    // flag values
     name: flags.string({char: 'n', description: messages.getMessage('nameFlagDescription')}),
     force: flags.boolean({char: 'f', description: messages.getMessage('forceFlagDescription')})
   };
@@ -25,7 +22,7 @@ export default class ApexClass extends SfdxCommand {
       const env = yeoman.createEnv();
 
       env.registerStub(ApexClassCreateGenerator, 'apexclassgenerator');
-      env.run('apexclassgenerator', );
+      env.run('apexclassgenerator', {apiName});
       return;
     }
 }

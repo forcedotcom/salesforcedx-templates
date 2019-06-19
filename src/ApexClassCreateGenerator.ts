@@ -6,11 +6,9 @@ export interface StringKeyValueObject<V> {
     [opt: string]: V;
 }
 export type OptionsMap = StringKeyValueObject<string>;
-
 export type Answers = StringKeyValueObject<string>;
 
 export default class ApexClassCreateGenerator extends GENERATOR {
-    private apiName: string;
     constructor(args: string | string[], options: OptionsMap) {
         super(args, options);
         this.sourceRoot (__dirname);
@@ -20,13 +18,12 @@ export default class ApexClassCreateGenerator extends GENERATOR {
             type: 'String',
             defaults: ''
         });
-        this.options('name');
     }
     public writing() {
         this.fs.copyTpl(
         this.templatePath('templates/DefaultApexClass.cls'),
-        this.destinationPath(this.apiName + '.cls'),
-        { apiName: this.apiName}
+        this.destinationPath(this.options['apiName'] + '.cls'),
+        { apiName: this.options['apiName'] }
             );
     }
 }

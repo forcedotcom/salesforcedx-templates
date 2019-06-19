@@ -1,5 +1,7 @@
 {
-    "commandDescription": "create an apex class",
-    "nameFlagDescription": "api name to print",
-    "forceFlagDescription": "example boolean flag"
+    "commandDescription": "create an Apex class",
+    "nameFlagDescription": "name of the generated Apex class",
+    "apiversion": "API version number",
+    "outputdir": "folder for saving the created files",
+    "template": "template to use for file creation"
 }

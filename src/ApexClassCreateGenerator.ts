@@ -17,13 +17,39 @@ export default class ApexClassCreateGenerator extends GENERATOR {
             required: false,
             type: 'String',
             defaults: ''
+        }),
+        this.argument('template', {
+            desc: 'The name of the template',
+            required: false,
+            type: 'String',
+            defaults: 'templates/DefaultApexClass.cls'
+        }),
+        this.argument('apiVersion', {
+            desc: 'The name of the apiVersion',
+            required: false,
+            type: 'Number',
+            defaults: '44.0'
         });
+        this.argument('outputdir', {
+            desc: 'The name of the output directory',
+            required: false,
+            type: 'String',
+            defaults: ''
+        });
+
     }
     public writing() {
         this.fs.copyTpl(
-        this.templatePath('templates/DefaultApexClass.cls'),
-        this.destinationPath(this.options['apiName'] + '.cls'),
+        this.templatePath('templates/' + this.options['template'] + '.cls'),
+        this.destinationPath(this.options['template'] + '.cls'),
         { apiName: this.options['apiName'] }
+            ),
+        this.fs.copyTpl(
+        this.templatePath('templates/_class.cls-meta.xml'),
+        this.destinationPath(this.options['apiName'] + '.cls-meta.xml'),
+        { apiName: this.options['apiName'],
+        apiVersion: this.options['apiVersion'] }
             );
+
     }
 }

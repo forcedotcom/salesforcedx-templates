@@ -16,12 +16,12 @@ export default class ApexClassCreateGenerator extends GENERATOR {
     // Use arguments from create class to copy and edit templates.
     public writing() {
         this.fs.copyTpl(
-        this.templatePath('commands/force/apex/class/templates/' + this.options['template'] + '.cls'),
+        this.templatePath('templates/' + this.options['template'] + '.cls'),
         this.destinationPath(this.options['outputdir'] + '/' + this.options['apiName'] + '.cls'),
         { apiName: this.options['apiName'] }
             ),
         this.fs.copyTpl(
-        this.templatePath('commands/force/apex/class/templates/_class.cls-meta.xml'),
+        this.templatePath('templates/' + '_class.cls-meta.xml'),
         this.destinationPath(this.options['outputdir'] + '/' + this.options['apiName'] + '.cls-meta.xml'),
         { apiName: this.options['apiName'], apiVersion: this.options['apiVersion'] }
             );

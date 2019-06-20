@@ -15,38 +15,37 @@ export default class ApexClassCreateGenerator extends GENERATOR {
         this.argument('apiName', {
             desc: 'The name of the Apex class',
             required: false,
-            type: 'String',
+            type: String,
             defaults: ''
-        }),
-        this.argument('template', {
+        },
+        'template', {
             desc: 'The name of the template',
+            type: String,
             required: false,
-            type: 'String',
-            defaults: 'templates/DefaultApexClass.cls'
-        }),
-        this.argument('apiVersion', {
-            desc: 'The name of the apiVersion',
-            required: false,
-            type: 'Number',
-            defaults: '44.0'
+            defaults: 'DefaultApexClass'
         });
-        this.argument('outputdir', {
-            desc: 'The name of the output directory',
-            required: false,
-            type: 'String',
-            defaults: ''
-        });
-
+        // this.argument('apiVersion', {
+        //     desc: 'The name of the apiVersion',
+        //     required: false,
+        //     type: 'Number',
+        //     defaults: '44.0'
+        // });
+        // this.argument('outputdir', {
+        //     desc: 'The name of the output directory',
+        //     required: false,
+        //     type: 'String',
+        //     defaults: ''
+        // });
     }
     public writing() {
         this.fs.copyTpl(
         this.templatePath('templates/' + this.options['template'] + '.cls'),
-        this.destinationPath(this.options['template'] + '.cls'),
+        this.destinationPath(this.options['apiName'] + '.cls'),
         { apiName: this.options['apiName'] }
             ),
         this.fs.copyTpl(
         this.templatePath('templates/_class.cls-meta.xml'),
-        this.destinationPath(this.options['apiName'] + '.cls-meta.xml'),
+        this.destinationPath( this.options['apiName'] + '.cls-meta.xml'),
         { apiName: this.options['apiName'],
         apiVersion: this.options['apiVersion'] }
             );

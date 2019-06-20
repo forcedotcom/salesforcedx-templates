@@ -10,10 +10,10 @@ export default class ApexClass extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
   public static args = [{name: 'file'}];
   protected static flagsConfig = {
-    classname: flags.string({char: 'n', description: messages.getMessage('nameFlagDescription')}),
-    outputdir: flags.string({char: 'd', description: messages.getMessage('outputdir')}),
+    classname: flags.string({char: 'n', description: messages.getMessage('nameFlagDescription'), required: true}),
+    outputdir: flags.string({char: 'd', description: messages.getMessage('outputdir'), default: __dirname}),
     apiversion: flags.builtin({description: messages.getMessage('apiversion')}),
-    template: flags.string({char: 't', description: messages.getMessage('template')})
+    template: flags.string({char: 't', description: messages.getMessage('template'), default: 'DefaultApexClass'})
     };
     public async run(): Promise<AnyJson> {
       const apiName = this.flags.classname;
@@ -25,7 +25,7 @@ export default class ApexClass extends SfdxCommand {
       const env = yeoman.createEnv();
 
       env.registerStub(ApexClassCreateGenerator, 'apexclassgenerator');
-      env.run('apexclassgenerator', {apiName}, {apiVersion}, {outputdir}, {template});
+      env.run('apexclassgenerator', {apiName, template, outputdir, apiVersion});
       return;
     }
 }

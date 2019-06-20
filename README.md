@@ -54,7 +54,7 @@ OPTIONS
   --apiversion=apiversion                                                           override the api version used for
                                                                                     api requests made by this command
 
-  --json                                                                            format output as json
+  --json                                                                            JSON output
 
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation

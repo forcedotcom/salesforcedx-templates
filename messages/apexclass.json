@@ -3,5 +3,7 @@
     "nameFlagDescription": "name of the generated Apex class",
     "apiversion": "API version number",
     "outputdir": "folder for saving the created files",
-    "template": "template to use for file creation"
+    "template": "template to use for file creation",
+    "apexclass": "If not supplied, the apiversion, template, and outputdir use default values.\n The outputdir can be an absolute path or relative to the current working directory.\n \nExamples:\n ",
+    "examples": "$ sfdx force:apex:class:create -n MyClass\n $ sfdx force:apex:class:create -n MyClass -d classes\n" 
 }

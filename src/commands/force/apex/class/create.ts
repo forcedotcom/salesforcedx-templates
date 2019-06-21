@@ -26,6 +26,27 @@ export default class ApexClass extends SfdxCommand {
     template: flags.string({char: 't', description: messages.getMessage('template'), default: 'DefaultApexClass', options: ['DefaultApexClass', 'ApexException', 'ApexUnitTest', 'InboundEmailService']})
     };
 
+// Check inputs are valid.
+    public checkInputs(inputName) {
+      const alphaRegExp = /^\w+$/;
+      if (!alphaRegExp.test(inputName)) {
+          return Error(messages.getMessage('AlphaNumericNameError'));
+      }
+      const letterStartRegExp = /^[A-Za-z]/;
+      if (!letterStartRegExp.test(inputName)) {
+          return Error(messages.getMessage('NameMustStartWithLetterError'));
+      }
+      const endUnderscore = /_$/;
+      if (endUnderscore.test(inputName)) {
+          return Error(messages.getMessage('EndWithUnderscoreError'));
+      }
+      const dblUnderscore = /__/;
+      if (dblUnderscore.test(inputName)) {
+          return Error(messages.getMessage('DoubleUnderscoreError'));
+      }
+      return '';
+  }
+
     // Execute apex class create generator with flags as arguments.
     public async run(): Promise<AnyJson> {
       const apiName = this.flags.classname;
@@ -33,12 +54,17 @@ export default class ApexClass extends SfdxCommand {
       const apiVersion = this.flags.apiversion;
       const template = this.flags.template;
 
+      this.checkInputs(apiName);
+      this.checkInputs(outputdir);
+      this.checkInputs(apiVersion);
+      this.checkInputs(template);
+
       const yeoman = require('yeoman-environment');
       const env = yeoman.createEnv();
 
       env.registerStub(ApexClassCreateGenerator, 'apexclassgenerator');
       this.log('target dir =' + process.cwd() + '/' + outputdir);
-      env.run('apexclassgenerator', {apiName, template, outputdir, apiVersion});
-      return;
+      return env.run('apexclassgenerator', {apiName, template, outputdir, apiVersion});
+     // return;
     }
 }

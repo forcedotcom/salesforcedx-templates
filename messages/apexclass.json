@@ -4,6 +4,8 @@
     "apiversion": "API version number",
     "outputdir": "folder for saving the created files",
     "template": "template to use for file creation",
-    "apexclass": "If not supplied, the apiversion, template, and outputdir use default values.\n The outputdir can be an absolute path or relative to the current working directory.\n \nExamples:\n ",
-    "examples": "$ sfdx force:apex:class:create -n MyClass\n $ sfdx force:apex:class:create -n MyClass -d classes\n" 
+    "AlphaNumericNameError": "Name must contain only alphanumeric characters.",
+    "NameMustStartWithLetterError": "Name must start with a letter.",
+    "EndWithUnderscoreError": "Name can't end with an underscore.",
+    "DoubleUnderscoreError": "Name can't contain 2 consecutive underscores."
 }

@@ -1,11 +1,11 @@
 {
-    "commandDescription": "create an Apex class",
-    "nameFlagDescription": "name of the generated Apex class",
-    "apiversion": "API version number",
-    "outputdir": "folder for saving the created files",
-    "template": "template to use for file creation",
-    "AlphaNumericNameError": "Name must contain only alphanumeric characters.",
-    "NameMustStartWithLetterError": "Name must start with a letter.",
-    "EndWithUnderscoreError": "Name can't end with an underscore.",
-    "DoubleUnderscoreError": "Name can't contain 2 consecutive underscores."
+  "commandDescription": "create an Apex class",
+  "nameFlagDescription": "name of the generated Apex class",
+  "apiversion": "API version number",
+  "outputdir": "folder for saving the created files",
+  "template": "template to use for file creation",
+  "AlphaNumericNameError": "Name must contain only alphanumeric characters.",
+  "NameMustStartWithLetterError": "Name must start with a letter.",
+  "EndWithUnderscoreError": "Name can't end with an underscore.",
+  "DoubleUnderscoreError": "Name can't contain 2 consecutive underscores."
 }

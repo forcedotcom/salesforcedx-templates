@@ -1,8 +1,45 @@
-*-debug.log
-*-error.log
-/.nyc_output
-/dist
-/lib
-/package-lock.json
-/tmp
-node_modules
+# TypeScript generated files
+dist/
+out/
+lib/
+tmp/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directories
+node_modules/
+
+# test results
+test-results.xml
+xunit.xml
+xunit-unitTests.xml
+xunit-integrationTests.xml
+xunit-vscodeIntegrationTests.xml
+junit-custom.xml
+junit-custom-unitTests.xml
+junit-custom-integrationTests.xml
+junit-custom-vscodeIntegrationTests.xml
+
+# nyc test coverage
+.nyc_output
+
+# Eclipse
+.project
+
+# no keys
+*.key
+
+# SalesforceDX
+.sfdx/
+
+# MacOS folder atttribute tracking
+**/.DS_Store

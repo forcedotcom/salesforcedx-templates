@@ -1,0 +1,8 @@
+{
+    "commandDescription": "create an Apex trigger\n If not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.",
+    "triggerevents": "events that fire the trigger",
+    "triggername": "name of the generated Apex trigger",
+    "sobject": "sObject to create a trigger on",
+    "template": "template to use for file creation",
+    "outputdir": "folder for saving the created files"
+}

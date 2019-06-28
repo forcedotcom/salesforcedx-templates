@@ -30,7 +30,12 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
+<<<<<<< HEAD
 * [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+=======
+* [`sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapexclasscreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapextriggercreate--n-string--d-string--e-string--s-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+>>>>>>> 8f7f213... apex trigger started and apex class edits made
 
 ## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -68,7 +73,57 @@ EXAMPLES
      Hello myname! This is org: MyOrg and I will be around until Tue Mar 20 2018!
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/hello/org.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/hello/org.ts)_
+=======
+_See code: [src/commands/force/apex/class/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/apex/class/create.ts)_
+
+## `sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+create an Apex trigger
+
+```
+USAGE
+  $ sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion 
+  <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -d, --outputdir=outputdir
+      [default: /Users/amanda.stern/Desktop/force-language-services] folder for saving the created files
+
+  -e, --triggerevents=before insert|before update|before delete|after insert|after update|after delete|after undelete
+      [default: before insert] events that fire the trigger
+
+  -n, --triggername=triggername
+      (required) name of the generated Apex trigger
+
+  -s, --sobject=sobject
+      [default: SOBJECT] sObject to create a trigger on
+
+  -t, --template=template
+      [default: ApexTrigger] template to use for file creation
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+DESCRIPTION
+  If not supplied, the apiversion, template, and outputdir use default values.
+  The outputdir can be an absolute path or relative to the current working directory.
+
+EXAMPLES
+  $ sfdx force:apex:trigger:create -n MyTrigger
+  $ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after upsert'
+  $ sfdx force:apex:trigger:create -n MyTrigger -d triggers
+```
+
+_See code: [src/commands/force/apex/trigger/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/apex/trigger/create.ts)_
+>>>>>>> 8f7f213... apex trigger started and apex class edits made
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin

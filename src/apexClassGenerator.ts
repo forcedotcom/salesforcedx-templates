@@ -12,6 +12,7 @@ export default class ApexClassGenerator extends GENERATOR {
     constructor(args: string | string[], options: OptionsMap) {
         super(args, options);
         this.sourceRoot (__dirname);
+        this.conflicter.force = true;
     }
 
     // Use arguments from create class to copy and edit templates.

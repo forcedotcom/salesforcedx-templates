@@ -54,15 +54,17 @@ export default class ApexClass extends SfdxCommand {
     public async run(): Promise<AnyJson> {
       this.checkInputs(this.flags.classname);
 
-      // Object.keys(this.flags).forEach(flag => {
-      //   this.checkInputs(flag);
-      // });
+      // log the output directory
+      // tslint:disable-next-line:no-unused-expression
+      if (this.flags.outputdir === process.cwd()) {
+        this.log(path.join(process.cwd()));
+      } else {
+        this.log(path.join(process.cwd(), this.flags.outputdir));
+      }
 
       const yeoman = require('yeoman-environment');
       const env = yeoman.createEnv();
-
       env.registerStub(ApexClassGenerator, 'apexclassgenerator');
-      this.log(path.join(process.cwd()));
       return env.run('apexclassgenerator', this.flags);
     }
 }

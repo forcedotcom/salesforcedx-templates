@@ -8,15 +8,15 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
 
 describe('apex class create tests', () => {
+
     // Command properly creates files
-    describe('test apex class creation', () => {
+    describe('Check apex class creation', () => {
     test
     .withOrg()
     .withProject()
     .stdout()
     .command(['force:apex:class:create', '--classname', 'foo'])
     .it ('should create foo class using DefaultApexClass template and default output directory', ctx => {
-        console.log('end');
         assert.file(['foo.cls', 'foo.cls-meta.xml']);
         assert.fileContent(path.join(process.cwd(), 'foo.cls'), 'public with sharing class foo');
         });
@@ -100,9 +100,6 @@ describe('apex class create tests', () => {
     });
     });
 });
-
 // // Check that foo class is created with given api version
 
 // // Check that foo class is created with json output
-
-// // Check that help output work properly

@@ -1,5 +1,5 @@
 {
-    "commandDescription": "create an Apex class",
+    "commandDescription": "create an Apex class \n If not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.",
     "nameFlagDescription": "name of the generated Apex class",
     "apiversion": "API version number",
     "outputdir": "folder for saving the created files",

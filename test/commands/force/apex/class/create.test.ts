@@ -1,10 +1,8 @@
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import mkdirp from 'mkdirp';
 import * as path from 'path';
-// tslint:disable-next-line:no-var-requires
-const assert = require('yeoman-assert');
-// tslint:disable-next-line: no-var-requires
-const mkdirp = require('mkdirp');
+import assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');

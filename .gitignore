@@ -28,6 +28,7 @@ junit-custom.xml
 junit-custom-unitTests.xml
 junit-custom-integrationTests.xml
 junit-custom-vscodeIntegrationTests.xml
+testsoutput/
 
 # nyc test coverage
 .nyc_output

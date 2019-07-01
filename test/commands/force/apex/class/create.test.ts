@@ -1,8 +1,8 @@
-import { expect, test} from '@salesforce/command/lib/test';
-import { Messages} from '@salesforce/core';
+import { expect, test } from '@salesforce/command/lib/test';
+import { Messages } from '@salesforce/core';
 import * as path from 'path';
 // tslint:disable-next-line:no-var-requires
-const assert = require ('yeoman-assert');
+const assert = require('yeoman-assert');
 // tslint:disable-next-line: no-var-requires
 const mkdirp = require('mkdirp');
 
@@ -10,98 +10,156 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
 
 describe('Apex class creation tests:', () => {
+  mkdirp('testsoutput', () => {
+    process.chdir('testsoutput');
+  });
 
-    mkdirp('testsoutput', () => {
-        process.chdir('testsoutput');
-    });
-
-    describe('Check apex class creation', () => {
+  describe('Check apex class creation', () => {
     test
-    .withOrg()
-    .withProject()
-    .stdout()
-    .command(['force:apex:class:create', '--classname', 'foo'])
-    .it ('should create foo class using DefaultApexClass template and default output directory', ctx => {
-        assert.file(['foo.cls', 'foo.cls-meta.xml']);
-        assert.fileContent(path.join(process.cwd(), 'foo.cls'), 'public with sharing class foo');
-        });
-
-    test
-    .withOrg()
-    .withProject()
-    .stdout()
-    .command(['force:apex:class:create', '--classname', 'foo', '--outputdir', 'testfolder', '--template', 'ApexException'])
-    .it('should create foo class with a targetpath set and ApexException template', ctx => {
-        assert.file([path.join('testfolder', 'foo.cls'), path.join('testfolder', 'foo.cls-meta.xml')]);
-        assert.fileContent(path.join('testfolder', 'foo.cls'), 'public class foo extends Exception');
-        });
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command(['force:apex:class:create', '--classname', 'foo'])
+      .it(
+        'should create foo class using DefaultApexClass template and default output directory',
+        ctx => {
+          assert.file(['foo.cls', 'foo.cls-meta.xml']);
+          assert.fileContent(
+            path.join(process.cwd(), 'foo.cls'),
+            'public with sharing class foo'
+          );
+        }
+      );
 
     test
-    .withOrg()
-    .withProject()
-    .stdout()
-    .command(['force:apex:class:create', '--classname', 'foo', '--template', 'ApexException'])
-    .it ('should override foo class using ApexException template', ctx => {
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:apex:class:create',
+        '--classname',
+        'foo',
+        '--outputdir',
+        'testfolder',
+        '--template',
+        'ApexException'
+      ])
+      .it(
+        'should create foo class with a targetpath set and ApexException template',
+        ctx => {
+          assert.file([
+            path.join('testfolder', 'foo.cls'),
+            path.join('testfolder', 'foo.cls-meta.xml')
+          ]);
+          assert.fileContent(
+            path.join('testfolder', 'foo.cls'),
+            'public class foo extends Exception'
+          );
+        }
+      );
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:apex:class:create',
+        '--classname',
+        'foo',
+        '--template',
+        'ApexException'
+      ])
+      .it('should override foo class using ApexException template', ctx => {
         assert.file(['foo.cls', 'foo.cls-meta.xml']);
         assert.fileContent('foo.cls', 'public class foo extends Exception');
-        });
+      });
 
     test
-    .withOrg()
-    .withProject()
-    .stdout()
-    .command(['force:apex:class:create', '--classname', 'foo', '--outputdir', 'classes create'])
-    .it ('should create foo class in custom folder name that has a space in it', ctx => {
-        assert.file([path.join('classes create', 'foo.cls'), path.join('classes create', 'foo.cls-meta.xml')]);
-        assert.fileContent('foo.cls', 'public class foo extends Exception');
-        });
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:apex:class:create',
+        '--classname',
+        'foo',
+        '--outputdir',
+        'classes create'
+      ])
+      .it(
+        'should create foo class in custom folder name that has a space in it',
+        ctx => {
+          assert.file([
+            path.join('classes create', 'foo.cls'),
+            path.join('classes create', 'foo.cls-meta.xml')
+          ]);
+          assert.fileContent('foo.cls', 'public class foo extends Exception');
+        }
+      );
+  });
 
-    });
-
-    describe ('Check that all invalid name errors are thrown' , () => {
+  describe('Check that all invalid name errors are thrown', () => {
     test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command(['force:apex:class:create'])
-    .it('should throw a missing classname error', ctx => {
-        expect(ctx.stderr).to.contain(messages.getMessage('MissingClassnameFlag'));
-    });
-
-    test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command(['force:apex:class:create', '--classname', '/a'])
-    .it('should throw invalid non alphanumeric class name error', ctx => {
-        expect(ctx.stderr).to.contain(messages.getMessage('AlphaNumericNameError'));
-    });
-
-    test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command(['force:apex:class:create', '--classname', '3aa'])
-    .it('should throw invalid class name starting with numeric error', ctx => {
-        expect(ctx.stderr).to.contain(messages.getMessage('NameMustStartWithLetterError'));
-    });
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command(['force:apex:class:create'])
+      .it('should throw a missing classname error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('MissingClassnameFlag')
+        );
+      });
 
     test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command(['force:apex:class:create', '--classname', 'a_'])
-    .it('should throw invalid class name ending with underscore error', ctx => {
-        expect(ctx.stderr).to.contain(messages.getMessage('EndWithUnderscoreError'));
-    });
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command(['force:apex:class:create', '--classname', '/a'])
+      .it('should throw invalid non alphanumeric class name error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('AlphaNumericNameError')
+        );
+      });
 
     test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command(['force:apex:class:create', '--classname', 'a__a'])
-    .it('should throw invalid class name with double underscore error', ctx => {
-        expect(ctx.stderr).to.contain(messages.getMessage('DoubleUnderscoreError'));
-    });
-    });
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command(['force:apex:class:create', '--classname', '3aa'])
+      .it(
+        'should throw invalid class name starting with numeric error',
+        ctx => {
+          expect(ctx.stderr).to.contain(
+            messages.getMessage('NameMustStartWithLetterError')
+          );
+        }
+      );
+
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command(['force:apex:class:create', '--classname', 'a_'])
+      .it(
+        'should throw invalid class name ending with underscore error',
+        ctx => {
+          expect(ctx.stderr).to.contain(
+            messages.getMessage('EndWithUnderscoreError')
+          );
+        }
+      );
+
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command(['force:apex:class:create', '--classname', 'a__a'])
+      .it(
+        'should throw invalid class name with double underscore error',
+        ctx => {
+          expect(ctx.stderr).to.contain(
+            messages.getMessage('DoubleUnderscoreError')
+          );
+        }
+      );
+  });
 });

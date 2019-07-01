@@ -28,6 +28,7 @@ junit-custom.xml
 junit-custom-unitTests.xml
 junit-custom-integrationTests.xml
 junit-custom-vscodeIntegrationTests.xml
+testsoutput/
 
 # nyc test coverage
 .nyc_output
@@ -43,3 +44,6 @@ junit-custom-vscodeIntegrationTests.xml
 
 # MacOS folder atttribute tracking
 **/.DS_Store
+
+# ignore oclif manifest file
+oclif.manifest.json

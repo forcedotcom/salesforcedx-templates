@@ -3,20 +3,20 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
-import ApexClassCreateGenerator from '../../../../apexclasscreategenerator';
+import ApexClassGenerator from '../../../../apexClassGenerator';
 
 // Loading the apex class messages.
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
 
 export default class ApexClass extends SfdxCommand {
-  // Display apex class create examples.
+  // display apex class create examples.
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
     '$ sfdx force:apex:class:create -n MyClass -d classes'
   ];
 
-  // Display the desceription for the help flag.
+  // Display the description for the help flag.
   public static description = messages.getMessage('commandDescription');
   // All flags:
   protected static flagsConfig = {
@@ -28,23 +28,23 @@ export default class ApexClass extends SfdxCommand {
     };
 
   // Check inputs are valid.
-  public checkInputs(inputName) {
+  public checkInputs(flagValue) {
     const alphaRegExp = /^\w+$/;
     // tslint:disable-next-line:no-unused-expression
-    if (!alphaRegExp.test(inputName)) {
+    if (!alphaRegExp.test(flagValue)) {
         throw new Error(messages.getMessage('AlphaNumericNameError'));
     }
     const letterStartRegExp = /^[A-Za-z]/;
     // tslint:disable-next-line:no-unused-expression
-    if (!letterStartRegExp.test(inputName)) {
+    if (!letterStartRegExp.test(flagValue)) {
         throw new Error(messages.getMessage('NameMustStartWithLetterError'));
     }
     const endUnderscore = /_$/;
-    if (endUnderscore.test(inputName)) {
+    if (endUnderscore.test(flagValue)) {
         throw new Error(messages.getMessage('EndWithUnderscoreError'));
     }
     const dblUnderscore = /__/;
-    if (dblUnderscore.test(inputName)) {
+    if (dblUnderscore.test(flagValue)) {
         throw new Error(messages.getMessage('DoubleUnderscoreError'));
     }
     return '';
@@ -61,7 +61,7 @@ export default class ApexClass extends SfdxCommand {
       const yeoman = require('yeoman-environment');
       const env = yeoman.createEnv();
 
-      env.registerStub(ApexClassCreateGenerator, 'apexclassgenerator');
+      env.registerStub(ApexClassGenerator, 'apexclassgenerator');
       this.log(path.join(process.cwd(), this.flags.outputdir));
       return env.run('apexclassgenerator', this.flags);
     }

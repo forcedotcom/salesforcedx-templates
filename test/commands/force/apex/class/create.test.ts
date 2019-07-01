@@ -7,11 +7,11 @@ Messages.importMessagesDirectory(__dirname);
 // const messages = Messages.loadMessages('force-language-services', 'apexclass');
 
 // // Check that foo class is created with default api version
-describe('apexcreate success set', () => {
+describe('help output check', () => {
     test
     .stdout()
-    .command(['force:apex:class:create', '--classname', 'foo', '--template', 'ApexException'])
-    .it ('should create foo class with the default apiVersion'), ctx => {
+    .command(['force:apex:class:create', '--help'])
+    .it ('should have the correct help output'), ctx => {
         expect(ctx.stdout).to.contain('');
     };
     // parseInt(new (require('salesforce-alm/dist/lib/core/configApi').Config)().getApiVersion());
@@ -35,9 +35,9 @@ describe('apexcreate success set', () => {
 
 // // Check that all the check input issues are thrown
 
-describe('apexcreate failure set', () => {
-    test
-    .do(() => { test .command(['force:apex:class:create', '--classname', '/a']); } )
-    .catch( err => expect(err).to.throw(new Error(messages.getMessage('AlphaNumericNameError'))))
-    .end('invalid non alphanumeric class name');
-});
+// describe('apexcreate failure set', () => {
+//     test
+//     .do(() => { test .command(['force:apex:class:create', '--classname', '/a']); } )
+//     .catch( err => expect(err).to.throw(new Error(messages.getMessage('AlphaNumericNameError'))))
+//     .end('invalid non alphanumeric class name');
+// });

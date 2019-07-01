@@ -8,5 +8,5 @@
     "NameMustStartWithLetterError": "Name must start with a letter.",
     "EndWithUnderscoreError": "Name can't end with an underscore.",
     "DoubleUnderscoreError": "Name can't contain 2 consecutive underscores.",
-    "MissingName": "Flag --classname expects a value"
+    "MissingClassnameFlag": "Missing required flag:\n -n, --classname CLASSNAME  name of the generated Apex class\nSee more help with --help\n"
 }

@@ -1,15 +1,20 @@
-import {test, expect} from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
+import { expect, test} from '@salesforce/command/lib/test';
+import { Messages} from '@salesforce/core';
 import * as path from 'path';
-
 // tslint:disable-next-line:no-var-requires
 const assert = require ('yeoman-assert');
+// tslint:disable-next-line: no-var-requires
+const mkdirp = require('mkdirp');
+
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
 
-describe('apex class create tests', () => {
+describe('Apex class creation tests:', () => {
 
-    // Command properly creates files
+    mkdirp('testsoutput', () => {
+        process.chdir('testsoutput');
+    });
+
     describe('Check apex class creation', () => {
     test
     .withOrg()
@@ -26,7 +31,7 @@ describe('apex class create tests', () => {
     .withProject()
     .stdout()
     .command(['force:apex:class:create', '--classname', 'foo', '--outputdir', 'testfolder', '--template', 'ApexException'])
-    .it('should create foo class with a targetpath set', ctx => {
+    .it('should create foo class with a targetpath set and ApexException template', ctx => {
         assert.file([path.join('testfolder', 'foo.cls'), path.join('testfolder', 'foo.cls-meta.xml')]);
         assert.fileContent(path.join('testfolder', 'foo.cls'), 'public class foo extends Exception');
         });
@@ -50,17 +55,17 @@ describe('apex class create tests', () => {
         assert.file([path.join('classes create', 'foo.cls'), path.join('classes create', 'foo.cls-meta.xml')]);
         assert.fileContent('foo.cls', 'public class foo extends Exception');
         });
+
     });
 
-    // Properly throws errors
-    describe ('Check that all errors are thrown' , () => {
+    describe ('Check that all invalid name errors are thrown' , () => {
     test
     .withOrg()
     .withProject()
     .stderr()
     .command(['force:apex:class:create'])
     .it('should throw a missing classname error', ctx => {
-        expect(ctx.stderr).to.contain('Missing required flag');
+        expect(ctx.stderr).to.contain(messages.getMessage('MissingClassnameFlag'));
     });
 
     test
@@ -100,6 +105,3 @@ describe('apex class create tests', () => {
     });
     });
 });
-// // Check that foo class is created with given api version
-
-// // Check that foo class is created with json output

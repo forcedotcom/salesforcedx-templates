@@ -1,33 +1,29 @@
 import { flags, SfdxCommand } from '@salesforce/command';
-// import { optionalBuiltinFlags } from '@salesforce/command/lib/sfdxFlags';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import ApexClassGenerator from '../../../../apexClassGenerator';
 
-// Loading the apex class messages.
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
 
 export default class ApexClass extends SfdxCommand {
-  // display apex class create examples.
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
     '$ sfdx force:apex:class:create -n MyClass -d classes'
   ];
 
-  // Display the description for the help flag.
   public static description = messages.getMessage('commandDescription');
-  // All flags:
+
   protected static flagsConfig = {
     classname: flags.string({char: 'n', description: messages.getMessage('nameFlagDescription'), required: true}),
     outputdir: flags.string({char: 'd', description: messages.getMessage('outputdir'), required: false, default: process.cwd()}),
+    // Need to fix the apiversion flag with default and optional inputs
     // apiversion: flags.string({char: 'a', description: messages.getMessage('outputdir'), options: ['46.0', '45.0'], default: '45.0'}),
     apiversion: flags.builtin(),
     template: flags.string({char: 't', description: messages.getMessage('template'), default: 'DefaultApexClass', options: ['DefaultApexClass', 'ApexException', 'ApexUnitTest', 'InboundEmailService']})
     };
 
-  // Check inputs are valid.
   public checkInputs(flagValue) {
     const alphaRegExp = /^\w+$/;
     // tslint:disable-next-line:no-unused-expression
@@ -50,11 +46,10 @@ export default class ApexClass extends SfdxCommand {
     return '';
 }
 
-    // Execute apex class create generator with flags as arguments.
     public async run(): Promise<AnyJson> {
       this.checkInputs(this.flags.classname);
+      this.checkInputs(this.flags.template);
 
-      // log the output directory
       // tslint:disable-next-line:no-unused-expression
       if (this.flags.outputdir === process.cwd()) {
         this.log(path.join(process.cwd()));

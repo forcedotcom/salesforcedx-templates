@@ -1,6 +1,7 @@
 import { flags, SfdxCommand} from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import * as path from 'path';
 import ApexTriggerGenerator from '../../../../apexTriggerGenerator';
 
 Messages.importMessagesDirectory(__dirname);
@@ -26,9 +27,16 @@ export default class ApexTrigger extends SfdxCommand {
     };
 
     public async run(): Promise<AnyJson> {
+        // tslint:disable-next-line:no-unused-expression
+        if (this.flags.outputdir === process.cwd()) {
+            this.log(path.join(process.cwd()));
+          } else {
+            this.log(path.join(process.cwd(), this.flags.outputdir));
+          }
+
         const yeoman = require('yeoman-environment');
         const env = yeoman.createEnv();
-        env.registerStub(ApexTriggerGenerator, 'apexclassgenerator');
-        return env.run('apexclassgenerator', this.flags);
+        env.registerStub(ApexTriggerGenerator, 'ApexTriggerGenerator');
+        return env.run('apexTriggerGenerator', this.flags);
     }
 }

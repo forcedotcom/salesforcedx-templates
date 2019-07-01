@@ -30,12 +30,12 @@ export default class ApexClass extends SfdxCommand {
       required: false,
       default: process.cwd()
     }),
-    apiversion: flags.string({
-      char: 'a',
-      description: messages.getMessage('apiversion'),
-      options: ['46.0', '45.0'],
-      default: '45.0'
-    }),
+    // apiversion: flags.string({
+    //   char: 'a',
+    //   description: messages.getMessage('apiversion'),
+    //   options: ['46.0', '45.0'],
+    //   default: '45.0'
+    // }),
     template: flags.string({
       char: 't',
       description: messages.getMessage('template'),

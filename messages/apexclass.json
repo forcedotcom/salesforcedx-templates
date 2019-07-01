@@ -1,5 +1,5 @@
 {
-  "commandDescription": "create an Apex class",
+  "commandDescription": "create an Apex class \n If not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.",
   "nameFlagDescription": "name of the generated Apex class",
   "apiversion": "API version number",
   "outputdir": "folder for saving the created files",
@@ -7,5 +7,6 @@
   "AlphaNumericNameError": "Name must contain only alphanumeric characters.",
   "NameMustStartWithLetterError": "Name must start with a letter.",
   "EndWithUnderscoreError": "Name can't end with an underscore.",
-  "DoubleUnderscoreError": "Name can't contain 2 consecutive underscores."
+  "DoubleUnderscoreError": "Name can't contain 2 consecutive underscores.",
+  "MissingClassnameFlag": "Missing required flag:\n -n, --classname CLASSNAME  name of the generated Apex class\nSee more help with --help\n"
 }

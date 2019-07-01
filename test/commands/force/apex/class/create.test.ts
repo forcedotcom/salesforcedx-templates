@@ -1,8 +1,8 @@
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
-import mkdirp from 'mkdirp';
+import * as mkdirp from 'mkdirp';
 import * as path from 'path';
-import assert from 'yeoman-assert';
+import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');

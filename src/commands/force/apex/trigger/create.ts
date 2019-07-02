@@ -36,7 +36,7 @@ export default class ApexTrigger extends SfdxCommand {
 
         const yeoman = require('yeoman-environment');
         const env = yeoman.createEnv();
-        env.registerStub(ApexTriggerGenerator, 'ApexTriggerGenerator');
-        return env.run('apexTriggerGenerator', this.flags);
+        env.registerStub(ApexTriggerGenerator, 'apextriggergenerator');
+        return env.run('apextriggergenerator', this.flags);
     }
 }

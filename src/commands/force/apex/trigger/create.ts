@@ -1,14 +1,14 @@
 import { flags, SfdxCommand} from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import * as fs from 'fs';
 import * as path from 'path';
 import ApexTriggerGenerator from '../../../../apexTriggerGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apextrigger');
-
+const triggerfile = /.trigger$/;
 export default class ApexTrigger extends SfdxCommand {
-
     public static examples = [
         '$ sfdx force:apex:trigger:create -n MyTrigger',
         '$ sfdx force:apex:trigger:create -n MyTrigger -s Account -e \'before insert, after upsert\'',
@@ -23,20 +23,27 @@ export default class ApexTrigger extends SfdxCommand {
         triggerevents: flags.string({char: 'e', description: messages.getMessage('triggerevents'), default: 'before insert', options: ['before insert', 'before update', 'before delete', 'after insert', 'after update', 'after delete', 'after undelete']}),
         triggername: flags.string({char: 'n', description: messages.getMessage('triggername'), required: true}),
         sobject: flags.string({char: 's', description: messages.getMessage('sobject'), default: 'SOBJECT' }),
-        template: flags.string({char: 't', description: messages.getMessage('template'), default: 'ApexTrigger'})
+        template: flags.string({char: 't', description: messages.getMessage('template'), default: 'ApexTrigger', options: ApexTrigger.getTemplates()})
     };
+    private static getTemplates() {
+      const files =  fs.readdirSync(path.join(__dirname, 'templates'))
+      .filter( file => triggerfile.test(file)).map(file => {
+          return file.split('.', 1).toString();
+      });
+      return files;
+    }
 
     public async run(): Promise<AnyJson> {
         // tslint:disable-next-line:no-unused-expression
-        if (this.flags.outputdir === process.cwd()) {
+      if (this.flags.outputdir === process.cwd()) {
             this.log(path.join(process.cwd()));
           } else {
             this.log(path.join(process.cwd(), this.flags.outputdir));
           }
 
-        const yeoman = require('yeoman-environment');
-        const env = yeoman.createEnv();
-        env.registerStub(ApexTriggerGenerator, 'apextriggergenerator');
-        return env.run('apextriggergenerator', this.flags);
+      const yeoman = require('yeoman-environment');
+      const env = yeoman.createEnv();
+      env.registerStub(ApexTriggerGenerator, 'apextriggergenerator');
+      return env.run('apextriggergenerator', this.flags);
     }
 }

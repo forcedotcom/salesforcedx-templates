@@ -17,13 +17,13 @@ export default class ApexTriggerGenerator extends generator {
     public writing() {
         const {template, outputdir, triggername, apiversion, triggerevents, sobject} = this.options;
         this.fs.copyTpl(
-        this.templatePath(path.join('commands', 'force', 'apex', 'trigger', 'templates', template + '.cls')),
-        this.destinationPath(path.join(outputdir , triggername + '.cls')),
+        this.templatePath(path.join('commands', 'force', 'apex', 'trigger', 'templates', template + '.trigger')),
+        this.destinationPath(path.join(outputdir , triggername + '.trigger')),
         { apiName: triggername, sobject: sobject, triggerEvents: triggerevents }
             ),
         this.fs.copyTpl(
-        this.templatePath(path.join('commands', 'force', 'apex', 'trigger', 'templates', '_class.cls-meta.xml')),
-        this.destinationPath(path.join(outputdir , triggername + '.cls-meta.xml')),
+        this.templatePath(path.join('commands', 'force', 'apex', 'trigger', 'templates', '_trigger.trigger-meta.xml')),
+        this.destinationPath(path.join(outputdir , triggername + '.trigger-meta.xml')),
         { apiName: triggername, apiVersion: apiversion }
             );
 

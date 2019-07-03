@@ -1,12 +1,13 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import * as fs from 'fs';
 import * as path from 'path';
 import ApexClassGenerator from '../../../../apexClassGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
-
+const clsfile = /.cls$/;
 export default class ApexClass extends SfdxCommand {
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
@@ -34,14 +35,18 @@ export default class ApexClass extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultApexClass',
-      options: [
-        'DefaultApexClass',
-        'ApexException',
-        'ApexUnitTest',
-        'InboundEmailService'
-      ]
+      options: ApexClass.getTemplates()
+      // TODO: options should just read the templates folder
     })
   };
+
+  private static getTemplates() {
+    const files =  fs.readdirSync(path.join(__dirname, 'templates'))
+    .filter( file => clsfile.test(file)).map(file => {
+        return file.split('.', 1).toString();
+    });
+    return files;
+  }
 
   public checkInputs(flagValue) {
     const alphaRegExp = /^\w+$/;

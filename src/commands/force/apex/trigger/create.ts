@@ -32,8 +32,30 @@ export default class ApexTrigger extends SfdxCommand {
       });
       return files;
     }
-
+    public checkInputs(flagValue) {
+      const alphaRegExp = /^\w+$/;
+      // tslint:disable-next-line:no-unused-expression
+      if (!alphaRegExp.test(flagValue)) {
+        throw new Error(messages.getMessage('AlphaNumericNameError'));
+      }
+      const letterStartRegExp = /^[A-Za-z]/;
+      // tslint:disable-next-line:no-unused-expression
+      if (!letterStartRegExp.test(flagValue)) {
+        throw new Error(messages.getMessage('NameMustStartWithLetterError'));
+      }
+      const endUnderscore = /_$/;
+      if (endUnderscore.test(flagValue)) {
+        throw new Error(messages.getMessage('EndWithUnderscoreError'));
+      }
+      const dblUnderscore = /__/;
+      if (dblUnderscore.test(flagValue)) {
+        throw new Error(messages.getMessage('DoubleUnderscoreError'));
+      }
+      return '';
+    }
     public async run(): Promise<AnyJson> {
+      this.checkInputs(this.flags.triggername);
+      this.checkInputs(this.flags.template);  
         // tslint:disable-next-line:no-unused-expression
       if (this.flags.outputdir === process.cwd()) {
             this.log(path.join(process.cwd()));

@@ -3,13 +3,9 @@ force-language-services
 
 Code base to host the Salesforce CLI commands.
 
-[![Version](https://img.shields.io/npm/v/force-language-services.svg)](https://npmjs.org/package/force-language-services)
 [![CircleCI](https://circleci.com/gh/forcedotcom/force-language-services/tree/master.svg?style=shield)](https://circleci.com/gh/forcedotcom/force-language-services/tree/master)
-[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/forcedotcom/force-language-services?branch=master&svg=true)](https://ci.appveyor.com/project/heroku/force-language-services/branch/master)
 [![Codecov](https://codecov.io/gh/forcedotcom/force-language-services/branch/master/graph/badge.svg)](https://codecov.io/gh/forcedotcom/force-language-services)
-[![Greenkeeper](https://badges.greenkeeper.io/forcedotcom/force-language-services.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io/test/github/forcedotcom/force-language-services/badge.svg)](https://snyk.io/test/github/forcedotcom/force-language-services)
-[![Downloads/week](https://img.shields.io/npm/dw/force-language-services.svg)](https://npmjs.org/package/force-language-services)
 [![License](https://img.shields.io/npm/l/force-language-services.svg)](https://github.com/forcedotcom/force-language-services/blob/master/package.json)
 
 <!-- toc -->

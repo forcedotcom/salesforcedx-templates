@@ -1,13 +1,11 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import * as fs from 'fs';
-import * as path from 'path';
 import ApexClassGenerator from '../../../../apexClassGenerator';
+import { CreateUtil } from '../../../../createUtil';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apexclass');
-const clsfile = /.cls$/;
 export default class ApexClass extends SfdxCommand {
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
@@ -35,51 +33,15 @@ export default class ApexClass extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultApexClass',
-      options: ApexClass.getTemplates()
-      // TODO: options should just read the templates folder
+      options: CreateUtil.getTemplates(/.cls$/, __dirname)
     })
   };
 
-  private static getTemplates() {
-    const files =  fs.readdirSync(path.join(__dirname, 'templates'))
-    .filter( file => clsfile.test(file)).map(file => {
-        return file.split('.', 1).toString();
-    });
-    return files;
-  }
-
-  public checkInputs(flagValue) {
-    const alphaRegExp = /^\w+$/;
-    // tslint:disable-next-line:no-unused-expression
-    if (!alphaRegExp.test(flagValue)) {
-      throw new Error(messages.getMessage('AlphaNumericNameError'));
-    }
-    const letterStartRegExp = /^[A-Za-z]/;
-    // tslint:disable-next-line:no-unused-expression
-    if (!letterStartRegExp.test(flagValue)) {
-      throw new Error(messages.getMessage('NameMustStartWithLetterError'));
-    }
-    const endUnderscore = /_$/;
-    if (endUnderscore.test(flagValue)) {
-      throw new Error(messages.getMessage('EndWithUnderscoreError'));
-    }
-    const dblUnderscore = /__/;
-    if (dblUnderscore.test(flagValue)) {
-      throw new Error(messages.getMessage('DoubleUnderscoreError'));
-    }
-    return '';
-  }
-
   public async run(): Promise<AnyJson> {
-    this.checkInputs(this.flags.classname);
-    this.checkInputs(this.flags.template);
+    CreateUtil.checkInputs(this.flags.classname);
+    CreateUtil.checkInputs(this.flags.template);
 
-    // tslint:disable-next-line:no-unused-expression
-    if (this.flags.outputdir === process.cwd()) {
-      this.log(path.join(process.cwd()));
-    } else {
-      this.log(path.join(process.cwd(), this.flags.outputdir));
-    }
+    this.log(CreateUtil.printOutputDir(this.flags.outputdir, process.cwd()));
 
     const yeoman = require('yeoman-environment');
     const env = yeoman.createEnv();

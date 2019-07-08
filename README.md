@@ -57,7 +57,7 @@ OPTIONS
   -n, --classname=classname                                                         (required) name of the generated
                                                                                     Apex class
 
-  -t, --template=DefaultApexClass|ApexException|ApexUnitTest|InboundEmailService    [default: DefaultApexClass] template
+  -t, --template=ApexException|ApexUnitTest|DefaultApexClass|InboundEmailService    [default: DefaultApexClass] template
                                                                                     to use for file creation
 
   --apiversion=apiversion                                                           override the api version used for
@@ -101,7 +101,7 @@ OPTIONS
   -s, --sobject=sobject
       [default: SOBJECT] sObject to create a trigger on
 
-  -t, --template=template
+  -t, --template=ApexTrigger
       [default: ApexTrigger] template to use for file creation
 
   --apiversion=apiversion

@@ -90,7 +90,7 @@ describe('Apex class creation tests:', () => {
             path.join('classes create', 'foo.cls'),
             path.join('classes create', 'foo.cls-meta.xml')
           ]);
-          assert.fileContent('foo.cls', 'public class foo extends Exception');
+          assert.fileContent( path.join('classes create', 'foo.cls'), 'public with sharing class foo');
         }
       );
   });

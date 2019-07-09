@@ -5,10 +5,7 @@ import ApexTriggerGenerator from '../../../../apexTriggerGenerator';
 import { CreateUtil } from '../../../../createUtil';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  'force-language-services',
-  'apextrigger'
-);
+const messages = Messages.loadMessages('force-language-services', 'messages');
 export default class ApexTrigger extends SfdxCommand {
   public static examples = [
     '$ sfdx force:apex:trigger:create -n MyTrigger',
@@ -16,7 +13,9 @@ export default class ApexTrigger extends SfdxCommand {
     '$ sfdx force:apex:trigger:create -n MyTrigger -d triggers'
   ];
 
-  public static description = messages.getMessage('commandDescription');
+  public static description = messages.getMessage(
+    'ApexTriggerCommandDescription'
+  );
 
   protected static flagsConfig = {
     outputdir: flags.string({
@@ -25,6 +24,7 @@ export default class ApexTrigger extends SfdxCommand {
       required: false,
       default: process.cwd()
     }),
+    // Need to fix the apiversion flag with default and optional inputs
     apiversion: flags.builtin(),
     triggerevents: flags.string({
       char: 'e',
@@ -64,9 +64,6 @@ export default class ApexTrigger extends SfdxCommand {
 
     this.log(CreateUtil.printOutputDir(this.flags.outputdir, process.cwd()));
 
-    const yeoman = require('yeoman-environment');
-    const env = yeoman.createEnv();
-    env.registerStub(ApexTriggerGenerator, 'apextriggergenerator');
-    return env.run('apextriggergenerator', this.flags);
+    return CreateUtil.runGenerator(ApexTriggerGenerator, this.flags);
   }
 }

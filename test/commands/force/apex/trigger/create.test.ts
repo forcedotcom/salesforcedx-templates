@@ -4,10 +4,7 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  'force-language-services',
-  'apextrigger'
-);
+const messages = Messages.loadMessages('force-language-services', 'messages');
 
 describe('Apex trigger creation tests:', () => {
   describe('Check apex trigger creation', () => {
@@ -17,7 +14,7 @@ describe('Apex trigger creation tests:', () => {
       .stdout()
       .command(['force:apex:trigger:create', '--triggername', 'foo'])
       .it(
-        'should create foo class using ApexTrigger template and default output directory',
+        'should create foo trigger using ApexTrigger template and default output directory',
         ctx => {
           assert.file(['foo.trigger', 'foo.trigger-meta.xml']);
           assert.fileContent(
@@ -108,7 +105,7 @@ describe('Apex trigger creation tests:', () => {
       .withProject()
       .stderr()
       .command(['force:apex:trigger:create'])
-      .it('should throw a missing triggername error', ctx => {
+      .it('should throw a missing trigger name error', ctx => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingTriggernameFlag')
         );
@@ -119,7 +116,7 @@ describe('Apex trigger creation tests:', () => {
       .withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '/a'])
-      .it('should throw invalid non alphanumeric class name error', ctx => {
+      .it('should throw invalid non alphanumeric trigger name error', ctx => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('AlphaNumericNameError')
         );
@@ -131,7 +128,7 @@ describe('Apex trigger creation tests:', () => {
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '3aa'])
       .it(
-        'should throw invalid class name starting with numeric error',
+        'should throw invalid trigger name starting with numeric error',
         ctx => {
           expect(ctx.stderr).to.contain(
             messages.getMessage('NameMustStartWithLetterError')
@@ -145,7 +142,7 @@ describe('Apex trigger creation tests:', () => {
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', 'a_'])
       .it(
-        'should throw invalid class name ending with underscore error',
+        'should throw invalid trigger name ending with underscore error',
         ctx => {
           expect(ctx.stderr).to.contain(
             messages.getMessage('EndWithUnderscoreError')
@@ -159,7 +156,7 @@ describe('Apex trigger creation tests:', () => {
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', 'a__a'])
       .it(
-        'should throw invalid class name with double underscore error',
+        'should throw invalid trigger name with double underscore error',
         ctx => {
           expect(ctx.stderr).to.contain(
             messages.getMessage('DoubleUnderscoreError')

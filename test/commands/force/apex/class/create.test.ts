@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'apexclass');
+const messages = Messages.loadMessages('force-language-services', 'messages');
 
 describe('Apex class creation tests:', () => {
   mkdirp('testsoutput', () => {

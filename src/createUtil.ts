@@ -1,22 +1,23 @@
 import { Messages } from '@salesforce/core';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as yeoman from 'yeoman-environment';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages(
   'force-language-services',
   'apextrigger'
 );
-
+/* tslint:disable:no-unused-expression */
 export class CreateUtil {
   public static checkInputs(flagValue) {
     const alphaRegExp = /^\w+$/;
-    // tslint:disable-next-line:no-unused-expression
+
     if (!alphaRegExp.test(flagValue)) {
       throw new Error(messages.getMessage('AlphaNumericNameError'));
     }
     const letterStartRegExp = /^[A-Za-z]/;
-    // tslint:disable-next-line:no-unused-expression
+
     if (!letterStartRegExp.test(flagValue)) {
       throw new Error(messages.getMessage('NameMustStartWithLetterError'));
     }
@@ -42,11 +43,16 @@ export class CreateUtil {
   }
 
   public static printOutputDir(outputdir, currentdir) {
-    // tslint:disable-next-line:no-unused-expression
     if (outputdir === currentdir) {
       return path.join(currentdir);
     } else {
       return path.join(currentdir, outputdir);
     }
+  }
+
+  public static runGenerator(generatorname, args) {
+    const env = yeoman.createEnv();
+    env.registerStub(generatorname, 'generator');
+    return env.run('generator', args);
   }
 }

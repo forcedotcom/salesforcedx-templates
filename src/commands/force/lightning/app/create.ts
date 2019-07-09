@@ -54,9 +54,6 @@ export default class LightningComponent extends SfdxCommand {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
 
-    const yeoman = require('yeoman-environment');
-    const env = yeoman.createEnv();
-    env.registerStub(LightningAppGenerator, 'lightningappgenerator');
-    return env.run('lightningappgenerator', this.flags);
+    return CreateUtil.runGenerator(LightningAppGenerator, this.flags);
   }
 }

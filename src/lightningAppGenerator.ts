@@ -29,7 +29,7 @@ export default class LightningAppGenerator extends generator {
         )
       ),
       this.destinationPath(
-        path.join(outputdir, appname, appname + '.app-meta.xml')
+        path.join(outputdir, appname, `${appname}.app-meta.xml`)
       ),
       {
         apiName: appname,
@@ -45,10 +45,10 @@ export default class LightningAppGenerator extends generator {
             'lightning',
             'app',
             'templates',
-            template + '.app'
+            `${template}.app`
           )
         ),
-        this.destinationPath(path.join(outputdir, appname, appname + '.app'))
+        this.destinationPath(path.join(outputdir, appname, `${appname}.app`))
       ),
       this.fs.copyTpl(
         this.templatePath(
@@ -62,7 +62,7 @@ export default class LightningAppGenerator extends generator {
           )
         ),
         this.destinationPath(
-          path.join(outputdir, appname, appname + '.auradoc')
+          path.join(outputdir, appname, `${appname}.auradoc`)
         )
       ),
       this.fs.copyTpl(
@@ -77,7 +77,7 @@ export default class LightningAppGenerator extends generator {
           )
         ),
         this.destinationPath(
-          path.join(outputdir, appname, appname + 'Controller.js')
+          path.join(outputdir, appname, `${appname}Controller.js`)
         )
       ),
       this.fs.copyTpl(
@@ -91,7 +91,7 @@ export default class LightningAppGenerator extends generator {
             'DefaultLightningCss.css'
           )
         ),
-        this.destinationPath(path.join(outputdir, appname, appname + '.css'))
+        this.destinationPath(path.join(outputdir, appname, `${appname}.css`))
       ),
       this.fs.copyTpl(
         this.templatePath(
@@ -105,7 +105,7 @@ export default class LightningAppGenerator extends generator {
           )
         ),
         this.destinationPath(
-          path.join(outputdir, appname, appname + 'Helper.css')
+          path.join(outputdir, appname, `${appname}Helper.css`)
         )
       ),
       this.fs.copyTpl(
@@ -120,7 +120,7 @@ export default class LightningAppGenerator extends generator {
           )
         ),
         this.destinationPath(
-          path.join(outputdir, appname, appname + 'Renderer.js')
+          path.join(outputdir, appname, `${appname}Renderer.js`)
         )
       ),
       this.fs.copyTpl(
@@ -134,7 +134,7 @@ export default class LightningAppGenerator extends generator {
             'DefaultLightningSVG.svg'
           )
         ),
-        this.destinationPath(path.join(outputdir, appname, appname + 'SVG.svg'))
+        this.destinationPath(path.join(outputdir, appname, `${appname}SVG.svg`))
       );
   }
 }

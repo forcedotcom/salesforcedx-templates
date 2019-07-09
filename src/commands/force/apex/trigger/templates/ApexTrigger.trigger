@@ -1,3 +1,3 @@
-trigger <%= apiName %> on <%= sobject %> (<%= triggerEvents %>) {
+trigger <%= triggername %> on <%= sobject %> (<%= triggerEvents %>) {
 
 }

@@ -27,10 +27,10 @@ export default class ApexClassGenerator extends generator {
           'apex',
           'class',
           'templates',
-          template + '.cls'
+          `${template}.cls`
         )
       ),
-      this.destinationPath(path.join(outputdir, classname + '.cls')),
+      this.destinationPath(path.join(outputdir, `${classname}.cls`)),
       { apiName: classname }
     ),
       this.fs.copyTpl(
@@ -44,7 +44,7 @@ export default class ApexClassGenerator extends generator {
             '_class.cls-meta.xml'
           )
         ),
-        this.destinationPath(path.join(outputdir, classname + '.cls-meta.xml')),
+        this.destinationPath(path.join(outputdir, `${classname}.cls-meta.xml`)),
         { apiName: classname, apiVersion: apiversion }
       );
   }

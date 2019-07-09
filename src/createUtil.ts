@@ -6,7 +6,7 @@ import * as yeoman from 'yeoman-environment';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages(
   'force-language-services',
-  'apextrigger'
+  'messages'
 );
 /* tslint:disable:no-unused-expression */
 export class CreateUtil {

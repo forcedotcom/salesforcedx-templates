@@ -1,8 +1,6 @@
 import * as path from 'path';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
-//
-
 export interface StringKeyValueObject<V> {
   [opt: string]: V;
 }
@@ -12,6 +10,7 @@ export default class ApexTriggerGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(__dirname);
+
     // This disables yeoman feature for overwriting files prompt
     this.conflicter.force = true;
   }
@@ -35,7 +34,7 @@ export default class ApexTriggerGenerator extends generator {
           `${template}.trigger`
         )
       ),
-      this.destinationPath(path.join(outputdir, triggername + '.trigger')),
+      this.destinationPath(path.join(outputdir, `${triggername}.trigger`)),
       { triggername, sobject, triggerEvents: triggerevents }
     ),
       this.fs.copyTpl(
@@ -50,7 +49,7 @@ export default class ApexTriggerGenerator extends generator {
           )
         ),
         this.destinationPath(
-          path.join(outputdir, triggername + '.trigger-meta.xml')
+          path.join(outputdir, `${triggername}.trigger-meta.xml`)
         ),
         { apiVersion: apiversion }
       );

@@ -1,6 +1,7 @@
 import * as path from 'path';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
+//
 
 export interface StringKeyValueObject<V> {
   [opt: string]: V;
@@ -31,11 +32,11 @@ export default class ApexTriggerGenerator extends generator {
           'apex',
           'trigger',
           'templates',
-          template + '.trigger'
+          `${template}.trigger`
         )
       ),
       this.destinationPath(path.join(outputdir, triggername + '.trigger')),
-      { apiName: triggername, sobject: sobject, triggerEvents: triggerevents }
+      { triggername, sobject, triggerEvents: triggerevents }
     ),
       this.fs.copyTpl(
         this.templatePath(
@@ -51,7 +52,7 @@ export default class ApexTriggerGenerator extends generator {
         this.destinationPath(
           path.join(outputdir, triggername + '.trigger-meta.xml')
         ),
-        { apiName: triggername, apiVersion: apiversion }
+        { apiVersion: apiversion }
       );
   }
 }

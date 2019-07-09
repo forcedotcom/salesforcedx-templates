@@ -6,10 +6,7 @@ import { CreateUtil } from '../../../../createUtil';
 import LightningAppGenerator from '../../../../lightningAppGenerator';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  'force-language-services',
-  'lightningapp'
-);
+const messages = Messages.loadMessages('force-language-services', 'messages');
 
 export default class LightningComponent extends SfdxCommand {
   public static examples = [
@@ -17,7 +14,9 @@ export default class LightningComponent extends SfdxCommand {
     '$ sfdx force:lightning:app:create -n myapp -d aura'
   ];
 
-  public static description = messages.getMessage('commandDescription');
+  public static description = messages.getMessage(
+    'LightningAppCommandDescription'
+  );
 
   protected static flagsConfig = {
     outputdir: flags.string({

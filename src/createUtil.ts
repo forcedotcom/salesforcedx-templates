@@ -1,6 +1,7 @@
 import { Messages } from '@salesforce/core';
 import * as fs from 'fs';
 import * as path from 'path';
+import { boolean } from '@oclif/parser/lib/flags';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'apextrigger');
@@ -44,4 +45,5 @@ export class CreateUtil {
             return (path.join(currentdir, outputdir));
           }
     }
-}
+
+    }

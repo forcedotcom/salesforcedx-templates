@@ -28,10 +28,9 @@ export class CreateUtil {
     }
     return '';
   }
-
-  public static getTemplates(filetype, directory) {
+  public static getTemplates(filetype, command) {
     const files = fs
-      .readdirSync(path.join(directory, 'templates'))
+      .readdirSync(path.join(__dirname, 'templates', command))
       .filter(file => filetype.test(file))
       .map(file => {
         return file.split('.', 1).toString();

@@ -1,8 +1,8 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import ApexClassGenerator from '../../../../apexClassGenerator';
 import { CreateUtil } from '../../../../createUtil';
+import ApexClassGenerator from '../../../../generators/apexClassGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
@@ -34,7 +34,7 @@ export default class ApexClass extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultApexClass',
-      options: CreateUtil.getTemplates(/.cls$/, __dirname)
+      options: CreateUtil.getTemplates(/.cls$/, 'apexclass')
     })
   };
 

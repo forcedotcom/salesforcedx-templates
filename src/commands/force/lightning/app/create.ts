@@ -3,7 +3,7 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
-import LightningAppGenerator from '../../../../lightningAppGenerator';
+import LightningAppGenerator from '../../../../generators/lightningAppGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
@@ -35,7 +35,7 @@ export default class LightningComponent extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultLightningApp',
-      options: CreateUtil.getTemplates(/.app$/, __dirname)
+      options: CreateUtil.getTemplates(/.app$/, 'lightningapp')
     })
   };
 
@@ -47,6 +47,7 @@ export default class LightningComponent extends SfdxCommand {
       this.flags.outputdir,
       process.cwd()
     );
+
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression

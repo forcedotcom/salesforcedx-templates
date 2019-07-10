@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'apexclass');
+const messages = Messages.loadMessages('force-language-services', 'messages');
 
 describe('Apex class creation tests:', () => {
   mkdirp('testsoutput', () => {
@@ -90,7 +90,10 @@ describe('Apex class creation tests:', () => {
             path.join('classes create', 'foo.cls'),
             path.join('classes create', 'foo.cls-meta.xml')
           ]);
-          assert.fileContent('foo.cls', 'public class foo extends Exception');
+          assert.fileContent(
+            path.join('classes create', 'foo.cls'),
+            'public with sharing class foo'
+          );
         }
       );
   });

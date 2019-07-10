@@ -51,7 +51,7 @@ export default class LightningAppGenerator extends generator {
       this.fs.copyTpl(
         this.templatePath('DefaultLightningHelper.js'),
         this.destinationPath(
-          path.join(outputdir, appname, `${appname}Helper.css`)
+          path.join(outputdir, appname, `${appname}Helper.js`)
         )
       ),
       this.fs.copyTpl(
@@ -62,7 +62,7 @@ export default class LightningAppGenerator extends generator {
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningSVG.svg'),
-        this.destinationPath(path.join(outputdir, appname, `${appname}SVG.svg`))
+        this.destinationPath(path.join(outputdir, appname, `${appname}.svg`))
       );
   }
 }

@@ -47,6 +47,7 @@ export default class LightningComponent extends SfdxCommand {
       this.flags.outputdir,
       process.cwd()
     );
+    this.log(`target dir = ${filepath}`);
 
     const fileparts = filepath.split(path.sep);
 

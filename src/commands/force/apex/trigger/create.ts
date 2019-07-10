@@ -62,7 +62,12 @@ export default class ApexTrigger extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.triggername);
     CreateUtil.checkInputs(this.flags.template);
 
-    this.log(CreateUtil.printOutputDir(this.flags.outputdir, process.cwd()));
+    this.log(
+      `target dir = ${CreateUtil.printOutputDir(
+        this.flags.outputdir,
+        process.cwd()
+      )}`
+    );
 
     return CreateUtil.runGenerator(ApexTriggerGenerator, this.flags);
   }

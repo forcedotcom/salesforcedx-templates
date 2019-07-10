@@ -42,7 +42,12 @@ export default class ApexClass extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.classname);
     CreateUtil.checkInputs(this.flags.template);
 
-    this.log(CreateUtil.printOutputDir(this.flags.outputdir, process.cwd()));
+    this.log(
+      `target dir = ${CreateUtil.printOutputDir(
+        this.flags.outputdir,
+        process.cwd()
+      )}`
+    );
 
     return CreateUtil.runGenerator(ApexClassGenerator, this.flags);
   }

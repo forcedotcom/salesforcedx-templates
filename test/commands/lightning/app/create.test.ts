@@ -14,9 +14,9 @@ export class TestFormatter {
       '.auradoc',
       '.css',
       'Controller.js',
-      'Helper.css',
+      'Helper.js',
       'Renderer.js',
-      'SVG.svg'
+      '.svg'
     ];
     suffixarray.forEach(element => {
       files.push(path.join('aura', pathway, filename + element));

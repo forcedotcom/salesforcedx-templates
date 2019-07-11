@@ -14,6 +14,7 @@ lerna-debug.log*
 
 # Coverage directory used by tools like istanbul
 coverage
+coverage.lcov
 
 # Dependency directories
 node_modules/

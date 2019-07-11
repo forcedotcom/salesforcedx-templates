@@ -8,7 +8,7 @@ import LightningAppGenerator from '../../../../generators/lightningAppGenerator'
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 
-export default class LightningComponent extends SfdxCommand {
+export default class LightningApp extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myapp',
     '$ sfdx force:lightning:app:create -n myapp -d aura'

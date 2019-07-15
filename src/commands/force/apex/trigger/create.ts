@@ -1,8 +1,8 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import ApexTriggerGenerator from '../../../../apexTriggerGenerator';
 import { CreateUtil } from '../../../../createUtil';
+import ApexTriggerGenerator from '../../../../generators/apexTriggerGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
@@ -54,7 +54,10 @@ export default class ApexTrigger extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'ApexTrigger',
-      options: CreateUtil.getTemplates(/.trigger$/, __dirname)
+      options: CreateUtil.getCommandTemplatesForFiletype(
+        /.trigger$/,
+        'apextrigger'
+      )
     })
   };
 
@@ -62,7 +65,12 @@ export default class ApexTrigger extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.triggername);
     CreateUtil.checkInputs(this.flags.template);
 
-    this.log(CreateUtil.printOutputDir(this.flags.outputdir, process.cwd()));
+    this.log(
+      `target dir = ${CreateUtil.printOutputDir(
+        this.flags.outputdir,
+        process.cwd()
+      )}`
+    );
 
     return CreateUtil.runGenerator(ApexTriggerGenerator, this.flags);
   }

@@ -4,10 +4,7 @@ import * as path from 'path';
 import * as yeoman from 'yeoman-environment';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  'force-language-services',
-  'messages'
-);
+const messages = Messages.loadMessages('force-language-services', 'messages');
 /* tslint:disable:no-unused-expression */
 export class CreateUtil {
   public static checkInputs(flagValue) {
@@ -31,10 +28,9 @@ export class CreateUtil {
     }
     return '';
   }
-
-  public static getTemplates(filetype, directory) {
+  public static getCommandTemplatesForFiletype(filetype, command) {
     const files = fs
-      .readdirSync(path.join(directory, 'templates'))
+      .readdirSync(path.join(__dirname, 'templates', command))
       .filter(file => filetype.test(file))
       .map(file => {
         return file.split('.', 1).toString();

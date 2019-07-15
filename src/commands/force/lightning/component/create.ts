@@ -36,7 +36,10 @@ export default class LightningComponent extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultLightningCmp',
-      options: CreateUtil.getTemplates(/.cmp$/, 'lightningcomponent')
+      options: CreateUtil.getCommandTemplatesForFiletype(
+        /.cmp$/,
+        'lightningcomponent'
+      )
     }),
     type: flags.string({
       description: messages.getMessage('CmpType'),

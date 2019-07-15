@@ -1,6 +1,9 @@
+import { Messages } from '@salesforce/core';
 import * as path from 'path';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
+Messages.importMessagesDirectory(__dirname);
+const messages = Messages.loadMessages('force-language-services', 'messages');
 
 export interface StringKeyValueObject<V> {
   [opt: string]: V;
@@ -23,9 +26,8 @@ export default class LightningAppGenerator extends generator {
         path.join(outputdir, appname, `${appname}.app-meta.xml`)
       ),
       {
-        apiName: appname,
         apiVersion: apiversion,
-        description: 'A Lightning Application Bundle'
+        description: messages.getMessage('LightningAppBundle')
       }
     ),
       this.fs.copyTpl(

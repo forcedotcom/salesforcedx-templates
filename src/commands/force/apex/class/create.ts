@@ -34,7 +34,7 @@ export default class ApexClass extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultApexClass',
-      options: CreateUtil.getTemplates(/.cls$/, 'apexclass')
+      options: CreateUtil.getCommandTemplatesForFiletype(/.cls$/, 'apexclass')
     })
   };
 

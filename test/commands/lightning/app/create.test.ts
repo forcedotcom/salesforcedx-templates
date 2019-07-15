@@ -36,7 +36,9 @@ describe('Lightning app creation tests:', () => {
         '--appname',
         'foo',
         '--outputdir',
-        'aura'
+        'aura',
+        '--template',
+        'DefaultLightningApp'
       ])
       .it(
         'should create lightning app foo using DefaultLightningApp template and aura output directory',
@@ -46,7 +48,7 @@ describe('Lightning app creation tests:', () => {
             path.join('aura', 'foo', 'foo.app'),
             '<aura:application>\n\n</aura:application>',
             path.join('aura', 'foo', 'foo.app-meta.xml'),
-            '<AuraDefinitionBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="foo">'
+            '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
           );
         }
       );
@@ -72,6 +74,23 @@ describe('Lightning app creation tests:', () => {
       .withOrg()
       .withProject()
       .stderr()
+      .command([
+        'force:lightning:app:create',
+        '--appname',
+        'foo',
+        '--outputdir',
+        'aura',
+        '--template',
+        'foo'
+      ])
+      .it('should throw invalid template name error', ctx => {
+        expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
+      });
+
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
       .command(['force:lightning:app:create', '--appname', 'foo'])
       .it('should throw missing aura parent folder error', ctx => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
@@ -85,72 +104,73 @@ describe('Lightning app creation tests:', () => {
       .it('should throw missing appname error', ctx => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingAppname'));
       });
+
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command([
+        'force:lightning:app:create',
+        '--appname',
+        '/a',
+        '--outputdir',
+        'aura'
+      ])
+      .it('should throw invalid non alphanumeric appname error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('AlphaNumericNameError')
+        );
+      });
+
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command([
+        'force:lightning:app:create',
+        '--appname',
+        '3aa',
+        '--outputdir',
+        'aura'
+      ])
+      .it('should throw invalid appname starting with numeric error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('NameMustStartWithLetterError')
+        );
+      });
+
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command([
+        'force:lightning:app:create',
+        '--appname',
+        'a_',
+        '--outputdir',
+        'aura'
+      ])
+      .it('should throw invalid appname ending with underscore error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('EndWithUnderscoreError')
+        );
+      });
+
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command([
+        'force:lightning:app:create',
+        '--appname',
+        'a__a',
+        '--outputdir',
+        'aura'
+      ])
+      .it('should throw invalid appname with double underscore error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('DoubleUnderscoreError')
+        );
+      });
   });
-  test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command([
-      'force:lightning:app:create',
-      '--appname',
-      '/a',
-      '--outputdir',
-      'aura'
-    ])
-    .it('should throw invalid non alphanumeric appname error', ctx => {
-      expect(ctx.stderr).to.contain(
-        messages.getMessage('AlphaNumericNameError')
-      );
-    });
-
-  test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command([
-      'force:lightning:app:create',
-      '--appname',
-      '3aa',
-      '--outputdir',
-      'aura'
-    ])
-    .it('should throw invalid appname starting with numeric error', ctx => {
-      expect(ctx.stderr).to.contain(
-        messages.getMessage('NameMustStartWithLetterError')
-      );
-    });
-
-  test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command([
-      'force:lightning:app:create',
-      '--appname',
-      'a_',
-      '--outputdir',
-      'aura'
-    ])
-    .it('should throw invalid appname ending with underscore error', ctx => {
-      expect(ctx.stderr).to.contain(
-        messages.getMessage('EndWithUnderscoreError')
-      );
-    });
-
-  test
-    .withOrg()
-    .withProject()
-    .stderr()
-    .command([
-      'force:lightning:app:create',
-      '--appname',
-      'a__a',
-      '--outputdir',
-      'aura'
-    ])
-    .it('should throw invalid appname with double underscore error', ctx => {
-      expect(ctx.stderr).to.contain(
-        messages.getMessage('DoubleUnderscoreError')
-      );
-    });
 });

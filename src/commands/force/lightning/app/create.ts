@@ -35,7 +35,10 @@ export default class LightningApp extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultLightningApp',
-      options: CreateUtil.getTemplates(/.app$/, 'lightningapp')
+      options: CreateUtil.getCommandTemplatesForFiletype(
+        /.app$/,
+        'lightningapp'
+      )
     })
   };
 

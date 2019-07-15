@@ -54,7 +54,10 @@ export default class ApexTrigger extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'ApexTrigger',
-      options: CreateUtil.getTemplates(/.trigger$/, 'apextrigger')
+      options: CreateUtil.getCommandTemplatesForFiletype(
+        /.trigger$/,
+        'apextrigger'
+      )
     })
   };
 

@@ -28,7 +28,7 @@ export class CreateUtil {
     }
     return '';
   }
-  public static getTemplates(filetype, command) {
+  public static getCommandTemplatesForFiletype(filetype, command) {
     const files = fs
       .readdirSync(path.join(__dirname, 'templates', command))
       .filter(file => filetype.test(file))

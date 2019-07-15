@@ -30,5 +30,9 @@
   "ComponentType": "type of the Lightning component",
   "MissingLWCDir": "Lightning bundles must have a parent folder named 'lwc'.",
   "MissingComponentName": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Lightning component\nSee more help with --help\n",
-  "MissingLWCFolder": "Lightning bundles must have a parent folder named 'lwc'."
+  "MissingLWCFolder": "Lightning bundles must have a parent folder named 'lwc'.",
+
+  "LightningEventCommandDescription": "create a Lightning event\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nIf you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we create force-app/myBundle/ to store the files in the bundle.",
+  "eventname": "name of the generated Lightning event",
+  "MissingEventname": "Missing required flag:\n -n, --eventname EVENTNAME  name of the generated Lightning event\nSee more help with --help\n"
 }

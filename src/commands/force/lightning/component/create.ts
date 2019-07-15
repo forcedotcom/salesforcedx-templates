@@ -42,7 +42,7 @@ export default class LightningComponent extends SfdxCommand {
       )
     }),
     type: flags.string({
-      description: messages.getMessage('CmpType'),
+      description: messages.getMessage('ComponentType'),
       options: ['aura', 'lwc'],
       default: 'aura'
     })

@@ -1,0 +1,115 @@
+import { expect, test } from '@salesforce/command/lib/test';
+import { Messages } from '@salesforce/core';
+import * as path from 'path';
+import * as assert from 'yeoman-assert';
+
+Messages.importMessagesDirectory(__dirname);
+const messages = Messages.loadMessages('force-language-services', 'messages');
+
+export class AuraLightningTestFormatter {
+  public static fileformatter(pathway, filename) {
+    const files = [];
+    const suffixarray = [
+      '.cmp',
+      '.cmp-meta.xml',
+      '.auradoc',
+      '.css',
+      'Controller.js',
+      'Helper.js',
+      'Renderer.js',
+      '.svg',
+      '.design'
+    ];
+    suffixarray.forEach(element => {
+      files.push(path.join('aura', pathway, filename + element));
+    });
+    return files;
+  }
+}
+
+describe('Lightning component creation tests:', () => {
+  describe('Check lightning aura components creation', () => {
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'aura'
+      ])
+      .it(
+        'should create lightning aura component files in the aura output directory',
+        ctx => {
+          assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
+          assert.fileContent(
+            path.join('aura', 'foo', 'foo.cmp-meta.xml'),
+            '<AuraDefinitionBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="foo">'
+          );
+        }
+      );
+  });
+  describe('Check lightning web components creation', () => {
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc'
+      ])
+      .it(
+        'should create lightning web component files in the lwc output directory',
+        ctx => {
+          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
+          assert.file(path.join('lwc', 'foo', 'foo.js'));
+          assert.fileContent(
+            path.join('lwc', 'foo', 'foo.js'),
+            'export default class foo extends LightningElement {}'
+          );
+        }
+      );
+  });
+  describe('lightning component failures', () => {
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command(['force:lightning:component:create', '--outputdir', 'aura'])
+      .it('should throw missing component name error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('MissingComponentName')
+        );
+      });
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command(['force:lightning:component:create', '--componentname', 'foo'])
+      .it('should throw missing aura parent folder error', ctx => {
+        expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
+      });
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--type',
+        'lwc'
+      ])
+      .it('should throw missing lwc parent folder error', ctx => {
+        expect(ctx.stderr).to.contain(messages.getMessage('MissingLWCFolder'));
+      });
+  });
+});

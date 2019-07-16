@@ -15,5 +15,20 @@
   "triggerevents": "events that fire the trigger",
   "triggername": "name of the generated Apex trigger",
   "sobject": "sObject to create a trigger on",
-  "MissingTriggernameFlag": "Missing required flag:\n -n, --triggername TRIGGERNAME  name of the generated Apex trigger\nSee more help with --help\n"
+  "MissingTriggernameFlag": "Missing required flag:\n -n, --triggername TRIGGERNAME  name of the generated Apex trigger\nSee more help with --help\n",
+
+  "appname": "name of the generated Lightning app",
+  "MissingAuraDir": "Lightning bundles must have a parent folder named 'aura'.",
+  "LightningAppCommandDescription": "create a Lightning app\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nIf you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we create force-app/myBundle/ to store the files in the bundle.",
+  "MissingAuraFolder": "Lightning bundles must have a parent folder named 'aura'.",
+  "MissingAppname": "Missing required flag:\n -n, --appname APPNAME  name of the generated Lightning app\nSee more help with --help\n",
+  "LightningAppBundle": "A Lightning Application Bundle",
+  "InvalidTemplate": "Expected --template=foo to be one of:",
+
+  "LightningComponentCommandDescription": "create a bundle for an Aura component or a Lightning web component\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nIf you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we create force-app/myBundle/ to store the files in the bundle.\nTo create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce CLI creates an Aura component by default.",
+  "componentname": "name of the generated Lightning component",
+  "ComponentType": "type of the Lightning component",
+  "MissingLWCDir": "Lightning bundles must have a parent folder named 'lwc'.",
+  "MissingComponentName": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Lightning component\nSee more help with --help\n",
+  "MissingLWCFolder": "Lightning bundles must have a parent folder named 'lwc'."
 }

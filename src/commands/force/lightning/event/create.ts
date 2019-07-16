@@ -7,7 +7,7 @@ import LightningEventGenerator from '../../../../generators/lightningEventGenera
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
-
+const lightningEventFileSuffix = /.evt$/;
 export default class LightningEvent extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myevent',
@@ -36,7 +36,7 @@ export default class LightningEvent extends SfdxCommand {
       description: messages.getMessage('template'),
       default: 'DefaultLightningEvt',
       options: CreateUtil.getCommandTemplatesForFiletype(
-        /.evt$/,
+        lightningEventFileSuffix,
         'lightningevent'
       )
     })

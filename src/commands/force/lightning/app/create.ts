@@ -7,7 +7,7 @@ import LightningAppGenerator from '../../../../generators/lightningAppGenerator'
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
-
+const lightningAppFileSuffix = /.app$/;
 export default class LightningApp extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myapp',
@@ -36,7 +36,7 @@ export default class LightningApp extends SfdxCommand {
       description: messages.getMessage('template'),
       default: 'DefaultLightningApp',
       options: CreateUtil.getCommandTemplatesForFiletype(
-        /.app$/,
+        lightningAppFileSuffix,
         'lightningapp'
       )
     })

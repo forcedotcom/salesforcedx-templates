@@ -23,7 +23,8 @@ export default class LightningInterfaceGenerator extends generator {
       this.templatePath('_auradefinitionbundle.intf-meta.xml'),
       this.destinationPath(
         path.join(outputdir, interfacename, `${interfacename}.intf-meta.xml`)
-      )
+      ),
+      { apiVersion: apiversion }
     );
     this.fs.copyTpl(
       this.templatePath(`${template}.intf`),

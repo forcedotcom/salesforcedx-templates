@@ -3,19 +3,19 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
-import LightningAppGenerator from '../../../../generators/lightningAppGenerator';
+import LightningEventGenerator from '../../../../generators/lightningEventGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
-const lightningAppFileSuffix = /.app$/;
-export default class LightningApp extends SfdxCommand {
+const lightningEventFileSuffix = /.evt$/;
+export default class LightningEvent extends SfdxCommand {
   public static examples = [
-    '$ sfdx force:lightning:app:create -n myapp',
-    '$ sfdx force:lightning:app:create -n myapp -d aura'
+    '$ sfdx force:lightning:app:create -n myevent',
+    '$ sfdx force:lightning:event:create -n myevent -d aura'
   ];
 
   public static description = messages.getMessage(
-    'LightningAppCommandDescription'
+    'LightningEventCommandDescription'
   );
 
   protected static flagsConfig = {
@@ -26,24 +26,23 @@ export default class LightningApp extends SfdxCommand {
       default: process.cwd()
     }),
     apiversion: flags.builtin(),
-    appname: flags.string({
+    eventname: flags.string({
       char: 'n',
-      description: messages.getMessage('appname'),
+      description: messages.getMessage('eventname'),
       required: true
     }),
     template: flags.string({
       char: 't',
       description: messages.getMessage('template'),
-      default: 'DefaultLightningApp',
+      default: 'DefaultLightningEvt',
       options: CreateUtil.getCommandTemplatesForFiletype(
-        lightningAppFileSuffix,
-        'lightningapp'
+        lightningEventFileSuffix,
+        'lightningevent'
       )
     })
   };
-
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.appname);
+    CreateUtil.checkInputs(this.flags.eventname);
     CreateUtil.checkInputs(this.flags.template);
 
     const filepath = CreateUtil.printOutputDir(
@@ -51,14 +50,12 @@ export default class LightningApp extends SfdxCommand {
       process.cwd()
     );
     this.log(`target dir = ${filepath}`);
-
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression
     if (!fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
-
-    return CreateUtil.runGenerator(LightningAppGenerator, this.flags);
+    return CreateUtil.runGenerator(LightningEventGenerator, this.flags);
   }
 }

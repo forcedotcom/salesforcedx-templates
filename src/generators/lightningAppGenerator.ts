@@ -1,15 +1,10 @@
 import { Messages } from '@salesforce/core';
 import * as path from 'path';
+import { OptionsMap } from './types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
-
-export interface StringKeyValueObject<V> {
-  [opt: string]: V;
-}
-export type OptionsMap = StringKeyValueObject<string>;
-export type Answers = StringKeyValueObject<string>;
 
 export default class LightningAppGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {

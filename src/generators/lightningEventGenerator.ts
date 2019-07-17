@@ -1,12 +1,7 @@
 import * as path from 'path';
+import { OptionsMap } from './types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
-
-export interface StringKeyValueObject<V> {
-  [opt: string]: V;
-}
-export type OptionsMap = StringKeyValueObject<string>;
-export type Answers = StringKeyValueObject<string>;
 
 export default class LightningEventGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {

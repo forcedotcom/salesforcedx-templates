@@ -53,11 +53,7 @@ export default class LightningComponent extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.componentname);
     CreateUtil.checkInputs(this.flags.template);
 
-    const filepath = CreateUtil.printOutputDir(
-      this.flags.outputdir,
-      process.cwd()
-    );
-    this.log(`target dir = ${filepath}`);
+    const filepath = path.resolve(this.flags.outputdir);
 
     const fileparts = filepath.split(path.sep);
 
@@ -72,6 +68,7 @@ export default class LightningComponent extends SfdxCommand {
       }
     }
 
+    this.log(`target dir = ${filepath}`);
     return CreateUtil.runGenerator(LightningComponentGenerator, this.flags);
   }
 }

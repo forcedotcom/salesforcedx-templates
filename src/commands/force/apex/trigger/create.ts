@@ -1,6 +1,7 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
 import ApexTriggerGenerator from '../../../../generators/apexTriggerGenerator';
 
@@ -65,14 +66,8 @@ export default class ApexTrigger extends SfdxCommand {
   public async run(): Promise<AnyJson> {
     CreateUtil.checkInputs(this.flags.triggername);
     CreateUtil.checkInputs(this.flags.template);
-
-    this.log(
-      `target dir = ${CreateUtil.printOutputDir(
-        this.flags.outputdir,
-        process.cwd()
-      )}`
-    );
-
+    const filepath = path.resolve(this.flags.outputdir);
+    this.log(`target dir = ${filepath}`);
     return CreateUtil.runGenerator(ApexTriggerGenerator, this.flags);
   }
 }

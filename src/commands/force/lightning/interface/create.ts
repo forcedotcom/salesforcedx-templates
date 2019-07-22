@@ -44,10 +44,7 @@ export default class LightningInterface extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.interfacename);
     CreateUtil.checkInputs(this.flags.template);
 
-    const filepath = CreateUtil.printOutputDir(
-      this.flags.outputdir,
-      process.cwd()
-    );
+    const filepath = path.resolve(this.flags.outputdir);
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression

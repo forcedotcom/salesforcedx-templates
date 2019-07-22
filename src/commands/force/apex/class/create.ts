@@ -1,6 +1,7 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
 import ApexClassGenerator from '../../../../generators/apexClassGenerator';
 
@@ -35,7 +36,10 @@ export default class ApexClass extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'DefaultApexClass',
-      options: CreateUtil.getCommandTemplatesForFiletype(apexClassFileSuffix, 'apexclass')
+      options: CreateUtil.getCommandTemplatesForFiletype(
+        apexClassFileSuffix,
+        'apexclass'
+      )
     })
   };
 
@@ -43,13 +47,8 @@ export default class ApexClass extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.classname);
     CreateUtil.checkInputs(this.flags.template);
 
-    this.log(
-      `target dir = ${CreateUtil.printOutputDir(
-        this.flags.outputdir,
-        process.cwd()
-      )}`
-    );
-
+    const filepath = path.resolve(this.flags.outputdir);
+    this.log(`target dir = ${filepath}`);
     return CreateUtil.runGenerator(ApexClassGenerator, this.flags);
   }
 }

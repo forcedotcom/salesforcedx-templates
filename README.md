@@ -11,8 +11,8 @@ Code base to host the Salesforce CLI commands.
 * [force-language-services](#force-language-services)
 * [Debugging your plugin](#debugging-your-plugin)
 <!-- tocstop -->
-  <!-- install -->
-  <!-- usage -->
+    <!-- install -->
+    <!-- usage -->
 ```sh-session
 $ npm install -g force-language-services
 $ sfdx COMMAND
@@ -32,6 +32,7 @@ USAGE
 * [`sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningcomponentcreate--n-string--d-string--t-string---type-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 * [`sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningeventcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 * [`sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightninginterfacecreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcecomponentcreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
 ## `sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -297,6 +298,50 @@ EXAMPLES
 ```
 
 _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
+
+## `sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+create a Visualforce component
+
+```
+USAGE
+  $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] 
+  [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -d, --outputdir=outputdir                                                         [default:
+                                                                                    /Users/amanda.stern/Desktop/force-la
+                                                                                    nguage-services] folder for saving
+                                                                                    the created files
+
+  -l, --label=label                                                                 (required) Visualforce component
+                                                                                    label
+
+  -n, --componentname=componentname                                                 (required) name of the generated
+                                                                                    Visualforce component
+
+  -t, --template=DefaultVFComponent                                                 [default: DefaultVFComponent]
+                                                                                    template to use for file creation
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+DESCRIPTION
+  If not supplied, the apiversion, template, and outputdir use default values.
+  The outputdir can be an absolute path or relative to the current working directory.
+  Name and label are required.
+
+EXAMPLES
+  $ sfdx force:visualforce:component:create -n mycomponent -l mylabel
+  $ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components
+```
+
+_See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 

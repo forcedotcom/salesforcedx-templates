@@ -3,19 +3,19 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
-import LightningAppGenerator from '../../../../generators/lightningAppGenerator';
+import VisualforceComponentGenerator from '../../../../generators/visualforceComponentGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
-const lightningAppFileSuffix = /.app$/;
-export default class LightningApp extends SfdxCommand {
+const visualforceComponentFileSuffix = /.component$/;
+export default class VisualforceComponent extends SfdxCommand {
   public static examples = [
-    '$ sfdx force:lightning:app:create -n myapp',
-    '$ sfdx force:lightning:app:create -n myapp -d aura'
+    '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel',
+    '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components'
   ];
 
   public static description = messages.getMessage(
-    'LightningAppCommandDescription'
+    'VisualforceComponentCommandDescription'
   );
 
   protected static flagsConfig = {
@@ -25,36 +25,34 @@ export default class LightningApp extends SfdxCommand {
       default: process.cwd()
     }),
     apiversion: flags.builtin(),
-    appname: flags.string({
+    componentname: flags.string({
       char: 'n',
-      description: messages.getMessage('appname'),
+      description: messages.getMessage('visualforcecomponentname'),
       required: true
     }),
     template: flags.string({
       char: 't',
       description: messages.getMessage('template'),
-      default: 'DefaultLightningApp',
+      default: 'DefaultVFComponent',
       options: CreateUtil.getCommandTemplatesForFiletype(
-        lightningAppFileSuffix,
-        'lightningapp'
+        visualforceComponentFileSuffix,
+        'visualforcecomponent'
       )
+    }),
+    label: flags.string({
+      char: 'l',
+      description: messages.getMessage('label'),
+      required: true
     })
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.appname);
+    CreateUtil.checkInputs(this.flags.componentname);
     CreateUtil.checkInputs(this.flags.template);
 
     const filepath = path.resolve(this.flags.outputdir);
 
-    const fileparts = filepath.split(path.sep);
-
-    // tslint:disable-next-line:no-unused-expression
-    if (!fileparts.includes('aura')) {
-      throw new Error(messages.getMessage('MissingAuraDir'));
-    }
-
     this.log(`target dir = ${filepath}`);
-    return CreateUtil.runGenerator(LightningAppGenerator, this.flags);
+    return CreateUtil.runGenerator(VisualforceComponentGenerator, this.flags);
   }
 }

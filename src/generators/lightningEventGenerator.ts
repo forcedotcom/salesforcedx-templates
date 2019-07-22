@@ -1,7 +1,10 @@
+import { Messages } from '@salesforce/core';
 import * as path from 'path';
 import { OptionsMap } from './types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
+Messages.importMessagesDirectory(__dirname);
+const messages = Messages.loadMessages('force-language-services', 'messages');
 
 export default class LightningEventGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
@@ -17,7 +20,11 @@ export default class LightningEventGenerator extends generator {
       this.destinationPath(
         path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)
       ),
-      { eventname, apiVersion: apiversion }
+      {
+        eventname,
+        apiVersion: apiversion,
+        description: messages.getMessage('LightningEventBundle')
+      }
     );
     this.fs.copyTpl(
       this.templatePath(`${template}.evt`),

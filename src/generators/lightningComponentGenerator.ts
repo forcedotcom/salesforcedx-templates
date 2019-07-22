@@ -1,8 +1,10 @@
+import { Messages } from '@salesforce/core';
 import * as path from 'path';
 import { OptionsMap } from './types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
-
+Messages.importMessagesDirectory(__dirname);
+const messages = Messages.loadMessages('force-language-services', 'messages');
 export default class LightningComponentGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
@@ -29,7 +31,7 @@ export default class LightningComponentGenerator extends generator {
         ),
         {
           componentname,
-          description: 'A Lightning Component Bundle',
+          description: messages.getMessage('LightningComponentBundle'),
           apiVersion: apiversion
         }
       ),

@@ -3,19 +3,19 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
-import VisualforceComponentGenerator from '../../../../generators/visualforceComponentGenerator';
+import VisualforcePageGenerator from '../../../../generators/visualforcePageGenerator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
-const visualforceComponentFileSuffix = /.component$/;
-export default class VisualforceComponent extends SfdxCommand {
+const visualforcePageFileSuffix = /.page$/;
+export default class VisualforcePage extends SfdxCommand {
   public static examples = [
-    '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel',
-    '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components'
+    '$ sfdx force:visualforce:page:create -n mypage -l mylabel',
+    '$ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages'
   ];
 
   public static description = messages.getMessage(
-    'VisualforceComponentCommandDescription'
+    'VisualforcePageCommandDescription'
   );
 
   protected static flagsConfig = {
@@ -25,34 +25,34 @@ export default class VisualforceComponent extends SfdxCommand {
       default: process.cwd()
     }),
     apiversion: flags.builtin(),
-    componentname: flags.string({
+    pagename: flags.string({
       char: 'n',
-      description: messages.getMessage('visualforcecomponentname'),
+      description: messages.getMessage('visualforcepagename'),
       required: true
     }),
     template: flags.string({
       char: 't',
       description: messages.getMessage('template'),
-      default: 'DefaultVFComponent',
+      default: 'DefaultVFPage',
       options: CreateUtil.getCommandTemplatesForFiletype(
-        visualforceComponentFileSuffix,
-        'visualforcecomponent'
+        visualforcePageFileSuffix,
+        'visualforcepage'
       )
     }),
     label: flags.string({
       char: 'l',
-      description: messages.getMessage('componentlabel'),
+      description: messages.getMessage('pagelabel'),
       required: true
     })
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.componentname);
+    CreateUtil.checkInputs(this.flags.pagename);
     CreateUtil.checkInputs(this.flags.template);
 
     const filepath = path.resolve(this.flags.outputdir);
 
     this.log(`target dir = ${filepath}`);
-    return CreateUtil.runGenerator(VisualforceComponentGenerator, this.flags);
+    return CreateUtil.runGenerator(VisualforcePageGenerator, this.flags);
   }
 }

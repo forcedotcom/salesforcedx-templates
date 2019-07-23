@@ -30,7 +30,7 @@ export default class VisualforceComponentGenerator extends generator {
         this.destinationPath(
           path.join(outputdir, `${componentname}.component-meta.xml`)
         ),
-        { vfLabel: label, apiVersion: apiversion, vfName: componentname }
+        { vfLabel: label, apiVersion: apiversion }
       );
   }
 }

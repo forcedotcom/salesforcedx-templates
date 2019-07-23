@@ -11,8 +11,8 @@ Code base to host the Salesforce CLI commands.
 * [force-language-services](#force-language-services)
 * [Debugging your plugin](#debugging-your-plugin)
 <!-- tocstop -->
-  <!-- install -->
-  <!-- usage -->
+    <!-- install -->
+    <!-- usage -->
 ```sh-session
 $ npm install -g force-language-services
 $ sfdx COMMAND

@@ -50,5 +50,6 @@
 
   "VisualforcePageCommandDescription": "create a Visualforce page\nIf not supplied, the apiversion, template, and outputdir use default values.\nIf not supplied, the apiversion, template, and outputdir use default values.\nName and label are required.",
   "visualforcepagename": "name of the generated Visualforce page",
-  "pagelabel": "Visualforce page label"
+  "pagelabel": "Visualforce page label",
+  "MissingPagenameFlag": "Missing required flag:\n -n, --pagename PAGENAME  name of the generated Visualforce page\nSee more help with --help\n"
 }

@@ -3,4 +3,3 @@
     <apiVersion><%= apiVersion %></apiVersion>
     <description><%= description %></description>
 </AuraDefinitionBundle>
-

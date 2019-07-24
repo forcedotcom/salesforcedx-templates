@@ -17,6 +17,7 @@ export default class LightningInterface extends SfdxCommand {
   public static description = messages.getMessage(
     'LightningInterfaceCommandDescription'
   );
+
   protected static flagsConfig = {
     outputdir: flags.string({
       char: 'd',
@@ -40,6 +41,7 @@ export default class LightningInterface extends SfdxCommand {
       )
     })
   };
+
   public async run(): Promise<AnyJson> {
     CreateUtil.checkInputs(this.flags.interfacename);
     CreateUtil.checkInputs(this.flags.template);

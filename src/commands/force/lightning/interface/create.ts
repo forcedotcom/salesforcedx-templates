@@ -8,6 +8,7 @@ import LightningInterfaceGenerator from '../../../../generators/lightningInterfa
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 const lightningInterfaceFileSuffix = /.intf$/;
+
 export default class LightningInterface extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:interface:create -n myinterface',
@@ -17,6 +18,7 @@ export default class LightningInterface extends SfdxCommand {
   public static description = messages.getMessage(
     'LightningInterfaceCommandDescription'
   );
+
   protected static flagsConfig = {
     outputdir: flags.string({
       char: 'd',
@@ -40,6 +42,7 @@ export default class LightningInterface extends SfdxCommand {
       )
     })
   };
+
   public async run(): Promise<AnyJson> {
     CreateUtil.checkInputs(this.flags.interfacename);
     CreateUtil.checkInputs(this.flags.template);

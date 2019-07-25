@@ -8,6 +8,7 @@ import VisualforceComponentGenerator from '../../../../generators/visualforceCom
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 const visualforceComponentFileSuffix = /.component$/;
+
 export default class VisualforceComponent extends SfdxCommand {
   public static examples = [
     '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel',

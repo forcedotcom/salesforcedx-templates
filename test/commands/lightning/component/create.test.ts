@@ -46,7 +46,7 @@ describe('Lightning component creation tests:', () => {
           assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
           assert.fileContent(
             path.join('aura', 'foo', 'foo.cmp-meta.xml'),
-            '<AuraDefinitionBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="foo">'
+            '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
           );
         }
       );

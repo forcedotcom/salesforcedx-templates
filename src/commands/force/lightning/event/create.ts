@@ -45,17 +45,14 @@ export default class LightningEvent extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.eventname);
     CreateUtil.checkInputs(this.flags.template);
 
-    const filepath = CreateUtil.printOutputDir(
-      this.flags.outputdir,
-      process.cwd()
-    );
-    this.log(`target dir = ${filepath}`);
+    const filepath = path.resolve(this.flags.outputdir);
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression
     if (!fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
+    this.log(`target dir = ${filepath}`);
     return CreateUtil.runGenerator(LightningEventGenerator, this.flags);
   }
 }

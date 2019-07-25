@@ -3,4 +3,3 @@ export interface StringKeyValueObject<V> {
 }
 
 export type OptionsMap = StringKeyValueObject<string>;
-export type Answers = StringKeyValueObject<string>;

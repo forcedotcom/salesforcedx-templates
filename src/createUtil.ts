@@ -38,14 +38,6 @@ export class CreateUtil {
     return files;
   }
 
-  public static printOutputDir(outputdir, currentdir) {
-    if (outputdir === currentdir) {
-      return path.join(currentdir);
-    } else {
-      return path.join(currentdir, outputdir);
-    }
-  }
-
   public static runGenerator(generatorname, args) {
     const env = yeoman.createEnv();
     env.registerStub(generatorname, 'generator');

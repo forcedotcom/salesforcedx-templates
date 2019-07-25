@@ -12,8 +12,8 @@ Code base to host the Salesforce CLI commands.
 - [force-language-services](#force-language-services)
 - [Debugging your plugin](#debugging-your-plugin)
   <!-- tocstop -->
-      <!-- install -->
-      <!-- usage -->
+        <!-- install -->
+        <!-- usage -->
 
 ```sh-session
 $ npm install -g force-language-services
@@ -260,6 +260,10 @@ EXAMPLES
 
 _See code: [src/commands/force/lightning/event/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/event/create.ts)_
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+> > > > > > > master
 
 ## `sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -267,7 +271,11 @@ create a Lightning interface
 
 ```
 USAGE
+<<<<<<< HEAD
   $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
+=======
+  $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
+>>>>>>> master
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -293,8 +301,13 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
+<<<<<<< HEAD
   If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
   bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+=======
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+>>>>>>> master
   create force-app/myBundle/ to store the files in the bundle.
 
 EXAMPLES
@@ -303,7 +316,11 @@ EXAMPLES
 ```
 
 <<<<<<< HEAD
-_See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
+<<<<<<< HEAD
+=======
+
+> > > > > > > master
+> > > > > > > _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
 
 ## `sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -311,7 +328,11 @@ create a Visualforce component
 
 ```
 USAGE
+<<<<<<< HEAD
   $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
+=======
+  $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
+>>>>>>> master
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -347,6 +368,8 @@ EXAMPLES
   $ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components
 ```
 
+<<<<<<< HEAD
+
 # _See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
 
 # _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
@@ -354,6 +377,11 @@ EXAMPLES
 > > > > > > > origin/master
 
 > > > > > > > LightningInterface
+
+=======
+_See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
+
+> > > > > > > master
 
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->

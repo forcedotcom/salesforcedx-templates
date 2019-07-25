@@ -41,5 +41,10 @@
   "LightningInterfaceCommandDescription": "create a Lightning interface\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nIf you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we create force-app/myBundle/ to store the files in the bundle.",
   "interfacename": "name of the generated Lightning interface",
   "MissingInterfacename": "Missing required flag:\n -n, --interfacename INTERFACENAME  name of the generated Lightning interface\nSee more help with --help\n",
-  "LightningInterfaceBundle": "A Lightning Interface Bundle"
+  "LightningInterfaceBundle": "A Lightning Interface Bundle",
+
+  "VisualforceComponentCommandDescription": "create a Visualforce component\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nName and label are required.",
+  "label": "Visualforce component label",
+  "visualforcecomponentname": "name of the generated Visualforce component",
+  "MissingComponentnameFlag": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Visualforce component\nSee more help with --help\n"
 }

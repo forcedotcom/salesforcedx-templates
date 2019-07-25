@@ -3,5 +3,3 @@
     <apiVersion><%= apiVersion %></apiVersion>
     <status>Active</status>
 </ApexClass>
-
-

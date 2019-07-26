@@ -8,6 +8,7 @@ import VisualforcePageGenerator from '../../../../generators/visualforcePageGene
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 const visualforcePageFileSuffix = /.page$/;
+
 export default class VisualforcePage extends SfdxCommand {
   public static examples = [
     '$ sfdx force:visualforce:page:create -n mypage -l mylabel',

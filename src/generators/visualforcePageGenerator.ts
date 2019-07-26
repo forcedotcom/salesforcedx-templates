@@ -16,11 +16,11 @@ export default class VisualforcePageGenerator extends generator {
     this.fs.copyTpl(
       this.templatePath(`${template}.page`),
       this.destinationPath(path.join(outputdir, `${pagename}.page`))
-    ),
-      this.fs.copyTpl(
-        this.templatePath('_page.page-meta.xml'),
-        this.destinationPath(path.join(outputdir, `${pagename}.page-meta.xml`)),
-        { vfLabel: label, apiVersion: apiversion }
-      );
+    );
+    this.fs.copyTpl(
+      this.templatePath('_page.page-meta.xml'),
+      this.destinationPath(path.join(outputdir, `${pagename}.page-meta.xml`)),
+      { vfLabel: label, apiVersion: apiversion }
+    );
   }
 }

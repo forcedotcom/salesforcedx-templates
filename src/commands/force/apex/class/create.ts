@@ -8,6 +8,7 @@ import ApexClassGenerator from '../../../../generators/apexClassGenerator';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 const apexClassFileSuffix = /.cls$/;
+
 export default class ApexClass extends SfdxCommand {
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',

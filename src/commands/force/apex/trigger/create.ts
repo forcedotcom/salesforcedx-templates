@@ -8,6 +8,7 @@ import ApexTriggerGenerator from '../../../../generators/apexTriggerGenerator';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 const apexTriggerFileSuffix = /.trigger$/;
+
 export default class ApexTrigger extends SfdxCommand {
   public static examples = [
     '$ sfdx force:apex:trigger:create -n MyTrigger',

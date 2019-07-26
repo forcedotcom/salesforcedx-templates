@@ -44,7 +44,6 @@
   "LightningInterfaceBundle": "A Lightning Interface Bundle",
 
   "VisualforceComponentCommandDescription": "create a Visualforce component\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nName and label are required.",
-<<<<<<< HEAD
   "componentlabel": "Visualforce component label",
   "visualforcecomponentname": "name of the generated Visualforce component",
   "MissingComponentnameFlag": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Visualforce component\nSee more help with --help\n",
@@ -53,9 +52,4 @@
   "visualforcepagename": "name of the generated Visualforce page",
   "pagelabel": "Visualforce page label",
   "MissingPagenameFlag": "Missing required flag:\n -n, --pagename PAGENAME  name of the generated Visualforce page\nSee more help with --help\n"
-=======
-  "label": "Visualforce component label",
-  "visualforcecomponentname": "name of the generated Visualforce component",
-  "MissingComponentnameFlag": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Visualforce component\nSee more help with --help\n"
->>>>>>> master
 }

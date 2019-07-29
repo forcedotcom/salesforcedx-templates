@@ -14,21 +14,24 @@ export default class LightningAppGenerator extends generator {
     this.conflicter.force = true;
   }
   public writing() {
-    const { template, outputdir, appname, apiversion } = this.options;
-    this.fs.copyTpl(
-      this.templatePath('_auradefinitionbundle.app-meta.xml'),
-      this.destinationPath(
-        path.join(outputdir, appname, `${appname}.app-meta.xml`)
-      ),
-      {
-        apiVersion: apiversion,
-        description: messages.getMessage('LightningAppBundle')
-      }
-    ),
+    const { template, outputdir, appname, apiversion, internal } = this.options;
+    // tslint:disable-next-line:no-unused-expression
+    if (!internal) {
       this.fs.copyTpl(
-        this.templatePath(`${template}.app`),
-        this.destinationPath(path.join(outputdir, appname, `${appname}.app`))
-      ),
+        this.templatePath('_auradefinitionbundle.app-meta.xml'),
+        this.destinationPath(
+          path.join(outputdir, appname, `${appname}.app-meta.xml`)
+        ),
+        {
+          apiVersion: apiversion,
+          description: messages.getMessage('LightningAppBundle')
+        }
+      );
+    }
+    this.fs.copyTpl(
+      this.templatePath(`${template}.app`),
+      this.destinationPath(path.join(outputdir, appname, `${appname}.app`))
+    ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningAuradoc.auradoc'),
         this.destinationPath(

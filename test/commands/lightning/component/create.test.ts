@@ -11,7 +11,6 @@ export class AuraLightningTestFormatter {
     const files = [];
     const suffixarray = [
       '.cmp',
-      '.cmp-meta.xml',
       '.auradoc',
       '.css',
       'Controller.js',
@@ -44,6 +43,7 @@ describe('Lightning component creation tests:', () => {
         'should create lightning aura component files in the aura output directory',
         ctx => {
           assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
+          assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
           assert.fileContent(
             path.join('aura', 'foo', 'foo.cmp-meta.xml'),
             '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
@@ -51,7 +51,73 @@ describe('Lightning component creation tests:', () => {
         }
       );
   });
-  describe('Check lightning web components creation', () => {
+  describe('Check lightning aura components creation without -meta.xml file', () => {
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'internalflagtest',
+        '--outputdir',
+        'aura',
+        '--internal'
+      ])
+      .it(
+        'should create lightning aura component files in the aura output directory without a -meta.xml file',
+        ctx => {
+          assert.file(
+            AuraLightningTestFormatter.fileformatter(
+              'internalflagtest',
+              'internalflagtest'
+            )
+          );
+          assert.noFile(
+            path.join(
+              'aura',
+              'internalflagtest',
+              'internalflagtest.cmp-meta.xml'
+            )
+          );
+        }
+      );
+  });
+  describe('Check lightning web components creation without -meta-xml file', () => {
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'internallwctest',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc',
+        '--internal'
+      ])
+      .it(
+        'should create lightning web component files in the lwc output directory with the internal flag for disabling -meta.xml files',
+        ctx => {
+          assert.file(
+            path.join('lwc', 'internallwctest', 'internallwctest.html')
+          );
+          assert.noFile(
+            path.join('lwc', 'internallwctest', 'internallwctest.js-meta.xml')
+          );
+          assert.file(
+            path.join('lwc', 'internallwctest', 'internallwctest.js')
+          );
+          assert.fileContent(
+            path.join('lwc', 'internallwctest', 'internallwctest.js'),
+            'export default class internallwctest extends LightningElement {}'
+          );
+        }
+      );
+  });
+  describe('Check lightning web components creation with -meta-xml file', () => {
     test
       .withOrg()
       .withProject()
@@ -66,15 +132,9 @@ describe('Lightning component creation tests:', () => {
         'lwc'
       ])
       .it(
-        'should create lightning web component files in the lwc output directory',
+        'should create lightning web component files in the lwc output directory with the internal flag for disabling -meta.xml files',
         ctx => {
-          assert.file(path.join('lwc', 'foo', 'foo.html'));
           assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
-          assert.file(path.join('lwc', 'foo', 'foo.js'));
-          assert.fileContent(
-            path.join('lwc', 'foo', 'foo.js'),
-            'export default class foo extends LightningElement {}'
-          );
         }
       );
   });

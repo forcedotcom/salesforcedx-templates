@@ -10,7 +10,6 @@ export class TestFormatter {
     const files = [];
     const suffixarray = [
       '.app',
-      '.app-meta.xml',
       '.auradoc',
       '.css',
       'Controller.js',
@@ -44,6 +43,7 @@ describe('Lightning app creation tests:', () => {
         'should create lightning app foo using DefaultLightningApp template and aura output directory',
         ctx => {
           assert.file(TestFormatter.fileformatter('foo', 'foo'));
+          assert.file(path.join('aura', 'foo', 'foo.app-meta.xml'));
           assert.fileContent(
             path.join('aura', 'foo', 'foo.app'),
             '<aura:application>\n\n</aura:application>',
@@ -61,13 +61,17 @@ describe('Lightning app creation tests:', () => {
         '--appname',
         'foo',
         '--outputdir',
-        path.join('aura', 'testing')
+        path.join('aura', 'testing'),
+        '--internal'
       ])
-      .it('should create lightning app foo in a new directory', ctx => {
-        assert.file(
-          TestFormatter.fileformatter(path.join('testing', 'foo'), 'foo')
-        );
-      });
+      .it(
+        'should create lightning app foo in a new directory without the -meta.xml file',
+        ctx => {
+          assert.file(
+            TestFormatter.fileformatter(path.join('testing', 'foo'), 'foo')
+          );
+        }
+      );
   });
   describe('lightning app failures', () => {
     test

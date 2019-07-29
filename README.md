@@ -8,13 +8,11 @@ Code base to host the Salesforce CLI commands.
 [![License](https://img.shields.io/npm/l/force-language-services.svg)](https://github.com/forcedotcom/force-language-services/blob/master/package.json)
 
 <!-- toc -->
-
-- [force-language-services](#force-language-services)
-- [Debugging your plugin](#debugging-your-plugin)
-  <!-- tocstop -->
+* [force-language-services](#force-language-services)
+* [Debugging your plugin](#debugging-your-plugin)
+<!-- tocstop -->
         <!-- install -->
         <!-- usage -->
-
 ```sh-session
 $ npm install -g force-language-services
 $ sfdx COMMAND
@@ -26,25 +24,23 @@ USAGE
   $ sfdx COMMAND
 ...
 ```
-
 <!-- usagestop -->
 <!-- commands -->
-
-- [`sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapexclasscreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapextriggercreate--n-string--d-string--e-string--s-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningappcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningcomponentcreate--n-string--d-string--t-string---type-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningeventcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightninginterfacecreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcecomponentcreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapexclasscreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapextriggercreate--n-string--d-string--e-string--s-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningappcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningcomponentcreate--n-string--d-string--t-string---type-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningeventcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightninginterfacecreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcecomponentcreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
 ## `sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-create an Apex class
+create an Apex class 
 
 ```
 USAGE
-  $ sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel
+  $ sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -84,7 +80,7 @@ create an Apex trigger
 
 ```
 USAGE
-  $ sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion
+  $ sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion 
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -130,7 +126,7 @@ create a Lightning app
 
 ```
 USAGE
-  $ sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel
+  $ sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -156,8 +152,8 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
 
 EXAMPLES
@@ -173,7 +169,7 @@ create a bundle for an Aura component or a Lightning web component
 
 ```
 USAGE
-  $ sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion
+  $ sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion 
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -202,10 +198,10 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
-  To create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce
+  To create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce 
   CLI creates an Aura component by default.
 
 EXAMPLES
@@ -223,7 +219,7 @@ create a Lightning event
 
 ```
 USAGE
-  $ sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
+  $ sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] 
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -249,8 +245,8 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
 
 EXAMPLES
@@ -259,11 +255,6 @@ EXAMPLES
 ```
 
 _See code: [src/commands/force/lightning/event/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/event/create.ts)_
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-> > > > > > > master
 
 ## `sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -271,11 +262,7 @@ create a Lightning interface
 
 ```
 USAGE
-<<<<<<< HEAD
-  $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
-=======
-  $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
->>>>>>> master
+  $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] 
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -301,13 +288,8 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-<<<<<<< HEAD
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
-=======
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
->>>>>>> master
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
 
 EXAMPLES
@@ -315,12 +297,7 @@ EXAMPLES
   $ sfdx force:lightning:interface:create -n myinterface -d aura
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-> > > > > > > master
-> > > > > > > _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
+_See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
 
 ## `sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -328,11 +305,7 @@ create a Visualforce component
 
 ```
 USAGE
-<<<<<<< HEAD
-  $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
-=======
-  $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
->>>>>>> master
+  $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] 
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -368,21 +341,7 @@ EXAMPLES
   $ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components
 ```
 
-<<<<<<< HEAD
-
-# _See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
-
-# _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
-
-> > > > > > > origin/master
-
-> > > > > > > LightningInterface
-
-=======
 _See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
-
-> > > > > > > master
-
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 

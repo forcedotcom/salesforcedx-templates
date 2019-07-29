@@ -40,6 +40,11 @@ export default class LightningInterface extends SfdxCommand {
         lightningInterfaceFileSuffix,
         'lightninginterface'
       )
+    }),
+    internal: flags.boolean({
+      char: 'i',
+      description: messages.getMessage('internal'),
+      hidden: true
     })
   };
 

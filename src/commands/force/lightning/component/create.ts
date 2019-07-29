@@ -46,6 +46,11 @@ export default class LightningComponent extends SfdxCommand {
       description: messages.getMessage('ComponentType'),
       options: ['aura', 'lwc'],
       default: 'aura'
+    }),
+    internal: flags.boolean({
+      char: 'i',
+      description: messages.getMessage('internal'),
+      hidden: true
     })
   };
 

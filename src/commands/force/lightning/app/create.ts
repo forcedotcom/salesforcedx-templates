@@ -40,7 +40,9 @@ export default class LightningApp extends SfdxCommand {
       )
     }),
     internal: flags.boolean({
-      char: 'i'
+      char: 'i',
+      description: messages.getMessage('internal'),
+      hidden: true
     })
   };
 

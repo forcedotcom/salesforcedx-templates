@@ -39,6 +39,11 @@ export default class LightningEvent extends SfdxCommand {
         lightningEventFileSuffix,
         'lightningevent'
       )
+    }),
+    internal: flags.boolean({
+      char: 'i',
+      description: messages.getMessage('internal'),
+      hidden: true
     })
   };
   public async run(): Promise<AnyJson> {

@@ -38,9 +38,9 @@ export default class LightningApp extends SfdxCommand {
         lightningAppFileSuffix,
         'lightningapp'
       )
-    })
-    Internal: flags.string({
-      
+    }),
+    internal: flags.boolean({
+      char: 'i'
     })
   };
 

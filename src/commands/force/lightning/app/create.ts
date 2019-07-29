@@ -39,6 +39,9 @@ export default class LightningApp extends SfdxCommand {
         'lightningapp'
       )
     })
+    Internal: flags.string({
+      
+    })
   };
 
   public async run(): Promise<AnyJson> {

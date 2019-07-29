@@ -40,7 +40,7 @@ describe('Lightning app creation tests:', () => {
         'DefaultLightningApp'
       ])
       .it(
-        'should create lightning app foo using DefaultLightningApp template and aura output directory',
+        'should create lightning app foo using DefaultLightningApp template',
         ctx => {
           assert.file(TestFormatter.fileformatter('foo', 'foo'));
           assert.file(path.join('aura', 'foo', 'foo.app-meta.xml'));

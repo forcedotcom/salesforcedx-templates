@@ -55,8 +55,10 @@ export default class LightningApp extends SfdxCommand {
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression
-    if (!fileparts.includes('aura')) {
-      throw new Error(messages.getMessage('MissingAuraDir'));
+    if (!this.flags.internal) {
+      if (!fileparts.includes('aura')) {
+        throw new Error(messages.getMessage('MissingAuraDir'));
+      }
     }
 
     this.log(`target dir = ${filepath}`);

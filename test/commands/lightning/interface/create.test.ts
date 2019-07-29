@@ -35,6 +35,29 @@ describe('Lightning interface creation tests:', () => {
         .command([
           'force:lightning:interface:create',
           '--interfacename',
+          'foometa',
+          '--outputdir',
+          'aura',
+          '--template',
+          'DefaultLightningIntf',
+          '--internal'
+        ])
+        .it(
+          'should create lightning interface foo using DefaultLightningIntf template and aura output directory and no -meta.xml file',
+          ctx => {
+            assert.file(path.join('aura', 'foometa', 'foometa.intf'));
+            assert.noFile(
+              path.join('aura', 'foometa', 'foometa.intf-meta.xml')
+            );
+          }
+        ),
+      test
+        .withOrg()
+        .withProject()
+        .stdout()
+        .command([
+          'force:lightning:interface:create',
+          '--interfacename',
           'foo',
           '--outputdir',
           path.join('aura', 'interfacetest'),

@@ -28,6 +28,27 @@ describe('Lightning event creation tests:', () => {
           assert.file(path.join('aura', 'foo', 'foo.evt-meta.xml'));
         }
       );
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:event:create',
+        '--eventname',
+        'foometa',
+        '--outputdir',
+        'aura',
+        '--template',
+        'DefaultLightningEvt',
+        '--internal'
+      ])
+      .it(
+        'should create lightning event foo using DefaultLightningEvt template and aura output directory with no -meta.xml file',
+        ctx => {
+          assert.file(path.join('aura', 'foometa', 'foometa.evt'));
+          assert.noFile(path.join('aura', 'foometa', 'foometa.evt-meta.xml'));
+        }
+      );
 
     test
       .withOrg()

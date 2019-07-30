@@ -14,6 +14,7 @@ import LightningComponentGenerator from '../../../../generators/lightningCompone
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 const lightningComponentFileSuffix = /.cmp$/;
+
 export default class LightningComponent extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:component:create -n mycomponent',

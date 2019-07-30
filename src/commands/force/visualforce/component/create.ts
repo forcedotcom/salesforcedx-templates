@@ -48,7 +48,7 @@ export default class VisualforceComponent extends SfdxCommand {
     }),
     label: flags.string({
       char: 'l',
-      description: messages.getMessage('label'),
+      description: messages.getMessage('componentlabel'),
       required: true
     })
   };

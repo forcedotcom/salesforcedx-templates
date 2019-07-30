@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2019, salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
@@ -8,6 +14,7 @@ import LightningComponentGenerator from '../../../../generators/lightningCompone
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('force-language-services', 'messages');
 const lightningComponentFileSuffix = /.cmp$/;
+
 export default class LightningComponent extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:component:create -n mycomponent',

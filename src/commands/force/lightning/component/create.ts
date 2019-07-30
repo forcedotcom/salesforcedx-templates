@@ -71,14 +71,10 @@ export default class LightningComponent extends SfdxCommand {
 
     // tslint:disable-next-line:no-unused-expression
     if (!this.flags.internal) {
-      if (this.flags.type === 'lwc') {
-        if (!fileparts.includes('lwc')) {
-          throw new Error(messages.getMessage('MissingLWCDir'));
-        }
-      } else {
-        if (!fileparts.includes('aura')) {
-          throw new Error(messages.getMessage('MissingAuraDir'));
-        }
+      if (this.flags.type === 'lwc' && !fileparts.includes('lwc')) {
+        throw new Error(messages.getMessage('MissingLWCDir'));
+      } else if (!fileparts.includes('aura') && this.flags.type === 'aura') {
+        throw new Error(messages.getMessage('MissingAuraDir'));
       }
     }
 

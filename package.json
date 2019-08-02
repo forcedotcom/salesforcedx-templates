@@ -64,10 +64,12 @@
   },
   "repository": "forcedotcom/force-language-services",
   "scripts": {
+    "clean:lib": "rm -rf lib",
+    "create:lib:templates": "mkdir lib && mkdir lib/templates",
+    "copy:templates": "yarn run create:lib:templates && cp -r src/templates/* lib/templates",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "rm -f oclif.manifest.json",
-    "posttest": "tslint -p test -t stylish",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "yarn run clean:lib && yarn run copy:templates && tsc -b && oclif-dev manifest && oclif-dev readme",
     "reformat": "prettier --config .prettierrc --write './*.{js,json}' './**/*.{ts,json}'",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif-dev readme && git add README.md"

@@ -30,6 +30,9 @@ junit-custom-unitTests.xml
 junit-custom-integrationTests.xml
 junit-custom-vscodeIntegrationTests.xml
 testsoutput/
+testpage/
+folder space/
+foo*
 
 # nyc test coverage
 .nyc_output

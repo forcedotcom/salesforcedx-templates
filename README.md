@@ -18,7 +18,7 @@ $ npm install -g force-language-services
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-force-language-services/0.0.0 darwin-x64 node-v10.15.2
+force-language-services/0.0.0 darwin-x64 node-v10.2.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -46,9 +46,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/force-language-services]
+                                                                                    folder for saving the created files
 
   -n, --classname=classname                                                         (required) name of the generated
                                                                                     Apex class
@@ -86,7 +86,7 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir
-      [default: /Users/amanda.stern/Desktop/force-language-services] folder for saving the created files
+      [default: /Users/lcamposguajardo/github/DevTools/summer/force-language-services] folder for saving the created files
 
   -e, --triggerevents=before insert|before update|before delete|after insert|after update|after delete|after undelete
       [default: before insert] events that fire the trigger
@@ -132,9 +132,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/force-language-services]
+                                                                                    folder for saving the created files
 
   -n, --appname=appname                                                             (required) name of the generated
                                                                                     Lightning app
@@ -175,9 +175,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/force-language-services]
+                                                                                    folder for saving the created files
 
   -n, --componentname=componentname                                                 (required) name of the generated
                                                                                     Lightning component
@@ -225,9 +225,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/force-language-services]
+                                                                                    folder for saving the created files
 
   -n, --eventname=eventname                                                         (required) name of the generated
                                                                                     Lightning event
@@ -268,9 +268,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/force-language-services]
+                                                                                    folder for saving the created files
 
   -n, --interfacename=interfacename                                                 (required) name of the generated
                                                                                     Lightning interface
@@ -311,9 +311,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/force-language-services]
+                                                                                    folder for saving the created files
 
   -l, --label=label                                                                 (required) Visualforce component
                                                                                     label
@@ -355,9 +355,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/force-language-services]
+                                                                                    folder for saving the created files
 
   -l, --label=label                                                                 (required) Visualforce page label
 

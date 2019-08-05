@@ -10,27 +10,39 @@
       "name": "Attach to Remote",
       "address": "127.0.0.1",
       "port": 9229,
-      "localRoot": "${workspaceFolder}"
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "${workspaceFolder}"
     },
     {
-      "name": "Unit Tests",
+      "name": "Run All Tests",
       "type": "node",
       "request": "launch",
       "protocol": "inspector",
-      "program": "${workspaceRoot}/node_modules/.bin/_mocha",
-      "args": [
-        "--require",
-        "test/helpers/init.js",
-        "--require",
-        "ts-node/register",
-        "--require",
-        "source-map-support/register",
-        "--recursive",
-        "--reporter",
-        "spec",
-        "test/**/*.test.ts"
-      ],
-      "cwd": "${workspaceRoot}"
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": ["--inspect", "--no-timeouts", "--colors", "test/**/*.test.ts"],
+      "env": {
+        "NODE_ENV": "development",
+        "SFDX_ENV": "development"
+      },
+      "sourceMaps": true,
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "preLaunchTask": "Compile"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Current Test",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": ["--inspect", "--no-timeouts", "--colors", "${file}"],
+      "env": {
+        "NODE_ENV": "development",
+        "SFDX_ENV": "development"
+      },
+      "sourceMaps": true,
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "preLaunchTask": "Compile"
     }
   ]
 }

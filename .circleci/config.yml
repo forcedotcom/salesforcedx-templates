@@ -15,6 +15,9 @@ jobs:
           name: Install dependencies
           command: yarn
       - run:
+          name: Build plugin
+          command: yarn prepack
+      - run:
           name: Testing
           command: yarn test
       - run:
@@ -46,7 +49,7 @@ jobs:
 
 workflows:
   version: 2
-  "force-language-services":
+  'force-language-services':
     jobs:
       - node-latest
       - node-8

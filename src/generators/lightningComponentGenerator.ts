@@ -23,30 +23,33 @@ export default class LightningComponentGenerator extends generator {
       outputdir,
       componentname,
       apiversion,
-      type
+      type,
+      internal
     } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (type === 'aura') {
       this.sourceRoot(
         path.join(__dirname, '..', 'templates', 'lightningcomponent', 'aura')
       );
-      this.fs.copyTpl(
-        this.templatePath('_auradefinitionbundle.cmp-meta.xml'),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.cmp-meta.xml`)
-        ),
-        {
-          componentname,
-          description: messages.getMessage('LightningComponentBundle'),
-          apiVersion: apiversion
-        }
-      ),
+      if (!internal) {
         this.fs.copyTpl(
-          this.templatePath('DefaultLightningAuradoc.auradoc'),
+          this.templatePath('_auradefinitionbundle.cmp-meta.xml'),
           this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.auradoc`)
-          )
-        ),
+            path.join(outputdir, componentname, `${componentname}.cmp-meta.xml`)
+          ),
+          {
+            componentname,
+            description: messages.getMessage('LightningComponentBundle'),
+            apiVersion: apiversion
+          }
+        );
+      }
+      this.fs.copyTpl(
+        this.templatePath('DefaultLightningAuradoc.auradoc'),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}.auradoc`)
+        )
+      ),
         this.fs.copyTpl(
           this.templatePath(`${template}.cmp`),
           this.destinationPath(
@@ -107,7 +110,8 @@ export default class LightningComponentGenerator extends generator {
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}.html`)
           )
-        ),
+        );
+      if (!internal) {
         this.fs.copyTpl(
           this.templatePath('_js-meta.xml'),
           this.destinationPath(
@@ -115,6 +119,7 @@ export default class LightningComponentGenerator extends generator {
           ),
           { apiVersion: apiversion, componentname }
         );
+      }
     }
   }
 }

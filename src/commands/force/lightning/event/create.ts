@@ -46,6 +46,11 @@ export default class LightningEvent extends SfdxCommand {
         lightningEventFileSuffix,
         'lightningevent'
       )
+    }),
+    internal: flags.boolean({
+      char: 'i',
+      description: messages.getMessage('internal'),
+      hidden: true
     })
   };
   public async run(): Promise<AnyJson> {
@@ -56,9 +61,10 @@ export default class LightningEvent extends SfdxCommand {
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression
-    if (!fileparts.includes('aura')) {
+    if (!this.flags.internal && !fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
+
     this.log(`target dir = ${filepath}`);
     return CreateUtil.runGenerator(LightningEventGenerator, this.flags);
   }

@@ -46,6 +46,11 @@ export default class LightningInterface extends SfdxCommand {
         lightningInterfaceFileSuffix,
         'lightninginterface'
       )
+    }),
+    internal: flags.boolean({
+      char: 'i',
+      description: messages.getMessage('internal'),
+      hidden: true
     })
   };
 
@@ -57,7 +62,7 @@ export default class LightningInterface extends SfdxCommand {
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression
-    if (!fileparts.includes('aura')) {
+    if (!this.flags.internal && !fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
     this.log(`target dir = ${filepath}`);

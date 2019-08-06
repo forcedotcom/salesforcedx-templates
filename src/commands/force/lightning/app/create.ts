@@ -45,6 +45,11 @@ export default class LightningApp extends SfdxCommand {
         lightningAppFileSuffix,
         'lightningapp'
       )
+    }),
+    internal: flags.boolean({
+      char: 'i',
+      description: messages.getMessage('internal'),
+      hidden: true
     })
   };
 
@@ -57,7 +62,7 @@ export default class LightningApp extends SfdxCommand {
     const fileparts = filepath.split(path.sep);
 
     // tslint:disable-next-line:no-unused-expression
-    if (!fileparts.includes('aura')) {
+    if (!fileparts.includes('aura') && !this.flags.internal) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
 

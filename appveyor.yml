@@ -1,3 +1,10 @@
+environment:
+  nodejs_version: "10"	version: '{branch}-{build}'
+
+cache:	
+  - '%LOCALAPPDATA%\Yarn -> appveyor.yml'	
+  - node_modules -> yarn.lock
+
 # version format
 version: '{branch}-{build}'
 

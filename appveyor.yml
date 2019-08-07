@@ -15,7 +15,7 @@ platform: x64
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
-  - appveyor-retry yarn
+  - appveyor-retry yarn install
 
 # disable appveyor's MSBuild mode.
 build: off

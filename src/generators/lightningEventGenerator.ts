@@ -20,18 +20,27 @@ export default class LightningEventGenerator extends generator {
     this.conflicter.force = true;
   }
   public writing() {
-    const { template, outputdir, eventname, apiversion } = this.options;
-    this.fs.copyTpl(
-      this.templatePath('_auradefinitionbundle.evt-meta.xml'),
-      this.destinationPath(
-        path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)
-      ),
-      {
-        eventname,
-        apiVersion: apiversion,
-        description: messages.getMessage('LightningEventBundle')
-      }
-    );
+    const {
+      template,
+      outputdir,
+      eventname,
+      apiversion,
+      internal
+    } = this.options;
+    // tslint:disable-next-line:no-unused-expression
+    if (!internal) {
+      this.fs.copyTpl(
+        this.templatePath('_auradefinitionbundle.evt-meta.xml'),
+        this.destinationPath(
+          path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)
+        ),
+        {
+          eventname,
+          apiVersion: apiversion,
+          description: messages.getMessage('LightningEventBundle')
+        }
+      );
+    }
     this.fs.copyTpl(
       this.templatePath(`${template}.evt`),
       this.destinationPath(path.join(outputdir, eventname, `${eventname}.evt`))

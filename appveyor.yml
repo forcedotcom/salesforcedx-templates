@@ -21,7 +21,7 @@ install:
 build: off
 
 build_script:
-  - ps: Prepack FLS plugin
+  - ps: Write-Host “Prepack FLS plugin”
   - yarn run prepack
 
 test_script:

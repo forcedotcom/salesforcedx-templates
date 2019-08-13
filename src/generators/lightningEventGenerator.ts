@@ -10,7 +10,7 @@ import { OptionsMap } from './types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
 export default class LightningEventGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {

@@ -1,9 +1,9 @@
 {
-  "name": "force-language-services",
+  "name": "salesforcedx-templates",
   "description": "Code base to host the Salesforce CLI commands.",
   "version": "0.0.0",
   "author": "Amanda Stern",
-  "bugs": "https://github.com/forcedotcom/force-language-services/issues",
+  "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
@@ -48,7 +48,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/forcedotcom/force-language-services",
+  "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "keywords": [
     "sfdx-plugin"
   ],
@@ -65,7 +65,7 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "forcedotcom/force-language-services",
+  "repository": "forcedotcom/salesforcedx-templates",
   "scripts": {
     "clean:lib": "node scripts/remove-lib",
     "build:templates": "node scripts/build-templates",

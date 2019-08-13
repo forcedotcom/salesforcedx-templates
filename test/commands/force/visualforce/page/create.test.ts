@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
 describe('Visualforce page creation tests:', () => {
   describe('Check visualforce page creation', () => {

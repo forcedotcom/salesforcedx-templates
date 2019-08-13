@@ -12,7 +12,7 @@ import { CreateUtil } from '../../../../createUtil';
 import LightningEventGenerator from '../../../../generators/lightningEventGenerator';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningEventFileSuffix = /.evt$/;
 
 export default class LightningEvent extends SfdxCommand {

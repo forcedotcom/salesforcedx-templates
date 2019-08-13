@@ -12,7 +12,7 @@ import { CreateUtil } from '../../../../createUtil';
 import VisualforceComponentGenerator from '../../../../generators/visualforceComponentGenerator';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const visualforceComponentFileSuffix = /.component$/;
 
 export default class VisualforceComponent extends SfdxCommand {

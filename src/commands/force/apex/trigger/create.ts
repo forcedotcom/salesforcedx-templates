@@ -12,7 +12,7 @@ import { CreateUtil } from '../../../../createUtil';
 import ApexTriggerGenerator from '../../../../generators/apexTriggerGenerator';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const apexTriggerFileSuffix = /.trigger$/;
 
 export default class ApexTrigger extends SfdxCommand {

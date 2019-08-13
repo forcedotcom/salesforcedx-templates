@@ -12,7 +12,7 @@ import { CreateUtil } from '../../../../createUtil';
 import LightningInterfaceGenerator from '../../../../generators/lightningInterfaceGenerator';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningInterfaceFileSuffix = /.intf$/;
 
 export default class LightningInterface extends SfdxCommand {

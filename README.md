@@ -1,24 +1,24 @@
-# force-language-services
+# salesforcedx-templates
 
 Code base to host the Salesforce CLI commands.
 
-[![CircleCI](https://circleci.com/gh/forcedotcom/force-language-services/tree/master.svg?style=shield)](https://circleci.com/gh/forcedotcom/force-language-services/tree/master)
-[![Codecov](https://codecov.io/gh/forcedotcom/force-language-services/branch/master/graph/badge.svg)](https://codecov.io/gh/forcedotcom/force-language-services)
-[![Known Vulnerabilities](https://snyk.io/test/github/forcedotcom/force-language-services/badge.svg)](https://snyk.io/test/github/forcedotcom/force-language-services)
-[![License](https://img.shields.io/npm/l/force-language-services.svg)](https://github.com/forcedotcom/force-language-services/blob/master/package.json)
+[![CircleCI](https://circleci.com/gh/forcedotcom/salesforcedx-templates/tree/master.svg?style=shield)](https://circleci.com/gh/forcedotcom/salesforcedx-templates/tree/master)
+[![Codecov](https://codecov.io/gh/forcedotcom/salesforcedx-templates/branch/master/graph/badge.svg)](https://codecov.io/gh/forcedotcom/salesforcedx-templates)
+[![Known Vulnerabilities](https://snyk.io/test/github/forcedotcom/salesforcedx-templates/badge.svg)](https://snyk.io/test/github/forcedotcom/salesforcedx-templates)
+[![License](https://img.shields.io/npm/l/salesforcedx-templates.svg)](https://github.com/forcedotcom/salesforcedx-templates/blob/master/package.json)
 
 <!-- toc -->
-* [force-language-services](#force-language-services)
+* [salesforcedx-templates](#salesforcedx-templates)
 * [Debugging your plugin](#debugging-your-plugin)
 <!-- tocstop -->
             <!-- install -->
             <!-- usage -->
 ```sh-session
-$ npm install -g force-language-services
+$ npm install -g salesforcedx-templates
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-force-language-services/0.0.0 darwin-x64 node-v10.15.2
+salesforcedx-templates/0.0.0 darwin-x64 node-v10.15.3
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -46,9 +46,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/ntotten/dev/salesforcedx-temp
+                                                                                    lates] folder for saving the created
+                                                                                    files
 
   -n, --classname=classname                                                         (required) name of the generated
                                                                                     Apex class
@@ -73,7 +73,7 @@ EXAMPLES
   $ sfdx force:apex:class:create -n MyClass -d classes
 ```
 
-_See code: [src/commands/force/apex/class/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/apex/class/create.ts)_
+_See code: [src/commands/force/apex/class/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/apex/class/create.ts)_
 
 ## `sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -86,7 +86,7 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir
-      [default: /Users/amanda.stern/Desktop/force-language-services] folder for saving the created files
+      [default: /Users/ntotten/dev/salesforcedx-templates] folder for saving the created files
 
   -e, --triggerevents=before insert|before update|before delete|after insert|after update|after delete|after undelete
       [default: before insert] events that fire the trigger
@@ -119,7 +119,7 @@ EXAMPLES
   $ sfdx force:apex:trigger:create -n MyTrigger -d triggers
 ```
 
-_See code: [src/commands/force/apex/trigger/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/apex/trigger/create.ts)_
+_See code: [src/commands/force/apex/trigger/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/apex/trigger/create.ts)_
 
 ## `sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -132,9 +132,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/ntotten/dev/salesforcedx-temp
+                                                                                    lates] folder for saving the created
+                                                                                    files
 
   -n, --appname=appname                                                             (required) name of the generated
                                                                                     Lightning app
@@ -162,7 +162,7 @@ EXAMPLES
   $ sfdx force:lightning:app:create -n myapp -d aura
 ```
 
-_See code: [src/commands/force/lightning/app/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/app/create.ts)_
+_See code: [src/commands/force/lightning/app/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/app/create.ts)_
 
 ## `sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -175,9 +175,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/ntotten/dev/salesforcedx-temp
+                                                                                    lates] folder for saving the created
+                                                                                    files
 
   -n, --componentname=componentname                                                 (required) name of the generated
                                                                                     Lightning component
@@ -212,7 +212,7 @@ EXAMPLES
   $ sfdx force:lightning:component:create -n mycomponent --type lwc -d lwc
 ```
 
-_See code: [src/commands/force/lightning/component/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/component/create.ts)_
+_See code: [src/commands/force/lightning/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/component/create.ts)_
 
 ## `sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -225,9 +225,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/ntotten/dev/salesforcedx-temp
+                                                                                    lates] folder for saving the created
+                                                                                    files
 
   -n, --eventname=eventname                                                         (required) name of the generated
                                                                                     Lightning event
@@ -255,7 +255,7 @@ EXAMPLES
   $ sfdx force:lightning:event:create -n myevent -d aura
 ```
 
-_See code: [src/commands/force/lightning/event/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/event/create.ts)_
+_See code: [src/commands/force/lightning/event/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/event/create.ts)_
 
 ## `sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -268,9 +268,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/ntotten/dev/salesforcedx-temp
+                                                                                    lates] folder for saving the created
+                                                                                    files
 
   -n, --interfacename=interfacename                                                 (required) name of the generated
                                                                                     Lightning interface
@@ -298,7 +298,7 @@ EXAMPLES
   $ sfdx force:lightning:interface:create -n myinterface -d aura
 ```
 
-_See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
+_See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
 
 ## `sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -311,9 +311,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/ntotten/dev/salesforcedx-temp
+                                                                                    lates] folder for saving the created
+                                                                                    files
 
   -l, --label=label                                                                 (required) Visualforce component
                                                                                     label
@@ -342,7 +342,7 @@ EXAMPLES
   $ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components
 ```
 
-_See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
+_See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
 
 ## `sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -355,9 +355,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/amanda.stern/Desktop/force-la
-                                                                                    nguage-services] folder for saving
-                                                                                    the created files
+                                                                                    /Users/ntotten/dev/salesforcedx-temp
+                                                                                    lates] folder for saving the created
+                                                                                    files
 
   -l, --label=label                                                                 (required) Visualforce page label
 
@@ -385,7 +385,7 @@ EXAMPLES
   $ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages
 ```
 
-_See code: [src/commands/force/visualforce/page/create.ts](https://github.com/forcedotcom/force-language-services/blob/v0.0.0/src/commands/force/visualforce/page/create.ts)_
+_See code: [src/commands/force/visualforce/page/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/page/create.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 

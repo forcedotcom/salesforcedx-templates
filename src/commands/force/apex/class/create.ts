@@ -12,7 +12,7 @@ import { CreateUtil } from '../../../../createUtil';
 import ApexClassGenerator from '../../../../generators/apexClassGenerator';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const apexClassFileSuffix = /.cls$/;
 
 export default class ApexClass extends SfdxCommand {

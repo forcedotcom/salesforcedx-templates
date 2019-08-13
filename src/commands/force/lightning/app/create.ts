@@ -12,7 +12,7 @@ import { CreateUtil } from '../../../../createUtil';
 import LightningAppGenerator from '../../../../generators/lightningAppGenerator';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningAppFileSuffix = /.app$/;
 
 export default class LightningApp extends SfdxCommand {

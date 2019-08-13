@@ -10,7 +10,7 @@ import * as path from 'path';
 import * as yeoman from 'yeoman-environment';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('force-language-services', 'messages');
+const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 /* tslint:disable:no-unused-expression */
 export class CreateUtil {
   public static checkInputs(flagValue) {

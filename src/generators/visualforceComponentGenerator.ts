@@ -30,13 +30,13 @@ export default class VisualforceComponentGenerator extends generator {
     this.fs.copyTpl(
       this.templatePath(`${template}.component`),
       this.destinationPath(path.join(outputdir, `${componentname}.component`))
-    );
-    this.fs.copyTpl(
-      this.templatePath('_component.component-meta.xml'),
-      this.destinationPath(
-        path.join(outputdir, `${componentname}.component-meta.xml`)
-      ),
-      { vfLabel: label, apiVersion: apiversion, vfName: componentname }
-    );
+    ),
+      this.fs.copyTpl(
+        this.templatePath('_component.component-meta.xml'),
+        this.destinationPath(
+          path.join(outputdir, `${componentname}.component-meta.xml`)
+        ),
+        { vfLabel: label, apiVersion: apiversion }
+      );
   }
 }

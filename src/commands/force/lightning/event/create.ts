@@ -14,7 +14,6 @@ import LightningEventGenerator from '../../../../generators/lightningEventGenera
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningEventFileSuffix = /.evt$/;
-
 export default class LightningEvent extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myevent',
@@ -57,15 +56,11 @@ export default class LightningEvent extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.eventname);
     CreateUtil.checkInputs(this.flags.template);
 
-    const filepath = path.resolve(this.flags.outputdir);
-    const fileparts = filepath.split(path.sep);
-
+    const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
     // tslint:disable-next-line:no-unused-expression
     if (!this.flags.internal && !fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
-
-    this.log(`target dir = ${filepath}`);
-    return CreateUtil.runGenerator(LightningEventGenerator, this.flags);
+    return CreateUtil.runGenerator(LightningEventGenerator, this);
   }
 }

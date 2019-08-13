@@ -12,6 +12,7 @@ import * as yeoman from 'yeoman-environment';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 /* tslint:disable:no-unused-expression */
+
 export class CreateUtil {
   public static checkInputs(flagValue) {
     const alphaRegExp = /^\w+$/;
@@ -44,9 +45,27 @@ export class CreateUtil {
     return files;
   }
 
-  public static runGenerator(generatorname, args) {
+  public static makeEmptyFolders(toplevelfolders, metadatafolders) {
+    let oldfolder = '';
+    for (const folder of toplevelfolders) {
+      if (!fs.existsSync(path.join(oldfolder, folder))) {
+        fs.mkdirSync(path.join(oldfolder, folder));
+        oldfolder = path.join(oldfolder, folder);
+      }
+    }
+    for (const newfolder of metadatafolders) {
+      if (!fs.existsSync(path.join(oldfolder, newfolder))) {
+        fs.mkdirSync(path.join(oldfolder, newfolder));
+      }
+    }
+    return;
+  }
+
+  public static runGenerator(generatorname, command) {
     const env = yeoman.createEnv();
     env.registerStub(generatorname, 'generator');
-    return env.run('generator', args);
+    const result = env.run('generator', command.flags);
+    command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
+    return result;
   }
 }

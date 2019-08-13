@@ -7,7 +7,6 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
 import VisualforceComponentGenerator from '../../../../generators/visualforceComponentGenerator';
 
@@ -57,9 +56,6 @@ export default class VisualforceComponent extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.componentname);
     CreateUtil.checkInputs(this.flags.template);
 
-    const filepath = path.resolve(this.flags.outputdir);
-
-    this.log(`target dir = ${filepath}`);
-    return CreateUtil.runGenerator(VisualforceComponentGenerator, this.flags);
+    return CreateUtil.runGenerator(VisualforceComponentGenerator, this);
   }
 }

@@ -14,7 +14,6 @@ import LightningAppGenerator from '../../../../generators/lightningAppGenerator'
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningAppFileSuffix = /.app$/;
-
 export default class LightningApp extends SfdxCommand {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myapp',
@@ -57,16 +56,12 @@ export default class LightningApp extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.appname);
     CreateUtil.checkInputs(this.flags.template);
 
-    const filepath = path.resolve(this.flags.outputdir);
-
-    const fileparts = filepath.split(path.sep);
-
+    const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
     // tslint:disable-next-line:no-unused-expression
     if (!fileparts.includes('aura') && !this.flags.internal) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
 
-    this.log(`target dir = ${filepath}`);
-    return CreateUtil.runGenerator(LightningAppGenerator, this.flags);
+    return CreateUtil.runGenerator(LightningAppGenerator, this);
   }
 }

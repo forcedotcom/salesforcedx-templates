@@ -6,7 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
-import * as mkdirp from 'mkdirp';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
@@ -14,9 +14,11 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
 describe('Apex class creation tests:', () => {
-  mkdirp('testsoutput', () => {
-    process.chdir('testsoutput');
-  });
+  // tslint:disable-next-line:no-unused-expression
+  if (!fs.existsSync('testsoutput')) {
+    fs.mkdirSync('testsoutput');
+  }
+  process.chdir('testsoutput');
 
   describe('Check apex class creation', () => {
     test

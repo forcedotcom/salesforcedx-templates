@@ -11,6 +11,7 @@ import { OptionsMap } from './types';
 const generator = require('yeoman-generator');
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+
 export default class LightningComponentGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);

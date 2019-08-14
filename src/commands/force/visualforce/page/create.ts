@@ -1,7 +1,12 @@
+/*
+ * Copyright (c) 2019, salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import * as path from 'path';
 import { CreateUtil } from '../../../../createUtil';
 import VisualforcePageGenerator from '../../../../generators/visualforcePageGenerator';
 
@@ -51,9 +56,6 @@ export default class VisualforcePage extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.pagename);
     CreateUtil.checkInputs(this.flags.template);
 
-    const filepath = path.resolve(this.flags.outputdir);
-
-    this.log(`target dir = ${filepath}`);
-    return CreateUtil.runGenerator(VisualforcePageGenerator, this.flags);
+    return CreateUtil.runGenerator(VisualforcePageGenerator, this);
   }
 }

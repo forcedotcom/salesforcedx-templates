@@ -9,16 +9,14 @@ Code base to host the Salesforce CLI commands.
 
 <!-- toc -->
 * [salesforcedx-templates](#salesforcedx-templates)
-* [Debugging your plugin](#debugging-your-plugin)
-<!-- tocstop -->
-            <!-- install -->
-            <!-- usage -->
+    <!-- install -->
+    <!-- usage -->
 ```sh-session
 $ npm install -g salesforcedx-templates
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-salesforcedx-templates/0.0.0 darwin-x64 node-v10.15.3
+salesforcedx-templates/0.0.0 darwin-x64 node-v10.15.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -32,6 +30,7 @@ USAGE
 * [`sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningcomponentcreate--n-string--d-string--t-string---type-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 * [`sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningeventcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 * [`sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightninginterfacecreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceprojectcreate--n-string--d-string--p-string--s-string--t-string--x---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 * [`sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcecomponentcreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 * [`sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcepagecreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
@@ -46,9 +45,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/ntotten/dev/salesforcedx-temp
-                                                                                    lates] folder for saving the created
-                                                                                    files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
 
   -n, --classname=classname                                                         (required) name of the generated
                                                                                     Apex class
@@ -86,7 +85,7 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir
-      [default: /Users/ntotten/dev/salesforcedx-templates] folder for saving the created files
+      [default: /Users/lcamposguajardo/github/DevTools/summer/salesforcedx-templates] folder for saving the created files
 
   -e, --triggerevents=before insert|before update|before delete|after insert|after update|after delete|after undelete
       [default: before insert] events that fire the trigger
@@ -132,9 +131,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/ntotten/dev/salesforcedx-temp
-                                                                                    lates] folder for saving the created
-                                                                                    files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
 
   -n, --appname=appname                                                             (required) name of the generated
                                                                                     Lightning app
@@ -175,9 +174,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/ntotten/dev/salesforcedx-temp
-                                                                                    lates] folder for saving the created
-                                                                                    files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
 
   -n, --componentname=componentname                                                 (required) name of the generated
                                                                                     Lightning component
@@ -225,9 +224,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/ntotten/dev/salesforcedx-temp
-                                                                                    lates] folder for saving the created
-                                                                                    files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
 
   -n, --eventname=eventname                                                         (required) name of the generated
                                                                                     Lightning event
@@ -268,9 +267,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/ntotten/dev/salesforcedx-temp
-                                                                                    lates] folder for saving the created
-                                                                                    files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
 
   -n, --interfacename=interfacename                                                 (required) name of the generated
                                                                                     Lightning interface
@@ -300,6 +299,53 @@ EXAMPLES
 
 _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
 
+## `sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+create a Salesforce DX project
+
+```
+USAGE
+  $ sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] 
+  [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -d, --outputdir=outputdir                                                         [default:
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
+
+  -n, --projectname=projectname                                                     (required) name of the generated
+                                                                                    project
+
+  -p, --defaultpackagedir=defaultpackagedir                                         [default: force-app] default package
+                                                                                    directory name
+
+  -s, --namespace=namespace                                                         project associated namespace
+
+  -t, --template=standard|empty                                                     [default: standard] template to use
+                                                                                    for file creation
+
+  -x, --manifest                                                                    generate a manifest (package.xml)
+                                                                                    for change-set based development
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+DESCRIPTION
+  Default values are used if the template, namespace, defaultpackagedir, and outputdir aren’t supplied.
+  The outputdir can be an absolute path or relative to the current working directory.
+
+EXAMPLES
+  $ sfdx force:project:create --projectname mywork
+  $ sfdx force:project:create --projectname mywork --defaultpackagedir myapp
+  $ sfdx force:project:create --projectname mywork --defaultpackagedir myapp --manifest
+  $ sfdx force:project:create --projectname mywork --template empty
+```
+
+_See code: [src/commands/force/project/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/project/create.ts)_
+
 ## `sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 create a Visualforce component
@@ -311,9 +357,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/ntotten/dev/salesforcedx-temp
-                                                                                    lates] folder for saving the created
-                                                                                    files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
 
   -l, --label=label                                                                 (required) Visualforce component
                                                                                     label
@@ -355,9 +401,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/ntotten/dev/salesforcedx-temp
-                                                                                    lates] folder for saving the created
-                                                                                    files
+                                                                                    /Users/lcamposguajardo/github/DevToo
+                                                                                    ls/summer/salesforcedx-templates]
+                                                                                    folder for saving the created files
 
   -l, --label=label                                                                 (required) Visualforce page label
 

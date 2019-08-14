@@ -1,0 +1,11 @@
+{
+    "packageDirectories": [
+      {
+        "path": "<%= defaultpackagedir %>",
+        "default": true
+      }
+    ],
+    "namespace": "<%= namespace %>",
+    "sfdcLoginUrl": "<%= loginURL %>",
+    "sourceApiVersion": "<%= sourceApiVersion %>"
+  }

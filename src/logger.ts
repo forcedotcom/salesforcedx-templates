@@ -38,6 +38,7 @@ export class Log {
   constructor() {
     let that: { [kind: string]: any } = this;
     let self: Log = this;
+    console.log('we are in the constructor');
     Object.keys(colors).forEach(function(status) {
       // Each predefined status has its logging method utility, handling
       // status color and padding before the usual `.write()`

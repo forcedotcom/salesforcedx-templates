@@ -66,7 +66,7 @@ export class CreateUtil {
     const env = yeoman.createEnv(
       command.flags,
       undefined,
-      ForceGeneratorAdapter
+      new ForceGeneratorAdapter('hello')
     );
     env.registerStub(generatorname, 'generator');
     const result = env.run('generator', command.flags);

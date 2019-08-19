@@ -1,18 +1,20 @@
 import * as generator from 'yeoman-generator';
 import { OptionsMap } from './options';
 import { Answers } from './options';
-import * as logger from './logger';
+import { Log } from './logger';
 
 export class ForceGeneratorAdapter {
   private values: OptionsMap;
   // tslint:disable-next-line:member-ordering
-  public log: logger.Log = new logger.Log();
+  public log = new Log();
 
-  constructor(values: OptionsMap) {
+  // tslint:disable-next-line:no-any
+  constructor(values: any) {
     this.values = values;
   }
 
   public prompt(opt: [generator.Questions], cb: () => void): Promise<Answers> {
+    this.log.log('its coming here', 'ctx');
     let localValues: OptionsMap = this.values;
     // tslint:disable-next-line:only-arrow-functions
     let promptPromise = new Promise<Answers>(function(resolve, reject) {

@@ -36,30 +36,15 @@ export class CreateUtil {
     return '';
   }
 
+  // TODO: switch filetype to a string instead of regex
   public static getCommandTemplatesForFiletype(filetype, command) {
     const files = fs
-      .readdirSync(path.join(__dirname, 'templates', command))
+      .readdirSync(path.resolve(__dirname, '..', 'templates', command))
       .filter(file => filetype.test(file))
       .map(file => {
         return file.split('.', 1).toString();
       });
     return files;
-  }
-
-  public static makeEmptyFolders(toplevelfolders, metadatafolders) {
-    let oldfolder = '';
-    for (const folder of toplevelfolders) {
-      if (!fs.existsSync(path.join(oldfolder, folder))) {
-        fs.mkdirSync(path.join(oldfolder, folder));
-        oldfolder = path.join(oldfolder, folder);
-      }
-    }
-    for (const newfolder of metadatafolders) {
-      if (!fs.existsSync(path.join(oldfolder, newfolder))) {
-        fs.mkdirSync(path.join(oldfolder, newfolder));
-      }
-    }
-    return;
   }
 
   public static runGenerator(generatorname, command) {
@@ -74,8 +59,8 @@ export class CreateUtil {
     return result;
   }
 
-  private static getDefaultApiVersion(): string {
-    const versionTrimmed = require('../package.json').version.trim();
+  public static getDefaultApiVersion(): string {
+    const versionTrimmed = require('../../package.json').version.trim();
     return `${versionTrimmed.split('.')[0]}.0`;
   }
 }

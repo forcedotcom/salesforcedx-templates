@@ -5,7 +5,8 @@
     "outDir": "./lib",
     // We can replace the TS generated snippets with require statements
     // from the tslib dependency, making our code more efficient
-    "importHelpers": true
+    "importHelpers": true,
+    "resolveJsonModule": true
 
     // Commenting for now since we need to add handling to undefined variables
     // "strict": true

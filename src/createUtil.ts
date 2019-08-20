@@ -35,6 +35,7 @@ export class CreateUtil {
     }
     return '';
   }
+
   public static getCommandTemplatesForFiletype(filetype, command) {
     const files = fs
       .readdirSync(path.join(__dirname, 'templates', command))
@@ -62,10 +63,19 @@ export class CreateUtil {
   }
 
   public static runGenerator(generatorname, command) {
+    if (!command.flags.apiversion) {
+      command.flags.apiversion = CreateUtil.getDefaultApiVersion();
+    }
+
     const env = yeoman.createEnv();
     env.registerStub(generatorname, 'generator');
     const result = env.run('generator', command.flags);
     command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
     return result;
+  }
+
+  private static getDefaultApiVersion(): string {
+    const versionTrimmed = require('../package.json').version.trim();
+    return `${versionTrimmed.split('.')[0]}.0`;
   }
 }

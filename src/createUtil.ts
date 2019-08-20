@@ -62,15 +62,31 @@ export class CreateUtil {
     return;
   }
 
-  public static runGenerator(generatorname, command) {
-    const env = yeoman.createEnv(
-      command.flags,
-      undefined,
-      new ForceGeneratorAdapter('hello')
-    );
+  public static async runGenerator(generatorname, command) {
+    const adapter = new ForceGeneratorAdapter('hello');
+    const env = yeoman.createEnv(undefined, undefined, adapter);
     env.registerStub(generatorname, 'generator');
-    const result = env.run('generator', command.flags);
+    const result = await env.run('generator', command.flags);
     command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
-    return result;
+    if (command.isJson) {
+      const createdFiles = this.getCreatedFiles(adapter.log.getOutput());
+      return createdFiles;
+    } else {
+      return result;
+    }
+  }
+
+  public static getCreatedFiles(rawOutput: string): string[] {
+    let createdFiles: string[];
+    let createExp: RegExp = new RegExp(
+      '(\\n\\s+)(create\\s+|identical\\s+|force\\s+)(.*)',
+      'mig'
+    );
+    let result: RegExpExecArray | null = createExp.exec(rawOutput);
+    while (result) {
+      createdFiles.push(result[3]);
+      result = createExp.exec(rawOutput);
+    }
+    return createdFiles;
   }
 }

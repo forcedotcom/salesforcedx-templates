@@ -40,34 +40,9 @@ export class Log {
     let self: Log = this;
     console.log('we are in the constructor');
     Object.keys(colors).forEach(function(status) {
-      // Each predefined status has its logging method utility, handling
-      // status color and padding before the usual `.write()`
-      //
-      // Example
-      //
-      //    this.log
-      //      .write()
-      //      .info('Doing something')
-      //      .force('Forcing filepath %s, 'some path')
-      //      .conflict('on %s' 'model.js')
-      //      .write()
-      //      .ok('This is ok');
-      //
-      // The list of status and mapping colors
-      //
-      //    skip       yellow
-      //    force      yellow
-      //    create     green
-      //    invoke     bold
-      //    conflict   red
-      //    identical  cyan
-      //    info       grey
-      //
       // Returns the logger
       that[status] = (...args: any[]) => {
-        // let color = colors[status];
-        // this.write(chalk[color](pad(status))).write(padding);
-        // this.write(util.format.apply(util, arguments) + '\n');
+        console.log('this is the arg' + args);
         self.write(self.pad(status)).write(padding);
         self.write(self.applyNoStyle(args) + '\n');
         return self;
@@ -86,8 +61,6 @@ export class Log {
     return this;
   }
 
-  // _.extend(log, events.EventEmitter.prototype);
-
   public getOutput(): string {
     return this.output;
   }
@@ -96,7 +69,9 @@ export class Log {
   //
   // Returns the logger
   public write(...args: any[]): Log {
+    console.log('this is the output' + this.output);
     this.output = this.output + util.format.apply(util, args);
+    console.log('this is the modified output' + this.output);
     return this;
   }
 
@@ -124,22 +99,6 @@ export class Log {
     return this;
   }
 
-  // log.on('up', function () {
-  //   padding = padding + step;
-  // });
-
-  // log.on('down', function () {
-  //   padding = padding.replace(step, '');
-  // });
-
-  // A basic wrapper around `cli-table` package, resetting any single
-  // char to empty strings, this is used for aligning options and
-  // arguments without too much Math on our side.
-  //
-  // - opts - A list of rows or an Hash of options to pass through cli
-  //          table.
-  //
-  // Returns the table reprensetation
   // tslint:disable-next-line:no-any
   public table(opts: any[] | any): any {
     // tslint:disable-next-line:no-any
@@ -197,21 +156,3 @@ export class Log {
     return str;
   }
 }
-
-// `this.log` is a [logref](https://github.com/mikeal/logref)
-// compatible logger, with an enhanced API.
-//
-// It also has EventEmitter like capabilities, so you can call on / emit
-// on it, namely used to increase or decrease the padding.
-//
-// All logs are done against STDERR, letting you stdout for meaningfull
-// value and redirection, should you need to generate output this way.
-//
-// Log functions take two arguments, a message and a context. For any
-// other kind of paramters, `console.error` is used, so all of the
-// console format string goodies you're used to work fine.
-//
-// - msg      - The message to show up
-// - context  - The optional context to escape the message against
-//
-// Returns the logger

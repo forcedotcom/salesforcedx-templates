@@ -14,7 +14,6 @@ export class ForceGeneratorAdapter {
   }
 
   public prompt(opt: [generator.Questions], cb: () => void): Promise<Answers> {
-    this.log.log('its coming here', 'ctx');
     let localValues: OptionsMap = this.values;
     // tslint:disable-next-line:only-arrow-functions
     let promptPromise = new Promise<Answers>(function(resolve, reject) {

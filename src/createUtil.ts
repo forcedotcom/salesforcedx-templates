@@ -69,24 +69,28 @@ export class CreateUtil {
     const result = await env.run('generator', command.flags);
     command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
     if (command.isJson) {
-      const createdFiles = this.getCreatedFiles(adapter.log.getOutput());
-      return createdFiles;
+      return JSON.parse(this.buildJson(adapter, command.flags.outputdir));
     } else {
       return result;
     }
   }
 
-  public static getCreatedFiles(rawOutput: string): string[] {
-    let createdFiles: string[];
-    let createExp: RegExp = new RegExp(
-      '(\\n\\s+)(create\\s+|identical\\s+|force\\s+)(.*)',
-      'mig'
-    );
-    let result: RegExpExecArray | null = createExp.exec(rawOutput);
-    while (result) {
-      createdFiles.push(result[3]);
-      result = createExp.exec(rawOutput);
-    }
-    return createdFiles;
+  public static buildJson(
+    adapter: ForceGeneratorAdapter,
+    outputDir: string
+  ): string {
+    const cleanOutput = adapter.log.getCleanOutput();
+    const rawOutput = adapter.log.getOutput();
+    const output: CreateOutput = {
+      outputDir: outputDir,
+      created: cleanOutput,
+      rawOutput
+    };
+    return JSON.stringify(output);
   }
+}
+export interface CreateOutput {
+  outputDir: string;
+  created: string[];
+  rawOutput: string;
 }

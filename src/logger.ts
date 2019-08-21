@@ -34,6 +34,7 @@ const colors: { [kind: string]: string } = {
 
 export class Log {
   private output: string = '';
+  private cleanOutput: string[] = [];
 
   constructor() {
     let that: { [kind: string]: any } = this;
@@ -42,7 +43,7 @@ export class Log {
     Object.keys(colors).forEach(function(status) {
       // Returns the logger
       that[status] = (...args: any[]) => {
-        console.log('this is the arg' + args);
+        self.setCleanOutput(args);
         self.write(self.pad(status)).write(padding);
         self.write(self.applyNoStyle(args) + '\n');
         return self;
@@ -51,7 +52,6 @@ export class Log {
   }
   public log(msg: string, ctx: any): Log {
     msg = msg || '';
-
     if (typeof ctx === 'object' && !Array.isArray(ctx)) {
       this.output = this.output + this.formatter(msg, ctx);
     } else {
@@ -65,14 +65,20 @@ export class Log {
     return this.output;
   }
 
+  public getCleanOutput(): string[] {
+    return this.cleanOutput;
+  }
+
   // A simple write method, with formatted message.
   //
   // Returns the logger
   public write(...args: any[]): Log {
-    console.log('this is the output' + this.output);
     this.output = this.output + util.format.apply(util, args);
-    console.log('this is the modified output' + this.output);
     return this;
+  }
+
+  public setCleanOutput(args: any) {
+    this.cleanOutput.push(args);
   }
 
   // Same as `log.write()` but automatically appends a `\n` at the end

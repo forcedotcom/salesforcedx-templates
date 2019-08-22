@@ -7,7 +7,7 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import { CreateUtil } from '../../../../createUtil';
+import { CreateUtil } from '../../../../utils/createUtil';
 import ApexClassGenerator from '../../../../generators/apexClassGenerator';
 
 Messages.importMessagesDirectory(__dirname);

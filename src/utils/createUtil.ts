@@ -38,7 +38,7 @@ export class CreateUtil {
   }
   public static getCommandTemplatesForFiletype(filetype, command) {
     const files = fs
-      .readdirSync(path.join(__dirname, 'templates', command))
+      .readdirSync(path.resolve(__dirname, '..', 'templates', command))
       .filter(file => filetype.test(file))
       .map(file => {
         return file.split('.', 1).toString();

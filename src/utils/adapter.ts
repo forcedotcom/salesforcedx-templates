@@ -10,14 +10,16 @@ import { Log } from './logger';
 
 export class ForceGeneratorAdapter {
   public log = new Log();
-  private values?: OptionsMap;
+  // tslint:disable-next-line:no-any
+  private values?: any;
 
-  constructor(values?: OptionsMap) {
-    this.values ? values : '';
+  // tslint:disable-next-line:no-any
+  constructor(values?: any) {
+    this.values = values ? values : {};
   }
 
   public prompt(opt: [generator.Questions], cb: () => void): Promise<Answers> {
-    let localValues: OptionsMap = this.values;
+    let localValues: OptionsMap = this.values!;
     let promptPromise = new Promise<Answers>((resolve, reject) => {
       let answers: Answers = {};
       for (let i = 0; i < opt.length; i++) {

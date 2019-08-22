@@ -7,7 +7,7 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import { CreateUtil } from '../../../../createUtil';
+import { CreateUtil } from '../../../../utils/createUtil';
 import VisualforcePageGenerator from '../../../../generators/visualforcePageGenerator';
 
 Messages.importMessagesDirectory(__dirname);

@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import { CreateUtil } from '../createUtil';
+import { CreateUtil } from '../utils/createUtil';
 import { OptionsMap } from './types';
 // tslint:disable-next-line: no-var-requires
 const generator = require('yeoman-generator');

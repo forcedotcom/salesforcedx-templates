@@ -8,7 +8,7 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
-import { CreateUtil } from '../../../../createUtil';
+import { CreateUtil } from '../../../../utils/createUtil';
 import LightningInterfaceGenerator from '../../../../generators/lightningInterfaceGenerator';
 
 Messages.importMessagesDirectory(__dirname);

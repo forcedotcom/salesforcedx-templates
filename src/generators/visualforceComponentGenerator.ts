@@ -15,8 +15,8 @@ export default class VisualforceComponentGenerator extends generator {
     this.sourceRoot(
       path.join(__dirname, '..', 'templates', 'visualforcecomponent')
     );
-    // This disables yeoman feature for overwriting files prompt
-    this.conflicter.force = true;
+    // This enables yeoman feature for overwriting files prompt
+    this.conflicter.force = false;
   }
 
   public writing() {

@@ -63,30 +63,34 @@ export class CreateUtil {
   }
 
   public static async runGenerator(generatorname, command) {
-    const adapter = new ForceGeneratorAdapter('hello');
+    const adapter = new ForceGeneratorAdapter();
     const env = yeoman.createEnv(undefined, undefined, adapter);
     env.registerStub(generatorname, 'generator');
+
     const result = await env.run('generator', command.flags);
-    command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
+    const targetDir = path.resolve(command.flags.outputdir);
+
     if (command.isJson) {
-      return JSON.parse(this.buildJson(adapter, command.flags.outputdir));
+      return this.buildJson(adapter, targetDir);
     } else {
+      command.log(`target dir = ${targetDir}`);
+      command.log(adapter.log.getOutput().trim());
       return result;
     }
   }
 
   public static buildJson(
     adapter: ForceGeneratorAdapter,
-    outputDir: string
-  ): string {
+    targetDir: string
+  ): CreateOutput {
     const cleanOutput = adapter.log.getCleanOutput();
-    const rawOutput = adapter.log.getOutput();
-    const output: CreateOutput = {
-      outputDir: outputDir,
+    const rawOutput = `target dir = ${targetDir}\n${adapter.log.getOutput()}`;
+    const output = {
+      outputDir: targetDir,
       created: cleanOutput,
       rawOutput
     };
-    return JSON.stringify(output);
+    return output;
   }
 }
 export interface CreateOutput {

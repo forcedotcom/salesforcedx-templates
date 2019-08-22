@@ -16,8 +16,8 @@ export default class LightningEventGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningevent'));
-    // This disables yeoman feature for overwriting files prompt
-    this.conflicter.force = true;
+    // This enables yeoman feature for overwriting files prompt
+    this.conflicter.force = false;
   }
   public writing() {
     const {

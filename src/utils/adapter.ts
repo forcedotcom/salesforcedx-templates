@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as generator from 'yeoman-generator';
-import { Answers, OptionsMap } from './options';
+import { Answers, OptionsMap } from './types';
 import { Log } from './logger';
 
 export class ForceGeneratorAdapter {
@@ -38,7 +38,9 @@ export class ForceGeneratorAdapter {
       resolve(answers);
     });
 
-    promptPromise.then(cb || undefined);
+    promptPromise.then(cb || undefined).catch(() => {
+      throw new Error('Error resolving conflicting files');
+    });
 
     return promptPromise;
   }

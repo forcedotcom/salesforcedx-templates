@@ -6,7 +6,7 @@
  */
 import { Messages } from '@salesforce/core';
 import * as path from 'path';
-import { OptionsMap } from './types';
+import { OptionsMap } from '../utils/types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
 Messages.importMessagesDirectory(__dirname);
@@ -15,8 +15,8 @@ const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 export default class LightningComponentGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
-    // This enables yeoman feature for overwriting files prompt
-    this.conflicter.force = false;
+    // This disables yeoman feature for overwriting files prompt
+    this.conflicter.force = true;
   }
   public writing() {
     const {

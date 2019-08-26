@@ -6,7 +6,7 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils/createUtil';
-import { OptionsMap } from './types';
+import { OptionsMap } from '../utils/types';
 // tslint:disable-next-line: no-var-requires
 const generator = require('yeoman-generator');
 const loginURL = 'https://login.salesforce.com';
@@ -36,8 +36,8 @@ export default class ProjectGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'project'));
-    // This enables yeoman feature for overwriting files prompt
-    this.conflicter.force = false;
+    // This disables yeoman feature for overwriting files prompt
+    this.conflicter.force = true;
   }
   public writing() {
     const {

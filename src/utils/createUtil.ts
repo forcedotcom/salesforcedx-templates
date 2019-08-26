@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yeoman from 'yeoman-environment';
 import { ForceGeneratorAdapter } from './adapter';
+import { CreateOutput } from './types';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
@@ -73,8 +74,9 @@ export class CreateUtil {
     if (command.isJson) {
       return this.buildJson(adapter, targetDir);
     } else {
+      command.log(messages.getMessage('targetDirOutput', [targetDir]));
       command.log(`target dir = ${targetDir}`);
-      command.log(adapter.log.getOutput().trim());
+      command.log(adapter.log.getOutput());
       return result;
     }
   }
@@ -92,9 +94,4 @@ export class CreateUtil {
     };
     return output;
   }
-}
-export interface CreateOutput {
-  outputDir: string;
-  created: string[];
-  rawOutput: string;
 }

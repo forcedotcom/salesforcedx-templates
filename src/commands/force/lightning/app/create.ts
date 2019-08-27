@@ -8,8 +8,8 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
-import { CreateUtil } from '../../../../utils/createUtil';
 import LightningAppGenerator from '../../../../generators/lightningAppGenerator';
+import { CreateUtil } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');

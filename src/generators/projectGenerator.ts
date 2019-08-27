@@ -4,8 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+import * as fs from 'fs';
 import * as path from 'path';
-import { CreateUtil } from '../utils/createUtil';
 import { OptionsMap } from '../utils/types';
 // tslint:disable-next-line: no-var-requires
 const generator = require('yeoman-generator');
@@ -93,7 +93,7 @@ export default class ProjectGenerator extends generator {
 
     // tslint:disable-next-line:no-unused-expression
     if (template === 'standard') {
-      CreateUtil.makeEmptyFolders(folderlayout, standardfolderarray);
+      makeEmptyFolders(folderlayout, standardfolderarray);
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
@@ -126,11 +126,26 @@ export default class ProjectGenerator extends generator {
 
     // tslint:disable-next-line:no-unused-expression
     if (template === 'empty') {
-      CreateUtil.makeEmptyFolders(folderlayout, emptyfolderarray);
+      makeEmptyFolders(folderlayout, emptyfolderarray);
       this.fs.copyTpl(
         this.templatePath('.forceignore'),
         this.destinationPath(path.join(outputdir, projectname, '.forceignore'))
       );
+    }
+  }
+}
+
+function makeEmptyFolders(toplevelfolders, metadatafolders) {
+  let oldfolder = '';
+  for (const folder of toplevelfolders) {
+    if (!fs.existsSync(path.join(oldfolder, folder))) {
+      fs.mkdirSync(path.join(oldfolder, folder));
+      oldfolder = path.join(oldfolder, folder);
+    }
+  }
+  for (const newfolder of metadatafolders) {
+    if (!fs.existsSync(path.join(oldfolder, newfolder))) {
+      fs.mkdirSync(path.join(oldfolder, newfolder));
     }
   }
 }

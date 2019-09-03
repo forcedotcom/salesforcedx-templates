@@ -9,7 +9,8 @@ import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import { resolve } from 'path';
 import { SinonStub, stub } from 'sinon';
-import { CreateUtil } from '../../src/utils';
+import ApexClassGenerator from '../../src/generators/apexClassGenerator';
+import { CreateUtil, ForceGeneratorAdapter, Log } from '../../src/utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
@@ -90,6 +91,75 @@ describe('CreateUtil', () => {
       expect(version).to.not.be.undefined;
       const major = version.trim().split('.')[0];
       expect(CreateUtil.getDefaultApiVersion()).to.equal(`${major}.0`);
+    });
+  });
+
+  describe('buildJson', () => {
+    it('should build json output in the correct format', () => {
+      const adapter = new ForceGeneratorAdapter();
+      const targetDir = resolve('src', 'templates', 'output');
+      const cleanOutput = ['testClass.cls', 'testClass.cls-meta.xml'];
+      const rawOutput =
+        'create testClass.cls\n create testClass.cls-meta.xml\n';
+      const cleanOutputStub = stub(Log.prototype, 'getCleanOutput').returns(
+        cleanOutput
+      );
+      const outputStub = stub(Log.prototype, 'getOutput').returns(rawOutput);
+      const targetDirOutput = `target dir = ${targetDir}\n${rawOutput}`;
+
+      const expOutput = {
+        outputDir: targetDir,
+        created: cleanOutput,
+        rawOutput: targetDirOutput
+      };
+
+      const result = CreateUtil.buildJson(adapter, targetDir);
+      expect(result).to.eql(expOutput);
+      cleanOutputStub.restore();
+      outputStub.restore();
+    });
+  });
+
+  describe('runGenerator', () => {
+    let jsonStub: SinonStub;
+    const outputdir = resolve('src', 'templates', 'output');
+    beforeEach(() => {
+      jsonStub = stub(CreateUtil, 'buildJson');
+    });
+
+    afterEach(() => {
+      jsonStub.restore();
+    });
+
+    it('should build json output when flag is specified', async () => {
+      const command = {
+        flags: {
+          classname: 'newClasses',
+          json: true,
+          loglevel: 'warn',
+          outputdir,
+          template: 'DefaultApexClass'
+        },
+        isJson: true
+      };
+      await CreateUtil.runGenerator(ApexClassGenerator, command);
+      expect(jsonStub.calledOnce).to.be.true;
+    });
+
+    it('should log output when json flag is not specified', async () => {
+      const command = {
+        flags: {
+          classname: 'newClasses',
+          json: false,
+          loglevel: 'warn',
+          outputdir,
+          template: 'DefaultApexClass'
+        },
+        isJson: false,
+        log: () => {}
+      };
+      await CreateUtil.runGenerator(ApexClassGenerator, command);
+      expect(jsonStub.calledOnce).to.be.false;
     });
   });
 });

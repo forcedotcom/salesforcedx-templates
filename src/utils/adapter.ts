@@ -43,7 +43,7 @@ export class ForceGeneratorAdapter {
     promptPromise.then(cb || undefined).catch(() => {
       throw new Error('Error resolving conflicting files');
     });
-
-    return promptPromise;
+    const result = { value: '' };
+    return Promise.resolve(result);
   }
 }

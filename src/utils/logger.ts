@@ -22,17 +22,17 @@ const statuses = [
 ];
 
 export class Log {
-  public output: string = '';
-  public cleanOutput: string[] = [];
+  private output: string = '';
+  private cleanOutput: string[] = [];
 
   constructor() {
     for (const status of statuses) {
       this[status] = (arg: string) => {
-        if (status !== 'identical') {
+        if (status !== 'identical' && status !== 'conflict') {
           this.cleanOutput.push(arg);
         }
         this.write(this.pad(status)).write(padding);
-        this.write(arg + '\n');
+        this.write(`${arg}\n`);
         return this;
       };
     }
@@ -55,5 +55,13 @@ export class Log {
     let max = 'identical'.length;
     let delta = max - status.length;
     return delta ? new Array(delta + 1).join(' ') + status : status;
+  }
+
+  public setOutput(text: string) {
+    this.output = text;
+  }
+
+  public setCleanOutput(cleanText: string[]) {
+    this.cleanOutput = cleanText;
   }
 }

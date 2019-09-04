@@ -13,8 +13,7 @@ export default class ApexClassGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'apexclass'));
-    // This disables yeoman feature for overwriting files prompt
-    this.conflicter.force = true;
+    this.conflicter.force = false;
   }
 
   public writing() {

@@ -9,8 +9,6 @@
 'use strict';
 
 import * as util from 'util';
-import * as table from 'text-table';
-import * as logSymbols from 'log-symbols';
 
 const padding = ' ';
 const statuses = [
@@ -24,29 +22,20 @@ const statuses = [
 ];
 
 export class Log {
-  private output: string = '';
-  private cleanOutput: string[] = [];
+  public output: string = '';
+  public cleanOutput: string[] = [];
 
   constructor() {
     for (const status of statuses) {
       this[status] = (arg: string) => {
-        this.cleanOutput.push(arg);
+        if (status !== 'identical') {
+          this.cleanOutput.push(arg);
+        }
         this.write(this.pad(status)).write(padding);
-        this.write(this.applyNoStyle(arg) + '\n');
+        this.write(arg + '\n');
         return this;
       };
     }
-  }
-
-  public log(msg: string, context: any): Log {
-    msg = msg || '';
-    if (typeof context === 'object' && !Array.isArray(context)) {
-      this.output = this.output + this.formatter(msg, context);
-    } else {
-      this.output = msg;
-    }
-
-    return this;
   }
 
   public getOutput(): string {
@@ -62,75 +51,9 @@ export class Log {
     return this;
   }
 
-  public writeln(...args: string[]): Log {
-    this.write.apply(this, args);
-    this.write('\n');
-    return this;
-  }
-
-  public ok(...args: string[]): Log {
-    this.write(
-      logSymbols.success + ' ' + util.format.apply(util, arguments) + '\n'
-    );
-    return this;
-  }
-
-  public error(...args: string[]): Log {
-    this.write(
-      logSymbols.error + ' ' + util.format.apply(util, arguments) + '\n'
-    );
-    return this;
-  }
-
-  public table(opts: any[] | any): any {
-    let tableData: any[] = [];
-
-    opts = Array.isArray(opts) ? { rows: opts } : opts;
-    opts.rows = opts.rows || [];
-
-    opts.rows.forEach((row: string) => {
-      tableData.push(row);
-    });
-
-    return table(tableData);
-  }
-
-  private pad(status: string) {
+  public pad(status: string) {
     let max = 'identical'.length;
     let delta = max - status.length;
     return delta ? new Array(delta + 1).join(' ') + status : status;
-  }
-
-  // borrowed from https://github.com/mikeal/logref/blob/master/main.js#L6-15
-  private formatter(msg: string, context: any) {
-    while (msg.indexOf('%') !== -1) {
-      let start = msg.indexOf('%');
-      let end = msg.indexOf(' ', start);
-
-      if (end === -1) {
-        end = msg.length;
-      }
-
-      msg =
-        msg.slice(0, start) +
-        context[msg.slice(start + 1, end)] +
-        msg.slice(end);
-    }
-
-    return msg;
-  }
-
-  private applyNoStyle(args: string): string {
-    let argsLen = args.length;
-    let str = '';
-
-    if (argsLen > 1) {
-      for (let a = 0; a < argsLen; a++) {
-        str += '' + args[a];
-      }
-    } else {
-      str = args[0];
-    }
-    return str;
   }
 }

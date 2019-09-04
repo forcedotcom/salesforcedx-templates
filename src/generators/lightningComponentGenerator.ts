@@ -15,8 +15,7 @@ const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 export default class LightningComponentGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
-    // This disables yeoman feature for overwriting files prompt
-    this.conflicter.force = true;
+    this.conflicter.force = false;
   }
   public writing() {
     const {

@@ -65,7 +65,6 @@ export class CreateUtil {
       return this.buildJson(adapter, targetDir);
     } else {
       command.log(messages.getMessage('targetDirOutput', [targetDir]));
-      command.log(`target dir = ${targetDir}`);
       command.log(adapter.log.getOutput());
       return result;
     }

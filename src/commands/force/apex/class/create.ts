@@ -53,6 +53,6 @@ export default class ApexClass extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.classname);
     CreateUtil.checkInputs(this.flags.template);
 
-    return CreateUtil.runGenerator(ApexClassGenerator, this);
+    return CreateUtil.runGenerator(ApexClassGenerator, this); // rum Gen returns a promise
   }
 }

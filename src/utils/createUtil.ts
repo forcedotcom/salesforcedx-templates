@@ -11,10 +11,11 @@ import * as yeoman from 'yeoman-environment';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+
 /* tslint:disable:no-unused-expression */
 
 export class CreateUtil {
-  public static checkInputs(flagValue) {
+  public static checkInputs(flagValue: string) {
     const alphaRegExp = /^\w+$/;
 
     if (!alphaRegExp.test(flagValue)) {
@@ -37,7 +38,10 @@ export class CreateUtil {
   }
 
   // TODO: switch filetype to a string instead of regex
-  public static getCommandTemplatesForFiletype(filetype, command) {
+  public static getCommandTemplatesForFiletype(
+    filetype: RegExp,
+    command: string
+  ) {
     const files = fs
       .readdirSync(path.resolve(__dirname, '..', 'templates', command))
       .filter(file => filetype.test(file))
@@ -47,7 +51,7 @@ export class CreateUtil {
     return files;
   }
 
-  public static runGenerator(generatorname, command) {
+  public static runGenerator(generatorname: any, command: any) {
     if (!command.flags.apiversion) {
       command.flags.apiversion = CreateUtil.getDefaultApiVersion();
     }
@@ -56,7 +60,7 @@ export class CreateUtil {
     env.registerStub(generatorname, 'generator');
     const result = env.run('generator', command.flags);
     command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
-    return result;
+    return result; // result in a promise
   }
 
   public static getDefaultApiVersion(): string {

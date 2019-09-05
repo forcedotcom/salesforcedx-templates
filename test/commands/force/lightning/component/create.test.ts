@@ -13,7 +13,7 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
 export class AuraLightningTestFormatter {
-  public static fileformatter(pathway, filename) {
+  public static fileformatter(pathway: string, filename: string) {
     const files = [];
     const suffixarray = [
       '.cmp',

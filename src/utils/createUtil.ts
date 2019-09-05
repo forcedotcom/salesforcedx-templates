@@ -60,7 +60,7 @@ export class CreateUtil {
     env.registerStub(generatorname, 'generator');
     const result = env.run('generator', command.flags);
     command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
-    return result; // result in a promise
+    return result;
   }
 
   public static getDefaultApiVersion(): string {

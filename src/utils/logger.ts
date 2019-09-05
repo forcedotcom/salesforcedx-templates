@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-// tslint:disable no-any
 'use strict';
 
 import * as util from 'util';

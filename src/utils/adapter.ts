@@ -6,44 +6,22 @@
  */
 import * as generator from 'yeoman-generator';
 import { Log } from './logger';
-import { Answers, OptionsMap } from './types';
+import { Answers } from './types';
 
 export class ForceGeneratorAdapter {
   public log = new Log();
 
-  // tslint:disable-next-line:no-any
-  private values?: any;
-
-  // tslint:disable-next-line:no-any
-  constructor(values?: any) {
-    this.values = values ? values : {};
-  }
+  constructor() {}
 
   public prompt(opt: [generator.Questions], cb: () => void): Promise<Answers> {
-    const localValues: OptionsMap = this.values!;
-    const promptPromise = new Promise<Answers>((resolve, reject) => {
+    const promptPromise = new Promise<Answers>(resolve => {
       const answers: Answers = {};
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < opt.length; i++) {
-        const question: generator.Questions = opt[i];
-        // tslint:disable-next-line:no-unused-expression
-        if (question === 'action') {
-          answers[question.name] = 'write';
-        } else {
-          let retValue: string = localValues[0];
-          if (!retValue) {
-            retValue = '';
-          }
-          answers[0] = retValue;
-        }
-      }
+      answers[0] = '';
       resolve(answers);
     });
-
     promptPromise.then(cb || undefined).catch(() => {
       throw new Error('Error resolving conflicting files');
     });
-    const result = { value: '' };
-    return Promise.resolve(result);
+    return promptPromise;
   }
 }

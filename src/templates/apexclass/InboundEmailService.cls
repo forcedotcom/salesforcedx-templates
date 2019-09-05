@@ -3,7 +3,6 @@
  * to process the contents, headers, and attachments of inbound
  * email.
  */
- 
 global class <%= apiName %> implements Messaging.InboundEmailHandler {
 
     global Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {

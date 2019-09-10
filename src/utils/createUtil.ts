@@ -41,7 +41,7 @@ export class CreateUtil {
   public static getCommandTemplatesForFiletype(
     filetype: RegExp,
     command: string
-  ) {
+  ): string[] {
     const files = fs
       .readdirSync(path.resolve(__dirname, '..', 'templates', command))
       .filter(file => filetype.test(file))

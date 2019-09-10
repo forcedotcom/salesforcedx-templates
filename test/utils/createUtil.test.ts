@@ -75,7 +75,7 @@ describe('CreateUtil', () => {
       assertTemplateNames(['Template']);
     });
 
-    const assertTemplateNames = names => {
+    const assertTemplateNames = (names: String[]) => {
       const templates = CreateUtil.getCommandTemplatesForFiletype(
         /.cls$/,
         templateType

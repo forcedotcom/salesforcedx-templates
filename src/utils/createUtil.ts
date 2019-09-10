@@ -4,7 +4,9 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+import { SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
+import { AnyJson } from '@salesforce/ts-types';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yeoman from 'yeoman-environment';
@@ -60,7 +62,7 @@ export class CreateUtil {
     env.registerStub(generatorname, 'generator');
     const result = env.run('generator', command.flags);
     command.log(`target dir = ${path.resolve(command.flags.outputdir)}`);
-    return result;
+    return {};
   }
 
   public static getDefaultApiVersion(): string {

@@ -1,36 +1,5 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "outDir": "./lib",
-    "module": "commonjs",
-    "target": "es6",
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "rootDir": ".",
-    "preserveConstEnums": true,
-    "strict": true,
-
-    // We can replace the TS generated snippets with require statements
-    // from the tslib dependency, making our code more efficient
-    "importHelpers": true,
-    "resolveJsonModule": true
-
-    // Commenting for now since we need to add handling to undefined variables
-    // "strict": true
-
-    // Commenting composite out since it prevents the debugger from working
-    // if we import metadatainfos.json
-    // "composite": true
-  },
-  "exclude": ["**/node_modules/**"]
-}
-
-/*
-
-{
-  "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
     "lib": ["es6", "dom"],
@@ -45,5 +14,3 @@
   },
   "exclude": ["node_modules", "out"]
 }
-
-*/

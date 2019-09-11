@@ -7,5 +7,10 @@
 export interface StringKeyValueObject<V> {
   [opt: string]: V;
 }
-
 export type OptionsMap = StringKeyValueObject<string>;
+export type Answers = StringKeyValueObject<string>;
+export interface CreateOutput {
+  outputDir: string;
+  created: string[];
+  rawOutput: string;
+}

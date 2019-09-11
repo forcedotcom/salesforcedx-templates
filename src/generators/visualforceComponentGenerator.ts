@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import { OptionsMap } from './types';
+import { OptionsMap } from '../utils/types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
 
@@ -15,8 +15,7 @@ export default class VisualforceComponentGenerator extends generator {
     this.sourceRoot(
       path.join(__dirname, '..', 'templates', 'visualforcecomponent')
     );
-    // This disables yeoman feature for overwriting files prompt
-    this.conflicter.force = true;
+    this.conflicter.force = false;
   }
 
   public writing() {

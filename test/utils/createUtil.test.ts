@@ -8,7 +8,7 @@ import { Messages } from '@salesforce/core';
 import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import { resolve } from 'path';
-import { SinonStub, stub } from 'sinon';
+import { createSandbox, SinonStub, stub } from 'sinon';
 import ApexClassGenerator from '../../src/generators/apexClassGenerator';
 import { CreateUtil, ForceGeneratorAdapter, Log } from '../../src/utils';
 
@@ -158,8 +158,12 @@ describe('CreateUtil', () => {
         isJson: false,
         log: () => {}
       };
+      const sb = createSandbox();
+      const logSpy = sb.spy(command, 'log');
       await CreateUtil.runGenerator(ApexClassGenerator, command);
       expect(jsonStub.calledOnce).to.be.false;
+      assert(logSpy.calledTwice);
+      logSpy.restore();
     });
   });
 });

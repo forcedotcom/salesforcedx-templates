@@ -30,7 +30,7 @@ const filestocopy = [
   '.prettierrc'
 ];
 const emptyfolderarray = ['aura', 'lwc'];
-const analyticsfolderarray = ['wave', 'waveTemplates', 'lwc'];
+const analyticsfolderarray = ['waveTemplates'];
 const vscodearray = ['extensions', 'launch', 'settings'];
 
 Messages.importMessagesDirectory(__dirname);

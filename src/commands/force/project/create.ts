@@ -47,7 +47,7 @@ export default class Project extends SfdxCommand {
       char: 't',
       description: messages.getMessage('template'),
       default: 'standard',
-      options: ['standard', 'empty']
+      options: ['standard', 'empty', 'analytics']
     }),
     manifest: flags.boolean({
       char: 'x',

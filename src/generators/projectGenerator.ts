@@ -59,12 +59,15 @@ export default class ProjectGenerator extends generator {
     ];
 
     let scratchDefFile;
+    let manifestFile;
     switch (template) {
       case 'analytics':
         scratchDefFile = 'AnalyticsScratchDef.json';
+        manifestFile = 'AnalyticsManifest.xml';
         break;
       default:
         scratchDefFile = 'DefaultScratchDef.json';
+        manifestFile = 'DefaultManifest.xml';
     }
 
     this.fs.copyTpl(
@@ -93,14 +96,6 @@ export default class ProjectGenerator extends generator {
 
     // tslint:disable-next-line:no-unused-expression
     if (manifest === true) {
-      let manifestFile;
-      switch (template) {
-        case 'analytics':
-          manifestFile = 'AnalyticsManifest.xml';
-          break;
-        default:
-          manifestFile = 'DefaultManifest.xml';
-      }
       this.fs.copyTpl(
         this.templatePath(manifestFile),
         this.destinationPath(

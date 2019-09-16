@@ -1,7 +1,7 @@
 {
   "orgName": "<%= company %>",
   "edition": "Developer",
-  "features": ["AnalyticsAdminPerms","EinsteinAnalyticsPlus"],
+  "features": ["AnalyticsAdminPerms", "EinsteinAnalyticsPlus"],
   "settings": {
     "orgPreferenceSettings": {
       "s1DesktopEnabled": true

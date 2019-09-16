@@ -220,7 +220,7 @@ describe('Project creation tests:', () => {
           }
           assert.fileContent(
             path.join('analytics1', 'config', 'project-scratch-def.json'),
-            '["AnalyticsAdminPerms","EinsteinAnalyticsPlus"]'
+            '["AnalyticsAdminPerms", "EinsteinAnalyticsPlus"]'
           );
           assert.fileContent(
             path.join('analytics1', 'manifest', 'package.xml'),

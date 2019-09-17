@@ -55,6 +55,7 @@ describe('CreateUtil', () => {
     let readdirStub: SinonStub;
 
     beforeEach(() => {
+      // @ts-ignore
       readdirStub = stub(fs, 'readdirSync');
     });
 
@@ -124,6 +125,7 @@ describe('CreateUtil', () => {
     let jsonStub: SinonStub;
     const outputdir = resolve('src', 'templates', 'output');
     beforeEach(() => {
+      // @ts-ignore
       jsonStub = stub(CreateUtil, 'buildJson');
     });
 

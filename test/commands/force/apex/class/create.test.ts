@@ -8,7 +8,6 @@ import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
 import * as fs from 'fs';
 import * as path from 'path';
-// @ts-ignore
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);

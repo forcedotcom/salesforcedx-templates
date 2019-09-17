@@ -47,8 +47,8 @@ export class Log {
     return this.cleanOutput;
   }
 
-  public write(...args: string[]): Log {
-    this.output = this.output + util.format.apply(util, [args]);
+  public write(...args: [string]): Log {
+    this.output = this.output + util.format.apply(util, args);
     return this;
   }
 

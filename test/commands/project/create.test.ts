@@ -173,10 +173,9 @@ describe('Project creation tests:', () => {
           assert.file(path.join('fooempty', '.forceignore'));
           assert.fileContent(
             path.join('fooempty', 'sfdx-project.json'),
-            '"namespace": "testnamespace",',
-            '"path": "empty",',
-            'sourceApiVersion'
+            '"namespace": "testnamespace",'
           );
+          assert.fileContent('"path": "empty",', 'sourceApiVersion');
           for (const folder of emptyfolderarray) {
             assert(
               fs.existsSync(

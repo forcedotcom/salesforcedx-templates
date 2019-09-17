@@ -53,7 +53,9 @@ describe('Lightning app creation tests:', () => {
           assert.file(path.join('aura', 'foo', 'foo.app-meta.xml'));
           assert.fileContent(
             path.join('aura', 'foo', 'foo.app'),
-            '<aura:application>\n\n</aura:application>',
+            '<aura:application>\n\n</aura:application>'
+          );
+          assert.fileContent(
             path.join('aura', 'foo', 'foo.app-meta.xml'),
             '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
           );

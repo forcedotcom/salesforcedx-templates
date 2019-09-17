@@ -9,6 +9,7 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as fs from 'fs';
 import * as path from 'path';
+// @ts-ignore
 import * as yeoman from 'yeoman-environment';
 import { ForceGeneratorAdapter } from './adapter';
 import { CreateOutput } from './types';

@@ -12,8 +12,8 @@ import * as assert from 'yeoman-assert';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 export class TestFormatter {
-  public static fileformatter(pathway, filename) {
-    const files = [];
+  public static fileformatter(pathway: string, filename: string): string[] {
+    const files: string[] = [];
     const suffixarray = [
       '.app',
       '.app-meta.xml',

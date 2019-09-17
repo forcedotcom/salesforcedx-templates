@@ -9,6 +9,9 @@ Code base to host the Salesforce CLI commands.
 
 <!-- toc -->
 * [salesforcedx-templates](#salesforcedx-templates)
+* [Debugging your plugin](#debugging-your-plugin)
+<!-- tocstop -->
+* [salesforcedx-templates](#salesforcedx-templates)
     <!-- install -->
     <!-- usage -->
 ```sh-session
@@ -16,7 +19,7 @@ $ npm install -g salesforcedx-templates
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-salesforcedx-templates/0.0.0 darwin-x64 node-v10.15.0
+salesforcedx-templates/0.0.0 darwin-x64 node-v12.6.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -45,9 +48,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --classname=classname                                                         (required) name of the generated
                                                                                     Apex class
@@ -85,7 +88,7 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir
-      [default: /Users/lcamposguajardo/github/DevTools/summer/salesforcedx-templates] folder for saving the created files
+      [default: /Users/c.may/Desktop/code/teamRepos/salesforcedx-templates] folder for saving the created files
 
   -e, --triggerevents=before insert|before update|before delete|after insert|after update|after delete|after undelete
       [default: before insert] events that fire the trigger
@@ -114,7 +117,7 @@ DESCRIPTION
 
 EXAMPLES
   $ sfdx force:apex:trigger:create -n MyTrigger
-  $ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after upsert'
+  $ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after insert'
   $ sfdx force:apex:trigger:create -n MyTrigger -d triggers
 ```
 
@@ -131,9 +134,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --appname=appname                                                             (required) name of the generated
                                                                                     Lightning app
@@ -174,9 +177,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --componentname=componentname                                                 (required) name of the generated
                                                                                     Lightning component
@@ -224,9 +227,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --eventname=eventname                                                         (required) name of the generated
                                                                                     Lightning event
@@ -267,9 +270,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --interfacename=interfacename                                                 (required) name of the generated
                                                                                     Lightning interface
@@ -310,9 +313,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --projectname=projectname                                                     (required) name of the generated
                                                                                     project
@@ -357,9 +360,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -l, --label=label                                                                 (required) Visualforce component
                                                                                     label
@@ -401,9 +404,9 @@ USAGE
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -l, --label=label                                                                 (required) Visualforce page label
 

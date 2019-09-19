@@ -375,10 +375,10 @@
   resolved "https://registry.yarnpkg.com/@types/yeoman-assert/-/yeoman-assert-3.1.1.tgz#d1f683e5f6e6b15d36bfb216221a19bd7e9735c6"
   integrity sha512-ACDlMVhoLIA3VQPFKtJWlr3evUE3DaEbVxi1ukivBRNB1havMW+vo2J0+hNURF19yiqs7iu+yUHLG25bCi2xcw==
 
-"@types/yeoman-generator@3.1.3":
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/@types/yeoman-generator/-/yeoman-generator-3.1.3.tgz#7ba2d83bf9c5a223fc181d4215d767e120ff15e9"
-  integrity sha512-CCuqeAbyEWOUjXrk6uOoahPlMhoaIniCVBxniDzXmmCCc30iADrYb9WdjDrfVyV2C2wAL0gFI9POXHZN+8EGjA==
+"@types/yeoman-generator@^3.1.3":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@types/yeoman-generator/-/yeoman-generator-3.1.4.tgz#21d6599515d41447eb84e2bc45033f1a640bbaf2"
+  integrity sha512-5oG9Qlk119qSHQpSClGonDIs4djxZSPurtg6faHItjeg8cffhkKs4twVYE+Wa0crAKJZDOwSd/Vmc6BSqJtgMA==
   dependencies:
     "@types/inquirer" "*"
     rxjs ">=6.4.0"

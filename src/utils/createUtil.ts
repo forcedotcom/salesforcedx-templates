@@ -5,19 +5,17 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
-import { AnyJson } from '@salesforce/ts-types';
 import * as fs from 'fs';
 import * as path from 'path';
 // @ts-ignore
 import * as yeoman from 'yeoman-environment';
 import { ForceGeneratorAdapter } from './adapter';
 import { CreateOutput } from './types';
-import * as generator from '../../node_modules/@types/yeoman-generator';
-
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+
+const generator = require('yeoman-generator');
 
 /* tslint:disable:no-unused-expression */
 
@@ -59,8 +57,8 @@ export class CreateUtil {
   }
 
   public static async runGenerator(
-    generatorname: generator,
-    command: SfdxCommand
+    generatorname: typeof generator,
+    command: any
   ) {
     if (!command.flags.apiversion) {
       command.flags.apiversion = CreateUtil.getDefaultApiVersion();

@@ -66,9 +66,11 @@ export default class LightningComponent extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.template);
 
     // lwc requires first letter lowercase
-    this.flags.componentname = `${this.flags.componentname
-      .substring(0, 1)
-      .toLowerCase()}${this.flags.componentname.substring(1)}`;
+    if (this.flags.type === 'lwc') {
+      this.flags.componentname = `${this.flags.componentname
+        .substring(0, 1)
+        .toLowerCase()}${this.flags.componentname.substring(1)}`;
+    }
 
     const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
 

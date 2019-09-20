@@ -58,17 +58,8 @@ export default class ProjectGenerator extends generator {
       'default'
     ];
 
-    let scratchDefFile;
-    let manifestFile;
-    switch (template) {
-      case 'analytics':
-        scratchDefFile = 'AnalyticsScratchDef.json';
-        manifestFile = 'AnalyticsManifest.xml';
-        break;
-      default:
-        scratchDefFile = 'DefaultScratchDef.json';
-        manifestFile = 'DefaultManifest.xml';
-    }
+    let scratchDefFile = `${template}/ScratchDef.json`;
+    let manifestFile = `${template}/Manifest.xml`;
 
     this.fs.copyTpl(
       this.templatePath(scratchDefFile),
@@ -78,7 +69,7 @@ export default class ProjectGenerator extends generator {
       { company: (process.env.USER || 'Demo') + ' company' }
     );
     this.fs.copyTpl(
-      this.templatePath(`README.${template}.md`),
+      this.templatePath(`${template}/README.md`),
       this.destinationPath(path.join(outputdir, projectname, 'README.md'))
     );
     this.fs.copyTpl(

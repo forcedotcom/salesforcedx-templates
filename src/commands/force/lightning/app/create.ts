@@ -9,12 +9,12 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningAppGenerator from '../../../../generators/lightningAppGenerator';
-import { CreateUtil } from '../../../../utils';
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningAppFileSuffix = /.app$/;
-export default class LightningApp extends SfdxCommand {
+export default class LightningApp extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myapp',
     '$ sfdx force:lightning:app:create -n myapp -d aura'
@@ -62,6 +62,6 @@ export default class LightningApp extends SfdxCommand {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
 
-    return CreateUtil.runGenerator(LightningAppGenerator, this);
+    return this.runGenerator(LightningAppGenerator, this);
   }
 }

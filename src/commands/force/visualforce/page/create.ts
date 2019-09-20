@@ -8,13 +8,13 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import VisualforcePageGenerator from '../../../../generators/visualforcePageGenerator';
-import { CreateUtil } from '../../../../utils';
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const visualforcePageFileSuffix = /.page$/;
 
-export default class VisualforcePage extends SfdxCommand {
+export default class VisualforcePage extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:visualforce:page:create -n mypage -l mylabel',
     '$ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages'
@@ -56,6 +56,6 @@ export default class VisualforcePage extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.pagename);
     CreateUtil.checkInputs(this.flags.template);
 
-    return CreateUtil.runGenerator(VisualforcePageGenerator, this);
+    return this.runGenerator(VisualforcePageGenerator, this);
   }
 }

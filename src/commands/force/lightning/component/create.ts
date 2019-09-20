@@ -9,13 +9,12 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningComponentGenerator from '../../../../generators/lightningComponentGenerator';
-import { CreateUtil } from '../../../../utils';
-
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningComponentFileSuffix = /.cmp$/;
 
-export default class LightningComponent extends SfdxCommand {
+export default class LightningComponent extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:lightning:component:create -n mycomponent',
     '$ sfdx force:lightning:component:create -n mycomponent --type lwc',
@@ -76,6 +75,6 @@ export default class LightningComponent extends SfdxCommand {
       }
     }
 
-    return CreateUtil.runGenerator(LightningComponentGenerator, this);
+    return this.runGenerator(LightningComponentGenerator, this);
   }
 }

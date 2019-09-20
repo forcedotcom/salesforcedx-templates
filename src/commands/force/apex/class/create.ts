@@ -8,13 +8,13 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import ApexClassGenerator from '../../../../generators/apexClassGenerator';
-import { CreateUtil } from '../../../../utils';
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const apexClassFileSuffix = /.cls$/;
 
-export default class ApexClass extends SfdxCommand {
+export default class ApexClass extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
     '$ sfdx force:apex:class:create -n MyClass -d classes'
@@ -53,6 +53,6 @@ export default class ApexClass extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.classname);
     CreateUtil.checkInputs(this.flags.template);
 
-    return CreateUtil.runGenerator(ApexClassGenerator, this);
+    return this.runGenerator(ApexClassGenerator, this);
   }
 }

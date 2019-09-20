@@ -8,13 +8,13 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import ApexTriggerGenerator from '../../../../generators/apexTriggerGenerator';
-import { CreateUtil } from '../../../../utils';
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const apexTriggerFileSuffix = /.trigger$/;
 
-export default class ApexTrigger extends SfdxCommand {
+export default class ApexTrigger extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:apex:trigger:create -n MyTrigger',
     "$ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after insert'",
@@ -73,6 +73,6 @@ export default class ApexTrigger extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.triggername);
     CreateUtil.checkInputs(this.flags.template);
 
-    return CreateUtil.runGenerator(ApexTriggerGenerator, this);
+    return this.runGenerator(ApexTriggerGenerator, this);
   }
 }

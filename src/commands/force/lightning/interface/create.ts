@@ -9,13 +9,13 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningInterfaceGenerator from '../../../../generators/lightningInterfaceGenerator';
-import { CreateUtil } from '../../../../utils';
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningInterfaceFileSuffix = /.intf$/;
 
-export default class LightningInterface extends SfdxCommand {
+export default class LightningInterface extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:lightning:interface:create -n myinterface',
     '$ sfdx force:lightning:interface:create -n myinterface -d aura'
@@ -65,6 +65,6 @@ export default class LightningInterface extends SfdxCommand {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
 
-    return CreateUtil.runGenerator(LightningInterfaceGenerator, this);
+    return this.runGenerator(LightningInterfaceGenerator, this);
   }
 }

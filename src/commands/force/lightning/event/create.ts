@@ -9,12 +9,11 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningEventGenerator from '../../../../generators/lightningEventGenerator';
-import { CreateUtil } from '../../../../utils';
-
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningEventFileSuffix = /.evt$/;
-export default class LightningEvent extends SfdxCommand {
+export default class LightningEvent extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myevent',
     '$ sfdx force:lightning:event:create -n myevent -d aura'
@@ -61,6 +60,6 @@ export default class LightningEvent extends SfdxCommand {
     if (!this.flags.internal && !fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
-    return CreateUtil.runGenerator(LightningEventGenerator, this);
+    return this.runGenerator(LightningEventGenerator, this);
   }
 }

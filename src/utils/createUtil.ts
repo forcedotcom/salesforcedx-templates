@@ -15,8 +15,6 @@ import { CreateOutput } from './types';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
-const generator = require('yeoman-generator');
-
 /* tslint:disable:no-unused-expression */
 
 export class CreateUtil {
@@ -54,30 +52,6 @@ export class CreateUtil {
         return file.split('.', 1).toString();
       });
     return files;
-  }
-
-  public static async runGenerator(
-    generatorname: typeof generator,
-    command: any
-  ) {
-    if (!command.flags.apiversion) {
-      command.flags.apiversion = CreateUtil.getDefaultApiVersion();
-    }
-
-    const adapter = new ForceGeneratorAdapter();
-    const env = yeoman.createEnv(undefined, undefined, adapter);
-    env.registerStub(generatorname, 'generator');
-
-    const result = await env.run('generator', command.flags);
-    const targetDir = path.resolve(command.flags.outputdir);
-
-    if (command.isJson) {
-      return this.buildJson(adapter, targetDir);
-    } else {
-      command.log(messages.getMessage('targetDirOutput', [targetDir]));
-      command.log(adapter.log.getOutput());
-      return result;
-    }
   }
 
   public static buildJson(

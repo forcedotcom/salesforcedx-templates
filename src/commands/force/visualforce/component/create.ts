@@ -8,13 +8,13 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import VisualforceComponentGenerator from '../../../../generators/visualforceComponentGenerator';
-import { CreateUtil } from '../../../../utils';
+import { CreateUtil, SfdxCommandBase } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const visualforceComponentFileSuffix = /.component$/;
 
-export default class VisualforceComponent extends SfdxCommand {
+export default class VisualforceComponent extends SfdxCommandBase {
   public static examples = [
     '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel',
     '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components'
@@ -56,6 +56,6 @@ export default class VisualforceComponent extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.componentname);
     CreateUtil.checkInputs(this.flags.template);
 
-    return CreateUtil.runGenerator(VisualforceComponentGenerator, this);
+    return this.runGenerator(VisualforceComponentGenerator, this);
   }
 }

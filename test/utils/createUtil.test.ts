@@ -11,7 +11,7 @@ import { resolve } from 'path';
 import { createSandbox, SinonStub, stub } from 'sinon';
 import ApexClassGenerator from '../../src/generators/apexClassGenerator';
 import { CreateUtil, ForceGeneratorAdapter, Log } from '../../src/utils';
-
+import ApexClass from '../../src/commands/force/apex/class/create';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
@@ -144,6 +144,7 @@ describe('CreateUtil', () => {
         },
         isJson: true
       };
+
       await CreateUtil.runGenerator(ApexClassGenerator, command);
       expect(jsonStub.calledOnce).to.be.true;
     });

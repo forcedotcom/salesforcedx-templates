@@ -75,6 +75,6 @@ export default class LightningComponent extends SfdxCommandBase {
       }
     }
 
-    return this.runGenerator(LightningComponentGenerator, this);
+    return this.runGenerator(LightningComponentGenerator);
   }
 }

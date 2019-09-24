@@ -20,23 +20,23 @@ export class SfdxCommandBase extends SfdxCommand {
     throw new Error('Method not implemented.');
   }
 
-  public async runGenerator(generatorname: typeof generator, command: any) {
-    if (!command.flags.apiversion) {
-      command.flags.apiversion = CreateUtil.getDefaultApiVersion();
+  public async runGenerator(generatorname: typeof generator) {
+    if (!this.flags.apiversion) {
+      this.flags.apiversion = CreateUtil.getDefaultApiVersion();
     }
 
     const adapter = new ForceGeneratorAdapter();
     const env = yeoman.createEnv(undefined, undefined, adapter);
     env.registerStub(generatorname, 'generator');
 
-    const result = await env.run('generator', command.flags);
-    const targetDir = path.resolve(command.flags.outputdir);
+    const result = await env.run('generator', this.flags);
+    const targetDir = path.resolve(this.flags.outputdir);
 
-    if (command.isJson) {
+    if (this.flags.isJson) {
       return CreateUtil.buildJson(adapter, targetDir);
     } else {
-      command.log(messages.getMessage('targetDirOutput', [targetDir]));
-      command.log(adapter.log.getOutput());
+      this.log(messages.getMessage('targetDirOutput', [targetDir]));
+      this.log(adapter.log.getOutput());
       return result;
     }
   }

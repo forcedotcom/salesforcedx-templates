@@ -56,6 +56,6 @@ export default class VisualforcePage extends SfdxCommandBase {
     CreateUtil.checkInputs(this.flags.pagename);
     CreateUtil.checkInputs(this.flags.template);
 
-    return this.runGenerator(VisualforcePageGenerator, this);
+    return this.runGenerator(VisualforcePageGenerator);
   }
 }

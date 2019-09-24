@@ -53,6 +53,6 @@ export default class ApexClass extends SfdxCommandBase {
     CreateUtil.checkInputs(this.flags.classname);
     CreateUtil.checkInputs(this.flags.template);
 
-    return this.runGenerator(ApexClassGenerator, this);
+    return this.runGenerator(ApexClassGenerator);
   }
 }

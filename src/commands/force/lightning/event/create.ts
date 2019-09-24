@@ -60,6 +60,6 @@ export default class LightningEvent extends SfdxCommandBase {
     if (!this.flags.internal && !fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
-    return this.runGenerator(LightningEventGenerator, this);
+    return this.runGenerator(LightningEventGenerator);
   }
 }

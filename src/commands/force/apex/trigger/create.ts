@@ -73,6 +73,6 @@ export default class ApexTrigger extends SfdxCommandBase {
     CreateUtil.checkInputs(this.flags.triggername);
     CreateUtil.checkInputs(this.flags.template);
 
-    return this.runGenerator(ApexTriggerGenerator, this);
+    return this.runGenerator(ApexTriggerGenerator);
   }
 }

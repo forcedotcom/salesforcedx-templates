@@ -56,6 +56,6 @@ export default class VisualforceComponent extends SfdxCommandBase {
     CreateUtil.checkInputs(this.flags.componentname);
     CreateUtil.checkInputs(this.flags.template);
 
-    return this.runGenerator(VisualforceComponentGenerator, this);
+    return this.runGenerator(VisualforceComponentGenerator);
   }
 }

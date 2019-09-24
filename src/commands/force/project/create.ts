@@ -64,6 +64,6 @@ export default class Project extends SfdxCommandBase {
     // TODO: update the latest apiversion
     this.flags.sourceApiVersion = '46.0';
 
-    return this.runGenerator(ProjectGenerator, this);
+    return this.runGenerator(ProjectGenerator);
   }
 }

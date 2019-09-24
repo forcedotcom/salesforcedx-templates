@@ -65,6 +65,6 @@ export default class LightningInterface extends SfdxCommandBase {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
 
-    return this.runGenerator(LightningInterfaceGenerator, this);
+    return this.runGenerator(LightningInterfaceGenerator);
   }
 }

@@ -214,7 +214,10 @@ describe('Project creation tests:', () => {
           assert.file(path.join('analytics1', '.forceignore'));
           assert.fileContent(
             path.join('analytics1', 'sfdx-project.json'),
-            '"path": "force-app",',
+            '"path": "force-app",'
+          );
+          assert.fileContent(
+            path.join('analytics1', 'sfdx-project.json'),
             'sourceApiVersion'
           );
           for (const folder of analyticsfolderarray) {

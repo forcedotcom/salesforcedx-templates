@@ -11,7 +11,8 @@ Code base to host the Salesforce CLI commands.
 * [salesforcedx-templates](#salesforcedx-templates)
 * [Debugging your plugin](#debugging-your-plugin)
 <!-- tocstop -->
-* [salesforcedx-templates](#salesforcedx-templates)
+
+- [salesforcedx-templates](#salesforcedx-templates)
     <!-- install -->
     <!-- usage -->
 ```sh-session
@@ -325,7 +326,7 @@ OPTIONS
 
   -s, --namespace=namespace                                                         project associated namespace
 
-  -t, --template=standard|empty                                                     [default: standard] template to use
+  -t, --template=standard|empty|analytics                                           [default: standard] template to use
                                                                                     for file creation
 
   -x, --manifest                                                                    generate a manifest (package.xml)

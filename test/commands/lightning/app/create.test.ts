@@ -12,8 +12,8 @@ import * as assert from 'yeoman-assert';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 export class TestFormatter {
-  public static fileformatter(pathway, filename) {
-    const files = [];
+  public static fileformatter(pathway: string, filename: string): string[] {
+    const files: string[] = [];
     const suffixarray = [
       '.app',
       '.app-meta.xml',
@@ -52,7 +52,10 @@ describe('Lightning app creation tests:', () => {
           assert.file(TestFormatter.fileformatter('foo', 'foo'));
           assert.fileContent(
             path.join('aura', 'foo', 'foo.app'),
-            '<aura:application>\n\n</aura:application>',
+            '<aura:application>\n\n</aura:application>'
+          );
+
+          assert.fileContent(
             path.join('aura', 'foo', 'foo.app-meta.xml'),
             '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
           );

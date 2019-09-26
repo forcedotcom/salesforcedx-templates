@@ -7,16 +7,18 @@
 import { Messages } from '@salesforce/core';
 import * as fs from 'fs';
 import * as path from 'path';
+// @ts-ignore
 import * as yeoman from 'yeoman-environment';
 import { ForceGeneratorAdapter } from './adapter';
 import { CreateOutput } from './types';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+
 /* tslint:disable:no-unused-expression */
 
 export class CreateUtil {
-  public static checkInputs(flagValue) {
+  public static checkInputs(flagValue: string) {
     const alphaRegExp = /^\w+$/;
 
     if (!alphaRegExp.test(flagValue)) {
@@ -39,7 +41,10 @@ export class CreateUtil {
   }
 
   // TODO: switch filetype to a string instead of regex
-  public static getCommandTemplatesForFiletype(filetype, command) {
+  public static getCommandTemplatesForFiletype(
+    filetype: RegExp,
+    command: string
+  ): string[] {
     const files = fs
       .readdirSync(path.resolve(__dirname, '..', 'templates', command))
       .filter(file => filetype.test(file))
@@ -49,7 +54,7 @@ export class CreateUtil {
     return files;
   }
 
-  public static async runGenerator(generatorname, command) {
+  public static async runGenerator(generatorname: any, command: any) {
     if (!command.flags.apiversion) {
       command.flags.apiversion = CreateUtil.getDefaultApiVersion();
     }

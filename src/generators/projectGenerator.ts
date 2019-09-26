@@ -159,7 +159,10 @@ export default class ProjectGenerator extends generator {
   }
 }
 
-function makeEmptyFolders(toplevelfolders, metadatafolders) {
+function makeEmptyFolders(
+  toplevelfolders: string[],
+  metadatafolders: string[]
+) {
   let oldfolder = '';
   for (const folder of toplevelfolders) {
     if (!fs.existsSync(path.join(oldfolder, folder))) {

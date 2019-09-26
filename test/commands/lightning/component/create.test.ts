@@ -59,6 +59,21 @@ describe('Lightning component creation tests:', () => {
   });
   describe('Check lightning web components creation', () => {
     test
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'FooBar',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc'
+      ])
+      .it('should force first letter of component name to lowercase', ctx => {
+        assert.file(path.join('lwc', 'fooBar'));
+      });
+
+    test
       .withOrg()
       .withProject()
       .stdout()

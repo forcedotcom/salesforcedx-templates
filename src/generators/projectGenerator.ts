@@ -32,6 +32,8 @@ const filestocopy = [
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 
+const analyticsfolderarray = ['waveTemplates'];
+
 export default class ProjectGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
@@ -55,15 +57,19 @@ export default class ProjectGenerator extends generator {
       'main',
       'default'
     ];
+
+    let scratchDefFile = `${template}/ScratchDef.json`;
+    let manifestFile = `${template}/Manifest.xml`;
+
     this.fs.copyTpl(
-      this.templatePath('DefaultScratchDef.json'),
+      this.templatePath(scratchDefFile),
       this.destinationPath(
         path.join(outputdir, projectname, 'config', 'project-scratch-def.json')
       ),
       { company: (process.env.USER || 'Demo') + ' company' }
     );
     this.fs.copyTpl(
-      this.templatePath(`README.${template}.md`),
+      this.templatePath(`${template}/README.md`),
       this.destinationPath(path.join(outputdir, projectname, 'README.md'))
     );
     this.fs.copyTpl(
@@ -82,7 +88,7 @@ export default class ProjectGenerator extends generator {
     // tslint:disable-next-line:no-unused-expression
     if (manifest === true) {
       this.fs.copyTpl(
-        this.templatePath('DefaultManifest.xml'),
+        this.templatePath(manifestFile),
         this.destinationPath(
           path.join(outputdir, projectname, 'manifest', 'package.xml')
         ),
@@ -130,6 +136,25 @@ export default class ProjectGenerator extends generator {
         this.templatePath('.forceignore'),
         this.destinationPath(path.join(outputdir, projectname, '.forceignore'))
       );
+    }
+
+    // tslint:disable-next-line:no-unused-expression
+    if (template === 'analytics') {
+      makeEmptyFolders(folderlayout, analyticsfolderarray);
+      for (const file of vscodearray) {
+        this.fs.copyTpl(
+          this.templatePath(`${file}.json`),
+          this.destinationPath(
+            path.join(outputdir, projectname, '.vscode', `${file}.json`)
+          )
+        );
+      }
+      for (const file of filestocopy) {
+        this.fs.copyTpl(
+          this.templatePath(file),
+          this.destinationPath(path.join(outputdir, projectname, file))
+        );
+      }
     }
   }
 }

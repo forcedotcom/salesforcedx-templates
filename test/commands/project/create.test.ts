@@ -30,6 +30,7 @@ const filestocopy = [
   '.prettierrc'
 ];
 const emptyfolderarray = ['aura', 'lwc'];
+const analyticsfolderarray = ['waveTemplates'];
 const vscodearray = ['extensions', 'launch', 'settings'];
 
 Messages.importMessagesDirectory(__dirname);
@@ -191,6 +192,51 @@ describe('Project creation tests:', () => {
           }
           assert.fileContent(
             path.join('fooempty', 'README.md'),
+            '# Salesforce App'
+          );
+        }
+      );
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:project:create',
+        '--projectname',
+        'analytics1',
+        '--template',
+        'analytics',
+        '--manifest'
+      ])
+      .it(
+        'should create project with analytics1 name using analytics template and a manifest',
+        ctx => {
+          assert.file(path.join('analytics1', '.forceignore'));
+          assert.fileContent(
+            path.join('analytics1', 'sfdx-project.json'),
+            '"path": "force-app",'
+          );
+          assert.fileContent(
+            path.join('analytics1', 'sfdx-project.json'),
+            'sourceApiVersion'
+          );
+          for (const folder of analyticsfolderarray) {
+            assert(
+              fs.existsSync(
+                path.join('analytics1', 'force-app', 'main', 'default', folder)
+              )
+            );
+          }
+          assert.fileContent(
+            path.join('analytics1', 'config', 'project-scratch-def.json'),
+            '["AnalyticsAdminPerms", "EinsteinAnalyticsPlus"]'
+          );
+          assert.fileContent(
+            path.join('analytics1', 'manifest', 'package.xml'),
+            '<name>WaveTemplateBundle</name>'
+          );
+          assert.fileContent(
+            path.join('analytics1', 'README.md'),
             '# Salesforce App'
           );
         }

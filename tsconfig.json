@@ -9,7 +9,16 @@
     "noImplicitAny": true,
     "outDir": "./lib",
     "preserveConstEnums": true,
-    "strict": true
+    "strict": true,
+
+    // We can replace the TS generated snippets with require statements
+    // from the tslib dependency, making our code more efficient
+    "importHelpers": true,
+    "resolveJsonModule": true
+
+    // Commenting composite out since it prevents the debugger from working
+    // if we import metadatainfos.json
+    // "composite": true
   },
   "include": ["./src/**/*"]
 }

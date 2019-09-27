@@ -6,12 +6,21 @@
  */
 import { Messages } from '@salesforce/core';
 import { assert, expect } from 'chai';
+import { test } from '@salesforce/command/lib/test';
+
 import * as fs from 'fs';
 import { resolve } from 'path';
 import { createSandbox, SinonStub, stub } from 'sinon';
 import ApexClassGenerator from '../../src/generators/apexClassGenerator';
-import { CreateUtil, ForceGeneratorAdapter, Log } from '../../src/utils';
+import {
+  CreateUtil,
+  ForceGeneratorAdapter,
+  Log,
+  SfdxCommandBase
+} from '../../src/utils';
 import ApexClass from '../../src/commands/force/apex/class/create';
+import { Config, IConfig, Options } from '../../node_modules/@oclif/config/lib';
+
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
@@ -145,8 +154,24 @@ describe('CreateUtil', () => {
         isJson: true
       };
 
-      await CreateUtil.runGenerator(ApexClassGenerator, command);
+      /*
+      let conf = new Config(Options);
+
+      let base = new SfdxCommandBase([], Config);
+
+      base.runGenerator(ApexClassGenerator);
       expect(jsonStub.calledOnce).to.be.true;
+      */
+
+      test
+        .withOrg()
+        .withProject()
+        .stdout()
+        .command(['force:apex:class:create', '--classname', 'foo'])
+        .it('xxxxx', async () => {
+          console.log('AXXXX', jsonStub.callCount);
+          expect(jsonStub.calledOnce).to.be.true;
+        });
     });
 
     it('should log output when json flag is not specified', async () => {
@@ -163,9 +188,22 @@ describe('CreateUtil', () => {
       };
       const sb = createSandbox();
       const logSpy = sb.spy(command, 'log');
-      await CreateUtil.runGenerator(ApexClassGenerator, command);
-      expect(jsonStub.calledOnce).to.be.false;
-      assert(logSpy.calledTwice);
+
+      test
+        .withOrg()
+        .withProject()
+        .stdout()
+        .command(['force:apex:class:create', '--classname', 'foo'])
+        .it('xxxxx2', async () => {
+          let x = logSpy.callCount;
+          let y = jsonStub.callCount;
+          console.log(x, y, 'ALLLLLLLL');
+          expect(jsonStub.calledOnce).to.be.false;
+          expect(logSpy.calledTwice).to.be.true;
+        });
+
+      //await CreateUtil.runGenerator(ApexClassGenerator, command);
+
       logSpy.restore();
     });
   });

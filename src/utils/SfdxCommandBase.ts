@@ -32,7 +32,7 @@ export class SfdxCommandBase extends SfdxCommand {
     const result = await env.run('generator', this.flags);
     const targetDir = path.resolve(this.flags.outputdir);
 
-    if (this.flags.isJson) {
+    if (this.flags.json) {
       return CreateUtil.buildJson(adapter, targetDir);
     } else {
       this.log(messages.getMessage('targetDirOutput', [targetDir]));

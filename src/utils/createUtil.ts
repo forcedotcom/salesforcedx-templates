@@ -59,6 +59,7 @@ export class CreateUtil {
     targetDir: string
   ): CreateOutput {
     const cleanOutput = adapter.log.getCleanOutput();
+    console.log('BUILDJSON');
     const rawOutput = `target dir = ${targetDir}\n${adapter.log.getOutput()}`;
     const output = {
       outputDir: targetDir,

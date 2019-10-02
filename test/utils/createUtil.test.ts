@@ -6,11 +6,16 @@
  */
 import { Messages } from '@salesforce/core';
 import { assert, expect } from 'chai';
-import { test } from '@salesforce/command/lib/test';
-
 import * as fs from 'fs';
 import { resolve } from 'path';
-import { createSandbox, SinonStub, stub } from 'sinon';
+import {
+  createSandbox,
+  SinonStub,
+  stub,
+  SinonSandbox,
+  sandbox,
+  spy
+} from 'sinon';
 import ApexClassGenerator from '../../src/generators/apexClassGenerator';
 import {
   CreateUtil,
@@ -18,8 +23,9 @@ import {
   Log,
   SfdxCommandBase
 } from '../../src/utils';
-import ApexClass from '../../src/commands/force/apex/class/create';
-import { Config, IConfig, Options } from '../../node_modules/@oclif/config/lib';
+import { test } from '@salesforce/command/lib/test';
+import * as path from 'path';
+import * as yeomanAssert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
@@ -132,79 +138,21 @@ describe('CreateUtil', () => {
 
   describe('runGenerator', () => {
     let jsonStub: SinonStub;
-    const outputdir = resolve('src', 'templates', 'output');
-    beforeEach(() => {
-      // @ts-ignore
-      jsonStub = stub(CreateUtil, 'buildJson');
-    });
+    let messageStub: SinonStub;
 
-    afterEach(() => {
-      jsonStub.restore();
-    });
+    // @ts-ignore
+    jsonStub = spy(CreateUtil, 'buildJson');
+    // @ts-ignore
+    messageStub = stub(messages, 'getMessage');
 
-    it('should build json output when flag is specified', async () => {
-      const command = {
-        flags: {
-          classname: 'newClasses',
-          json: true,
-          loglevel: 'warn',
-          outputdir,
-          template: 'DefaultApexClass'
-        },
-        isJson: true
-      };
-
-      /*
-      let conf = new Config(Options);
-
-      let base = new SfdxCommandBase([], Config);
-
-      base.runGenerator(ApexClassGenerator);
-      expect(jsonStub.calledOnce).to.be.true;
-      */
-
-      test
-        .withOrg()
-        .withProject()
-        .stdout()
-        .command(['force:apex:class:create', '--classname', 'foo'])
-        .it('xxxxx', async () => {
-          console.log('AXXXX', jsonStub.callCount);
-          expect(jsonStub.calledOnce).to.be.true;
-        });
-    });
-
-    it('should log output when json flag is not specified', async () => {
-      const command = {
-        flags: {
-          classname: 'newClasses',
-          json: false,
-          loglevel: 'warn',
-          outputdir,
-          template: 'DefaultApexClass'
-        },
-        isJson: false,
-        log: () => {}
-      };
-      const sb = createSandbox();
-      const logSpy = sb.spy(command, 'log');
-
-      test
-        .withOrg()
-        .withProject()
-        .stdout()
-        .command(['force:apex:class:create', '--classname', 'foo'])
-        .it('xxxxx2', async () => {
-          let x = logSpy.callCount;
-          let y = jsonStub.callCount;
-          console.log(x, y, 'ALLLLLLLL');
-          expect(jsonStub.calledOnce).to.be.false;
-          expect(logSpy.calledTwice).to.be.true;
-        });
-
-      //await CreateUtil.runGenerator(ApexClassGenerator, command);
-
-      logSpy.restore();
-    });
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command(['force:apex:class:create', '--classname', 'foo'])
+      .it('should build json output when flag is specified', ctx => {
+        const jsonStubCalls = jsonStub.callCount;
+        expect(jsonStub.calledOnce).to.be.true;
+      });
   });
 });

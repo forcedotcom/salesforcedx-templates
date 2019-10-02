@@ -30,6 +30,7 @@ describe('Apex class creation tests:', () => {
         'should create foo class using DefaultApexClass template and default output directory',
         ctx => {
           assert.file(['foo.cls', 'foo.cls-meta.xml']);
+          console.log('HEREEEE5');
           assert.fileContent(
             path.join(process.cwd(), 'foo.cls'),
             'public with sharing class foo'

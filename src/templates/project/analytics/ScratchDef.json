@@ -1,5 +1,5 @@
 {
   "orgName": "<%= company %>",
   "edition": "Developer",
-  "features": ["AnalyticsAdminPerms", "EinsteinAnalyticsPlus"]
+  "features": ["DevelopmentWave"]
 }

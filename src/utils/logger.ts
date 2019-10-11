@@ -24,6 +24,8 @@ export class Log {
   private output: string = '';
   private cleanOutput: string[] = [];
 
+  [index: string]: any;
+
   constructor() {
     for (const status of statuses) {
       this[status] = (arg: string) => {
@@ -45,7 +47,7 @@ export class Log {
     return this.cleanOutput;
   }
 
-  public write(...args: string[]): Log {
+  public write(...args: [string]): Log {
     this.output = this.output + util.format.apply(util, args);
     return this;
   }

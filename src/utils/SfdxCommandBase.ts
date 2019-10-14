@@ -38,10 +38,8 @@ export class SfdxCommandBase extends SfdxCommand {
 
     // tslint:disable-next-line:no-unused-expression
     if (this.flags.json) {
-      console.log('this is in the json part');
       return CreateUtil.buildJson(adapter, targetDir);
     } else {
-      console.log('we should be getting the message');
       this.log(messages.getMessage('targetDirOutput', [targetDir]));
       this.log(adapter.log.getOutput());
       return result;

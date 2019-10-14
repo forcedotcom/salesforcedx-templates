@@ -8,24 +8,9 @@ import { Messages } from '@salesforce/core';
 import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import { resolve } from 'path';
-import {
-  createSandbox,
-  SinonStub,
-  stub,
-  SinonSandbox,
-  sandbox,
-  spy
-} from 'sinon';
-import ApexClassGenerator from '../../src/generators/apexClassGenerator';
-import {
-  CreateUtil,
-  ForceGeneratorAdapter,
-  Log,
-  SfdxCommandBase
-} from '../../src/utils';
+import { SinonStub, stub } from 'sinon';
+import { CreateUtil, ForceGeneratorAdapter, Log } from '../../src/utils';
 import { test } from '@salesforce/command/lib/test';
-import * as path from 'path';
-import * as yeomanAssert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
@@ -137,34 +122,26 @@ describe('CreateUtil', () => {
   });
 
   describe('runGenerator', () => {
-    let messageStub = spy(messages, 'getMessage');
-    // let jsonSpy = spy(CreateUtil, 'buildJson');
-
     test
       .withOrg()
       .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should log output when json flag is not specified', () => {
-        // expect(jsonSpy.called).to.be.false;
-        // jsonSpy.restore();
-        expect(messageStub.called).to.be.true;
-        messageStub.restore();
+      .it('should log basic output when json flag is not specified', output => {
+        const expectedOutput =
+          'target dir = /Users/a.jha/Documents/salesforcedx-templates/testsoutput\n conflict foo.cls\n    force foo.cls\nidentical foo.cls-meta.xml\n\n';
+        expect(output.stdout).to.equal(expectedOutput);
       });
-
-    let jsonStub = spy(CreateUtil, 'buildJson');
 
     test
       .withOrg()
       .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--json'])
-      .it('should build json output when flag is specified', ctx => {
-        console.log('test reached here');
-        expect(jsonStub.calledOnce).to.be.true;
-        jsonStub.restore();
-        expect(messageStub.called).to.be.false;
-        messageStub.restore();
+      .it('should log json output when flag is specified', output => {
+        const expectedOutput =
+          '{\n  "status": 0,\n  "result": {\n    "outputDir": "/Users/a.jha/Documents/salesforcedx-templates/testsoutput",\n    "created": [],\n    "rawOutput": "target dir = /Users/a.jha/Documents/salesforcedx-templates/testsoutput\\nidentical foo.cls\\nidentical foo.cls-meta.xml\\n"\n  }\n}\n';
+        expect(output.stdout).to.eql(expectedOutput);
       });
   });
 });

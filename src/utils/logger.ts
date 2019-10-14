@@ -40,6 +40,7 @@ export class Log {
   }
 
   public getOutput(): string {
+    console.log('i am printing from adapter');
     return this.output;
   }
 

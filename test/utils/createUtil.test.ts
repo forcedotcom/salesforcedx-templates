@@ -137,22 +137,34 @@ describe('CreateUtil', () => {
   });
 
   describe('runGenerator', () => {
-    let jsonStub: SinonStub;
-    let messageStub: SinonStub;
-
-    // @ts-ignore
-    jsonStub = spy(CreateUtil, 'buildJson');
-    // @ts-ignore
-    messageStub = stub(messages, 'getMessage');
+    let messageStub = spy(messages, 'getMessage');
+    // let jsonSpy = spy(CreateUtil, 'buildJson');
 
     test
       .withOrg()
       .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
+      .it('should log output when json flag is not specified', () => {
+        // expect(jsonSpy.called).to.be.false;
+        // jsonSpy.restore();
+        expect(messageStub.called).to.be.true;
+        messageStub.restore();
+      });
+
+    let jsonStub = spy(CreateUtil, 'buildJson');
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command(['force:apex:class:create', '--classname', 'foo', '--json'])
       .it('should build json output when flag is specified', ctx => {
-        const jsonStubCalls = jsonStub.callCount;
+        console.log('test reached here');
         expect(jsonStub.calledOnce).to.be.true;
+        jsonStub.restore();
+        expect(messageStub.called).to.be.false;
+        messageStub.restore();
       });
   });
 });

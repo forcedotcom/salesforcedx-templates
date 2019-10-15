@@ -122,14 +122,14 @@ describe('CreateUtil', () => {
   });
 
   describe('runGenerator', () => {
+    const dir = process.cwd();
     test
       .withOrg()
       .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should log basic output when json flag is not specified', output => {
-        const expectedOutput =
-          'target dir = /Users/a.jha/Documents/salesforcedx-templates/testsoutput\n conflict foo.cls\n    force foo.cls\nidentical foo.cls-meta.xml\n\n';
+        const expectedOutput = `target dir = ${dir}\n conflict foo.cls\n    force foo.cls\nidentical foo.cls-meta.xml\n\n`;
         expect(output.stdout).to.equal(expectedOutput);
       });
 
@@ -139,8 +139,7 @@ describe('CreateUtil', () => {
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--json'])
       .it('should log json output when flag is specified', output => {
-        const expectedOutput =
-          '{\n  "status": 0,\n  "result": {\n    "outputDir": "/Users/a.jha/Documents/salesforcedx-templates/testsoutput",\n    "created": [],\n    "rawOutput": "target dir = /Users/a.jha/Documents/salesforcedx-templates/testsoutput\\nidentical foo.cls\\nidentical foo.cls-meta.xml\\n"\n  }\n}\n';
+        const expectedOutput = `{\n  "status": 0,\n  "result": {\n    "outputDir": "${dir}",\n    "created": [],\n    "rawOutput": "target dir = ${dir}\\nidentical foo.cls\\nidentical foo.cls-meta.xml\\n"\n  }\n}\n`;
         expect(output.stdout).to.eql(expectedOutput);
       });
   });

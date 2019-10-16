@@ -4,18 +4,18 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { flags, SfdxCommand } from '@salesforce/command';
+import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningInterfaceGenerator from '../../../../generators/lightningInterfaceGenerator';
-import { CreateUtil, SfdxCommandBase } from '../../../../utils';
+import { CreateUtil, TemplateCommand } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningInterfaceFileSuffix = /.intf$/;
 
-export default class LightningInterface extends SfdxCommandBase {
+export default class LightningInterface extends TemplateCommand {
   public static examples = [
     '$ sfdx force:lightning:interface:create -n myinterface',
     '$ sfdx force:lightning:interface:create -n myinterface -d aura'

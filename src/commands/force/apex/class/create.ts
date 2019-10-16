@@ -4,17 +4,17 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { flags, SfdxCommand } from '@salesforce/command';
+import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import ApexClassGenerator from '../../../../generators/apexClassGenerator';
-import { CreateUtil, SfdxCommandBase } from '../../../../utils';
+import { CreateUtil, TemplateCommand } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const apexClassFileSuffix = /.cls$/;
 
-export default class ApexClass extends SfdxCommandBase {
+export default class ApexClass extends TemplateCommand {
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
     '$ sfdx force:apex:class:create -n MyClass -d classes'

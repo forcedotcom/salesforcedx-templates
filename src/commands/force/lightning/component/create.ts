@@ -4,17 +4,17 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { flags, SfdxCommand } from '@salesforce/command';
+import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningComponentGenerator from '../../../../generators/lightningComponentGenerator';
-import { CreateUtil, SfdxCommandBase } from '../../../../utils';
+import { CreateUtil, TemplateCommand } from '../../../../utils';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningComponentFileSuffix = /.cmp$/;
 
-export default class LightningComponent extends SfdxCommandBase {
+export default class LightningComponent extends TemplateCommand {
   public static examples = [
     '$ sfdx force:lightning:component:create -n mycomponent',
     '$ sfdx force:lightning:component:create -n mycomponent --type lwc',

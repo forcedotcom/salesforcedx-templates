@@ -9,8 +9,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 // @ts-ignore
 import * as yeoman from 'yeoman-environment';
-import { ForceGeneratorAdapter } from './adapter';
-import { CreateOutput } from './types';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
@@ -51,24 +49,5 @@ export class CreateUtil {
         return file.split('.', 1).toString();
       });
     return files;
-  }
-
-  public static buildJson(
-    adapter: ForceGeneratorAdapter,
-    targetDir: string
-  ): CreateOutput {
-    const cleanOutput = adapter.log.getCleanOutput();
-    const rawOutput = `target dir = ${targetDir}\n${adapter.log.getOutput()}`;
-    const output = {
-      outputDir: targetDir,
-      created: cleanOutput,
-      rawOutput
-    };
-    return output;
-  }
-
-  public static getDefaultApiVersion(): string {
-    const versionTrimmed = require('../../package.json').version.trim();
-    return `${versionTrimmed.split('.')[0]}.0`;
   }
 }

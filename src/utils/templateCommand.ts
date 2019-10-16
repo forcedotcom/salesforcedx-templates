@@ -18,38 +18,7 @@ const yeoman = require('yeoman-environment');
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
 export abstract class TemplateCommand extends SfdxCommand {
-  // tslint:disable-next-line:no-any
-  abstract run(): Promise<AnyJson>;
-
-  public async runGenerator(generator: typeof yeomanGenerator) {
-    // tslint:disable-next-line:no-unused-expression
-    if (!this.flags.apiversion) {
-      this.flags.apiversion = this.getDefaultApiVersion();
-    }
-
-    const adapter = new ForceGeneratorAdapter();
-    const env = yeoman.createEnv(undefined, undefined, adapter);
-    env.registerStub(generator, 'generator');
-
-    const result = await env.run('generator', this.flags);
-    const targetDir = path.resolve(this.flags.outputdir);
-
-    // tslint:disable-next-line:no-unused-expression
-    if (this.flags.json) {
-      return this.buildJson(adapter, targetDir);
-    } else {
-      this.log(messages.getMessage('targetDirOutput', [targetDir]));
-      this.log(adapter.log.getOutput());
-      return result;
-    }
-  }
-
-  public getDefaultApiVersion(): string {
-    const versionTrimmed = require('../../package.json').version.trim();
-    return `${versionTrimmed.split('.')[0]}.0`;
-  }
-
-  public buildJson(
+  public static buildJson(
     adapter: ForceGeneratorAdapter,
     targetDir: string
   ): CreateOutput {
@@ -61,5 +30,35 @@ export abstract class TemplateCommand extends SfdxCommand {
       rawOutput
     };
     return output;
+  }
+
+  public static getDefaultApiVersion(): string {
+    const versionTrimmed = require('../../package.json').version.trim();
+    return `${versionTrimmed.split('.')[0]}.0`;
+  }
+
+  abstract run(): Promise<AnyJson>;
+
+  public async runGenerator(generator: typeof yeomanGenerator) {
+    // tslint:disable-next-line:no-unused-expression
+    if (!this.flags.apiversion) {
+      this.flags.apiversion = TemplateCommand.getDefaultApiVersion();
+    }
+
+    const adapter = new ForceGeneratorAdapter();
+    const env = yeoman.createEnv(undefined, undefined, adapter);
+    env.registerStub(generator, 'generator');
+
+    const result = await env.run('generator', this.flags);
+    const targetDir = path.resolve(this.flags.outputdir);
+
+    // tslint:disable-next-line:no-unused-expression
+    if (this.flags.json) {
+      return TemplateCommand.buildJson(adapter, targetDir);
+    } else {
+      this.log(messages.getMessage('targetDirOutput', [targetDir]));
+      this.log(adapter.log.getOutput());
+      return result;
+    }
   }
 }

@@ -9,7 +9,12 @@ import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import { resolve } from 'path';
 import { SinonStub, stub } from 'sinon';
-import { CreateUtil, ForceGeneratorAdapter, Log } from '../../src/utils';
+import {
+  CreateUtil,
+  ForceGeneratorAdapter,
+  Log,
+  TemplateCommand
+} from '../../src/utils';
 import { test } from '@salesforce/command/lib/test';
 
 Messages.importMessagesDirectory(__dirname);
@@ -91,7 +96,7 @@ describe('CreateUtil', () => {
       const { version } = require('../../package.json');
       expect(version).to.not.be.undefined;
       const major = version.trim().split('.')[0];
-      expect(CreateUtil.getDefaultApiVersion()).to.equal(`${major}.0`);
+      expect(TemplateCommand.getDefaultApiVersion()).to.equal(`${major}.0`);
     });
   });
 
@@ -114,7 +119,7 @@ describe('CreateUtil', () => {
         rawOutput: targetDirOutput
       };
 
-      const result = CreateUtil.buildJson(adapter, targetDir);
+      const result = TemplateCommand.buildJson(adapter, targetDir);
       expect(result).to.eql(expOutput);
       cleanOutputStub.restore();
       outputStub.restore();

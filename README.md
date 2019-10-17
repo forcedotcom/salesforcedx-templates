@@ -8,50 +8,50 @@ Code base to host the Salesforce CLI commands.
 [![License](https://img.shields.io/npm/l/salesforcedx-templates.svg)](https://github.com/forcedotcom/salesforcedx-templates/blob/master/package.json)
 
 <!-- toc -->
+* [salesforcedx-templates](#salesforcedx-templates)
+* [Debugging your plugin](#debugging-your-plugin)
+<!-- tocstop -->
 
 - [salesforcedx-templates](#salesforcedx-templates)
     <!-- install -->
     <!-- usage -->
-
 ```sh-session
 $ npm install -g salesforcedx-templates
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-salesforcedx-templates/0.0.0 darwin-x64 node-v10.15.0
+salesforcedx-templates/0.0.0 darwin-x64 node-v12.6.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
 ...
 ```
-
 <!-- usagestop -->
 <!-- commands -->
-
-- [`sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapexclasscreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapextriggercreate--n-string--d-string--e-string--s-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningappcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningcomponentcreate--n-string--d-string--t-string---type-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningeventcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightninginterfacecreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceprojectcreate--n-string--d-string--p-string--s-string--t-string--x---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcecomponentcreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcepagecreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapexclasscreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapextriggercreate--n-string--d-string--e-string--s-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningappcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningcomponentcreate--n-string--d-string--t-string---type-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningeventcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightninginterfacecreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceprojectcreate--n-string--d-string--p-string--s-string--t-string--x---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcecomponentcreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcepagecreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
 ## `sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-create an Apex class
+create an Apex class 
 
 ```
 USAGE
-  $ sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel
+  $ sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --classname=classname                                                         (required) name of the generated
                                                                                     Apex class
@@ -84,12 +84,12 @@ create an Apex trigger
 
 ```
 USAGE
-  $ sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion
+  $ sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion 
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir
-      [default: /Users/lcamposguajardo/github/DevTools/summer/salesforcedx-templates] folder for saving the created files
+      [default: /Users/c.may/Desktop/code/teamRepos/salesforcedx-templates] folder for saving the created files
 
   -e, --triggerevents=before insert|before update|before delete|after insert|after update|after delete|after undelete
       [default: before insert] events that fire the trigger
@@ -118,7 +118,7 @@ DESCRIPTION
 
 EXAMPLES
   $ sfdx force:apex:trigger:create -n MyTrigger
-  $ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after upsert'
+  $ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after insert'
   $ sfdx force:apex:trigger:create -n MyTrigger -d triggers
 ```
 
@@ -130,14 +130,14 @@ create a Lightning app
 
 ```
 USAGE
-  $ sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel
+  $ sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --appname=appname                                                             (required) name of the generated
                                                                                     Lightning app
@@ -156,8 +156,8 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
 
 EXAMPLES
@@ -173,14 +173,14 @@ create a bundle for an Aura component or a Lightning web component
 
 ```
 USAGE
-  $ sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion
+  $ sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion 
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --componentname=componentname                                                 (required) name of the generated
                                                                                     Lightning component
@@ -202,10 +202,10 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
-  To create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce
+  To create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce 
   CLI creates an Aura component by default.
 
 EXAMPLES
@@ -223,14 +223,14 @@ create a Lightning event
 
 ```
 USAGE
-  $ sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
+  $ sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] 
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --eventname=eventname                                                         (required) name of the generated
                                                                                     Lightning event
@@ -249,8 +249,8 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
 
 EXAMPLES
@@ -266,14 +266,14 @@ create a Lightning interface
 
 ```
 USAGE
-  $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
+  $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] 
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --interfacename=interfacename                                                 (required) name of the generated
                                                                                     Lightning interface
@@ -292,8 +292,8 @@ OPTIONS
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
   The outputdir can be an absolute path or relative to the current working directory.
-  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your
-  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we
+  If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your 
+  bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we 
   create force-app/myBundle/ to store the files in the bundle.
 
 EXAMPLES
@@ -309,14 +309,14 @@ create a Salesforce DX project
 
 ```
 USAGE
-  $ sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json]
+  $ sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] 
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -n, --projectname=projectname                                                     (required) name of the generated
                                                                                     project
@@ -326,7 +326,7 @@ OPTIONS
 
   -s, --namespace=namespace                                                         project associated namespace
 
-  -t, --template=standard|empty                                                     [default: standard] template to use
+  -t, --template=standard|empty|analytics                                           [default: standard] template to use
                                                                                     for file creation
 
   -x, --manifest                                                                    generate a manifest (package.xml)
@@ -356,14 +356,14 @@ create a Visualforce component
 
 ```
 USAGE
-  $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
+  $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] 
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -l, --label=label                                                                 (required) Visualforce component
                                                                                     label
@@ -400,14 +400,14 @@ create a Visualforce page
 
 ```
 USAGE
-  $ sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
+  $ sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] 
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+                                                                                    /Users/c.may/Desktop/code/teamRepos/
+                                                                                    salesforcedx-templates] folder for
+                                                                                    saving the created files
 
   -l, --label=label                                                                 (required) Visualforce page label
 
@@ -436,7 +436,6 @@ EXAMPLES
 ```
 
 _See code: [src/commands/force/visualforce/page/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/page/create.ts)_
-
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 

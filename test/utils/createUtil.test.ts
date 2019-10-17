@@ -8,9 +8,14 @@ import { Messages } from '@salesforce/core';
 import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import { resolve } from 'path';
-import { createSandbox, SinonStub, stub } from 'sinon';
-import ApexClassGenerator from '../../src/generators/apexClassGenerator';
-import { CreateUtil, ForceGeneratorAdapter, Log } from '../../src/utils';
+import { SinonStub, stub } from 'sinon';
+import {
+  CreateUtil,
+  ForceGeneratorAdapter,
+  Log,
+  TemplateCommand
+} from '../../src/utils';
+import { test } from '@salesforce/command/lib/test';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
@@ -91,7 +96,7 @@ describe('CreateUtil', () => {
       const { version } = require('../../package.json');
       expect(version).to.not.be.undefined;
       const major = version.trim().split('.')[0];
-      expect(CreateUtil.getDefaultApiVersion()).to.equal(`${major}.0`);
+      expect(TemplateCommand.getDefaultApiVersion()).to.equal(`${major}.0`);
     });
   });
 
@@ -114,7 +119,7 @@ describe('CreateUtil', () => {
         rawOutput: targetDirOutput
       };
 
-      const result = CreateUtil.buildJson(adapter, targetDir);
+      const result = TemplateCommand.buildJson(adapter, targetDir);
       expect(result).to.eql(expOutput);
       cleanOutputStub.restore();
       outputStub.restore();
@@ -122,50 +127,25 @@ describe('CreateUtil', () => {
   });
 
   describe('runGenerator', () => {
-    let jsonStub: SinonStub;
-    const outputdir = resolve('src', 'templates', 'output');
-    beforeEach(() => {
-      // @ts-ignore
-      jsonStub = stub(CreateUtil, 'buildJson');
-    });
+    const dir = process.cwd();
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command(['force:apex:class:create', '--classname', 'foo'])
+      .it('should log basic output when json flag is not specified', output => {
+        const expectedOutput = `target dir = ${dir}\n conflict foo.cls\n    force foo.cls\nidentical foo.cls-meta.xml\n\n`;
+        expect(output.stdout).to.equal(expectedOutput);
+      });
 
-    afterEach(() => {
-      jsonStub.restore();
-    });
-
-    it('should build json output when flag is specified', async () => {
-      const command = {
-        flags: {
-          classname: 'newClasses',
-          json: true,
-          loglevel: 'warn',
-          outputdir,
-          template: 'DefaultApexClass'
-        },
-        isJson: true
-      };
-      await CreateUtil.runGenerator(ApexClassGenerator, command);
-      expect(jsonStub.calledOnce).to.be.true;
-    });
-
-    it('should log output when json flag is not specified', async () => {
-      const command = {
-        flags: {
-          classname: 'newClasses',
-          json: false,
-          loglevel: 'warn',
-          outputdir,
-          template: 'DefaultApexClass'
-        },
-        isJson: false,
-        log: () => {}
-      };
-      const sb = createSandbox();
-      const logSpy = sb.spy(command, 'log');
-      await CreateUtil.runGenerator(ApexClassGenerator, command);
-      expect(jsonStub.calledOnce).to.be.false;
-      assert(logSpy.calledTwice);
-      logSpy.restore();
-    });
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command(['force:apex:class:create', '--classname', 'foo', '--json'])
+      .it('should log json output when flag is specified', output => {
+        const expectedOutput = `{\n  "status": 0,\n  "result": {\n    "outputDir": "${dir}",\n    "created": [],\n    "rawOutput": "target dir = ${dir}\\nidentical foo.cls\\nidentical foo.cls-meta.xml\\n"\n  }\n}\n`;
+        expect(output.stdout).to.eql(expectedOutput);
+      });
   });
 });

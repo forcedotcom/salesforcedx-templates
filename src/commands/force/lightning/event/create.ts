@@ -4,17 +4,16 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { flags, SfdxCommand } from '@salesforce/command';
+import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningEventGenerator from '../../../../generators/lightningEventGenerator';
-import { CreateUtil } from '../../../../utils';
-
+import { CreateUtil, TemplateCommand } from '../../../../utils';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningEventFileSuffix = /.evt$/;
-export default class LightningEvent extends SfdxCommand {
+export default class LightningEvent extends TemplateCommand {
   public static examples = [
     '$ sfdx force:lightning:app:create -n myevent',
     '$ sfdx force:lightning:event:create -n myevent -d aura'
@@ -61,6 +60,6 @@ export default class LightningEvent extends SfdxCommand {
     if (!this.flags.internal && !fileparts.includes('aura')) {
       throw new Error(messages.getMessage('MissingAuraDir'));
     }
-    return CreateUtil.runGenerator(LightningEventGenerator, this);
+    return this.runGenerator(LightningEventGenerator);
   }
 }

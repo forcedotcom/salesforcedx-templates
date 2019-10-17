@@ -4,16 +4,16 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { flags, SfdxCommand } from '@salesforce/command';
+import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import ProjectGenerator from '../../../generators/projectGenerator';
-import { CreateUtil } from '../../../utils/createUtil';
+import { CreateUtil, TemplateCommand } from '../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
-export default class Project extends SfdxCommand {
+export default class Project extends TemplateCommand {
   public static examples = [
     '$ sfdx force:project:create --projectname mywork',
     '$ sfdx force:project:create --projectname mywork --defaultpackagedir myapp',
@@ -64,6 +64,6 @@ export default class Project extends SfdxCommand {
     // TODO: update the latest apiversion
     this.flags.sourceApiVersion = '46.0';
 
-    return CreateUtil.runGenerator(ProjectGenerator, this);
+    return this.runGenerator(ProjectGenerator);
   }
 }

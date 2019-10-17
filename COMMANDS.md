@@ -1,4 +1,4 @@
-##Commands
+## Commands
 
 A list of the available commands
 
@@ -48,29 +48,22 @@ USAGE
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir
-      [default: /Users/lcamposguajardo/github/DevTools/summer/salesforcedx-templates] folder for saving the created files
+  -d, --outputdir=outputdir                                                           folder for saving the created files
 
   -e, --triggerevents=before insert|before update|before delete|after insert|after update|after delete|after undelete
-      [default: before insert] events that fire the trigger
+                                                                                      [default: before insert] events that                                                                                            fire the trigger
 
-  -n, --triggername=triggername
-      (required) name of the generated Apex trigger
+  -n, --triggername=triggername                                                       (required) name of the generated Apex                                                                                          trigger
 
-  -s, --sobject=sobject
-      [default: SOBJECT] sObject to create a trigger on
+  -s, --sobject=sobject                                                               [default: SOBJECT] sObject to create a                                                                                          trigger on
 
-  -t, --template=ApexTrigger
-      [default: ApexTrigger] template to use for file creation
+  -t, --template=ApexTrigger                                                          [default: ApexTrigger] template to use                                                                                          for file creation
 
-  --apiversion=apiversion
-      override the api version used for api requests made by this command
+  --apiversion=apiversion                                                             override the api version used for api                                                                                         requests made by this command
 
-  --json
-      format output as json
+  --json                                                                              format output as json
 
-  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
-      [default: warn] logging level for this command invocation
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)    [default: warn] logging level for this                                                                                          command invocation
 
 DESCRIPTION
   If not supplied, the apiversion, template, and outputdir use default values.
@@ -94,10 +87,7 @@ USAGE
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
   -n, --appname=appname                                                             (required) name of the generated
                                                                                     Lightning app
@@ -137,10 +127,7 @@ USAGE
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
   -n, --componentname=componentname                                                 (required) name of the generated
                                                                                     Lightning component
@@ -187,10 +174,7 @@ USAGE
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
   -n, --eventname=eventname                                                         (required) name of the generated
                                                                                     Lightning event
@@ -230,10 +214,7 @@ USAGE
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
   -n, --interfacename=interfacename                                                 (required) name of the generated
                                                                                     Lightning interface
@@ -273,10 +254,7 @@ USAGE
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
   -n, --projectname=projectname                                                     (required) name of the generated
                                                                                     project
@@ -320,10 +298,7 @@ USAGE
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
   -l, --label=label                                                                 (required) Visualforce component
                                                                                     label
@@ -364,10 +339,7 @@ USAGE
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
   -l, --label=label                                                                 (required) Visualforce page label
 
@@ -396,6 +368,3 @@ EXAMPLES
 ```
 
 _See code: [src/commands/force/visualforce/page/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/page/create.ts)_
-
-<!-- commandsstop -->
-<!-- debugging-your-plugin -->

@@ -22,39 +22,24 @@ salesforcedx-templates/0.0.0 darwin-x64 node-v10.15.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
-...
 ```
 
 <!-- usagestop -->
 <!-- commands -->
 
-- [`sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapexclasscreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceapextriggercreate--n-string--d-string--e-string--s-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningappcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningcomponentcreate--n-string--d-string--t-string---type-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightningeventcreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcelightninginterfacecreate--n-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceprojectcreate--n-string--d-string--p-string--s-string--t-string--x---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcecomponentcreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-- [`sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forcevisualforcepagecreate--n-string--l-string--d-string--t-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-
-## `sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:apex:class:create`
 
 create an Apex class
 
-```
+````
 USAGE
   $ sfdx force:apex:class:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir=outputdir                                                         [default:
-                                                                                    /Users/lcamposguajardo/github/DevToo
-                                                                                    ls/summer/salesforcedx-templates]
-                                                                                    folder for saving the created files
+  -d, --outputdir=outputdir                                                         folder for saving the created files
 
-  -n, --classname=classname                                                         (required) name of the generated
-                                                                                    Apex class
+  -n, --classname=classname(required)                                               name of the generated Apex class
 
   -t, --template=ApexException|ApexUnitTest|DefaultApexClass|InboundEmailService    [default: DefaultApexClass] template
                                                                                     to use for file creation
@@ -74,15 +59,15 @@ DESCRIPTION
 EXAMPLES
   $ sfdx force:apex:class:create -n MyClass
   $ sfdx force:apex:class:create -n MyClass -d classes
-```
+````
 
 _See code: [src/commands/force/apex/class/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/apex/class/create.ts)_
 
-## `sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:apex:trigger:create`
 
 create an Apex trigger
 
-```
+````
 USAGE
   $ sfdx force:apex:trigger:create -n <string> [-d <string>] [-e <string>] [-s <string>] [-t <string>] [--apiversion
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -120,15 +105,15 @@ EXAMPLES
   $ sfdx force:apex:trigger:create -n MyTrigger
   $ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after upsert'
   $ sfdx force:apex:trigger:create -n MyTrigger -d triggers
-```
+````
 
 _See code: [src/commands/force/apex/trigger/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/apex/trigger/create.ts)_
 
-## `sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:lightning:app:create`
 
 create a Lightning app
 
-```
+````
 USAGE
   $ sfdx force:lightning:app:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -163,15 +148,15 @@ DESCRIPTION
 EXAMPLES
   $ sfdx force:lightning:app:create -n myapp
   $ sfdx force:lightning:app:create -n myapp -d aura
-```
+````
 
 _See code: [src/commands/force/lightning/app/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/app/create.ts)_
 
-## `sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:lightning:component:create`
 
 create a bundle for an Aura component or a Lightning web component
 
-```
+````
 USAGE
   $ sfdx force:lightning:component:create -n <string> [-d <string>] [-t <string>] [--type <string>] [--apiversion
   <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -213,15 +198,15 @@ EXAMPLES
   $ sfdx force:lightning:component:create -n mycomponent --type lwc
   $ sfdx force:lightning:component:create -n mycomponent -d aura
   $ sfdx force:lightning:component:create -n mycomponent --type lwc -d lwc
-```
+````
 
 _See code: [src/commands/force/lightning/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/component/create.ts)_
 
-## `sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:lightning:event:create`
 
 create a Lightning event
 
-```
+````
 USAGE
   $ sfdx force:lightning:event:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -256,15 +241,15 @@ DESCRIPTION
 EXAMPLES
   $ sfdx force:lightning:app:create -n myevent
   $ sfdx force:lightning:event:create -n myevent -d aura
-```
+````
 
 _See code: [src/commands/force/lightning/event/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/event/create.ts)_
 
-## `sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:lightning:interface:create`
 
 create a Lightning interface
 
-```
+````
 USAGE
   $ sfdx force:lightning:interface:create -n <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json]
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -299,15 +284,15 @@ DESCRIPTION
 EXAMPLES
   $ sfdx force:lightning:interface:create -n myinterface
   $ sfdx force:lightning:interface:create -n myinterface -d aura
-```
+````
 
 _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
 
-## `sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:project:create`
 
 create a Salesforce DX project
 
-```
+````
 USAGE
   $ sfdx force:project:create -n <string> [-d <string>] [-p <string>] [-s <string>] [-t <string>] [-x] [--json]
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -346,15 +331,15 @@ EXAMPLES
   $ sfdx force:project:create --projectname mywork --defaultpackagedir myapp
   $ sfdx force:project:create --projectname mywork --defaultpackagedir myapp --manifest
   $ sfdx force:project:create --projectname mywork --template empty
-```
+````
 
 _See code: [src/commands/force/project/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/project/create.ts)_
 
-## `sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:visualforce:component:create`
 
 create a Visualforce component
 
-```
+````
 USAGE
   $ sfdx force:visualforce:component:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -390,15 +375,15 @@ DESCRIPTION
 EXAMPLES
   $ sfdx force:visualforce:component:create -n mycomponent -l mylabel
   $ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components
-```
+````
 
 _See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
 
-## `sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+#### `sfdx force:visualforce:page:create`
 
 create a Visualforce page
 
-```
+````
 USAGE
   $ sfdx force:visualforce:page:create -n <string> -l <string> [-d <string>] [-t <string>] [--apiversion <string>]
   [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -433,7 +418,7 @@ DESCRIPTION
 EXAMPLES
   $ sfdx force:visualforce:page:create -n mypage -l mylabel
   $ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages
-```
+````
 
 _See code: [src/commands/force/visualforce/page/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/page/create.ts)_
 

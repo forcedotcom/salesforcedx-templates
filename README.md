@@ -23,17 +23,15 @@ To run a command
 
 ## Commands
 
-- `sfdx force:apex:class:create`
-- `sfdx force:apex:class:create`
-- `sfdx force:apex:trigger:create`
-- `sfdx force:lightning:app:create`
-- `sfdx force:lightning:component:create`
-- `sfdx force:lightning:event:create`
-- `sfdx force:lightning:interface:create`
-- `sfdx force:project:create`
-- `sfdx force:visualforce:component:create`
-- `sfdx force:visualforce:page:create`
-- `sfdx force:visualforce:page:create`
+- [`sfdx force:apex:class:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forceapexclasscreate)
+- [`sfdx force:apex:trigger:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forceapextriggercreate_)
+- [`sfdx force:lightning:app:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightningappcreate)
+- [`sfdx force:lightning:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightningcomponentcreate)
+- [`sfdx force:lightning:event:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightningeventcreate)
+- [`sfdx force:lightning:interface:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightninginterfacecreate)
+- [`sfdx force:project:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forceprojectcreate)
+- [`sfdx force:visualforce:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcevisualforcecomponentcreate)
+- [`sfdx force:visualforce:page:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcevisualforcepagecreate)
 
 # Debugging your plugin
 

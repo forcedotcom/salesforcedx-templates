@@ -74,7 +74,7 @@
     "build:templates": "node scripts/build-templates",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "yarn run clean:lib && yarn run build:templates && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "yarn run clean:lib && yarn run build:templates && tsc -b && oclif-dev manifest",
     "reformat": "prettier --config .prettierrc --write './*.{js,json}' './**/*.{ts,json}'",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif-dev readme && git add README.md"

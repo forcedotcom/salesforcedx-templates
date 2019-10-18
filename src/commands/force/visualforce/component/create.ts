@@ -4,17 +4,17 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { flags, SfdxCommand } from '@salesforce/command';
+import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import VisualforceComponentGenerator from '../../../../generators/visualforceComponentGenerator';
-import { CreateUtil } from '../../../../utils';
+import { CreateUtil, TemplateCommand } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const visualforceComponentFileSuffix = /.component$/;
 
-export default class VisualforceComponent extends SfdxCommand {
+export default class VisualforceComponent extends TemplateCommand {
   public static examples = [
     '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel',
     '$ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components'
@@ -56,6 +56,6 @@ export default class VisualforceComponent extends SfdxCommand {
     CreateUtil.checkInputs(this.flags.componentname);
     CreateUtil.checkInputs(this.flags.template);
 
-    return CreateUtil.runGenerator(VisualforceComponentGenerator, this);
+    return this.runGenerator(VisualforceComponentGenerator);
   }
 }

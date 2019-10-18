@@ -9,9 +9,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 // @ts-ignore
 import * as yeoman from 'yeoman-environment';
-import { ForceGeneratorAdapter } from './adapter';
-import { CreateOutput } from './types';
-
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
@@ -52,45 +49,5 @@ export class CreateUtil {
         return file.split('.', 1).toString();
       });
     return files;
-  }
-
-  public static async runGenerator(generatorname: any, command: any) {
-    if (!command.flags.apiversion) {
-      command.flags.apiversion = CreateUtil.getDefaultApiVersion();
-    }
-
-    const adapter = new ForceGeneratorAdapter();
-    const env = yeoman.createEnv(undefined, undefined, adapter);
-    env.registerStub(generatorname, 'generator');
-
-    const result = await env.run('generator', command.flags);
-    const targetDir = path.resolve(command.flags.outputdir);
-
-    if (command.isJson) {
-      return this.buildJson(adapter, targetDir);
-    } else {
-      command.log(messages.getMessage('targetDirOutput', [targetDir]));
-      command.log(adapter.log.getOutput());
-      return result;
-    }
-  }
-
-  public static buildJson(
-    adapter: ForceGeneratorAdapter,
-    targetDir: string
-  ): CreateOutput {
-    const cleanOutput = adapter.log.getCleanOutput();
-    const rawOutput = `target dir = ${targetDir}\n${adapter.log.getOutput()}`;
-    const output = {
-      outputDir: targetDir,
-      created: cleanOutput,
-      rawOutput
-    };
-    return output;
-  }
-
-  public static getDefaultApiVersion(): string {
-    const versionTrimmed = require('../../package.json').version.trim();
-    return `${versionTrimmed.split('.')[0]}.0`;
   }
 }

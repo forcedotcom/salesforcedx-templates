@@ -8,6 +8,9 @@ This repository provides a series of commands, templates, and generators for var
 [![License](https://img.shields.io/npm/l/salesforcedx-templates.svg)](https://github.com/forcedotcom/salesforcedx-templates/blob/master/package.json)
 
 <!-- toc -->
+* [salesforcedx-templates](#salesforcedx-templates)
+* [Debugging your plugin](#debugging-your-plugin)
+<!-- tocstop -->
 
 ## Getting Started
 
@@ -48,6 +51,7 @@ To verify
 - [`sfdx force:project:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forceprojectcreate)
 - [`sfdx force:visualforce:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcevisualforcecomponentcreate)
 - [`sfdx force:visualforce:page:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcevisualforcepagecreate)
+
 
 # Debugging your plugin
 

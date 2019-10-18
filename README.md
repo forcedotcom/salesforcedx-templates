@@ -10,16 +10,32 @@ This repository provides a series of commands, templates, and generators for var
 <!-- toc -->
 
 ## Getting Started
+
 To use, install the [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli) and run the following commands.
 
-````
+```
 Verify the CLI is installed
   $ sfdx (-v | --version)
 Install the salesforcedx plugin
   $ sfdx plugins:install salesforcedx
 To run a command
   $ sfdx [command]
-````
+```
+
+To build the plugin locally, make sure to have yarn installed and run the following commands:
+
+```
+Clone the repository
+  $ git clone git@github.com:forcedotcom/salesforcedx-vscode.git
+Install the dependencies and compile
+  $ yarn install
+  $ yarn prepack
+Link your plugin to the sfdx cli
+  $ sfdx plugins:link .
+To verify
+  $ sfdx plugins
+  salesforcedx-templates 0.0.0 (link) /Users/a.jha/Documents/repos/salesforcedx-templates
+```
 
 ## Commands
 
@@ -36,16 +52,6 @@ To run a command
 # Debugging your plugin
 
 We recommend using the Visual Studio Code (VS Code) IDE for your plugin development. Included in the `.vscode` directory of this plugin is a `launch.json` config file, which allows you to attach a debugger to the node process when running your commands.
-
-To link your plugin to the sfdx cli, navigate into your project and run:
-```
-$ sfdx plugins:link .
-```
-To verify:
-```
-$ sfdx plugins
-salesforcedx-templates 0.0.0 (link) /Users/a.jha/Documents/repos/salesforcedx-templates
-```
 
 To debug the `hello:org` command:
 

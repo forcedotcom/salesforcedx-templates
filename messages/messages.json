@@ -66,7 +66,7 @@
   "targetDirOutput": "target dir = %s",
 
   "LightningTestCommandDescription": "create a Lightning test\nThe outputdir can be an absolute path or relative to the current working directory.",
-  "missingTestName": "Missing required flag:\n -n, --testname TESTNAME  name of the generated Lightning test\nSee more help with --help\n",
+  "MissingTestName": "Missing required flag:\n -n, --testname TESTNAME  name of the generated Lightning test\nSee more help with --help\n",
   "testname": "name of the generated Lightning test",
   "LightningTest": "A Lightning Test"
 }

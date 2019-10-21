@@ -62,5 +62,11 @@
   "visualforcepagename": "name of the generated Visualforce page",
   "pagelabel": "Visualforce page label",
   "MissingPagenameFlag": "Missing required flag:\n -n, --pagename PAGENAME  name of the generated Visualforce page\nSee more help with --help\n",
-  "targetDirOutput": "target dir = %s"
+
+  "targetDirOutput": "target dir = %s",
+
+  "LightningTestCommandDescription": "create a Lightning test\nThe outputdir can be an absolute path or relative to the current working directory.",
+  "MissingTestName": "Missing required flag:\n -n, --testname TESTNAME  name of the generated Lightning test\nSee more help with --help\n",
+  "testname": "name of the generated Lightning test",
+  "LightningTest": "A Lightning Test"
 }

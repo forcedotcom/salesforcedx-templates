@@ -26,7 +26,7 @@ describe('Lightning test creation tests:', () => {
         'DefaultLightningTest'
       ])
       .it(
-        'should create lightning test foo using DefaultLightningTest template and aura output directory',
+        'should create lightning test foo using DefaultLightningTest template',
         ctx => {
           assert.file(path.join('foo.resource'));
           assert.file(path.join('foo.resource-meta.xml'));
@@ -53,6 +53,25 @@ describe('Lightning test creation tests:', () => {
           }
         );
   }),
+    describe('Check lightning test creation with internal flag', () => {
+      test
+        .withOrg()
+        .withProject()
+        .stdout()
+        .command([
+          'force:lightning:test:create',
+          '-n',
+          'internalflagtest',
+          '--internal'
+        ])
+        .it(
+          'should create lightning aura component files in the aura output directory without a -meta.xml file',
+          ctx => {
+            assert.file(path.join('internalflagtest.resource'));
+            assert.noFile('internalflagtest.resource-meta.xml');
+          }
+        );
+    }),
     describe('lightning test failures', () => {
       test
         .withOrg()

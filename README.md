@@ -44,7 +44,7 @@ To verify
 - [`sfdx force:lightning:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightningcomponentcreate)
 - [`sfdx force:lightning:event:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightningeventcreate)
 - [`sfdx force:lightning:interface:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightninginterfacecreate)
-- [`sfdx force:lightning:test:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/bp/readmeCommandLinks/COMMANDS.md#sfdx-forcelightningtestcreate)
+- [`sfdx force:lightning:test:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightningtestcreate)
 - [`sfdx force:project:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forceprojectcreate)
 - [`sfdx force:visualforce:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcevisualforcecomponentcreate)
 - [`sfdx force:visualforce:page:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcevisualforcepagecreate)

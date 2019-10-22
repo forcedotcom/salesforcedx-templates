@@ -244,6 +244,31 @@ EXAMPLES
 
 _See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
 
+#### `sfdx force:lightning:test:create`
+
+create a Lightning test
+
+```
+USAGE
+  $ sfdx force:lightning:test:create -n <string> [-d <string>] [-t <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -d, --outputdir=outputdir                                                         folder for saving the created files
+  -n, --testname=testname                                                           (required) name of the generated Lightning test
+  -t, --template=DefaultLightningTest                                               [default: DefaultLightningTest] template to use for file creation
+  --json                                                                            format output as json
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for this command invocation
+
+DESCRIPTION
+  The outputdir can be an absolute path or relative to the current working directory.
+
+EXAMPLES
+  $ sfdx force:lightning:test:create -n MyLightningTest
+  $ sfdx force:lightning:test:create -n MyLightningTest -d lightningTests
+```
+
+_See code: [src/commands/force/lightning/test/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/lightning/test/create.ts)_
+
 #### `sfdx force:project:create`
 
 create a Salesforce DX project

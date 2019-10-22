@@ -36,7 +36,7 @@ EXAMPLES
   $ sfdx force:apex:class:create -n MyClass -d classes
 ```
 
-_See code: [src/commands/force/apex/class/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/apex/class/create.ts)_
+_See code: [src/commands/force/apex/class/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/apex/class/create.ts)_
 
 #### `sfdx force:apex:trigger:create`
 
@@ -75,7 +75,7 @@ EXAMPLES
   $ sfdx force:apex:trigger:create -n MyTrigger -d triggers
 ```
 
-_See code: [src/commands/force/apex/trigger/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/apex/trigger/create.ts)_
+_See code: [src/commands/force/apex/trigger/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/apex/trigger/create.ts)_
 
 #### `sfdx force:lightning:app:create`
 
@@ -115,7 +115,7 @@ EXAMPLES
   $ sfdx force:lightning:app:create -n myapp -d aura
 ```
 
-_See code: [src/commands/force/lightning/app/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/app/create.ts)_
+_See code: [src/commands/force/lightning/app/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/lightning/app/create.ts)_
 
 #### `sfdx force:lightning:component:create`
 
@@ -162,7 +162,7 @@ EXAMPLES
   $ sfdx force:lightning:component:create -n mycomponent --type lwc -d lwc
 ```
 
-_See code: [src/commands/force/lightning/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/component/create.ts)_
+_See code: [src/commands/force/lightning/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/lightning/component/create.ts)_
 
 #### `sfdx force:lightning:event:create`
 
@@ -202,7 +202,7 @@ EXAMPLES
   $ sfdx force:lightning:event:create -n myevent -d aura
 ```
 
-_See code: [src/commands/force/lightning/event/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/event/create.ts)_
+_See code: [src/commands/force/lightning/event/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/lightning/event/create.ts)_
 
 #### `sfdx force:lightning:interface:create`
 
@@ -242,7 +242,7 @@ EXAMPLES
   $ sfdx force:lightning:interface:create -n myinterface -d aura
 ```
 
-_See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/lightning/interface/create.ts)_
+_See code: [src/commands/force/lightning/interface/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/lightning/interface/create.ts)_
 
 #### `sfdx force:lightning:test:create`
 
@@ -311,7 +311,7 @@ EXAMPLES
   $ sfdx force:project:create --projectname mywork --template empty
 ```
 
-_See code: [src/commands/force/project/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/project/create.ts)_
+_See code: [src/commands/force/project/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/project/create.ts)_
 
 #### `sfdx force:visualforce:component:create`
 
@@ -352,7 +352,7 @@ EXAMPLES
   $ sfdx force:visualforce:component:create -n mycomponent -l mylabel -d components
 ```
 
-_See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/component/create.ts)_
+_See code: [src/commands/force/visualforce/component/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/visualforce/component/create.ts)_
 
 #### `sfdx force:visualforce:page:create`
 
@@ -392,4 +392,4 @@ EXAMPLES
   $ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages
 ```
 
-_See code: [src/commands/force/visualforce/page/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/v0.0.0/src/commands/force/visualforce/page/create.ts)_
+_See code: [src/commands/force/visualforce/page/create.ts](https://github.com/forcedotcom/salesforcedx-templates/blob/master/src/commands/force/visualforce/page/create.ts)_

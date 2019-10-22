@@ -38,15 +38,15 @@ To verify
 
 ## Commands
 
-- [`sfdx force:apex:class:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forceapexclasscreate)
-- [`sfdx force:apex:trigger:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forceapextriggercreate_)
-- [`sfdx force:lightning:app:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightningappcreate)
-- [`sfdx force:lightning:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightningcomponentcreate)
-- [`sfdx force:lightning:event:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightningeventcreate)
-- [`sfdx force:lightning:interface:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcelightninginterfacecreate)
-- [`sfdx force:project:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forceprojectcreate)
-- [`sfdx force:visualforce:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcevisualforcecomponentcreate)
-- [`sfdx force:visualforce:page:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/ananya/readMe/COMMANDS.md#sfdx-forcevisualforcepagecreate)
+- [`sfdx force:apex:class:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forceapexclasscreate)
+- [`sfdx force:apex:trigger:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forceapextriggercreate)
+- [`sfdx force:lightning:app:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightningappcreate)
+- [`sfdx force:lightning:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightningcomponentcreate)
+- [`sfdx force:lightning:event:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightningeventcreate)
+- [`sfdx force:lightning:interface:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcelightninginterfacecreate)
+- [`sfdx force:project:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forceprojectcreate)
+- [`sfdx force:visualforce:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcevisualforcecomponentcreate)
+- [`sfdx force:visualforce:page:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcevisualforcepagecreate)
 
 
 ## Debugging your plugin

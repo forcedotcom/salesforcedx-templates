@@ -55,7 +55,7 @@ export default class Project extends TemplateCommand {
     }),
     loginurl: flags.string({
       char: 'l',
-      description: 'The login URL for the Salesforce instance being used.', // messages.getMessage('loginurl'),
+      description: messages.getMessage('loginurl'),
       default: 'https://login.salesforce.com',
       hidden: true
     })

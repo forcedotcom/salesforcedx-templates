@@ -52,6 +52,7 @@
   "MissingProjectname": "Missing required flag:\n -n, --projectname PROJECTNAME  name of the generated project\nSee more help with --help\n",
   "StandardReadMe": "This guide helps Salesforce developers who are new to Visual Studio Code go",
   "EmptyReadMe": "# Salesforce App",
+  "loginurl": "The login URL for the Salesforce instance being used.",
 
   "VisualforceComponentCommandDescription": "create a Visualforce component\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nName and label are required.",
   "componentlabel": "Visualforce component label",

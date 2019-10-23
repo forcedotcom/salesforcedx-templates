@@ -52,6 +52,12 @@ export default class Project extends TemplateCommand {
     manifest: flags.boolean({
       char: 'x',
       description: messages.getMessage('manifest')
+    }),
+    loginurl: flags.string({
+      char: 'l',
+      description: messages.getMessage('loginurl'),
+      default: 'https://login.salesforce.com',
+      hidden: true
     })
   };
   public async run(): Promise<AnyJson> {
@@ -62,7 +68,9 @@ export default class Project extends TemplateCommand {
     this.flags.ns = this.flags.namespace;
 
     // TODO: update the latest apiversion
-    this.flags.sourceApiVersion = '46.0';
+    this.flags.sourceApiVersion = '47.0';
+
+    this.flags.loginURL = this.flags.loginurl;
 
     return this.runGenerator(ProjectGenerator);
   }

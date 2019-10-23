@@ -1,8 +1,8 @@
 {
   "name": "salesforcedx-templates",
-  "description": "Code base to host the Salesforce CLI commands.",
-  "version": "0.0.0",
-  "author": "Amanda Stern",
+  "description": "Salesforce CLI scaffolding commands for different types of Force.com metadata",
+  "version": "47.0.1",
+  "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "dependencies": {
     "@types/yeoman-assert": "^3.1.1",
@@ -53,17 +53,16 @@
   ],
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "keywords": [
+    "force",
+    "salesforce",
+    "sfdx",
+    "salesforcedx",
     "sfdx-plugin"
   ],
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "oclif": {
     "commands": "./lib/commands",
     "bin": "sfdx",
-    "topics": {
-      "hello": {
-        "description": "Commands to say hello."
-      }
-    },
     "devPlugins": [
       "@oclif/plugin-help"
     ]

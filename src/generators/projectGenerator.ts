@@ -9,7 +9,6 @@ import * as path from 'path';
 import { OptionsMap } from '../utils/types';
 // tslint:disable-next-line: no-var-requires
 const generator = require('yeoman-generator');
-const loginURL = 'https://login.salesforce.com';
 const vscodearray = ['extensions', 'launch', 'settings'];
 const standardfolderarray = [
   'applications',
@@ -48,7 +47,8 @@ export default class ProjectGenerator extends generator {
       defaultpackagedir,
       manifest,
       ns,
-      sourceApiVersion
+      sourceApiVersion,
+      loginURL
     } = this.options;
     const folderlayout = [
       outputdir,

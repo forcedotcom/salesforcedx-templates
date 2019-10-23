@@ -47,6 +47,23 @@ describe('Project creation tests:', () => {
         assert.file([path.join('foo', 'config', 'project-scratch-def.json')]);
         assert.file([path.join('foo', 'README.md')]);
         assert.file([path.join('foo', 'sfdx-project.json')]);
+        assert.fileContent(
+          path.join('foo', 'sfdx-project.json'),
+          '"namespace": "",'
+        );
+        assert.fileContent(
+          path.join('foo', 'sfdx-project.json'),
+          '"path": "force-app",'
+        );
+        assert.fileContent(
+          path.join('foo', 'sfdx-project.json'),
+          'sourceApiVersion'
+        );
+        assert.fileContent(
+          path.join('foo', 'sfdx-project.json'),
+          '"sfdcLoginUrl": "https://login.salesforce.com"'
+        );
+
         for (const file of vscodearray) {
           assert.file([path.join('foo', '.vscode', `${file}.json`)]);
         }
@@ -196,6 +213,56 @@ describe('Project creation tests:', () => {
           );
         }
       );
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:project:create',
+        '--projectname',
+        'fooempty',
+        '--template',
+        'empty',
+        '--defaultpackagedir',
+        'empty',
+        '--loginurl',
+        'https://vandelay-industries.my.salesforce.com'
+      ])
+      .it(
+        'should create project with fooempty name, empty template, empty default package directory, empty namespace and custom login url',
+        ctx => {
+          assert.file(path.join('fooempty', '.forceignore'));
+          assert.fileContent(
+            path.join('fooempty', 'sfdx-project.json'),
+            '"namespace": "",'
+          );
+          assert.fileContent(
+            path.join('fooempty', 'sfdx-project.json'),
+            '"path": "empty",'
+          );
+          assert.fileContent(
+            path.join('fooempty', 'sfdx-project.json'),
+            'sourceApiVersion'
+          );
+          assert.fileContent(
+            path.join('fooempty', 'sfdx-project.json'),
+            '"sfdcLoginUrl": "https://vandelay-industries.my.salesforce.com"'
+          );
+          for (const folder of emptyfolderarray) {
+            assert(
+              fs.existsSync(
+                path.join('fooempty', 'empty', 'main', 'default', folder)
+              )
+            );
+          }
+          assert.fileContent(
+            path.join('fooempty', 'README.md'),
+            '# Salesforce App'
+          );
+        }
+      );
+
     test
       .withOrg()
       .withProject()

@@ -27,7 +27,7 @@ const standardfolderarray = [
 ];
 const filestocopy = [
   '.forceignore',
-  'gitignore',
+  GITIGNORE,
   '.prettierignore',
   '.prettierrc'
 ];

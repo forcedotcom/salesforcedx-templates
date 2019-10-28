@@ -153,9 +153,10 @@ export default class ProjectGenerator extends generator {
         );
       }
       for (const file of filestocopy) {
+        const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, file))
+          this.destinationPath(path.join(outputdir, projectname, out))
         );
       }
     }

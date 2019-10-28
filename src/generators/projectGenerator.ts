@@ -25,7 +25,7 @@ const standardfolderarray = [
 ];
 const filestocopy = [
   '.forceignore',
-  '.gitignore',
+  'gitignore',
   '.prettierignore',
   '.prettierrc'
 ];
@@ -122,9 +122,10 @@ export default class ProjectGenerator extends generator {
         )
       );
       for (const file of filestocopy) {
+        const out = file === 'gitignore' ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, file))
+          this.destinationPath(path.join(outputdir, projectname, out))
         );
       }
     }

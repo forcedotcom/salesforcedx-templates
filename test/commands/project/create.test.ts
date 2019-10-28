@@ -308,6 +308,15 @@ describe('Project creation tests:', () => {
           );
         }
       );
+
+    test
+      .command(['force:project:create', '-n', 'GitIgnoreTest'])
+      .it('should rename gitignore to .gitignore', ctx => {
+        const srcPath = path.normalize('../lib/templates/project');
+        assert.noFile(path.join(srcPath, '.gitignore'));
+        assert.file(path.join(srcPath, 'gitignore'));
+        assert.file(path.normalize('GitIgnoreTest/.gitignore'));
+      });
   });
   describe('project creation failures', () => {
     test

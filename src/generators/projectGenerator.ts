@@ -9,6 +9,8 @@ import * as path from 'path';
 import { OptionsMap } from '../utils/types';
 // tslint:disable-next-line: no-var-requires
 const generator = require('yeoman-generator');
+
+const GITIGNORE = 'gitignore';
 const vscodearray = ['extensions', 'launch', 'settings'];
 const standardfolderarray = [
   'applications',
@@ -25,7 +27,7 @@ const standardfolderarray = [
 ];
 const filestocopy = [
   '.forceignore',
-  '.gitignore',
+  GITIGNORE,
   '.prettierignore',
   '.prettierrc'
 ];
@@ -122,9 +124,10 @@ export default class ProjectGenerator extends generator {
         )
       );
       for (const file of filestocopy) {
+        const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, file))
+          this.destinationPath(path.join(outputdir, projectname, out))
         );
       }
     }

@@ -25,10 +25,10 @@
   "lenses" : [ ],
   "dashboards" : [
     {
-      "label" : "basicDashboard",
-      "name" : "basicDashboard_tp",
+      "label" : "<%= templateName %>Dashboard",
+      "name" : "<%= templateName %>Dashboard",
       "condition" : "${Variables.Overrides.createAllDashboards}",
-      "file" : "dashboards/basicDashboard.json"
+      "file" : "dashboards/<%= templateName %>Dashboard.json"
     }
   ],
   "eltDataflows" : [ ],

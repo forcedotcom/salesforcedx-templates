@@ -31,7 +31,7 @@ export default class AnalyticsTemplate extends TemplateCommand {
     templatename: flags.string({
       char: 'n',
       description: messages.getMessage('AnalyticsTemplateName'),
-      default: 'DefaultAnalyticsTemplate'
+      required: true
     })
   };
 

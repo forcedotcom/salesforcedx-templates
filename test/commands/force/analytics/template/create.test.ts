@@ -4,12 +4,9 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { test } from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
+import { expect, test } from '@salesforce/command/lib/test';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
-
-Messages.importMessagesDirectory(__dirname);
 
 describe('Analytics template creation tests:', () => {
   describe('Check analytics template creation', () => {
@@ -36,26 +33,25 @@ describe('Analytics template creation tests:', () => {
             path.join('waveTemplates', 'foo', 'folder.json'),
             '"name" : "foo"'
           );
+          assert.file('waveTemplates/foo/dashboards/fooDashboard.json');
+          assert.fileContent(
+            path.join(
+              'waveTemplates',
+              'foo',
+              'dashboards',
+              'fooDashboard.json'
+            ),
+            '"name" : "fooDashboard"'
+          );
         }
       );
     test
       .withOrg()
       .withProject()
-      .stdout()
+      .stderr()
       .command(['force:analytics:template:create'])
-      .it(
-        'should create default analytics template with DefaultAnalyticsTemplate as the name',
-        ctx => {
-          assert.file('DefaultAnalyticsTemplate/template-info.json');
-          assert.fileContent(
-            path.join('DefaultAnalyticsTemplate', 'template-info.json'),
-            '"label" : "DefaultAnalyticsTemplate"'
-          );
-          assert.fileContent(
-            path.join('DefaultAnalyticsTemplate', 'folder.json'),
-            '"name" : "DefaultAnalyticsTemplate"'
-          );
-        }
-      );
+      .it('should throw error when missing required name field', ctx => {
+        expect(ctx.stderr).to.contain('Missing required flag');
+      });
   });
 });

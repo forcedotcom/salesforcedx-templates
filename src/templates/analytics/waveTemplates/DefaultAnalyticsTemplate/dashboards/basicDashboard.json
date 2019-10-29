@@ -1,7 +1,7 @@
 {
-  "name" : "basicDashboard_tp",
-  "label" : "basicDashboard",
-  "description" : "Basic dashboard",
+  "name" : "<%= templateName %>Dashboard",
+  "label" : "<%= templateName %>Dashboard",
+  "description" : "<%= templateName %> dashboard",
   "folder" : {
     "id" : "${App.Folder.Id}"
   },
@@ -70,7 +70,7 @@
         "parameters" : {
           "fontSize" : 48,
           "showActionMenu" : true,
-          "text" : "Very Basic Analytics Dashboard",
+          "text" : "<%= templateName %> Analytics Dashboard",
           "textAlignment" : "center",
           "textColor" : "rgb(9, 26, 62)"
         },

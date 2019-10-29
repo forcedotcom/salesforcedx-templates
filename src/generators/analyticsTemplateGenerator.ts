@@ -32,9 +32,9 @@ export default class AnalyticsTemplateGenerator extends generator {
       this.destinationPath(
         path.join(
           outputdir,
-          `${templatename}`,
+          templatename,
           'dashboards',
-          `${templatename}` + 'Dashboard.json'
+          templatename + 'Dashboard.json'
         )
       ),
       { templateName: templatename }
@@ -44,14 +44,12 @@ export default class AnalyticsTemplateGenerator extends generator {
         path.join('DefaultAnalyticsTemplate', 'app-to-template-rules.json')
       ),
       this.destinationPath(
-        path.join(outputdir, `${templatename}`, 'app-to-template-rules.json')
+        path.join(outputdir, templatename, 'app-to-template-rules.json')
       )
     );
     this.fs.copyTpl(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'folder.json')),
-      this.destinationPath(
-        path.join(outputdir, `${templatename}`, 'folder.json')
-      ),
+      this.destinationPath(path.join(outputdir, templatename, 'folder.json')),
       { templateName: templatename }
     );
     this.fs.copyTpl(
@@ -59,7 +57,7 @@ export default class AnalyticsTemplateGenerator extends generator {
         path.join('DefaultAnalyticsTemplate', 'releaseNotes.html')
       ),
       this.destinationPath(
-        path.join(outputdir, `${templatename}`, 'releaseNotes.html')
+        path.join(outputdir, templatename, 'releaseNotes.html')
       )
     );
     this.fs.copyTpl(
@@ -67,7 +65,7 @@ export default class AnalyticsTemplateGenerator extends generator {
         path.join('DefaultAnalyticsTemplate', 'template-info.json')
       ),
       this.destinationPath(
-        path.join(outputdir, `${templatename}`, 'template-info.json')
+        path.join(outputdir, templatename, 'template-info.json')
       ),
       { templateName: templatename, sourceApiVersion: apiversion }
     );
@@ -76,20 +74,18 @@ export default class AnalyticsTemplateGenerator extends generator {
         path.join('DefaultAnalyticsTemplate', 'template-to-app-rules.json')
       ),
       this.destinationPath(
-        path.join(outputdir, `${templatename}`, 'template-to-app-rules.json')
+        path.join(outputdir, templatename, 'template-to-app-rules.json')
       )
     );
     this.fs.copyTpl(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'ui.json')),
-      this.destinationPath(path.join(outputdir, `${templatename}`, 'ui.json'))
+      this.destinationPath(path.join(outputdir, templatename, 'ui.json'))
     );
     this.fs.copyTpl(
       this.templatePath(
         path.join('DefaultAnalyticsTemplate', 'variables.json')
       ),
-      this.destinationPath(
-        path.join(outputdir, `${templatename}`, 'variables.json')
-      )
+      this.destinationPath(path.join(outputdir, templatename, 'variables.json'))
     );
   }
 }

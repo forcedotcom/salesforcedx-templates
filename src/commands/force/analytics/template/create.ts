@@ -8,7 +8,7 @@ import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import AnalyticsTemplateGenerator from '../../../../generators/analyticsTemplateGenerator';
-import { TemplateCommand } from '../../../../utils';
+import { CreateUtil, TemplateCommand } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
@@ -36,6 +36,7 @@ export default class AnalyticsTemplate extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
+    CreateUtil.checkInputs(this.flags.templatename);
     return this.runGenerator(AnalyticsTemplateGenerator);
   }
 }

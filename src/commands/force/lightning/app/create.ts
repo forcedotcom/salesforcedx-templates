@@ -11,7 +11,7 @@ import LightningAppGenerator from '../../../../generators/lightningAppGenerator'
 import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningAppFileSuffix = /.app$/;
-const BUNDLE_TYPE = MessageUtil.get('app');
+const BUNDLE_TYPE = MessageUtil.get('App');
 
 export default class LightningApp extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
@@ -41,7 +41,7 @@ export default class LightningApp extends TemplateCommand {
     }),
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningApp',
       options: CreateUtil.getCommandTemplatesForFiletype(
@@ -51,14 +51,14 @@ export default class LightningApp extends TemplateCommand {
     }),
     outputdir: flags.string({
       char: 'd',
-      description: MessageUtil.get('outputdir'),
+      description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: MessageUtil.get('CurrentWorkingDir')
+      default: MessageUtil.get('OutputDirDefaultDescription')
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
-      description: MessageUtil.get('internal'),
+      description: MessageUtil.get('LightningInternalFlagDescription'),
       hidden: true
     })
   };

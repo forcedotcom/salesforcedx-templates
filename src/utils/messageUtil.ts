@@ -51,7 +51,7 @@ export class MessageUtil {
     return (
       this.getHelpHead(isLightningBundle) +
       (extra || '') +
-      this.messages.getMessage('help_examples') +
+      this.messages.getMessage('HelpExamplesTitle') +
       examples.reduce((acc, current) => acc + `   ${current}\n`, '')
     );
   }
@@ -63,9 +63,9 @@ export class MessageUtil {
 
   private static getHelpHead(isLightning: boolean): string {
     return (
-      this.messages.getMessage('help_defaults') +
-      this.messages.getMessage('help_outputdir_relative') +
-      (isLightning ? MessageUtil.get('help_outputdir_relative_lightning') : '')
+      this.messages.getMessage('HelpDefaults') +
+      this.messages.getMessage('HelpOutputDirRelative') +
+      (isLightning ? MessageUtil.get('HelpOutputDirRelativeLightning') : '')
     );
   }
 }

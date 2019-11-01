@@ -14,7 +14,7 @@ import LightningComponentGenerator from '../../../../generators/lightningCompone
 import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningComponentFileSuffix = /.cmp$/;
-const BUNDLE_TYPE = MessageUtil.get('component');
+const BUNDLE_TYPE = MessageUtil.get('Component');
 
 export default class LightningComponent extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
@@ -51,7 +51,7 @@ export default class LightningComponent extends TemplateCommand {
     }),
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningCmp',
       options: CreateUtil.getCommandTemplatesForFiletype(
@@ -61,10 +61,10 @@ export default class LightningComponent extends TemplateCommand {
     }),
     outputdir: flags.string({
       char: 'd',
-      description: MessageUtil.get('outputdir'),
+      description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
       required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
+      default: MessageUtil.get('OutputDirDefaultDescription')
     }),
     apiversion: flags.builtin(),
     type: flags.string({
@@ -75,7 +75,7 @@ export default class LightningComponent extends TemplateCommand {
     }),
     internal: flags.boolean({
       char: 'i',
-      description: MessageUtil.get('internal'),
+      description: MessageUtil.get('LightningInternalFlagDescription'),
       hidden: true
     })
   };

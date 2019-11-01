@@ -10,7 +10,7 @@ import VisualforcePageGenerator from '../../../../generators/visualforcePageGene
 import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const visualforcePageFileSuffix = /.page$/;
-const VF_TYPE = MessageUtil.get('page');
+const VF_TYPE = MessageUtil.get('Page');
 
 export default class VisualforcePage extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
@@ -34,7 +34,7 @@ export default class VisualforcePage extends TemplateCommand {
   protected static flagsConfig = {
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultVFPage',
       options: CreateUtil.getCommandTemplatesForFiletype(
@@ -44,9 +44,9 @@ export default class VisualforcePage extends TemplateCommand {
     }),
     outputdir: flags.string({
       char: 'd',
-      description: MessageUtil.get('outputdir'),
+      description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: MessageUtil.get('CurrentWorkingDir')
+      default: MessageUtil.get('OutputDirDefaultDescription')
     }),
     pagename: flags.string({
       char: 'n',

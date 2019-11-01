@@ -11,7 +11,7 @@ import LightningEventGenerator from '../../../../generators/lightningEventGenera
 import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningEventFileSuffix = /.evt$/;
-const BUNDLE_TYPE = MessageUtil.get('event');
+const BUNDLE_TYPE = MessageUtil.get('Event');
 
 export default class LightningEvent extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
@@ -41,7 +41,7 @@ export default class LightningEvent extends TemplateCommand {
     }),
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningEvt',
       options: CreateUtil.getCommandTemplatesForFiletype(
@@ -51,15 +51,15 @@ export default class LightningEvent extends TemplateCommand {
     }),
     outputdir: flags.string({
       char: 'd',
-      description: MessageUtil.get('outputdir'),
+      description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
       required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
+      default: MessageUtil.get('OutputDirDefaultDescription')
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
-      description: MessageUtil.get('internal'),
+      description: MessageUtil.get('LightningInternalFlagDescription'),
       hidden: true
     })
   };

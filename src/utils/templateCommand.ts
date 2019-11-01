@@ -45,7 +45,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     if (!apiversion) {
       this.flags.apiversion = TemplateCommand.getDefaultApiVersion();
     }
-    if (outputdir === MessageUtil.get('CurrentWorkingDir')) {
+    if (outputdir === MessageUtil.get('OutputDirDefaultDescription')) {
       this.flags.outputdir = process.cwd();
     }
 
@@ -58,7 +58,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     if (this.flags.json) {
       return TemplateCommand.buildJson(adapter, targetDir);
     } else {
-      this.log(MessageUtil.get('targetDirOutput', [targetDir]));
+      this.log(MessageUtil.get('TargetDirOutput', [targetDir]));
       this.log(adapter.log.getOutput());
       return result;
     }

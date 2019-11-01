@@ -10,7 +10,7 @@ import VisualforceComponentGenerator from '../../../../generators/visualforceCom
 import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const visualforceComponentFileSuffix = /.component$/;
-const VF_TYPE = MessageUtil.get('component');
+const VF_TYPE = MessageUtil.get('Component');
 
 export default class VisualforceComponent extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
@@ -34,7 +34,7 @@ export default class VisualforceComponent extends TemplateCommand {
   protected static flagsConfig = {
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultVFComponent',
       options: CreateUtil.getCommandTemplatesForFiletype(
@@ -44,9 +44,9 @@ export default class VisualforceComponent extends TemplateCommand {
     }),
     outputdir: flags.string({
       char: 'd',
-      description: MessageUtil.get('outputdir'),
+      description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: MessageUtil.get('CurrentWorkingDir')
+      default: MessageUtil.get('OutputDirDefaultDescription')
     }),
     componentname: flags.string({
       char: 'n',

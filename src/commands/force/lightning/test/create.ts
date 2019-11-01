@@ -29,14 +29,14 @@ export default class LightningTest extends TemplateCommand {
     testname: flags.string({
       char: 'n',
       description: MessageUtil.get('LightningNameFlagDescription', [
-        MessageUtil.get('test')
+        MessageUtil.get('Test')
       ]),
       longDescription: MessageUtil.get('LightningTestNameFlagLongDescription'),
       required: true
     }),
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningTest',
       options: CreateUtil.getCommandTemplatesForFiletype(
@@ -46,14 +46,14 @@ export default class LightningTest extends TemplateCommand {
     }),
     outputdir: flags.string({
       char: 'd',
-      description: MessageUtil.get('outputdir'),
+      description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
       required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
+      default: MessageUtil.get('OutputDirDefaultDescription')
     }),
     internal: flags.boolean({
       char: 'i',
-      description: MessageUtil.get('internal'),
+      description: MessageUtil.get('LightningInternalFlagDescription'),
       hidden: true
     })
   };

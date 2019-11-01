@@ -11,7 +11,7 @@ import LightningInterfaceGenerator from '../../../../generators/lightningInterfa
 import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningInterfaceFileSuffix = /.intf$/;
-const BUNDLE_TYPE = MessageUtil.get('interface');
+const BUNDLE_TYPE = MessageUtil.get('Interface');
 
 export default class LightningInterface extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
@@ -44,7 +44,7 @@ export default class LightningInterface extends TemplateCommand {
     }),
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningIntf',
       options: CreateUtil.getCommandTemplatesForFiletype(
@@ -54,15 +54,15 @@ export default class LightningInterface extends TemplateCommand {
     }),
     outputdir: flags.string({
       char: 'd',
-      description: MessageUtil.get('outputdir'),
+      description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
       required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
+      default: MessageUtil.get('OutputDirDefaultDescription')
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
-      description: MessageUtil.get('internal'),
+      description: MessageUtil.get('LightningInternalFlagDescription'),
       hidden: true
     })
   };

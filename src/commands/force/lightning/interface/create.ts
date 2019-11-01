@@ -36,7 +36,7 @@ export default class LightningInterface extends TemplateCommand {
       char: 'd',
       description: MessageUtil.get('outputdir'),
       required: false,
-      default: process.cwd()
+      default: MessageUtil.get('CurrentWorkingDir')
     }),
     apiversion: flags.builtin(),
     interfacename: flags.string({

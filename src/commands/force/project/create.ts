@@ -5,57 +5,58 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { flags } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import ProjectGenerator from '../../../generators/projectGenerator';
-import { CreateUtil, TemplateCommand } from '../../../utils';
-
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+import { CreateUtil, TemplateCommand, MessageUtil } from '../../../utils';
 
 export default class Project extends TemplateCommand {
+  public static description = MessageUtil.buildDescription(
+    'ProjectDescription',
+    false
+  );
   public static examples = [
     '$ sfdx force:project:create --projectname mywork',
     '$ sfdx force:project:create --projectname mywork --defaultpackagedir myapp',
     '$ sfdx force:project:create --projectname mywork --defaultpackagedir myapp --manifest',
     '$ sfdx force:project:create --projectname mywork --template empty'
   ];
-  public static description = messages.getMessage('ProjectCommandDescription');
+  public static help = MessageUtil.buildHelpText(Project.examples, false);
+  public static longDescription = MessageUtil.get('ProjectLongDescription');
 
   protected static flagsConfig = {
     outputdir: flags.string({
       char: 'd',
-      description: messages.getMessage('outputdir'),
-      default: process.cwd()
+      description: MessageUtil.get('outputdir'),
+      default: MessageUtil.get('CurrentWorkingDir')
     }),
     projectname: flags.string({
       char: 'n',
-      description: messages.getMessage('projectname'),
+      description: MessageUtil.get('projectname'),
       required: true
     }),
     defaultpackagedir: flags.string({
       char: 'p',
-      description: messages.getMessage('defaultpackagedir'),
+      description: MessageUtil.get('defaultpackagedir'),
       default: 'force-app'
     }),
     namespace: flags.string({
       char: 's',
-      description: messages.getMessage('namespace'),
+      description: MessageUtil.get('namespace'),
       default: ''
     }),
     template: flags.string({
       char: 't',
-      description: messages.getMessage('template'),
+      description: MessageUtil.get('template'),
       default: 'standard',
       options: ['standard', 'empty', 'analytics']
     }),
     manifest: flags.boolean({
       char: 'x',
-      description: messages.getMessage('manifest')
+      description: MessageUtil.get('manifest')
     }),
     loginurl: flags.string({
       char: 'l',
-      description: messages.getMessage('loginurl'),
+      description: MessageUtil.get('loginurl'),
       default: 'https://login.salesforce.com',
       hidden: true
     })

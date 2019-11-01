@@ -30,7 +30,7 @@ export default class LightningTest extends TemplateCommand {
       char: 'd',
       description: MessageUtil.get('outputdir'),
       required: false,
-      default: process.cwd()
+      default: MessageUtil.get('CurrentWorkingDir')
     }),
     testname: flags.string({
       char: 'n',

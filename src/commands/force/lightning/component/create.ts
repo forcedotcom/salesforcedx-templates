@@ -4,44 +4,50 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+
+// tslint:disable:no-unused-expression
+
 import { flags } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningComponentGenerator from '../../../../generators/lightningComponentGenerator';
-import { CreateUtil, TemplateCommand } from '../../../../utils';
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
+
 const lightningComponentFileSuffix = /.cmp$/;
 
 export default class LightningComponent extends TemplateCommand {
+  public static description = MessageUtil.get('LightningComponentDescription');
   public static examples = [
     '$ sfdx force:lightning:component:create -n mycomponent',
     '$ sfdx force:lightning:component:create -n mycomponent --type lwc',
     '$ sfdx force:lightning:component:create -n mycomponent -d aura',
     '$ sfdx force:lightning:component:create -n mycomponent --type lwc -d lwc'
   ];
-
-  public static description = messages.getMessage(
-    'LightningComponentCommandDescription'
+  public static help = MessageUtil.buildHelpText(
+    LightningComponent.examples,
+    true,
+    MessageUtil.get('LightningComponentHelpExtra')
+  );
+  public static longDescription = MessageUtil.get(
+    'LightningComponentLongDescription'
   );
 
   protected static flagsConfig = {
     outputdir: flags.string({
       char: 'd',
-      description: messages.getMessage('outputdir'),
+      description: MessageUtil.get('outputdir'),
       required: false,
-      default: process.cwd()
+      default: MessageUtil.get('CurrentWorkingDir')
     }),
     apiversion: flags.builtin(),
     componentname: flags.string({
       char: 'n',
-      description: messages.getMessage('componentname'),
+      description: MessageUtil.get('componentname'),
       required: true
     }),
     template: flags.string({
       char: 't',
-      description: messages.getMessage('template'),
+      description: MessageUtil.get('template'),
       default: 'DefaultLightningCmp',
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningComponentFileSuffix,
@@ -49,13 +55,13 @@ export default class LightningComponent extends TemplateCommand {
       )
     }),
     type: flags.string({
-      description: messages.getMessage('ComponentType'),
+      description: MessageUtil.get('ComponentType'),
       options: ['aura', 'lwc'],
       default: 'aura'
     }),
     internal: flags.boolean({
       char: 'i',
-      description: messages.getMessage('internal'),
+      description: MessageUtil.get('internal'),
       hidden: true
     })
   };
@@ -73,12 +79,11 @@ export default class LightningComponent extends TemplateCommand {
 
     const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
 
-    // tslint:disable-next-line:no-unused-expression
     if (!this.flags.internal) {
       if (this.flags.type === 'lwc' && !fileparts.includes('lwc')) {
-        throw new Error(messages.getMessage('MissingLWCDir'));
+        throw new Error(MessageUtil.get('MissingLWCDir'));
       } else if (!fileparts.includes('aura') && this.flags.type === 'aura') {
-        throw new Error(messages.getMessage('MissingAuraDir'));
+        throw new Error(MessageUtil.get('MissingAuraDir'));
       }
     }
 

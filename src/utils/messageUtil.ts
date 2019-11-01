@@ -18,17 +18,17 @@ export class MessageUtil {
   /**
    * Get the description used in the --help output for the command
    * @param descriptionKey The message key for the description text
-   * @param isLightning If the command is for a lightning bundle
+   * @param isLightningBundle If the command is for a lightning bundle
    */
   public static buildDescription(
     descriptionKey: string,
-    isLightning: boolean,
+    isLightningBundle: boolean,
     tokens?: Array<string | number | boolean>
   ): string {
     return (
       this.messages.getMessage(descriptionKey, tokens) +
       '\n' +
-      this.getHelpHead(isLightning)
+      this.getHelpHead(isLightningBundle)
     );
   }
 
@@ -39,14 +39,16 @@ export class MessageUtil {
    * A COMMAND. THIS IS EXCLUSIVELY USED TO SET THE `help` PROPERTY ON THE COMMAND FOR
    * DOC GENERATING PURPOSES AND IS NOT SHOWN IN THE --help OUTPUT.**
    * @param examples Example uses of the command
-   * @param isLightning If the command is for a lightning bundle
+   * @param isLightningBundle If the command is for a lightning bundle
    */
   public static buildHelpText(
     examples: string[],
-    isLightning: boolean
+    isLightningBundle: boolean,
+    extra?: string
   ): string {
     return (
-      this.getHelpHead(isLightning) +
+      this.getHelpHead(isLightningBundle) +
+      (extra || '') +
       this.messages.getMessage('help_examples') +
       examples.reduce((acc, current) => acc + `   ${current}\n`, '')
     );

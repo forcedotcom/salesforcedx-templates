@@ -5,42 +5,48 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { flags } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningInterfaceGenerator from '../../../../generators/lightningInterfaceGenerator';
-import { CreateUtil, TemplateCommand } from '../../../../utils';
+import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
 
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningInterfaceFileSuffix = /.intf$/;
+const BUNDLE_TYPE = MessageUtil.get('interface');
 
 export default class LightningInterface extends TemplateCommand {
+  public static description = MessageUtil.buildDescription(
+    'LightningDescription',
+    true,
+    [BUNDLE_TYPE]
+  );
   public static examples = [
     '$ sfdx force:lightning:interface:create -n myinterface',
     '$ sfdx force:lightning:interface:create -n myinterface -d aura'
   ];
-
-  public static description = messages.getMessage(
-    'LightningInterfaceCommandDescription'
+  public static help = MessageUtil.buildHelpText(
+    LightningInterface.examples,
+    true
   );
+  public static longDescription = MessageUtil.get('LightningLongDescription', [
+    BUNDLE_TYPE
+  ]);
 
   protected static flagsConfig = {
     outputdir: flags.string({
       char: 'd',
-      description: messages.getMessage('outputdir'),
+      description: MessageUtil.get('outputdir'),
       required: false,
       default: process.cwd()
     }),
     apiversion: flags.builtin(),
     interfacename: flags.string({
       char: 'n',
-      description: messages.getMessage('interfacename'),
+      description: MessageUtil.get('interfacename'),
       required: true
     }),
     template: flags.string({
       char: 't',
-      description: messages.getMessage('template'),
+      description: MessageUtil.get('template'),
       default: 'DefaultLightningIntf',
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningInterfaceFileSuffix,
@@ -49,7 +55,7 @@ export default class LightningInterface extends TemplateCommand {
     }),
     internal: flags.boolean({
       char: 'i',
-      description: messages.getMessage('internal'),
+      description: MessageUtil.get('internal'),
       hidden: true
     })
   };
@@ -62,7 +68,7 @@ export default class LightningInterface extends TemplateCommand {
 
     // tslint:disable-next-line:no-unused-expression
     if (!this.flags.internal && !fileparts.includes('aura')) {
-      throw new Error(messages.getMessage('MissingAuraDir'));
+      throw new Error(MessageUtil.get('MissingAuraDir'));
     }
 
     return this.runGenerator(LightningInterfaceGenerator);

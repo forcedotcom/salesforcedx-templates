@@ -31,6 +31,8 @@ const filestocopy = [
   '.prettierignore',
   '.prettierrc'
 ];
+const soqlQueryFile = 'accounts.soql';
+const anonApexFile = 'hello.apex';
 const emptyfolderarray = ['aura', 'lwc'];
 
 const analyticsfolderarray = ['waveTemplates'];
@@ -121,6 +123,18 @@ export default class ProjectGenerator extends generator {
             'lwc',
             '.eslintrc.json'
           )
+        )
+      );
+      this.fs.copyTpl(
+        this.templatePath(soqlQueryFile),
+        this.destinationPath(
+          path.join(outputdir, projectname, 'queries', soqlQueryFile)
+        )
+      );
+      this.fs.copyTpl(
+        this.templatePath(anonApexFile),
+        this.destinationPath(
+          path.join(outputdir, projectname, 'apex', anonApexFile)
         )
       );
       for (const file of filestocopy) {

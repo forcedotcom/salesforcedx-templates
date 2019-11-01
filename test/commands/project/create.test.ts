@@ -45,6 +45,8 @@ describe('Project creation tests:', () => {
       .command(['force:project:create', '--projectname', 'foo'])
       .it('should create project with default values and foo name', ctx => {
         assert.file([path.join('foo', 'config', 'project-scratch-def.json')]);
+        assert.file([path.join('foo', 'queries', 'account.soql')]);
+        assert.file([path.join('foo', 'apex', 'hello.apex')]);
         assert.file([path.join('foo', 'README.md')]);
         assert.file([path.join('foo', 'sfdx-project.json')]);
         assert.fileContent(

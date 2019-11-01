@@ -25,17 +25,41 @@ export default class ApexTrigger extends TemplateCommand {
   public static longDescription = MessageUtil.get('ApexTriggerLongDescription');
 
   protected static flagsConfig = {
+    triggername: flags.string({
+      char: 'n',
+      description: MessageUtil.get('ApexTriggerNameFlagDescription'),
+      longDescription: MessageUtil.get('ApexTriggerNameFlagLongDescription'),
+      required: true
+    }),
+    template: flags.string({
+      char: 't',
+      description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
+      default: 'ApexTrigger',
+      options: CreateUtil.getCommandTemplatesForFiletype(
+        apexTriggerFileSuffix,
+        'apextrigger'
+      )
+    }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
       required: false,
       default: MessageUtil.get('CurrentWorkingDir')
     }),
     apiversion: flags.builtin(),
-    triggerevents: flags.string({
+    sobject: flags.string({
+      char: 's',
+      description: MessageUtil.get('ApexTriggerSObjectFlagDescription'),
+      longDescription: MessageUtil.get('ApexTriggerSObjectFlagLongDescription'),
+      default: 'SOBJECT'
+    }),
+    triggerevents: flags.array({
       char: 'e',
-      description: MessageUtil.get('triggerevents'),
-      default: 'before insert',
+      description: MessageUtil.get('ApexTriggerEventsFlagDescription'),
+      longDescription: MessageUtil.get('ApexTriggerEventsFlagLongDescription'),
+      default: ['before insert'],
       options: [
         'before insert',
         'before update',
@@ -45,25 +69,6 @@ export default class ApexTrigger extends TemplateCommand {
         'after delete',
         'after undelete'
       ]
-    }),
-    triggername: flags.string({
-      char: 'n',
-      description: MessageUtil.get('triggername'),
-      required: true
-    }),
-    sobject: flags.string({
-      char: 's',
-      description: MessageUtil.get('sobject'),
-      default: 'SOBJECT'
-    }),
-    template: flags.string({
-      char: 't',
-      description: MessageUtil.get('template'),
-      default: 'ApexTrigger',
-      options: CreateUtil.getCommandTemplatesForFiletype(
-        apexTriggerFileSuffix,
-        'apextrigger'
-      )
     })
   };
 

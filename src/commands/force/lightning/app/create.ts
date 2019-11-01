@@ -8,7 +8,7 @@ import { flags } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningAppGenerator from '../../../../generators/lightningAppGenerator';
-import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningAppFileSuffix = /.app$/;
 const BUNDLE_TYPE = MessageUtil.get('app');
@@ -29,26 +29,33 @@ export default class LightningApp extends TemplateCommand {
   ]);
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
-    apiversion: flags.builtin(),
     appname: flags.string({
       char: 'n',
-      description: MessageUtil.get('appname'),
+      description: MessageUtil.get('LightningNameFlagDescription', [
+        BUNDLE_TYPE
+      ]),
+      longDescription: MessageUtil.get('LightningNameFlagLongDescription', [
+        BUNDLE_TYPE
+      ]),
       required: true
     }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningApp',
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningAppFileSuffix,
         'lightningapp'
       )
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: MessageUtil.get('CurrentWorkingDir')
+    }),
+    apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
       description: MessageUtil.get('internal'),

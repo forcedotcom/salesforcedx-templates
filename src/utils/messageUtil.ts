@@ -62,9 +62,8 @@ export class MessageUtil {
   private static getHelpHead(isLightning: boolean): string {
     return (
       this.messages.getMessage('help_defaults') +
-      this.messages.getMessage(
-        `help_outputdir_relative${isLightning ? '_lightning' : ''}`
-      )
+      this.messages.getMessage('help_outputdir_relative') +
+      (isLightning ? MessageUtil.get('help_outputdir_relative_lightning') : '')
     );
   }
 }

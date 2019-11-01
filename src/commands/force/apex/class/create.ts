@@ -26,25 +26,28 @@ export default class ApexClass extends TemplateCommand {
   protected static flagsConfig = {
     classname: flags.string({
       char: 'n',
-      description: MessageUtil.get('NameFlagDescription'),
+      description: MessageUtil.get('ApexClassNameFlagDescription'),
+      longDescription: MessageUtil.get('ApexClassNameFlagLongDescription'),
       required: true
     }),
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
-    apiversion: flags.builtin(),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultApexClass',
       options: CreateUtil.getCommandTemplatesForFiletype(
         apexClassFileSuffix,
         'apexclass'
       )
-    })
+    }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      required: false,
+      default: MessageUtil.get('CurrentWorkingDir')
+    }),
+    apiversion: flags.builtin()
   };
 
   public async run(): Promise<AnyJson> {

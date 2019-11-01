@@ -53,6 +53,25 @@ describe('Analytics template creation tests:', () => {
       .withOrg()
       .withProject()
       .stderr()
+      .command([
+        'force:analytics:template:create',
+        '--templatename',
+        'foo',
+        '--outputdir',
+        'foo'
+      ])
+      .it(
+        'should throw error output directory does not contain waveTemplates',
+        ctx => {
+          expect(ctx.stderr).to.contain(
+            messages.getMessage('MissingWaveTemplatesDir')
+          );
+        }
+      );
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
       .command(['force:analytics:template:create'])
       .it('should throw error when missing required name field', ctx => {
         expect(ctx.stderr).to.contain('Missing required flag');

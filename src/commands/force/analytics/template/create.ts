@@ -7,6 +7,7 @@
 import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
+import * as path from 'path';
 import AnalyticsTemplateGenerator from '../../../../generators/analyticsTemplateGenerator';
 import { CreateUtil, TemplateCommand } from '../../../../utils';
 
@@ -14,7 +15,7 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 export default class AnalyticsTemplate extends TemplateCommand {
   public static examples = [
-    '$ sfdx force:analytics:template:create -d outputdir'
+    '$ sfdx force:analytics:template:create -n myTemplate -d outputdir'
   ];
 
   public static description = messages.getMessage(
@@ -37,6 +38,13 @@ export default class AnalyticsTemplate extends TemplateCommand {
 
   public async run(): Promise<AnyJson> {
     CreateUtil.checkInputs(this.flags.templatename);
+
+    const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
+    // tslint:disable-next-line:no-unused-expression
+    if (!fileparts.includes('waveTemplates')) {
+      throw new Error(messages.getMessage('MissingWaveTemplatesDir'));
+    }
+
     return this.runGenerator(AnalyticsTemplateGenerator);
   }
 }

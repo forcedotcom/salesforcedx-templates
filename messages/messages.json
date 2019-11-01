@@ -71,6 +71,7 @@
   "testname": "name of the generated Lightning test",
   "LightningTest": "A Lightning Test",
 
-  "CreateAnalyticsTemplateCommandDescription": "add an analytics template to your workspace",
-  "AnalyticsTemplateName": "name of the analytics template"
+  "CreateAnalyticsTemplateCommandDescription": "add an analytics template to your workspace\nIf not supplied, the apiversion and outputdir use default values.\nThe outputdir should contain the path to the waveTemplates directory.",
+  "AnalyticsTemplateName": "name of the analytics template",
+  "MissingWaveTemplatesDir": "Analytics templates must have a parent folder named 'waveTemplates'."
 }

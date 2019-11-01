@@ -7,7 +7,7 @@
 import { flags } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import LightningTestGenerator from '../../../../generators/lightningTestGenerator';
-import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningTestFileSuffix = /.resource$/;
 
@@ -26,25 +26,30 @@ export default class LightningTest extends TemplateCommand {
   );
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
     testname: flags.string({
       char: 'n',
-      description: MessageUtil.get('testname'),
+      description: MessageUtil.get('LightningNameFlagDescription', [
+        MessageUtil.get('test')
+      ]),
+      longDescription: MessageUtil.get('LightningTestNameFlagLongDescription'),
       required: true
     }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningTest',
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningTestFileSuffix,
         'lightningtest'
       )
+    }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      required: false,
+      default: MessageUtil.get('CurrentWorkingDir')
     }),
     internal: flags.boolean({
       char: 'i',

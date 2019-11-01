@@ -7,14 +7,14 @@
 import { flags } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import VisualforceComponentGenerator from '../../../../generators/visualforceComponentGenerator';
-import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const visualforceComponentFileSuffix = /.component$/;
 const VF_TYPE = MessageUtil.get('component');
 
 export default class VisualforceComponent extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
-    'VisualforceDescription',
+    'VFDescription',
     false,
     [VF_TYPE]
   );
@@ -26,35 +26,39 @@ export default class VisualforceComponent extends TemplateCommand {
     VisualforceComponent.examples,
     false
   );
-  public static longDescription = MessageUtil.get(
-    'VisualforceLongDescription',
-    [VF_TYPE, VF_TYPE]
-  );
+  public static longDescription = MessageUtil.get('VFLongDescription', [
+    VF_TYPE,
+    VF_TYPE
+  ]);
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
-    apiversion: flags.builtin(),
-    componentname: flags.string({
-      char: 'n',
-      description: MessageUtil.get('visualforcecomponentname'),
-      required: true
-    }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultVFComponent',
       options: CreateUtil.getCommandTemplatesForFiletype(
         visualforceComponentFileSuffix,
         'visualforcecomponent'
       )
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: MessageUtil.get('CurrentWorkingDir')
+    }),
+    componentname: flags.string({
+      char: 'n',
+      description: MessageUtil.get('VFNameFlagDescription', [VF_TYPE]),
+      longDescription: MessageUtil.get('VFNameFlagLongDescription', [VF_TYPE]),
+      required: true
+    }),
+    apiversion: flags.builtin(),
     label: flags.string({
       char: 'l',
-      description: MessageUtil.get('componentlabel'),
+      description: MessageUtil.get('VFLabelFlagDescription', [VF_TYPE]),
+      longDescription: MessageUtil.get('VFLabelFlagLongDescription', [VF_TYPE]),
       required: true
     })
   };

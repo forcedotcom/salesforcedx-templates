@@ -11,12 +11,18 @@ import { flags } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningComponentGenerator from '../../../../generators/lightningComponentGenerator';
-import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningComponentFileSuffix = /.cmp$/;
+const BUNDLE_TYPE = MessageUtil.get('component');
 
 export default class LightningComponent extends TemplateCommand {
-  public static description = MessageUtil.get('LightningComponentDescription');
+  public static description = MessageUtil.buildDescription(
+    'LightningCmpDescription',
+    true,
+    undefined,
+    MessageUtil.get('LightningCmpHelpExtra')
+  );
   public static examples = [
     '$ sfdx force:lightning:component:create -n mycomponent',
     '$ sfdx force:lightning:component:create -n mycomponent --type lwc',
@@ -26,36 +32,44 @@ export default class LightningComponent extends TemplateCommand {
   public static help = MessageUtil.buildHelpText(
     LightningComponent.examples,
     true,
-    MessageUtil.get('LightningComponentHelpExtra')
+    MessageUtil.get('LightningCmpHelpExtra')
   );
   public static longDescription = MessageUtil.get(
-    'LightningComponentLongDescription'
+    'LightningCmpLongDescription'
   );
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
-    apiversion: flags.builtin(),
     componentname: flags.string({
       char: 'n',
-      description: MessageUtil.get('componentname'),
+      description: MessageUtil.get('LightningNameFlagDescription', [
+        BUNDLE_TYPE
+      ]),
+      longDescription: MessageUtil.get('LightningNameFlagLongDescription', [
+        BUNDLE_TYPE
+      ]),
       required: true
     }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningCmp',
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningComponentFileSuffix,
         'lightningcomponent'
       )
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      required: false,
+      default: MessageUtil.get('CurrentWorkingDir')
+    }),
+    apiversion: flags.builtin(),
     type: flags.string({
-      description: MessageUtil.get('ComponentType'),
+      description: MessageUtil.get('LightningCmpTypeFlagDescription'),
+      longDescription: MessageUtil.get('LightningCmpTypeFlagLongDescription'),
       options: ['aura', 'lwc'],
       default: 'aura'
     }),

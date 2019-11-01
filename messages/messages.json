@@ -6,6 +6,7 @@
   "app": "app",
   "event": "event",
   "interface": "interface",
+  "test": "test",
   "component": "component",
   "page": "page",
   "apiversion": "API version number",
@@ -37,22 +38,38 @@
   "LightningLongDescription": "Creates a Lightning %s bundle in the specified directory or the current working directory. The bundle consists of multiple files in a folder with the designated name.",
   "LightningNameFlagDescription": "name of the generated Lightning %s",
   "LightningNameFlagLongDescription": "The Lightning %s name. The name can be up to 40 characters and must start with a letter.",
-  "LightningComponentDescription": "create a bundle for an Aura component or a Lightning web component",
-  "LightningComponentLongDescription": "Creates a bundle for an Aura component or a Lightning web component in the specified directory or the current working directory. The bundle consists of multiple files in a folder with the designated name.",
-  "LightningComponentHelpExtra": "\nTo create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce CLI creates an Aura component by default.",
+  "LightningCmpDescription": "create a bundle for an Aura component or a Lightning web component",
+  "LightningCmpLongDescription": "Creates a bundle for an Aura component or a Lightning web component in the specified directory or the current working directory. The bundle consists of multiple files in a folder with the designated name.",
+  "LightningCmpHelpExtra": "\nTo create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce CLI creates an Aura component by default.",
+  "LightningCmpTypeFlagDescription": "type of the Lightning component",
+  "LightningCmpTypeFlagLongDescription": "The type of the new Lightning component.",
   "LightningTestDescription": "create a Lightning test",
   "LightningTestLongDescription": "Creates a Lightning test in the specified directory or the current working directory. The .resource file and associated metadata file are created.",
-  
+  "LightningTestNameFlagLongDescription": "The name of the new Lightning test. The name can be up to 40 characters and must start with a letter.",
+
   "ProjectDescription": "create a Salesforce DX project",
   "ProjectLongDescription": "Creates a Salesforce DX project in the specified directory or the current working directory. The command creates the necessary configuration files and folders.",
-  
-  "VisualforceDescription": "create a Visualforce %s",
-  "VisualforceLongDescription": "Creates a Visualforce %s in the specified directory or the current working directory. The command creates the .%s file and associated metadata file.",
-  
+  "ProjectNameFlagDescription": "name of the generated project",
+  "ProjectNameFlagLongDescription": "The name for the new project. Any valid folder name is accepted.",
+  "ProjectTemplateFlagDescription": "template to use for project creation",
+  "ProjectTemplateFlagLongDescription": "The template to use to create the project. Supplied parameter values or default values are filled into a copy of the template.",
+  "ProjectNamespaceFlagDescription": "project associated namespace",
+  "ProjectNamespaceFlagLongDescription": "The namespace associated with this project and any connected scratch orgs.",
+  "ProjectPackageFlagDescription": "default package directory name",
+  "ProjectPackageFlagLongDescription": "The default package directory name. Metadata items such as classes and Lightning bundles are placed inside this folder.",
+  "ProjectManifestFlagDescription": "generate a manifest (package.xml) for change-set based development",
+  "ProjectManifestFlagLongDescription": "Generates a default manifest (package.xml) for fetching Apex, Visualforce, Lightning components, and static resources.",
+  "ProjectLoginUrlDescription": "Salesforce instance login URL",
+  "ProjectLoginUrlLongDescription": "The login URL for the Salesforce instance being used. Normally defaults to https://login.salesforce.com.",
+
+  "VFDescription": "create a Visualforce %s",
+  "VFLongDescription": "Creates a Visualforce %s in the specified directory or the current working directory. The command creates the .%s file and associated metadata file.",
+  "VFNameFlagDescription": "name of the generated Visualforce %s",
+  "VFNameFlagLongDescription": "The Visualforce %s name. The name can be up to 40 characters and must start with a letter.",
+  "VFLabelFlagDescription": "Visualforce %s label",
+  "VFLabelFlagLongDescription": "The label saved in the metadata for the Visualforce %s.",
+
   "MissingClassnameFlag": "Missing required flag:\n -n, --classname CLASSNAME  name of the generated Apex class\nSee more help with --help\n",
-  
-  
-  
   "MissingTriggernameFlag": "Missing required flag:\n -n, --triggername TRIGGERNAME  name of the generated Apex trigger\nSee more help with --help\n",
   "internal": "create lightning components without creating a -meta.xml file",
   
@@ -62,8 +79,6 @@
   "LightningAppBundle": "A Lightning Application Bundle",
   "InvalidTemplate": "Expected --template=foo to be one of:",
   "LightningComponentCommandDescription": "create a bundle for an Aura component or a Lightning web component\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nIf you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we create force-app/myBundle/ to store the files in the bundle.\nTo create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce CLI creates an Aura component by default.",
-  "componentname": "name of the generated Lightning component",
-  "ComponentType": "type of the Lightning component",
   "MissingLWCDir": "Lightning bundles must have a parent folder named 'lwc'.",
   "MissingComponentName": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Lightning component\nSee more help with --help\n",
   "MissingLWCFolder": "Lightning bundles must have a parent folder named 'lwc'.",
@@ -75,16 +90,14 @@
   "LightningInterfaceCommandDescription": "create a Lightning interface\nIf not supplied, the apiversion, template, and outputdir use default values.\nThe outputdir can be an absolute path or relative to the current working directory.\nIf you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directory is force-app and your Lightning bundle is called myBundle, we create force-app/myBundle/ to store the files in the bundle.",
   "interfacename": "name of the generated Lightning interface",
   "MissingInterfacename": "Missing required flag:\n -n, --interfacename INTERFACENAME  name of the generated Lightning interface\nSee more help with --help\n",
-  "defaultpackagedir": "default package directory name",
-  "namespace": "project associated namespace",
-  "manifest": "generate a manifest (package.xml) for change-set based development",
-  "projectname": "name of the generated project",
+  
+
   "LightningInterfaceBundle": "A Lightning Interface Bundle",
   "MissingProjectname": "Missing required flag:\n -n, --projectname PROJECTNAME  name of the generated project\nSee more help with --help\n",
   "StandardReadMe": "This guide helps Salesforce developers who are new to Visual Studio Code go",
   "EmptyReadMe": "# Salesforce App",
-  "loginurl": "The login URL for the Salesforce instance being used.",
-  "componentlabel": "Visualforce component label",
+  
+  
   "visualforcecomponentname": "name of the generated Visualforce component",
   "MissingComponentnameFlag": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Visualforce component\nSee more help with --help\n",
   "VisualforcePageCommandDescription": "create a Visualforce page\nIf not supplied, the apiversion, template, and outputdir use default values.\nIf not supplied, the apiversion, template, and outputdir use default values.\nName and label are required.",

@@ -8,7 +8,7 @@ import { flags } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 import LightningEventGenerator from '../../../../generators/lightningEventGenerator';
-import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningEventFileSuffix = /.evt$/;
 const BUNDLE_TYPE = MessageUtil.get('event');
@@ -29,27 +29,34 @@ export default class LightningEvent extends TemplateCommand {
   ]);
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      required: false,
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
-    apiversion: flags.builtin(),
     eventname: flags.string({
       char: 'n',
-      description: MessageUtil.get('eventname'),
+      description: MessageUtil.get('LightningNameFlagDescription', [
+        BUNDLE_TYPE
+      ]),
+      longDescription: MessageUtil.get('LightningNameFlagLongDescription', [
+        BUNDLE_TYPE
+      ]),
       required: true
     }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningEvt',
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningEventFileSuffix,
         'lightningevent'
       )
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      required: false,
+      default: MessageUtil.get('CurrentWorkingDir')
+    }),
+    apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
       description: MessageUtil.get('internal'),

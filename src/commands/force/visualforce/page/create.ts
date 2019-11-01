@@ -7,14 +7,14 @@
 import { flags } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import VisualforcePageGenerator from '../../../../generators/visualforcePageGenerator';
-import { CreateUtil, TemplateCommand, MessageUtil } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
 const visualforcePageFileSuffix = /.page$/;
 const VF_TYPE = MessageUtil.get('page');
 
 export default class VisualforcePage extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
-    'VisualforceDescription',
+    'VFDescription',
     false,
     [VF_TYPE]
   );
@@ -26,35 +26,39 @@ export default class VisualforcePage extends TemplateCommand {
     VisualforcePage.examples,
     false
   );
-  public static longDescription = MessageUtil.get(
-    'VisualforceLongDescription',
-    [VF_TYPE, VF_TYPE]
-  );
+  public static longDescription = MessageUtil.get('VFLongDescription', [
+    VF_TYPE,
+    VF_TYPE
+  ]);
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
-    apiversion: flags.builtin(),
-    pagename: flags.string({
-      char: 'n',
-      description: MessageUtil.get('visualforcepagename'),
-      required: true
-    }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('template'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultVFPage',
       options: CreateUtil.getCommandTemplatesForFiletype(
         visualforcePageFileSuffix,
         'visualforcepage'
       )
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: MessageUtil.get('CurrentWorkingDir')
+    }),
+    pagename: flags.string({
+      char: 'n',
+      description: MessageUtil.get('VFNameFlagDescription', [VF_TYPE]),
+      longDescription: MessageUtil.get('VFNameFlagLongDescription', [VF_TYPE]),
+      required: true
+    }),
+    apiversion: flags.builtin(),
     label: flags.string({
       char: 'l',
-      description: MessageUtil.get('pagelabel'),
+      description: MessageUtil.get('VFLabelFlagDescription', [VF_TYPE]),
+      longDescription: MessageUtil.get('VFLabelFlagLongDescription', [VF_TYPE]),
       required: true
     })
   };

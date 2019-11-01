@@ -23,12 +23,14 @@ export class MessageUtil {
   public static buildDescription(
     descriptionKey: string,
     isLightningBundle: boolean,
-    tokens?: Array<string | number | boolean>
+    tokens?: Array<string | number | boolean>,
+    extra?: string
   ): string {
     return (
       this.messages.getMessage(descriptionKey, tokens) +
       '\n' +
-      this.getHelpHead(isLightningBundle)
+      this.getHelpHead(isLightningBundle) +
+      (extra || '')
     );
   }
 

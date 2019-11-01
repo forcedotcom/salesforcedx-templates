@@ -7,7 +7,7 @@
 import { flags } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import ProjectGenerator from '../../../generators/projectGenerator';
-import { CreateUtil, TemplateCommand, MessageUtil } from '../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../utils';
 
 export default class Project extends TemplateCommand {
   public static description = MessageUtil.buildDescription(
@@ -24,39 +24,46 @@ export default class Project extends TemplateCommand {
   public static longDescription = MessageUtil.get('ProjectLongDescription');
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: MessageUtil.get('outputdir'),
-      default: MessageUtil.get('CurrentWorkingDir')
-    }),
     projectname: flags.string({
       char: 'n',
-      description: MessageUtil.get('projectname'),
+      description: MessageUtil.get('ProjectNameFlagDescription'),
+      longDescription: MessageUtil.get('ProjectNameFlagLongDescription'),
       required: true
-    }),
-    defaultpackagedir: flags.string({
-      char: 'p',
-      description: MessageUtil.get('defaultpackagedir'),
-      default: 'force-app'
-    }),
-    namespace: flags.string({
-      char: 's',
-      description: MessageUtil.get('namespace'),
-      default: ''
     }),
     template: flags.string({
       char: 't',
-      description: MessageUtil.get('template'),
+      description: MessageUtil.get('ProjectTemplateFlagDescription'),
+      longDescription: MessageUtil.get('ProjectTemplateFlagLongDescription'),
       default: 'standard',
       options: ['standard', 'empty', 'analytics']
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('outputdir'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: MessageUtil.get('CurrentWorkingDir')
+    }),
+    namespace: flags.string({
+      char: 's',
+      description: MessageUtil.get('ProjectNamespaceFlagDescription'),
+      longDescription: MessageUtil.get('ProjectNamespaceFlagLongDescription'),
+      default: ''
+    }),
+    defaultpackagedir: flags.string({
+      char: 'p',
+      description: MessageUtil.get('ProjectPackageFlagDescription'),
+      longDescription: MessageUtil.get('ProjectPackageFlagLongDescription'),
+      default: 'force-app'
+    }),
     manifest: flags.boolean({
       char: 'x',
-      description: MessageUtil.get('manifest')
+      description: MessageUtil.get('ProjectManifestFlagDescription'),
+      longDescription: MessageUtil.get('ProjectManifestFlagLongDescription')
     }),
     loginurl: flags.string({
       char: 'l',
-      description: MessageUtil.get('loginurl'),
+      description: MessageUtil.get('ProjectLoginUrlDescription'),
+      longDescription: MessageUtil.get('ProjectLoginUrlLongDescription'),
       default: 'https://login.salesforce.com',
       hidden: true
     })

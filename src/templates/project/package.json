@@ -1,0 +1,19 @@
+{
+  "name": "salesforce-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Salesforce App",
+  "scripts": {
+    "prettier": "prettier --write '**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}'",
+    "lint": "npm run lint:lwc && npm run lint:aura",
+    "lint:lwc": "eslint **/lwc/**",
+    "lint:aura": "sfdx force:lightning:lint **/aura/** --exit"
+  },
+  "devDependencies": {
+    "@salesforce/eslint-config-lwc": "^0.3.0",
+    "@salesforce/sfdx-lwc-jest": "^0.5.4",
+    "eslint": "^5.16.0",
+    "prettier": "^1.18.2",
+    "prettier-plugin-apex": "^1.0.0"
+  }
+}

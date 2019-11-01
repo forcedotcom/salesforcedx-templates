@@ -29,7 +29,8 @@ const filestocopy = [
   '.forceignore',
   GITIGNORE,
   '.prettierignore',
-  '.prettierrc'
+  '.prettierrc',
+  'package.json'
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 

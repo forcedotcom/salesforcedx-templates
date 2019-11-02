@@ -7,8 +7,11 @@
 
 // tslint:disable: no-unused-expression
 
+import { Messages } from '@salesforce/core';
 import { expect } from 'chai';
 import { MessageUtil } from '../../src/utils';
+
+Messages.importMessagesDirectory(__dirname);
 
 describe('MessageUtil', () => {
   const extra = 'some extra text';
@@ -16,14 +19,20 @@ describe('MessageUtil', () => {
     MessageUtil.get('HelpOutputDirRelative')}`;
 
   describe('get', () => {
-    // it('should get a message with a given key', () => {
-    //   expect(MessageUtil.get('Test')).to.equal('test');
-    // });
-    // it('should format message with given tokens', () => {
-    //   expect(MessageUtil.get('TestWithTokens', ['hello', 'world'])).to.equal(
-    //     'test hello world message'
-    //   );
-    // });
+    const messages = Messages.loadMessages(
+      'salesforcedx-templates',
+      'messages'
+    );
+
+    it('should get a message with a given key', () => {
+      expect(MessageUtil.get('Test')).to.equal(messages.getMessage('Test'));
+    });
+
+    it('should format message with given tokens', () => {
+      expect(MessageUtil.get('TargetDirOutput', ['something'])).to.equal(
+        messages.getMessage('TargetDirOutput', ['something'])
+      );
+    });
   });
 
   describe('buildDescription', () => {

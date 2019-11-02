@@ -162,31 +162,27 @@ describe('Project creation tests:', () => {
       .command([
         'force:project:create',
         '--projectname',
-        'foo-project',
-        '--outputdir',
-        'test outputdir'
+        'foo-project'
       ])
       .it(
         'should create project with default values and foo-project name in a custom output directory with spaces in its name',
         ctx => {
           assert.file([
             path.join(
-              'test outputdir',
               'foo-project',
               'config',
               'project-scratch-def.json'
             )
           ]);
           assert.file([
-            path.join('test outputdir', 'foo-project', 'README.md')
+            path.join('foo-project', 'README.md')
           ]);
           assert.file([
-            path.join('test outputdir', 'foo-project', 'sfdx-project.json')
+            path.join('foo-project', 'sfdx-project.json')
           ]);
           for (const file of vscodearray) {
             assert.file([
               path.join(
-                'test outputdir',
                 'foo-project',
                 '.vscode',
                 `${file}.json`
@@ -195,7 +191,6 @@ describe('Project creation tests:', () => {
           }
           assert.file([
             path.join(
-              'test outputdir',
               'foo-project',
               'force-app',
               'main',
@@ -205,14 +200,12 @@ describe('Project creation tests:', () => {
             )
           ]);
           for (const file of filestocopy) {
-            assert.file([path.join('test outputdir', 'foo-project', file)]);
+            assert.file([path.join('foo-project', file)]);
           }
           for (const folder of standardfolderarray) {
-            console.log('folder ===>', folder);
             assert(
               fs.existsSync(
                 path.join(
-                  'test outputdir',
                   'foo-project',
                   'force-app',
                   'main',

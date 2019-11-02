@@ -1,7 +1,14 @@
+/*
+ * Copyright (c) 2019, salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import { Messages } from '@salesforce/core';
 
 Messages.importMessagesDirectory(__dirname);
 
+// TODO: Update util when sfdxdocgen is updated to support oclif
 export class MessageUtil {
   /**
    * Get the message for a given key
@@ -19,6 +26,8 @@ export class MessageUtil {
    * Get the description used in the --help output for the command
    * @param descriptionKey The message key for the description text
    * @param isLightningBundle If the command is for a lightning bundle
+   * @param tokens The values to substitute in the message
+   * @param extra Extra text to append to the description at the end
    */
   public static buildDescription(
     descriptionKey: string,
@@ -42,6 +51,7 @@ export class MessageUtil {
    * DOC GENERATING PURPOSES AND IS NOT SHOWN IN THE --help OUTPUT.**
    * @param examples Example uses of the command
    * @param isLightningBundle If the command is for a lightning bundle
+   * @param extra Extra text to append to the help message before the examples
    */
   public static buildHelpText(
     examples: string[],

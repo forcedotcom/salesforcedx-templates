@@ -62,7 +62,8 @@ export default class LightningComponent extends TemplateCommand {
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
-      longDescription: MessageUtil.get('OutputDirFlagLongDescription')
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: process.cwd()
     }),
     apiversion: flags.builtin(),
     type: flags.string({

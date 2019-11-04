@@ -41,13 +41,9 @@ export abstract class TemplateCommand extends SfdxCommand {
   public abstract run(): Promise<AnyJson>;
 
   public async runGenerator(generator: typeof yeomanGenerator) {
-    // These flags need to be dynamically set for default values
-    const { apiversion, outputdir } = this.flags;
-    if (!apiversion) {
+    // Can't specify a default value the normal way for apiversion, so set it here
+    if (!this.flags.apiversion) {
       this.flags.apiversion = TemplateCommand.getDefaultApiVersion();
-    }
-    if (!outputdir) {
-      this.flags.outputdir = process.cwd();
     }
 
     const adapter = new ForceGeneratorAdapter();

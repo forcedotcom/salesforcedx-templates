@@ -45,7 +45,8 @@ export default class VisualforceComponent extends TemplateCommand {
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
-      longDescription: MessageUtil.get('OutputDirFlagLongDescription')
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: process.cwd()
     }),
     componentname: flags.string({
       char: 'n',

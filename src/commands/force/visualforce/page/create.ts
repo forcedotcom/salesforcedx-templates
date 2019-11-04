@@ -5,49 +5,60 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { flags } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import VisualforcePageGenerator from '../../../../generators/visualforcePageGenerator';
-import { CreateUtil, TemplateCommand } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const visualforcePageFileSuffix = /.page$/;
+const VF_TYPE = MessageUtil.get('Page');
 
 export default class VisualforcePage extends TemplateCommand {
+  public static description = MessageUtil.buildDescription(
+    'VFDescription',
+    false,
+    [VF_TYPE]
+  );
   public static examples = [
     '$ sfdx force:visualforce:page:create -n mypage -l mylabel',
     '$ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages'
   ];
-
-  public static description = messages.getMessage(
-    'VisualforcePageCommandDescription'
+  public static help = MessageUtil.buildHelpText(
+    VisualforcePage.examples,
+    false
   );
+  public static longDescription = MessageUtil.get('VFLongDescription', [
+    VF_TYPE,
+    VF_TYPE
+  ]);
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: messages.getMessage('outputdir'),
-      default: process.cwd()
-    }),
-    apiversion: flags.builtin(),
-    pagename: flags.string({
-      char: 'n',
-      description: messages.getMessage('visualforcepagename'),
-      required: true
-    }),
     template: flags.string({
       char: 't',
-      description: messages.getMessage('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultVFPage',
       options: CreateUtil.getCommandTemplatesForFiletype(
         visualforcePageFileSuffix,
         'visualforcepage'
       )
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('OutputDirFlagDescription'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: process.cwd()
+    }),
+    pagename: flags.string({
+      char: 'n',
+      description: MessageUtil.get('VFNameFlagDescription', [VF_TYPE]),
+      longDescription: MessageUtil.get('VFNameFlagLongDescription', [VF_TYPE]),
+      required: true
+    }),
+    apiversion: flags.builtin(),
     label: flags.string({
       char: 'l',
-      description: messages.getMessage('pagelabel'),
+      description: MessageUtil.get('VFLabelFlagDescription', [VF_TYPE]),
+      longDescription: MessageUtil.get('VFLabelFlagLongDescription', [VF_TYPE]),
       required: true
     })
   };

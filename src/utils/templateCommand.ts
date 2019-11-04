@@ -5,17 +5,18 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+// tslint:disable:no-var-requires
+// tslint:disable:no-unused-expression
+
 import { SfdxCommand } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-// tslint:disable-next-line:no-var-requires
-const yeomanGenerator = require('yeoman-generator');
-import { ForceGeneratorAdapter } from './adapter';
 import * as path from 'path';
+import { ForceGeneratorAdapter } from './adapter';
+import { MessageUtil } from './messageUtil';
 import { CreateOutput } from './types';
-// tslint:disable-next-line:no-var-requires
+
 const yeoman = require('yeoman-environment');
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+const yeomanGenerator = require('yeoman-generator');
 
 export abstract class TemplateCommand extends SfdxCommand {
   public static buildJson(
@@ -37,10 +38,10 @@ export abstract class TemplateCommand extends SfdxCommand {
     return `${versionTrimmed.split('.')[0]}.0`;
   }
 
-  abstract run(): Promise<AnyJson>;
+  public abstract run(): Promise<AnyJson>;
 
   public async runGenerator(generator: typeof yeomanGenerator) {
-    // tslint:disable-next-line:no-unused-expression
+    // Can't specify a default value the normal way for apiversion, so set it here
     if (!this.flags.apiversion) {
       this.flags.apiversion = TemplateCommand.getDefaultApiVersion();
     }
@@ -51,12 +52,10 @@ export abstract class TemplateCommand extends SfdxCommand {
 
     const result = await env.run('generator', this.flags);
     const targetDir = path.resolve(this.flags.outputdir);
-
-    // tslint:disable-next-line:no-unused-expression
     if (this.flags.json) {
       return TemplateCommand.buildJson(adapter, targetDir);
     } else {
-      this.log(messages.getMessage('targetDirOutput', [targetDir]));
+      this.log(MessageUtil.get('TargetDirOutput', [targetDir]));
       this.log(adapter.log.getOutput());
       return result;
     }

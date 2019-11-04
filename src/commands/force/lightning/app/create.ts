@@ -52,8 +52,7 @@ export default class LightningApp extends TemplateCommand {
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
-      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: MessageUtil.get('OutputDirDefaultDescription')
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription')
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({

@@ -10,10 +10,10 @@
 
 import { SfdxCommand } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
-import { ForceGeneratorAdapter } from './adapter';
 import * as path from 'path';
-import { CreateOutput } from './types';
+import { ForceGeneratorAdapter } from './adapter';
 import { MessageUtil } from './messageUtil';
+import { CreateOutput } from './types';
 
 const yeoman = require('yeoman-environment');
 const yeomanGenerator = require('yeoman-generator');
@@ -41,11 +41,12 @@ export abstract class TemplateCommand extends SfdxCommand {
   public abstract run(): Promise<AnyJson>;
 
   public async runGenerator(generator: typeof yeomanGenerator) {
+    // These flags need to be dynamically set for default values
     const { apiversion, outputdir } = this.flags;
     if (!apiversion) {
       this.flags.apiversion = TemplateCommand.getDefaultApiVersion();
     }
-    if (outputdir === MessageUtil.get('OutputDirDefaultDescription')) {
+    if (!outputdir) {
       this.flags.outputdir = process.cwd();
     }
 

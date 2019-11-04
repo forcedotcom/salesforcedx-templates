@@ -5,7 +5,6 @@
   "HelpExamplesTitle": "\nExamples:\n",
   "OutputDirFlagDescription": "folder for saving the created files",
   "OutputDirFlagLongDescription": "The directory to store the newly created files. The location can be an absolute path or relative to the current working directory. The default is the current directory.",
-  "OutputDirDefaultDescription": "The current working directory",
   "TemplateFlagDescription": "template to use for file creation",
   "TemplateFlagLongDescription": "The template to use to create the file. Supplied parameter values or default values are filled into a copy of the template.",
   "TargetDirOutput": "target dir = %s",

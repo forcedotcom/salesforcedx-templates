@@ -43,9 +43,7 @@ export default class ApexClass extends TemplateCommand {
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
-      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      required: false,
-      default: MessageUtil.get('OutputDirDefaultDescription')
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription')
     }),
     apiversion: flags.builtin()
   };

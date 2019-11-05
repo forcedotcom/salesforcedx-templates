@@ -5,49 +5,54 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { flags } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import LightningTestGenerator from '../../../../generators/lightningTestGenerator';
-import { CreateUtil, TemplateCommand } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const lightningTestFileSuffix = /.resource$/;
 
 export default class LightningTest extends TemplateCommand {
+  public static description = MessageUtil.buildDescription(
+    'LightningTestDescription',
+    false
+  );
   public static examples = [
     '$ sfdx force:lightning:test:create -n MyLightningTest',
     '$ sfdx force:lightning:test:create -n MyLightningTest -d lightningTests'
   ];
-
-  public static description = messages.getMessage(
-    'LightningTestCommandDescription'
+  public static help = MessageUtil.buildHelpText(LightningTest.examples, false);
+  public static longDescription = MessageUtil.get(
+    'LightningTestLongDescription'
   );
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: messages.getMessage('outputdir'),
-      required: false,
-      default: process.cwd()
-    }),
     testname: flags.string({
       char: 'n',
-      description: messages.getMessage('testname'),
+      description: MessageUtil.get('LightningNameFlagDescription', [
+        MessageUtil.get('Test')
+      ]),
+      longDescription: MessageUtil.get('LightningTestNameFlagLongDescription'),
       required: true
     }),
     template: flags.string({
       char: 't',
-      description: messages.getMessage('template'),
+      description: MessageUtil.get('TemplateFlagDescription'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningTest',
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningTestFileSuffix,
         'lightningtest'
       )
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('OutputDirFlagDescription'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: process.cwd()
+    }),
     internal: flags.boolean({
       char: 'i',
-      description: messages.getMessage('internal'),
+      description: MessageUtil.get('LightningInternalFlagDescription'),
       hidden: true
     })
   };

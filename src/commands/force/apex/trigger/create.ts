@@ -5,39 +5,60 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { flags } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import ApexTriggerGenerator from '../../../../generators/apexTriggerGenerator';
-import { CreateUtil, TemplateCommand } from '../../../../utils';
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
 
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 const apexTriggerFileSuffix = /.trigger$/;
 
 export default class ApexTrigger extends TemplateCommand {
+  public static description = MessageUtil.buildDescription(
+    'ApexTriggerDescription',
+    false
+  );
   public static examples = [
     '$ sfdx force:apex:trigger:create -n MyTrigger',
     "$ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after insert'",
     '$ sfdx force:apex:trigger:create -n MyTrigger -d triggers'
   ];
-
-  public static description = messages.getMessage(
-    'ApexTriggerCommandDescription'
-  );
+  public static help = MessageUtil.buildHelpText(ApexTrigger.examples, false);
+  public static longDescription = MessageUtil.get('ApexTriggerLongDescription');
 
   protected static flagsConfig = {
+    triggername: flags.string({
+      char: 'n',
+      description: MessageUtil.get('ApexTriggerNameFlagDescription'),
+      longDescription: MessageUtil.get('ApexTriggerNameFlagLongDescription'),
+      required: true
+    }),
+    template: flags.string({
+      char: 't',
+      description: MessageUtil.get('TemplateFlagDescription'),
+      longDescription: MessageUtil.get('TemplateFlagLongDescription'),
+      default: 'ApexTrigger',
+      options: CreateUtil.getCommandTemplatesForFiletype(
+        apexTriggerFileSuffix,
+        'apextrigger'
+      )
+    }),
     outputdir: flags.string({
       char: 'd',
-      description: messages.getMessage('outputdir'),
-      required: false,
+      description: MessageUtil.get('OutputDirFlagDescription'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
       default: process.cwd()
     }),
-    // Need to fix the apiversion flag with default and optional inputs
     apiversion: flags.builtin(),
-    triggerevents: flags.string({
+    sobject: flags.string({
+      char: 's',
+      description: MessageUtil.get('ApexTriggerSObjectFlagDescription'),
+      longDescription: MessageUtil.get('ApexTriggerSObjectFlagLongDescription'),
+      default: 'SOBJECT'
+    }),
+    triggerevents: flags.array({
       char: 'e',
-      description: messages.getMessage('triggerevents'),
-      default: 'before insert',
+      description: MessageUtil.get('ApexTriggerEventsFlagDescription'),
+      longDescription: MessageUtil.get('ApexTriggerEventsFlagLongDescription'),
+      default: ['before insert'],
       options: [
         'before insert',
         'before update',
@@ -47,25 +68,6 @@ export default class ApexTrigger extends TemplateCommand {
         'after delete',
         'after undelete'
       ]
-    }),
-    triggername: flags.string({
-      char: 'n',
-      description: messages.getMessage('triggername'),
-      required: true
-    }),
-    sobject: flags.string({
-      char: 's',
-      description: messages.getMessage('sobject'),
-      default: 'SOBJECT'
-    }),
-    template: flags.string({
-      char: 't',
-      description: messages.getMessage('template'),
-      default: 'ApexTrigger',
-      options: CreateUtil.getCommandTemplatesForFiletype(
-        apexTriggerFileSuffix,
-        'apextrigger'
-      )
     })
   };
 

@@ -128,13 +128,13 @@ export default class ProjectGenerator extends generator {
       this.fs.copyTpl(
         this.templatePath(soqlQueryFile),
         this.destinationPath(
-          path.join(outputdir, projectname, 'queries', soqlQueryFile)
+          path.join(outputdir, projectname, 'scripts/soql', soqlQueryFile)
         )
       );
       this.fs.copyTpl(
         this.templatePath(anonApexFile),
         this.destinationPath(
-          path.join(outputdir, projectname, 'apex', anonApexFile)
+          path.join(outputdir, projectname, 'scripts/apex', anonApexFile)
         )
       );
       for (const file of filestocopy) {

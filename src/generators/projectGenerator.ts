@@ -31,8 +31,6 @@ const filestocopy = [
   '.prettierignore',
   '.prettierrc'
 ];
-const soqlQueryFile = 'accounts.soql';
-const anonApexFile = 'hello.apex';
 const emptyfolderarray = ['aura', 'lwc'];
 
 const analyticsfolderarray = ['waveTemplates'];
@@ -64,6 +62,8 @@ export default class ProjectGenerator extends generator {
 
     let scratchDefFile = `${template}/ScratchDef.json`;
     let manifestFile = `${template}/Manifest.xml`;
+    const soqlQueryFile = 'account.soql';
+    const anonApexFile = 'hello.apex';
 
     this.fs.copyTpl(
       this.templatePath(scratchDefFile),
@@ -126,13 +126,13 @@ export default class ProjectGenerator extends generator {
         )
       );
       this.fs.copyTpl(
-        this.templatePath(soqlQueryFile),
+        this.templatePath(path.join(template, soqlQueryFile)),
         this.destinationPath(
           path.join(outputdir, projectname, 'scripts/soql', soqlQueryFile)
         )
       );
       this.fs.copyTpl(
-        this.templatePath(anonApexFile),
+        this.templatePath(path.join(template, anonApexFile)),
         this.destinationPath(
           path.join(outputdir, projectname, 'scripts/apex', anonApexFile)
         )

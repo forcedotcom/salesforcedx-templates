@@ -49,8 +49,8 @@ export default class ProjectGenerator extends generator {
       defaultpackagedir,
       manifest,
       ns,
-      sourceApiVersion,
-      loginURL
+      apiversion,
+      loginurl
     } = this.options;
     const folderlayout = [
       outputdir,
@@ -82,8 +82,8 @@ export default class ProjectGenerator extends generator {
       {
         defaultpackagedir,
         namespace: ns,
-        loginURL,
-        sourceApiVersion
+        loginurl,
+        apiversion
       }
     );
 
@@ -94,7 +94,7 @@ export default class ProjectGenerator extends generator {
         this.destinationPath(
           path.join(outputdir, projectname, 'manifest', 'package.xml')
         ),
-        { sourceApiVersion }
+        { apiversion }
       );
     }
 

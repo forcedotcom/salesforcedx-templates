@@ -45,6 +45,8 @@ describe('Project creation tests:', () => {
       .command(['force:project:create', '--projectname', 'foo'])
       .it('should create project with default values and foo name', ctx => {
         assert.file([path.join('foo', 'config', 'project-scratch-def.json')]);
+        assert.file([path.join('foo', 'scripts', 'soql', 'account.soql')]);
+        assert.file([path.join('foo', 'scripts', 'apex', 'hello.apex')]);
         assert.file([path.join('foo', 'README.md')]);
         assert.file([path.join('foo', 'sfdx-project.json')]);
         assert.fileContent(
@@ -159,35 +161,17 @@ describe('Project creation tests:', () => {
       .withOrg()
       .withProject()
       .stdout()
-      .command([
-        'force:project:create',
-        '--projectname',
-        'foo-project'
-      ])
+      .command(['force:project:create', '--projectname', 'foo-project'])
       .it(
         'should create project with default values and foo-project name in a custom output directory with spaces in its name',
         ctx => {
           assert.file([
-            path.join(
-              'foo-project',
-              'config',
-              'project-scratch-def.json'
-            )
+            path.join('foo-project', 'config', 'project-scratch-def.json')
           ]);
-          assert.file([
-            path.join('foo-project', 'README.md')
-          ]);
-          assert.file([
-            path.join('foo-project', 'sfdx-project.json')
-          ]);
+          assert.file([path.join('foo-project', 'README.md')]);
+          assert.file([path.join('foo-project', 'sfdx-project.json')]);
           for (const file of vscodearray) {
-            assert.file([
-              path.join(
-                'foo-project',
-                '.vscode',
-                `${file}.json`
-              )
-            ]);
+            assert.file([path.join('foo-project', '.vscode', `${file}.json`)]);
           }
           assert.file([
             path.join(
@@ -205,13 +189,7 @@ describe('Project creation tests:', () => {
           for (const folder of standardfolderarray) {
             assert(
               fs.existsSync(
-                path.join(
-                  'foo-project',
-                  'force-app',
-                  'main',
-                  'default',
-                  folder
-                )
+                path.join('foo-project', 'force-app', 'main', 'default', folder)
               )
             );
           }

@@ -75,11 +75,6 @@ export default class Project extends TemplateCommand {
     // namespace is a reserved keyword for the generator
     this.flags.ns = this.flags.namespace;
 
-    // TODO: update the latest apiversion
-    this.flags.sourceApiVersion = '47.0';
-
-    this.flags.loginURL = this.flags.loginurl;
-
     return this.runGenerator(ProjectGenerator);
   }
 }

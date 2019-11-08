@@ -69,7 +69,6 @@ export default class Project extends TemplateCommand {
     })
   };
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.projectname);
     CreateUtil.checkInputs(this.flags.template);
 
     // namespace is a reserved keyword for the generator

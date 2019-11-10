@@ -155,7 +155,7 @@ describe('CreateUtil', () => {
         expect(jsonOutput.result.created).to.be.an('array').that.is.empty;
         expect(jsonOutput.result).to.haveOwnProperty('rawOutput');
         expect(jsonOutput.result.rawOutput).to.equal(
-          `target dir = ${dir}\nidentical foo.cls\nidentical foo.cls-meta.xml`
+          `target dir = ${dir}\nidentical foo.cls\nidentical foo.cls-meta.xml\n`
         );
       });
   });

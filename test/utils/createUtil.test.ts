@@ -4,6 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+import { test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
 import { assert, expect } from 'chai';
 import * as fs from 'fs';
@@ -15,7 +16,6 @@ import {
   Log,
   TemplateCommand
 } from '../../src/utils';
-import { test } from '@salesforce/command/lib/test';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
@@ -144,8 +144,19 @@ describe('CreateUtil', () => {
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--json'])
       .it('should log json output when flag is specified', output => {
-        const expectedOutput = `{\n  "status": 0,\n  "result": {\n    "outputDir": "${dir}",\n    "created": [],\n    "rawOutput": "target dir = ${dir}\\nidentical foo.cls\\nidentical foo.cls-meta.xml\\n"\n  }\n}\n`;
-        expect(output.stdout).to.eql(expectedOutput);
+        const jsonOutput = JSON.parse(output.stdout);
+        expect(jsonOutput).to.haveOwnProperty('status');
+        expect(jsonOutput.status).to.equal(0);
+        expect(jsonOutput).to.haveOwnProperty('result');
+        expect(jsonOutput.result).to.be.an('object');
+        expect(jsonOutput.result).to.haveOwnProperty('outputDir');
+        expect(jsonOutput.result.outputDir).to.equal(dir);
+        expect(jsonOutput.result).to.haveOwnProperty('created');
+        expect(jsonOutput.result.created).to.be.an('array').that.is.empty;
+        expect(jsonOutput.result).to.haveOwnProperty('rawOutput');
+        expect(jsonOutput.result.rawOutput).to.equal(
+          `target dir = ${dir}\nidentical foo.cls\nidentical foo.cls-meta.xml\n`
+        );
       });
   });
 });

@@ -94,7 +94,9 @@
   "StandardReadMe": "This guide helps Salesforce developers who are new to Visual Studio Code go",
   "EmptyReadMe": "# Salesforce App",
 
-  "CreateAnalyticsTemplateCommandDescription": "add an analytics template to your workspace\nIf not supplied, the apiversion and outputdir use default values.\nThe outputdir should contain the path to the waveTemplates directory.",
-  "AnalyticsTemplateName": "name of the analytics template",
+  "AnalyticsTemplateDescription": "add an analytics template to your workspace",
+  "AnalyticsTemplateLongDescription": "Creates a simple Analytics template in the specified directory. If you don’t explicitly set the API version, it defaults to the current API version. The associated metadata files are created.",
+  "AnalyticsTemplateNameFlagDescription": "name of the analytics template",
+  "AnalyticsTemplateNameFlagLongDescription": "The name of the analytics template.",
   "MissingWaveTemplatesDir": "Analytics templates must have a parent folder named 'waveTemplates'."
 }

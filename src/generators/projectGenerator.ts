@@ -49,8 +49,8 @@ export default class ProjectGenerator extends generator {
       defaultpackagedir,
       manifest,
       ns,
-      sourceApiVersion,
-      loginURL
+      apiversion,
+      loginurl
     } = this.options;
     const folderlayout = [
       outputdir,
@@ -62,6 +62,8 @@ export default class ProjectGenerator extends generator {
 
     const scratchDefFile = `${template}/ScratchDef.json`;
     const manifestFile = `${template}/Manifest.xml`;
+    const soqlQueryFile = 'account.soql';
+    const anonApexFile = 'hello.apex';
 
     this.fs.copyTpl(
       this.templatePath(scratchDefFile),
@@ -82,8 +84,8 @@ export default class ProjectGenerator extends generator {
       {
         defaultpackagedir,
         namespace: ns,
-        loginURL,
-        sourceApiVersion
+        loginurl,
+        apiversion
       }
     );
 
@@ -94,7 +96,7 @@ export default class ProjectGenerator extends generator {
         this.destinationPath(
           path.join(outputdir, projectname, 'manifest', 'package.xml')
         ),
-        { sourceApiVersion }
+        { apiversion }
       );
     }
 
@@ -121,6 +123,18 @@ export default class ProjectGenerator extends generator {
             'lwc',
             '.eslintrc.json'
           )
+        )
+      );
+      this.fs.copyTpl(
+        this.templatePath(path.join(template, soqlQueryFile)),
+        this.destinationPath(
+          path.join(outputdir, projectname, 'scripts', 'soql', soqlQueryFile)
+        )
+      );
+      this.fs.copyTpl(
+        this.templatePath(path.join(template, anonApexFile)),
+        this.destinationPath(
+          path.join(outputdir, projectname, 'scripts', 'apex', anonApexFile)
         )
       );
       for (const file of filestocopy) {
@@ -153,9 +167,10 @@ export default class ProjectGenerator extends generator {
         );
       }
       for (const file of filestocopy) {
+        const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, file))
+          this.destinationPath(path.join(outputdir, projectname, out))
         );
       }
     }

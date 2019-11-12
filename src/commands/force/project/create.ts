@@ -5,72 +5,74 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { flags } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import ProjectGenerator from '../../../generators/projectGenerator';
-import { CreateUtil, TemplateCommand } from '../../../utils';
-
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+import { CreateUtil, MessageUtil, TemplateCommand } from '../../../utils';
 
 export default class Project extends TemplateCommand {
+  public static description = MessageUtil.buildDescription(
+    'ProjectDescription',
+    false
+  );
   public static examples = [
     '$ sfdx force:project:create --projectname mywork',
     '$ sfdx force:project:create --projectname mywork --defaultpackagedir myapp',
     '$ sfdx force:project:create --projectname mywork --defaultpackagedir myapp --manifest',
     '$ sfdx force:project:create --projectname mywork --template empty'
   ];
-  public static description = messages.getMessage('ProjectCommandDescription');
+  public static help = MessageUtil.buildHelpText(Project.examples, false);
+  public static longDescription = MessageUtil.get('ProjectLongDescription');
 
   protected static flagsConfig = {
-    outputdir: flags.string({
-      char: 'd',
-      description: messages.getMessage('outputdir'),
-      default: process.cwd()
-    }),
     projectname: flags.string({
       char: 'n',
-      description: messages.getMessage('projectname'),
+      description: MessageUtil.get('ProjectNameFlagDescription'),
+      longDescription: MessageUtil.get('ProjectNameFlagLongDescription'),
       required: true
-    }),
-    defaultpackagedir: flags.string({
-      char: 'p',
-      description: messages.getMessage('defaultpackagedir'),
-      default: 'force-app'
-    }),
-    namespace: flags.string({
-      char: 's',
-      description: messages.getMessage('namespace'),
-      default: ''
     }),
     template: flags.string({
       char: 't',
-      description: messages.getMessage('template'),
+      description: MessageUtil.get('ProjectTemplateFlagDescription'),
+      longDescription: MessageUtil.get('ProjectTemplateFlagLongDescription'),
       default: 'standard',
       options: ['standard', 'empty', 'analytics']
     }),
+    outputdir: flags.string({
+      char: 'd',
+      description: MessageUtil.get('OutputDirFlagDescription'),
+      longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
+      default: process.cwd()
+    }),
+    namespace: flags.string({
+      char: 's',
+      description: MessageUtil.get('ProjectNamespaceFlagDescription'),
+      longDescription: MessageUtil.get('ProjectNamespaceFlagLongDescription'),
+      default: ''
+    }),
+    defaultpackagedir: flags.string({
+      char: 'p',
+      description: MessageUtil.get('ProjectPackageFlagDescription'),
+      longDescription: MessageUtil.get('ProjectPackageFlagLongDescription'),
+      default: 'force-app'
+    }),
     manifest: flags.boolean({
       char: 'x',
-      description: messages.getMessage('manifest')
+      description: MessageUtil.get('ProjectManifestFlagDescription'),
+      longDescription: MessageUtil.get('ProjectManifestFlagLongDescription')
     }),
     loginurl: flags.string({
       char: 'l',
-      description: messages.getMessage('loginurl'),
+      description: MessageUtil.get('ProjectLoginUrlDescription'),
+      longDescription: MessageUtil.get('ProjectLoginUrlLongDescription'),
       default: 'https://login.salesforce.com',
       hidden: true
     })
   };
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.projectname);
     CreateUtil.checkInputs(this.flags.template);
 
     // namespace is a reserved keyword for the generator
     this.flags.ns = this.flags.namespace;
-
-    // TODO: update the latest apiversion
-    this.flags.sourceApiVersion = '47.0';
-
-    this.flags.loginURL = this.flags.loginurl;
 
     return this.runGenerator(ProjectGenerator);
   }

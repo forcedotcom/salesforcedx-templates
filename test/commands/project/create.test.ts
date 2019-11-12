@@ -45,6 +45,8 @@ describe('Project creation tests:', () => {
       .command(['force:project:create', '--projectname', 'foo'])
       .it('should create project with default values and foo name', ctx => {
         assert.file([path.join('foo', 'config', 'project-scratch-def.json')]);
+        assert.file([path.join('foo', 'scripts', 'soql', 'account.soql')]);
+        assert.file([path.join('foo', 'scripts', 'apex', 'hello.apex')]);
         assert.file([path.join('foo', 'README.md')]);
         assert.file([path.join('foo', 'sfdx-project.json')]);
         assert.fileContent(
@@ -92,6 +94,7 @@ describe('Project creation tests:', () => {
           );
         }
       });
+
     test
       .withOrg()
       .withProject()
@@ -153,6 +156,46 @@ describe('Project creation tests:', () => {
           }
         }
       );
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command(['force:project:create', '--projectname', 'foo-project'])
+      .it(
+        'should create project with default values and foo-project name in a custom output directory with spaces in its name',
+        ctx => {
+          assert.file([
+            path.join('foo-project', 'config', 'project-scratch-def.json')
+          ]);
+          assert.file([path.join('foo-project', 'README.md')]);
+          assert.file([path.join('foo-project', 'sfdx-project.json')]);
+          for (const file of vscodearray) {
+            assert.file([path.join('foo-project', '.vscode', `${file}.json`)]);
+          }
+          assert.file([
+            path.join(
+              'foo-project',
+              'force-app',
+              'main',
+              'default',
+              'lwc',
+              '.eslintrc.json'
+            )
+          ]);
+          for (const file of filestocopy) {
+            assert.file([path.join('foo-project', file)]);
+          }
+          for (const folder of standardfolderarray) {
+            assert(
+              fs.existsSync(
+                path.join('foo-project', 'force-app', 'main', 'default', folder)
+              )
+            );
+          }
+        }
+      );
+
     test
       .withOrg()
       .withProject()
@@ -311,12 +354,30 @@ describe('Project creation tests:', () => {
 
     test
       .command(['force:project:create', '-n', 'GitIgnoreTest'])
-      .it('should rename gitignore to .gitignore', ctx => {
+      .it('should rename gitignore to .gitignore in standard template', ctx => {
         const srcPath = path.normalize('../lib/templates/project');
         assert.noFile(path.join(srcPath, '.gitignore'));
         assert.file(path.join(srcPath, 'gitignore'));
         assert.file(path.normalize('GitIgnoreTest/.gitignore'));
       });
+
+    test
+      .command([
+        'force:project:create',
+        '-n',
+        'GitIgnoreTest2',
+        '-t',
+        'analytics'
+      ])
+      .it(
+        'should rename gitignore to .gitignore in analytics template',
+        ctx => {
+          const srcPath = path.normalize('../lib/templates/project');
+          assert.noFile(path.join(srcPath, '.gitignore'));
+          assert.file(path.join(srcPath, 'gitignore'));
+          assert.file(path.normalize('GitIgnoreTest2/.gitignore'));
+        }
+      );
   });
   describe('project creation failures', () => {
     test
@@ -343,69 +404,5 @@ describe('Project creation tests:', () => {
       .it('should throw invalid template name error', ctx => {
         expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
       });
-    test
-      .withOrg()
-      .withProject()
-      .stderr()
-      .command([
-        'force:project:create',
-        '--projectname',
-        '/a',
-        '--outputdir',
-        'testing'
-      ])
-      .it('should throw invalid non alphanumeric projectname error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('AlphaNumericNameError')
-        );
-      });
-
-    test
-      .withOrg()
-      .withProject()
-      .stderr()
-      .command([
-        'force:project:create',
-        '--projectname',
-        '3aa',
-        '--outputdir',
-        'testing'
-      ])
-      .it(
-        'should throw invalid projectname starting with numeric error',
-        ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('NameMustStartWithLetterError')
-          );
-        }
-      );
-
-    test
-      .withOrg()
-      .withProject()
-      .stderr()
-      .command(['force:project:create', '--projectname', 'a_'])
-      .it(
-        'should throw invalid projectname ending with underscore error',
-        ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('EndWithUnderscoreError')
-          );
-        }
-      );
-
-    test
-      .withOrg()
-      .withProject()
-      .stderr()
-      .command(['force:project:create', '--projectname', 'a__a'])
-      .it(
-        'should throw invalid projectname with double underscore error',
-        ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('DoubleUnderscoreError')
-          );
-        }
-      );
   });
 });

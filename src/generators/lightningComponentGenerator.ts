@@ -120,7 +120,7 @@ export default class LightningComponentGenerator extends generator {
           this.destinationPath(
             path.join(outputdir, fileName, `${fileName}.js-meta.xml`)
           ),
-          { apiVersion: apiversion, componentname }
+          { apiVersion: apiversion }
         );
       }
     }

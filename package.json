@@ -1,7 +1,7 @@
 {
   "name": "salesforcedx-templates",
   "description": "Salesforce CLI scaffolding commands for different types of Force.com metadata",
-  "version": "47.3.1",
+  "version": "47.6.0",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "dependencies": {

@@ -70,7 +70,18 @@ describe('Lightning component creation tests:', () => {
         'lwc'
       ])
       .it('should force first letter of component name to lowercase', ctx => {
-        assert.file(path.join('lwc', 'fooBar'));
+        const camelCaseName = 'fooBar';
+        const bundlePath = path.join('lwc', camelCaseName);
+        const jsPath = path.join(bundlePath, `${camelCaseName}.js`);
+        assert.file(bundlePath);
+        assert.file(jsPath);
+        assert.file(path.join(bundlePath, `${camelCaseName}.html`));
+        assert.file(path.join(bundlePath, `${camelCaseName}.js-meta.xml`));
+        // but verify the class name is consistent with the exact flag value
+        assert.fileContent(
+          jsPath,
+          'export default class FooBar extends LightningElement {}'
+        );
       });
 
     test

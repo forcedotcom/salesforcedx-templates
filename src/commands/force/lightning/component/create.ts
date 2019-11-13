@@ -83,6 +83,13 @@ export default class LightningComponent extends TemplateCommand {
     CreateUtil.checkInputs(this.flags.componentname);
     CreateUtil.checkInputs(this.flags.template);
 
+    if (this.flags.type === 'lwc') {
+      // lwc's convention is for the class name to be Pascal Case
+      this.flags.componentname = `${this.flags.componentname
+        .substring(0, 1)
+        .toUpperCase()}${this.flags.componentname.substring(1)}`;
+    }
+
     const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
 
     if (!this.flags.internal) {

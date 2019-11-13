@@ -120,7 +120,7 @@ describe('Lightning component creation tests:', () => {
           );
           assert.fileContent(
             path.join('lwc', 'internallwctest', 'internallwctest.js'),
-            'export default class internallwctest extends LightningElement {}'
+            'export default class Internallwctest extends LightningElement {}'
           );
         }
       );

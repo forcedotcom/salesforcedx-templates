@@ -100,13 +100,18 @@ export default class LightningComponentGenerator extends generator {
         .substring(0, 1)
         .toLowerCase()}${componentname.substring(1)}`;
 
+      // lwc's convention is for the class name to be Pascal Case
+      const className = `${componentname
+        .substring(0, 1)
+        .toUpperCase()}${componentname.substring(1)}`;
+
       this.sourceRoot(
         path.join(__dirname, '..', 'templates', 'lightningcomponent', 'lwc')
       );
       this.fs.copyTpl(
         this.templatePath('DefaultLightningLWC.js'),
         this.destinationPath(path.join(outputdir, fileName, `${fileName}.js`)),
-        { componentname }
+        { className }
       ),
         this.fs.copyTpl(
           this.templatePath('_.html'),

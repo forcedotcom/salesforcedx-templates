@@ -105,7 +105,7 @@ describe('Lightning component creation tests:', () => {
           assert.file(path.join('lwc', 'foo', 'foo.js'));
           assert.fileContent(
             path.join('lwc', 'foo', 'foo.js'),
-            'export default class foo extends LightningElement {}'
+            'export default class Foo extends LightningElement {}'
           );
         }
       );

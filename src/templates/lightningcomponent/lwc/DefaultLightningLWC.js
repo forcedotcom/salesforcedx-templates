@@ -1,3 +1,3 @@
 import { LightningElement } from 'lwc';
 
-export default class <%= componentname %> extends LightningElement {}
+export default class <%= className %> extends LightningElement {}

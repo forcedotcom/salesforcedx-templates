@@ -95,29 +95,37 @@ export default class LightningComponentGenerator extends generator {
     }
     // tslint:disable-next-line:no-unused-expression
     if (type === 'lwc') {
+      // lwc requires first letter of filename to be lowercase
+      const fileName = `${componentname
+        .substring(0, 1)
+        .toLowerCase()}${componentname.substring(1)}`;
+
+      // lwc's convention is for the class name to be Pascal Case
+      const className = `${componentname
+        .substring(0, 1)
+        .toUpperCase()}${componentname.substring(1)}`;
+
       this.sourceRoot(
         path.join(__dirname, '..', 'templates', 'lightningcomponent', 'lwc')
       );
       this.fs.copyTpl(
         this.templatePath('DefaultLightningLWC.js'),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.js`)
-        ),
-        { componentname }
+        this.destinationPath(path.join(outputdir, fileName, `${fileName}.js`)),
+        { className }
       ),
         this.fs.copyTpl(
           this.templatePath('_.html'),
           this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.html`)
+            path.join(outputdir, fileName, `${fileName}.html`)
           )
         );
       if (!internal) {
         this.fs.copyTpl(
           this.templatePath('_js-meta.xml'),
           this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.js-meta.xml`)
+            path.join(outputdir, fileName, `${fileName}.js-meta.xml`)
           ),
-          { apiVersion: apiversion, componentname }
+          { apiVersion: apiversion }
         );
       }
     }

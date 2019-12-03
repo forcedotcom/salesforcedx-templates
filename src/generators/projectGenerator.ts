@@ -60,8 +60,8 @@ export default class ProjectGenerator extends generator {
       'default'
     ];
 
-    let scratchDefFile = `${template}/ScratchDef.json`;
-    let manifestFile = `${template}/Manifest.xml`;
+    const scratchDefFile = `${template}/ScratchDef.json`;
+    const manifestFile = `${template}/Manifest.xml`;
     const soqlQueryFile = 'account.soql';
     const anonApexFile = 'hello.apex';
 

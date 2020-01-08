@@ -25,7 +25,7 @@ To build the plugin locally, make sure to have yarn installed and run the follow
 
 ```
 Clone the repository
-  $ git clone git@github.com:forcedotcom/salesforcedx-vscode.git
+  $ git clone git@github.com:forcedotcom/salesforcedx-templates.git
 Install the dependencies and compile
   $ yarn install
   $ yarn prepack

@@ -41,7 +41,7 @@ export default class Project extends TemplateCommand {
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: process.cwd()
+      default: '.'
     }),
     namespace: flags.string({
       char: 's',

@@ -161,6 +161,27 @@ describe('Project creation tests:', () => {
       .withOrg()
       .withProject()
       .stdout()
+      .command([
+        'force:project:create',
+        '--projectname',
+        'duplicate-project-test',
+        '--outputdir',
+        'test outputdir'
+      ])
+      .it(
+        'should not create duplicate project in the directory where command is executed',
+        ctx => {
+          assert.file(
+            path.join('test outputdir', 'duplicate-project-test', 'force-app')
+          );
+          assert.noFile(path.join('.', 'duplicate-project-test', 'force-app'));
+        }
+      );
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
       .command(['force:project:create', '--projectname', 'foo-project'])
       .it(
         'should create project with default values and foo-project name in a custom output directory with spaces in its name',

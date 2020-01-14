@@ -1,0 +1,4 @@
+triggers:
+  master: [release, pre-release, develop]
+  release: [pre-release, develop]
+  pre-release: [develop]

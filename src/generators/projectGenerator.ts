@@ -185,8 +185,8 @@ function makeEmptyFolders(
   for (const folder of toplevelfolders) {
     if (!fs.existsSync(path.join(oldfolder, folder))) {
       fs.mkdirSync(path.join(oldfolder, folder));
-      oldfolder = path.join(oldfolder, folder);
     }
+    oldfolder = path.join(oldfolder, folder);
   }
   for (const newfolder of metadatafolders) {
     if (!fs.existsSync(path.join(oldfolder, newfolder))) {

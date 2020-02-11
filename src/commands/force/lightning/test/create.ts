@@ -48,7 +48,7 @@ export default class LightningTest extends TemplateCommand {
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: process.cwd()
+      default: '.'
     }),
     internal: flags.boolean({
       char: 'i',

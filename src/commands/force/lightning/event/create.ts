@@ -20,7 +20,7 @@ export default class LightningEvent extends TemplateCommand {
     [BUNDLE_TYPE]
   );
   public static examples = [
-    '$ sfdx force:lightning:app:create -n myevent',
+    '$ sfdx force:lightning:event:create -n myevent',
     '$ sfdx force:lightning:event:create -n myevent -d aura'
   ];
   public static help = MessageUtil.buildHelpText(LightningEvent.examples, true);
@@ -53,7 +53,7 @@ export default class LightningEvent extends TemplateCommand {
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: process.cwd()
+      default: '.'
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({

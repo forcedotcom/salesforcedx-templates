@@ -4,16 +4,22 @@
   "version": "1.0.0",
   "description": "Salesforce App",
   "scripts": {
-    "prettier": "prettier --write '**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}'",
-    "lint": "npm run lint:lwc && npm run lint:aura",
-    "lint:lwc": "eslint **/lwc/**",
-    "lint:aura": "sfdx force:lightning:lint **/aura/** --exit"
+    "lint": "npm run lint:lwc",
+    "lint:lwc": "eslint force-app/main/default/lwc",
+    "test": "npm run test:unit",
+    "test:unit": "sfdx-lwc-jest",
+    "test:unit:watch": "sfdx-lwc-jest --watch",
+    "test:unit:debug": "sfdx-lwc-jest --debug",
+    "test:unit:coverage": "sfdx-lwc-jest --coverage",
+    "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
   },
   "devDependencies": {
-    "@salesforce/eslint-config-lwc": "^0.3.0",
-    "@salesforce/sfdx-lwc-jest": "^0.5.4",
+    "@prettier/plugin-xml": "^0.7.0",
+    "@salesforce/eslint-config-lwc": "^0.4.0",
+    "@salesforce/sfdx-lwc-jest": "^0.7.0",
     "eslint": "^5.16.0",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "prettier-plugin-apex": "^1.0.0"
   }
 }

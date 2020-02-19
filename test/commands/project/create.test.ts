@@ -24,6 +24,7 @@ const standardfolderarray = [
   'triggers'
 ];
 const filestocopy = [
+  '.eslintignore',
   '.forceignore',
   '.gitignore',
   '.prettierignore',

@@ -62,12 +62,6 @@ jobs:
             - dependency-cache-win1-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
             # if cache for exact version of 'package.json' is not present, then load the most recent cache
             - dependency-cache-win1-
-      # - run:
-      #     name: 'Install yarn'
-      #     command: |
-      #       choco install yarn
-      #       yarn --version
-      #       node --version
       - run:
           name: 'Install dependencies'
           command: |
@@ -78,7 +72,6 @@ jobs:
           key: dependency-cache-win1-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
           paths:
             - node_modules
-            - ~/.cache/yarn
       - run:
           name: 'Compile'
           command: |
@@ -101,7 +94,4 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-
-  commit-workflow:
-    jobs:
       - run-win-tests

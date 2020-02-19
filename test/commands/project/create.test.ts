@@ -24,10 +24,12 @@ const standardfolderarray = [
   'triggers'
 ];
 const filestocopy = [
+  '.eslintignore',
   '.forceignore',
   '.gitignore',
   '.prettierignore',
-  '.prettierrc'
+  '.prettierrc',
+  'package.json'
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 const analyticsfolderarray = ['waveTemplates'];

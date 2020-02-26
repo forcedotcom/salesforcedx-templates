@@ -24,10 +24,6 @@ jobs:
       - run:
           name: Testing
           command: yarn test
-      - run:
-          name: Submitting code coverage to codecov
-          command: |
-            codecov --disable=gcov
   node-8:
     <<: *test
     docker:
@@ -67,6 +63,7 @@ jobs:
             yarn --version
             node --version
             yarn
+            npm install -g codecov
       - save_cache:
           key: dependency-cache-win1-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
           paths:
@@ -79,6 +76,10 @@ jobs:
           name: 'Running unit tests'
           command: |
             yarn test
+      - run:
+          name: Submitting code coverage to codecov
+          command: |
+            codecov --disable=gcov
 
 workflows:
   version: 2

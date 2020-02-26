@@ -27,8 +27,7 @@ jobs:
       - run:
           name: Submitting code coverage to codecov
           command: |
-            ./node_modules/.bin/nyc report --reporter text-lcov > coverage.lcov
-            bash <(curl -s https://codecov.io/bash) -f "coverage.lcov" -t $CODECOV_KEY
+            codecov --disable=gcov
   node-8:
     <<: *test
     docker:

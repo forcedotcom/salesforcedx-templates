@@ -69,7 +69,7 @@
   },
   "repository": "forcedotcom/salesforcedx-templates",
   "scripts": {
-    "clean:lib": "node scripts/remove-lib",
+    "clean:lib": "node scripts/remove-lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "build:templates": "node scripts/build-templates",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "shx rm -f oclif.manifest.json",

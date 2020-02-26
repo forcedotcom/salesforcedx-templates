@@ -79,7 +79,7 @@ jobs:
       - run:
           name: Submitting code coverage to codecov
           command: |
-            codecov --disable=gcov
+            npx codecov --disable=gcov
 
 workflows:
   version: 2

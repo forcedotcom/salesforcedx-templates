@@ -31,11 +31,11 @@ describe('Analytics template creation tests:', () => {
           assert.file('waveTemplates/foo/template-info.json');
           assert.fileContent(
             path.join('waveTemplates', 'foo', 'template-info.json'),
-            '"label" : "foo"'
+            '"label": "foo"'
           );
           assert.fileContent(
             path.join('waveTemplates', 'foo', 'folder.json'),
-            '"name" : "foo"'
+            '"name": "foo"'
           );
           assert.file('waveTemplates/foo/dashboards/fooDashboard.json');
           assert.fileContent(
@@ -45,7 +45,7 @@ describe('Analytics template creation tests:', () => {
               'dashboards',
               'fooDashboard.json'
             ),
-            '"name" : "fooDashboard"'
+            '"name": "fooDashboard"'
           );
         }
       );

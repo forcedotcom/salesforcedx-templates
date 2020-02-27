@@ -65,7 +65,17 @@
     "bin": "sfdx",
     "devPlugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "topics": {
+      "force:analytics": {
+        "description": "work with analytics assets",
+        "subtopics": {
+          "template": {
+            "description": "work with analytics templates"
+          }
+        }
+      }
+    }
   },
   "repository": "forcedotcom/salesforcedx-templates",
   "scripts": {

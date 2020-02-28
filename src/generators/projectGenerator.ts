@@ -26,10 +26,12 @@ const standardfolderarray = [
   'triggers'
 ];
 const filestocopy = [
+  '.eslintignore',
   '.forceignore',
   GITIGNORE,
   '.prettierignore',
-  '.prettierrc'
+  '.prettierrc',
+  'package.json'
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 

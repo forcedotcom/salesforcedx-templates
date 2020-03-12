@@ -1,5 +1,7 @@
 # salesforcedx-templates
 
+testing
+
 This repository provides a series of commands, templates, and generators for various metadata types. It is bundled with the [salesforcedx plugin](https://www.npmjs.com/package/salesforcedx).
 
 [![CircleCI](https://circleci.com/gh/forcedotcom/salesforcedx-templates/tree/master.svg?style=shield)](https://circleci.com/gh/forcedotcom/salesforcedx-templates/tree/master)

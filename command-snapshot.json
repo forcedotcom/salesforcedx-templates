@@ -1,0 +1,163 @@
+[
+    {
+        "command": "commandreference:generate",
+        "flags": [
+            "json",
+            "loglevel",
+            "outputdir",
+            "plugins",
+            "hidden",
+            "erroronwarnings"
+        ]
+    },
+    {
+        "command": "force:analytics:template:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "outputdir",
+            "apiversion",
+            "templatename"
+        ]
+    },
+    {
+        "command": "force:apex:class:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "classname",
+            "template",
+            "outputdir",
+            "apiversion"
+        ]
+    },
+    {
+        "command": "force:apex:trigger:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "triggername",
+            "template",
+            "outputdir",
+            "apiversion",
+            "sobject",
+            "triggerevents"
+        ]
+    },
+    {
+        "command": "force:lightning:app:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "appname",
+            "template",
+            "outputdir",
+            "apiversion",
+            "internal"
+        ]
+    },
+    {
+        "command": "force:lightning:component:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "componentname",
+            "template",
+            "outputdir",
+            "apiversion",
+            "type",
+            "internal"
+        ]
+    },
+    {
+        "command": "force:lightning:event:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "eventname",
+            "template",
+            "outputdir",
+            "apiversion",
+            "internal"
+        ]
+    },
+    {
+        "command": "force:lightning:interface:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "interfacename",
+            "template",
+            "outputdir",
+            "apiversion",
+            "internal"
+        ]
+    },
+    {
+        "command": "force:lightning:test:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "testname",
+            "template",
+            "outputdir",
+            "internal"
+        ]
+    },
+    {
+        "command": "force:project:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "projectname",
+            "template",
+            "outputdir",
+            "namespace",
+            "defaultpackagedir",
+            "manifest",
+            "loginurl"
+        ]
+    },
+    {
+        "command": "force:visualforce:component:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "template",
+            "outputdir",
+            "componentname",
+            "apiversion",
+            "label"
+        ]
+    },
+    {
+        "command": "force:visualforce:page:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "template",
+            "outputdir",
+            "pagename",
+            "apiversion",
+            "label"
+        ]
+    },
+    {
+        "command": "help",
+        "flags": [
+            "all"
+        ]
+    },
+    {
+        "command": "snapshot:compare",
+        "flags": [
+            "filepath"
+        ]
+    },
+    {
+        "command": "snapshot:generate",
+        "flags": [
+            "filepath"
+        ]
+    }
+]

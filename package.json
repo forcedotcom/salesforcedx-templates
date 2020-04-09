@@ -43,7 +43,7 @@
     "yeoman-test": "^2.0.0"
   },
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=10.15.0"
   },
   "files": [
     "/lib",

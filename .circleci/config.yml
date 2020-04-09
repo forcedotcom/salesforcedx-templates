@@ -24,10 +24,10 @@ jobs:
       - run:
           name: Testing
           command: yarn test
-  node-8:
+  node-12:
     <<: *test
     docker:
-      - image: node:8
+      - image: node:12
   node-10:
     <<: *test
     docker:
@@ -86,7 +86,7 @@ workflows:
   'salesforcedx-templates':
     jobs:
       - node-latest
-      - node-8
+      - node-12
       - node-10
       - cache:
           filters:

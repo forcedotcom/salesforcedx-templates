@@ -1,7 +1,7 @@
 {
   "name": "salesforcedx-templates",
   "description": "Salesforce CLI scaffolding commands for different types of Force.com metadata",
-  "version": "48.0.1",
+  "version": "48.8.0",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "dependencies": {
@@ -79,7 +79,7 @@
   },
   "repository": "forcedotcom/salesforcedx-templates",
   "scripts": {
-    "clean:lib": "node scripts/remove-lib",
+    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "build:templates": "node scripts/build-templates",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "rm -f oclif.manifest.json",

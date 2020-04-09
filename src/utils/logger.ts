@@ -24,6 +24,7 @@ export class Log {
   private output: string = '';
   private cleanOutput: string[] = [];
 
+  // tslint:disable-next-line: no-any
   [index: string]: any;
 
   constructor() {
@@ -53,8 +54,8 @@ export class Log {
   }
 
   public pad(status: string) {
-    let max = 'identical'.length;
-    let delta = max - status.length;
+    const max = 'identical'.length;
+    const delta = max - status.length;
     return delta ? new Array(delta + 1).join(' ') + status : status;
   }
 

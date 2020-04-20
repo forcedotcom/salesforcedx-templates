@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "@types/yeoman-environment": "^2.3.3",
+    "lerna": "^3.20.2",
+    "prettier": "1.19.1",
+    "shelljs": "^0.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forcedotcom/sfdx-diff.git"
+  },
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "clean:lib": "rm -rf lib && rm -rf coverage && rm -rf .nyc_output && rm -f oclif.manifest.json",
+    "compile": "tsc -b",
+    "build": "yarn run clean:lib && yarn build:templates && yarn compile",
+    "build:templates": "node scripts/build-templates"
+  },
+  "name": "salesforcedx-templates",
+  "dependencies": {
+    "@salesforce/core": "^2.3.1",
+    "yeoman-environment": "^2.9.4",
+    "yeoman-generator": "^4.8.2"
+  }
+}

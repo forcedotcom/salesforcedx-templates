@@ -6,9 +6,8 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
+import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
-// tslint:disable-next-line: no-var-requires
-const generator = require('yeoman-generator');
 
 const GITIGNORE = 'gitignore';
 const vscodearray = ['extensions', 'launch', 'settings'];
@@ -37,10 +36,11 @@ const emptyfolderarray = ['aura', 'lwc'];
 
 const analyticsfolderarray = ['waveTemplates'];
 
-export default class ProjectGenerator extends generator {
+export default class ProjectGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'project'));
+    // @ts-ignore
     this.conflicter.force = false;
   }
   public writing() {
@@ -76,7 +76,8 @@ export default class ProjectGenerator extends generator {
     );
     this.fs.copyTpl(
       this.templatePath(`${template}/README.md`),
-      this.destinationPath(path.join(outputdir, projectname, 'README.md'))
+      this.destinationPath(path.join(outputdir, projectname, 'README.md')),
+      {}
     );
     this.fs.copyTpl(
       this.templatePath('sfdx-project.json'),
@@ -110,7 +111,8 @@ export default class ProjectGenerator extends generator {
           this.templatePath(`${file}.json`),
           this.destinationPath(
             path.join(outputdir, projectname, '.vscode', `${file}.json`)
-          )
+          ),
+          {}
         );
       }
       this.fs.copyTpl(
@@ -125,25 +127,29 @@ export default class ProjectGenerator extends generator {
             'lwc',
             '.eslintrc.json'
           )
-        )
+        ),
+        {}
       );
       this.fs.copyTpl(
         this.templatePath(path.join(template, soqlQueryFile)),
         this.destinationPath(
           path.join(outputdir, projectname, 'scripts', 'soql', soqlQueryFile)
-        )
+        ),
+        {}
       );
       this.fs.copyTpl(
         this.templatePath(path.join(template, anonApexFile)),
         this.destinationPath(
           path.join(outputdir, projectname, 'scripts', 'apex', anonApexFile)
-        )
+        ),
+        {}
       );
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, out))
+          this.destinationPath(path.join(outputdir, projectname, out)),
+          {}
         );
       }
     }
@@ -153,7 +159,8 @@ export default class ProjectGenerator extends generator {
       makeEmptyFolders(folderlayout, emptyfolderarray);
       this.fs.copyTpl(
         this.templatePath('.forceignore'),
-        this.destinationPath(path.join(outputdir, projectname, '.forceignore'))
+        this.destinationPath(path.join(outputdir, projectname, '.forceignore')),
+        {}
       );
     }
 
@@ -165,14 +172,16 @@ export default class ProjectGenerator extends generator {
           this.templatePath(`${file}.json`),
           this.destinationPath(
             path.join(outputdir, projectname, '.vscode', `${file}.json`)
-          )
+          ),
+          {}
         );
       }
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, out))
+          this.destinationPath(path.join(outputdir, projectname, out)),
+          {}
         );
       }
     }

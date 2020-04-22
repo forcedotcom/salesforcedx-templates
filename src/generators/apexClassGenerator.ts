@@ -5,14 +5,14 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
+import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
-// tslint:disable-next-line:no-var-requires
-const generator = require('yeoman-generator');
 
-export default class ApexClassGenerator extends generator {
+export default class ApexClassGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'apexclass'));
+    // @ts-ignore
     this.conflicter.force = false;
   }
 

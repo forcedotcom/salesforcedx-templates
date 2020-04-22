@@ -6,15 +6,16 @@
  */
 import { Messages } from '@salesforce/core';
 import * as path from 'path';
+import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
-// tslint:disable-next-line:no-var-requires
-const generator = require('yeoman-generator');
+
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
-export default class LightningComponentGenerator extends generator {
+export default class LightningComponentGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
+    // @ts-ignore
     this.conflicter.force = false;
   }
   public writing() {
@@ -48,49 +49,57 @@ export default class LightningComponentGenerator extends generator {
         this.templatePath('DefaultLightningAuradoc.auradoc'),
         this.destinationPath(
           path.join(outputdir, componentname, `${componentname}.auradoc`)
-        )
+        ),
+        {}
       ),
         this.fs.copyTpl(
           this.templatePath(`${template}.cmp`),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}.cmp`)
-          )
+          ),
+          {}
         ),
         this.fs.copyTpl(
           this.templatePath('DefaultLightningCss.css'),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}.css`)
-          )
+          ),
+          {}
         ),
         this.fs.copyTpl(
           this.templatePath('DefaultLightningDesign.design'),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}.design`)
-          )
+          ),
+          {}
         ),
         this.fs.copyTpl(
           this.templatePath('DefaultLightningSVG.svg'),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}.svg`)
-          )
+          ),
+          {}
         ),
         this.fs.copyTpl(
           this.templatePath('DefaultLightningController.js'),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}Controller.js`)
-          )
+          ),
+          {}
         ),
         this.fs.copyTpl(
           this.templatePath('DefaultLightningHelper.js'),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}Helper.js`)
-          )
+          ),
+          {}
         ),
         this.fs.copyTpl(
           this.templatePath('DefaultLightningRenderer.js'),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}Renderer.js`)
-          )
+          ),
+          {}
         );
     }
     // tslint:disable-next-line:no-unused-expression
@@ -117,7 +126,8 @@ export default class LightningComponentGenerator extends generator {
           this.templatePath('_.html'),
           this.destinationPath(
             path.join(outputdir, fileName, `${fileName}.html`)
-          )
+          ),
+          {}
         );
       if (!internal) {
         this.fs.copyTpl(

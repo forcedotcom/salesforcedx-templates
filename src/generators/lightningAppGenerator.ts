@@ -6,16 +6,17 @@
  */
 import { Messages } from '@salesforce/core';
 import * as path from 'path';
+import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
-// tslint:disable-next-line:no-var-requires
-const generator = require('yeoman-generator');
+
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
-export default class LightningAppGenerator extends generator {
+export default class LightningAppGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningapp'));
+    // @ts-ignore
     this.conflicter.force = false;
   }
   public writing() {
@@ -35,39 +36,46 @@ export default class LightningAppGenerator extends generator {
     }
     this.fs.copyTpl(
       this.templatePath(`${template}.app`),
-      this.destinationPath(path.join(outputdir, appname, `${appname}.app`))
+      this.destinationPath(path.join(outputdir, appname, `${appname}.app`)),
+      {}
     ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningAuradoc.auradoc'),
         this.destinationPath(
           path.join(outputdir, appname, `${appname}.auradoc`)
-        )
+        ),
+        {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningController.js'),
         this.destinationPath(
           path.join(outputdir, appname, `${appname}Controller.js`)
-        )
+        ),
+        {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningCss.css'),
-        this.destinationPath(path.join(outputdir, appname, `${appname}.css`))
+        this.destinationPath(path.join(outputdir, appname, `${appname}.css`)),
+        {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningHelper.js'),
         this.destinationPath(
           path.join(outputdir, appname, `${appname}Helper.js`)
-        )
+        ),
+        {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningRenderer.js'),
         this.destinationPath(
           path.join(outputdir, appname, `${appname}Renderer.js`)
-        )
+        ),
+        {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningSVG.svg'),
-        this.destinationPath(path.join(outputdir, appname, `${appname}.svg`))
+        this.destinationPath(path.join(outputdir, appname, `${appname}.svg`)),
+        {}
       );
   }
 }

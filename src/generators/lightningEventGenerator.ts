@@ -6,16 +6,17 @@
  */
 import { Messages } from '@salesforce/core';
 import * as path from 'path';
+import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
-// tslint:disable-next-line:no-var-requires
-const generator = require('yeoman-generator');
+
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
-export default class LightningEventGenerator extends generator {
+export default class LightningEventGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningevent'));
+    // @ts-ignore
     this.conflicter.force = false;
   }
   public writing() {
@@ -42,7 +43,8 @@ export default class LightningEventGenerator extends generator {
     }
     this.fs.copyTpl(
       this.templatePath(`${template}.evt`),
-      this.destinationPath(path.join(outputdir, eventname, `${eventname}.evt`))
+      this.destinationPath(path.join(outputdir, eventname, `${eventname}.evt`)),
+      {}
     );
   }
 }

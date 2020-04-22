@@ -6,16 +6,17 @@
  */
 import { Messages } from '@salesforce/core';
 import * as path from 'path';
+import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
-// tslint:disable-next-line: no-var-requires
-const generator = require('yeoman-generator');
+
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
-export default class LightningTestGenerator extends generator {
+export default class LightningTestGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningtest'));
+    // @ts-ignore
     this.conflicter.force = false;
   }
   public writing() {

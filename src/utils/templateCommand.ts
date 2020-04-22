@@ -5,18 +5,15 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-// tslint:disable:no-var-requires
-// tslint:disable:no-unused-expression
-
 import { SfdxCommand } from '@salesforce/command';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
+// @ts-ignore
+import * as yeoman from 'yeoman-environment';
+import * as yeomanGenerator from 'yeoman-generator';
 import { ForceGeneratorAdapter } from './adapter';
 import { MessageUtil } from './messageUtil';
 import { CreateOutput } from './types';
-
-const yeoman = require('yeoman-environment');
-const yeomanGenerator = require('yeoman-generator');
 
 export abstract class TemplateCommand extends SfdxCommand {
   public static buildJson(
@@ -47,6 +44,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     }
 
     const adapter = new ForceGeneratorAdapter();
+    // @ts-ignore
     const env = yeoman.createEnv(undefined, undefined, adapter);
     env.registerStub(generator, 'generator');
 

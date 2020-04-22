@@ -6,12 +6,12 @@
  */
 import { Messages } from '@salesforce/core';
 import * as path from 'path';
+import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
-// tslint:disable-next-line:no-var-requires
-const generator = require('yeoman-generator');
+
 Messages.importMessagesDirectory(__dirname);
 
-export default class AnalyticsTemplateGenerator extends generator {
+export default class AnalyticsTemplateGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(
@@ -45,7 +45,8 @@ export default class AnalyticsTemplateGenerator extends generator {
       ),
       this.destinationPath(
         path.join(outputdir, templatename, 'app-to-template-rules.json')
-      )
+      ),
+      {}
     );
     this.fs.copyTpl(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'folder.json')),
@@ -58,7 +59,8 @@ export default class AnalyticsTemplateGenerator extends generator {
       ),
       this.destinationPath(
         path.join(outputdir, templatename, 'releaseNotes.html')
-      )
+      ),
+      {}
     );
     this.fs.copyTpl(
       this.templatePath(
@@ -75,17 +77,22 @@ export default class AnalyticsTemplateGenerator extends generator {
       ),
       this.destinationPath(
         path.join(outputdir, templatename, 'template-to-app-rules.json')
-      )
+      ),
+      {}
     );
     this.fs.copyTpl(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'ui.json')),
-      this.destinationPath(path.join(outputdir, templatename, 'ui.json'))
+      this.destinationPath(path.join(outputdir, templatename, 'ui.json')),
+      {}
     );
     this.fs.copyTpl(
       this.templatePath(
         path.join('DefaultAnalyticsTemplate', 'variables.json')
       ),
-      this.destinationPath(path.join(outputdir, templatename, 'variables.json'))
+      this.destinationPath(
+        path.join(outputdir, templatename, 'variables.json')
+      ),
+      {}
     );
   }
 }

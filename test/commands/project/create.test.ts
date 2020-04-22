@@ -6,10 +6,10 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
-// tslint:disable-next-line: no-var-requires
-const fs = require('fs');
+
 const standardfolderarray = [
   'aura',
   'applications',

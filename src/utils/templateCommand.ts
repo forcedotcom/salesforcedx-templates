@@ -15,6 +15,9 @@ import { ForceGeneratorAdapter } from './adapter';
 import { MessageUtil } from './messageUtil';
 import { CreateOutput } from './types';
 
+// tslint:disable-next-line: no-var-requires
+// const yeoman = require('yeoman-environment');
+
 export abstract class TemplateCommand extends SfdxCommand {
   public static buildJson(
     adapter: ForceGeneratorAdapter,
@@ -44,7 +47,6 @@ export abstract class TemplateCommand extends SfdxCommand {
     }
 
     const adapter = new ForceGeneratorAdapter();
-    // @ts-ignore
     const env = yeoman.createEnv(undefined, undefined, adapter);
     env.registerStub(generator, 'generator');
 

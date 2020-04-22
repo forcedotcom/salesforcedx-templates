@@ -37,9 +37,13 @@
     "pretty-quick": "^1.11.1",
     "shx": "0.2.2",
     "sinon": "^7.3.1",
+    "string-replace-loader": "^2.3.0",
+    "ts-loader": "5.4.5",
     "ts-node": "^8.6.2",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3",
+    "webpack": "4.30.0",
+    "webpack-cli": "3.3.5",
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^2.0.0"
   },
@@ -104,7 +108,8 @@
   "repository": "forcedotcom/salesforcedx-templates",
   "scripts": {
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
-    "compile": "tsc -b",
+    "compile": "webpack --config ./webpack.config.js",
+    "compile:old": "tsc -b",
     "build": "yarn run clean:lib && yarn build:templates && yarn compile",
     "build:templates": "node scripts/build-templates",
     "lint": "tslint --project . --config tslint.json --format stylish",

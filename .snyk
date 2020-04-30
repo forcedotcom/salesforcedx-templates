@@ -1,0 +1,48 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - yeoman-environment > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-generator > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - '@salesforce/core > jsforce > lodash':
+        patched: '2020-04-30T23:28:05.523Z'
+    - '@salesforce/command > cli-ux > lodash':
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-environment > grouped-queue > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-environment > inquirer > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-generator > async > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-environment > yeoman-generator > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-generator > yeoman-environment > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - '@salesforce/command > @oclif/test > fancy-test > lodash':
+        patched: '2020-04-30T23:28:05.523Z'
+    - '@salesforce/command > @salesforce/core > jsforce > lodash':
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-generator > yeoman-environment > grouped-queue > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-generator > yeoman-environment > inquirer > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-environment > yeoman-generator > async > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-generator > yeoman-environment > yeoman-generator > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-environment > yeoman-generator > yeoman-environment > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-environment > yeoman-generator > yeoman-environment > grouped-queue > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-environment > yeoman-generator > yeoman-environment > inquirer > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - yeoman-generator > yeoman-environment > yeoman-generator > async > lodash:
+        patched: '2020-04-30T23:28:05.523Z'
+    - '@salesforce/core > @salesforce/ts-sinon > sinon > nise > @sinonjs/formatio > @sinonjs/samsam > lodash':
+        patched: '2020-04-30T23:28:05.523Z'
+    - '@salesforce/command > @salesforce/core > @salesforce/ts-sinon > sinon > nise > @sinonjs/formatio > @sinonjs/samsam > lodash':
+        patched: '2020-04-30T23:28:05.523Z'

@@ -1,5 +1,9 @@
 ---
-version: 2
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
 jobs:
   node-latest: &test
     docker:
@@ -20,15 +24,10 @@ jobs:
       - run:
           name: Testing
           command: yarn test
-      - run:
-          name: Submitting code coverage to codecov
-          command: |
-            ./node_modules/.bin/nyc report --reporter text-lcov > coverage.lcov
-            bash <(curl -s https://codecov.io/bash) -f "coverage.lcov" -t $CODECOV_KEY
-  node-8:
+  node-12:
     <<: *test
     docker:
-      - image: node:8
+      - image: node:12
   node-10:
     <<: *test
     docker:
@@ -47,12 +46,47 @@ jobs:
             - /usr/local/share/.cache/yarn
             - /usr/local/share/.config/yarn
 
+  run-win-tests:
+    description: 'Run tests on Windows'
+    executor: win/default
+    steps:
+      - run: git config --global core.autocrlf false
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-win1-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
+            # if cache for exact version of 'package.json' is not present, then load the most recent cache
+            - dependency-cache-win1-
+      - run:
+          name: 'Install dependencies'
+          command: |
+            yarn --version
+            node --version
+            yarn
+            yarn global add codecov
+      - save_cache:
+          key: dependency-cache-win1-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
+          paths:
+            - node_modules
+      - run:
+          name: 'Compile'
+          command: |
+            yarn prepack
+      - run:
+          name: 'Running unit tests'
+          command: |
+            yarn test
+      - run:
+          name: Submitting code coverage to codecov
+          command: |
+            npx codecov --disable=gcov
+
 workflows:
   version: 2
   'salesforcedx-templates':
     jobs:
       - node-latest
-      - node-8
+      - node-12
       - node-10
       - cache:
           filters:
@@ -60,3 +94,4 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - run-win-tests

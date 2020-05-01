@@ -8,6 +8,8 @@ import { Messages } from '@salesforce/core';
 
 Messages.importMessagesDirectory(__dirname);
 
+export type Token = string | number | boolean;
+
 // TODO: Update util when sfdxdocgen is updated to support oclif
 export class MessageUtil {
   /**
@@ -15,10 +17,7 @@ export class MessageUtil {
    * @param key The key of the message
    * @param tokens The values to substitute in the message
    */
-  public static get(
-    key: string,
-    tokens?: Array<string | number | boolean>
-  ): string {
+  public static get(key: string, tokens?: Token[]): string {
     return this.messages.getMessage(key, tokens);
   }
 
@@ -32,7 +31,7 @@ export class MessageUtil {
   public static buildDescription(
     descriptionKey: string,
     isLightningBundle: boolean,
-    tokens?: Array<string | number | boolean>,
+    tokens?: Token[],
     extra?: string
   ): string {
     return (

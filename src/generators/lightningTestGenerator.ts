@@ -16,8 +16,6 @@ export default class LightningTestGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningtest'));
-    // @ts-ignore
-    this.conflicter.force = false;
   }
   public writing() {
     const { template, outputdir, testname, internal } = this.options;

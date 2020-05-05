@@ -14,8 +14,6 @@ export default class VisualforceComponentGenerator extends Generator {
     this.sourceRoot(
       path.join(__dirname, '..', 'templates', 'visualforcecomponent')
     );
-    // @ts-ignore
-    this.conflicter.force = false;
   }
 
   public writing() {

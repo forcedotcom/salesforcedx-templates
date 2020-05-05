@@ -12,8 +12,6 @@ export default class ApexClassGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'apexclass'));
-    // @ts-ignore
-    this.conflicter.force = false;
   }
 
   public writing() {

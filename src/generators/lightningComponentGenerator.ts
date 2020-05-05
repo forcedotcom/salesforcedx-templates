@@ -15,8 +15,6 @@ const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 export default class LightningComponentGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
-    // @ts-ignore
-    this.conflicter.force = false;
   }
   public writing() {
     const {

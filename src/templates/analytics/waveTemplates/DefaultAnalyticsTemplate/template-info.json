@@ -3,7 +3,7 @@
   "label": "<%= templateName %>",
   "name": "<%= templateName %>",
   "description": "",
-  "assetVersion": <%= sourceApiVersion %>,
+  "assetVersion": 48.0,
   "variableDefinition": "variables.json",
   "uiDefinition": "ui.json",
   "rules": [

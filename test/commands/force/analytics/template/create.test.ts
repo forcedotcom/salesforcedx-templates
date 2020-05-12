@@ -45,7 +45,7 @@ describe('Analytics template creation tests:', () => {
               'dashboards',
               'fooDashboard.json'
             ),
-            '"name": "fooDashboard"'
+            '"name": "fooDashboard_tp"'
           );
         }
       );

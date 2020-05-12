@@ -362,7 +362,7 @@ describe('Project creation tests:', () => {
           }
           assert.fileContent(
             path.join('analytics1', 'config', 'project-scratch-def.json'),
-            '["DevelopmentWave"]'
+            '"DevelopmentWave"'
           );
           assert.fileContent(
             path.join('analytics1', 'manifest', 'package.xml'),

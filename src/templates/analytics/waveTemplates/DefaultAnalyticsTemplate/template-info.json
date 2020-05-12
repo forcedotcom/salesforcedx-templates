@@ -3,7 +3,7 @@
   "label": "<%= templateName %>",
   "name": "<%= templateName %>",
   "description": "",
-  "assetVersion": <%= sourceApiVersion %>,
+  "assetVersion": 48.0,
   "variableDefinition": "variables.json",
   "uiDefinition": "ui.json",
   "rules": [
@@ -26,7 +26,7 @@
   "dashboards": [
     {
       "label": "<%= templateName %>Dashboard",
-      "name": "<%= templateName %>Dashboard",
+      "name": "<%= templateName %>Dashboard_tp",
       "condition": "${Variables.Overrides.createAllDashboards}",
       "file": "dashboards/<%= templateName %>Dashboard.json"
     }

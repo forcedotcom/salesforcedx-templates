@@ -10,6 +10,8 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2.2.0",
     "@salesforce/core": "^2.3.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
     "mkdirp": "^0.5.1",
     "tslib": "^1",
     "yeoman-environment": "^2.9.0",
@@ -110,11 +112,16 @@
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "shx rm -f oclif.manifest.json",
     "prepack": "yarn run build && oclif-dev manifest",
-    "reformat": "prettier --config .prettierrc --write './*.{js,json}' './**/*.{ts,json}'",
+    "reformat": "prettier --config .prettierrc --write './*.{js,json,md}' './**/*.{ts,json,md}'",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
     "version": "oclif-dev readme && git add README.md",
     "test:deprecation-policy": "./bin/run snapshot:compare",
     "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

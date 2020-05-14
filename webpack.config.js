@@ -3,8 +3,8 @@ const glob = require('glob');
 const BASE_DIR = path.resolve(__dirname);
 
 const getEntryObject = () => {
-  const entryArray = glob.sync('src/utils/**/**/**/*.ts');
-  // const entryArray = glob.sync('src/**/**/**/**/*.ts');
+  // const entryArray = glob.sync('src/utils/**/**/**/*.ts');
+  const entryArray = glob.sync('src/**/**/**/**/*.ts');
   const srcObj = entryArray.reduce((acc, item) => {
     const outputModulePath = path.join(
       'lib',
@@ -25,6 +25,7 @@ const getMode = () => {
 module.exports = {
   // extensions run in a node context
   target: 'node',
+  node: { __dirname: false, __filename: true },
   mode: getMode(),
   entry: getEntryObject(),
   output: {

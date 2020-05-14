@@ -30,7 +30,13 @@ export default class LightningComponentGenerator extends Generator {
     // tslint:disable-next-line:no-unused-expression
     if (type === 'aura') {
       this.sourceRoot(
-        path.join(__dirname, '..', 'templates', 'lightningcomponent', 'aura')
+        path.join(
+          __dirname,
+          '../../../../',
+          'templates',
+          'lightningcomponent',
+          'aura'
+        )
       );
       if (!internal) {
         this.fs.copyTpl(
@@ -115,7 +121,13 @@ export default class LightningComponentGenerator extends Generator {
         .toUpperCase()}${componentname.substring(1)}`;
 
       this.sourceRoot(
-        path.join(__dirname, '..', 'templates', 'lightningcomponent', 'lwc')
+        path.join(
+          __dirname,
+          '../../../../',
+          'templates',
+          'lightningcomponent',
+          'lwc'
+        )
       );
       this.fs.copyTpl(
         this.templatePath('DefaultLightningLWC.js'),

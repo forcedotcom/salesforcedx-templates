@@ -15,7 +15,9 @@ const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 export default class LightningAppGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningapp'));
+    this.sourceRoot(
+      path.join(__dirname, '../../../../', 'templates', 'lightningapp')
+    );
     // @ts-ignore
     this.conflicter.force = false;
   }

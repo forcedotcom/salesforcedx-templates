@@ -16,7 +16,7 @@ export default class LightningInterfaceGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(
-      path.join(__dirname, '..', 'templates', 'lightninginterface')
+      path.join(__dirname, '../../../../', 'templates', 'lightninginterface')
     );
     // @ts-ignore
     this.conflicter.force = false;

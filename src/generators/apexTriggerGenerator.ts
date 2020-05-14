@@ -10,7 +10,9 @@ import { OptionsMap } from '../utils/types';
 export default class ApexTriggerGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'apextrigger'));
+    this.sourceRoot(
+      path.join(__dirname, '../../../../', 'templates', 'apextrigger')
+    );
     // @ts-ignore
     this.conflicter.force = false;
   }

@@ -15,7 +15,13 @@ export default class AnalyticsTemplateGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(
-      path.join(__dirname, '..', 'templates', 'analytics', 'waveTemplates')
+      path.join(
+        __dirname,
+        '../../../../',
+        'templates',
+        'analytics',
+        'waveTemplates'
+      )
     );
   }
   public writing() {

@@ -39,7 +39,9 @@ const analyticsfolderarray = ['waveTemplates'];
 export default class ProjectGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'project'));
+    this.sourceRoot(
+      path.join(__dirname, '../../../../', 'templates', 'project')
+    );
     // @ts-ignore
     this.conflicter.force = false;
   }

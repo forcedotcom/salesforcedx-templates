@@ -12,7 +12,7 @@ export default class VisualforceComponentGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(
-      path.join(__dirname, '..', 'templates', 'visualforcecomponent')
+      path.join(__dirname, '../../../../', 'templates', 'visualforcecomponent')
     );
     // @ts-ignore
     this.conflicter.force = false;

@@ -85,6 +85,16 @@ describe('Project creation tests:', () => {
             '.eslintrc.json'
           )
         ]);
+        assert.file([
+          path.join(
+            'foo',
+            'force-app',
+            'main',
+            'default',
+            'aura',
+            '.eslintrc.json'
+          )
+        ]);
         for (const file of filestocopy) {
           assert.file([path.join('foo', file)]);
         }
@@ -136,6 +146,17 @@ describe('Project creation tests:', () => {
               'main',
               'default',
               'lwc',
+              '.eslintrc.json'
+            )
+          ]);
+          assert.file([
+            path.join(
+              'test outputdir',
+              'foo',
+              'force-app',
+              'main',
+              'default',
+              'aura',
               '.eslintrc.json'
             )
           ]);

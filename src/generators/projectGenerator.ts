@@ -116,7 +116,7 @@ export default class ProjectGenerator extends Generator {
         );
       }
       this.fs.copyTpl(
-        this.templatePath('.eslintrc.json'),
+        this.templatePath('lwc.eslintrc.json'),
         this.destinationPath(
           path.join(
             outputdir,
@@ -125,6 +125,21 @@ export default class ProjectGenerator extends Generator {
             'main',
             'default',
             'lwc',
+            '.eslintrc.json'
+          )
+        ),
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath('aura.eslintrc.json'),
+        this.destinationPath(
+          path.join(
+            outputdir,
+            projectname,
+            defaultpackagedir,
+            'main',
+            'default',
+            'aura',
             '.eslintrc.json'
           )
         ),

@@ -6,6 +6,7 @@
  */
 
 import { SfdxCommand } from '@salesforce/command';
+import { ConfigAggregator } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 // @ts-ignore
@@ -16,6 +17,8 @@ import { MessageUtil } from './messageUtil';
 import { CreateOutput } from './types';
 
 export abstract class TemplateCommand extends SfdxCommand {
+  private static API_VERSION = 'apiVersion';
+
   public static buildJson(
     adapter: ForceGeneratorAdapter,
     targetDir: string
@@ -31,8 +34,21 @@ export abstract class TemplateCommand extends SfdxCommand {
   }
 
   public static getDefaultApiVersion(): string {
-    const versionTrimmed = require('../../package.json').version.trim();
+    const packageJsonPath = path.join('..', '..', 'package.json');
+    const versionTrimmed = require(packageJsonPath).version.trim();
     return `${versionTrimmed.split('.')[0]}.0`;
+  }
+
+  public static async getApiVersion(): Promise<string> {
+    try {
+      const aggregator = await ConfigAggregator.create();
+      const apiVersionFromConfig = aggregator.getPropertyValue(
+        TemplateCommand.API_VERSION
+      ) as string;
+      return apiVersionFromConfig || TemplateCommand.getDefaultApiVersion();
+    } catch (err) {
+      return TemplateCommand.getDefaultApiVersion();
+    }
   }
 
   public abstract run(): Promise<AnyJson>;
@@ -40,7 +56,7 @@ export abstract class TemplateCommand extends SfdxCommand {
   public async runGenerator(generator: typeof yeomanGenerator) {
     // Can't specify a default value the normal way for apiversion, so set it here
     if (!this.flags.apiversion) {
-      this.flags.apiversion = TemplateCommand.getDefaultApiVersion();
+      this.flags.apiversion = await TemplateCommand.getApiVersion();
     }
 
     const adapter = new ForceGeneratorAdapter();

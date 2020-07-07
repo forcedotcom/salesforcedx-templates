@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { test } from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
+import { Messages, ConfigAggregator } from '@salesforce/core';
 import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import { resolve } from 'path';
@@ -92,11 +92,22 @@ describe('CreateUtil', () => {
   });
 
   describe('getDefaultApiVersion', () => {
-    it('should parse apiVersion using the major version number of the package.json', () => {
+    it('should parse apiVersion using the major version number of the package.json', async () => {
       const { version } = require('../../package.json');
       expect(version).to.not.be.undefined;
       const major = version.trim().split('.')[0];
-      expect(TemplateCommand.getDefaultApiVersion()).to.equal(`${major}.0`);
+      const apiVersion = await TemplateCommand.getApiVersion();
+      expect(apiVersion).to.equal(`${major}.0`);
+    });
+
+    it('should parse apiVersion using the value from the ConfigAggregator', async () => {
+      const configStub = stub(
+        ConfigAggregator.prototype,
+        'getPropertyValue'
+      ).returns('50.0');
+      const apiVersion = await TemplateCommand.getApiVersion();
+      expect(apiVersion).to.equal('50.0');
+      configStub.restore();
     });
   });
 

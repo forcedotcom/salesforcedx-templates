@@ -3,5 +3,14 @@
     "**/node_modules": true,
     "**/bower_components": true,
     "**/.sfdx": true
-  }
+  },
+  "xml.catalogs": [
+		".sfdx/lwcResources/js-meta-home.xml"
+	],
+	"xml.fileAssociations": [
+		{
+			"systemId": ".sfdx/lwcResources/js-meta.xsd",
+			"pattern": "**/*js-meta.xml"
+		}
+	]
 }

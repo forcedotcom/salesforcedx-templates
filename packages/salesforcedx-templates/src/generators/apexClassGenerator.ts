@@ -5,14 +5,18 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import { OptionsMap } from '../utils/types';
-import { TemplateOptions } from '../types';
 import YeomanGenerator from 'yeoman-generator';
+import { OptionsMap } from '../types';
+import { TemplateOptions } from '../types';
 
-export type ApexClassOptions = TemplateOptions & {
-  template: string;
+export interface ApexClassOptions extends TemplateOptions {
+  template?:
+    | 'DefaultApexClass'
+    | 'ApexUnitTest'
+    | 'ApexException'
+    | 'InboundEmailService';
   classname: string;
-};
+}
 
 export class ApexClassGenerator extends YeomanGenerator {
   constructor(args: string | string[], options: TemplateOptions) {

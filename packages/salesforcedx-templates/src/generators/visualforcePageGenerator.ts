@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { OptionsMap } from '../utils/types';
+import { OptionsMap } from '../types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
 

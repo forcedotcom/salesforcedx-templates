@@ -3,7 +3,8 @@
     "@types/yeoman-environment": "^2.3.3",
     "lerna": "^3.20.2",
     "prettier": "1.19.1",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.3",
+    "typescript": "^3.9.6"
   },
   "repository": {
     "type": "git",

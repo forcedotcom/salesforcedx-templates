@@ -1,9 +1,11 @@
-import YeomanGenerator from 'yeoman-generator';
-import { ApexClassGenerator, ApexClassOptions } from './generators';
-import { TemplateOptions } from './types';
-import { GeneratorContext } from './context/context';
+import {
+  ApexClassGenerator,
+  ApexClassOptions,
+  GeneratorContext
+} from './generators';
+import { ApexTriggerOptions } from './generators/apexTriggerGenerator';
 
-export const SfdxGenerator = {
+export const SfdxTemplates = {
   apexclass: new GeneratorContext<ApexClassOptions>(ApexClassGenerator),
-  apextrigger: new GeneratorContext<ApexClassOptions>(ApexClassGenerator)
+  apextrigger: new GeneratorContext<ApexTriggerOptions>(ApexClassGenerator)
 };

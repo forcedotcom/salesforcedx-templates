@@ -5,9 +5,30 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import { OptionsMap } from '../utils/types';
+import { OptionsMap, TemplateOptions } from '../types';
 // tslint:disable-next-line:no-var-requires
 const generator = require('yeoman-generator');
+
+export interface ApexTriggerOptions extends TemplateOptions {
+  template?: 'ApexTrigger';
+  /**
+   * sObject to create a trigger on. Defaults to `SOBJECT`.
+   */
+  sobject?: string;
+  /**
+   * Events that fire the trigger. Defaults to `before insert`.
+   */
+  triggerevents?:
+    | 'before insert'
+    | 'before update'
+    | 'before delete'
+    | 'after insert'
+    | 'after update'
+    | 'after delete'
+    | 'after undelete';
+  triggername: string;
+}
+
 export default class ApexTriggerGenerator extends generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);

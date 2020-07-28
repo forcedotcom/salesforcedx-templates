@@ -1,5 +1,6 @@
 {
-  "name": "salesforcedx-templates",
+  "name": "salesforcedx-templates-repo",
+  "private": true,
   "description": "Salesforce CLI scaffolding commands for different types of Force.com metadata",
   "version": "49.0.0",
   "author": "Salesforce",
@@ -33,6 +34,7 @@
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.5.0",
     "globby": "^8",
+    "lerna": "^3.22.1",
     "mocha": "^5",
     "nyc": "15.0.1",
     "prettier": "1.16.4",
@@ -123,5 +125,8 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

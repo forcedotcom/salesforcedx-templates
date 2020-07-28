@@ -1,0 +1,7 @@
+{
+  "name": "<%= templateName %>",
+  "label": "<%= templateName %>",
+  "description": "Analytics template with one simple dashboard",
+  "featuredAssets": {},
+  "shares": []
+}

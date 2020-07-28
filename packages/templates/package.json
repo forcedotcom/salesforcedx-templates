@@ -1,0 +1,21 @@
+{
+  "name": "@salesforce/templates",
+  "version": "0.0.1",
+  "description": "Salesforce JS library for templates",
+  "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
+  "main": "lib/index.js",
+  "author": "Salesforce",
+  "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@salesforce/core": "^2.3.0",
+    "yeoman-environment": "2.4.0",
+    "yeoman-generator": "4.0.1"
+  },
+  "scripts": {
+    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
+    "compile": "tsc -b",
+    "build": "yarn run clean:lib && yarn build:templates && yarn compile",
+    "build:templates": "node scripts/build-templates"
+  }
+}

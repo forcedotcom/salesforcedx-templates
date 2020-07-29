@@ -1,0 +1,82 @@
+{
+  "name": "salesforcedx-templates",
+  "version": "49.0.0",
+  "main": "index.js",
+  "author": "Salesforce",
+  "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@salesforce/templates": "^0.0.1",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/errors": "^1",
+    "@salesforce/command": "^2.2.0",
+    "@salesforce/core": "^2.3.0",
+    "yeoman-environment": "2.4.0",
+    "yeoman-generator": "4.0.1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/plugin-command-snapshot": "^1.0.0",
+    "@oclif/plugin-help": "^2",
+    "@oclif/test": "^1",
+    "@salesforce/dev-config": "1.4.1",
+    "@salesforce/plugin-command-reference": "^1.0.7"
+  },
+  "files": [
+    "/lib",
+    "/messages",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "sfdx",
+    "devPlugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-command-snapshot",
+      "@salesforce/plugin-command-reference"
+    ],
+    "topics": {
+      "force": {
+        "external": true,
+        "subtopics": {
+          "apex": {
+            "external": true
+          },
+          "analytics": {
+            "description": "work with analytics assets",
+            "longDescription": "Work with analytics assets.",
+            "subtopics": {
+              "template": {
+                "description": "work with analytics templates",
+                "longDescription": "Work with analytics templates."
+              }
+            }
+          },
+          "lightning": {
+            "external": true
+          },
+          "project": {
+            "external": true,
+            "subtopics": {}
+          },
+          "visualforce": {
+            "external": true,
+            "subtopics": {}
+          }
+        }
+      }
+    }
+  },
+  "repository": "forcedotcom/salesforcedx-templates",
+  "scripts": {
+    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
+    "compile": "tsc -b",
+    "build": "yarn run clean:lib && yarn compile",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "prepack": "yarn run build && oclif-dev manifest",
+    "test:deprecation-policy": "./bin/run snapshot:compare",
+    "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
+  }
+}

@@ -82,6 +82,7 @@
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
     "compile": "tsc -b",
     "build": "yarn run clean:lib && yarn compile",
+    "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "shx rm -f oclif.manifest.json",
     "prepack": "yarn run build && oclif-dev manifest",
     "version": "oclif-dev readme && git add README.md",

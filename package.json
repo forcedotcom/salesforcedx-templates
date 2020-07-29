@@ -53,7 +53,6 @@
     "test": "lerna run test",
     "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
     "reformat": "prettier --config .prettierrc --write './*.{js,json,md}' './**/*.{ts,json,md}'",
-    "version": "oclif-dev readme && git add README.md",
     "test:deprecation-policy": "cd packages/plugin-templates && yarn run test:deprecation-policy",
     "test:command-reference": "cd packages/plugin-templates && yarn run test:command-reference"
   },

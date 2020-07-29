@@ -50,9 +50,9 @@
   "scripts": {
     "build": "lerna run build",
     "lint": "lerna run lint",
-    "reformat": "prettier --config .prettierrc --write './*.{js,json,md}' './**/*.{ts,json,md}'",
-    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "test": "lerna run test",
     "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
+    "reformat": "prettier --config .prettierrc --write './*.{js,json,md}' './**/*.{ts,json,md}'",
     "version": "oclif-dev readme && git add README.md",
     "test:deprecation-policy": "cd packages/plugin-templates && yarn run test:deprecation-policy",
     "test:command-reference": "cd packages/plugin-templates && yarn run test:command-reference"

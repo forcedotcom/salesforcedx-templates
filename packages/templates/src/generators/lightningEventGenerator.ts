@@ -16,8 +16,6 @@ export default class LightningEventGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningevent'));
-    // @ts-ignore
-    this.conflicter.force = false;
   }
   public writing() {
     const {

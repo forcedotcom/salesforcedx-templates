@@ -6,8 +6,6 @@ export default class VisualforcePageGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'visualforcepage'));
-    // @ts-ignore
-    this.conflicter.force = false;
   }
 
   public writing() {

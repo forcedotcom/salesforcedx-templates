@@ -6,9 +6,10 @@
  */
 import { flags } from '@salesforce/command';
 import LightningInterfaceGenerator from '@salesforce/templates/lib/generators/lightningInterfaceGenerator';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
-import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
+import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningInterfaceFileSuffix = /.intf$/;
 const BUNDLE_TYPE = MessageUtil.get('Interface');

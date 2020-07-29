@@ -6,8 +6,9 @@
  */
 import { flags } from '@salesforce/command';
 import VisualforcePageGenerator from '@salesforce/templates/lib/generators/visualforcePageGenerator';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
+import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const visualforcePageFileSuffix = /.page$/;
 const VF_TYPE = MessageUtil.get('Page');

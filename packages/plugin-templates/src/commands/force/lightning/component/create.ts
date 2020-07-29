@@ -9,9 +9,10 @@
 
 import { flags } from '@salesforce/command';
 import LightningComponentGenerator from '@salesforce/templates/lib/generators/lightningComponentGenerator';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
-import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
+import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningComponentFileSuffix = /.cmp$/;
 const BUNDLE_TYPE = MessageUtil.get('Component');

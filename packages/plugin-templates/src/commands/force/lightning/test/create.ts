@@ -6,8 +6,9 @@
  */
 import { flags } from '@salesforce/command';
 import LightningTestGenerator from '@salesforce/templates/lib/generators/lightningTestGenerator';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
+import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningTestFileSuffix = /.resource$/;
 

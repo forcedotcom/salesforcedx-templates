@@ -4,7 +4,6 @@
   "main": "index.js",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
-  "license": "BSD-3-Clause",
   "dependencies": {
     "@salesforce/templates": "^0.0.1",
     "@oclif/command": "^1",
@@ -23,6 +22,15 @@
     "@salesforce/dev-config": "1.4.1",
     "@salesforce/plugin-command-reference": "^1.0.7"
   },
+  "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
+  "keywords": [
+    "force",
+    "salesforce",
+    "sfdx",
+    "salesforcedx",
+    "sfdx-plugin"
+  ],
+  "license": "BSD-3-Clause",
   "files": [
     "/lib",
     "/messages",
@@ -76,6 +84,7 @@
     "build": "yarn run clean:lib && yarn compile",
     "postpack": "shx rm -f oclif.manifest.json",
     "prepack": "yarn run build && oclif-dev manifest",
+    "version": "oclif-dev readme && git add README.md",
     "test:deprecation-policy": "./bin/run snapshot:compare",
     "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
   }

@@ -7,9 +7,10 @@
 import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import AnalyticsTemplateGenerator from '@salesforce/templates/lib/generators/analyticsTemplateGenerator';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
-import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
+import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 export default class AnalyticsTemplate extends TemplateCommand {

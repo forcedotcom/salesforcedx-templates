@@ -6,8 +6,9 @@
  */
 import { flags } from '@salesforce/command';
 import VisualforceComponentGenerator from '@salesforce/templates/lib/generators/visualforceComponentGenerator';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import { CreateUtil, MessageUtil, TemplateCommand } from '../../../../utils';
+import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const visualforceComponentFileSuffix = /.component$/;
 const VF_TYPE = MessageUtil.get('Component');

@@ -86,6 +86,7 @@
     "postpack": "shx rm -f oclif.manifest.json",
     "prepack": "yarn run build && oclif-dev manifest",
     "version": "oclif-dev readme && git add README.md",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "test:deprecation-policy": "./bin/run snapshot:compare",
     "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
   }

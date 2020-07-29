@@ -399,7 +399,10 @@ describe('Project creation tests:', () => {
     test
       .command(['force:project:create', '-n', 'GitIgnoreTest'])
       .it('should rename gitignore to .gitignore in standard template', ctx => {
-        const srcPath = path.normalize('../lib/templates/project');
+        const srcPath = path.join(
+          path.dirname(require.resolve('@salesforce/templates')),
+          'templates/project'
+        );
         assert.noFile(path.join(srcPath, '.gitignore'));
         assert.file(path.join(srcPath, 'gitignore'));
         assert.file(path.normalize('GitIgnoreTest/.gitignore'));
@@ -416,7 +419,10 @@ describe('Project creation tests:', () => {
       .it(
         'should rename gitignore to .gitignore in analytics template',
         ctx => {
-          const srcPath = path.normalize('../lib/templates/project');
+          const srcPath = path.join(
+            path.dirname(require.resolve('@salesforce/templates')),
+            'templates/project'
+          );
           assert.noFile(path.join(srcPath, '.gitignore'));
           assert.file(path.join(srcPath, 'gitignore'));
           assert.file(path.normalize('GitIgnoreTest2/.gitignore'));

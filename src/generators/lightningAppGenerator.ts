@@ -16,8 +16,6 @@ export default class LightningAppGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningapp'));
-    // @ts-ignore
-    this.conflicter.force = false;
   }
   public writing() {
     const { template, outputdir, appname, apiversion, internal } = this.options;

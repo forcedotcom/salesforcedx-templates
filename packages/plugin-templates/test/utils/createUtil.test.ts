@@ -8,12 +8,13 @@ import { test } from '@salesforce/command/lib/test';
 import { ConfigAggregator } from '@salesforce/core';
 import { nls } from '@salesforce/templates/lib/i18n';
 import { CreateUtil } from '@salesforce/templates/lib/utils';
+import { ForceGeneratorAdapter, Log } from '@salesforce/templates/lib/utils';
 
 import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import * as path from 'path';
 import { SinonStub, stub } from 'sinon';
-import { ForceGeneratorAdapter, Log, TemplateCommand } from '../../src/utils';
+import { TemplateCommand } from '../../src/utils';
 
 // TODO: move this test to templates package
 /* tslint:disable: no-unused-expression */

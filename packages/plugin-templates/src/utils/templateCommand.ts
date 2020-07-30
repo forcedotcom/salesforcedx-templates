@@ -7,15 +7,15 @@
 
 import { SfdxCommand } from '@salesforce/command';
 import { ConfigAggregator } from '@salesforce/core';
+import { ForceGeneratorAdapter } from '@salesforce/templates/lib/utils';
 import { CreateOutput } from '@salesforce/templates/lib/utils/types';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
 // @ts-ignore
 import * as yeoman from 'yeoman-environment';
 import * as yeomanGenerator from 'yeoman-generator';
-import { ForceGeneratorAdapter } from './adapter';
-import { MessageUtil } from './messageUtil';
 
+import { MessageUtil } from './messageUtil';
 export abstract class TemplateCommand extends SfdxCommand {
   public static buildJson(
     adapter: ForceGeneratorAdapter,

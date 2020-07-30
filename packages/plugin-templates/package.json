@@ -85,7 +85,7 @@
     "build": "yarn run clean:lib && yarn compile",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "shx rm -f oclif.manifest.json",
-    "prepack": "pushd ../../ && yarn run build && popd && oclif-dev manifest",
+    "prepack": "cd ../../ && yarn run build && cd packages/plugin-templates && oclif-dev manifest",
     "version": "oclif-dev readme && git add README.md",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "test:deprecation-policy": "./bin/run snapshot:compare",

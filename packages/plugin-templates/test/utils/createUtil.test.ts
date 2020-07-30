@@ -5,21 +5,17 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { test } from '@salesforce/command/lib/test';
-import { Messages, ConfigAggregator } from '@salesforce/core';
+import { ConfigAggregator } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
+
 import { assert, expect } from 'chai';
 import * as fs from 'fs';
-import { resolve } from 'path';
+import * as path from 'path';
 import { SinonStub, stub } from 'sinon';
-import {
-  CreateUtil,
-  ForceGeneratorAdapter,
-  Log,
-  TemplateCommand
-} from '../../src/utils';
+import { ForceGeneratorAdapter, Log, TemplateCommand } from '../../src/utils';
 
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
-
+// TODO: move this test to templates package
 /* tslint:disable: no-unused-expression */
 describe('CreateUtil', () => {
   describe('checkInputs', () => {
@@ -44,16 +40,16 @@ describe('CreateUtil', () => {
         CreateUtil.checkInputs(input);
         assert.fail(`Expected checkInputs to throw ${errorName} error.`);
       } catch (e) {
-        expect(e.message).to.equal(messages.getMessage(errorName));
+        expect(e.message).to.equal(nls.localize(errorName));
       }
     };
   });
 
   describe('getCommandTemplatesForFiletype', () => {
     const templateType = 'apexclass';
-    const templatesPath = resolve(
-      __dirname,
-      '../../src/templates',
+    const templatesPath = path.join(
+      path.dirname(require.resolve('@salesforce/templates')),
+      'templates',
       templateType
     );
 
@@ -114,7 +110,7 @@ describe('CreateUtil', () => {
   describe('buildJson', () => {
     it('should build json output in the correct format', () => {
       const adapter = new ForceGeneratorAdapter();
-      const targetDir = resolve('src', 'templates', 'output');
+      const targetDir = path.resolve('src', 'templates', 'output');
       const cleanOutput = ['testClass.cls', 'testClass.cls-meta.xml'];
       const rawOutput =
         'create testClass.cls\n create testClass.cls-meta.xml\n';

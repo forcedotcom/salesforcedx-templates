@@ -7,6 +7,10 @@
   "author": "Salesforce",
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "license": "BSD-3-Clause",
+  "files": [
+    "/lib",
+    "/messages"
+  ],
   "dependencies": {
     "@salesforce/core": "^2.3.0",
     "yeoman-environment": "2.4.0",

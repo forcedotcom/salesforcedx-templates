@@ -20,7 +20,23 @@
     "@oclif/plugin-command-snapshot": "^1.0.0",
     "@oclif/plugin-help": "^2",
     "@oclif/test": "^1",
-    "@salesforce/plugin-command-reference": "^1.0.7"
+    "@salesforce/plugin-command-reference": "^1.0.7",
+    "@salesforce/ts-sinon": "^1.2.2",
+    "@types/chai": "^4",
+    "@types/mocha": "^5",
+    "@types/node": "^10",
+    "@types/yeoman-assert": "^3.1.1",
+    "@types/yeoman-generator": "^3.1.3",
+    "chai": "^4",
+    "nyc": "15.0.1",
+    "mocha": "^6.2.3",
+    "shx": "0.2.2",
+    "sinon": "^7.3.1",
+    "ts-node": "^8.6.2",
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^2.0.0"
   },
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "keywords": [
@@ -81,11 +97,13 @@
   "scripts": {
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
     "compile": "tsc -b",
-    "build": "yarn run clean:lib && yarn compile && oclif-dev manifest",
+    "build": "yarn run clean:lib && yarn compile",
+    "prepack": "yarn build && oclif-dev manifest",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "shx rm -f oclif.manifest.json",
     "version": "oclif-dev readme && git add README.md",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
     "test:deprecation-policy": "./bin/run snapshot:compare",
     "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
   }

@@ -10,7 +10,7 @@ import * as Generator from 'yeoman-generator';
 import { OptionsMap } from '../utils/types';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+const messages = Messages.loadMessages('@salesforce/templates', 'messages');
 
 export default class LightningAppGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {

@@ -66,7 +66,7 @@ export class MessageUtil {
   }
 
   private static messages = Messages.loadMessages(
-    'salesforcedx-templates',
+    '@salesforce/templates',
     'messages'
   );
 

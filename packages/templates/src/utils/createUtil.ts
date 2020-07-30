@@ -10,7 +10,7 @@ import * as path from 'path';
 // @ts-ignore
 import * as yeoman from 'yeoman-environment';
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+const messages = Messages.loadMessages('@salesforce/templates', 'messages');
 
 /* tslint:disable:no-unused-expression */
 

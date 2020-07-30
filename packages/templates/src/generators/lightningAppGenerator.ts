@@ -4,13 +4,10 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { Messages } from '@salesforce/core';
 import * as path from 'path';
 import * as Generator from 'yeoman-generator';
+import { nls } from '../i18n';
 import { OptionsMap } from '../utils/types';
-
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/templates', 'messages');
 
 export default class LightningAppGenerator extends Generator {
   constructor(args: string | string[], options: OptionsMap) {
@@ -28,7 +25,7 @@ export default class LightningAppGenerator extends Generator {
         ),
         {
           apiVersion: apiversion,
-          description: messages.getMessage('LightningAppBundle')
+          description: nls.localize('LightningAppBundle')
         }
       );
     }

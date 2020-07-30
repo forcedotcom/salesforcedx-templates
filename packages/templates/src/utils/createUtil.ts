@@ -4,13 +4,11 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { Messages } from '@salesforce/core';
 import * as fs from 'fs';
 import * as path from 'path';
 // @ts-ignore
 import * as yeoman from 'yeoman-environment';
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/templates', 'messages');
+import { nls } from '../i18n';
 
 /* tslint:disable:no-unused-expression */
 
@@ -19,20 +17,20 @@ export class CreateUtil {
     const alphaRegExp = /^\w+$/;
 
     if (!alphaRegExp.test(flagValue)) {
-      throw new Error(messages.getMessage('AlphaNumericNameError'));
+      throw new Error(nls.localize('AlphaNumericNameError'));
     }
     const letterStartRegExp = /^[A-Za-z]/;
 
     if (!letterStartRegExp.test(flagValue)) {
-      throw new Error(messages.getMessage('NameMustStartWithLetterError'));
+      throw new Error(nls.localize('NameMustStartWithLetterError'));
     }
     const endUnderscore = /_$/;
     if (endUnderscore.test(flagValue)) {
-      throw new Error(messages.getMessage('EndWithUnderscoreError'));
+      throw new Error(nls.localize('EndWithUnderscoreError'));
     }
     const dblUnderscore = /__/;
     if (dblUnderscore.test(flagValue)) {
-      throw new Error(messages.getMessage('DoubleUnderscoreError'));
+      throw new Error(nls.localize('DoubleUnderscoreError'));
     }
     return '';
   }

@@ -6,6 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
@@ -123,9 +124,7 @@ describe('Lightning event creation tests:', () => {
           'aura'
         ])
         .it('should throw invalid non alphanumeric eventname error', ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('AlphaNumericNameError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
         });
 
       test
@@ -143,7 +142,7 @@ describe('Lightning event creation tests:', () => {
           'should throw invalid eventname starting with numeric error',
           ctx => {
             expect(ctx.stderr).to.contain(
-              messages.getMessage('NameMustStartWithLetterError')
+              nls.localize('NameMustStartWithLetterError')
             );
           }
         );
@@ -163,7 +162,7 @@ describe('Lightning event creation tests:', () => {
           'should throw invalid eventname ending with underscore error',
           ctx => {
             expect(ctx.stderr).to.contain(
-              messages.getMessage('EndWithUnderscoreError')
+              nls.localize('EndWithUnderscoreError')
             );
           }
         );
@@ -183,7 +182,7 @@ describe('Lightning event creation tests:', () => {
           'should throw invalid eventname with double underscore error',
           ctx => {
             expect(ctx.stderr).to.contain(
-              messages.getMessage('DoubleUnderscoreError')
+              nls.localize('DoubleUnderscoreError')
             );
           }
         );

@@ -6,6 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
@@ -123,9 +124,7 @@ describe('Apex trigger creation tests:', () => {
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '/a'])
       .it('should throw invalid non alphanumeric trigger name error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('AlphaNumericNameError')
-        );
+        expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
     test
@@ -137,7 +136,7 @@ describe('Apex trigger creation tests:', () => {
         'should throw invalid trigger name starting with numeric error',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('NameMustStartWithLetterError')
+            nls.localize('NameMustStartWithLetterError')
           );
         }
       );
@@ -150,9 +149,7 @@ describe('Apex trigger creation tests:', () => {
       .it(
         'should throw invalid trigger name ending with underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('EndWithUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
 
@@ -164,9 +161,7 @@ describe('Apex trigger creation tests:', () => {
       .it(
         'should throw invalid trigger name with double underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('DoubleUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );
   });

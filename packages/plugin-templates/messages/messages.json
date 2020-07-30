@@ -15,11 +15,6 @@
   "Component": "component",
   "Page": "page",
 
-  "AlphaNumericNameError": "Name must contain only alphanumeric characters.",
-  "NameMustStartWithLetterError": "Name must start with a letter.",
-  "EndWithUnderscoreError": "Name can't end with an underscore.",
-  "DoubleUnderscoreError": "Name can't contain 2 consecutive underscores.",
-
   "ApexClassDescription": "create an Apex class",
   "ApexClassLongDescription": "Creates an Apex class in the specified directory or the current working directory. If you don’t explicitly set the API version, it defaults to the current API version. The .cls file and associated metadata file are created.",
   "ApexClassNameFlagDescription": "name of the generated Apex class",
@@ -68,12 +63,6 @@
   "VFNameFlagLongDescription": "The Visualforce %s name. The name can be up to 40 characters and must start with a letter.",
   "VFLabelFlagDescription": "Visualforce %s label",
   "VFLabelFlagLongDescription": "The label saved in the metadata for the Visualforce %s.",
-
-  "LightningAppBundle": "A Lightning Application Bundle",
-  "LightningComponentBundle": "A Lightning Component Bundle",
-  "LightningEventBundle": "A Lightning Event Bundle",
-  "LightningInterfaceBundle": "A Lightning Interface Bundle",
-  "LightningTest": "A Lightning Test",
 
   "MissingClassnameFlag": "Missing required flag:\n -n, --classname CLASSNAME  name of the generated Apex class\nSee more help with --help\n",
   "MissingTriggernameFlag": "Missing required flag:\n -n, --triggername TRIGGERNAME  name of the generated Apex trigger\nSee more help with --help\n",

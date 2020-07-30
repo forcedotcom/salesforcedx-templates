@@ -6,6 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 
 import * as assert from 'yeoman-assert';
@@ -127,9 +128,7 @@ describe('Lightning app creation tests:', () => {
         'aura'
       ])
       .it('should throw invalid non alphanumeric appname error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('AlphaNumericNameError')
-        );
+        expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
     test
@@ -145,7 +144,7 @@ describe('Lightning app creation tests:', () => {
       ])
       .it('should throw invalid appname starting with numeric error', ctx => {
         expect(ctx.stderr).to.contain(
-          messages.getMessage('NameMustStartWithLetterError')
+          nls.localize('NameMustStartWithLetterError')
         );
       });
 
@@ -161,9 +160,7 @@ describe('Lightning app creation tests:', () => {
         'aura'
       ])
       .it('should throw invalid appname ending with underscore error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('EndWithUnderscoreError')
-        );
+        expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
       });
 
     test
@@ -178,9 +175,7 @@ describe('Lightning app creation tests:', () => {
         'aura'
       ])
       .it('should throw invalid appname with double underscore error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('DoubleUnderscoreError')
-        );
+        expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
       });
   });
 });

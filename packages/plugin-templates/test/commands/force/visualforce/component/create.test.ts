@@ -6,6 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
@@ -108,9 +109,7 @@ describe('Visualforce component creation tests:', () => {
         'foo'
       ])
       .it('should throw invalid non alphanumeric componentname error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('AlphaNumericNameError')
-        );
+        expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
     test
@@ -128,7 +127,7 @@ describe('Visualforce component creation tests:', () => {
         'should throw invalid componentname starting with numeric error',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('NameMustStartWithLetterError')
+            nls.localize('NameMustStartWithLetterError')
           );
         }
       );
@@ -147,9 +146,7 @@ describe('Visualforce component creation tests:', () => {
       .it(
         'should throw invalid componentname ending with underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('EndWithUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
 
@@ -167,9 +164,7 @@ describe('Visualforce component creation tests:', () => {
       .it(
         'should throw invalid componentname with double underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('DoubleUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );
   });

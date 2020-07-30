@@ -6,8 +6,9 @@
  */
 import { flags } from '@salesforce/command';
 import ProjectGenerator from '@salesforce/templates/lib/generators/projectGenerator';
+import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import { CreateUtil, MessageUtil, TemplateCommand } from '../../../utils';
+import { MessageUtil, TemplateCommand } from '../../../utils';
 
 export default class Project extends TemplateCommand {
   public static description = MessageUtil.buildDescription(

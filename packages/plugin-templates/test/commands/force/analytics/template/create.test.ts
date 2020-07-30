@@ -6,6 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
@@ -90,9 +91,7 @@ describe('Analytics template creation tests:', () => {
       .it(
         'should throw error with message about invalid characters in name',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('AlphaNumericNameError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
         }
       );
   });

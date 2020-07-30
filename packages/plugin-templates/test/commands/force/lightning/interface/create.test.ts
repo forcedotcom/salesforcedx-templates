@@ -6,6 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
@@ -133,7 +134,7 @@ describe('Lightning interface creation tests:', () => {
           'should throw invalid non alphanumeric interfacename error',
           ctx => {
             expect(ctx.stderr).to.contain(
-              messages.getMessage('AlphaNumericNameError')
+              nls.localize('AlphaNumericNameError')
             );
           }
         );
@@ -153,7 +154,7 @@ describe('Lightning interface creation tests:', () => {
           'should throw invalid interfacename starting with numeric error',
           ctx => {
             expect(ctx.stderr).to.contain(
-              messages.getMessage('NameMustStartWithLetterError')
+              nls.localize('NameMustStartWithLetterError')
             );
           }
         );
@@ -173,7 +174,7 @@ describe('Lightning interface creation tests:', () => {
           'should throw invalid interfacename ending with underscore error',
           ctx => {
             expect(ctx.stderr).to.contain(
-              messages.getMessage('EndWithUnderscoreError')
+              nls.localize('EndWithUnderscoreError')
             );
           }
         );
@@ -193,7 +194,7 @@ describe('Lightning interface creation tests:', () => {
           'should throw invalid interfacename with double underscore error',
           ctx => {
             expect(ctx.stderr).to.contain(
-              messages.getMessage('DoubleUnderscoreError')
+              nls.localize('DoubleUnderscoreError')
             );
           }
         );

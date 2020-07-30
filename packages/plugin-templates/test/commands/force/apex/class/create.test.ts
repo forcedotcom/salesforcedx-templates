@@ -6,6 +6,7 @@
  */
 import { expect, test } from '@salesforce/command/lib/test';
 import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
@@ -124,9 +125,7 @@ describe('Apex class creation tests:', () => {
       .stderr()
       .command(['force:apex:class:create', '--classname', '/a'])
       .it('should throw invalid non alphanumeric class name error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('AlphaNumericNameError')
-        );
+        expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
     test
@@ -138,7 +137,7 @@ describe('Apex class creation tests:', () => {
         'should throw invalid class name starting with numeric error',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('NameMustStartWithLetterError')
+            nls.localize('NameMustStartWithLetterError')
           );
         }
       );
@@ -151,9 +150,7 @@ describe('Apex class creation tests:', () => {
       .it(
         'should throw invalid class name ending with underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('EndWithUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
 
@@ -165,9 +162,7 @@ describe('Apex class creation tests:', () => {
       .it(
         'should throw invalid class name with double underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('DoubleUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );
   });

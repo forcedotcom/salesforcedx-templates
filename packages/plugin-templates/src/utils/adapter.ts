@@ -5,9 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  * Derived from https://github.com/yeoman/environment/blob/master/lib/adapter.js
  */
+import { StringKeyValueObject } from '@salesforce/templates/lib/utils/types';
 import * as generator from 'yeoman-generator';
 import { Log } from './logger';
-import { Answers } from './types';
+
+export type Answers = StringKeyValueObject<string>;
 
 export class ForceGeneratorAdapter {
   public log = new Log();

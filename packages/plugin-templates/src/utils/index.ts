@@ -1,5 +1,4 @@
 export { Log } from './logger';
-export { ForceGeneratorAdapter } from './adapter';
-export { Answers } from './types';
+export { Answers, ForceGeneratorAdapter } from './adapter';
 export { MessageUtil } from './messageUtil';
 export { TemplateCommand } from './templateCommand';

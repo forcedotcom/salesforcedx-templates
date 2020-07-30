@@ -19,7 +19,7 @@ export default class ApexTrigger extends TemplateCommand {
   );
   public static examples = [
     '$ sfdx force:apex:trigger:create -n MyTrigger',
-    "$ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert, after insert'",
+    "$ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert,after insert'",
     '$ sfdx force:apex:trigger:create -n MyTrigger -d triggers'
   ];
   public static help = MessageUtil.buildHelpText(ApexTrigger.examples, false);

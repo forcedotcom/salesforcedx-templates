@@ -1,0 +1,110 @@
+{
+  "name": "salesforcedx-templates",
+  "version": "49.0.0",
+  "main": "index.js",
+  "author": "Salesforce",
+  "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
+  "dependencies": {
+    "@salesforce/templates": "^49.0.0",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/errors": "^1",
+    "@salesforce/command": "^2.2.0",
+    "@salesforce/core": "^2.3.0",
+    "tslib": "^1",
+    "yeoman-environment": "2.4.0",
+    "yeoman-generator": "4.0.1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/plugin-command-snapshot": "^1.0.0",
+    "@oclif/plugin-help": "^2",
+    "@oclif/test": "^1",
+    "@salesforce/plugin-command-reference": "^1.0.7",
+    "@salesforce/ts-sinon": "^1.2.2",
+    "@types/chai": "^4",
+    "@types/mocha": "^5",
+    "@types/node": "^10",
+    "@types/yeoman-assert": "^3.1.1",
+    "@types/yeoman-generator": "^3.1.3",
+    "chai": "^4",
+    "nyc": "15.0.1",
+    "mocha": "^6.2.3",
+    "shx": "0.2.2",
+    "sinon": "^7.3.1",
+    "ts-node": "^8.6.2",
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^2.0.0"
+  },
+  "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
+  "keywords": [
+    "force",
+    "salesforce",
+    "sfdx",
+    "salesforcedx",
+    "sfdx-plugin"
+  ],
+  "license": "BSD-3-Clause",
+  "files": [
+    "/lib",
+    "/messages",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "sfdx",
+    "devPlugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-command-snapshot",
+      "@salesforce/plugin-command-reference"
+    ],
+    "topics": {
+      "force": {
+        "external": true,
+        "subtopics": {
+          "apex": {
+            "external": true
+          },
+          "analytics": {
+            "description": "work with analytics assets",
+            "longDescription": "Work with analytics assets.",
+            "subtopics": {
+              "template": {
+                "description": "work with analytics templates",
+                "longDescription": "Work with analytics templates."
+              }
+            }
+          },
+          "lightning": {
+            "external": true
+          },
+          "project": {
+            "external": true,
+            "subtopics": {}
+          },
+          "visualforce": {
+            "external": true,
+            "subtopics": {}
+          }
+        }
+      }
+    }
+  },
+  "repository": "forcedotcom/salesforcedx-templates",
+  "scripts": {
+    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
+    "compile": "tsc -b",
+    "build": "yarn run clean:lib && yarn compile",
+    "prepack": "yarn build && oclif-dev manifest",
+    "lint": "tslint --project . --config tslint.json --format stylish",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "version": "oclif-dev readme && git add README.md",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
+    "test:deprecation-policy": "./bin/run snapshot:compare",
+    "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
+  }
+}

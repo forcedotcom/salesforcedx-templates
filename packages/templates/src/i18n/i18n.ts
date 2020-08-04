@@ -25,5 +25,7 @@ export const messages = {
   LightningComponentBundle: 'A Lightning Component Bundle',
   LightningEventBundle: 'A Lightning Event Bundle',
   LightningInterfaceBundle: 'A Lightning Interface Bundle',
-  LightningTest: 'A Lightning Test'
+  LightningTest: 'A Lightning Test',
+
+  RawOutput: 'target dir = %s\n%s'
 };

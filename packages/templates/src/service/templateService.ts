@@ -1,8 +1,13 @@
 import * as path from 'path';
 import * as yeoman from 'yeoman-environment';
 
+import { nls } from '../i18n';
 import { ForceGeneratorAdapter } from '../utils';
+import { CreateOutput } from '../utils/types';
 
+/**
+ * Available Template types
+ */
 export enum TemplateType {
   AnayticsTemplate,
   ApexClass,
@@ -17,19 +22,26 @@ export enum TemplateType {
   VisualForcePage
 }
 
+/**
+ * Template Options
+ * If not supplied, the apiversion and outputdir use default values.
+ */
 export interface TemplateOptions {
   apiversion?: string;
   outputdir?: string;
   [opt: string]: string | undefined;
 }
 
+/**
+ * Template Service
+ */
 export class TemplateService {
   private static instance: TemplateService;
-  private adapter: yeoman.Adapter;
+  private adapter: ForceGeneratorAdapter;
   private env: yeoman;
   constructor() {
-    // @ts-ignore the adaptor doesn't fully implement yeoman's adaptor yet
     this.adapter = new ForceGeneratorAdapter();
+    // @ts-ignore the adaptor doesn't fully implement yeoman's adaptor yet
     this.env = yeoman.createEnv(undefined, undefined, this.adapter);
   }
 
@@ -40,10 +52,15 @@ export class TemplateService {
     return TemplateService.instance;
   }
 
+  /**
+   * Create using templates
+   * @param templateType template type
+   * @param templateOptions template options
+   */
   public async create(
     templateType: TemplateType,
     templateOptions: TemplateOptions
-  ) {
+  ): Promise<CreateOutput> {
     const generatorClass =
       TemplateType[templateType]
         .toString()
@@ -70,11 +87,25 @@ export class TemplateService {
         if (err) {
           reject(err);
         }
-        resolve();
+        const outputDir = path.resolve(templateOptions.outputdir!);
+        const created = this.adapter.log.getCleanOutput();
+        const rawOutput = nls.localize('RawOutput', [
+          outputDir,
+          this.adapter.log.getOutput()
+        ]);
+        const result = {
+          outputDir,
+          created,
+          rawOutput
+        };
+        resolve(result);
       });
     });
   }
 
+  /**
+   * Look up package version of @salesforce/templates package to supply a default API version
+   */
   private getDefaultApiVersion(): string {
     const packageJsonPath = path.join('..', '..', 'package.json');
     const versionTrimmed = require(packageJsonPath).version.trim();

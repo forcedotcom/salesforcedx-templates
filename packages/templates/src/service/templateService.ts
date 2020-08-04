@@ -39,17 +39,29 @@ export class TemplateService {
   private static instance: TemplateService;
   private adapter: ForceGeneratorAdapter;
   private env: yeoman;
-  constructor() {
+  constructor(cwd: string = process.cwd()) {
     this.adapter = new ForceGeneratorAdapter();
     // @ts-ignore the adaptor doesn't fully implement yeoman's adaptor yet
-    this.env = yeoman.createEnv(undefined, undefined, this.adapter);
+    this.env = yeoman.createEnv(undefined, { cwd }, this.adapter);
   }
 
-  public static getInstance() {
+  /**
+   * Get an instance of TemplateService
+   * @param cwd cwd of current yeoman environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
+   */
+  public static getInstance(cwd?: string) {
     if (!TemplateService.instance) {
-      TemplateService.instance = new TemplateService();
+      TemplateService.instance = new TemplateService(cwd);
     }
     return TemplateService.instance;
+  }
+
+  /**
+   * Setting cwd of current yeoman environment
+   * In VS Code, it's typically the root workspace path
+   */
+  public set cwd(cwd: string) {
+    this.env.cwd = cwd;
   }
 
   /**

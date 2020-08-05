@@ -19,7 +19,7 @@ export interface CreateOutput {
  * Available Template types
  */
 export enum TemplateType {
-  AnayticsTemplate,
+  AnalyticsTemplate,
   ApexClass,
   ApexTrigger,
   LightningApp,

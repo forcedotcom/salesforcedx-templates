@@ -18,8 +18,6 @@ export default class LightningInterfaceGenerator extends Generator {
     this.sourceRoot(
       path.join(__dirname, '..', 'templates', 'lightninginterface')
     );
-    // @ts-ignore
-    this.conflicter.force = false;
   }
   public writing() {
     const {

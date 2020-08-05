@@ -5,6 +5,5 @@
 **/staticresources/**
 .localdevserver
 .sfdx
-.vscode
 
 coverage/

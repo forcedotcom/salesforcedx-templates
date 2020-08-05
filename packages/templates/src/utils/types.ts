@@ -29,7 +29,7 @@ export enum TemplateType {
   LightningTest,
   Project,
   VisualForceComponent,
-  VisualForcePage
+  VisualforcePage
 }
 
 /**

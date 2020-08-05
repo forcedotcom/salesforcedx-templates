@@ -1,36 +1,15 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import * as path from 'path';
 import * as yeoman from 'yeoman-environment';
 
 import { nls } from '../i18n';
 import { ForceGeneratorAdapter } from '../utils';
-import { CreateOutput } from '../utils/types';
-
-/**
- * Available Template types
- */
-export enum TemplateType {
-  AnayticsTemplate,
-  ApexClass,
-  ApexTrigger,
-  LightningApp,
-  LightningComponent,
-  LightningEvent,
-  LightningInterface,
-  LightningTest,
-  Project,
-  VisualForceComponent,
-  VisualForcePage
-}
-
-/**
- * Template Options
- * If not supplied, the apiversion and outputdir use default values.
- */
-export interface TemplateOptions {
-  apiversion?: string;
-  outputdir?: string;
-  [opt: string]: string | undefined;
-}
+import { CreateOutput, TemplateOptions, TemplateType } from '../utils/types';
 
 /**
  * Template Service
@@ -69,9 +48,9 @@ export class TemplateService {
    * @param templateType template type
    * @param templateOptions template options
    */
-  public async create(
+  public async create<TOptions extends TemplateOptions>(
     templateType: TemplateType,
-    templateOptions: TemplateOptions
+    templateOptions: TOptions
   ): Promise<CreateOutput> {
     const generatorClass =
       TemplateType[templateType]
@@ -91,9 +70,7 @@ export class TemplateService {
         generatorPackagePath
       );
     }
-    templateOptions.apiversion =
-      templateOptions.apiversion ?? this.getDefaultApiVersion();
-    templateOptions.outputdir = templateOptions.outputdir ?? process.cwd();
+
     return new Promise((resolve, reject) => {
       this.env.run(generatorNamespace, templateOptions, err => {
         if (err) {
@@ -113,14 +90,5 @@ export class TemplateService {
         resolve(result);
       });
     });
-  }
-
-  /**
-   * Look up package version of @salesforce/templates package to supply a default API version
-   */
-  private getDefaultApiVersion(): string {
-    const packageJsonPath = path.join('..', '..', 'package.json');
-    const versionTrimmed = require(packageJsonPath).version.trim();
-    return `${versionTrimmed.split('.')[0]}.0`;
   }
 }

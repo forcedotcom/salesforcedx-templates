@@ -5,15 +5,30 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import * as Generator from 'yeoman-generator';
 import { nls } from '../i18n';
-import { OptionsMap } from '../utils/types';
+import { CreateUtil } from '../utils';
+import { TemplateOptions } from '../utils/types';
+import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningTestGenerator extends Generator {
-  constructor(args: string | string[], options: OptionsMap) {
+export interface LightningTestOptions extends TemplateOptions {
+  template: 'DefaultLightningTest';
+  testname: string;
+  internal: boolean;
+}
+
+export default class LightningTestGenerator extends SfdxGenerator<
+  LightningTestOptions
+> {
+  constructor(args: string | string[], options: LightningTestOptions) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningtest'));
   }
+
+  public validateOptions() {
+    CreateUtil.checkInputs(this.options.testname);
+    CreateUtil.checkInputs(this.options.template);
+  }
+
   public writing() {
     const { template, outputdir, testname, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
@@ -26,6 +41,7 @@ export default class LightningTestGenerator extends Generator {
         {
           description: nls.localize('LightningTest')
         },
+        // @ts-ignore
         { apiName: testname }
       );
     }

@@ -5,9 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import {
-  TemplateOptions,
-  TemplateService,
-  TemplateType
-} from './service/templateService';
-export { TemplateType, TemplateOptions, TemplateService };
+import { TemplateService } from './service/templateService';
+import { TemplateOptions, TemplateType } from './utils/types';
+export { TemplateOptions, TemplateType, TemplateService };

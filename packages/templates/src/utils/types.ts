@@ -14,3 +14,29 @@ export interface CreateOutput {
   created: string[];
   rawOutput: string;
 }
+
+/**
+ * Available Template types
+ */
+export enum TemplateType {
+  AnayticsTemplate,
+  ApexClass,
+  ApexTrigger,
+  LightningApp,
+  LightningComponent,
+  LightningEvent,
+  LightningInterface,
+  LightningTest,
+  Project,
+  VisualForceComponent,
+  VisualForcePage
+}
+
+/**
+ * Template Options
+ * If not supplied, the apiversion and outputdir use default values.
+ */
+export interface TemplateOptions {
+  apiversion?: string;
+  outputdir?: string;
+}

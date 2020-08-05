@@ -50,7 +50,7 @@ export abstract class TemplateCommand extends SfdxCommand {
   }
   private static API_VERSION = 'apiVersion';
 
-  public abstract run(): Promise<AnyJson>;
+  public abstract run(): Promise<AnyJson | CreateOutput>;
 
   public async runGenerator(generator: yeomanGenerator.GeneratorConstructor) {
     // Can't specify a default value the normal way for apiversion, so set it here

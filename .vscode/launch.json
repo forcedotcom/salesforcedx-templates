@@ -16,7 +16,7 @@
       "type": "node",
       "request": "launch",
       "protocol": "inspector",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "program": "${workspaceFolder}/packages/plugin-templates/node_modules/mocha/bin/_mocha",
       "args": ["--inspect", "--no-timeouts", "--colors", "test/**/*.test.ts"],
       "env": {
         "NODE_ENV": "development",
@@ -31,7 +31,8 @@
       "type": "node",
       "request": "launch",
       "name": "Run Current Test",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "program": "${workspaceFolder}/packages/plugin-templates/node_modules/mocha/bin/_mocha",
+      "cwd": "${workspaceFolder}/packages/plugin-templates",
       "args": ["--inspect", "--no-timeouts", "--colors", "${file}"],
       "env": {
         "NODE_ENV": "development",

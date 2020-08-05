@@ -28,7 +28,7 @@ export enum TemplateType {
   LightningInterface,
   LightningTest,
   Project,
-  VisualForceComponent,
+  VisualforceComponent,
   VisualforcePage
 }
 

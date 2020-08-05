@@ -5,9 +5,9 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { flags } from '@salesforce/command';
-import LightningTestGenerator from '@salesforce/templates/lib/generators/lightningTestGenerator';
+import { TemplateService, TemplateType } from '@salesforce/templates';
 import { CreateUtil } from '@salesforce/templates/lib/utils';
-import { AnyJson } from '@salesforce/ts-types';
+import { CreateOutput } from '@salesforce/templates/lib/utils/types';
 import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningTestFileSuffix = /.resource$/;
@@ -58,10 +58,15 @@ export default class LightningTest extends TemplateCommand {
     })
   };
 
-  public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.testname);
-    CreateUtil.checkInputs(this.flags.template);
-
-    return this.runGenerator(LightningTestGenerator);
+  public async run(): Promise<CreateOutput> {
+    const templateService = TemplateService.getInstance();
+    const result = await templateService.create(
+      TemplateType.LightningTest,
+      this.flags
+    );
+    if (!this.flags.json) {
+      this.log(result.rawOutput);
+    }
+    return result;
   }
 }

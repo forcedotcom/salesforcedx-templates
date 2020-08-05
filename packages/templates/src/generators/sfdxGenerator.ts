@@ -4,7 +4,7 @@ import { TemplateOptions } from '../utils/types';
 
 export abstract class SfdxGenerator<
   TOptions extends TemplateOptions
-> extends Generator<TOptions> {
+> extends Generator<Generator.GeneratorOptions> {
   options!: TOptions & {
     apiversion: string;
     outputdir: string;

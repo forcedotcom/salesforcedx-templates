@@ -66,4 +66,9 @@ export class Log {
   public setCleanOutput(cleanText: string[]) {
     this.cleanOutput = cleanText;
   }
+
+  public clear() {
+    this.output = '';
+    this.cleanOutput = [];
+  }
 }

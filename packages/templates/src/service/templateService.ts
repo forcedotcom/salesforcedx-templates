@@ -71,6 +71,8 @@ export class TemplateService {
       );
     }
 
+    this.adapter.log.clear();
+
     return new Promise((resolve, reject) => {
       this.env.run(generatorNamespace, templateOptions, err => {
         if (err) {

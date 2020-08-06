@@ -35,7 +35,7 @@
     "globby": "^8",
     "mocha": "^5",
     "nyc": "15.0.1",
-    "prettier": "1.16.4",
+    "prettier": "2.0.5",
     "pretty-quick": "^1.11.1",
     "shx": "0.2.2",
     "sinon": "^7.3.1",

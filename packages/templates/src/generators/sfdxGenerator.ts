@@ -8,6 +8,9 @@ import * as path from 'path';
 import * as Generator from 'yeoman-generator';
 import { TemplateOptions } from '../utils/types';
 
+/**
+ * Base class for generators
+ */
 export abstract class SfdxGenerator<
   TOptions extends TemplateOptions
 > extends Generator<Generator.GeneratorOptions> {
@@ -22,6 +25,9 @@ export abstract class SfdxGenerator<
     this.options.outputdir = this.options.outputdir ?? process.cwd();
     this.validateOptions();
   }
+  /**
+   * Validate provided options
+   */
   public abstract validateOptions(): void;
 
   /**

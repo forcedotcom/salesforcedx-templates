@@ -17,6 +17,10 @@ export interface CreateOutput {
 
 /**
  * Available Template types
+ * Each template type must have a corresponding generator class:
+ * - generator class file should locate in generators/
+ * - generator class file should default export a generator class extending SfdxGenerator
+ * - generator class file should have a name same as the type name, except with the first letter lowercased
  */
 export enum TemplateType {
   AnalyticsTemplate,
@@ -39,4 +43,87 @@ export enum TemplateType {
 export interface TemplateOptions {
   apiversion?: string;
   outputdir?: string;
+}
+
+export interface AnalyticsTemplateOptions extends TemplateOptions {
+  templatename: string;
+}
+
+export interface ApexClassOptions extends TemplateOptions {
+  template:
+    | 'DefaultApexClass'
+    | 'ApexUnitTest'
+    | 'ApexException'
+    | 'InboundEmailService';
+  classname: string;
+}
+
+export interface ApexTriggerOptions extends TemplateOptions {
+  triggername: string;
+  triggerevents:
+    | 'before insert'
+    | 'before update'
+    | 'before delete'
+    | 'after insert'
+    | 'after update'
+    | 'after delete'
+    | 'after undelete';
+  sobject: string;
+  template: 'ApexTrigger';
+}
+
+export interface LightningAppOptions extends TemplateOptions {
+  appname: string;
+  template: 'DefaultLightningApp';
+  internal: boolean;
+}
+
+export interface LightningComponentOptions extends TemplateOptions {
+  componentname: string;
+  template: 'DefaultLightningCmp';
+  type: 'aura' | 'lwc';
+  internal: boolean;
+}
+
+export interface LightningEventOptions extends TemplateOptions {
+  eventname: string;
+  template: 'DefaultLightningEvt';
+  internal: boolean;
+}
+
+export interface LightningInterfaceOptions extends TemplateOptions {
+  interfacename: string;
+  template: 'DefaultLightningIntf';
+  internal: boolean;
+}
+
+export interface LightningTestOptions extends TemplateOptions {
+  template: 'DefaultLightningTest';
+  testname: string;
+  internal: boolean;
+}
+
+export interface ProjectOptions extends TemplateOptions {
+  projectname: string;
+  defaultpackagedir: string;
+  /**
+   * namespace
+   * Note that namespace is a reserved keyword for yeoman generator
+   */
+  ns: string;
+  template: 'standard' | 'empty' | 'analytics';
+  manifest: boolean;
+  loginurl: string;
+}
+
+export interface VisualforceComponentOptions extends TemplateOptions {
+  componentname: string;
+  label: string;
+  template: 'DefaultVFComponent';
+}
+
+export interface VisualforcePageOptions extends TemplateOptions {
+  pagename: string;
+  label: string;
+  template: 'DefaultVFPage';
 }

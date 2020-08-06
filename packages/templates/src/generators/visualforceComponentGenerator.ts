@@ -5,15 +5,23 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import * as Generator from 'yeoman-generator';
-import { OptionsMap } from '../utils/types';
+import { CreateUtil } from '../utils';
+import { VisualforceComponentOptions } from '../utils/types';
+import { SfdxGenerator } from './sfdxGenerator';
 
-export default class VisualforceComponentGenerator extends Generator {
-  constructor(args: string | string[], options: OptionsMap) {
+export default class VisualforceComponentGenerator extends SfdxGenerator<
+  VisualforceComponentOptions
+> {
+  constructor(args: string | string[], options: VisualforceComponentOptions) {
     super(args, options);
     this.sourceRoot(
       path.join(__dirname, '..', 'templates', 'visualforcecomponent')
     );
+  }
+
+  public validateOptions() {
+    CreateUtil.checkInputs(this.options.componentname);
+    CreateUtil.checkInputs(this.options.template);
   }
 
   public writing() {

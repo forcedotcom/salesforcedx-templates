@@ -21,6 +21,11 @@ export const messages = {
   EndWithUnderscoreError: "Name can't end with an underscore.",
   DoubleUnderscoreError: "Name can't contain 2 consecutive underscores.",
 
+  MissingWaveTemplatesDir:
+    "Analytics templates must have a parent folder named 'waveTemplates'.",
+  MissingAuraDir: "Lightning bundles must have a parent folder named 'aura'.",
+  MissingLWCDir: "Lightning bundles must have a parent folder named 'lwc'.",
+
   LightningAppBundle: 'A Lightning Application Bundle',
   LightningComponentBundle: 'A Lightning Component Bundle',
   LightningEventBundle: 'A Lightning Event Bundle',

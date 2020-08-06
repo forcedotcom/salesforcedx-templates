@@ -5,12 +5,20 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import * as Generator from 'yeoman-generator';
-import { OptionsMap } from '../utils/types';
-export default class ApexTriggerGenerator extends Generator {
-  constructor(args: string | string[], options: OptionsMap) {
+import { CreateUtil } from '../utils';
+import { ApexTriggerOptions } from '../utils/types';
+import { SfdxGenerator } from './sfdxGenerator';
+
+export default class ApexTriggerGenerator extends SfdxGenerator<
+  ApexTriggerOptions
+> {
+  constructor(args: string | string[], options: ApexTriggerOptions) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'apextrigger'));
+  }
+  public validateOptions() {
+    CreateUtil.checkInputs(this.options.triggername);
+    CreateUtil.checkInputs(this.options.template);
   }
   public writing() {
     const {

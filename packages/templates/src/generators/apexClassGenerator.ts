@@ -6,17 +6,8 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { TemplateOptions } from '../utils/types';
+import { ApexClassOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
-
-export interface ApexClassOptions extends TemplateOptions {
-  template:
-    | 'DefaultApexClass'
-    | 'ApexUnitTest'
-    | 'ApexException'
-    | 'InboundEmailService';
-  classname: string;
-}
 
 export default class ApexClassGenerator extends SfdxGenerator<
   ApexClassOptions

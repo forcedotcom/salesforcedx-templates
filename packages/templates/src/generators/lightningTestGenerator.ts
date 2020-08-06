@@ -7,14 +7,8 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { TemplateOptions } from '../utils/types';
+import { LightningTestOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
-
-export interface LightningTestOptions extends TemplateOptions {
-  template: 'DefaultLightningTest';
-  testname: string;
-  internal: boolean;
-}
 
 export default class LightningTestGenerator extends SfdxGenerator<
   LightningTestOptions

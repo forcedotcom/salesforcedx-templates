@@ -31,8 +31,17 @@ export class TemplateService {
   public static getInstance(cwd?: string) {
     if (!TemplateService.instance) {
       TemplateService.instance = new TemplateService(cwd);
+    } else if (cwd) {
+      TemplateService.instance.cwd = cwd;
     }
     return TemplateService.instance;
+  }
+
+  /**
+   * Getting cwd of current yeoman environment
+   */
+  public get cwd() {
+    return this.env.cwd;
   }
 
   /**

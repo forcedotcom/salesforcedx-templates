@@ -6,5 +6,5 @@
  */
 
 import { TemplateService } from './service/templateService';
-import { TemplateOptions, TemplateType } from './utils/types';
-export { TemplateOptions, TemplateType, TemplateService };
+export { TemplateService };
+export * from './utils/types';

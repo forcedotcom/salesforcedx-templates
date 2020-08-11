@@ -127,3 +127,18 @@ export interface VisualforcePageOptions extends TemplateOptions {
   label: string;
   template: 'DefaultVFPage';
 }
+
+export type TemplateTypeOptionsMap = {
+  [TemplateType.AnalyticsTemplate]: AnalyticsTemplateOptions;
+  [TemplateType.ApexClass]: ApexClassOptions;
+  [TemplateType.ApexTrigger]: ApexTriggerOptions;
+  [TemplateType.LightningTest]: LightningTestOptions;
+  [TemplateType.LightningApp]: LightningAppOptions;
+  [TemplateType.LightningComponent]: LightningComponentOptions;
+  [TemplateType.LightningEvent]: LightningEventOptions;
+  [TemplateType.LightningInterface]: LightningInterfaceOptions;
+  [TemplateType.LightningTest]: LightningTestOptions;
+  [TemplateType.Project]: ProjectOptions;
+  [TemplateType.VisualforceComponent]: VisualforceComponentOptions;
+  [TemplateType.VisualforcePage]: VisualforcePageOptions;
+};

@@ -9,7 +9,11 @@ import * as yeoman from 'yeoman-environment';
 
 import { nls } from '../i18n';
 import { ForceGeneratorAdapter } from '../utils';
-import { CreateOutput, TemplateOptions, TemplateType } from '../utils/types';
+import {
+  CreateOutput,
+  TemplateType,
+  TemplateTypeOptionsMap
+} from '../utils/types';
 
 /**
  * Template Service
@@ -57,9 +61,9 @@ export class TemplateService {
    * @param templateType template type
    * @param templateOptions template options
    */
-  public async create<TOptions extends TemplateOptions>(
-    templateType: TemplateType,
-    templateOptions: TOptions
+  public async create<T extends keyof TemplateTypeOptionsMap>(
+    templateType: T,
+    templateOptions: TemplateTypeOptionsMap[T]
   ): Promise<CreateOutput> {
     const generatorClass =
       TemplateType[templateType]

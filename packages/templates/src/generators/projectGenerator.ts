@@ -6,8 +6,9 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import * as Generator from 'yeoman-generator';
-import { OptionsMap } from '../utils/types';
+import { CreateUtil } from '../utils';
+import { ProjectOptions } from '../utils/types';
+import { SfdxGenerator } from './sfdxGenerator';
 
 const GITIGNORE = 'gitignore';
 const vscodearray = ['extensions', 'launch', 'settings'];
@@ -36,11 +37,16 @@ const emptyfolderarray = ['aura', 'lwc'];
 
 const analyticsfolderarray = ['waveTemplates'];
 
-export default class ProjectGenerator extends Generator {
-  constructor(args: string | string[], options: OptionsMap) {
+export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
+  constructor(args: string | string[], options: ProjectOptions) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'project'));
   }
+
+  public validateOptions() {
+    CreateUtil.checkInputs(this.options.template);
+  }
+
   public writing() {
     const {
       outputdir,

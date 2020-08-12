@@ -289,7 +289,7 @@ OPTIONS
 
   -s, --namespace=namespace                                                         project associated namespace
 
-  -t, --template=standard|empty                                                     [default: standard] template to use
+  -t, --template=standard|empty|analytics                                           [default: standard] template to use
                                                                                     for file creation
 
   -x, --manifest                                                                    generate a manifest (package.xml)

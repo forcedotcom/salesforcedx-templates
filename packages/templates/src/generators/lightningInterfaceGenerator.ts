@@ -5,17 +5,32 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import * as Generator from 'yeoman-generator';
 import { nls } from '../i18n';
-import { OptionsMap } from '../utils/types';
+import { CreateUtil } from '../utils';
+import { LightningInterfaceOptions } from '../utils/types';
+import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningInterfaceGenerator extends Generator {
-  constructor(args: string | string[], options: OptionsMap) {
+export default class LightningInterfaceGenerator extends SfdxGenerator<
+  LightningInterfaceOptions
+> {
+  constructor(args: string | string[], options: LightningInterfaceOptions) {
     super(args, options);
     this.sourceRoot(
       path.join(__dirname, '..', 'templates', 'lightninginterface')
     );
   }
+
+  public validateOptions() {
+    CreateUtil.checkInputs(this.options.interfacename);
+    CreateUtil.checkInputs(this.options.template);
+
+    const fileparts = path.resolve(this.options.outputdir).split(path.sep);
+
+    if (!this.options.internal && !fileparts.includes('aura')) {
+      throw new Error(nls.localize('MissingAuraDir'));
+    }
+  }
+
   public writing() {
     const {
       template,

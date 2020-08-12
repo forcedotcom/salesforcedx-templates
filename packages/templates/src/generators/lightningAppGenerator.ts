@@ -5,15 +5,29 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
-import * as Generator from 'yeoman-generator';
 import { nls } from '../i18n';
-import { OptionsMap } from '../utils/types';
+import { CreateUtil } from '../utils';
+import { LightningAppOptions } from '../utils/types';
+import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningAppGenerator extends Generator {
-  constructor(args: string | string[], options: OptionsMap) {
+export default class LightningAppGenerator extends SfdxGenerator<
+  LightningAppOptions
+> {
+  constructor(args: string | string[], options: LightningAppOptions) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningapp'));
   }
+
+  public validateOptions() {
+    CreateUtil.checkInputs(this.options.appname);
+    CreateUtil.checkInputs(this.options.template);
+
+    const fileparts = path.resolve(this.options.outputdir).split(path.sep);
+    if (!fileparts.includes('aura') && !this.options.internal) {
+      throw new Error(nls.localize('MissingAuraDir'));
+    }
+  }
+
   public writing() {
     const { template, outputdir, appname, apiversion, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression

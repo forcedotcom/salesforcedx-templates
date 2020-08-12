@@ -1,11 +1,25 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import * as path from 'path';
-import * as Generator from 'yeoman-generator';
-import { OptionsMap } from '../utils/types';
+import { CreateUtil } from '../utils';
+import { VisualforcePageOptions } from '../utils/types';
+import { SfdxGenerator } from './sfdxGenerator';
 
-export default class VisualforcePageGenerator extends Generator {
-  constructor(args: string | string[], options: OptionsMap) {
+export default class VisualforcePageGenerator extends SfdxGenerator<
+  VisualforcePageOptions
+> {
+  constructor(args: string | string[], options: VisualforcePageOptions) {
     super(args, options);
     this.sourceRoot(path.join(__dirname, '..', 'templates', 'visualforcepage'));
+  }
+
+  public validateOptions() {
+    CreateUtil.checkInputs(this.options.pagename);
+    CreateUtil.checkInputs(this.options.template);
   }
 
   public writing() {

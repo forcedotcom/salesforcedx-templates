@@ -4,8 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { Log } from '@salesforce/templates/lib/utils';
 import { expect } from 'chai';
+import { Log } from '../../src/utils';
 
 const logger = new Log();
 const output = 'create newClasses.cls\n create newClasses.cls-meta.xml\n';

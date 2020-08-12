@@ -52,7 +52,7 @@ export abstract class TemplateCommand extends SfdxCommand {
 
   public abstract run(): Promise<AnyJson>;
 
-  public async runGenerator(generator: typeof yeomanGenerator) {
+  public async runGenerator(generator: yeomanGenerator.GeneratorConstructor) {
     // Can't specify a default value the normal way for apiversion, so set it here
     if (!this.flags.apiversion) {
       this.flags.apiversion = await TemplateCommand.getApiVersion();
@@ -63,6 +63,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     const env = yeoman.createEnv(undefined, undefined, adapter);
     env.registerStub(generator, 'generator');
 
+    // @ts-ignore env.run should have a callback param. This should all go away if switched to lib implementation
     const result = await env.run('generator', this.flags);
     const targetDir = path.resolve(this.flags.outputdir);
     if (this.flags.json) {
@@ -70,7 +71,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     } else {
       this.log(MessageUtil.get('TargetDirOutput', [targetDir]));
       this.log(adapter.log.getOutput());
-      return result;
+      return {};
     }
   }
 }

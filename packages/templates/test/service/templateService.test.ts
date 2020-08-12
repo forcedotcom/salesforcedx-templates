@@ -41,31 +41,40 @@ describe('TemplateService', () => {
         classname: 'LibraryCreateClass',
         outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
-      assert.file([
-        path.join(
+      const expectedApexClassPath = path.join(
           'testsoutput',
           'libraryCreate',
           'apexClass',
           'LibraryCreateClass.cls'
-        ),
-        path.join(
+        );
+      const expectedApexClassContent = 'public with sharing class LibraryCreateClass';
+      const expectedApexClassMetaPath = path.join(
           'testsoutput',
           'libraryCreate',
           'apexClass',
           'LibraryCreateClass.cls-meta.xml'
-        )
+        );
+      const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
+<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <status>Active</status>
+</ApexClass>
+`;
+      assert.file([
+        expectedApexClassPath,
+        expectedApexClassMetaPath
       ]);
       assert.fileContent(
-        path.join(
-          'testsoutput',
-          'libraryCreate',
-          'apexClass',
-          'LibraryCreateClass.cls'
-        ),
-        'public with sharing class LibraryCreateClass'
+        expectedApexClassPath,
+        expectedApexClassContent
+      );
+      assert.fileContent(
+        expectedApexClassMetaPath,
+        expectedApexClassMetaContent
       );
     });
   });
+
   describe('create template', () => {
     it('create template should return created output', async () => {
       await fs.remove(path.join('testsoutput', 'libraryCreate', 'apexClass'));

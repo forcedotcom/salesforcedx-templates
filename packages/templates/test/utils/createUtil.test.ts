@@ -15,6 +15,10 @@ import { SinonStub, stub } from 'sinon';
 /* tslint:disable: no-unused-expression */
 describe('CreateUtil', () => {
   describe('checkInputs', () => {
+    it('should throw error for input with empty characters', () => {
+      assertErrorThrown('', 'AlphaNumericNameError');
+    });
+
     it('should throw error for input with non-alphanumeric characters', () => {
       assertErrorThrown('test!@#$%^&*()_+-=', 'AlphaNumericNameError');
     });

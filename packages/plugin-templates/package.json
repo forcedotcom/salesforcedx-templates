@@ -1,6 +1,6 @@
 {
   "name": "salesforcedx-templates",
-  "version": "49.0.0",
+  "version": "49.3.0",
   "main": "index.js",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",

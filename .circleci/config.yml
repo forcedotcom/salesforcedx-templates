@@ -5,61 +5,45 @@ orbs:
   win: circleci/windows@2.2.0
   npm-release-management: salesforce/npm-release-management@2.0.0
 
-commands:
-  publish-npm-package:
-    parameters:
-      package_user_friendly_name:
-        type: string
-      is_sfdx_plugin:
-        default: false
-        type: boolean
-    steps:
-      - when:
-        condition:
-          not: <<parameters.is_sfdx_plugin>>
-        - steps:
-          - npm run pack
-          - npm-release-management/publish:
-            use_tarfile: true
-      - when:
-        condition: <<parameters.is_sfdx_plugin>>
-        - steps:
-          - npm-release-management/sign
-          - npm-release-management/publish:
-            use_tarfile: true
-          - npm-release-management/verify-signed-package
+parameters:
+  publish:
+    type: boolean
+    default: false
+  publish-type:
+    type: string
+    default: minor
 
+commands:
   setup-publish:
     description: 'Configure GitHub, Checkout, Bump Package Version, Install, Build'
     steps:
       - run:
-        name: Configuring GitHub
-        command: |
-          git config credential.helper 'cache --timeout=120'
-          git config user.email "$GH_EMAIL"
-          git config user.name "Release Bot"
+          name: Configuring GitHub
+          command: |
+            git config credential.helper 'cache --timeout=120'
+            git config user.email "$GH_EMAIL"
+            git config user.name "Release Bot"
       - checkout
       - run:
-        name: Bump package version
-        command: |
-          yarn bump-versions patch
-          # lerna version --force-publish --no-git-tag-version --exact --yes
-          git add .
-          export RELEASE_TAG="$(node -pe "require('./packages/templates/package.json').version")"
-          git commit -m "Updated version $RELEASE_TAG"
+          name: Bump package version
+          command: |
+            npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
+            git add .
+            export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
+            git commit -m "Updated version $RELEASE_TAG"
       - restore_cache:
-        keys:
-          - v2-npm-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
-          - v2-npm-{{checksum ".circleci/config.yml"}}
+          keys:
+            - v2-npm-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
+            - v2-npm-{{checksum ".circleci/config.yml"}}
       - run:
-        name: Install dependencies
-        command: |
-          yarn --version
-          node --version
-          yarn
+          name: Install dependencies
+          command: |
+            yarn --version
+            node --version
+            yarn
       - run:
-        name: Build project
-        command: yarn build
+          name: Build project
+          command: yarn build
 
 jobs:
   node-latest: &test
@@ -138,31 +122,44 @@ jobs:
           command: |
             npx codecov --disable=gcov
 
-    prepublish:
-      description: 'Prepublish'
-      working_directory: ~/cli
-      steps:
-        - setup-publish
+  prepublish:
+    description: 'Prepublish'
+    working_directory: ~/cli
+    docker:
+      - image: node:12
+    steps:
+      - setup-publish
 
-    publish-library:
-      description: 'Publish library package'
-      working_directory: ~/cli/packages/templates
-      steps:
-        - yarn publish --non-interactive
-
-    publish-plugin:
-      description: 'Publish plugin package'
-      working_directory: ~/cli/packages/plugin-templates
-      steps:
-        - npm-release-management/sign
-        - npm-release-management/publish:
+  publish-library:
+    description: 'Publish library package'
+    docker:
+      - image: node:12
+    working_directory: ~/cli/packages/templates
+    steps:
+      - run:
+          name: 'NPM Pack'
+          command: npm run pack
+      - npm-release-management/publish:
           use_tarfile: true
-        - npm-release-management/verify-signed-package
 
-    postpublish:
-      steps:
-        - npm-release-management/create-git-tag # this is looking up package.json
-        - run: git push origin main
+  publish-plugin:
+    description: 'Publish plugin package'
+    working_directory: ~/cli/packages/plugin-templates
+    docker:
+      - image: node:12
+    steps:
+      - npm-release-management/sign
+      - npm-release-management/publish:
+          use_tarfile: true
+      - npm-release-management/verify-signed-package
+
+  postpublish:
+    working_directory: ~/cli
+    docker:
+      - image: node:12
+    steps:
+      - npm-release-management/create-git-tag # this is looking up package.json
+      - run: git push origin main
 
 workflows:
   version: 2
@@ -187,30 +184,30 @@ workflows:
       - node-10
       - run-win-tests
       - prepublish:
-        requires:
-          - run-win-tests
-          - node-latest
-          - node-12
-          - node-10
+          requires:
+            - run-win-tests
+            - node-latest
+            - node-12
+            - node-10
       - hold: # Requires manual approval in Circle Ci
-        type: approval
+          type: approval
       - publish-library:
-        filters:
-          branches:
-            only:
-              - main
-        requires:
-          - prepublish
-          - hold
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - prepublish
+            - hold
       - publish-plugin:
-        filters:
-          branches:
-            only:
-              - main
-        requires:
-          - prepublish
-          - hold
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - prepublish
+            - hold
       - postpublish:
-        requires:
-          - publish-library
-          - publish-plugin
+          requires:
+            - publish-library
+            - publish-plugin

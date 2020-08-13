@@ -37,7 +37,7 @@ const vscodearray = ['extensions', 'launch', 'settings'];
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages(
-  'salesforce/plugin-templates',
+  '@salesforce/plugin-templates',
   'messages'
 );
 

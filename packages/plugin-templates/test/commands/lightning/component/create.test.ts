@@ -12,7 +12,7 @@ import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages(
-  'salesforce/plugin-templates',
+  '@salesforce/plugin-templates',
   'messages'
 );
 export class AuraLightningTestFormatter {

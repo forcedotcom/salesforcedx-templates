@@ -57,16 +57,18 @@ export interface ApexClassOptions extends TemplateOptions {
   classname: string;
 }
 
+type ApexTriggerEvent =
+  | 'before insert'
+  | 'before update'
+  | 'before delete'
+  | 'after insert'
+  | 'after update'
+  | 'after delete'
+  | 'after undelete';
+
 export interface ApexTriggerOptions extends TemplateOptions {
   triggername: string;
-  triggerevents:
-    | 'before insert'
-    | 'before update'
-    | 'before delete'
-    | 'after insert'
-    | 'after update'
-    | 'after delete'
-    | 'after undelete';
+  triggerevents: ApexTriggerEvent[];
   sobject: string;
   template: 'ApexTrigger';
 }

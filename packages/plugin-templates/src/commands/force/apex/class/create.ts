@@ -51,9 +51,6 @@ export default class ApexClass extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.classname);
-    CreateUtil.checkInputs(this.flags.template);
-
     return this.runGenerator(ApexClassGenerator);
   }
 }

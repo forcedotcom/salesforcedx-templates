@@ -11,7 +11,6 @@ import { flags } from '@salesforce/command';
 import LightningComponentGenerator from '@salesforce/templates/lib/generators/lightningComponentGenerator';
 import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import * as path from 'path';
 import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningComponentFileSuffix = /.cmp$/;
@@ -81,19 +80,6 @@ export default class LightningComponent extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.componentname);
-    CreateUtil.checkInputs(this.flags.template);
-
-    const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
-
-    if (!this.flags.internal) {
-      if (this.flags.type === 'lwc' && !fileparts.includes('lwc')) {
-        throw new Error(MessageUtil.get('MissingLWCDir'));
-      } else if (!fileparts.includes('aura') && this.flags.type === 'aura') {
-        throw new Error(MessageUtil.get('MissingAuraDir'));
-      }
-    }
-
     return this.runGenerator(LightningComponentGenerator);
   }
 }

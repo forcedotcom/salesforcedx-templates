@@ -65,9 +65,6 @@ export default class VisualforcePage extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.pagename);
-    CreateUtil.checkInputs(this.flags.template);
-
     return this.runGenerator(VisualforcePageGenerator);
   }
 }

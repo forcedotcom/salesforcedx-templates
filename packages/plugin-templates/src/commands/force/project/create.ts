@@ -6,7 +6,6 @@
  */
 import { flags } from '@salesforce/command';
 import ProjectGenerator from '@salesforce/templates/lib/generators/projectGenerator';
-import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
 import { MessageUtil, TemplateCommand } from '../../../utils';
 
@@ -70,8 +69,6 @@ export default class Project extends TemplateCommand {
     })
   };
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.template);
-
     // namespace is a reserved keyword for the generator
     this.flags.ns = this.flags.namespace;
 

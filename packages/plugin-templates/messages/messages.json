@@ -66,10 +66,8 @@
 
   "MissingClassnameFlag": "Missing required flag:\n -n, --classname CLASSNAME  name of the generated Apex class\nSee more help with --help\n",
   "MissingTriggernameFlag": "Missing required flag:\n -n, --triggername TRIGGERNAME  name of the generated Apex trigger\nSee more help with --help\n",
-  "MissingAuraDir": "Lightning bundles must have a parent folder named 'aura'.",
   "MissingAuraFolder": "Lightning bundles must have a parent folder named 'aura'.",
   "MissingAppname": "Missing required flag:\n -n, --appname APPNAME  name of the generated Lightning app\nSee more help with --help\n",
-  "MissingLWCDir": "Lightning bundles must have a parent folder named 'lwc'.",
   "MissingComponentName": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Lightning component\nSee more help with --help\n",
   "MissingLWCFolder": "Lightning bundles must have a parent folder named 'lwc'.",
   "MissingEventname": "Missing required flag:\n -n, --eventname EVENTNAME  name of the generated Lightning event\nSee more help with --help\n",
@@ -86,6 +84,5 @@
   "AnalyticsTemplateDescription": "add an Analytics template to your workspace",
   "AnalyticsTemplateLongDescription": "Creates a simple Analytics template in the specified directory. If you don’t explicitly set the API version, it defaults to the current API version. The associated metadata files are created.",
   "AnalyticsTemplateNameFlagDescription": "name of the Analytics template",
-  "AnalyticsTemplateNameFlagLongDescription": "The name of the Analytics template.",
-  "MissingWaveTemplatesDir": "Analytics templates must have a parent folder named 'waveTemplates'."
+  "AnalyticsTemplateNameFlagLongDescription": "The name of the Analytics template."
 }

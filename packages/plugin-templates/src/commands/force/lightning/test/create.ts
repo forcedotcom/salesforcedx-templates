@@ -59,9 +59,6 @@ export default class LightningTest extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.testname);
-    CreateUtil.checkInputs(this.flags.template);
-
     return this.runGenerator(LightningTestGenerator);
   }
 }

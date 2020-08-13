@@ -8,7 +8,6 @@ import { flags } from '@salesforce/command';
 import LightningInterfaceGenerator from '@salesforce/templates/lib/generators/lightningInterfaceGenerator';
 import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import * as path from 'path';
 import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningInterfaceFileSuffix = /.intf$/;
@@ -68,16 +67,6 @@ export default class LightningInterface extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.interfacename);
-    CreateUtil.checkInputs(this.flags.template);
-
-    const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
-
-    // tslint:disable-next-line:no-unused-expression
-    if (!this.flags.internal && !fileparts.includes('aura')) {
-      throw new Error(MessageUtil.get('MissingAuraDir'));
-    }
-
     return this.runGenerator(LightningInterfaceGenerator);
   }
 }

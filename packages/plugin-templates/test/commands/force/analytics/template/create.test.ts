@@ -5,13 +5,9 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { expect, test } from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
 import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
-
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
 
 describe('Analytics template creation tests:', () => {
   describe('Check analytics template creation', () => {
@@ -65,7 +61,7 @@ describe('Analytics template creation tests:', () => {
         'should throw error output directory does not contain waveTemplates',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('MissingWaveTemplatesDir')
+            nls.localize('MissingWaveTemplatesDir')
           );
         }
       );

@@ -44,6 +44,9 @@ commands:
       - run:
           name: Build project
           command: yarn build
+      - run:
+          name: Generate plugin manifest
+          command: yarn manifest:generate
 
 jobs:
   node-latest: &test

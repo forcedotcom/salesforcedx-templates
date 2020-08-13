@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/templates",
-  "version": "49.3.0",
+  "version": "49.4.0",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "main": "lib/index.js",
@@ -30,8 +30,8 @@
     "fs-extra": "^9.0.1",
     "mocha": "^6.2.3",
     "nyc": "15.0.1",
-    "sinon": "^7.3.1",
     "shx": "0.2.2",
+    "sinon": "^7.3.1",
     "ts-node": "^8.6.2",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3",

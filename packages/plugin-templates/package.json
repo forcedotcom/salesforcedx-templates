@@ -105,6 +105,6 @@
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
     "test:deprecation-policy": "./bin/run snapshot:compare",
-    "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
+    "test:command-reference": "./bin/run commandreference:generate -p @salesforce/plugin-templates --erroronwarnings"
   }
 }

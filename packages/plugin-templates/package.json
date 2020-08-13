@@ -48,6 +48,7 @@
   ],
   "license": "BSD-3-Clause",
   "files": [
+    "yarn.lock",
     "/lib",
     "/messages",
     "/npm-shrinkwrap.json",

@@ -7,9 +7,7 @@
 import { flags } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import AnalyticsTemplateGenerator from '@salesforce/templates/lib/generators/analyticsTemplateGenerator';
-import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import * as path from 'path';
 import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
@@ -50,14 +48,6 @@ export default class AnalyticsTemplate extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.templatename);
-
-    const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
-    // tslint:disable-next-line:no-unused-expression
-    if (!fileparts.includes('waveTemplates')) {
-      throw new Error(MessageUtil.get('MissingWaveTemplatesDir'));
-    }
-
     return this.runGenerator(AnalyticsTemplateGenerator);
   }
 }

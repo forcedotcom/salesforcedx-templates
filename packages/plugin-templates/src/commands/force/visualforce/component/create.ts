@@ -65,9 +65,6 @@ export default class VisualforceComponent extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.componentname);
-    CreateUtil.checkInputs(this.flags.template);
-
     return this.runGenerator(VisualforceComponentGenerator);
   }
 }

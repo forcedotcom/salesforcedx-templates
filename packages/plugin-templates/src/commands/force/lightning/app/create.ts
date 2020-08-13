@@ -8,7 +8,6 @@ import { flags } from '@salesforce/command';
 import LightningAppGenerator from '@salesforce/templates/lib/generators/lightningAppGenerator';
 import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
-import * as path from 'path';
 import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningAppFileSuffix = /.app$/;
@@ -65,15 +64,6 @@ export default class LightningApp extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.appname);
-    CreateUtil.checkInputs(this.flags.template);
-
-    const fileparts = path.resolve(this.flags.outputdir).split(path.sep);
-    // tslint:disable-next-line:no-unused-expression
-    if (!fileparts.includes('aura') && !this.flags.internal) {
-      throw new Error(MessageUtil.get('MissingAuraDir'));
-    }
-
     return this.runGenerator(LightningAppGenerator);
   }
 }

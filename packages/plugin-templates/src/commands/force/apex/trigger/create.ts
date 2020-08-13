@@ -73,9 +73,6 @@ export default class ApexTrigger extends TemplateCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    CreateUtil.checkInputs(this.flags.triggername);
-    CreateUtil.checkInputs(this.flags.template);
-
     return this.runGenerator(ApexTriggerGenerator);
   }
 }

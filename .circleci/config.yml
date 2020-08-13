@@ -47,6 +47,10 @@ commands:
       - run:
           name: Generate plugin manifest
           command: yarn manifest:generate
+      - run:
+          name: Pack Library
+          working_directory: ./packages/templates
+          command: npm pack
 
 jobs:
   node-latest: &test
@@ -151,9 +155,6 @@ jobs:
       - image: node:12
     working_directory: ~/cli/packages/templates
     steps:
-      - run:
-          name: 'NPM Pack'
-          command: npm run pack
       - npm-release-management/publish:
           use_tarfile: true
 

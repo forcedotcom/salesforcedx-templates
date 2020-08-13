@@ -129,6 +129,8 @@ jobs:
       - image: node:12
     steps:
       - setup-publish
+      - persist_to_workspace:
+        root: .
 
   publish-library:
     description: 'Publish library package'
@@ -154,7 +156,7 @@ jobs:
       - npm-release-management/verify-signed-package
 
   postpublish:
-    working_directory: ~/cli
+    working_directory: ~/cli/packages/plugin-templates
     docker:
       - image: node:12
     steps:

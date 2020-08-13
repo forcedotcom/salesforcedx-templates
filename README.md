@@ -27,7 +27,7 @@ Clone the repository
   $ git clone git@github.com:forcedotcom/salesforcedx-templates.git
 Install the dependencies and compile
   $ yarn install
-  $ yarn prepack
+  $ yarn build
 Link your plugin to the sfdx cli
   $ sfdx plugins:link .
 To verify

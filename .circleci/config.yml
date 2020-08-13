@@ -130,7 +130,17 @@ jobs:
     steps:
       - setup-publish
       - persist_to_workspace:
-        root: .
+          root: .
+          paths:
+            - .git
+            - ./packages/templates/*.tgz
+            - ./packages/plugin-templates/package.json
+            - ./packages/plugin-templates/README.md
+            - ./packages/plugin-templates/yarn.lock
+            - ./packages/plugin-templates/messages
+            - ./packages/plugin-templates/lib
+            - ./packages/plugin-templates/bin
+            - ./packages/plugin-templates/oclif.manifest.json
 
   publish-library:
     description: 'Publish library package'
@@ -154,12 +164,6 @@ jobs:
       - npm-release-management/publish:
           use_tarfile: true
       - npm-release-management/verify-signed-package
-
-  postpublish:
-    working_directory: ~/cli/packages/plugin-templates
-    docker:
-      - image: node:12
-    steps:
       - npm-release-management/create-git-tag # this is looking up package.json
       - run: git push origin main
 
@@ -207,9 +211,4 @@ workflows:
               only:
                 - main
           requires:
-            - prepublish
-            - hold
-      - postpublish:
-          requires:
             - publish-library
-            - publish-plugin

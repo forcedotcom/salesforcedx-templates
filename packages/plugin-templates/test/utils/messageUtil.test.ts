@@ -20,7 +20,7 @@ describe('MessageUtil', () => {
 
   describe('get', () => {
     const messages = Messages.loadMessages(
-      'salesforcedx-templates',
+      '@salesforce/plugin-templates',
       'messages'
     );
 

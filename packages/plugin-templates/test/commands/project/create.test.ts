@@ -36,7 +36,10 @@ const analyticsfolderarray = ['waveTemplates'];
 const vscodearray = ['extensions', 'launch', 'settings'];
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+const messages = Messages.loadMessages(
+  '@salesforce/plugin-templates',
+  'messages'
+);
 
 describe('Project creation tests:', () => {
   describe('Check project creation', () => {

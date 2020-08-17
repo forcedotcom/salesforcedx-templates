@@ -1,16 +1,16 @@
 {
-  "name": "salesforcedx-templates",
-  "version": "49.0.0",
+  "name": "@salesforce/plugin-templates",
+  "version": "49.4.0",
   "main": "index.js",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "dependencies": {
-    "@salesforce/templates": "^49.0.0",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/errors": "^1",
     "@salesforce/command": "^2.2.0",
     "@salesforce/core": "^2.3.0",
+    "@salesforce/templates": "49.4.0",
     "tslib": "^1",
     "yeoman-environment": "2.4.0",
     "yeoman-generator": "4.0.1"
@@ -28,8 +28,8 @@
     "@types/yeoman-assert": "^3.1.1",
     "@types/yeoman-generator": "4.11.0",
     "chai": "^4",
-    "nyc": "15.0.1",
     "mocha": "^6.2.3",
+    "nyc": "15.0.1",
     "shx": "0.2.2",
     "sinon": "^7.3.1",
     "ts-node": "^8.6.2",
@@ -48,6 +48,8 @@
   ],
   "license": "BSD-3-Clause",
   "files": [
+    "yarn.lock",
+    "/bin",
     "/lib",
     "/messages",
     "/npm-shrinkwrap.json",
@@ -98,13 +100,13 @@
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
     "compile": "tsc -b",
     "build": "yarn run clean:lib && yarn compile",
-    "prepack": "yarn build && oclif-dev manifest",
     "lint": "tslint --project . --config tslint.json --format stylish",
-    "postpack": "shx rm -f oclif.manifest.json",
+    "manifest:generate": "oclif-dev manifest",
+    "manifest:remove": "shx rm -f oclif.manifest.json",
     "version": "oclif-dev readme && git add README.md",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
     "test:deprecation-policy": "./bin/run snapshot:compare",
-    "test:command-reference": "./bin/run commandreference:generate -p salesforcedx-templates --erroronwarnings"
+    "test:command-reference": "./bin/run commandreference:generate -p @salesforce/plugin-templates --erroronwarnings"
   }
 }

@@ -12,7 +12,10 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
+const messages = Messages.loadMessages(
+  '@salesforce/plugin-templates',
+  'messages'
+);
 
 describe('Lightning event creation tests:', () => {
   describe('Check lightning event creation', () => {

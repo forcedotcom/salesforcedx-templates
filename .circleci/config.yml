@@ -60,6 +60,7 @@ commands:
       - add_ssh_keys:
           fingerprints:
             - << pipeline.parameters.fingerprint >>
+      - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
 jobs:
   node-latest: &test

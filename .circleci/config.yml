@@ -157,7 +157,7 @@ jobs:
     working_directory: ~/cli/packages/templates
     steps:
       - attach_workspace:
-        at: ~/cli
+          at: ~/cli
       - npm-release-management/publish:
           use_tarfile: true
 
@@ -168,7 +168,7 @@ jobs:
       - image: node:12
     steps:
       - attach_workspace:
-        at: ~/cli
+          at: ~/cli
       - npm-release-management/sign
       - npm-release-management/publish:
           use_tarfile: true

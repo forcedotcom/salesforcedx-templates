@@ -142,6 +142,8 @@ jobs:
             - .git
             - packages/templates/package.json
             - packages/templates/*.tgz
+            - packages/plugin-templates/.gitignore
+            - packages/plugin-templates/.npmignore
             - packages/plugin-templates/package.json
             - packages/plugin-templates/README.md
             - packages/plugin-templates/yarn.lock

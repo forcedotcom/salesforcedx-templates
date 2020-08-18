@@ -140,14 +140,15 @@ jobs:
           root: .
           paths:
             - .git
-            - ./packages/templates/*.tgz
-            - ./packages/plugin-templates/package.json
-            - ./packages/plugin-templates/README.md
-            - ./packages/plugin-templates/yarn.lock
-            - ./packages/plugin-templates/messages
-            - ./packages/plugin-templates/lib
-            - ./packages/plugin-templates/bin
-            - ./packages/plugin-templates/oclif.manifest.json
+            - packages/templates/package.json
+            - packages/templates/*.tgz
+            - packages/plugin-templates/package.json
+            - packages/plugin-templates/README.md
+            - packages/plugin-templates/yarn.lock
+            - packages/plugin-templates/messages
+            - packages/plugin-templates/lib
+            - packages/plugin-templates/bin
+            - packages/plugin-templates/oclif.manifest.json
 
   publish-library:
     description: 'Publish library package'
@@ -155,6 +156,8 @@ jobs:
       - image: node:12
     working_directory: ~/cli/packages/templates
     steps:
+      - attach_workspace:
+        at: ~/cli
       - npm-release-management/publish:
           use_tarfile: true
 
@@ -164,6 +167,8 @@ jobs:
     docker:
       - image: node:12
     steps:
+      - attach_workspace:
+        at: ~/cli
       - npm-release-management/sign
       - npm-release-management/publish:
           use_tarfile: true

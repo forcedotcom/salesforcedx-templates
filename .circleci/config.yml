@@ -18,7 +18,7 @@ parameters:
 
 commands:
   setup-publish:
-    description: 'Configure GitHub, Checkout, Bump Package Version, Install, Build'
+    description: 'Configure GitHub, Checkout, Install, Bump Package Version, Build'
     steps:
       - run:
           name: Configuring GitHub
@@ -27,13 +27,6 @@ commands:
             git config --global user.email "$GH_EMAIL"
             git config --global user.name "Release Bot"
       - checkout
-      - run:
-          name: Bump package version
-          command: |
-            npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
-            git add .
-            export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
-            git commit -m "Updated version $RELEASE_TAG"
       - restore_cache:
           keys:
             - v2-npm-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
@@ -44,6 +37,13 @@ commands:
             yarn --version
             node --version
             yarn
+      - run:
+          name: Bump package version
+          command: |
+            npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
+            git add .
+            export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
+            git commit -m "Updated version $RELEASE_TAG"
       - run:
           name: Build project
           command: yarn build

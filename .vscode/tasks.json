@@ -58,12 +58,6 @@
       "command": "./scripts/publish-workflow.sh",
       "type": "shell",
       "args": ["${input:circleCiId}", "${input:publishType}"]
-    },
-    {
-      "label": "Publish Library and Plugin (Custom Version)",
-      "command": "./scripts/publish-workflow.sh",
-      "type": "shell",
-      "args": ["${input:circleCiId}", "${input:publishVersion}"]
     }
   ],
   "inputs": [
@@ -78,11 +72,6 @@
       "description": "Type of version to publish",
       "options": ["minor", "patch", "major"],
       "default": "minor"
-    },
-    {
-      "id": "publishVersion",
-      "type": "promptString",
-      "description": "Version to publish"
     }
   ]
 }

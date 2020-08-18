@@ -6,6 +6,9 @@ orbs:
   npm-release-management: salesforce/npm-release-management@2.0.0
 
 parameters:
+  fingerprint:
+    type: string
+    default: '1e:57:e5:df:0e:82:aa:ff:33:b7:8c:0f:9c:28:56:f3'
   publish:
     type: boolean
     default: false
@@ -51,6 +54,12 @@ commands:
           name: Pack Library
           working_directory: ./packages/templates
           command: npm pack
+
+  ssh-config:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - << pipeline.parameters.fingerprint >>
 
 jobs:
   node-latest: &test
@@ -174,6 +183,7 @@ jobs:
       - npm-release-management/publish:
           use_tarfile: true
       - npm-release-management/verify-signed-package
+      - ssh-config
       - npm-release-management/create-git-tag # this is looking up package.json
       - run: git push origin main
 

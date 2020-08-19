@@ -1,6 +1,6 @@
 # Developing
 
-1. Clone the repository, and `cd` into it.
+1. Clone the repository, and `cd` in to it.
 
 ```sh
 git clone git@github.com:forcedotcom/salesforcedx-templates.git
@@ -35,7 +35,7 @@ Verify plugin is linked:
 sfdx plugins
 ```
 
-### Debugging your plugin
+### Debugging Your Plugin
 
 We recommend using the Visual Studio Code (VS Code) IDE for your plugin development. Included in the `.vscode` directory of this plugin is a `launch.json` config file, which allows you to attach a debugger to the node process when running your commands.
 
@@ -53,11 +53,11 @@ Alternatively, to call your command using the `bin/run` script, set the `NODE_OP
 $ NODE_OPTIONS=--inspect-brk bin/run hello:org -u myOrg@example.com
 ```
 
-2. Set some breakpoints in your command code
+2. Set some breakpoints in your command code.
 3. Click on the Debug icon in the Activity Bar on the side of VS Code to open up the Debug view.
-4. In the upper left hand corner of VS Code, verify that the "Attach to Remote" launch configuration has been chosen.
+4. In the upper left hand corner of VS Code, verify that the "Attach to Remote" launch configuration is selected.
 5. Hit the green play button to the left of the "Attach to Remote" launch configuration window. The debugger should now be suspended on the first line of the program.
-6. Hit the green play button at the top middle of VS Code (this play button will be to the right of the play button that you clicked in step #5).
+6. Hit the green play button at the top middle of VS Code (this play button is to the right of the play button that you clicked in step #5).
    <br><img src="../.images/vscodeScreenshot.png" width="480" height="278"><br>
    Congrats, you are debugging!
 
@@ -66,10 +66,10 @@ $ NODE_OPTIONS=--inspect-brk bin/run hello:org -u myOrg@example.com
 Adding a new template:
 
 1. Define a new template type in `TemplateType`, and add available template options extending `TemplateOptions` in library [types](../packages/templates/src/utils/types.ts).
-2. Create a generator extending [`SfdxGenerator`](../packages/templates/src/generators/sfdxGenerator.ts) in [generators](../packages/templates/src/generators) folder. Take a look at [`ApexClassGenerator`](../packages/templates/src/generators/apexClassGenerator.ts) for example.
+2. Create a generator extending [`SfdxGenerator`](../packages/templates/src/generators/sfdxGenerator.ts) in [generators](../packages/templates/src/generators) folder. Take a look at [`ApexClassGenerator`](../packages/templates/src/generators/apexClassGenerator.ts) for an example.
 
-- generator class file should default export a generator class extending SfdxGenerator
-- generator class file should have a name same as the template type's name, except with the first letter lowercased
+- Generator class file should default export a generator class extending SfdxGenerator
+- Generator class file should have a name same as the template type's name, except with the first letter is lowercased
 
 ## Testing
 

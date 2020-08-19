@@ -13,9 +13,17 @@ yarn install
 yarn build
 ```
 
-## Develop Plugin
+## Developing Plugin
 
-Link your plugin to the sfdx cli
+To test plugin locally, use `bin/run` in place of `sfdx`. For example:
+
+```sh
+./bin/run force:apex:class:create --classname 'TestClass' --template 'DefaultApexClass' --outputdir ./testsoutput/myApex/
+```
+
+To test plugin locally with SFDX, add `"@salesforce/templates": "file://path/to/packages/templates"` to the plugin's `package.json`.
+
+Link your plugin to the sfdx cli:
 
 ```sh
 sfdx plugins:link .
@@ -53,15 +61,22 @@ $ NODE_OPTIONS=--inspect-brk bin/run hello:org -u myOrg@example.com
    <br><img src="../.images/vscodeScreenshot.png" width="480" height="278"><br>
    Congrats, you are debugging!
 
-### Testing Plugin Locally
+## Developing Library
 
-Add `"@salesforce/templates": "file:/path-to-packages-templates"` to the plugin's `package.json`.
+Adding a new template:
 
-## Develop Library
+1. Define a new template type in `TemplateType`, and add available template options extending `TemplateOptions` in library [types](../packages/templates/src/utils/types.ts).
+2. Create a generator extending [`SfdxGenerator`](../packages/templates/src/generators/sfdxGenerator.ts) in [generators](../packages/templates/src/generators) folder. Take a look at [`ApexClassGenerator`](../packages/templates/src/generators/apexClassGenerator.ts) for example.
+
+- generator class file should default export a generator class extending SfdxGenerator
+- generator class file should have a name same as the template type's name, except with the first letter lowercased
 
 ## Testing
 
-Run the following to test:
-`yarn test`
+Run the following to test library and plugin:
 
-## Adding a new template
+```sh
+yarn test
+```
+
+If you are using VS Code for development, the following launch configurations are available: "Run All Tests", "Run Current Test", "Run Current Test Without Compile". Have `"debug.javascript.usePreview": true` in your user setting enabled so you can utilize [`vscode-js-debug`](https://github.com/microsoft/vscode-js-debug) debugger. This setting is enabled by default in VS Code version 1.47.

@@ -59,4 +59,4 @@ $ git push origin main
 
 ### Merging Pull Requests
 
-- Pull request merging is restricted to `squash & merge` only.
+- Pull request merging is restricted to squash and merge only.

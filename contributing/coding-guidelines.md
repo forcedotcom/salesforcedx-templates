@@ -20,15 +20,15 @@ We use spaces, not tabs.
 
 ## Conventions
 
-- Create a folder for each major subarea
-- In the folder, create an index.ts which exports the public facing API for that
-  subarea.
-- Tests can refer directly to the .ts files; other consumers should refer to the
-  index.ts file.
+- Create a folder for each major sub-area
+- In the folder, create an `index.ts` that exports the public-facing API for that
+  sub-area.
+- Tests can refer directly to the `.ts` files; other consumers should refer to the
+  `index.ts` file.
 
 ## Comments
 
-- Use sparingly since comments always become outdated quickly.
+- Use comments sparingly because comments always become outdated quickly.
 - If you must, use JSDoc style comments.
 
 ## Strings

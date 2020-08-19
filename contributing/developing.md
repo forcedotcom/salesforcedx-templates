@@ -21,9 +21,9 @@ To test plugin locally, use `bin/run` in place of `sfdx`. For example:
 ./bin/run force:apex:class:create --classname 'TestClass' --template 'DefaultApexClass' --outputdir ./testsoutput/myApex/
 ```
 
-To test plugin locally with SFDX, add `"@salesforce/templates": "file://path/to/packages/templates"` to the plugin's `package.json`.
+To test plugin locally with Salesforce CLI, add `"@salesforce/templates": "file://path/to/packages/templates"` to the plugin's `package.json`.
 
-Link your plugin to the sfdx cli:
+Link your plugin to Salesforce CLI:
 
 ```sh
 sfdx plugins:link .

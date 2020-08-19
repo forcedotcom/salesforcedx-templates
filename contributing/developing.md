@@ -41,7 +41,7 @@ We recommend using the Visual Studio Code (VS Code) IDE for your plugin developm
 
 To debug the `hello:org` command:
 
-If you linked your plugin to the sfdx cli, call your command with the `dev-suspend` switch:
+1. If you linked your plugin to the sfdx cli, call your command with the `dev-suspend` switch:
 
 ```sh-session
 $ sfdx hello:org -u myOrg@example.com --dev-suspend
@@ -68,8 +68,8 @@ Adding a new template:
 1. Define a new template type in `TemplateType`, and add available template options extending `TemplateOptions` in library [types](../packages/templates/src/utils/types.ts).
 2. Create a generator extending [`SfdxGenerator`](../packages/templates/src/generators/sfdxGenerator.ts) in [generators](../packages/templates/src/generators) folder. Take a look at [`ApexClassGenerator`](../packages/templates/src/generators/apexClassGenerator.ts) for an example.
 
-- Generator class file should default export a generator class extending SfdxGenerator
-- Generator class file should have a name same as the template type's name, except with the first letter is lowercased
+- Generator class file should default export a generator class extending `SfdxGenerator`
+- Generator class file should have a name same as the template type's name, except with the first letter lowercased
 
 ## Testing
 

@@ -18,8 +18,7 @@ Here's a summary:
 - <strike>Wrap the body at 72 characters</strike> (this is not strictly
   enforced)
 - Use the body to explain what and why vs. how
-- Do not put internal bug numbers in the commit subject so you don't exceed the
-  recommended 50 characters
+- Don't use internal bug numbers because you might run out of characters
 - The commit log is _not_ a diary - keep it short and relevant to the project,
   not to what a developer is thinking at that moment. Longer discussions can be
   had in the PRs.

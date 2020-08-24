@@ -13,49 +13,12 @@
 1. Send us a pull request when you're done. We'll review your code, suggest any
    needed changes, and merge it in.
 
+## Pull Requests
+
 ### CLA
 
 External contributors are required to sign a Contributor's License
 Agreement. You can do so by going to https://cla.salesforce.com/sign-cla.
-
-## Branches
-
-- We work in `develop`.
-- Our released (aka. _production_) branch is `main`.
-- Our work happens in _topic_ branches (feature and/or bug-fix).
-  - Feature as well as bug-fix branches are based on `develop`.
-  - Branches _should_ be kept up-to-date using `rebase`.
-  - See below for further merge instructions.
-
-### Merging between branches
-
-- We try to limit merge commits as much as possible.
-
-  - They are usually only ok when done by our release automation.
-
-- _Topic_ branches are based on `develop` and are squash-merged into `develop`.
-
-- Hot-fix branches are an exception.
-  - Instead, we aim for faster cycles and a generally stable `develop` branch.
-
-### Merging `develop` into `main`
-
-- When a development cycle finishes, the content of the `develop` branch becomes the `main` branch.
-
-```
-$ git checkout main
-$ git reset --hard develop
-$
-$ # Using a custom commit message for the merge below
-$ git merge -m 'Merge -s our (where _ours_ is develop) releasing stream x.y.z.' -s ours origin/main
-$ git push origin main
-```
-
-## Pull Requests
-
-- Develop features and bug fixes in _topic_ branches.
-- _Topic_ branches can live in forks (external contributors) or within this repository (committers).
-  \*\* When creating _topic_ branches in this repository please prefix with `<developer-name>/`.
 
 ### Merging Pull Requests
 

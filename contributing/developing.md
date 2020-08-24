@@ -1,6 +1,8 @@
 # Developing
 
-1. Clone the repository, and `cd` in to it.
+## Get Started
+
+1. Clone the repository, and `cd` into it.
 
 ```sh
 git clone git@github.com:forcedotcom/salesforcedx-templates.git
@@ -12,6 +14,48 @@ git clone git@github.com:forcedotcom/salesforcedx-templates.git
 yarn install
 yarn build
 ```
+
+## Branches
+
+- We work in `develop`.
+- Our released (aka. _production_) branch is `main`.
+- Our work happens in _topic_ branches (feature and/or bug-fix).
+  - feature as well as bug-fix branches are based on `develop`
+    - _Topic_ branches can live in forks (external contributors) or within this repository (committers).
+      \*\* When creating _topic_ branches in this repository please prefix with `<developer-name>/`.
+  - branches _should_ be kept up-to-date using `rebase`
+  - see below for further merge instructions
+
+### Merging between branches
+
+- We try to limit merge commits as much as possible.
+
+  - They are usually only ok when done by our release automation.
+
+- _Topic_ branches are:
+
+  1. based on `develop` and will be
+  1. squash-merged into `develop`.
+
+- Hot-fix branches are an exception.
+  - Instead we aim for faster cycles and a generally stable `develop` branch.
+
+### Merging `develop` into `main`
+
+- When a development cycle finishes, the content of the `develop` branch will become the `main` branch
+
+```
+$ git checkout main
+$ git reset --hard develop
+$
+$ # Using a custom commit message for the merge below
+$ git merge -m 'Merge -s our (where _ours_ is develop) releasing stream x.y.z.' -s ours origin/main
+$ git push origin main
+```
+
+### Making Pull Requests
+
+Take a look at [CONTRIBUTING](../CONTRIBUTING.md) doc for making and merging pull requests.
 
 ## Developing Plugin
 

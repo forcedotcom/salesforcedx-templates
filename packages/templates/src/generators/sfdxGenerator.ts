@@ -4,8 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as path from 'path';
 import * as Generator from 'yeoman-generator';
+import { TemplateService } from '../service/templateService';
 import { TemplateOptions } from '../utils/types';
 
 /**
@@ -21,7 +21,7 @@ export abstract class SfdxGenerator<
   constructor(args: string | string[], options: TOptions) {
     super(args, options);
     this.options.apiversion =
-      this.options.apiversion ?? this.getDefaultApiVersion();
+      this.options.apiversion ?? TemplateService.getDefaultApiVersion();
     this.options.outputdir = this.options.outputdir ?? process.cwd();
     this.validateOptions();
   }
@@ -29,13 +29,4 @@ export abstract class SfdxGenerator<
    * Validate provided options
    */
   public abstract validateOptions(): void;
-
-  /**
-   * Look up package version of @salesforce/templates package to supply a default API version
-   */
-  private getDefaultApiVersion(): string {
-    const packageJsonPath = path.join('..', '..', 'package.json');
-    const versionTrimmed = require(packageJsonPath).version.trim();
-    return `${versionTrimmed.split('.')[0]}.0`;
-  }
 }

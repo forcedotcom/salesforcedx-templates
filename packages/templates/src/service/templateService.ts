@@ -53,6 +53,15 @@ export class TemplateService {
   }
 
   /**
+   * Look up package version of @salesforce/templates package to supply a default API version
+   */
+  public static getDefaultApiVersion(): string {
+    const packageJsonPath = path.join('..', '..', 'package.json');
+    const versionTrimmed = require(packageJsonPath).version.trim();
+    return `${versionTrimmed.split('.')[0]}.0`;
+  }
+
+  /**
    * Create using templates
    * @param templateType template type
    * @param templateOptions template options
@@ -87,7 +96,7 @@ export class TemplateService {
         if (err) {
           reject(err);
         }
-        const outputDir = path.resolve(templateOptions.outputdir!);
+        const outputDir = path.resolve(this.cwd, templateOptions.outputdir!);
         const created = this.adapter.log.getCleanOutput();
         const rawOutput = nls.localize('RawOutput', [
           outputDir,

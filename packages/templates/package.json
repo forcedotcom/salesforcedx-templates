@@ -25,7 +25,7 @@
     "@types/sinon": "^7.3.1",
     "@types/yeoman-assert": "^3.1.1",
     "@types/yeoman-environment": "2.10.0",
-    "@types/yeoman-generator": "4.11.0",
+    "@types/yeoman-generator": "4.11.2",
     "chai": "^4",
     "fs-extra": "^9.0.1",
     "mocha": "^6.2.3",

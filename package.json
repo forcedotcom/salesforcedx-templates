@@ -14,7 +14,7 @@
     "lerna": "^3.22.1",
     "lint-staged": "^10.2.2",
     "mkdirp": "^0.5.1",
-    "prettier": "1.19.1",
+    "prettier": "2.1.0",
     "pretty-quick": "^1.11.1"
   },
   "engines": {

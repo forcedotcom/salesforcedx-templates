@@ -85,7 +85,7 @@ We recommend using the Visual Studio Code (VS Code) IDE for your plugin developm
 
 To debug the `hello:org` command:
 
-1. If you linked your plugin to the sfdx cli, call your command with the `dev-suspend` switch:
+1. If you linked your plugin to the Salesforce CLI, call your command with the `dev-suspend` switch:
 
 ```sh-session
 $ sfdx hello:org -u myOrg@example.com --dev-suspend

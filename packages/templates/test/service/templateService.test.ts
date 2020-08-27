@@ -42,32 +42,27 @@ describe('TemplateService', () => {
         outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
       const expectedApexClassPath = path.join(
-          'testsoutput',
-          'libraryCreate',
-          'apexClass',
-          'LibraryCreateClass.cls'
-        );
-      const expectedApexClassContent = 'public with sharing class LibraryCreateClass';
+        'testsoutput',
+        'libraryCreate',
+        'apexClass',
+        'LibraryCreateClass.cls'
+      );
+      const expectedApexClassContent =
+        'public with sharing class LibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
-          'testsoutput',
-          'libraryCreate',
-          'apexClass',
-          'LibraryCreateClass.cls-meta.xml'
-        );
+        'testsoutput',
+        'libraryCreate',
+        'apexClass',
+        'LibraryCreateClass.cls-meta.xml'
+      );
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>49.0</apiVersion>
     <status>Active</status>
 </ApexClass>
 `;
-      assert.file([
-        expectedApexClassPath,
-        expectedApexClassMetaPath
-      ]);
-      assert.fileContent(
-        expectedApexClassPath,
-        expectedApexClassContent
-      );
+      assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
+      assert.fileContent(expectedApexClassPath, expectedApexClassContent);
       assert.fileContent(
         expectedApexClassMetaPath,
         expectedApexClassMetaContent

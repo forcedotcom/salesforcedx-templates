@@ -80,6 +80,9 @@ jobs:
           name: Build plugin
           command: yarn build
       - run:
+          name: Lint source files
+          command: yarn lint
+      - run:
           name: Testing
           command: yarn test
   node-12:

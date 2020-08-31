@@ -435,6 +435,16 @@
   resolved "https://registry.yarnpkg.com/@salesforce/schemas/-/schemas-1.0.1.tgz#d1db56759d2b22a7688e1821aec564e979237ad2"
   integrity sha512-78pP1GB/DbIS8nSWGL0GpQ27g02drrEo0vzYdRipGYAIXHMzlh1gqEsq0pOiIQlPm1MxWyEqbmf4GG5qSVsd0Q==
 
+"@salesforce/templates@49.4.4":
+  version "49.4.4"
+  resolved "https://registry.yarnpkg.com/@salesforce/templates/-/templates-49.4.4.tgz#6d93cba7355c08d46ec26ec9b9d5ee790aab5432"
+  integrity sha512-7uDI59iTusshF6L+IGNmjeE3TkYR7fGo6AR1kbp6urfX8gvig8G7U+o0UaeyAhXSHQIzgptitf2TI/5lOcfb4A==
+  dependencies:
+    "@salesforce/core" "^2.3.0"
+    tslib "^1"
+    yeoman-environment "2.4.0"
+    yeoman-generator "4.0.1"
+
 "@salesforce/ts-sinon@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.2.2.tgz#4d99437def324f9e5507a02c3b322a40ed769167"
@@ -5337,10 +5347,10 @@ yeoman-generator@4.0.1:
     through2 "^3.0.1"
     yeoman-environment "^2.3.4"
 
-yeoman-generator@^4.10.0, yeoman-generator@^4.8.2:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/yeoman-generator/-/yeoman-generator-4.11.0.tgz#c9e2fab77f17a4d7acff571f31e002bc066ed6a8"
-  integrity sha512-++t6t2Z6HjL5F1/UM7+uNvGknKmQdF8tstJx8WKzsUSEpB+19kLVtapSfQIh9uWqm0L59fLWDzUui//WXoynPw==
+yeoman-generator@4.12.0, yeoman-generator@^4.10.0, yeoman-generator@^4.8.2:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/yeoman-generator/-/yeoman-generator-4.12.0.tgz#512e783a38b004c49265e71826a09ff7f1939f4b"
+  integrity sha512-lozwklVQHwUXMM1o8BgxEB8F5BB7vkHW4pjAo1Zt5sJ7FOlWhd6DJ4ZxJ2OK0w+gNYkY/ocPMkUV7DTz/uqEEg==
   dependencies:
     async "^2.6.2"
     chalk "^2.4.2"

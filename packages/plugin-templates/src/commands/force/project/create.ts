@@ -35,7 +35,7 @@ export default class Project extends TemplateCommand {
       description: MessageUtil.get('ProjectTemplateFlagDescription'),
       longDescription: MessageUtil.get('ProjectTemplateFlagLongDescription'),
       default: 'standard',
-      options: ['standard', 'empty', 'analytics']
+      options: ['standard', 'empty', 'analytics', 'functions']
     }),
     outputdir: flags.string({
       char: 'd',
@@ -70,6 +70,7 @@ export default class Project extends TemplateCommand {
   };
   public async run(): Promise<AnyJson> {
     // namespace is a reserved keyword for the generator
+
     this.flags.ns = this.flags.namespace;
 
     return this.runGenerator(ProjectGenerator);

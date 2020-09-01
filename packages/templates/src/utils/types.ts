@@ -107,7 +107,6 @@ export interface LightningTestOptions extends TemplateOptions {
 export interface ProjectOptions extends TemplateOptions {
   projectname: string;
   defaultpackagedir: string;
-  defaultfunctionsdir: string;
   /**
    * namespace
    * Note that namespace is a reserved keyword for yeoman generator

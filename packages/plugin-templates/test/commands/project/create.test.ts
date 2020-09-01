@@ -413,7 +413,6 @@ describe('Project creation tests:', () => {
       .it(
         'should create project with functionsProject name using functions template',
         ctx => {
-          assert.equal(true, true);
           assert.file(path.join('functionsProject', '.forceignore'));
           assert.fileContent(
             path.join('functionsProject', 'sfdx-project.json'),
@@ -471,7 +470,6 @@ describe('Project creation tests:', () => {
           assert.file(path.normalize('GitIgnoreTest2/.gitignore'));
         }
       );
-
   });
   describe('project creation failures', () => {
     test

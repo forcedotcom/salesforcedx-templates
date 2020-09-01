@@ -50,10 +50,10 @@ export interface AnalyticsTemplateOptions extends TemplateOptions {
 
 export interface ApexClassOptions extends TemplateOptions {
   template:
-    | 'DefaultApexClass'
-    | 'ApexUnitTest'
-    | 'ApexException'
-    | 'InboundEmailService';
+  | 'DefaultApexClass'
+  | 'ApexUnitTest'
+  | 'ApexException'
+  | 'InboundEmailService';
   classname: string;
 }
 
@@ -107,12 +107,13 @@ export interface LightningTestOptions extends TemplateOptions {
 export interface ProjectOptions extends TemplateOptions {
   projectname: string;
   defaultpackagedir: string;
+  defaultfunctionsdir: string;
   /**
    * namespace
    * Note that namespace is a reserved keyword for yeoman generator
    */
   ns: string;
-  template: 'standard' | 'empty' | 'analytics';
+  template: 'standard' | 'empty' | 'analytics' | 'functions';
   manifest: boolean;
   loginurl: string;
 }

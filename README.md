@@ -47,6 +47,7 @@ To verify
 - [`sfdx force:project:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forceprojectcreate)
 - [`sfdx force:visualforce:component:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcevisualforcecomponentcreate)
 - [`sfdx force:visualforce:page:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcevisualforcepagecreate)
+- [`sfdx force:staticresource:create`](https://github.com/forcedotcom/salesforcedx-templates/blob/master/COMMANDS.md#sfdx-forcestaticresourcecreate)
 
 ## Debugging your plugin
 

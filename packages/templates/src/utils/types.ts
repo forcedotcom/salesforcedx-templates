@@ -50,10 +50,10 @@ export interface AnalyticsTemplateOptions extends TemplateOptions {
 
 export interface ApexClassOptions extends TemplateOptions {
   template:
-  | 'DefaultApexClass'
-  | 'ApexUnitTest'
-  | 'ApexException'
-  | 'InboundEmailService';
+    | 'DefaultApexClass'
+    | 'ApexUnitTest'
+    | 'ApexException'
+    | 'InboundEmailService';
   classname: string;
 }
 

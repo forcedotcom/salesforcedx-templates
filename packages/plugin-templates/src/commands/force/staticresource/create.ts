@@ -16,6 +16,7 @@ export default class StaticResource extends TemplateCommand {
   );
   public static examples = [
     '$ sfdx force:staticresource:create -n MyResource',
+    '$ sfdx force:staticresource:create -n MyResource --contenttype application/json',
     '$ sfdx force:staticresource:create -n MyResource -d staticresources'
   ];
   public static help = MessageUtil.buildHelpText(

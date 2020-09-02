@@ -11,7 +11,7 @@
     "@salesforce/command": "^2.2.0",
     "@salesforce/core": "^2.3.0",
     "@salesforce/templates": "49.4.4",
-    "tslib": "^1",
+    "tslib": "^2",
     "yeoman-environment": "2.4.0",
     "yeoman-generator": "4.0.1"
   },

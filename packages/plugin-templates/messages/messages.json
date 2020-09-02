@@ -92,5 +92,5 @@
   "StaticResourceNameFlagDescription": "name of the generated static resource",
   "StaticResourceNameFlagLongDescription": "The name of the new static resource. This name can contain only underscores and alphanumeric characters, and must be unique in your org. It must begin with a letter, not include spaces, not end with an underscore, and not contain two consecutive underscores.",
   "StaticResourceContentTypeFlagDescription": "content type (mime type) of the generated static resource",
-  "StaticResourceContentTypeFlagLongDescription": "The content type of the generated static resource. This must be a valid MIME type such as application/json, applicaiton/js, application/zip, text/plain, text/css, etc."
+  "StaticResourceContentTypeFlagLongDescription": "The content type of the generated static resource. This must be a valid MIME type such as application/json, applicaiton/javascript, application/zip, text/plain, text/css, etc."
 }

@@ -341,9 +341,9 @@
   integrity sha512-60CHpq+eqnTxLZQ4PGHYNwUX572hgpMHGPtTWMjdTMsAvlm69lZV/4ly6O3sAYkomo4NggGcomrDpBe34rxUqw==
 
 "@oclif/test@^1", "@oclif/test@^1.2.4":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-1.2.6.tgz#0cc5b4f762c4007f3aeda1608a374cf02e76fe9d"
-  integrity sha512-8BQm0VFwTf/JpDnI3x6Lbp3S4RRUvQcv8WalKm82+7FNEylWMAXFNgBuzG65cNPj11J2jhlVo0gOWGF6hbiaJQ==
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-1.2.7.tgz#d4fdf60fd43207dc9efae4380201b21c3660739d"
+  integrity sha512-1I8KQkOgScw18mr0zcly/OJjDW+kZnnmGXELaVBF69EZVzVgjE+Mz3EU1W29wf2rB7e8BqqtNrHzzoFu4oDuTw==
   dependencies:
     fancy-test "^1.4.3"
 
@@ -434,6 +434,16 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@salesforce/schemas/-/schemas-1.0.1.tgz#d1db56759d2b22a7688e1821aec564e979237ad2"
   integrity sha512-78pP1GB/DbIS8nSWGL0GpQ27g02drrEo0vzYdRipGYAIXHMzlh1gqEsq0pOiIQlPm1MxWyEqbmf4GG5qSVsd0Q==
+
+"@salesforce/templates@49.4.4":
+  version "49.4.4"
+  resolved "https://registry.yarnpkg.com/@salesforce/templates/-/templates-49.4.4.tgz#6d93cba7355c08d46ec26ec9b9d5ee790aab5432"
+  integrity sha512-7uDI59iTusshF6L+IGNmjeE3TkYR7fGo6AR1kbp6urfX8gvig8G7U+o0UaeyAhXSHQIzgptitf2TI/5lOcfb4A==
+  dependencies:
+    "@salesforce/core" "^2.3.0"
+    tslib "^1"
+    yeoman-environment "2.4.0"
+    yeoman-generator "4.0.1"
 
 "@salesforce/ts-sinon@^1.2.2":
   version "1.2.2"

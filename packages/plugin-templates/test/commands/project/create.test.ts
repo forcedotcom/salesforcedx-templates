@@ -400,45 +400,6 @@ describe('Project creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
-      .stdout()
-      .command([
-        'force:project:create',
-        '--projectname',
-        'functionsProject',
-        '--template',
-        'functions',
-      ])
-      .it(
-        'should create project with functionsProject name using functions template',
-        ctx => {
-          assert.file(path.join('functionsProject', '.forceignore'));
-          assert.fileContent(
-            path.join('functionsProject', 'sfdx-project.json'),
-            '"namespace": "",'
-          );
-          assert.fileContent(
-            path.join('functionsProject', 'sfdx-project.json'),
-            '"path": "force-app",'
-          );
-          assert.fileContent(
-            path.join('functionsProject', 'sfdx-project.json'),
-            'sourceApiVersion'
-          );
-          assert(
-            fs.existsSync(
-              path.join('functionsProject', 'functions')
-            )
-          );
-          assert.fileContent(
-            path.join('functionsProject', 'README.md'),
-            '# Salesforce App'
-          );
-        }
-      );
-
-    test
       .command(['force:project:create', '-n', 'GitIgnoreTest'])
       .it('should rename gitignore to .gitignore in standard template', ctx => {
         const srcPath = path.join(

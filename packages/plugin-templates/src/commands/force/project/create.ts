@@ -35,7 +35,7 @@ export default class Project extends TemplateCommand {
       description: MessageUtil.get('ProjectTemplateFlagDescription'),
       longDescription: MessageUtil.get('ProjectTemplateFlagLongDescription'),
       default: 'standard',
-      options: ['standard', 'empty', 'analytics', 'functions']
+      options: ['standard', 'empty', 'analytics']
     }),
     outputdir: flags.string({
       char: 'd',

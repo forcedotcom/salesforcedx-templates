@@ -204,6 +204,17 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         );
       }
     }
+
+    if (template === 'functions') {
+      const functionsFolderlayout = [outputdir, projectname, 'functions'];
+      makeEmptyFolders(functionsFolderlayout, []);
+      makeEmptyFolders(folderlayout, emptyfolderarray);
+      this.fs.copyTpl(
+        this.templatePath('.forceignore'),
+        this.destinationPath(path.join(outputdir, projectname, '.forceignore')),
+        {}
+      );
+    }
   }
 }
 

@@ -15,16 +15,9 @@
       "name": "Run All Tests",
       "type": "node",
       "request": "launch",
-      "protocol": "inspector",
-      "program": "${workspaceFolder}/packages/plugin-templates/node_modules/mocha/bin/_mocha",
-      "args": ["--inspect", "--no-timeouts", "--colors", "test/**/*.test.ts"],
-      "env": {
-        "NODE_ENV": "development",
-        "SFDX_ENV": "development"
-      },
-      "sourceMaps": true,
-      "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["test"],
       "preLaunchTask": "Compile"
     },
     {

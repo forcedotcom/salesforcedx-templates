@@ -1,0 +1,7 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/packages/templates/src/templates/project"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10

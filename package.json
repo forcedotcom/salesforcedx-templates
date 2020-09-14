@@ -34,6 +34,8 @@
     "build": "lerna run build",
     "manifest:generate": "lerna run manifest:generate",
     "lint": "lerna run lint",
+    "plugin:link": "cd packages/plugin-templates && sfdx plugins:link",
+    "plugin:unlink": "cd packages/plugin-templates && sfdx plugins:unlink",
     "postinstall": "lerna bootstrap --no-ci",
     "test": "lerna run test",
     "reformat": "prettier --config .prettierrc --write './*.{js,json,md}' './**/*.{ts,json,md}'"
@@ -42,5 +44,9 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "volta": {
+    "node": "12.4.0",
+    "yarn": "1.22.4"
   }
 }

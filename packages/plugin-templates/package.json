@@ -90,6 +90,10 @@
           "visualforce": {
             "external": true,
             "subtopics": {}
+          },
+          "staticresource": {
+            "external": true,
+            "subtopics": {}
           }
         }
       }

@@ -143,6 +143,17 @@
         ]
     },
     {
+        "command": "force:staticresource:create",
+        "flags": [
+            "json",
+            "loglevel",
+            "outputdir",
+            "contenttype",
+            "apiversion",
+            "resourcename"
+        ]
+    },
+    {
         "command": "help",
         "flags": [
             "all"

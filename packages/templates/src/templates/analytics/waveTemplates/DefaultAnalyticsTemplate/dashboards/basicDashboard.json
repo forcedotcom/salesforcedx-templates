@@ -68,9 +68,11 @@
     "widgets": {
       "text_1": {
         "parameters": {
+          "content": {
+            "displayTemplate": "<%= templateName %> Analytics Dashboard"
+          },
           "fontSize": 48,
           "showActionMenu": true,
-          "text": "<%= templateName %> Analytics Dashboard",
           "textAlignment": "center",
           "textColor": "rgb(9, 26, 62)"
         },

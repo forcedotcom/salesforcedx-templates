@@ -25,24 +25,40 @@ describe('Analytics template creation tests:', () => {
       .it(
         'should create analytics template foo using foo as the output name and internal values',
         ctx => {
-          assert.file('waveTemplates/foo/template-info.json');
-          assert.fileContent(
+          assert.jsonFileContent(
             path.join('waveTemplates', 'foo', 'template-info.json'),
-            '"label": "foo"'
+            {
+              label: 'foo',
+              assetVersion: 49.0
+            }
           );
-          assert.fileContent(
+
+          assert.jsonFileContent(
             path.join('waveTemplates', 'foo', 'folder.json'),
-            '"name": "foo"'
+            { name: 'foo' }
           );
-          assert.file('waveTemplates/foo/dashboards/fooDashboard.json');
-          assert.fileContent(
+
+          assert.jsonFileContent(
             path.join(
               'waveTemplates',
               'foo',
               'dashboards',
               'fooDashboard.json'
             ),
-            '"name": "fooDashboard_tp"'
+            {
+              name: 'fooDashboard_tp',
+              state: {
+                widgets: {
+                  text_1: {
+                    parameters: {
+                      content: {
+                        displayTemplate: 'foo Analytics Dashboard'
+                      }
+                    }
+                  }
+                }
+              }
+            }
           );
         }
       );

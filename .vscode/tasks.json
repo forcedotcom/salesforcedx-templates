@@ -14,7 +14,10 @@
         "focus": false,
         "panel": "dedicated"
       },
-      "args": ["run", "build"],
+      "args": [
+        "run",
+        "build"
+      ],
       "isBackground": false,
       "problemMatcher": {
         "owner": "typescript",
@@ -38,7 +41,10 @@
         "focus": false,
         "panel": "dedicated"
       },
-      "args": ["run", "lint"],
+      "args": [
+        "run",
+        "lint"
+      ],
       "isBackground": false,
       "problemMatcher": {
         "owner": "typescript",
@@ -57,7 +63,11 @@
       "label": "Publish Library and Plugin",
       "command": "./scripts/publish-workflow.sh",
       "type": "shell",
-      "args": ["${input:circleCiId}", "${input:publishType}"]
+      "args": [
+        "${input:circleCiId}",
+        "${input:publishType}",
+        "${input:publishVersion}"
+      ]
     }
   ],
   "inputs": [
@@ -70,8 +80,17 @@
       "id": "publishType",
       "type": "pickString",
       "description": "Type of version to publish",
-      "options": ["minor", "patch", "major"],
+      "options": [
+        "minor",
+        "patch",
+        "major"
+      ],
       "default": "minor"
+    },
+    {
+      "id": "publishVersion",
+      "type": "promptString",
+      "description": "Enter a custom version? Leave blank to use the default logic."
     }
   ]
 }

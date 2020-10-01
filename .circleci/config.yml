@@ -15,6 +15,9 @@ parameters:
   publish-type:
     type: string
     default: minor
+  publish-version:
+    type: string
+    default: ''
 
 commands:
   setup-publish:
@@ -40,7 +43,17 @@ commands:
       - run:
           name: Bump package version
           command: |
-            npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
+            if [ ! -z << pipeline.parameters.publish-version >> ]; then
+              if [[ << pipeline.parameters.publish-version >> =~ ^[0-9]{2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
+                echo "Publish version << pipeline.parameters.publish-version >> is valid."
+                npx lerna version << pipeline.parameters.publish-version >> --force-publish --no-git-tag-version --exact --yes
+              else
+                echo "Publish version << pipeline.parameters.publish-version >> does not fit the format xx.yy.zz. Exiting."
+                exit 1
+              fi
+            else
+              npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
+            fi
             git add .
             export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
             git commit -m "Updated version $RELEASE_TAG"

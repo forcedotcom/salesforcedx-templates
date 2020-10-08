@@ -213,15 +213,18 @@ workflows:
       - node-12
       - node-10
       - run-win-tests
+      - hold: # Requires manual approval in Circle Ci
+          type: approval
       - prepublish:
+          context: pdt-publish-restricted-context
           requires:
             - run-win-tests
             - node-latest
             - node-12
             - node-10
-      - hold: # Requires manual approval in Circle Ci
-          type: approval
+            - hold
       - publish-library:
+          context: pdt-publish-restricted-context
           filters:
             branches:
               only:
@@ -230,6 +233,7 @@ workflows:
             - prepublish
             - hold
       - publish-plugin:
+          context: pdt-publish-restricted-context
           filters:
             branches:
               only:

@@ -4,6 +4,7 @@
 [![Codecov](https://codecov.io/gh/forcedotcom/salesforcedx-templates/branch/master/graph/badge.svg)](https://codecov.io/gh/forcedotcom/salesforcedx-templates)
 [![Known Vulnerabilities](https://snyk.io/test/github/forcedotcom/salesforcedx-templates/badge.svg)](https://snyk.io/test/github/forcedotcom/salesforcedx-templates)
 [![License](https://img.shields.io/npm/l/salesforcedx-templates.svg)](https://github.com/forcedotcom/salesforcedx-templates/blob/master/package.json)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Introduction
 

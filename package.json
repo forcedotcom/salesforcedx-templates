@@ -6,6 +6,10 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "devDependencies": {
+    "@commitlint/cli": "^7",
+    "@commitlint/config-conventional": "^7",
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "^2.1.0",
     "@salesforce/dev-config": "1.4.1",
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.5.0",
@@ -32,6 +36,8 @@
   "repository": "forcedotcom/salesforcedx-templates",
   "scripts": {
     "build": "lerna run build",
+    "commit-init": "commitizen init cz-conventional-changelog --save-dev --save-exact --force",
+    "commit": "git-cz",
     "manifest:generate": "lerna run manifest:generate",
     "lint": "lerna run lint",
     "plugin:link": "cd packages/plugin-templates && sfdx plugins:link",
@@ -42,7 +48,17 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "volta": {
+    "node": "12.4.0",
+    "yarn": "1.22.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "volta": {

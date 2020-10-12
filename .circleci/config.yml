@@ -43,7 +43,7 @@ commands:
             npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
             git add .
             export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
-            git commit -m "Updated version $RELEASE_TAG"
+            git commit -m "chore: updated version $RELEASE_TAG"
       - run:
           name: Build project
           command: yarn build

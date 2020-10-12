@@ -37,7 +37,7 @@ describe('SfdxGenerator', () => {
     assert.calledWith(
       doWritingStub,
       match({
-        apiversion: '49.0',
+        apiversion: '50.0',
         outputdir: process.cwd()
       })
     );

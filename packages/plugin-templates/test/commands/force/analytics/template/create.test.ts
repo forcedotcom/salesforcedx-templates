@@ -29,7 +29,7 @@ describe('Analytics template creation tests:', () => {
             path.join('waveTemplates', 'foo', 'template-info.json'),
             {
               label: 'foo',
-              assetVersion: 49.0
+              assetVersion: 50.0
             }
           );
 

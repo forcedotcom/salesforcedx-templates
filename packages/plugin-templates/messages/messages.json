@@ -79,7 +79,6 @@
 
   "InvalidTemplate": "Expected --template=foo to be one of:",
   "StandardReadMe": "This guide helps Salesforce developers who are new to Visual Studio Code go",
-  "EmptyReadMe": "# Salesforce App",
 
   "AnalyticsTemplateDescription": "add an Analytics template to your workspace",
   "AnalyticsTemplateLongDescription": "Creates a simple Analytics template in the specified directory. If you don’t explicitly set the API version, it defaults to the current API version. The associated metadata files are created.",

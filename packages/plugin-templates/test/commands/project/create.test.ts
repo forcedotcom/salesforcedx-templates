@@ -299,7 +299,7 @@ describe('Project creation tests:', () => {
           }
           assert.fileContent(
             path.join('fooempty', 'README.md'),
-            '# Salesforce App'
+            '# Salesforce DX Project: Next Steps'
           );
         }
       );
@@ -348,7 +348,7 @@ describe('Project creation tests:', () => {
           }
           assert.fileContent(
             path.join('fooempty', 'README.md'),
-            '# Salesforce App'
+            '# Salesforce DX Project: Next Steps'
           );
         }
       );
@@ -394,7 +394,7 @@ describe('Project creation tests:', () => {
           );
           assert.fileContent(
             path.join('analytics1', 'README.md'),
-            '# Salesforce App'
+            '# Salesforce DX Project: Next Steps'
           );
         }
       );

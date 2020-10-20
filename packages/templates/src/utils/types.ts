@@ -128,3 +128,9 @@ export interface VisualforcePageOptions extends TemplateOptions {
   label: string;
   template: 'DefaultVFPage';
 }
+
+export interface StaticResourceOptions extends TemplateOptions {
+  resourcename: string;
+  contenttype: string;
+  template: 'empty';
+}

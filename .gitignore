@@ -54,3 +54,6 @@ GitIgnoreTest2/
 
 # ignore oclif manifest file
 oclif.manifest.json
+
+# file generated for publishing
+*.tgz

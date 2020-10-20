@@ -207,9 +207,7 @@ describe('Static resource creation tests:', () => {
       .it(
         'should throw invalid non alphanumeric static resource name error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            nls.localize('AlphaNumericNameError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
         }
       );
 
@@ -235,9 +233,7 @@ describe('Static resource creation tests:', () => {
       .it(
         'should throw invalid static resource name ending with underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            nls.localize('EndWithUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
 
@@ -249,9 +245,7 @@ describe('Static resource creation tests:', () => {
       .it(
         'should throw invalid static resource name with double underscore error',
         ctx => {
-          expect(ctx.stderr).to.contain(
-            nls.localize('DoubleUnderscoreError')
-          );
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );
 

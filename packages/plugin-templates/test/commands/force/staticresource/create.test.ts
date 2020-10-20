@@ -5,16 +5,12 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { expect, test } from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
+import { nls } from '@salesforce/templates/lib/i18n';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('salesforcedx-templates', 'messages');
-
 describe('Static resource creation tests:', () => {
-  // tslint:disable-next-line:no-unused-expression
   if (!fs.existsSync('testsoutput')) {
     fs.mkdirSync('testsoutput');
   }
@@ -82,9 +78,7 @@ describe('Static resource creation tests:', () => {
           assert.file(['foo.json', 'foo.resource-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.json'),
-            `{
-              "__info": "Replace the contents of this file with your static resource"
-            }`
+            `{\n  "__info": "Replace the contents of this file with your static resource"\n}\n`
           );
         }
       );
@@ -118,16 +112,16 @@ describe('Static resource creation tests:', () => {
       .command([
         'force:staticresource:create',
         '--resourcename',
-        'foo',
+        'fooPDF',
         '--contenttype',
-        'text/application/pdf'
+        'application/pdf'
       ])
       .it(
         'should create foo generic static resource in the default output directory',
         ctx => {
-          assert.file(['foo.resource', 'foo.resource-meta.xml']);
+          assert.file(['fooPDF.resource', 'fooPDF.resource-meta.xml']);
           assert.fileContent(
-            path.join(process.cwd(), 'foo.resource'),
+            path.join(process.cwd(), 'fooPDF.resource'),
             'Replace this file with your static resource (i.e. an image)'
           );
         }
@@ -156,19 +150,17 @@ describe('Static resource creation tests:', () => {
       .command([
         'force:staticresource:create',
         '--resourcename',
-        'foo',
+        'srjs',
         '--outputdir',
-        'testfolder'
+        'resourcesjs',
+        '--contenttype',
+        'application/javascript'
       ])
       .it('should create foo resource with a targetpath set', ctx => {
         assert.file([
-          path.join('testfolder', 'foo', '.gitkeep'),
-          path.join('testfolder', 'foo.resource-meta.xml')
+          path.join('resourcesjs', 'srjs.resource-meta.xml'),
+          path.join('resourcesjs', 'srjs.js')
         ]);
-        assert.fileContent(
-          path.join('testfolder', 'foo', 'empty.js'),
-          'This file can be deleted'
-        );
       });
 
     test
@@ -180,17 +172,17 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'foo',
         '--outputdir',
-        'classes create'
+        'staticresource create'
       ])
       .it(
         'should create foo static resource in custom folder name that has a space in it',
         ctx => {
           assert.file([
-            path.join('classes create', 'foo', '.gitkeep'),
-            path.join('classes create', 'foo.resource-meta.xml')
+            path.join('staticresource create', 'foo', '.gitkeep'),
+            path.join('staticresource create', 'foo.resource-meta.xml')
           ]);
           assert.fileContent(
-            path.join('classes create', 'foo', '.gitkeep'),
+            path.join('staticresource create', 'foo', '.gitkeep'),
             'This file can be deleted'
           );
         }
@@ -204,9 +196,7 @@ describe('Static resource creation tests:', () => {
       .stderr()
       .command(['force:staticresource:create'])
       .it('should throw a missing resourcename error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('MissingResourcenameFlag')
-        );
+        expect(ctx.stderr).to.contain('Missing required flag');
       });
 
     test
@@ -218,7 +208,7 @@ describe('Static resource creation tests:', () => {
         'should throw invalid non alphanumeric static resource name error',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('AlphaNumericNameError')
+            nls.localize('AlphaNumericNameError')
           );
         }
       );
@@ -232,7 +222,7 @@ describe('Static resource creation tests:', () => {
         'should throw invalid static resource name starting with numeric error',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('NameMustStartWithLetterError')
+            nls.localize('NameMustStartWithLetterError')
           );
         }
       );
@@ -246,7 +236,7 @@ describe('Static resource creation tests:', () => {
         'should throw invalid static resource name ending with underscore error',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('EndWithUnderscoreError')
+            nls.localize('EndWithUnderscoreError')
           );
         }
       );
@@ -260,7 +250,7 @@ describe('Static resource creation tests:', () => {
         'should throw invalid static resource name with double underscore error',
         ctx => {
           expect(ctx.stderr).to.contain(
-            messages.getMessage('DoubleUnderscoreError')
+            nls.localize('DoubleUnderscoreError')
           );
         }
       );
@@ -277,7 +267,7 @@ describe('Static resource creation tests:', () => {
         'notvalid'
       ])
       .it('should throw an invalid mime type error', ctx => {
-        expect(ctx.stderr).to.contain(messages.getMessage('InvalidMimeType'));
+        expect(ctx.stderr).to.contain(nls.localize('InvalidMimeType'));
       });
   });
 });

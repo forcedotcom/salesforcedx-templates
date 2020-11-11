@@ -20,6 +20,7 @@ export const messages = {
   NameMustStartWithLetterError: 'Name must start with a letter.',
   EndWithUnderscoreError: "Name can't end with an underscore.",
   DoubleUnderscoreError: "Name can't contain 2 consecutive underscores.",
+  InvalidMimeType: 'The value of this argument must be a valid MIME type.',
 
   MissingWaveTemplatesDir:
     "Analytics templates must have a parent folder named 'waveTemplates'.",

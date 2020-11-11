@@ -14,7 +14,6 @@
   "Test": "test",
   "Component": "component",
   "Page": "page",
-
   "ApexClassDescription": "create an Apex class",
   "ApexClassLongDescription": "Creates an Apex class in the specified directory or the current working directory. If you don’t explicitly set the API version, it defaults to the current API version. The .cls file and associated metadata file are created.",
   "ApexClassNameFlagDescription": "name of the generated Apex class",
@@ -27,7 +26,6 @@
   "ApexTriggerNameFlagLongDescription": "The name of the new Apex trigger. The name can be up to 40 characters and must start with a letter.",
   "ApexTriggerSObjectFlagDescription": "sObject to create a trigger on",
   "ApexTriggerSObjectFlagLongDescription": "The sObject to create an Apex trigger on.",
-
   "LightningDescription": "create a Lightning %s",
   "LightningLongDescription": "Creates a Lightning %s bundle in the specified directory or the current working directory. The bundle consists of multiple files in a folder with the designated name.",
   "LightningNameFlagDescription": "name of the generated Lightning %s",
@@ -41,7 +39,6 @@
   "LightningTestDescription": "create a Lightning test",
   "LightningTestLongDescription": "Creates a Lightning test in the specified directory or the current working directory. The .resource file and associated metadata file are created.",
   "LightningTestNameFlagLongDescription": "The name of the new Lightning test. The name can be up to 40 characters and must start with a letter.",
-
   "ProjectDescription": "create a Salesforce DX project",
   "ProjectLongDescription": "Creates a Salesforce DX project in the specified directory or the current working directory. The command creates the necessary configuration files and folders.",
   "ProjectNameFlagDescription": "name of the generated project",
@@ -56,14 +53,12 @@
   "ProjectManifestFlagLongDescription": "Generates a default manifest (package.xml) for fetching Apex, Visualforce, Lightning components, and static resources.",
   "ProjectLoginUrlDescription": "Salesforce instance login URL",
   "ProjectLoginUrlLongDescription": "The login URL for the Salesforce instance being used. Normally defaults to https://login.salesforce.com.",
-
   "VFDescription": "create a Visualforce %s",
   "VFLongDescription": "Creates a Visualforce %s in the specified directory or the current working directory. The command creates the .%s file and associated metadata file.",
   "VFNameFlagDescription": "name of the generated Visualforce %s",
   "VFNameFlagLongDescription": "The Visualforce %s name. The name can be up to 40 characters and must start with a letter.",
   "VFLabelFlagDescription": "Visualforce %s label",
   "VFLabelFlagLongDescription": "The label saved in the metadata for the Visualforce %s.",
-
   "MissingClassnameFlag": "Missing required flag:\n -n, --classname CLASSNAME  name of the generated Apex class\nSee more help with --help\n",
   "MissingTriggernameFlag": "Missing required flag:\n -n, --triggername TRIGGERNAME  name of the generated Apex trigger\nSee more help with --help\n",
   "MissingAuraFolder": "Lightning bundles must have a parent folder named 'aura'.",
@@ -76,12 +71,16 @@
   "MissingComponentnameFlag": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Visualforce component\nSee more help with --help\n",
   "MissingPagenameFlag": "Missing required flag:\n -n, --pagename PAGENAME  name of the generated Visualforce page\nSee more help with --help\n",
   "MissingTestName": "Missing required flag:\n -n, --testname TESTNAME  name of the generated Lightning test\nSee more help with --help\n",
-
   "InvalidTemplate": "Expected --template=foo to be one of:",
   "StandardReadMe": "Now that you’ve created a Salesforce DX project, what’s next?",
-
   "AnalyticsTemplateDescription": "add an Analytics template to your workspace",
   "AnalyticsTemplateLongDescription": "Creates a simple Analytics template in the specified directory. If you don’t explicitly set the API version, it defaults to the current API version. The associated metadata files are created.",
   "AnalyticsTemplateNameFlagDescription": "name of the Analytics template",
-  "AnalyticsTemplateNameFlagLongDescription": "The name of the Analytics template."
+  "AnalyticsTemplateNameFlagLongDescription": "The name of the Analytics template.",
+  "StaticResourceDescription": "create a static resource",
+  "StaticResourceLongDescription": "Creates a static resource in the specified directory or the current working directory. The resource folder and associated metadata file are created.",
+  "StaticResourceNameFlagDescription": "name of the generated static resource",
+  "StaticResourceNameFlagLongDescription": "The name of the new static resource. This name can contain only underscores and alphanumeric characters, and must be unique in your org. It must begin with a letter, not include spaces, not end with an underscore, and not contain two consecutive underscores.",
+  "StaticResourceContentTypeFlagDescription": "content type (mime type) of the generated static resource",
+  "StaticResourceContentTypeFlagLongDescription": "The content type of the generated static resource. This must be a valid MIME type such as application/json, application/javascript, application/zip, text/plain, text/css, etc."
 }

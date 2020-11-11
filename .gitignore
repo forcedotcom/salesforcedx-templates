@@ -57,3 +57,4 @@ oclif.manifest.json
 
 # file generated for publishing
 *.tgz
+.npmrc

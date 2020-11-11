@@ -172,8 +172,16 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/cli
-      - npm-release-management/publish:
-          use_tarfile: true
+      - run:
+          name: Set .npmrc
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - run:
+          name: Publish to NPM
+          command: |
+            RELEASE_VERSION="$(node -pe "require('./package.json').version")"
+            TARFILE=$(ls | grep $RELEASE_VERSION.tgz)
+            echo "publishing to npm using ${TARFILE}"
+            npm publish $TARFILE --access public
 
   publish-plugin:
     description: 'Publish plugin package'

@@ -175,7 +175,7 @@ jobs:
       - run:
           name: Set .npmrc
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      -run:
+      - run:
           name: Publish to NPM
           command: |
             RELEASE_VERSION="$(node -pe "require('./package.json').version")"

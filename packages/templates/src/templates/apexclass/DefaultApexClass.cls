@@ -1,4 +1,4 @@
-public with sharing class <%= apiName %> {
+public inherited sharing class <%= apiName %> {
     public <%= apiName %>() {
 
     }

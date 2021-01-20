@@ -36,7 +36,7 @@ describe('Apex class creation tests:', () => {
           assert.file(['foo.cls', 'foo.cls-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.cls'),
-            'public with sharing class foo'
+            'public inherited sharing class foo'
           );
         }
       );
@@ -104,7 +104,7 @@ describe('Apex class creation tests:', () => {
           ]);
           assert.fileContent(
             path.join('classes create', 'foo.cls'),
-            'public with sharing class foo'
+            'public inherited sharing class foo'
           );
         }
       );

@@ -303,6 +303,7 @@ describe('Project creation tests:', () => {
         }
       );
 
+    // testing these changes
     test
       .withOrg({ username: TEST_USERNAME }, true)
       .loadConfig({
@@ -324,28 +325,34 @@ describe('Project creation tests:', () => {
       .it(
         'should create project with fooempty name, empty template, empty default package directory, and a custom namespace',
         async ctx => {
-          assert.file(path.join('fooempty', '.forceignore'));
+          assert.file(path.join('test-sfdx-project', '.forceignore'));
           const project = await SfdxProject.resolve(projectPath);
           const fooEmptyJson = project.resolveProjectConfig();
           expect(fooEmptyJson).to.contain({ namespace: 'testnamespace' });
 
           assert.fileContent(
-            path.join('fooempty', 'sfdx-project.json'),
+            path.join('test-sfdx-project', 'sfdx-project.json'),
             '"path": "empty",'
           );
           assert.fileContent(
-            path.join('fooempty', 'sfdx-project.json'),
+            path.join('test-sfdx-project', 'sfdx-project.json'),
             'sourceApiVersion'
           );
           for (const folder of emptyfolderarray) {
             assert(
               fs.existsSync(
-                path.join('fooempty', 'empty', 'main', 'default', folder)
+                path.join(
+                  'test-sfdx-project',
+                  'empty',
+                  'main',
+                  'default',
+                  folder
+                )
               )
             );
           }
           assert.fileContent(
-            path.join('fooempty', 'README.md'),
+            path.join('test-sfdx-project', 'README.md'),
             '# Salesforce DX Project: Next Steps'
           );
         }

@@ -45,7 +45,7 @@ const sfdxProjectJson = {
   sourceApiVersion: '49.0'
 };
 
-describe('Lightning app creation tests: MOOP', () => {
+describe('Lightning app creation tests:', () => {
   let sandboxStub: SinonSandbox;
 
   beforeEach(async () => {

@@ -325,9 +325,9 @@ describe('Project creation tests:', () => {
         'should create project with fooempty name, empty template, empty default package directory, and a custom namespace',
         async ctx => {
           assert.file(path.join('fooempty', '.forceignore'));
-          const project = (await SfdxProject.resolve(projectPath));
+          const project = await SfdxProject.resolve(projectPath);
           const fooEmptyJson = project.resolveProjectConfig();
-          expect(fooEmptyJson).to.contain({namespace: 'testnamespace'});
+          expect(fooEmptyJson).to.contain({ namespace: 'testnamespace' });
 
           assert.fileContent(
             path.join('fooempty', 'sfdx-project.json'),

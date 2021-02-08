@@ -4,10 +4,12 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { expect, test } from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
+import { test } from '@salesforce/command/lib/test';
+import { Messages, SfdxProject } from '@salesforce/core';
+import { expect } from 'chai';
 import * as fs from 'fs';
 import * as path from 'path';
+import { createSandbox, SinonSandbox } from 'sinon';
 import * as assert from 'yeoman-assert';
 
 const standardfolderarray = [
@@ -41,11 +43,40 @@ const messages = Messages.loadMessages(
   'messages'
 );
 
+const SFDX_PROJECT_PATH = 'test-sfdx-project';
+const TEST_USERNAME = 'test@example.com';
+const projectPath = path.resolve(SFDX_PROJECT_PATH);
+const sfdxProjectJson = {
+  packageDirectories: [{ path: 'force-app', default: true }],
+  namespace: 'testnamespace',
+  sfdcLoginUrl: 'https://login.salesforce.com',
+  sourceApiVersion: '49.0'
+};
+
 describe('Project creation tests:', () => {
+  let sandboxStub: SinonSandbox;
+
+  beforeEach(async () => {
+    sandboxStub = createSandbox();
+    sandboxStub.stub(SfdxProject, 'resolve').returns(
+      Promise.resolve(({
+        getPath: () => projectPath,
+        resolveProjectConfig: () => sfdxProjectJson
+      } as unknown) as SfdxProject)
+    );
+  });
+
+  afterEach(() => {
+    sandboxStub.restore();
+  });
+
   describe('Check project creation', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command(['force:project:create', '--projectname', 'foo'])
       .it('should create project with default values and foo name', ctx => {
@@ -111,8 +142,11 @@ describe('Project creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:project:create',
@@ -184,8 +218,11 @@ describe('Project creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:project:create',
@@ -205,8 +242,11 @@ describe('Project creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command(['force:project:create', '--projectname', 'foo-project'])
       .it(
@@ -244,8 +284,11 @@ describe('Project creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:project:create',
@@ -259,14 +302,18 @@ describe('Project creation tests:', () => {
           assert.file([path.join('footest', 'manifest', 'package.xml')]);
         }
       );
+
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:project:create',
         '--projectname',
-        'fooempty',
+        'test-sfdx-project',
         '--template',
         'empty',
         '--defaultpackagedir',
@@ -276,12 +323,12 @@ describe('Project creation tests:', () => {
       ])
       .it(
         'should create project with fooempty name, empty template, empty default package directory, and a custom namespace',
-        ctx => {
+        async ctx => {
           assert.file(path.join('fooempty', '.forceignore'));
-          assert.fileContent(
-            path.join('fooempty', 'sfdx-project.json'),
-            '"namespace": "testnamespace",'
-          );
+          const project = (await SfdxProject.resolve(projectPath));
+          const fooEmptyJson = project.resolveProjectConfig();
+          expect(fooEmptyJson).to.contain({namespace: 'testnamespace'});
+
           assert.fileContent(
             path.join('fooempty', 'sfdx-project.json'),
             '"path": "empty",'
@@ -305,8 +352,11 @@ describe('Project creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:project:create',
@@ -354,8 +404,11 @@ describe('Project creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:project:create',
@@ -432,10 +485,14 @@ describe('Project creation tests:', () => {
         }
       );
   });
+
   describe('project creation failures', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:project:create'])
       .it('should throw invalid template name error', ctx => {
@@ -443,9 +500,13 @@ describe('Project creation tests:', () => {
           messages.getMessage('MissingProjectname')
         );
       });
+
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:project:create',

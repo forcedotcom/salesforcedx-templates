@@ -5,16 +5,42 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { test } from '@salesforce/command/lib/test';
-import { ConfigAggregator } from '@salesforce/core';
+import { ConfigAggregator, SfdxProject } from '@salesforce/core';
 import { ForceGeneratorAdapter, Log } from '@salesforce/templates/lib/utils';
 
 import { expect } from 'chai';
 import * as path from 'path';
-import { stub } from 'sinon';
+import { createSandbox, SinonSandbox, stub } from 'sinon';
 import { TemplateCommand } from '../../src/utils';
+
+const SFDX_PROJECT_PATH = 'test-sfdx-project';
+const TEST_USERNAME = 'test@example.com';
+const projectPath = path.resolve(SFDX_PROJECT_PATH);
+const sfdxProjectJson = {
+  packageDirectories: [{ path: 'force-app', default: true }],
+  namespace: '',
+  sfdcLoginUrl: 'https://login.salesforce.com',
+  sourceApiVersion: '49.0'
+};
 
 /* tslint:disable: no-unused-expression */
 describe('TemplateCommand', () => {
+  let sandboxStub: SinonSandbox;
+
+  beforeEach(async () => {
+    sandboxStub = createSandbox();
+    sandboxStub.stub(SfdxProject, 'resolve').returns(
+      Promise.resolve(({
+        getPath: () => projectPath,
+        resolveProjectConfig: () => sfdxProjectJson
+      } as unknown) as SfdxProject)
+    );
+  });
+
+  afterEach(() => {
+    sandboxStub.restore();
+  });
+
   describe('getDefaultApiVersion', () => {
     it('should parse apiVersion using the major version number of the package.json', async () => {
       const { version } = require('../../package.json');
@@ -62,23 +88,30 @@ describe('TemplateCommand', () => {
   });
 
   describe('runGenerator', () => {
-    const dir = process.cwd();
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should log basic output when json flag is not specified', output => {
-        const expectedOutput = `target dir = ${dir}\n conflict foo.cls\n    force foo.cls\nidentical foo.cls-meta.xml\n\n`;
+        const dir = process.cwd();
+        const expectedOutput = `target dir = ${dir}\nidentical foo.cls\nidentical foo.cls-meta.xml\n\n`;
         expect(output.stdout).to.equal(expectedOutput);
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--json'])
       .it('should log json output when flag is specified', output => {
+        const dir = process.cwd();
         const jsonOutput = JSON.parse(output.stdout);
         expect(jsonOutput).to.haveOwnProperty('status');
         expect(jsonOutput.status).to.equal(0);

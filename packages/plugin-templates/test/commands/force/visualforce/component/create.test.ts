@@ -5,9 +5,10 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { expect, test } from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
+import { Messages, SfdxProject } from '@salesforce/core';
 import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
+import { createSandbox, SinonSandbox } from 'sinon';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
@@ -16,11 +17,40 @@ const messages = Messages.loadMessages(
   'messages'
 );
 
+const SFDX_PROJECT_PATH = 'test-sfdx-project';
+const TEST_USERNAME = 'test@example.com';
+const projectPath = path.resolve(SFDX_PROJECT_PATH);
+const sfdxProjectJson = {
+  packageDirectories: [{ path: 'force-app', default: true }],
+  namespace: '',
+  sfdcLoginUrl: 'https://login.salesforce.com',
+  sourceApiVersion: '49.0'
+};
+
 describe('Visualforce component creation tests:', () => {
+  let sandboxStub: SinonSandbox;
+
+  beforeEach(async () => {
+    sandboxStub = createSandbox();
+    sandboxStub.stub(SfdxProject, 'resolve').returns(
+      Promise.resolve(({
+        getPath: () => projectPath,
+        resolveProjectConfig: () => sfdxProjectJson
+      } as unknown) as SfdxProject)
+    );
+  });
+
+  afterEach(() => {
+    sandboxStub.restore();
+  });
+
   describe('Check visualforce component creation', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -45,8 +75,11 @@ describe('Visualforce component creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -65,8 +98,11 @@ describe('Visualforce component creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -90,8 +126,11 @@ describe('Visualforce component creation tests:', () => {
 
   describe('Check that all invalid name errors are thrown', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:visualforce:component:create'])
       .it('should throw a missing componentname error', ctx => {
@@ -101,8 +140,11 @@ describe('Visualforce component creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:visualforce:component:create',
@@ -116,8 +158,11 @@ describe('Visualforce component creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:visualforce:component:create',
@@ -136,8 +181,11 @@ describe('Visualforce component creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:visualforce:component:create',
@@ -154,8 +202,11 @@ describe('Visualforce component creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:visualforce:component:create',

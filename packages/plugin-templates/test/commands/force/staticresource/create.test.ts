@@ -5,12 +5,40 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { expect, test } from '@salesforce/command/lib/test';
+import { SfdxProject } from '@salesforce/core';
 import { nls } from '@salesforce/templates/lib/i18n';
 import * as fs from 'fs';
 import * as path from 'path';
+import { createSandbox, SinonSandbox } from 'sinon';
 import * as assert from 'yeoman-assert';
 
+const SFDX_PROJECT_PATH = 'test-sfdx-project';
+const TEST_USERNAME = 'test@example.com';
+const projectPath = path.resolve(SFDX_PROJECT_PATH);
+const sfdxProjectJson = {
+  packageDirectories: [{ path: 'force-app', default: true }],
+  namespace: '',
+  sfdcLoginUrl: 'https://login.salesforce.com',
+  sourceApiVersion: '49.0'
+};
+
 describe('Static resource creation tests:', () => {
+  let sandboxStub: SinonSandbox;
+
+  beforeEach(async () => {
+    sandboxStub = createSandbox();
+    sandboxStub.stub(SfdxProject, 'resolve').returns(
+      Promise.resolve(({
+        getPath: () => projectPath,
+        resolveProjectConfig: () => sfdxProjectJson
+      } as unknown) as SfdxProject)
+    );
+  });
+
+  afterEach(() => {
+    sandboxStub.restore();
+  });
+
   if (!fs.existsSync('testsoutput')) {
     fs.mkdirSync('testsoutput');
   }
@@ -18,8 +46,11 @@ describe('Static resource creation tests:', () => {
 
   describe('Check static resource creation', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:staticresource:create',
@@ -40,8 +71,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:staticresource:create',
@@ -62,8 +96,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:staticresource:create',
@@ -84,8 +121,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:staticresource:create',
@@ -106,8 +146,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:staticresource:create',
@@ -128,8 +171,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo'])
       .it(
@@ -144,8 +190,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:staticresource:create',
@@ -164,8 +213,11 @@ describe('Static resource creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:staticresource:create',
@@ -191,8 +243,11 @@ describe('Static resource creation tests:', () => {
 
   describe('Check that all invalid name errors are thrown', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:staticresource:create'])
       .it('should throw a missing resourcename error', ctx => {
@@ -200,8 +255,11 @@ describe('Static resource creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:staticresource:create', '--resourcename', '/a'])
       .it(
@@ -212,8 +270,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:staticresource:create', '--resourcename', '3aa'])
       .it(
@@ -226,8 +287,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:staticresource:create', '--resourcename', 'a_'])
       .it(
@@ -238,8 +302,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:staticresource:create', '--resourcename', 'a__a'])
       .it(
@@ -250,8 +317,11 @@ describe('Static resource creation tests:', () => {
       );
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:staticresource:create',

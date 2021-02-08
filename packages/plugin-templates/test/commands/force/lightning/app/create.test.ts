@@ -5,9 +5,10 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { expect, test } from '@salesforce/command/lib/test';
-import { Messages } from '@salesforce/core';
+import { Messages, SfdxProject } from '@salesforce/core';
 import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
+import { createSandbox, SinonSandbox } from 'sinon';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
@@ -34,11 +35,40 @@ export class TestFormatter {
   }
 }
 
-describe('Lightning app creation tests:', () => {
+const SFDX_PROJECT_PATH = 'test-sfdx-project';
+const TEST_USERNAME = 'test@example.com';
+const projectPath = path.resolve(SFDX_PROJECT_PATH);
+const sfdxProjectJson = {
+  packageDirectories: [{ path: 'force-app', default: true }],
+  namespace: '',
+  sfdcLoginUrl: 'https://login.salesforce.com',
+  sourceApiVersion: '49.0'
+};
+
+describe('Lightning app creation tests: MOOP', () => {
+  let sandboxStub: SinonSandbox;
+
+  beforeEach(async () => {
+    sandboxStub = createSandbox();
+    sandboxStub.stub(SfdxProject, 'resolve').returns(
+      Promise.resolve(({
+        getPath: () => projectPath,
+        resolveProjectConfig: () => sfdxProjectJson
+      } as unknown) as SfdxProject)
+    );
+  });
+
+  afterEach(() => {
+    sandboxStub.restore();
+  });
+
   describe('Check lightning app creation', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:lightning:app:create',
@@ -64,9 +94,13 @@ describe('Lightning app creation tests:', () => {
           );
         }
       );
+
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stdout()
       .command([
         'force:lightning:app:create',
@@ -85,10 +119,14 @@ describe('Lightning app creation tests:', () => {
         }
       );
   });
+
   describe('lightning app failures', () => {
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -104,8 +142,11 @@ describe('Lightning app creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:lightning:app:create', '--appname', 'foo'])
       .it('should throw missing aura parent folder error', ctx => {
@@ -113,8 +154,11 @@ describe('Lightning app creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command(['force:lightning:app:create', '--outputdir', 'aura'])
       .it('should throw missing appname error', ctx => {
@@ -122,8 +166,11 @@ describe('Lightning app creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -137,8 +184,11 @@ describe('Lightning app creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -154,8 +204,11 @@ describe('Lightning app creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -169,8 +222,11 @@ describe('Lightning app creation tests:', () => {
       });
 
     test
-      .withOrg()
-      .withProject()
+      .withOrg({ username: TEST_USERNAME }, true)
+      .loadConfig({
+        root: __dirname
+      })
+      .stub(process, 'cwd', () => projectPath)
       .stderr()
       .command([
         'force:lightning:app:create',

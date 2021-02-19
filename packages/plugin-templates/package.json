@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/plugin-templates",
-  "version": "51.1.0",
+  "version": "51.2.0",
   "main": "index.js",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
@@ -10,7 +10,7 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2.2.0",
     "@salesforce/core": "2.13.0",
-    "@salesforce/templates": "51.1.0",
+    "@salesforce/templates": "51.2.0",
     "tslib": "^1",
     "yeoman-environment": "2.4.0",
     "yeoman-generator": "4.0.1"

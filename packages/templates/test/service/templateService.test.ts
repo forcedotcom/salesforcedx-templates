@@ -48,7 +48,7 @@ describe('TemplateService', () => {
         'LibraryCreateClass.cls'
       );
       const expectedApexClassContent =
-        'public inherited sharing class LibraryCreateClass';
+        'public with sharing class LibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'libraryCreate',

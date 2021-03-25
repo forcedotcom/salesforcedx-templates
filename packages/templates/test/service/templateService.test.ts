@@ -48,7 +48,7 @@ describe('TemplateService', () => {
         'LibraryCreateClass.cls'
       );
       const expectedApexClassContent =
-        'public inherited sharing class LibraryCreateClass';
+        'public with sharing class LibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'libraryCreate',
@@ -57,7 +57,7 @@ describe('TemplateService', () => {
       );
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>50.0</apiVersion>
+    <apiVersion>51.0</apiVersion>
     <status>Active</status>
 </ApexClass>
 `;

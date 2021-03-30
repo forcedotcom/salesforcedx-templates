@@ -92,7 +92,8 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         defaultpackagedir,
         namespace: ns,
         loginurl,
-        apiversion
+        apiversion,
+        name: projectname
       }
     );
 

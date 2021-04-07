@@ -70,6 +70,10 @@ describe('Project creation tests:', () => {
           path.join('foo', 'sfdx-project.json'),
           '"sfdcLoginUrl": "https://login.salesforce.com"'
         );
+        assert.fileContent(
+          path.join('foo', 'sfdx-project.json'),
+          '"name": "foo"'
+        );
 
         for (const file of vscodearray) {
           assert.file([path.join('foo', '.vscode', `${file}.json`)]);

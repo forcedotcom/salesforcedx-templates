@@ -5,6 +5,7 @@
       "default": true
     }
   ],
+  "name": "<%= name %>",
   "namespace": "<%= namespace %>",
   "sfdcLoginUrl": "<%= loginurl %>",
   "sourceApiVersion": "<%= apiversion %>"

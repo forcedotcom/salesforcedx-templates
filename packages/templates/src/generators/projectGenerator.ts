@@ -31,6 +31,7 @@ const filestocopy = [
   GITIGNORE,
   '.prettierignore',
   '.prettierrc',
+  'jest.config.js',
   'package.json'
 ];
 const emptyfolderarray = ['aura', 'lwc'];

@@ -36,7 +36,8 @@ const filestocopy = [
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 
-const analyticsfolderarray = ['waveTemplates'];
+const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
+const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
 
 export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   constructor(args: string | string[], options: ProjectOptions) {
@@ -98,7 +99,6 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       }
     );
 
-    // tslint:disable-next-line:no-unused-expression
     if (manifest === true) {
       this.fs.copyTpl(
         this.templatePath(manifestFile),
@@ -109,7 +109,6 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       );
     }
 
-    // tslint:disable-next-line:no-unused-expression
     if (template === 'standard') {
       makeEmptyFolders(folderlayout, standardfolderarray);
       for (const file of vscodearray) {
@@ -124,30 +123,14 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       this.fs.copyTpl(
         this.templatePath('lwc.eslintrc.json'),
         this.destinationPath(
-          path.join(
-            outputdir,
-            projectname,
-            defaultpackagedir,
-            'main',
-            'default',
-            'lwc',
-            '.eslintrc.json'
-          )
+          path.join(...folderlayout, 'lwc', '.eslintrc.json')
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath('aura.eslintrc.json'),
         this.destinationPath(
-          path.join(
-            outputdir,
-            projectname,
-            defaultpackagedir,
-            'main',
-            'default',
-            'aura',
-            '.eslintrc.json'
-          )
+          path.join(...folderlayout, 'aura', '.eslintrc.json')
         ),
         {}
       );
@@ -175,7 +158,6 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       }
     }
 
-    // tslint:disable-next-line:no-unused-expression
     if (template === 'empty') {
       makeEmptyFolders(folderlayout, emptyfolderarray);
       this.fs.copyTpl(
@@ -185,7 +167,6 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       );
     }
 
-    // tslint:disable-next-line:no-unused-expression
     if (template === 'analytics') {
       makeEmptyFolders(folderlayout, analyticsfolderarray);
       for (const file of vscodearray) {
@@ -197,6 +178,35 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
           {}
         );
       }
+      // add the analytics vscode extension to the recommendations
+      this.fs.extendJSON(
+        path.join(outputdir, projectname, '.vscode', 'extensions.json'),
+        {},
+        (key: string, value: unknown) => {
+          if (
+            key === 'recommendations' &&
+            Array.isArray(value) &&
+            !value.some(n => n === analyticsVscodeExt)
+          ) {
+            value.push(analyticsVscodeExt);
+          }
+          return value;
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('lwc.eslintrc.json'),
+        this.destinationPath(
+          path.join(...folderlayout, 'lwc', '.eslintrc.json')
+        ),
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath('aura.eslintrc.json'),
+        this.destinationPath(
+          path.join(...folderlayout, 'aura', '.eslintrc.json')
+        ),
+        {}
+      );
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(

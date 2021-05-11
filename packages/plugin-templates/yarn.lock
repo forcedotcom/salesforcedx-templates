@@ -469,17 +469,6 @@
   resolved "https://registry.yarnpkg.com/@salesforce/schemas/-/schemas-1.1.0.tgz#bbf94a11ee036f2b0ec6ba82306cd9565a6ba26b"
   integrity sha512-6D7DvE6nFxpLyyTnrOIbbAeCJw2r/EpinFAcMh6gU0gA/CGfSbwV/8uR3uHLYL2zCyCZLH8jJ4dZ3BzCMqc+Eg==
 
-"@salesforce/templates@51.3.0":
-  version "51.3.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/templates/-/templates-51.3.0.tgz#f31cf9f9abd98e1cd425048248429fda2dc235a7"
-  integrity sha512-GvoqafreK76kE1nEmrVvrPsYXxxqFw7fVBLB+02ZHfOccUGVHUrPAMjN21TVwcuyWvFqevZUtceypDFs50RVHg==
-  dependencies:
-    "@salesforce/core" "2.13.0"
-    mime-types "^2.1.27"
-    tslib "^1"
-    yeoman-environment "2.4.0"
-    yeoman-generator "4.0.1"
-
 "@salesforce/ts-sinon@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.2.2.tgz#4d99437def324f9e5507a02c3b322a40ed769167"
@@ -3459,7 +3448,7 @@ mime-db@1.47.0:
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.47.0.tgz#8cb313e59965d3c05cfbf898915a267af46a335c"
   integrity sha512-QBmA/G2y+IfeS4oktet3qRZ+P5kPhCKRXxXnQEudYqUaEioAU1/Lq2us3D/t1Jfo4hE9REQPrbB7K5sOczJVIw==
 
-mime-types@^2.1.12, mime-types@^2.1.27, mime-types@~2.1.19:
+mime-types@^2.1.12, mime-types@~2.1.19:
   version "2.1.30"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.30.tgz#6e7be8b4c479825f85ed6326695db73f9305d62d"
   integrity sha512-crmjA4bLtR8m9qLpHvgxSChT+XoSlZi8J4n/aIdn3z92e/U47Z0V/yl+Wh9W046GgFVAmoNR/fmdbZYcSSIUeg==

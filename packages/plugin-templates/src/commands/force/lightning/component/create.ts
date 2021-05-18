@@ -14,6 +14,7 @@ import { AnyJson } from '@salesforce/ts-types';
 import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 const lightningComponentFileSuffix = /.cmp$/;
+const lightningWebComponentFileSuffix = /.js$/;
 const BUNDLE_TYPE = MessageUtil.get('Component');
 
 export default class LightningComponent extends TemplateCommand {
@@ -53,10 +54,18 @@ export default class LightningComponent extends TemplateCommand {
       char: 't',
       description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
-      default: 'DefaultLightningCmp',
-      options: CreateUtil.getCommandTemplatesForFiletype(
-        lightningComponentFileSuffix,
-        'lightningcomponent'
+      default: 'default',
+      options: Array.from(
+        new Set([
+          ...CreateUtil.getCommandTemplatesInSubdirs('lightningcomponent', {
+            subdir: 'aura',
+            filetype: lightningComponentFileSuffix
+          }),
+          ...CreateUtil.getCommandTemplatesInSubdirs('lightningcomponent', {
+            subdir: 'lwc',
+            filetype: lightningWebComponentFileSuffix
+          })
+        ]).values()
       )
     }),
     outputdir: flags.string({

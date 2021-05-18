@@ -59,6 +59,31 @@ describe('Lightning component creation tests:', () => {
           );
         }
       );
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'aura',
+        '--template',
+        'default'
+      ])
+      .it(
+        'should create lightning aura component files from default template in the aura output directory',
+        ctx => {
+          assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
+          assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
+          assert.fileContent(
+            path.join('aura', 'foo', 'foo.cmp-meta.xml'),
+            '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
+          );
+        }
+      );
   });
 
   describe('Check lightning aura components creation without -meta.xml file', () => {
@@ -112,11 +137,11 @@ describe('Lightning component creation tests:', () => {
       .it(
         'should create lightning web component files in the lwc output directory with the internal flag for disabling -meta.xml files',
         ctx => {
-          assert.file(
-            path.join('lwc', 'internallwctest', 'internallwctest.html')
-          );
           assert.noFile(
             path.join('lwc', 'internallwctest', 'internallwctest.js-meta.xml')
+          );
+          assert.file(
+            path.join('lwc', 'internallwctest', 'internallwctest.html')
           );
           assert.file(
             path.join('lwc', 'internallwctest', 'internallwctest.js')
@@ -144,9 +169,43 @@ describe('Lightning component creation tests:', () => {
         'lwc'
       ])
       .it(
-        'should create lightning web component files in the lwc output directory with the internal flag for disabling -meta.xml files',
+        'should create lightning web component files in the lwc output directory',
         ctx => {
           assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
+          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(path.join('lwc', 'foo', 'foo.js'));
+          assert.fileContent(
+            path.join('lwc', 'foo', 'foo.js'),
+            'export default class Foo extends LightningElement {}'
+          );
+        }
+      );
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc',
+        '--template',
+        'default'
+      ])
+      .it(
+        'should create lightning web component files from default template in the lwc output directory',
+        ctx => {
+          assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
+          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(path.join('lwc', 'foo', 'foo.js'));
+          assert.fileContent(
+            path.join('lwc', 'foo', 'foo.js'),
+            'export default class Foo extends LightningElement {}'
+          );
         }
       );
   });
@@ -183,6 +242,24 @@ describe('Lightning component creation tests:', () => {
       ])
       .it('should throw missing lwc parent folder error', ctx => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingLWCFolder'));
+      });
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command([
+        'force:lightning:component:create',
+        '--outputdir',
+        'lwc',
+        '--componentname',
+        'foo',
+        '--type',
+        'lwc',
+        '--template',
+        'foo'
+      ])
+      .it('should throw invalid template error', ctx => {
+        expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
       });
   });
 });

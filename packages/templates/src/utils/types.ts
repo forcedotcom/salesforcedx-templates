@@ -50,10 +50,10 @@ export interface AnalyticsTemplateOptions extends TemplateOptions {
 
 export interface ApexClassOptions extends TemplateOptions {
   template:
-  | 'DefaultApexClass'
-  | 'ApexUnitTest'
-  | 'ApexException'
-  | 'InboundEmailService';
+    | 'DefaultApexClass'
+    | 'ApexUnitTest'
+    | 'ApexException'
+    | 'InboundEmailService';
   classname: string;
 }
 
@@ -81,7 +81,7 @@ export interface LightningAppOptions extends TemplateOptions {
 
 export interface LightningComponentOptions extends TemplateOptions {
   componentname: string;
-  template: 'DefaultLightningCmp';
+  template: string;
   type: 'aura' | 'lwc';
   internal: boolean;
 }

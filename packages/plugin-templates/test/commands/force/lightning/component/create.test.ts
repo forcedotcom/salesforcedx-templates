@@ -210,6 +210,82 @@ describe('Lightning component creation tests:', () => {
       );
   });
 
+  describe('Check analytics dashboard lwc creation', () => {
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc',
+        '--template',
+        'analyticsDashboard'
+      ])
+      .it(
+        'should create analyticsDashboard lwc files in the lwc output directory',
+        ctx => {
+          const jsFile = path.join('lwc', 'foo', 'foo.js');
+          const metaFile = path.join('lwc', 'foo', 'foo.js-meta.xml');
+          assert.file(metaFile);
+          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(jsFile);
+          assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
+          assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
+          assert.fileContent(metaFile, '<hasStep>false</hasStep>');
+          assert.fileContent(
+            jsFile,
+            'export default class Foo extends LightningElement {'
+          );
+          assert.fileContent(jsFile, '@api getState;');
+          assert.fileContent(jsFile, '@api setState;');
+        }
+      );
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc',
+        '--template',
+        'analyticsDashboardWithStep'
+      ])
+      .it(
+        'should create analyticsDashboardWithStep lwc files in the lwc output directory',
+        ctx => {
+          const jsFile = path.join('lwc', 'foo', 'foo.js');
+          const metaFile = path.join('lwc', 'foo', 'foo.js-meta.xml');
+          assert.file(metaFile);
+          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(jsFile);
+          assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
+          assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
+          assert.fileContent(metaFile, '<hasStep>true</hasStep>');
+          assert.fileContent(
+            jsFile,
+            'export default class Foo extends LightningElement {'
+          );
+          assert.fileContent(jsFile, '@api getState;');
+          assert.fileContent(jsFile, '@api setState;');
+          assert.fileContent(jsFile, '@api results;');
+          assert.fileContent(jsFile, '@api metadata;');
+          assert.fileContent(jsFile, '@api selection;');
+          assert.fileContent(jsFile, '@api setSelection;');
+          assert.fileContent(jsFile, '@api selectMode;');
+        }
+      );
+  });
+
   describe('lightning component failures', () => {
     test
       .withOrg()
@@ -260,6 +336,29 @@ describe('Lightning component creation tests:', () => {
       ])
       .it('should throw invalid template error', ctx => {
         expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
+      });
+    test
+      .withOrg()
+      .withProject()
+      .stderr()
+      .command([
+        'force:lightning:component:create',
+        '--outputdir',
+        'aura',
+        '--componentname',
+        'foo',
+        '--type',
+        'aura',
+        '--template',
+        'analyticsDashboard'
+      ])
+      .it('should throw missing template error', ctx => {
+        expect(ctx.stderr).to.contain(
+          messages.getMessage('MissingLightningComponentTemplate', [
+            'analyticsDashboard',
+            'aura'
+          ])
+        );
       });
   });
 });

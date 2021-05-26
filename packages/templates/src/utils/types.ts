@@ -81,7 +81,7 @@ export interface LightningAppOptions extends TemplateOptions {
 
 export interface LightningComponentOptions extends TemplateOptions {
   componentname: string;
-  template: string;
+  template: 'default' | 'analyticsDashboard' | 'analyticsDashboardWithStep';
   type: 'aura' | 'lwc';
   internal: boolean;
 }

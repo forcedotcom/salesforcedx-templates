@@ -30,6 +30,19 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         throw new Error(nls.localize('MissingAuraDir'));
       }
     }
+
+    if (
+      CreateUtil.getCommandTemplatesInSubdirs('lightningcomponent', {
+        subdir: this.options.type
+      }).indexOf(this.options.template) < 0
+    ) {
+      throw new Error(
+        nls.localize('MissingLightningComponentTemplate', [
+          this.options.template,
+          this.options.type
+        ])
+      );
+    }
   }
 
   public writing() {
@@ -41,14 +54,21 @@ export default class LightningComponentGenerator extends SfdxGenerator<
       type,
       internal
     } = this.options;
-    // tslint:disable-next-line:no-unused-expression
+
     if (type === 'aura') {
       this.sourceRoot(
-        path.join(__dirname, '..', 'templates', 'lightningcomponent', 'aura')
+        path.join(
+          __dirname,
+          '..',
+          'templates',
+          'lightningcomponent',
+          'aura',
+          template
+        )
       );
       if (!internal) {
         this.fs.copyTpl(
-          this.templatePath('_auradefinitionbundle.cmp-meta.xml'),
+          this.templatePath(`${template}.cmp-meta.xml`),
           this.destinationPath(
             path.join(outputdir, componentname, `${componentname}.cmp-meta.xml`)
           ),
@@ -60,63 +80,62 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         );
       }
       this.fs.copyTpl(
-        this.templatePath('DefaultLightningAuradoc.auradoc'),
+        this.templatePath(`${template}.auradoc`),
         this.destinationPath(
           path.join(outputdir, componentname, `${componentname}.auradoc`)
         ),
         {}
-      ),
-        this.fs.copyTpl(
-          this.templatePath(`${template}.cmp`),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.cmp`)
-          ),
-          {}
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}.cmp`),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}.cmp`)
         ),
-        this.fs.copyTpl(
-          this.templatePath('DefaultLightningCss.css'),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.css`)
-          ),
-          {}
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}.css`),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}.css`)
         ),
-        this.fs.copyTpl(
-          this.templatePath('DefaultLightningDesign.design'),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.design`)
-          ),
-          {}
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}.design`),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}.design`)
         ),
-        this.fs.copyTpl(
-          this.templatePath('DefaultLightningSVG.svg'),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.svg`)
-          ),
-          {}
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}.svg`),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}.svg`)
         ),
-        this.fs.copyTpl(
-          this.templatePath('DefaultLightningController.js'),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}Controller.js`)
-          ),
-          {}
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}Controller.js`),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}Controller.js`)
         ),
-        this.fs.copyTpl(
-          this.templatePath('DefaultLightningHelper.js'),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}Helper.js`)
-          ),
-          {}
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}Helper.js`),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}Helper.js`)
         ),
-        this.fs.copyTpl(
-          this.templatePath('DefaultLightningRenderer.js'),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}Renderer.js`)
-          ),
-          {}
-        );
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}Renderer.js`),
+        this.destinationPath(
+          path.join(outputdir, componentname, `${componentname}Renderer.js`)
+        ),
+        {}
+      );
     }
-    // tslint:disable-next-line:no-unused-expression
     if (type === 'lwc') {
       // lwc requires first letter of filename to be lowercase
       const fileName = `${componentname
@@ -129,23 +148,30 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         .toUpperCase()}${componentname.substring(1)}`;
 
       this.sourceRoot(
-        path.join(__dirname, '..', 'templates', 'lightningcomponent', 'lwc')
+        path.join(
+          __dirname,
+          '..',
+          'templates',
+          'lightningcomponent',
+          'lwc',
+          template
+        )
       );
       this.fs.copyTpl(
-        this.templatePath('DefaultLightningLWC.js'),
+        this.templatePath(`${template}.js`),
         this.destinationPath(path.join(outputdir, fileName, `${fileName}.js`)),
         { className }
-      ),
-        this.fs.copyTpl(
-          this.templatePath('_.html'),
-          this.destinationPath(
-            path.join(outputdir, fileName, `${fileName}.html`)
-          ),
-          {}
-        );
+      );
+      this.fs.copyTpl(
+        this.templatePath(`${template}.html`),
+        this.destinationPath(
+          path.join(outputdir, fileName, `${fileName}.html`)
+        ),
+        {}
+      );
       if (!internal) {
         this.fs.copyTpl(
-          this.templatePath('_js-meta.xml'),
+          this.templatePath(`${template}.js-meta.xml`),
           this.destinationPath(
             path.join(outputdir, fileName, `${fileName}.js-meta.xml`)
           ),

@@ -9,11 +9,9 @@
 
 import { flags } from '@salesforce/command';
 import LightningComponentGenerator from '@salesforce/templates/lib/generators/lightningComponentGenerator';
-import { CreateUtil } from '@salesforce/templates/lib/utils';
 import { AnyJson } from '@salesforce/ts-types';
 import { MessageUtil, TemplateCommand } from '../../../../utils';
 
-const lightningComponentFileSuffix = /.cmp$/;
 const BUNDLE_TYPE = MessageUtil.get('Component');
 
 export default class LightningComponent extends TemplateCommand {
@@ -53,11 +51,10 @@ export default class LightningComponent extends TemplateCommand {
       char: 't',
       description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
-      default: 'DefaultLightningCmp',
-      options: CreateUtil.getCommandTemplatesForFiletype(
-        lightningComponentFileSuffix,
-        'lightningcomponent'
-      )
+      default: 'default',
+      // Note: keep this list here and LightningComponentOptions#template in-sync with the
+      // templates/lightningcomponents/[aura|lwc]/* folders
+      options: ['default', 'analyticsDashboard', 'analyticsDashboardWithStep']
     }),
     outputdir: flags.string({
       char: 'd',

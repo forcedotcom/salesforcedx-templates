@@ -64,6 +64,7 @@
   "MissingAuraFolder": "Lightning bundles must have a parent folder named 'aura'.",
   "MissingAppname": "Missing required flag:\n -n, --appname APPNAME  name of the generated Lightning app\nSee more help with --help\n",
   "MissingComponentName": "Missing required flag:\n -n, --componentname COMPONENTNAME  name of the generated Lightning component\nSee more help with --help\n",
+  "MissingLightningComponentTemplate": "Template %s not available for component type %s.",
   "MissingLWCFolder": "Lightning bundles must have a parent folder named 'lwc'.",
   "MissingEventname": "Missing required flag:\n -n, --eventname EVENTNAME  name of the generated Lightning event\nSee more help with --help\n",
   "MissingInterfacename": "Missing required flag:\n -n, --interfacename INTERFACENAME  name of the generated Lightning interface\nSee more help with --help\n",

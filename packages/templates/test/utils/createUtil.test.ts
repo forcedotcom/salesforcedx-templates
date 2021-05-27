@@ -86,4 +86,82 @@ describe('CreateUtil', () => {
       expect(templates).to.eql(names);
     };
   });
+
+  describe('getCommandTemplatesInSubdirs', () => {
+    const templateType = 'lightningcomponent';
+    const templatePath = path.resolve(
+      __dirname,
+      '../../src/templates',
+      templateType
+    );
+    const auraPath = path.join(templatePath, 'aura');
+
+    function dirent(name: string, isDirectory: boolean): fs.Dirent {
+      const ent = new fs.Dirent();
+      ent.name = name;
+      ent.isDirectory = () => isDirectory;
+      ent.isFile = () => !isDirectory;
+      return ent;
+    }
+
+    let readdirStub: SinonStub;
+
+    beforeEach(() => {
+      readdirStub = stub(fs, 'readdirSync');
+    });
+
+    afterEach(() => readdirStub.restore());
+
+    it('should get template names', () => {
+      readdirStub
+        .withArgs(templatePath, { withFileTypes: true })
+        .returns([
+          dirent('Template1', true),
+          dirent('Template2', true),
+          dirent('afile.txt', false)
+        ]);
+
+      const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType);
+      expect(templates).to.eql(['Template1', 'Template2']);
+    });
+
+    it('should get template names for given subdir', () => {
+      readdirStub
+        .withArgs(auraPath, { withFileTypes: true })
+        .returns([dirent('Template1', true), dirent('Template2', true)]);
+
+      const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {
+        subdir: 'aura'
+      });
+      expect(templates).to.eql(['Template1', 'Template2']);
+    });
+
+    it('should ignore subdirs that do not have the given file suffix', () => {
+      readdirStub
+        .withArgs(auraPath, { withFileTypes: true })
+        .returns([
+          dirent('Template1', true),
+          dirent('Template2', true),
+          dirent('Template3', true)
+        ]);
+      readdirStub
+        .withArgs(path.join(auraPath, 'Template1'), { withFileTypes: true })
+        .returns([
+          dirent('Template1.cmp', false),
+          dirent('Template1Controller.js', false)
+        ]);
+      readdirStub
+        .withArgs(path.join(auraPath, 'Template2'), { withFileTypes: true })
+        .returns([dirent('randomfile.html', false)]);
+      readdirStub
+        .withArgs(path.join(auraPath, 'Template3'), { withFileTypes: true })
+        .returns([]);
+
+      const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {
+        subdir: 'aura',
+        filetype: /\.cmp$/
+      });
+      expect(templates).to.eql(['Template1']);
+    });
+  });
 });

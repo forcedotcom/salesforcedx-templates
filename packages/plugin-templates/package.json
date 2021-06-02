@@ -101,9 +101,6 @@
     }
   },
   "repository": "forcedotcom/salesforcedx-templates",
-  "resolutions": {
-    "**/@salesforce/core": "2.23.2"
-  },
   "scripts": {
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
     "compile": "tsc -b",

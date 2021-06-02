@@ -9,7 +9,7 @@
     "@oclif/config": "^1",
     "@oclif/errors": "^1",
     "@salesforce/command": "^2.2.0",
-    "@salesforce/core": "2.23.1",
+    "@salesforce/core": "2.23.2",
     "@salesforce/templates": "51.4.0",
     "tslib": "^1",
     "yeoman-environment": "2.4.0",
@@ -101,6 +101,9 @@
     }
   },
   "repository": "forcedotcom/salesforcedx-templates",
+  "resolutions": {
+    "**/@salesforce/core": "2.23.2"
+  },
   "scripts": {
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
     "compile": "tsc -b",

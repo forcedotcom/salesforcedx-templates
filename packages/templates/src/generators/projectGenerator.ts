@@ -11,6 +11,8 @@ import { ProjectOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
 const GITIGNORE = 'gitignore';
+const HUSKY_FOLDER = '.husky';
+const huskyhookarray = ['pre-commit'];
 const vscodearray = ['extensions', 'launch', 'settings'];
 const standardfolderarray = [
   'applications',
@@ -111,6 +113,19 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
 
     if (template === 'standard') {
       makeEmptyFolders(folderlayout, standardfolderarray);
+
+      // Add Husky config
+      makeEmptyFolders(folderlayout, [HUSKY_FOLDER]);
+      for (const file of huskyhookarray) {
+        this.fs.copyTpl(
+          this.templatePath(file),
+          this.destinationPath(
+            path.join(outputdir, projectname, HUSKY_FOLDER, file)
+          ),
+          {}
+        );
+      }
+
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),

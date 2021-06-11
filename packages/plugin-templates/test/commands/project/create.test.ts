@@ -34,6 +34,7 @@ const filestocopy = [
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
+const huskyhookarray = ['pre-commit'];
 const vscodearray = ['extensions', 'launch', 'settings'];
 
 Messages.importMessagesDirectory(__dirname);
@@ -75,6 +76,11 @@ describe('Project creation tests:', () => {
           path.join('foo', 'sfdx-project.json'),
           '"name": "foo"'
         );
+
+        // Check for Husky hooks
+        for (const file of huskyhookarray) {
+          assert.file([path.join('foo', '.husky', file)]);
+        }
 
         for (const file of vscodearray) {
           assert.file([path.join('foo', '.vscode', `${file}.json`)]);

@@ -114,14 +114,15 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     if (template === 'standard') {
       makeEmptyFolders(folderlayout, standardfolderarray);
 
-      // Add Husky config
-      makeEmptyFolders(folderlayout, [HUSKY_FOLDER]);
+      // Add Husky directory and hooks
+      const huskyDirPath = path.join(outputdir, projectname, HUSKY_FOLDER);
+      if (!fs.existsSync(huskyDirPath)) {
+        fs.mkdirSync(huskyDirPath);
+      }
       for (const file of huskyhookarray) {
         this.fs.copyTpl(
-          this.templatePath(file),
-          this.destinationPath(
-            path.join(outputdir, projectname, HUSKY_FOLDER, file)
-          ),
+          this.templatePath(path.join(HUSKY_FOLDER, file)),
+          this.destinationPath(path.join(huskyDirPath, file)),
           {}
         );
       }

@@ -16,7 +16,7 @@
     "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
   },
   "devDependencies": {
-    "@prettier/plugin-xml": "^0.12.0",
+    "@prettier/plugin-xml": "^0.13.1",
     "@salesforce/eslint-config-lwc": "^0.11.0",
     "@salesforce/eslint-plugin-aura": "^2.0.0",
     "@salesforce/sfdx-lwc-jest": "^0.10.4",

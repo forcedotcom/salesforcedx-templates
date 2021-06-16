@@ -248,8 +248,6 @@ workflows:
       - node-12
       - node-10
       - run-win-tests
-      - hold: # Requires manual approval in Circle Ci
-          type: approval
       - prepublish:
           context: pdt-publish-restricted-context
           requires:
@@ -258,6 +256,8 @@ workflows:
             - node-12
             - node-10
             - hold
+      - hold: # Requires manual approval in Circle Ci
+          type: approval
       - publish-library:
           context: pdt-publish-restricted-context
           filters:

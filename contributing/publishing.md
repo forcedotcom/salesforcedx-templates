@@ -47,6 +47,16 @@ For each commit being pulled into the port PR, make sure that the following is t
 
 To publish the changes to npm, we run the task `Publish Library and Plugin`. This task calls the script `publish-workflow.sh` and prompts the user for the required information. The publish-workflow script generates an HTTP Request to the CircleCI API. It tells CircleCI that it wants to run the `publish-workflow` from the `main` branch.
 
+### Publish a major release version
+
+To publish a major release version:
+
+- First open a PR to update default API version and the correspondent tests (Take a look at [this example](https://github.com/forcedotcom/salesforcedx-templates/pull/340))
+- Then create and merge the port PR
+- Finally, run the publish workflow from command line:
+  `./scripts/publish-workflow.sh <CircleCIToken> <Release-Version>`
+- Skip the Post Publish Step since the version has already been updated.
+
 ### Prerequisites
 
 1. All staged changes have been QA'd and Closed.

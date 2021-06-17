@@ -19,7 +19,7 @@
     "@prettier/plugin-xml": "^0.12.0",
     "@salesforce/eslint-config-lwc": "^0.11.0",
     "@salesforce/eslint-plugin-aura": "^2.0.0",
-    "@salesforce/sfdx-lwc-jest": "^0.10.4",
+    "@salesforce/sfdx-lwc-jest": "^0.12.4",
     "eslint": "^7.24.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^4.2.1",

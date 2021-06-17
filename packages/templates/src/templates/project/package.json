@@ -39,9 +39,6 @@
     ],
     "**/{aura,lwc}/**": [
       "eslint"
-    ],
-    "**/lwc/**": [
-      "sfdx-lwc-jest --skipApiVersionCheck -- --bail --findRelatedTests"
     ]
   }
 }

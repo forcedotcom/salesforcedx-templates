@@ -399,6 +399,12 @@ describe('Project creation tests:', () => {
             const dir = path.join(srcDir, folder);
             assert(fs.existsSync(dir), `Missing ${dir}`);
           }
+
+          // Check for Husky hooks
+          for (const file of huskyhookarray) {
+            assert.file([path.join('foo', '.husky', file)]);
+          }
+
           for (const file of vscodearray) {
             assert.file(path.join('analytics1', '.vscode', `${file}.json`));
           }

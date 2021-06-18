@@ -115,17 +115,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       makeEmptyFolders(folderlayout, standardfolderarray);
 
       // Add Husky directory and hooks
-      const huskyDirPath = path.join(outputdir, projectname, HUSKY_FOLDER);
-      if (!fs.existsSync(huskyDirPath)) {
-        fs.mkdirSync(huskyDirPath);
-      }
-      for (const file of huskyhookarray) {
-        this.fs.copyTpl(
-          this.templatePath(path.join(HUSKY_FOLDER, file)),
-          this.destinationPath(path.join(huskyDirPath, file)),
-          {}
-        );
-      }
+      this._createHuskyConfig(path.join(outputdir, projectname));
 
       for (const file of vscodearray) {
         this.fs.copyTpl(
@@ -185,6 +175,10 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
 
     if (template === 'analytics') {
       makeEmptyFolders(folderlayout, analyticsfolderarray);
+
+      // Add Husky directory and hooks
+      this._createHuskyConfig(path.join(outputdir, projectname));
+
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
@@ -231,6 +225,20 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
           {}
         );
       }
+    }
+  }
+
+  private _createHuskyConfig(projectRootDir: string) {
+    const huskyDirPath = path.join(projectRootDir, HUSKY_FOLDER);
+    if (!fs.existsSync(huskyDirPath)) {
+      fs.mkdirSync(huskyDirPath);
+    }
+    for (const file of huskyhookarray) {
+      this.fs.copyTpl(
+        this.templatePath(path.join(HUSKY_FOLDER, file)),
+        this.destinationPath(path.join(huskyDirPath, file)),
+        {}
+      );
     }
   }
 }

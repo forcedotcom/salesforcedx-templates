@@ -98,7 +98,7 @@
       "id": "publishType",
       "type": "pickString",
       "description": "Type of version to publish",
-      "options": ["minor", "patch", "major"],
+      "options": ["minor", "patch"],
       "default": "minor"
     },
     {

@@ -255,7 +255,6 @@ workflows:
             - node-latest
             - node-12
             - node-10
-            - hold
       - hold: # Requires manual approval in Circle Ci
           type: approval
       - publish-library:

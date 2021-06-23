@@ -252,6 +252,7 @@ jobs:
           name: Backport version bump to develop branch
           command: |
             export LATEST_VERSION=$(git describe --tags --abbrev=0)
+            git checkout main
             git checkout -b portToDevelop-${LATEST_VERSION}
             git rebase --onto origin/develop portToDevelop-${LATEST_VERSION}^ portToDevelop-${LATEST_VERSION}
             git checkout develop

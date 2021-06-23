@@ -240,6 +240,24 @@ jobs:
             fi
       - npm-release-management/verify-signed-package
 
+  backport-to-develop:
+    description: 'Backport version bump to develop branch'
+    working_directory: ~/cli
+    docker:
+      - image: node:12
+    steps:
+      - attach_workspace:
+          at: ~/cli
+      - run:
+          name: Backport version bump to develop branch
+          command: |
+            export LATEST_VERSION=$(git describe --tags --abbrev=0)
+            git checkout -b portToDevelop-${LATEST_VERSION}
+            git rebase --onto origin/develop portToDevelop-${LATEST_VERSION}^ portToDevelop-${LATEST_VERSION}
+            git checkout develop
+            git merge -ff-only portToDevelop-${LATEST_VERSION}
+            git push origin develop
+
 workflows:
   version: 2.1
 
@@ -290,3 +308,11 @@ workflows:
                 - main
           requires:
             - publish-library
+      - backport-to-develop:
+          context: pdt-publish-restricted-context
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - publish-plugin

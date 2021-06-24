@@ -219,10 +219,45 @@ jobs:
       - npm-release-management/sign
       - npm-release-management/publish:
           use_tarfile: true
-      - npm-release-management/verify-signed-package
       - ssh-config
       - create-git-tag # this is looking up package.json
       - run: git push origin main
+      - run:
+          name: Wait for dist-tags to become available
+          command: |
+            PKG_VERSION=$(cat package.json | jq -r .version)
+            MAX_TRIES=300
+            TRIES=0
+            until (( $(npm dist-tag ls "@salesforce/plugin-templates" | grep -c $PKG_VERSION ) )) || (($TRIES >= $MAX_TRIES )); do
+                printf '.'
+                sleep 1
+                TRIES=$((TRIES+1))
+            done
+
+            if (($TRIES >= $MAX_TRIES)); then
+                echo "Timeout waiting for dist-tags. Exiting job"
+                exit 1
+            fi
+      - npm-release-management/verify-signed-package
+
+  backport-to-develop:
+    description: 'Backport version bump to develop branch'
+    working_directory: ~/cli
+    docker:
+      - image: node:12
+    steps:
+      - attach_workspace:
+          at: ~/cli
+      - run:
+          name: Backport version bump to develop branch
+          command: |
+            export LATEST_VERSION=$(git describe --tags --abbrev=0)
+            git checkout main
+            git checkout -b portToDevelop-${LATEST_VERSION}
+            git rebase --onto origin/develop portToDevelop-${LATEST_VERSION}^ portToDevelop-${LATEST_VERSION}
+            git checkout develop
+            git merge -ff-only portToDevelop-${LATEST_VERSION}
+            git push origin develop
 
 workflows:
   version: 2.1
@@ -274,3 +309,11 @@ workflows:
                 - main
           requires:
             - publish-library
+      - backport-to-develop:
+          context: pdt-publish-restricted-context
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - publish-plugin

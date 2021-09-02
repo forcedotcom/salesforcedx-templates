@@ -4,19 +4,15 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { Global } from '@salesforce/core';
-import * as crypto from 'crypto';
+
 import * as fs from 'fs';
-import got from 'got';
 import * as path from 'path';
-import { Stream } from 'stream';
-import * as tar from 'tar';
-import { promisify } from 'util';
 import * as yeoman from 'yeoman-environment';
 
 import { nls } from '../i18n';
 import { ForceGeneratorAdapter } from '../utils';
 import { CreateOutput, TemplateOptions, TemplateType } from '../utils/types';
+import { loadCustomTemplatesGitRepo } from './gitRepoUtils';
 
 /**
  * Template Service
@@ -129,7 +125,6 @@ export class TemplateService {
     });
   }
 
-  // TODO: extract this to a different file
   /**
    * Local custom templates path set by user
    * or set to a local cache of a git repo.
@@ -141,7 +136,6 @@ export class TemplateService {
     // @ts-ignore
     this.env = yeoman.createEnv(undefined, { cwd }, this.adapter);
   }
-  private loadedCustomTemplatesGitRepos = new Map<string, boolean>();
 
   /**
    * Set custom templates root path or git repo.
@@ -156,9 +150,14 @@ export class TemplateService {
       // if pathOrRepoUri is valid url, load the repo
       const url = new URL(pathOrRepoUri);
       if (url) {
-        await this.loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo);
+        this.customTemplatesRootPath = await loadCustomTemplatesGitRepo(
+          url,
+          forceLoadingRemoteRepo
+        );
       }
     } catch (error) {
+      // TODO: if not invalid url error, throw the error
+
       const localTemplatesPath = pathOrRepoUri;
       if (fs.existsSync(localTemplatesPath)) {
         this.customTemplatesRootPath = localTemplatesPath;
@@ -169,76 +168,5 @@ export class TemplateService {
         );
       }
     }
-  }
-
-  /**
-   * Load custom templates Git repo. Currently only supports GitHub.
-   * @param repoUri repo uri
-   */
-  public async loadCustomTemplatesGitRepo(
-    repoUri: URL,
-    forceLoadingRemoteRepo: boolean = false
-  ) {
-    // For current session, do not load the remote repo if already loaded.
-    if (
-      this.loadedCustomTemplatesGitRepos.get(repoUri.href) &&
-      !forceLoadingRemoteRepo
-    ) {
-      return;
-    }
-
-    /**
-     * The following implementation are adapted from create-next-app
-     * See https://github.com/vercel/next.js/blob/canary/license.md for more information
-     */
-    if (repoUri.protocol !== 'https:') {
-      throw new Error(
-        `Only https protocol is supported for custom templates. Got ${repoUri.protocol}.`
-      );
-    }
-    if (repoUri.hostname !== 'github.com') {
-      throw new Error(
-        `Unsupported custom templates repo ${repoUri.href}. Only GitHub is supported.`
-      );
-    }
-
-    // TODO:
-    // - handle invalid GitHub URL: username, name, branch, "tree", filePath must be valid
-    // - handle repos with no branch information
-    const [, username, name, , branch, ...file] = repoUri.pathname.split('/');
-    const filePath = `${file.join('/')}`;
-
-    const folderHash = crypto
-      .createHash('md5')
-      .update(repoUri.href)
-      .digest('hex');
-
-    const customTemplatesPath = path.join(
-      Global.DIR,
-      'custom-templates',
-      folderHash
-    );
-
-    if (!fs.existsSync(customTemplatesPath)) {
-      fs.mkdirSync(customTemplatesPath, { recursive: true });
-    }
-
-    // Download the repo and extract to the SFDX global state folder
-    const pipeline = promisify(Stream.pipeline);
-    await pipeline(
-      got.stream(
-        `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
-      ),
-      tar.extract(
-        {
-          cwd: customTemplatesPath,
-          strip: filePath ? filePath.split('/').length + 1 : 1
-        },
-        [`${name}-${branch}${filePath ? `/${filePath}` : ''}`]
-      )
-    );
-
-    this.loadedCustomTemplatesGitRepos.set(repoUri.href, true);
-    this.customTemplatesRootPath = customTemplatesPath;
   }
 }

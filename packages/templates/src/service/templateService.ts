@@ -156,7 +156,9 @@ export class TemplateService {
         );
       }
     } catch (error) {
-      // TODO: if not invalid url error, throw the error
+      if (error.code !== 'ERR_INVALID_URL') {
+        throw error;
+      }
 
       const localTemplatesPath = pathOrRepoUri;
       if (fs.existsSync(localTemplatesPath)) {

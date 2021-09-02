@@ -68,6 +68,14 @@ describe('TemplateService', () => {
         expectedApexClassMetaContent
       );
     });
+  });
+
+  describe('create custom template', () => {
+    beforeEach(async () => {
+      await fs.remove(
+        path.join('testsoutput', 'customLibraryCreate', 'apexclass')
+      );
+    });
 
     it('should create custom template from local folder', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
@@ -112,7 +120,53 @@ describe('TemplateService', () => {
         expectedApexClassMetaContent
       );
     });
-  });
+
+    it('should create custom template from GitHub repository', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      // TODO: update the branch to develop after PR is merged
+      const customTemplates =
+        'https://github.com/forcedotcom/salesforcedx-templates/tree/tests/packages/templates/test/custom-templates';
+      await templateService.create(
+        TemplateType.ApexClass,
+        {
+          template: 'DefaultApexClass',
+          classname: 'LibraryCreateClass',
+          outputdir: path.join(
+            'testsoutput',
+            'customLibraryCreate',
+            'apexClass'
+          )
+        },
+        customTemplates
+      );
+      const expectedApexClassPath = path.join(
+        'testsoutput',
+        'customLibraryCreate',
+        'apexClass',
+        'LibraryCreateClass.cls'
+      );
+      const expectedApexClassContent =
+        'public with sharing class CustomLibraryCreateClass';
+      const expectedApexClassMetaPath = path.join(
+        'testsoutput',
+        'customLibraryCreate',
+        'apexClass',
+        'LibraryCreateClass.cls-meta.xml'
+      );
+      const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
+<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <status>Inactive</status>
+</ApexClass>
+`;
+      assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
+      assert.fileContent(expectedApexClassPath, expectedApexClassContent);
+      assert.fileContent(
+        expectedApexClassMetaPath,
+        expectedApexClassMetaContent
+      );
+    });
+  }).timeout(20000);
 
   describe('create template', () => {
     it('create template should return created output', async () => {

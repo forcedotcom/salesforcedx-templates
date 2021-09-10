@@ -38,7 +38,7 @@ export async function loadCustomTemplatesGitRepo(
 
   if (repoUri.protocol !== 'https:') {
     throw new Error(
-      `Only https protocol is supported for custom templates. Got ${repoUri.protocol}.`
+      `Only HTTPS protocol is supported for custom templates. Got ${repoUri.protocol}.`
     );
   }
   if (repoUri.hostname !== 'github.com') {
@@ -49,7 +49,7 @@ export async function loadCustomTemplatesGitRepo(
 
   // TODO:
   // - handle invalid GitHub URL: username, name, branch, "tree", filePath must be valid
-  // - handle repos with no branch information
+  // - handle repos with no branch information - fetch default branch
   const [, username, name, , branch, ...file] = repoUri.pathname.split('/');
   const filePath = `${file.join('/')}`;
 

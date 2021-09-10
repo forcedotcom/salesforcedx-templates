@@ -35,6 +35,9 @@ export const messages = {
     'Only HTTPS protocol is supported for custom templates. Got %s.',
   customTemplatesSupportsGitHubOnly:
     'Unsupported custom templates repo %s. Only GitHub is supported.',
+  customTemplatesInvalidRepoUrl: 'Invalid custom templates repository URL: %s',
+  customTemplatesCannotRetrieveDefaultBranch:
+    'Cannot retrieve default branch for custom templates repository: %s',
 
   LightningAppBundle: 'A Lightning Application Bundle',
   LightningComponentBundle: 'A Lightning Component Bundle',

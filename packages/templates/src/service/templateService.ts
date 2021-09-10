@@ -164,9 +164,8 @@ export class TemplateService {
       if (fs.existsSync(localTemplatesPath)) {
         this.customTemplatesRootPath = localTemplatesPath;
       } else {
-        // TODO: localize error
         throw new Error(
-          `Local custom templates ${localTemplatesPath} does not exist`
+          nls.localize('localCustomTemplateDoNotExist', localTemplatesPath)
         );
       }
     }

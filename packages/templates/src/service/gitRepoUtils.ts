@@ -76,7 +76,10 @@ export async function loadCustomTemplatesGitRepo(
 
   if (repoUri.protocol !== 'https:') {
     throw new Error(
-      nls.localize('customTemplatesShouldUseHttpsProtocol', repoUri.protocol)
+      nls.localize(
+        'customTemplatesShouldUseHttpsProtocol',
+        `"${repoUri.protocol}"`
+      )
     );
   }
   if (repoUri.hostname !== 'github.com') {

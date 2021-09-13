@@ -77,6 +77,10 @@ describe('TemplateService', () => {
   });
 
   describe('create custom template', () => {
+    // TODO: update the branch to develop after PR is merged
+    const TEST_CUSTOM_TEMPLATES_REPO =
+      'https://github.com/forcedotcom/salesforcedx-templates/tree/tests/packages/templates/test/custom-templates';
+
     beforeEach(async () => {
       await fs.remove(
         path.join('testsoutput', 'customLibraryCreate', 'apexclass')
@@ -129,9 +133,7 @@ describe('TemplateService', () => {
 
     it('should create custom template from GitHub repository', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      // TODO: update the branch to develop after PR is merged
-      const customTemplates =
-        'https://github.com/forcedotcom/salesforcedx-templates/tree/tests/packages/templates/test/custom-templates';
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
       await templateService.create(
         TemplateType.ApexClass,
         {
@@ -194,6 +196,109 @@ describe('TemplateService', () => {
         .should.be.rejectedWith(
           Error,
           nls.localize('localCustomTemplateDoNotExist', localPath)
+        );
+    });
+
+    it('should throw error if cannot retrieve default branch', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      const customTemplates =
+        'https://github.com/forcedotcom/this-repo-does-not-exist';
+      await templateService
+        .create(
+          TemplateType.ApexClass,
+          {
+            template: 'DefaultApexClass',
+            classname: 'LibraryCreateClass',
+            outputdir: path.join(
+              'testsoutput',
+              'customLibraryCreate',
+              'apexClass'
+            )
+          },
+          customTemplates
+        )
+        .should.be.rejectedWith(
+          Error,
+          nls.localize(
+            'customTemplatesCannotRetrieveDefaultBranch',
+            customTemplates
+          )
+        );
+    });
+
+    it('should throw error if repo url is invalid', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      const customTemplates =
+        'https://github.com/forcedotcom/salesforcedx-templates/invalid-url';
+      await templateService
+        .create(
+          TemplateType.ApexClass,
+          {
+            template: 'DefaultApexClass',
+            classname: 'LibraryCreateClass',
+            outputdir: path.join(
+              'testsoutput',
+              'customLibraryCreate',
+              'apexClass'
+            )
+          },
+          customTemplates
+        )
+        .should.be.rejectedWith(
+          Error,
+          nls.localize('customTemplatesInvalidRepoUrl', customTemplates)
+        );
+    });
+
+    it('should throw error if repo protocol is not https', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
+        'https',
+        'http'
+      );
+      await templateService
+        .create(
+          TemplateType.ApexClass,
+          {
+            template: 'DefaultApexClass',
+            classname: 'LibraryCreateClass',
+            outputdir: path.join(
+              'testsoutput',
+              'customLibraryCreate',
+              'apexClass'
+            )
+          },
+          customTemplates
+        )
+        .should.be.rejectedWith(
+          Error,
+          nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"')
+        );
+    });
+
+    it('should throw error if not a GitHub repo', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
+        'github.com',
+        'gitlab.com'
+      );
+      await templateService
+        .create(
+          TemplateType.ApexClass,
+          {
+            template: 'DefaultApexClass',
+            classname: 'LibraryCreateClass',
+            outputdir: path.join(
+              'testsoutput',
+              'customLibraryCreate',
+              'apexClass'
+            )
+          },
+          customTemplates
+        )
+        .should.be.rejectedWith(
+          Error,
+          nls.localize('customTemplatesSupportsGitHubOnly', customTemplates)
         );
     });
   }).timeout(20000);

@@ -4,6 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+
+import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
@@ -170,12 +172,13 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         {}
       );
       if (!internal) {
+        const masterLabel = camelCaseToTitleCase(componentname).replace(/</g, '&lt;').replace(/>/g, '&gt;');
         this.fs.copyTpl(
           this.templatePath(`${template}.js-meta.xml`),
           this.destinationPath(
             path.join(outputdir, fileName, `${fileName}.js-meta.xml`)
           ),
-          { apiVersion: apiversion }
+          { apiVersion: apiversion, masterLabel }
         );
       }
     }

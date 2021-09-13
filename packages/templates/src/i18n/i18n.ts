@@ -30,7 +30,7 @@ export const messages = {
     'Template %s not available for component type %s.',
 
   localCustomTemplateDoNotExist:
-    'Local custom templates folder %s do not exist',
+    'Local custom templates folder %s does not exist',
   customTemplatesShouldUseHttpsProtocol:
     'Only HTTPS protocol is supported for custom templates. Got %s.',
   customTemplatesSupportsGitHubOnly:

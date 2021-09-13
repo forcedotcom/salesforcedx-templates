@@ -234,6 +234,7 @@ describe('Lightning component creation tests:', () => {
           assert.file(metaFile);
           assert.file(path.join('lwc', 'foo', 'foo.html'));
           assert.file(jsFile);
+          assert.fileContent(metaFile, '<masterLabel>Foo</masterLabel>');
           assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
           assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
           assert.fileContent(metaFile, '<hasStep>false</hasStep>');
@@ -252,7 +253,7 @@ describe('Lightning component creation tests:', () => {
       .command([
         'force:lightning:component:create',
         '--componentname',
-        'foo',
+        'fooWithStep',
         '--outputdir',
         'lwc',
         '--type',
@@ -263,17 +264,18 @@ describe('Lightning component creation tests:', () => {
       .it(
         'should create analyticsDashboardWithStep lwc files in the lwc output directory',
         ctx => {
-          const jsFile = path.join('lwc', 'foo', 'foo.js');
-          const metaFile = path.join('lwc', 'foo', 'foo.js-meta.xml');
+          const jsFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js');
+          const metaFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js-meta.xml');
           assert.file(metaFile);
-          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(path.join('lwc', 'fooWithStep', 'fooWithStep.html'));
           assert.file(jsFile);
+          assert.fileContent(metaFile, '<masterLabel>Foo With Step</masterLabel>');
           assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
           assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
           assert.fileContent(metaFile, '<hasStep>true</hasStep>');
           assert.fileContent(
             jsFile,
-            'export default class Foo extends LightningElement {'
+            'export default class FooWithStep extends LightningElement {'
           );
           assert.fileContent(jsFile, '@api getState;');
           assert.fileContent(jsFile, '@api setState;');

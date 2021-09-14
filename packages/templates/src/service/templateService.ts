@@ -75,10 +75,10 @@ export class TemplateService {
     templateOptions: TOptions,
     customTemplatesRootPathOrGitRepo?: string
   ): Promise<CreateOutput> {
+    await this.setCustomTemplatesRootPathOrGitRepo(
+      customTemplatesRootPathOrGitRepo
+    );
     if (customTemplatesRootPathOrGitRepo) {
-      await this.setCustomTemplatesRootPathOrGitRepo(
-        customTemplatesRootPathOrGitRepo
-      );
       // In VS Code, if creating using a custom template, we need to reset the yeoman environment
       this.resetEnv();
     }
@@ -144,9 +144,14 @@ export class TemplateService {
    * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
    */
   public async setCustomTemplatesRootPathOrGitRepo(
-    pathOrRepoUri: string,
+    pathOrRepoUri?: string,
     forceLoadingRemoteRepo: boolean = false
   ) {
+    if (pathOrRepoUri === undefined) {
+      this.customTemplatesRootPath = undefined;
+      return;
+    }
+
     try {
       // if pathOrRepoUri is valid url, load the repo
       const url = new URL(pathOrRepoUri);

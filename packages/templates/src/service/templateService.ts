@@ -141,6 +141,7 @@ export class TemplateService {
    * Set custom templates root path or git repo.
    * Throws an error if local path doesn't exist or cannot reach git repo.
    * @param customTemplatesRootPathOrGitRepo custom templates root path or git repo
+   * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
    */
   public async setCustomTemplatesRootPathOrGitRepo(
     pathOrRepoUri: string,

@@ -58,15 +58,8 @@ export default class LightningComponentGenerator extends SfdxGenerator<
     } = this.options;
 
     if (type === 'aura') {
-      this.sourceRoot(
-        path.join(
-          __dirname,
-          '..',
-          'templates',
-          'lightningcomponent',
-          'aura',
-          template
-        )
+      this.sourceRootWithPartialPath(
+        path.join('lightningcomponent', 'aura', template)
       );
       if (!internal) {
         this.fs.copyTpl(
@@ -149,15 +142,8 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         .substring(0, 1)
         .toUpperCase()}${componentname.substring(1)}`;
 
-      this.sourceRoot(
-        path.join(
-          __dirname,
-          '..',
-          'templates',
-          'lightningcomponent',
-          'lwc',
-          template
-        )
+      this.sourceRootWithPartialPath(
+        path.join('lightningcomponent', 'lwc', template)
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.js`),

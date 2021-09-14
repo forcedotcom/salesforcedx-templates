@@ -14,9 +14,7 @@ export default class VisualforceComponentGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: VisualforceComponentOptions) {
     super(args, options);
-    this.sourceRoot(
-      path.join(__dirname, '..', 'templates', 'visualforcecomponent')
-    );
+    this.sourceRootWithPartialPath('visualforcecomponent');
   }
 
   public validateOptions() {

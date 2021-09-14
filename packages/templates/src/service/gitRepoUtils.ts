@@ -77,6 +77,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL) {
 /**
  * Load custom templates Git repo. Currently only supports GitHub.
  * @param repoUri repo uri
+ * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
  * @returns path to the local storage location of the repo
  */
 export async function loadCustomTemplatesGitRepo(

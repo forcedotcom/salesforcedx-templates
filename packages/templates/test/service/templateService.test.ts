@@ -8,13 +8,16 @@
 import { expect } from 'chai';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
+import * as fsOriginal from 'fs';
 import * as fs from 'fs-extra';
+import got from 'got';
 import * as path from 'path';
-import { stub } from 'sinon';
+import { assert as sinonAssert, spy, stub } from 'sinon';
 import * as assert from 'yeoman-assert';
 import * as yeoman from 'yeoman-environment';
 import { TemplateService, TemplateType } from '../../src';
 import { nls } from '../../src/i18n';
+import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -80,6 +83,9 @@ describe('TemplateService', () => {
     // TODO: update the branch to develop after PR is merged
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/tests/packages/templates/test/custom-templates';
+    const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
+      new URL(TEST_CUSTOM_TEMPLATES_REPO)
+    );
 
     beforeEach(async () => {
       await fs.remove(
@@ -134,6 +140,9 @@ describe('TemplateService', () => {
     it('should create custom template from GitHub repository', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
+      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
+        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
+      }
       await templateService.create(
         TemplateType.ApexClass,
         {
@@ -300,6 +309,84 @@ describe('TemplateService', () => {
           Error,
           nls.localize('customTemplatesSupportsGitHubOnly', customTemplates)
         );
+    });
+
+    it('should download the repo if the folder does not exist', async () => {
+      const existsSyncStub = stub(fsOriginal, 'existsSync');
+      existsSyncStub.callsFake(fsPath => {
+        if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
+          return true;
+        }
+        return fs.existsSync(fsPath);
+      });
+      const streamStub = spy(got, 'stream');
+      const templateService = TemplateService.getInstance(process.cwd());
+      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
+        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
+      }
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
+
+      const forceLoadingRemoteRepo = true;
+      await templateService.setCustomTemplatesRootPathOrGitRepo(
+        customTemplates,
+        forceLoadingRemoteRepo
+      );
+
+      sinonAssert.calledOnce(streamStub);
+      streamStub.restore();
+      existsSyncStub.restore();
+    });
+
+    it('should not download the repo if the folder already exists', async () => {
+      const existsSyncStub = stub(fsOriginal, 'existsSync');
+      existsSyncStub.callsFake(fsPath => {
+        if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
+          return true;
+        }
+        return fs.existsSync(fsPath);
+      });
+      const streamStub = spy(got, 'stream');
+      const templateService = TemplateService.getInstance(process.cwd());
+      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
+        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
+      }
+      fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
+
+      await templateService.setCustomTemplatesRootPathOrGitRepo(
+        customTemplates
+      );
+
+      sinonAssert.notCalled(streamStub);
+      streamStub.restore();
+      existsSyncStub.restore();
+    });
+
+    it('should download the repo if the folder already exists, but forcing a redownload', async () => {
+      const existsSyncStub = stub(fsOriginal, 'existsSync');
+      existsSyncStub.callsFake(fsPath => {
+        if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
+          return true;
+        }
+        return fs.existsSync(fsPath);
+      });
+      const streamStub = spy(got, 'stream');
+      const templateService = TemplateService.getInstance(process.cwd());
+      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
+        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
+      }
+      fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
+
+      const forceLoadingRemoteRepo = true;
+      await templateService.setCustomTemplatesRootPathOrGitRepo(
+        customTemplates,
+        forceLoadingRemoteRepo
+      );
+
+      sinonAssert.calledOnce(streamStub);
+      streamStub.restore();
+      existsSyncStub.restore();
     });
   }).timeout(20000);
 

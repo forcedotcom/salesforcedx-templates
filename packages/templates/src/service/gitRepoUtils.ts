@@ -18,8 +18,6 @@ import * as tar from 'tar';
 import { promisify } from 'util';
 import { nls } from '../i18n';
 
-const loadedCustomTemplatesGitRepos = new Map<string, boolean>();
-
 interface RepoInfo {
   username: string;
   name: string;
@@ -58,6 +56,25 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
 }
 
 /**
+ * Returns a path to store custom templates from a Git repo
+ * @param repoUri repository uri
+ * @returns path to store custom templates
+ */
+export function getStoragePathForCustomTemplates(repoUri: URL) {
+  const folderHash = crypto
+    .createHash('md5')
+    .update(repoUri.href)
+    .digest('hex');
+
+  const customTemplatesPath = path.join(
+    Global.DIR,
+    'custom-templates',
+    folderHash
+  );
+  return customTemplatesPath;
+}
+
+/**
  * Load custom templates Git repo. Currently only supports GitHub.
  * @param repoUri repo uri
  * @returns path to the local storage location of the repo
@@ -66,12 +83,10 @@ export async function loadCustomTemplatesGitRepo(
   repoUri: URL,
   forceLoadingRemoteRepo: boolean = false
 ) {
-  // For current session, do not load the remote repo if already loaded.
-  if (
-    loadedCustomTemplatesGitRepos.get(repoUri.href) &&
-    !forceLoadingRemoteRepo
-  ) {
-    return;
+  const customTemplatesPath = getStoragePathForCustomTemplates(repoUri);
+  // Do not load the remote repo if already the repo is already downloaded.
+  if (fs.existsSync(customTemplatesPath) && !forceLoadingRemoteRepo) {
+    return customTemplatesPath;
   }
 
   if (repoUri.protocol !== 'https:') {
@@ -89,17 +104,6 @@ export async function loadCustomTemplatesGitRepo(
   }
 
   const { username, name, branch, filePath } = await getRepoInfo(repoUri);
-
-  const folderHash = crypto
-    .createHash('md5')
-    .update(repoUri.href)
-    .digest('hex');
-
-  const customTemplatesPath = path.join(
-    Global.DIR,
-    'custom-templates',
-    folderHash
-  );
 
   if (!fs.existsSync(customTemplatesPath)) {
     fs.mkdirSync(customTemplatesPath, { recursive: true });
@@ -120,6 +124,5 @@ export async function loadCustomTemplatesGitRepo(
     )
   );
 
-  loadedCustomTemplatesGitRepos.set(repoUri.href, true);
   return customTemplatesPath;
 }

@@ -326,10 +326,8 @@ describe('TemplateService', () => {
       }
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
-      const forceLoadingRemoteRepo = true;
       await templateService.setCustomTemplatesRootPathOrGitRepo(
-        customTemplates,
-        forceLoadingRemoteRepo
+        customTemplates
       );
 
       sinonAssert.calledOnce(streamStub);

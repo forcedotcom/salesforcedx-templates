@@ -23,6 +23,7 @@ chai.use(chaiAsPromised);
 chai.should();
 
 describe('TemplateService', () => {
+  const apiVersion = TemplateService.getDefaultApiVersion();
   describe('Setting cwd', () => {
     it('should set default cwd of yeoman env to process cwd on getting instance', () => {
       const templateService = TemplateService.getInstance();
@@ -66,7 +67,7 @@ describe('TemplateService', () => {
       );
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>${apiVersion}</apiVersion>
     <status>Active</status>
 </ApexClass>
 `;
@@ -125,7 +126,7 @@ describe('TemplateService', () => {
       );
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>${apiVersion}</apiVersion>
     <status>Inactive</status>
 </ApexClass>
 `;
@@ -172,7 +173,7 @@ describe('TemplateService', () => {
       );
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>${apiVersion}</apiVersion>
     <status>Inactive</status>
 </ApexClass>
 `;

@@ -44,7 +44,7 @@ const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
 export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   constructor(args: string | string[], options: ProjectOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'project'));
+    this.sourceRootWithPartialPath('project');
   }
 
   public validateOptions() {

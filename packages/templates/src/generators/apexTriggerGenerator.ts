@@ -14,7 +14,7 @@ export default class ApexTriggerGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: ApexTriggerOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'apextrigger'));
+    this.sourceRootWithPartialPath('apextrigger');
   }
   public validateOptions() {
     CreateUtil.checkInputs(this.options.triggername);

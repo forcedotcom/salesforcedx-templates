@@ -15,9 +15,7 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: AnalyticsTemplateOptions) {
     super(args, options);
-    this.sourceRoot(
-      path.join(__dirname, '..', 'templates', 'analytics', 'waveTemplates')
-    );
+    this.sourceRootWithPartialPath(path.join('analytics', 'waveTemplates'));
   }
 
   public validateOptions() {

@@ -18,7 +18,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: StaticResourceOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'staticresource'));
+    this.sourceRootWithPartialPath('staticresource');
   }
 
   public validateOptions() {

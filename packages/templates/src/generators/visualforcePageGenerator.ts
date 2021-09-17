@@ -14,7 +14,7 @@ export default class VisualforcePageGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: VisualforcePageOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'visualforcepage'));
+    this.sourceRootWithPartialPath('visualforcepage');
   }
 
   public validateOptions() {

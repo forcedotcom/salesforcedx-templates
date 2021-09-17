@@ -81,9 +81,8 @@ describe('TemplateService', () => {
   });
 
   describe('create custom template', () => {
-    // TODO: update the branch to develop after PR is merged
     const TEST_CUSTOM_TEMPLATES_REPO =
-      'https://github.com/forcedotcom/salesforcedx-templates/tree/tests/packages/templates/test/custom-templates';
+      'https://github.com/forcedotcom/salesforcedx-templates/tree/develop/packages/templates/test/custom-templates';
     const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
       new URL(TEST_CUSTOM_TEMPLATES_REPO)
     );

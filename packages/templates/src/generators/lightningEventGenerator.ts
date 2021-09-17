@@ -15,7 +15,7 @@ export default class LightningEventGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: LightningEventOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningevent'));
+    this.sourceRootWithPartialPath('lightningevent');
   }
 
   public validateOptions() {

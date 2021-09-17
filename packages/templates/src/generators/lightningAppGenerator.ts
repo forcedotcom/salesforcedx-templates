@@ -15,7 +15,7 @@ export default class LightningAppGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: LightningAppOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningapp'));
+    this.sourceRootWithPartialPath('lightningapp');
   }
 
   public validateOptions() {

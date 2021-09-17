@@ -15,9 +15,7 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: LightningInterfaceOptions) {
     super(args, options);
-    this.sourceRoot(
-      path.join(__dirname, '..', 'templates', 'lightninginterface')
-    );
+    this.sourceRootWithPartialPath('lightninginterface');
   }
 
   public validateOptions() {

@@ -4,12 +4,15 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+
+import * as fs from 'fs';
 import * as path from 'path';
 import * as yeoman from 'yeoman-environment';
 
 import { nls } from '../i18n';
 import { ForceGeneratorAdapter } from '../utils';
 import { CreateOutput, TemplateOptions, TemplateType } from '../utils/types';
+import { loadCustomTemplatesGitRepo } from './gitRepoUtils';
 
 /**
  * Template Service
@@ -65,11 +68,21 @@ export class TemplateService {
    * Create using templates
    * @param templateType template type
    * @param templateOptions template options
+   * @param customTemplatesRootPathOrGitRepo custom templates root path or git repo. If not specified, use built-in templates
    */
   public async create<TOptions extends TemplateOptions>(
     templateType: TemplateType,
-    templateOptions: TOptions
+    templateOptions: TOptions,
+    customTemplatesRootPathOrGitRepo?: string
   ): Promise<CreateOutput> {
+    await this.setCustomTemplatesRootPathOrGitRepo(
+      customTemplatesRootPathOrGitRepo
+    );
+    if (customTemplatesRootPathOrGitRepo) {
+      // In VS Code, if creating using a custom template, we need to reset the yeoman environment
+      this.resetEnv();
+    }
+
     const generatorClass =
       TemplateType[templateType]
         .toString()
@@ -110,5 +123,57 @@ export class TemplateService {
         resolve(result);
       });
     });
+  }
+
+  /**
+   * Local custom templates path set by user
+   * or set to a local cache of a git repo.
+   * Used by the generators.
+   */
+  public customTemplatesRootPath?: string;
+  private resetEnv() {
+    const cwd = this.env.cwd;
+    // @ts-ignore
+    this.env = yeoman.createEnv(undefined, { cwd }, this.adapter);
+  }
+
+  /**
+   * Set custom templates root path or git repo.
+   * Throws an error if local path doesn't exist or cannot reach git repo.
+   * @param customTemplatesRootPathOrGitRepo custom templates root path or git repo
+   * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
+   */
+  public async setCustomTemplatesRootPathOrGitRepo(
+    pathOrRepoUri?: string,
+    forceLoadingRemoteRepo: boolean = false
+  ) {
+    if (pathOrRepoUri === undefined) {
+      this.customTemplatesRootPath = undefined;
+      return;
+    }
+
+    try {
+      // if pathOrRepoUri is valid url, load the repo
+      const url = new URL(pathOrRepoUri);
+      if (url) {
+        this.customTemplatesRootPath = await loadCustomTemplatesGitRepo(
+          url,
+          forceLoadingRemoteRepo
+        );
+      }
+    } catch (error) {
+      if (error.code !== 'ERR_INVALID_URL') {
+        throw error;
+      }
+
+      const localTemplatesPath = pathOrRepoUri;
+      if (fs.existsSync(localTemplatesPath)) {
+        this.customTemplatesRootPath = localTemplatesPath;
+      } else {
+        throw new Error(
+          nls.localize('localCustomTemplateDoNotExist', localTemplatesPath)
+        );
+      }
+    }
   }
 }

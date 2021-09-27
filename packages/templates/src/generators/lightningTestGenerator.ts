@@ -15,7 +15,7 @@ export default class LightningTestGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: LightningTestOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'lightningtest'));
+    this.sourceRootWithPartialPath('lightningtest');
   }
 
   public validateOptions() {

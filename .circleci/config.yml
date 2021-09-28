@@ -60,7 +60,7 @@ commands:
             npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
             git add .
             export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
-            git commit -m "chore: updated version $RELEASE_TAG"
+            git commit -m --allow-empty "chore: updated version $RELEASE_TAG"
       - run:
           name: Build project
           command: yarn build
@@ -248,15 +248,18 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/cli
+      - gh-config
+      - ssh-config
       - run:
           name: Backport version bump to develop branch
           command: |
             export LATEST_VERSION=$(git describe --tags --abbrev=0)
             git checkout main
             git checkout -b portToDevelop-${LATEST_VERSION}
+            git checkout -- .
             git rebase --onto origin/develop portToDevelop-${LATEST_VERSION}^ portToDevelop-${LATEST_VERSION}
             git checkout develop
-            git merge -ff-only portToDevelop-${LATEST_VERSION}
+            git merge --ff-only portToDevelop-${LATEST_VERSION}
             git push origin develop
 
 workflows:

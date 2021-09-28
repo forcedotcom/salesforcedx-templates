@@ -193,7 +193,7 @@ describe('TemplateCommand', () => {
         }
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if cannot retrieve default branch', ctx => {
+      .it('should throw error if repo url is invalid', ctx => {
         expect(ctx.stderr).to.contain(
           nls.localize('customTemplatesInvalidRepoUrl', INVALID_URL_REPO)
         );
@@ -209,7 +209,7 @@ describe('TemplateCommand', () => {
         }
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if cannot retrieve default branch', ctx => {
+      .it('should throw error if repo protocol is not https', ctx => {
         expect(ctx.stderr).to.contain(
           nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"')
         );
@@ -225,7 +225,7 @@ describe('TemplateCommand', () => {
         }
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if cannot retrieve default branch', ctx => {
+      .it('should throw error if not a GitHub repo', ctx => {
         expect(ctx.stderr).to.contain(
           nls.localize('customTemplatesSupportsGitHubOnly', GITLAB_REPO)
         );

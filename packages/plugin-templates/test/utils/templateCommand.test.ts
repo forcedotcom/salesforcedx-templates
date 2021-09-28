@@ -139,6 +139,37 @@ describe('TemplateCommand', () => {
       .stdout()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
+          return TEST_CUSTOM_TEMPLATES_REPO;
+        }
+      })
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc'
+      ])
+      .it(
+        'should create from default template if git repo templates do not have the template type',
+        ctx => {
+          assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
+          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(path.join('lwc', 'foo', 'foo.js'));
+          assert.fileContent(
+            path.join('lwc', 'foo', 'foo.js'),
+            'export default class Foo extends LightningElement {}'
+          );
+        }
+      );
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
+        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return LOCAL_CUSTOM_TEMPLATES;
         }
       })
@@ -147,6 +178,37 @@ describe('TemplateCommand', () => {
         assert.file(['foo.cls', 'foo.cls-meta.xml']);
         assert.fileContent('foo.cls', 'public with sharing class Customfoo');
       });
+
+    test
+      .withOrg()
+      .withProject()
+      .stdout()
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
+        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
+          return LOCAL_CUSTOM_TEMPLATES;
+        }
+      })
+      .command([
+        'force:lightning:component:create',
+        '--componentname',
+        'foo',
+        '--outputdir',
+        'lwc',
+        '--type',
+        'lwc'
+      ])
+      .it(
+        'should create from default template if local templates do not have the template type',
+        ctx => {
+          assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
+          assert.file(path.join('lwc', 'foo', 'foo.html'));
+          assert.file(path.join('lwc', 'foo', 'foo.js'));
+          assert.fileContent(
+            path.join('lwc', 'foo', 'foo.js'),
+            'export default class Foo extends LightningElement {}'
+          );
+        }
+      );
 
     test
       .withOrg()

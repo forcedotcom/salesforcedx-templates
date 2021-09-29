@@ -6,7 +6,8 @@
  */
 
 import { SfdxCommand } from '@salesforce/command';
-import { ConfigAggregator } from '@salesforce/core';
+import { Config, ConfigAggregator } from '@salesforce/core';
+import { TemplateService } from '@salesforce/templates';
 import { ForceGeneratorAdapter } from '@salesforce/templates/lib/utils';
 import { CreateOutput } from '@salesforce/templates/lib/utils/types';
 import { AnyJson } from '@salesforce/ts-types';
@@ -31,6 +32,14 @@ export abstract class TemplateCommand extends SfdxCommand {
     return output;
   }
 
+  private static aggregator?: ConfigAggregator;
+  private static async getConfigAggregator(): Promise<ConfigAggregator> {
+    if (!TemplateCommand.aggregator) {
+      TemplateCommand.aggregator = await ConfigAggregator.create();
+    }
+    return TemplateCommand.aggregator;
+  }
+
   public static getDefaultApiVersion(): string {
     const packageJsonPath = path.join('..', '..', 'package.json');
     const versionTrimmed = require(packageJsonPath).version.trim();
@@ -39,7 +48,7 @@ export abstract class TemplateCommand extends SfdxCommand {
 
   public static async getApiVersion(): Promise<string> {
     try {
-      const aggregator = await ConfigAggregator.create();
+      const aggregator = await TemplateCommand.getConfigAggregator();
       const apiVersionFromConfig = aggregator.getPropertyValue(
         TemplateCommand.API_VERSION
       ) as string;
@@ -50,12 +59,31 @@ export abstract class TemplateCommand extends SfdxCommand {
   }
   private static API_VERSION = 'apiVersion';
 
+  public static async getCustomTemplates() {
+    try {
+      const aggregator = await TemplateCommand.getConfigAggregator();
+      const customTemplatesFromConfig = aggregator.getPropertyValue(
+        Config.CUSTOM_ORG_METADATA_TEMPLATES
+      ) as string;
+      return customTemplatesFromConfig;
+    } catch (err) {
+      return undefined;
+    }
+  }
+
   public abstract run(): Promise<AnyJson>;
 
   public async runGenerator(generator: yeomanGenerator.GeneratorConstructor) {
     // Can't specify a default value the normal way for apiversion, so set it here
     if (!this.flags.apiversion) {
       this.flags.apiversion = await TemplateCommand.getApiVersion();
+    }
+
+    const customTemplates = await TemplateCommand.getCustomTemplates();
+    if (customTemplates) {
+      await TemplateService.getInstance().setCustomTemplatesRootPathOrGitRepo(
+        customTemplates
+      );
     }
 
     const adapter = new ForceGeneratorAdapter();

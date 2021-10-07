@@ -23,7 +23,7 @@ To port changes from the develop branch to main, we utilize a script called `por
 1. Search for `Tasks: Run Task`.
 1. Select `Create Port PR for Publishing`.
 1. Select `-v` to see the full output.
-1. Select the type of version bump. Typically using the default value of `minor` is fine.
+1. Select the type of version bump. In most instances we will be using `minor`. Select `patch` when backwards compatible bug fixes are made. Select `minor` when new backwards compatible functionality is added. Select `major` when incompatible API changes are made. See https://semver.org/ for more information.
 1. Push your branch up with `git push origin <branchName>` and open the pull request for review.
 1. <b>Important:</b> When your PR has been approved, be sure to merge with the option `Rebase and Merge`. We do <b>not</b> want to squash these commits.
 
@@ -46,6 +46,16 @@ For each commit being pulled into the port PR, make sure that the following is t
 ## Publishing to NPM
 
 To publish the changes to npm, we run the task `Publish Library and Plugin`. This task calls the script `publish-workflow.sh` and prompts the user for the required information. The publish-workflow script generates an HTTP Request to the CircleCI API. It tells CircleCI that it wants to run the `publish-workflow` from the `main` branch.
+
+### Publish a major release version
+
+To publish a major release version:
+
+- First open a PR to update default API version and the correspondent tests (Take a look at [this example](https://github.com/forcedotcom/salesforcedx-templates/pull/340))
+- Then create and merge the port PR
+- Finally, run the publish workflow from command line:
+  `./scripts/publish-workflow.sh <CircleCIToken> <Release-Version>`
+- Skip the Post Publish Step since the version has already been updated.
 
 ### Prerequisites
 

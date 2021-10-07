@@ -48,4 +48,33 @@ export class CreateUtil {
       });
     return files;
   }
+
+  /** Get the names of directories that contain matching template files.
+   * This will look in directories under the command/subdir folder.
+   * @param command the command name
+   * @param filetype optional file name pattern to match on in the subdirectories
+   * @param subdir optional subdirectory under `templates/${command}`
+   * @return the set of template names
+   */
+  public static getCommandTemplatesInSubdirs(
+    command: string,
+    { filetype, subdir }: { filetype?: RegExp; subdir?: string } = {}
+  ): string[] {
+    let basedir = path.resolve(__dirname, '..', 'templates', command);
+    if (subdir) {
+      basedir = path.join(basedir, subdir);
+    }
+    const subdirs = fs
+      .readdirSync(basedir, { withFileTypes: true })
+      .filter(ent => ent.isDirectory())
+      .map(ent => ent.name);
+    if (filetype) {
+      return subdirs.filter(dir =>
+        fs
+          .readdirSync(path.join(basedir, dir), { withFileTypes: true })
+          .some(ent => ent.isFile() && filetype.test(ent.name))
+      );
+    }
+    return subdirs;
+  }
 }

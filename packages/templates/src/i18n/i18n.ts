@@ -26,6 +26,18 @@ export const messages = {
     "Analytics templates must have a parent folder named 'waveTemplates'.",
   MissingAuraDir: "Lightning bundles must have a parent folder named 'aura'.",
   MissingLWCDir: "Lightning bundles must have a parent folder named 'lwc'.",
+  MissingLightningComponentTemplate:
+    'Template %s not available for component type %s.',
+
+  localCustomTemplateDoNotExist:
+    'Local custom templates folder %s does not exist',
+  customTemplatesShouldUseHttpsProtocol:
+    'Only HTTPS protocol is supported for custom templates. Got %s.',
+  customTemplatesSupportsGitHubOnly:
+    'Unsupported custom templates repo %s. Only GitHub is supported.',
+  customTemplatesInvalidRepoUrl: 'Invalid custom templates repository URL: %s',
+  customTemplatesCannotRetrieveDefaultBranch:
+    'Cannot retrieve default branch for custom templates repository: %s',
 
   LightningAppBundle: 'A Lightning Application Bundle',
   LightningComponentBundle: 'A Lightning Component Bundle',

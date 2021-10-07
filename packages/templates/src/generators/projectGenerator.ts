@@ -11,6 +11,8 @@ import { ProjectOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
 const GITIGNORE = 'gitignore';
+const HUSKY_FOLDER = '.husky';
+const huskyhookarray = ['pre-commit'];
 const vscodearray = ['extensions', 'launch', 'settings'];
 const standardfolderarray = [
   'applications',
@@ -31,16 +33,18 @@ const filestocopy = [
   GITIGNORE,
   '.prettierignore',
   '.prettierrc',
+  'jest.config.js',
   'package.json'
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 
-const analyticsfolderarray = ['waveTemplates'];
+const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
+const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
 
 export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   constructor(args: string | string[], options: ProjectOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'project'));
+    this.sourceRootWithPartialPath('project');
   }
 
   public validateOptions() {
@@ -92,11 +96,11 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         defaultpackagedir,
         namespace: ns,
         loginurl,
-        apiversion
+        apiversion,
+        name: projectname
       }
     );
 
-    // tslint:disable-next-line:no-unused-expression
     if (manifest === true) {
       this.fs.copyTpl(
         this.templatePath(manifestFile),
@@ -107,9 +111,12 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       );
     }
 
-    // tslint:disable-next-line:no-unused-expression
     if (template === 'standard') {
       makeEmptyFolders(folderlayout, standardfolderarray);
+
+      // Add Husky directory and hooks
+      this._createHuskyConfig(path.join(outputdir, projectname));
+
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
@@ -122,30 +129,14 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       this.fs.copyTpl(
         this.templatePath('lwc.eslintrc.json'),
         this.destinationPath(
-          path.join(
-            outputdir,
-            projectname,
-            defaultpackagedir,
-            'main',
-            'default',
-            'lwc',
-            '.eslintrc.json'
-          )
+          path.join(...folderlayout, 'lwc', '.eslintrc.json')
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath('aura.eslintrc.json'),
         this.destinationPath(
-          path.join(
-            outputdir,
-            projectname,
-            defaultpackagedir,
-            'main',
-            'default',
-            'aura',
-            '.eslintrc.json'
-          )
+          path.join(...folderlayout, 'aura', '.eslintrc.json')
         ),
         {}
       );
@@ -173,7 +164,6 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       }
     }
 
-    // tslint:disable-next-line:no-unused-expression
     if (template === 'empty') {
       makeEmptyFolders(folderlayout, emptyfolderarray);
       this.fs.copyTpl(
@@ -183,9 +173,12 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       );
     }
 
-    // tslint:disable-next-line:no-unused-expression
     if (template === 'analytics') {
       makeEmptyFolders(folderlayout, analyticsfolderarray);
+
+      // Add Husky directory and hooks
+      this._createHuskyConfig(path.join(outputdir, projectname));
+
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
@@ -195,6 +188,35 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
           {}
         );
       }
+      // add the analytics vscode extension to the recommendations
+      this.fs.extendJSON(
+        path.join(outputdir, projectname, '.vscode', 'extensions.json'),
+        {},
+        (key: string, value: unknown) => {
+          if (
+            key === 'recommendations' &&
+            Array.isArray(value) &&
+            !value.some(n => n === analyticsVscodeExt)
+          ) {
+            value.push(analyticsVscodeExt);
+          }
+          return value;
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('lwc.eslintrc.json'),
+        this.destinationPath(
+          path.join(...folderlayout, 'lwc', '.eslintrc.json')
+        ),
+        {}
+      );
+      this.fs.copyTpl(
+        this.templatePath('aura.eslintrc.json'),
+        this.destinationPath(
+          path.join(...folderlayout, 'aura', '.eslintrc.json')
+        ),
+        {}
+      );
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
@@ -204,14 +226,17 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         );
       }
     }
+  }
 
-    if (template === 'functions') {
-      const functionsFolderlayout = [outputdir, projectname, 'functions'];
-      makeEmptyFolders(functionsFolderlayout, []);
-      makeEmptyFolders(folderlayout, emptyfolderarray);
+  private _createHuskyConfig(projectRootDir: string) {
+    const huskyDirPath = path.join(projectRootDir, HUSKY_FOLDER);
+    if (!fs.existsSync(huskyDirPath)) {
+      fs.mkdirSync(huskyDirPath);
+    }
+    for (const file of huskyhookarray) {
       this.fs.copyTpl(
-        this.templatePath('.forceignore'),
-        this.destinationPath(path.join(outputdir, projectname, '.forceignore')),
+        this.templatePath(path.join(HUSKY_FOLDER, file)),
+        this.destinationPath(path.join(huskyDirPath, file)),
         {}
       );
     }

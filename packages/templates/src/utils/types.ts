@@ -82,7 +82,7 @@ export interface LightningAppOptions extends TemplateOptions {
 
 export interface LightningComponentOptions extends TemplateOptions {
   componentname: string;
-  template: 'DefaultLightningCmp';
+  template: 'default' | 'analyticsDashboard' | 'analyticsDashboardWithStep';
   type: 'aura' | 'lwc';
   internal: boolean;
 }
@@ -113,7 +113,7 @@ export interface ProjectOptions extends TemplateOptions {
    * Note that namespace is a reserved keyword for yeoman generator
    */
   ns: string;
-  template: 'standard' | 'empty' | 'analytics' | 'functions';
+  template: 'standard' | 'empty' | 'analytics';
   manifest: boolean;
   loginurl: string;
 }

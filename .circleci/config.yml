@@ -60,7 +60,7 @@ commands:
             npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
             git add .
             export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
-            git commit -m "chore: updated version $RELEASE_TAG"
+            git commit --allow-empty -m "chore: updated version $RELEASE_TAG"
       - run:
           name: Build project
           command: yarn build
@@ -154,7 +154,6 @@ jobs:
             yarn --version
             node --version
             yarn
-            yarn global add codecov
       - save_cache:
           key: dependency-cache-win1-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
           paths:
@@ -167,10 +166,6 @@ jobs:
           name: 'Running unit tests'
           command: |
             yarn test
-      - run:
-          name: Submitting code coverage to codecov
-          command: |
-            npx codecov --disable=gcov
 
   prepublish:
     description: 'Prepublish'
@@ -224,10 +219,48 @@ jobs:
       - npm-release-management/sign
       - npm-release-management/publish:
           use_tarfile: true
-      - npm-release-management/verify-signed-package
       - ssh-config
       - create-git-tag # this is looking up package.json
       - run: git push origin main
+      - run:
+          name: Wait for version to become available on NPM registry
+          command: |
+            PKG_NAME=$(cat package.json | jq -r .name)
+            PKG_VERSION=$(cat package.json | jq -r .version)
+            MAX_TRIES=30
+            TRIES=0
+            until (( $(curl -s 'https://registry.npmjs.org/'$PKG_NAME | jq '.["versions"]["'$PKG_VERSION'"]' | grep -c $PKG_VERSION ) )) || (($TRIES >= $MAX_TRIES )); do
+                printf '.'
+                sleep 1
+                TRIES=$((TRIES+1))
+            done
+            if (($TRIES >= $MAX_TRIES)); then
+                echo "Timeout waiting for tag. Exiting job"
+                exit 1
+            fi
+      - npm-release-management/verify-signed-package
+
+  backport-to-develop:
+    description: 'Backport version bump to develop branch'
+    working_directory: ~/cli
+    docker:
+      - image: node:12
+    steps:
+      - attach_workspace:
+          at: ~/cli
+      - gh-config
+      - ssh-config
+      - run:
+          name: Backport version bump to develop branch
+          command: |
+            export LATEST_VERSION=$(git describe --tags --abbrev=0)
+            git checkout main
+            git checkout -b portToDevelop-${LATEST_VERSION}
+            git checkout -- .
+            git rebase --onto origin/develop portToDevelop-${LATEST_VERSION}^ portToDevelop-${LATEST_VERSION}
+            git checkout develop
+            git merge --ff-only portToDevelop-${LATEST_VERSION}
+            git push origin develop
 
 workflows:
   version: 2.1
@@ -253,8 +286,6 @@ workflows:
       - node-12
       - node-10
       - run-win-tests
-      - hold: # Requires manual approval in Circle Ci
-          type: approval
       - prepublish:
           context: pdt-publish-restricted-context
           requires:
@@ -262,7 +293,8 @@ workflows:
             - node-latest
             - node-12
             - node-10
-            - hold
+      - hold: # Requires manual approval in Circle Ci
+          type: approval
       - publish-library:
           context: pdt-publish-restricted-context
           filters:
@@ -280,3 +312,11 @@ workflows:
                 - main
           requires:
             - publish-library
+      - backport-to-develop:
+          context: pdt-publish-restricted-context
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - publish-plugin

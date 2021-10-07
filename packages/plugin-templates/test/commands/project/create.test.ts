@@ -29,10 +29,12 @@ const filestocopy = [
   '.gitignore',
   '.prettierignore',
   '.prettierrc',
+  'jest.config.js',
   'package.json'
 ];
 const emptyfolderarray = ['aura', 'lwc'];
-const analyticsfolderarray = ['waveTemplates'];
+const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
+const huskyhookarray = ['pre-commit'];
 const vscodearray = ['extensions', 'launch', 'settings'];
 
 Messages.importMessagesDirectory(__dirname);
@@ -70,6 +72,15 @@ describe('Project creation tests:', () => {
           path.join('foo', 'sfdx-project.json'),
           '"sfdcLoginUrl": "https://login.salesforce.com"'
         );
+        assert.fileContent(
+          path.join('foo', 'sfdx-project.json'),
+          '"name": "foo"'
+        );
+
+        // Check for Husky hooks
+        for (const file of huskyhookarray) {
+          assert.file([path.join('foo', '.husky', file)]);
+        }
 
         for (const file of vscodearray) {
           assert.file([path.join('foo', '.vscode', `${file}.json`)]);
@@ -259,6 +270,7 @@ describe('Project creation tests:', () => {
           assert.file([path.join('footest', 'manifest', 'package.xml')]);
         }
       );
+
     test
       .withOrg()
       .withProject()
@@ -377,13 +389,33 @@ describe('Project creation tests:', () => {
             path.join('analytics1', 'sfdx-project.json'),
             'sourceApiVersion'
           );
+          const srcDir = path.join(
+            'analytics1',
+            'force-app',
+            'main',
+            'default'
+          );
           for (const folder of analyticsfolderarray) {
-            assert(
-              fs.existsSync(
-                path.join('analytics1', 'force-app', 'main', 'default', folder)
-              )
-            );
+            const dir = path.join(srcDir, folder);
+            assert(fs.existsSync(dir), `Missing ${dir}`);
           }
+
+          // Check for Husky hooks
+          for (const file of huskyhookarray) {
+            assert.file([path.join('foo', '.husky', file)]);
+          }
+
+          for (const file of vscodearray) {
+            assert.file(path.join('analytics1', '.vscode', `${file}.json`));
+          }
+          assert.fileContent(
+            path.join('analytics1', '.vscode', 'extensions.json'),
+            '"salesforce.analyticsdx-vscode"'
+          );
+          assert.fileContent(
+            path.join('analytics1', '.vscode', 'extensions.json'),
+            '"salesforce.salesforcedx-vscode"'
+          );
           assert.fileContent(
             path.join('analytics1', 'config', 'project-scratch-def.json'),
             '"DevelopmentWave"'
@@ -396,6 +428,8 @@ describe('Project creation tests:', () => {
             path.join('analytics1', 'README.md'),
             '# Salesforce DX Project: Next Steps'
           );
+          assert.file([path.join(srcDir, 'lwc', '.eslintrc.json')]);
+          assert.file([path.join(srcDir, 'aura', '.eslintrc.json')]);
         }
       );
 
@@ -432,6 +466,7 @@ describe('Project creation tests:', () => {
         }
       );
   });
+
   describe('project creation failures', () => {
     test
       .withOrg()

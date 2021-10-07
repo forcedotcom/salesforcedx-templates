@@ -14,7 +14,7 @@ export default class ApexClassGenerator extends SfdxGenerator<
 > {
   constructor(args: string | string[], options: ApexClassOptions) {
     super(args, options);
-    this.sourceRoot(path.join(__dirname, '..', 'templates', 'apexclass'));
+    this.sourceRootWithPartialPath('apexclass');
   }
 
   public validateOptions() {

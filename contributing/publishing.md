@@ -70,15 +70,3 @@ To publish a major release version:
 1. Select `Publish Library and Plugin`.
 1. Enter your CircleCI Token.
 1. Once the request has been sent, approve the workflow in CircleCI. <b>Note</b>: Only members of the GitHub team 'PDT' can approve the workflow.
-
-## Post Publish
-
-After the publish has succeeded, port the version bump in main back to develop.
-
-### Steps
-
-1. Grab the latest version bump commit from main: `git log -n 1 --pretty=format:"%h" main`.
-1. Create a new branch to port the change to develop: `git checkout -b portToDevelop-<versionNumber> develop`.
-1. Cherry-pick the latest commit number from step 1: `git cherry-pick <hash>`.
-1. Push your port branch up to origin: `git push origin portToDevelop-<versionNumber>`.
-1. Open your PR for review.

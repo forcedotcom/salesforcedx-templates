@@ -1,9 +1,8 @@
 /*
- * Copyright (c) 2019, salesforce.com, inc.
+ * Copyright (c) 2021, salesforce.com, inc.
  * All rights reserved.
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- * Derived from https://github.com/yeoman/environment/blob/master/lib/util/log.js
  */
 'use strict';
 
@@ -49,6 +48,7 @@ export class Log {
   }
 
   public write(...args: [string]): Log {
+    /* eslint prefer-spread: off */
     this.output = this.output + util.format.apply(util, args);
     return this;
   }

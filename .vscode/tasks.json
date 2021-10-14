@@ -86,6 +86,29 @@
       "command": "./scripts/publish-workflow.sh",
       "type": "shell",
       "args": ["${input:circleCiId}", "${input:publishType}"]
+    },
+    {
+      "label": "Lint",
+      "command": "yarn",
+      "type": "shell",
+      "presentation": {
+        "focus": false,
+        "panel": "dedicated"
+      },
+      "args": ["run", "lint"],
+      "isBackground": false,
+      "problemMatcher": {
+        "owner": "typescript",
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^(ERROR|WARNING|INFO):\\s*(.*\\.ts):(\\d*):(\\d*)(\\s*-\\s*)(.*)$",
+          "file": 2,
+          "line": 3,
+          "column": 4,
+          "severity": 1,
+          "message": 6
+        }
+      }
     }
   ],
   "inputs": [

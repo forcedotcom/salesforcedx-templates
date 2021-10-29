@@ -158,7 +158,9 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         {}
       );
       if (!internal) {
-        const masterLabel = camelCaseToTitleCase(componentname).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const masterLabel = camelCaseToTitleCase(componentname)
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
         this.fs.copyTpl(
           this.templatePath(`${template}.js-meta.xml`),
           this.destinationPath(

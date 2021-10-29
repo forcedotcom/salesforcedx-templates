@@ -1,3 +1,4 @@
+/* eslint header/header: off */
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) 2021 Vercel, Inc. All rights reserved.
  *  Licensed under the MIT License. See OSSREADME.json in the project root for license information.
@@ -82,7 +83,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL) {
  */
 export async function loadCustomTemplatesGitRepo(
   repoUri: URL,
-  forceLoadingRemoteRepo: boolean = false
+  forceLoadingRemoteRepo = false
 ) {
   const customTemplatesPath = getStoragePathForCustomTemplates(repoUri);
   // Do not load the remote repo if already the repo is already downloaded.

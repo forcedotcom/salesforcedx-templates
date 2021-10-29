@@ -42,7 +42,6 @@
     "shx": "0.2.2",
     "sinon": "^7.3.1",
     "ts-node": "^8.6.2",
-    "tslint": "^6.1.0",
     "typescript": "^3.8.3",
     "yeoman-assert": "^3.1.1"
   },
@@ -52,6 +51,6 @@
     "build": "yarn run clean:lib && yarn build:templates && yarn compile",
     "build:templates": "node scripts/build-templates",
     "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
-    "lint": "tslint --project . --config tslint.json --format stylish"
+    "lint": "eslint -c .eslintrc.json --ext .ts ./src ./test"
   }
 }

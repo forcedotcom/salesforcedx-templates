@@ -60,7 +60,7 @@ commands:
             npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
             git add .
             export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
-            git commit --allow-empty -m "chore: updated version $RELEASE_TAG"
+            git commit --allow-empty -m "chore: updated version $RELEASE_TAG [ci skip]"
       - run:
           name: Build project
           command: yarn build
@@ -266,7 +266,6 @@ workflows:
   version: 2.1
 
   commit-workflow:
-    unless: << pipeline.parameters.publish >>
     jobs:
       - node-latest
       - node-12
@@ -276,15 +275,9 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
-      - run-win-tests
-
-  publish-workflow:
-    when: << pipeline.parameters.publish >>
-    jobs:
-      - node-latest
-      - node-12
-      - node-10
+              ignore: 
+                - /.*/
+                - main
       - run-win-tests
       - prepublish:
           context: pdt-publish-restricted-context
@@ -293,14 +286,19 @@ workflows:
             - node-latest
             - node-12
             - node-10
+          filters:
+            branches:
+              only: main
       - hold: # Requires manual approval in Circle Ci
           type: approval
+          filters:
+            branches:
+              only: main
       - publish-library:
           context: pdt-publish-restricted-context
           filters:
             branches:
-              only:
-                - main
+              only: main
           requires:
             - prepublish
             - hold
@@ -308,15 +306,13 @@ workflows:
           context: pdt-publish-restricted-context
           filters:
             branches:
-              only:
-                - main
+              only: main
           requires:
             - publish-library
       - backport-to-develop:
           context: pdt-publish-restricted-context
           filters:
             branches:
-              only:
-                - main
+              only: main
           requires:
             - publish-plugin

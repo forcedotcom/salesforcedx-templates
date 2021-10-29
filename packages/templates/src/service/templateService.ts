@@ -145,7 +145,7 @@ export class TemplateService {
    */
   public async setCustomTemplatesRootPathOrGitRepo(
     pathOrRepoUri?: string,
-    forceLoadingRemoteRepo: boolean = false
+    forceLoadingRemoteRepo = false
   ) {
     if (pathOrRepoUri === undefined) {
       this.customTemplatesRootPath = undefined;

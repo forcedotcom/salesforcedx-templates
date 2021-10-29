@@ -10,12 +10,18 @@
     "@salesforce/dev-config": "1.4.1",
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "6.6.0",
-    "eslint-config-prettier": "6.5.0",
+    "typescript": "3.7.5",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^2.22.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-header": "^3.0.0",
+    "eslint-plugin-jsdoc": "^19.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "globby": "^8",
     "husky": "^4.2.5",
     "lerna": "^3.22.1",
-    "lint-staged": "^10.2.2",
+    "lint-staged": "^10.2.11",
     "mkdirp": "^0.5.1",
     "prettier": "1.19.1",
     "pretty-quick": "^1.11.1"
@@ -50,6 +56,11 @@
       "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "./{src,test}/**/*.{ts,js}": [
+      "eslint -c .eslintrc.json --fix"
+    ]
   },
   "volta": {
     "node": "12.4.0",

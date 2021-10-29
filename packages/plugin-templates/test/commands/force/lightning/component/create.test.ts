@@ -265,11 +265,18 @@ describe('Lightning component creation tests:', () => {
         'should create analyticsDashboardWithStep lwc files in the lwc output directory',
         ctx => {
           const jsFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js');
-          const metaFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js-meta.xml');
+          const metaFile = path.join(
+            'lwc',
+            'fooWithStep',
+            'fooWithStep.js-meta.xml'
+          );
           assert.file(metaFile);
           assert.file(path.join('lwc', 'fooWithStep', 'fooWithStep.html'));
           assert.file(jsFile);
-          assert.fileContent(metaFile, '<masterLabel>Foo With Step</masterLabel>');
+          assert.fileContent(
+            metaFile,
+            '<masterLabel>Foo With Step</masterLabel>'
+          );
           assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
           assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
           assert.fileContent(metaFile, '<hasStep>true</hasStep>');

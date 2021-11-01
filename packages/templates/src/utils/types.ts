@@ -32,7 +32,8 @@ export enum TemplateType {
   LightningTest,
   Project,
   VisualforceComponent,
-  VisualforcePage
+  VisualforcePage,
+  StaticResource
 }
 
 /**

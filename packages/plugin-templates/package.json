@@ -105,7 +105,7 @@
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
     "compile": "tsc -b",
     "build": "yarn run clean:lib && yarn compile",
-    "lint": "tslint --project . --config tslint.json --format stylish",
+    "lint": "eslint -c .eslintrc.json --ext .ts ./src ./test",
     "manifest:generate": "oclif-dev manifest",
     "manifest:remove": "shx rm -f oclif.manifest.json",
     "version": "oclif-dev readme && git add README.md",

@@ -82,7 +82,7 @@ describe('TemplateService', () => {
 
   describe('create custom template', () => {
     const TEST_CUSTOM_TEMPLATES_REPO =
-      'https://github.com/forcedotcom/salesforcedx-templates/tree/develop/packages/templates/test/custom-templates';
+      'https://github.com/forcedotcom/salesforcedx-templates/tree/main/packages/templates/test/custom-templates';
     const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
       new URL(TEST_CUSTOM_TEMPLATES_REPO)
     );

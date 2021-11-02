@@ -107,16 +107,16 @@ describe('TemplateCommand', () => {
       '../../../test/custom-templates'
     );
     const TEST_CUSTOM_TEMPLATES_REPO =
-      'https://github.com/forcedotcom/salesforcedx-templates/tree/develop/packages/templates/test/custom-templates';
+      'https://github.com/forcedotcom/salesforcedx-templates/tree/main/packages/templates/test/custom-templates';
     const NON_EXISTENT_LOCAL_PATH = 'this-folder-does-not-exist';
     const NON_EXISTENT_REPO =
       'https://github.com/forcedotcom/this-repo-does-not-exist';
     const INVALID_URL_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/invalid-url';
     const HTTP_REPO =
-      'http://github.com/forcedotcom/salesforcedx-templates/tree/develop/packages/templates/test/custom-templates';
+      'http://github.com/forcedotcom/salesforcedx-templates/tree/main/packages/templates/test/custom-templates';
     const GITLAB_REPO =
-      'https://gitlab.com/forcedotcom/salesforcedx-templates/tree/develop/packages/templates/test/custom-templates';
+      'https://gitlab.com/forcedotcom/salesforcedx-templates/tree/main/packages/templates/test/custom-templates';
 
     test
       .withOrg()

@@ -435,7 +435,8 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
         });
       } catch (error) {
-        expect(error.message).to.equal('error');
+        const err = error as Error;
+        expect(err.message).to.equal('error');
       }
       runStub.restore();
     });

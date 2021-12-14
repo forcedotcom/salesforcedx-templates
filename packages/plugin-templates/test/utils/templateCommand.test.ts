@@ -122,6 +122,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stdout()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return TEST_CUSTOM_TEMPLATES_REPO;
@@ -137,6 +138,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stdout()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return TEST_CUSTOM_TEMPLATES_REPO;
@@ -168,6 +170,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stdout()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return LOCAL_CUSTOM_TEMPLATES;
@@ -183,6 +186,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stdout()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return LOCAL_CUSTOM_TEMPLATES;
@@ -214,6 +218,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stderr()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return NON_EXISTENT_LOCAL_PATH;
@@ -230,6 +235,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stderr()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return NON_EXISTENT_REPO;
@@ -249,6 +255,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stderr()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return INVALID_URL_REPO;
@@ -265,6 +272,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stderr()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return HTTP_REPO;
@@ -281,6 +289,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       .withProject()
       .stderr()
+      /* @ts-ignore-line */
       .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
         if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
           return GITLAB_REPO;

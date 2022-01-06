@@ -14,6 +14,10 @@ import { ForceGeneratorAdapter } from '../utils';
 import { CreateOutput, TemplateOptions, TemplateType } from '../utils/types';
 import { loadCustomTemplatesGitRepo } from './gitRepoUtils';
 
+interface FsError extends Error {
+  code: string;
+}
+
 /**
  * Template Service
  */
@@ -162,7 +166,8 @@ export class TemplateService {
         );
       }
     } catch (error) {
-      if (error.code !== 'ERR_INVALID_URL') {
+      const err = error as FsError;
+      if (err.code !== 'ERR_INVALID_URL') {
         throw error;
       }
 

@@ -12,7 +12,7 @@
     "/messages"
   ],
   "dependencies": {
-    "@salesforce/core": "2.28.0",
+    "@salesforce/core": "2.32.0",
     "got": "^11.8.2",
     "mime-types": "^2.1.27",
     "tar": "^6.1.10",
@@ -42,7 +42,7 @@
     "shx": "0.2.2",
     "sinon": "^7.3.1",
     "ts-node": "^8.6.2",
-    "typescript": "^3.8.3",
+    "typescript": "^4.3.2",
     "yeoman-assert": "^3.1.1"
   },
   "scripts": {

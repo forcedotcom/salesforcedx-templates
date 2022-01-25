@@ -20,7 +20,7 @@ describe('Lightning interface creation tests:', () => {
   describe('Check lightning interface creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:interface:create',
@@ -40,7 +40,7 @@ describe('Lightning interface creation tests:', () => {
       ),
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stdout()
         .command([
           'force:lightning:interface:create',
@@ -63,7 +63,7 @@ describe('Lightning interface creation tests:', () => {
         ),
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stdout()
         .command([
           'force:lightning:interface:create',
@@ -87,7 +87,7 @@ describe('Lightning interface creation tests:', () => {
     describe('lightning interface failures', () => {
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:interface:create',
@@ -103,7 +103,7 @@ describe('Lightning interface creation tests:', () => {
         });
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', 'foo'])
         .it('should throw missing aura parent folder error', ctx => {
@@ -113,7 +113,7 @@ describe('Lightning interface creation tests:', () => {
         });
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--outputdir', 'aura'])
         .it('should throw missing interfacename error', ctx => {
@@ -124,7 +124,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:interface:create',
@@ -144,7 +144,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:interface:create',
@@ -164,7 +164,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:interface:create',
@@ -184,7 +184,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:interface:create',

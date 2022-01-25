@@ -38,7 +38,7 @@ describe('Lightning app creation tests:', () => {
   describe('Check lightning app creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:app:create',
@@ -66,7 +66,7 @@ describe('Lightning app creation tests:', () => {
       );
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:app:create',
@@ -88,7 +88,7 @@ describe('Lightning app creation tests:', () => {
   describe('lightning app failures', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -105,7 +105,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', 'foo'])
       .it('should throw missing aura parent folder error', ctx => {
@@ -114,7 +114,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:lightning:app:create', '--outputdir', 'aura'])
       .it('should throw missing appname error', ctx => {
@@ -123,7 +123,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -138,7 +138,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -155,7 +155,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:app:create',
@@ -170,7 +170,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:app:create',

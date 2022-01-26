@@ -122,7 +122,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return TEST_CUSTOM_TEMPLATES_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
@@ -135,7 +135,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return TEST_CUSTOM_TEMPLATES_REPO;
       })
       .command([
@@ -164,7 +164,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return LOCAL_CUSTOM_TEMPLATES;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
@@ -177,7 +177,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return LOCAL_CUSTOM_TEMPLATES;
       })
       .command([
@@ -206,7 +206,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return NON_EXISTENT_LOCAL_PATH;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
@@ -220,7 +220,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return NON_EXISTENT_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
@@ -237,7 +237,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return INVALID_URL_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
@@ -251,7 +251,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return HTTP_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
@@ -265,7 +265,7 @@ describe('TemplateCommand', () => {
       .withOrg()
       //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', function() {
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return GITLAB_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])

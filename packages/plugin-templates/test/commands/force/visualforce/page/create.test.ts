@@ -20,7 +20,7 @@ describe('Visualforce page creation tests:', () => {
   describe('Check visualforce page creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:visualforce:page:create',
@@ -46,7 +46,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:visualforce:page:create',
@@ -66,7 +66,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:visualforce:page:create',
@@ -91,7 +91,7 @@ describe('Visualforce page creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:visualforce:page:create'])
       .it('should throw a missing pagename error', ctx => {
@@ -102,7 +102,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:page:create',
@@ -117,7 +117,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:page:create',
@@ -134,7 +134,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:page:create',
@@ -149,7 +149,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:page:create',

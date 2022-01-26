@@ -47,7 +47,7 @@ describe('Project creation tests:', () => {
   describe('Check project creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'foo'])
       .it('should create project with default values and foo name', ctx => {
@@ -123,7 +123,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -196,7 +196,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -217,7 +217,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'foo-project'])
       .it(
@@ -256,7 +256,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -273,7 +273,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -318,7 +318,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -367,7 +367,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -470,7 +470,7 @@ describe('Project creation tests:', () => {
   describe('project creation failures', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:project:create'])
       .it('should throw invalid template name error', ctx => {
@@ -480,7 +480,7 @@ describe('Project creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:project:create',

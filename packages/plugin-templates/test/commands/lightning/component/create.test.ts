@@ -40,7 +40,7 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning aura components creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -89,7 +89,7 @@ describe('Lightning component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -116,7 +116,7 @@ describe('Lightning component creation tests:', () => {
   describe('lightning component failures', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--outputdir', 'aura'])
       .it('should throw missing component name error', ctx => {
@@ -126,7 +126,7 @@ describe('Lightning component creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--componentname', 'foo'])
       .it('should throw missing aura parent folder error', ctx => {
@@ -134,7 +134,7 @@ describe('Lightning component creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:component:create',

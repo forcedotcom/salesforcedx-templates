@@ -21,7 +21,7 @@ describe('Lightning event creation tests:', () => {
   describe('Check lightning event creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:event:create',
@@ -42,7 +42,7 @@ describe('Lightning event creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:event:create',
@@ -58,7 +58,7 @@ describe('Lightning event creation tests:', () => {
     describe('lightning event failures', () => {
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:event:create',
@@ -75,7 +75,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', 'foo'])
         .it('should throw missing aura parent folder error', ctx => {
@@ -86,7 +86,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:event:create', '--outputdir', 'aura'])
         .it('should throw missing eventname error', ctx => {
@@ -97,7 +97,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:event:create',
@@ -112,7 +112,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:event:create',
@@ -132,7 +132,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:event:create',
@@ -152,7 +152,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:event:create',

@@ -12,7 +12,7 @@
     "/messages"
   ],
   "dependencies": {
-    "@salesforce/core": "2.33.1",
+    "@salesforce/core": "^2.33.1",
     "got": "^11.8.2",
     "mime-types": "^2.1.27",
     "tar": "^6.1.10",

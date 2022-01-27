@@ -9,7 +9,7 @@
     "@oclif/config": "^1",
     "@oclif/errors": "^1",
     "@salesforce/command": "^4.2.1",
-    "@salesforce/core": "2.33.1",
+    "@salesforce/core": "^2.33.1",
     "@salesforce/templates": "53.2.0",
     "tslib": "^1",
     "yeoman-environment": "2.4.0",

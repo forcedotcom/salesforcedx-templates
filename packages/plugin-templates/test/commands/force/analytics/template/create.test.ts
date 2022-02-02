@@ -13,7 +13,7 @@ describe('Analytics template creation tests:', () => {
   describe('Check analytics template creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject() // temporarily broken in current version of command
       .stdout()
       .command([
         'force:analytics:template:create',
@@ -64,7 +64,7 @@ describe('Analytics template creation tests:', () => {
       );
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:analytics:template:create',
@@ -83,7 +83,7 @@ describe('Analytics template creation tests:', () => {
       );
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:analytics:template:create'])
       .it('should throw error when missing required name field', ctx => {
@@ -91,7 +91,7 @@ describe('Analytics template creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:analytics:template:create',

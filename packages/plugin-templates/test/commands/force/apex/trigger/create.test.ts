@@ -20,7 +20,7 @@ describe('Apex trigger creation tests:', () => {
   describe('Check apex trigger creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command(['force:apex:trigger:create', '--triggername', 'foo'])
       .it(
@@ -35,7 +35,7 @@ describe('Apex trigger creation tests:', () => {
       );
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:apex:trigger:create',
@@ -62,7 +62,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:apex:trigger:create',
@@ -86,7 +86,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:apex:trigger:create',
@@ -112,7 +112,7 @@ describe('Apex trigger creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:apex:trigger:create'])
       .it('should throw a missing trigger name error', ctx => {
@@ -123,7 +123,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '/a'])
       .it('should throw invalid non alphanumeric trigger name error', ctx => {
@@ -132,7 +132,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '3aa'])
       .it(
@@ -146,7 +146,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', 'a_'])
       .it(
@@ -158,7 +158,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', 'a__a'])
       .it(

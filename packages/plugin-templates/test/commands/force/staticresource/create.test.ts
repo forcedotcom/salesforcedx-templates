@@ -19,7 +19,7 @@ describe('Static resource creation tests:', () => {
   describe('Check static resource creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -41,7 +41,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -63,7 +63,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -85,7 +85,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -107,7 +107,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -129,7 +129,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo'])
       .it(
@@ -145,7 +145,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -165,7 +165,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -192,7 +192,7 @@ describe('Static resource creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:staticresource:create'])
       .it('should throw a missing resourcename error', ctx => {
@@ -201,7 +201,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', '/a'])
       .it(
@@ -213,7 +213,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', '3aa'])
       .it(
@@ -227,7 +227,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', 'a_'])
       .it(
@@ -239,7 +239,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', 'a__a'])
       .it(
@@ -251,7 +251,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:staticresource:create',

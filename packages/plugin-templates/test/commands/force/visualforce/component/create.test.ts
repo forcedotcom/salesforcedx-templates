@@ -20,7 +20,7 @@ describe('Visualforce component creation tests:', () => {
   describe('Check visualforce component creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -46,7 +46,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -66,7 +66,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -91,7 +91,7 @@ describe('Visualforce component creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:visualforce:component:create'])
       .it('should throw a missing componentname error', ctx => {
@@ -102,7 +102,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:component:create',
@@ -117,7 +117,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:component:create',
@@ -137,7 +137,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:component:create',
@@ -155,7 +155,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:visualforce:component:create',

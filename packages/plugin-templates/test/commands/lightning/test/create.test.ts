@@ -20,7 +20,7 @@ describe('Lightning test creation tests:', () => {
   describe('Check lightning test creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:test:create',
@@ -38,7 +38,7 @@ describe('Lightning test creation tests:', () => {
       ),
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stdout()
         .command([
           'force:lightning:test:create',
@@ -60,7 +60,7 @@ describe('Lightning test creation tests:', () => {
     describe('Check lightning test creation with internal flag', () => {
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stdout()
         .command([
           'force:lightning:test:create',
@@ -79,7 +79,7 @@ describe('Lightning test creation tests:', () => {
     describe('lightning test failures', () => {
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:test:create',
@@ -93,7 +93,7 @@ describe('Lightning test creation tests:', () => {
         });
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:test:create', '--outputdir', 'aura'])
         .it('should throw missing testname error', ctx => {
@@ -102,7 +102,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', '/a'])
         .it(
@@ -116,7 +116,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command([
           'force:lightning:test:create',
@@ -136,7 +136,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', 'a_'])
         .it(
@@ -150,7 +150,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        .withProject()
+        //.withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', 'a__a'])
         .it(

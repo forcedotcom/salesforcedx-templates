@@ -258,7 +258,7 @@ workflows:
                 - main
       - run-win-tests
       - prepublish:
-          context: pdt-publish-restricted-context
+          context: IEAT_keys
           requires:
             - run-win-tests
             - node-latest
@@ -273,7 +273,7 @@ workflows:
             branches:
               only: main
       - publish-library:
-          context: pdt-publish-restricted-context
+          context: IEAT_keys
           filters:
             branches:
               only: main
@@ -281,7 +281,9 @@ workflows:
             - prepublish
             - hold
       - publish-plugin:
-          context: pdt-publish-restricted-context
+          context:
+            - IEAT_keys
+            - AWS
           filters:
             branches:
               only: main

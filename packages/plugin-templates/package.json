@@ -40,6 +40,10 @@
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^2.0.0"
   },
+  "resolutions": {
+    "yeoman-generator": "4.11.0",
+    "@types/yeoman-generator": "4.11.0"
+  },
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "keywords": [
     "force",

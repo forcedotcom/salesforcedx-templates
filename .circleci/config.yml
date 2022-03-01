@@ -212,7 +212,7 @@ jobs:
     description: 'Publish plugin package'
     working_directory: ~/cli/packages/plugin-templates
     docker:
-      - image: node:12
+      - image: node:14
     steps:
       - attach_workspace:
           at: ~/cli

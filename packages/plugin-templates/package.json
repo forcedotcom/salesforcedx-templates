@@ -20,7 +20,7 @@
     "@oclif/plugin-command-snapshot": "^1.0.0",
     "@oclif/plugin-help": "^2",
     "@oclif/test": "^1",
-    "@salesforce/plugin-command-reference": "^1.0.7",
+    "@salesforce/plugin-command-reference": "^1.3.0",
     "@salesforce/ts-sinon": "^1.2.2",
     "@types/chai": "^4",
     "@types/mkdirp": "0.5.2",

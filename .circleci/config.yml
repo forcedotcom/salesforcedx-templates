@@ -115,10 +115,6 @@ jobs:
       - run:
           name: Testing
           command: yarn test
-  node-12:
-    <<: *test
-    docker:
-      - image: node:12
   node-14:
     <<: *test
     docker:
@@ -171,7 +167,7 @@ jobs:
     description: 'Prepublish'
     working_directory: ~/cli
     docker:
-      - image: node:12
+      - image: node:14
     steps:
       - setup-publish
       - persist_to_workspace:
@@ -192,7 +188,7 @@ jobs:
   publish-library:
     description: 'Publish library package'
     docker:
-      - image: node:12
+      - image: node:14
     working_directory: ~/cli/packages/templates
     steps:
       - attach_workspace:
@@ -246,14 +242,13 @@ workflows:
   commit-workflow:
     jobs:
       - node-latest
-      - node-12
       - node-14
       - cache:
           filters:
             tags:
               only: /^v.*/
             branches:
-              ignore: 
+              ignore:
                 - /.*/
                 - main
       - run-win-tests
@@ -262,7 +257,6 @@ workflows:
           requires:
             - run-win-tests
             - node-latest
-            - node-12
             - node-14
           filters:
             branches:

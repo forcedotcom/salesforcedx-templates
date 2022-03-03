@@ -119,6 +119,10 @@ jobs:
     <<: *test
     docker:
       - image: node:14
+  node-16:
+    <<: *test
+    docker:
+      - image: node:16
   cache:
     <<: *test
     steps:
@@ -243,6 +247,7 @@ workflows:
     jobs:
       - node-latest
       - node-14
+      - node-16
       - cache:
           filters:
             tags:
@@ -258,6 +263,7 @@ workflows:
             - run-win-tests
             - node-latest
             - node-14
+            - node-16
           filters:
             branches:
               only: main

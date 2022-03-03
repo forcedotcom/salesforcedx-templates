@@ -45,6 +45,10 @@
     "typescript": "^4.3.2",
     "yeoman-assert": "^3.1.1"
   },
+  "resolutions": {
+    "yeoman-generator": "4.11.0",
+    "@types/yeoman-generator": "4.11.0"
+  },
   "scripts": {
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "compile": "tsc -b",

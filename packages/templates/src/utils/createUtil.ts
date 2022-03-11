@@ -7,7 +7,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 // @ts-ignore
-import * as yeoman from 'yeoman-environment';
 import { nls } from '../i18n';
 
 /* tslint:disable:no-unused-expression */

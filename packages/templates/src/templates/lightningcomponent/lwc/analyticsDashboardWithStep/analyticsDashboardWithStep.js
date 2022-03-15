@@ -8,4 +8,5 @@ export default class <%= className %> extends LightningElement {
   @api selectMode;
   @api getState;
   @api setState;
+  @api refresh;
 }

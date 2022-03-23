@@ -244,6 +244,7 @@ describe('Lightning component creation tests:', () => {
           );
           assert.fileContent(jsFile, '@api getState;');
           assert.fileContent(jsFile, '@api setState;');
+          assert.fileContent(jsFile, '@api refresh;');
         }
       );
     test
@@ -286,6 +287,7 @@ describe('Lightning component creation tests:', () => {
           );
           assert.fileContent(jsFile, '@api getState;');
           assert.fileContent(jsFile, '@api setState;');
+          assert.fileContent(jsFile, '@api refresh;');
           assert.fileContent(jsFile, '@api results;');
           assert.fileContent(jsFile, '@api metadata;');
           assert.fileContent(jsFile, '@api selection;');

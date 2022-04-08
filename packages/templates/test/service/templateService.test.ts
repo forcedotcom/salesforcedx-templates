@@ -397,36 +397,40 @@ describe('TemplateService', () => {
         classname: 'LibraryCreateClass',
         outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
-      expect(result).to.eql({
-        outputDir: path.resolve(
-          process.cwd(),
-          'testsoutput/libraryCreate/apexClass'
-        ),
-        created: [
+      expect(result.outputDir).to.equal(
+        path.resolve(process.cwd(), 'testsoutput/libraryCreate/apexClass'),
+        'outputDir property did not match'
+      );
+      expect(result.created).to.eql(
+        [
           path.normalize(
             'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
           ),
           path.normalize(
             'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
           )
+          // '\nNo change to package.json was detected. No package manager install will be executed.'
         ],
-        rawOutput: `target dir = ${path.resolve(
-          process.cwd(),
-          'testsoutput/libraryCreate/apexClass'
-        )}\n   create ${path.normalize(
-          'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
-        )}\n   create ${path.normalize(
-          'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
-        )}\n`
-      });
+        'Created property did not match'
+      );
+
+      const actual = `target dir = ${path.resolve(
+        process.cwd(),
+        'testsoutput/libraryCreate/apexClass'
+      )}\n   create ${path.normalize(
+        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
+      )}\n   create ${path.normalize(
+        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
+      )}\n`;
+      // )}\n     info \nNo change to package.json was detected. No package manager install will be executed.\n`;
+      expect(result.rawOutput).to.equal(
+        actual,
+        'Actual property did not match'
+      );
     });
 
     it('should reject if create template fails', async () => {
-      const runStub = stub(yeoman.prototype, 'run').callsFake(
-        (args, options, callback) => {
-          callback(new Error('error'));
-        }
-      );
+      const runStub = stub(yeoman.prototype, 'run').rejects(new Error('error'));
       const templateService = TemplateService.getInstance(process.cwd());
       try {
         await templateService.create(TemplateType.ApexClass, {

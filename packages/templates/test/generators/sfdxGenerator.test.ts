@@ -9,6 +9,7 @@ import * as path from 'path';
 import { assert, match, stub } from 'sinon';
 import { TemplateOptions } from '../../';
 import { SfdxGenerator } from '../../src/generators/sfdxGenerator';
+import * as YeomanEnvironment from 'yeoman-environment';
 
 describe('SfdxGenerator', () => {
   interface MyTemplateOptions extends TemplateOptions {
@@ -23,10 +24,10 @@ describe('SfdxGenerator', () => {
     }
     public doWriting(options: object) {}
   }
+  const testEnv = YeomanEnvironment.createEnv();
+  testEnv.cwd = process.cwd();
   const mockMyGeneratorOptions = {
-    env: {
-      cwd: process.cwd()
-    },
+    env: testEnv,
     resolved: path.resolve('../../')
   };
 

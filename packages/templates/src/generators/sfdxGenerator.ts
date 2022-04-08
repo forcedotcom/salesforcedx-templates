@@ -32,22 +32,24 @@ export abstract class SfdxGenerator<
    *
    * @param args arguments to pass to the yeoman generator constructor.
    * @param options SFDXGenerator specific options.
-   * @param features The yeoman GeneratorFeatures.  Defaults to a customInstallTask of false in order to skip the automatic npm/yarn install.  Override to true if you need to run the package manager install.
+   * @param features The yeoman GeneratorFeatures. Defaults to a customInstallTask of false in order to skip the automatic npm/yarn install. Override to true if you need to run the package manager install.
    */
   constructor(
     args: string | string[],
     options: TOptions,
+    // custom install task set to true keeps us from getting a warning message about a missing package.json file.
+    // Note for generators that need an npm install it should be set to false.
     features: Generator.GeneratorFeatures = {
       customInstallTask: true
     }
   ) {
-    // custom install task set to true keeps us from getting a warning message about a missing package.json file.
     super(args, options, features);
     this.options.apiversion =
       this.options.apiversion ?? TemplateService.getDefaultApiVersion();
     this.options.outputdir = this.options.outputdir ?? process.cwd();
     this.validateOptions();
   }
+
   /**
    * Validate provided options
    */

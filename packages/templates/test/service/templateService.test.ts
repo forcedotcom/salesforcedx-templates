@@ -397,10 +397,12 @@ describe('TemplateService', () => {
         classname: 'LibraryCreateClass',
         outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
+
       expect(result.outputDir).to.equal(
         path.resolve(process.cwd(), 'testsoutput/libraryCreate/apexClass'),
         'outputDir property did not match'
       );
+
       expect(result.created).to.eql(
         [
           path.normalize(
@@ -409,7 +411,6 @@ describe('TemplateService', () => {
           path.normalize(
             'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
           )
-          // '\nNo change to package.json was detected. No package manager install will be executed.'
         ],
         'Created property did not match'
       );
@@ -422,7 +423,7 @@ describe('TemplateService', () => {
       )}\n   create ${path.normalize(
         'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
       )}\n`;
-      // )}\n     info \nNo change to package.json was detected. No package manager install will be executed.\n`;
+
       expect(result.rawOutput).to.equal(
         actual,
         'Actual property did not match'

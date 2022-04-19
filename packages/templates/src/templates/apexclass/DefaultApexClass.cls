@@ -1,4 +1,18 @@
-public with sharing class <%= apiName %> {
+/*
+ * Copyright (c) 2022, salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+/**
+ * TODO: fill in my class level comment
+ **/
+public without sharing class <%= apiName %> {
+ 
+    /**
+     * TODO: Populate constructor
+     **/
     public <%= apiName %>() {
 
     }

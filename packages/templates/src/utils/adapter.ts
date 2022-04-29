@@ -5,11 +5,12 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as generator from 'yeoman-generator';
-import { Log } from './logger';
+import { getYeomanLogger, Log } from './logger';
 import { Answers } from './types';
 
 export class ForceGeneratorAdapter {
-  public log = new Log();
+  private _log = new Log();
+  public log = getYeomanLogger(this._log);
 
   constructor() {}
 

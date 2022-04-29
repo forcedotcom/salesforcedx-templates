@@ -12,8 +12,8 @@
     "@salesforce/core": "^2.33.1",
     "@salesforce/templates": "54.3.0",
     "tslib": "^1",
-    "yeoman-environment": "2.4.0",
-    "yeoman-generator": "^4.8.2"
+    "yeoman-environment": "3.9.1",
+    "yeoman-generator": "^5.6.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
@@ -27,22 +27,22 @@
     "@types/mocha": "^5",
     "@types/node": "^10",
     "@types/yeoman-assert": "^3.1.1",
-    "@types/yeoman-generator": "4.11.0",
+    "@types/yeoman-generator": "^5.2.9",
     "chai": "^4",
     "eslint": "^8.4.1",
     "mocha": "^6.2.3",
     "nyc": "15.0.1",
-    "shx": "0.2.2",
+    "shx": "0.3.4",
     "sinon": "^7.3.1",
     "ts-node": "^8.6.2",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^2.0.0"
+    "yeoman-test": "^6.3.0"
   },
   "resolutions": {
-    "yeoman-generator": "4.11.0",
-    "@types/yeoman-generator": "4.11.0"
+    "yeoman-generator": "^5.6.1",
+    "@types/yeoman-generator": "^5.2.9"
   },
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "keywords": [

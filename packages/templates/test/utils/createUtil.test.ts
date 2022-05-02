@@ -40,7 +40,8 @@ describe('CreateUtil', () => {
         CreateUtil.checkInputs(input);
         assert.fail(`Expected checkInputs to throw ${errorName} error.`);
       } catch (e) {
-        expect(e.message).to.equal(nls.localize(errorName));
+        const err = e as Error;
+        expect(err.message).to.equal(nls.localize(errorName));
       }
     };
   });

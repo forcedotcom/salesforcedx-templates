@@ -39,7 +39,7 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning aura components creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -62,7 +62,7 @@ describe('Lightning component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -89,7 +89,7 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning aura components creation without -meta.xml file', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -122,7 +122,7 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning web components creation without -meta-xml file', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -157,7 +157,7 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning web components creation with -meta-xml file', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -183,7 +183,7 @@ describe('Lightning component creation tests:', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -213,7 +213,7 @@ describe('Lightning component creation tests:', () => {
   describe('Check analytics dashboard lwc creation', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -244,11 +244,12 @@ describe('Lightning component creation tests:', () => {
           );
           assert.fileContent(jsFile, '@api getState;');
           assert.fileContent(jsFile, '@api setState;');
+          assert.fileContent(jsFile, '@api refresh;');
         }
       );
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -286,6 +287,7 @@ describe('Lightning component creation tests:', () => {
           );
           assert.fileContent(jsFile, '@api getState;');
           assert.fileContent(jsFile, '@api setState;');
+          assert.fileContent(jsFile, '@api refresh;');
           assert.fileContent(jsFile, '@api results;');
           assert.fileContent(jsFile, '@api metadata;');
           assert.fileContent(jsFile, '@api selection;');
@@ -298,7 +300,7 @@ describe('Lightning component creation tests:', () => {
   describe('lightning component failures', () => {
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--outputdir', 'aura'])
       .it('should throw missing component name error', ctx => {
@@ -308,7 +310,7 @@ describe('Lightning component creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--componentname', 'foo'])
       .it('should throw missing aura parent folder error', ctx => {
@@ -316,7 +318,7 @@ describe('Lightning component creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:component:create',
@@ -330,7 +332,7 @@ describe('Lightning component creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:component:create',
@@ -348,7 +350,7 @@ describe('Lightning component creation tests:', () => {
       });
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
       .command([
         'force:lightning:component:create',

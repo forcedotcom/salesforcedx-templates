@@ -5,29 +5,28 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "devDependencies": {
-    "@commitlint/cli": "^7",
-    "@commitlint/config-conventional": "^7",
+    "@commitlint/cli": "^16",
+    "@commitlint/config-conventional": "^16",
     "@salesforce/dev-config": "1.4.1",
-    "commitizen": "^3.0.5",
-    "cz-conventional-changelog": "^2.1.0",
-    "typescript": "3.7.5",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^2.22.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.1.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-jsdoc": "^19.1.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "globby": "^8",
     "husky": "^4.2.5",
-    "lerna": "^3.22.1",
+    "lerna": "^4",
     "lint-staged": "^10.2.11",
     "mkdirp": "^0.5.1",
     "prettier": "1.19.1",
-    "pretty-quick": "^1.11.1"
+    "pretty-quick": "^1.11.1",
+    "typescript": "3.7.5"
   },
   "engines": {
-    "node": ">=10.15.0"
+    "node": ">=14.17.0"
   },
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "keywords": [

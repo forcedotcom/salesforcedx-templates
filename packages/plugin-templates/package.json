@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/plugin-templates",
-  "version": "52.6.0",
+  "version": "54.5.0",
   "main": "index.js",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
@@ -8,36 +8,41 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/errors": "^1",
-    "@salesforce/command": "^2.2.0",
-    "@salesforce/core": "2.28.0",
-    "@salesforce/templates": "52.6.0",
+    "@salesforce/command": "^4.2.1",
+    "@salesforce/core": "^2.33.1",
+    "@salesforce/templates": "54.5.0",
     "tslib": "^1",
-    "yeoman-environment": "2.4.0",
-    "yeoman-generator": "4.0.1"
+    "yeoman-environment": "3.9.1",
+    "yeoman-generator": "^5.6.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
     "@oclif/plugin-command-snapshot": "^1.0.0",
     "@oclif/plugin-help": "^2",
     "@oclif/test": "^1",
-    "@salesforce/plugin-command-reference": "^1.0.7",
+    "@salesforce/plugin-command-reference": "^1.3.0",
     "@salesforce/ts-sinon": "^1.2.2",
     "@types/chai": "^4",
     "@types/mkdirp": "0.5.2",
     "@types/mocha": "^5",
     "@types/node": "^10",
     "@types/yeoman-assert": "^3.1.1",
-    "@types/yeoman-generator": "4.11.0",
+    "@types/yeoman-generator": "^5.2.9",
     "chai": "^4",
+    "eslint": "^8.4.1",
     "mocha": "^6.2.3",
     "nyc": "15.0.1",
-    "shx": "0.2.2",
+    "shx": "0.3.4",
     "sinon": "^7.3.1",
     "ts-node": "^8.6.2",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^2.0.0"
+    "yeoman-test": "^6.3.0"
+  },
+  "resolutions": {
+    "yeoman-generator": "^5.6.1",
+    "@types/yeoman-generator": "^5.2.9"
   },
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "keywords": [

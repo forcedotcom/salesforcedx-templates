@@ -18,4 +18,4 @@ If you're interested in contributing, take a look at the [CONTRIBUTING](CONTRIBU
 
 If you're interested in building the plugin and library locally, take a look at the development [doc](contributing/developing.md).
 
-You can find more information about commands that the plugin provide in the [commands](COMMAND.md) doc
+You can find more information about commands that the plugin provide in the [commands](COMMANDS.md) doc

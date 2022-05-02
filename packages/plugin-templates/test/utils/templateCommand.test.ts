@@ -71,7 +71,7 @@ describe('TemplateCommand', () => {
     const dir = process.cwd();
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should log basic output when json flag is not specified', output => {
@@ -81,7 +81,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--json'])
       .it('should log json output when flag is specified', output => {
@@ -120,12 +120,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return TEST_CUSTOM_TEMPLATES_REPO;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return TEST_CUSTOM_TEMPLATES_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should create custom template from git repo', ctx => {
@@ -135,12 +133,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return TEST_CUSTOM_TEMPLATES_REPO;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return TEST_CUSTOM_TEMPLATES_REPO;
       })
       .command([
         'force:lightning:component:create',
@@ -166,12 +162,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return LOCAL_CUSTOM_TEMPLATES;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return LOCAL_CUSTOM_TEMPLATES;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should create custom template from local folder', ctx => {
@@ -181,12 +175,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stdout()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return LOCAL_CUSTOM_TEMPLATES;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return LOCAL_CUSTOM_TEMPLATES;
       })
       .command([
         'force:lightning:component:create',
@@ -212,12 +204,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return NON_EXISTENT_LOCAL_PATH;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return NON_EXISTENT_LOCAL_PATH;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should throw error if local custom templates do not exist', ctx => {
@@ -228,12 +218,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return NON_EXISTENT_REPO;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return NON_EXISTENT_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should throw error if cannot retrieve default branch', ctx => {
@@ -247,12 +235,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return INVALID_URL_REPO;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return INVALID_URL_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should throw error if repo url is invalid', ctx => {
@@ -263,12 +249,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return HTTP_REPO;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return HTTP_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should throw error if repo protocol is not https', ctx => {
@@ -279,12 +263,10 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      .withProject()
+      //.withProject()
       .stderr()
-      .stub(ConfigAggregator.prototype, 'getPropertyValue', (key: string) => {
-        if (key === Config.CUSTOM_ORG_METADATA_TEMPLATES) {
-          return GITLAB_REPO;
-        }
+      .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
+        return GITLAB_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should throw error if not a GitHub repo', ctx => {

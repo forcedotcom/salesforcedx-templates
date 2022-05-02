@@ -14,6 +14,10 @@ import { ForceGeneratorAdapter } from '../utils';
 import { CreateOutput, TemplateOptions, TemplateType } from '../utils/types';
 import { loadCustomTemplatesGitRepo } from './gitRepoUtils';
 
+interface FsError extends Error {
+  code: string;
+}
+
 /**
  * Template Service
  */
@@ -105,23 +109,25 @@ export class TemplateService {
     this.adapter.log.clear();
 
     return new Promise((resolve, reject) => {
-      this.env.run(generatorNamespace, templateOptions, err => {
-        if (err) {
+      this.env
+        .run(generatorNamespace, templateOptions)
+        .then(() => {
+          const outputDir = path.resolve(this.cwd, templateOptions.outputdir!);
+          const created = this.adapter.log.getCleanOutput();
+          const rawOutput = nls.localize('RawOutput', [
+            outputDir,
+            this.adapter.log.getOutput()
+          ]);
+          const result = {
+            outputDir,
+            created,
+            rawOutput
+          };
+          resolve(result);
+        })
+        .catch(err => {
           reject(err);
-        }
-        const outputDir = path.resolve(this.cwd, templateOptions.outputdir!);
-        const created = this.adapter.log.getCleanOutput();
-        const rawOutput = nls.localize('RawOutput', [
-          outputDir,
-          this.adapter.log.getOutput()
-        ]);
-        const result = {
-          outputDir,
-          created,
-          rawOutput
-        };
-        resolve(result);
-      });
+        });
     });
   }
 
@@ -162,7 +168,8 @@ export class TemplateService {
         );
       }
     } catch (error) {
-      if (error.code !== 'ERR_INVALID_URL') {
+      const err = error as FsError;
+      if (err.code !== 'ERR_INVALID_URL') {
         throw error;
       }
 

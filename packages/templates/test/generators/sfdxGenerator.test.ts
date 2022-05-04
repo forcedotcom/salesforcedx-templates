@@ -10,14 +10,16 @@ import { assert, match, stub } from 'sinon';
 import { TemplateOptions } from '../../';
 import { SfdxGenerator } from '../../src/generators/sfdxGenerator';
 import * as YeomanEnvironment from 'yeoman-environment';
+import { expect } from 'chai';
 
-describe('SfdxGenerator', () => {
+describe('SfdxGenerator Unit Tests', () => {
   interface MyTemplateOptions extends TemplateOptions {
     // env and resolved are for testing (similar to how yeoman environment instantiates the generators)
     env: object;
     resolved: string;
   }
   class MyGenerator extends SfdxGenerator<MyTemplateOptions> {
+    public features!: Record<string, any>;
     public validateOptions() {}
     public writing() {
       this.doWriting(this.options);
@@ -50,5 +52,10 @@ describe('SfdxGenerator', () => {
     // tslint:disable-next-line:no-unused-expression
     new MyGenerator([], mockMyGeneratorOptions);
     assert.calledOnce(validateOptionsStub);
+  });
+
+  it('Should set the customInstallTask feature to true for the SfdxGenerator', () => {
+    const generator = new MyGenerator([], mockMyGeneratorOptions);
+    expect(generator.features.customInstallTask).to.equal(true);
   });
 });

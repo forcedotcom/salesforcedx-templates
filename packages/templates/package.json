@@ -18,7 +18,7 @@
     "tar": "^6.1.10",
     "tslib": "^1",
     "yeoman-environment": "3.9.1",
-    "yeoman-generator": "^5.6.1"
+    "yeoman-generator": "5.6.1"
   },
   "devDependencies": {
     "@types/chai": "^4",

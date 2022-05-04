@@ -108,27 +108,19 @@ export class TemplateService {
 
     this.adapter.log.clear();
 
-    return new Promise((resolve, reject) => {
-      this.env
-        .run(generatorNamespace, templateOptions)
-        .then(() => {
-          const outputDir = path.resolve(this.cwd, templateOptions.outputdir!);
-          const created = this.adapter.log.getCleanOutput();
-          const rawOutput = nls.localize('RawOutput', [
-            outputDir,
-            this.adapter.log.getOutput()
-          ]);
-          const result = {
-            outputDir,
-            created,
-            rawOutput
-          };
-          resolve(result);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
+    await this.env.run(generatorNamespace, templateOptions);
+    const outputDir = path.resolve(this.cwd, templateOptions.outputdir!);
+    const created = this.adapter.log.getCleanOutput();
+    const rawOutput = nls.localize('RawOutput', [
+      outputDir,
+      this.adapter.log.getOutput()
+    ]);
+    const result = {
+      outputDir,
+      created,
+      rawOutput
+    };
+    return result;
   }
 
   /**

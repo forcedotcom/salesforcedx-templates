@@ -245,6 +245,10 @@ describe('Lightning component creation tests:', () => {
           assert.fileContent(jsFile, '@api getState;');
           assert.fileContent(jsFile, '@api setState;');
           assert.fileContent(jsFile, '@api refresh;');
+          assert.fileContent(
+            jsFile,
+            '@api stateChangedCallback(prevState, newState)'
+          );
         }
       );
     test
@@ -293,6 +297,10 @@ describe('Lightning component creation tests:', () => {
           assert.fileContent(jsFile, '@api selection;');
           assert.fileContent(jsFile, '@api setSelection;');
           assert.fileContent(jsFile, '@api selectMode;');
+          assert.fileContent(
+            jsFile,
+            '@api stateChangedCallback(prevState, newState)'
+          );
         }
       );
   });

@@ -4,4 +4,6 @@ export default class <%= className %> extends LightningElement {
   @api getState;
   @api setState;
   @api refresh;
+
+  @api stateChangedCallback(prevState, newState) {}
 }

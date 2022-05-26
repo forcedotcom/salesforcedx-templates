@@ -5,11 +5,7 @@
     "ecmaVersion": 6,
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "jsdoc",
-    "eslint-plugin-header"
-  ],
+  "plugins": ["@typescript-eslint", "jsdoc", "eslint-plugin-header"],
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"

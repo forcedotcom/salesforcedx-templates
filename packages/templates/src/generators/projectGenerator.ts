@@ -43,7 +43,10 @@ const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
 
 export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   constructor(args: string | string[], options: ProjectOptions) {
-    super(args, options);
+    // Set customInstallTask to false so that the npm install will be attempted.
+    super(args, options, {
+      customInstallTask: false
+    });
     this.sourceRootWithPartialPath('project');
   }
 

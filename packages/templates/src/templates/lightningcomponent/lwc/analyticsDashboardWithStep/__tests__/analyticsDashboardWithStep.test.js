@@ -1,4 +1,3 @@
-// this is a test (file)
 import { createElement } from 'lwc';
 import <%= pascalCaseComponentName %> from 'c/<%= camelCaseComponentName %>';
 

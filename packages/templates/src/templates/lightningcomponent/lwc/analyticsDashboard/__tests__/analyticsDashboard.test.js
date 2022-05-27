@@ -20,6 +20,6 @@ describe('c-<%= kebabCaseComponentName %>', () => {
 
         // Assert
         // const div = element.shadowRoot.querySelector('div');
-        expect(1).toBe(2);
+        expect(1).to.equal(1);
     });
 });

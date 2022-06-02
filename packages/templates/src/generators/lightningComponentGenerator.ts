@@ -131,32 +131,65 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         {}
       );
     }
-    if (type === 'lwc') {
-      // lwc requires first letter of filename to be lowercase
-      const fileName = `${componentname
-        .substring(0, 1)
-        .toLowerCase()}${componentname.substring(1)}`;
 
-      // lwc's convention is for the class name to be Pascal Case
-      const className = `${componentname
+    if (type === 'lwc') {
+      const pascalCaseComponentName = `${componentname
         .substring(0, 1)
         .toUpperCase()}${componentname.substring(1)}`;
+      const camelCaseComponentName = `${componentname
+        .substring(0, 1)
+        .toLowerCase()}${componentname.substring(1)}`;
+      const kebabCaseComponentName = componentname
+        .match(
+          /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
+        )!
+        .join('-')
+        .toLowerCase();
 
       this.sourceRootWithPartialPath(
         path.join('lightningcomponent', 'lwc', template)
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.js`),
-        this.destinationPath(path.join(outputdir, fileName, `${fileName}.js`)),
-        { className }
+        this.destinationPath(
+          path.join(
+            outputdir,
+            camelCaseComponentName,
+            `${camelCaseComponentName}.js`
+          )
+        ),
+        { pascalCaseComponentName }
       );
+
       this.fs.copyTpl(
         this.templatePath(`${template}.html`),
         this.destinationPath(
-          path.join(outputdir, fileName, `${fileName}.html`)
+          path.join(
+            outputdir,
+            camelCaseComponentName,
+            `${camelCaseComponentName}.html`
+          )
         ),
         {}
       );
+
+      this.fs.copyTpl(
+        this.templatePath(path.join(`__tests__`, `${template}.test.js`)),
+        this.destinationPath(
+          path.join(
+            outputdir,
+            camelCaseComponentName,
+            `__tests__`,
+            `${camelCaseComponentName}.test.js`
+          )
+        ),
+        {
+          pascalCaseComponentName,
+          camelCaseComponentName,
+          kebabCaseComponentName
+        }
+      );
+
       if (!internal) {
         const masterLabel = camelCaseToTitleCase(componentname)
           .replace(/</g, '&lt;')
@@ -164,7 +197,11 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         this.fs.copyTpl(
           this.templatePath(`${template}.js-meta.xml`),
           this.destinationPath(
-            path.join(outputdir, fileName, `${fileName}.js-meta.xml`)
+            path.join(
+              outputdir,
+              camelCaseComponentName,
+              `${camelCaseComponentName}.js-meta.xml`
+            )
           ),
           { apiVersion: apiversion, masterLabel }
         );

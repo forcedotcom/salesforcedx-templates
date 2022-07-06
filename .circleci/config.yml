@@ -258,7 +258,8 @@ workflows:
                 - main
       - run-win-tests
       - prepublish:
-          context: IEAT_keys
+          context:
+            - salesforce-ide
           requires:
             - run-win-tests
             - node-latest
@@ -273,7 +274,9 @@ workflows:
             branches:
               only: main
       - publish-library:
-          context: IEAT_keys
+          context:
+            - salesforce-ide
+            - NPM_Salesforce-Releases
           filters:
             branches:
               only: main
@@ -282,7 +285,8 @@ workflows:
             - hold
       - publish-plugin:
           context:
-            - IEAT_keys
+            - salesforce-ide
+            - NPM_Salesforce-Releases
             - AWS
           filters:
             branches:

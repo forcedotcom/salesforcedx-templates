@@ -9,9 +9,11 @@ import * as path from 'path';
 import { assert, match, stub } from 'sinon';
 import { TemplateOptions } from '../../';
 import { SfdxGenerator } from '../../src/generators/sfdxGenerator';
+import { TemplateService } from '../../src/service/templateService';
 import * as YeomanEnvironment from 'yeoman-environment';
 
 describe('SfdxGenerator', () => {
+  const API_VERSION = '55.0';
   interface MyTemplateOptions extends TemplateOptions {
     // env and resolved are for testing (similar to how yeoman environment instantiates the generators)
     env: object;
@@ -33,15 +35,21 @@ describe('SfdxGenerator', () => {
 
   it('should set default api version and output dir', () => {
     const doWritingStub = stub(MyGenerator.prototype, 'doWriting');
+    const getDefaultApiVersionStub = stub(
+      TemplateService,
+      'getDefaultApiVersion'
+    ).returns(API_VERSION);
     const generator = new MyGenerator([], mockMyGeneratorOptions);
     generator.writing();
     assert.calledWith(
       doWritingStub,
       match({
-        apiversion: '54.0',
+        apiversion: API_VERSION,
         outputdir: process.cwd()
       })
     );
+    assert.calledOnce(getDefaultApiVersionStub);
+    getDefaultApiVersionStub.restore();
     doWritingStub.restore();
   });
 

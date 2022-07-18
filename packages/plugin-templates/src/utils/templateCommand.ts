@@ -6,7 +6,7 @@
  */
 
 import { SfdxCommand } from '@salesforce/command';
-import { Config, ConfigAggregator } from '@salesforce/core';
+import { ConfigAggregator, OrgConfigProperties } from '@salesforce/core';
 import { TemplateService } from '@salesforce/templates';
 import { ForceGeneratorAdapter } from '@salesforce/templates/lib/utils';
 import { CreateOutput } from '@salesforce/templates/lib/utils/types';
@@ -63,7 +63,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     try {
       const aggregator = await TemplateCommand.getConfigAggregator();
       const customTemplatesFromConfig = aggregator.getPropertyValue(
-        Config.CUSTOM_ORG_METADATA_TEMPLATES
+        OrgConfigProperties.ORG_CUSTOM_METADATA_TEMPLATES
       ) as string;
       return customTemplatesFromConfig;
     } catch (err) {

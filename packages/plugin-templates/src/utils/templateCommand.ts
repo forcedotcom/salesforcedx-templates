@@ -22,7 +22,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     adapter: ForceGeneratorAdapter,
     targetDir: string
   ): CreateOutput {
-    const cleanOutput = adapter.log.getCleanOutput(); 
+    const cleanOutput = adapter.log.getCleanOutput();
     const rawOutput = `target dir = ${targetDir}\n${adapter.log.getOutput()}`;
     const output = {
       outputDir: targetDir,

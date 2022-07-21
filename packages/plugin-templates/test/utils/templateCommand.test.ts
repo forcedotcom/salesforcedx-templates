@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { test } from '@salesforce/command/lib/test';
-import { Config, ConfigAggregator } from '@salesforce/core';
+import { ConfigAggregator, SfdxPropertyKeys } from '@salesforce/core';
 import { ForceGeneratorAdapter, Log } from '@salesforce/templates/lib/utils';
 import * as assert from 'yeoman-assert';
 
@@ -31,7 +31,7 @@ describe('TemplateCommand', () => {
         ConfigAggregator.prototype,
         'getPropertyValue'
       ).callsFake((key: string) => {
-        if (key === Config.API_VERSION) {
+        if (key === SfdxPropertyKeys.API_VERSION) {
           return '50.0';
         }
       });

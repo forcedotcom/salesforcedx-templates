@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="df447fad-1239-4668-af64-72760c2e0b6a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/bin/run" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/bin/run" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/utils/templateCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/utils/templateCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/analytics/template/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/analytics/template/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/utils/templateCommand.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/utils/templateCommand.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/test/service/templateService.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/test/service/templateService.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="wr/parkingOrbit3" />
+                    <option name="lastUsedInstant" value="1658422493" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="wr/parkingOrbit" />
+                    <option name="lastUsedInstant" value="1658422469" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1658422432" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="wr/parkingOrbit2" />
+                    <option name="lastUsedInstant" value="1658421299" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="randi/updateCoreV3" />
+                    <option name="lastUsedInstant" value="1658415019" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2BFo51btt92CWIlV0gdeuLmkJQn" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.mocha.mocha_node_package_dir": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/packages/plugin-templates/node_modules/mocha",
+    "nodejs_package_manager_path": "yarn",
+    "prettierjs.PrettierConfiguration.Package": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/typescript/lib"
+  }
+}]]></component>
+  <component name="RunManager" selected="npm.test:deprecation-policy">
+    <configuration name="posttest" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/packages/plugin-templates/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="posttest" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="test (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/packages/plugin-templates/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="test:deprecation-policy" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/packages/plugin-templates/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test:deprecation-policy" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="Analytics template creation tests:" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/packages/plugin-templates/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$/packages/plugin-templates</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/packages/plugin-templates/test/commands/force/analytics/template/create.test.ts</test-file>
+      <test-names>
+        <name value="Analytics template creation tests:" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Apex class creation tests:" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/packages/plugin-templates/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$/packages/plugin-templates</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/packages/plugin-templates/test/commands/force/apex/class/create.test.ts</test-file>
+      <test-names>
+        <name value="Apex class creation tests:" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.test:deprecation-policy" />
+        <item itemvalue="npm.posttest" />
+        <item itemvalue="Mocha.Apex class creation tests:" />
+        <item itemvalue="Mocha.Analytics template creation tests:" />
+        <item itemvalue="npm.test (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="df447fad-1239-4668-af64-72760c2e0b6a" name="Changes" comment="" />
+      <created>1656511007030</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1656511007030</updated>
+      <workItem from="1656511010133" duration="407000" />
+      <workItem from="1658413274945" duration="1685000" />
+      <workItem from="1658415065646" duration="10475000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { expect } from 'chai';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as fsOriginal from 'fs';
@@ -27,13 +26,13 @@ describe('TemplateService', () => {
   describe('Setting cwd', () => {
     it('should set default cwd of yeoman env to process cwd on getting instance', () => {
       const templateService = TemplateService.getInstance();
-      expect(templateService.cwd).to.equal(process.cwd());
+      chai.expect(templateService.cwd).to.equal(process.cwd());
     });
 
     it('should set cwd of yeoman env on getting instance', () => {
       const mockWorkspacePath = path.join('root', 'project');
       const templateService = TemplateService.getInstance(mockWorkspacePath);
-      expect(templateService.cwd).to.equal(mockWorkspacePath);
+      chai.expect(templateService.cwd).to.equal(mockWorkspacePath);
     });
 
     it('should set cwd of yeoman env', () => {
@@ -41,7 +40,7 @@ describe('TemplateService', () => {
       const mockNewWorkspacePath = path.join('root', 'project2');
       const templateService = TemplateService.getInstance(mockWorkspacePath);
       templateService.cwd = mockNewWorkspacePath;
-      expect(templateService.cwd).to.equal(mockNewWorkspacePath);
+      chai.expect(templateService.cwd).to.equal(mockNewWorkspacePath);
     });
 
     it('should create template', async () => {
@@ -398,22 +397,26 @@ describe('TemplateService', () => {
         outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
 
-      expect(result.outputDir).to.equal(
-        path.resolve(process.cwd(), 'testsoutput/libraryCreate/apexClass'),
-        'outputDir property did not match'
-      );
+      chai
+        .expect(result.outputDir)
+        .to.equal(
+          path.resolve(process.cwd(), 'testsoutput/libraryCreate/apexClass'),
+          'outputDir property did not match'
+        );
 
-      expect(result.created).to.eql(
-        [
-          path.normalize(
-            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
-          ),
-          path.normalize(
-            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
-          )
-        ],
-        'Created property did not match'
-      );
+      chai
+        .expect(result.created)
+        .to.eql(
+          [
+            path.normalize(
+              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
+            ),
+            path.normalize(
+              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
+            )
+          ],
+          'Created property did not match'
+        );
 
       const actual = `target dir = ${path.resolve(
         process.cwd(),
@@ -424,10 +427,9 @@ describe('TemplateService', () => {
         'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
       )}\n`;
 
-      expect(result.rawOutput).to.equal(
-        actual,
-        'Actual property did not match'
-      );
+      chai
+        .expect(result.rawOutput)
+        .to.equal(actual, 'Actual property did not match');
     });
 
     it('should reject if create template fails', async () => {
@@ -441,7 +443,7 @@ describe('TemplateService', () => {
         });
       } catch (error) {
         const err = error as Error;
-        expect(err.message).to.equal('error');
+        chai.expect(err.message).to.equal('error');
       }
       runStub.restore();
     });

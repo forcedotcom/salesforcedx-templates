@@ -45,5 +45,5 @@ export const messages = {
   LightningInterfaceBundle: 'A Lightning Interface Bundle',
   LightningTest: 'A Lightning Test',
 
-  RawOutput: 'target dir = %s\n%s'
+  RawOutput: 'target dir = %s\n%s',
 };

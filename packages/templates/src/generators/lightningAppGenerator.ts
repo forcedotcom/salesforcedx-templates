@@ -10,9 +10,7 @@ import { CreateUtil } from '../utils';
 import { LightningAppOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningAppGenerator extends SfdxGenerator<
-  LightningAppOptions
-> {
+export default class LightningAppGenerator extends SfdxGenerator<LightningAppOptions> {
   constructor(args: string | string[], options: LightningAppOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightningapp');
@@ -39,7 +37,7 @@ export default class LightningAppGenerator extends SfdxGenerator<
         ),
         {
           apiVersion: apiversion,
-          description: nls.localize('LightningAppBundle')
+          description: nls.localize('LightningAppBundle'),
         }
       );
     }

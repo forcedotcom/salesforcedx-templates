@@ -57,7 +57,7 @@ describe('TemplateCommand', () => {
       const expOutput = {
         outputDir: targetDir,
         created: cleanOutput,
-        rawOutput: targetDirOutput
+        rawOutput: targetDirOutput,
       };
 
       const result = TemplateCommand.buildJson(adapter, targetDir);
@@ -74,17 +74,20 @@ describe('TemplateCommand', () => {
       //.withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should log basic output when json flag is not specified', output => {
-        const expectedOutput = `target dir = ${dir}\n conflict foo.cls\n    force foo.cls\nidentical foo.cls-meta.xml\n\n`;
-        expect(output.stdout).to.equal(expectedOutput);
-      });
+      .it(
+        'should log basic output when json flag is not specified',
+        (output) => {
+          const expectedOutput = `target dir = ${dir}\n conflict foo.cls\n    force foo.cls\nidentical foo.cls-meta.xml\n\n`;
+          expect(output.stdout).to.equal(expectedOutput);
+        }
+      );
 
     test
       .withOrg()
       //.withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--json'])
-      .it('should log json output when flag is specified', output => {
+      .it('should log json output when flag is specified', (output) => {
         const jsonOutput = JSON.parse(output.stdout);
         expect(jsonOutput).to.haveOwnProperty('status');
         expect(jsonOutput.status).to.equal(0);
@@ -126,7 +129,7 @@ describe('TemplateCommand', () => {
         return TEST_CUSTOM_TEMPLATES_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should create custom template from git repo', ctx => {
+      .it('should create custom template from git repo', (ctx) => {
         assert.file(['foo.cls', 'foo.cls-meta.xml']);
         assert.fileContent('foo.cls', 'public with sharing class Customfoo');
       });
@@ -145,11 +148,11 @@ describe('TemplateCommand', () => {
         '--outputdir',
         'lwc',
         '--type',
-        'lwc'
+        'lwc',
       ])
       .it(
         'should create from default template if git repo templates do not have the template type',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
           assert.file(path.join('lwc', 'foo', 'foo.html'));
           assert.file(path.join('lwc', 'foo', 'foo.js'));
@@ -168,7 +171,7 @@ describe('TemplateCommand', () => {
         return LOCAL_CUSTOM_TEMPLATES;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should create custom template from local folder', ctx => {
+      .it('should create custom template from local folder', (ctx) => {
         assert.file(['foo.cls', 'foo.cls-meta.xml']);
         assert.fileContent('foo.cls', 'public with sharing class Customfoo');
       });
@@ -187,11 +190,11 @@ describe('TemplateCommand', () => {
         '--outputdir',
         'lwc',
         '--type',
-        'lwc'
+        'lwc',
       ])
       .it(
         'should create from default template if local templates do not have the template type',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
           assert.file(path.join('lwc', 'foo', 'foo.html'));
           assert.file(path.join('lwc', 'foo', 'foo.js'));
@@ -210,11 +213,17 @@ describe('TemplateCommand', () => {
         return NON_EXISTENT_LOCAL_PATH;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if local custom templates do not exist', ctx => {
-        expect(ctx.stderr).to.contain(
-          nls.localize('localCustomTemplateDoNotExist', NON_EXISTENT_LOCAL_PATH)
-        );
-      });
+      .it(
+        'should throw error if local custom templates do not exist',
+        (ctx) => {
+          expect(ctx.stderr).to.contain(
+            nls.localize(
+              'localCustomTemplateDoNotExist',
+              NON_EXISTENT_LOCAL_PATH
+            )
+          );
+        }
+      );
 
     test
       .withOrg()
@@ -224,7 +233,7 @@ describe('TemplateCommand', () => {
         return NON_EXISTENT_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if cannot retrieve default branch', ctx => {
+      .it('should throw error if cannot retrieve default branch', (ctx) => {
         expect(ctx.stderr).to.contain(
           nls.localize(
             'customTemplatesCannotRetrieveDefaultBranch',
@@ -241,7 +250,7 @@ describe('TemplateCommand', () => {
         return INVALID_URL_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if repo url is invalid', ctx => {
+      .it('should throw error if repo url is invalid', (ctx) => {
         expect(ctx.stderr).to.contain(
           nls.localize('customTemplatesInvalidRepoUrl', INVALID_URL_REPO)
         );
@@ -255,7 +264,7 @@ describe('TemplateCommand', () => {
         return HTTP_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if repo protocol is not https', ctx => {
+      .it('should throw error if repo protocol is not https', (ctx) => {
         expect(ctx.stderr).to.contain(
           nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"')
         );
@@ -269,7 +278,7 @@ describe('TemplateCommand', () => {
         return GITLAB_REPO;
       })
       .command(['force:apex:class:create', '--classname', 'foo'])
-      .it('should throw error if not a GitHub repo', ctx => {
+      .it('should throw error if not a GitHub repo', (ctx) => {
         expect(ctx.stderr).to.contain(
           nls.localize('customTemplatesSupportsGitHubOnly', GITLAB_REPO)
         );

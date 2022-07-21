@@ -27,7 +27,7 @@ export abstract class TemplateCommand extends SfdxCommand {
     const output = {
       outputDir: targetDir,
       created: cleanOutput,
-      rawOutput
+      rawOutput,
     };
     return output;
   }

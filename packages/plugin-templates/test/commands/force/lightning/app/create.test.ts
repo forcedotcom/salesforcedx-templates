@@ -25,9 +25,9 @@ export class TestFormatter {
       'Controller.js',
       'Helper.js',
       'Renderer.js',
-      '.svg'
+      '.svg',
     ];
-    suffixarray.forEach(element => {
+    suffixarray.forEach((element) => {
       files.push(path.join('aura', pathway, filename + element));
     });
     return files;
@@ -47,11 +47,11 @@ describe('Lightning app creation tests:', () => {
         '--outputdir',
         'aura',
         '--template',
-        'DefaultLightningApp'
+        'DefaultLightningApp',
       ])
       .it(
         'should create lightning app foo using DefaultLightningApp template',
-        ctx => {
+        (ctx) => {
           assert.file(TestFormatter.fileformatter('foo', 'foo'));
           assert.file(path.join('aura', 'foo', 'foo.app-meta.xml'));
           assert.fileContent(
@@ -74,11 +74,11 @@ describe('Lightning app creation tests:', () => {
         'foo',
         '--outputdir',
         path.join('aura', 'testing'),
-        '--internal'
+        '--internal',
       ])
       .it(
         'should create lightning app foo in a new directory without the -meta.xml file',
-        ctx => {
+        (ctx) => {
           assert.file(
             TestFormatter.fileformatter(path.join('testing', 'foo'), 'foo')
           );
@@ -97,9 +97,9 @@ describe('Lightning app creation tests:', () => {
         '--outputdir',
         'aura',
         '--template',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid template name error', ctx => {
+      .it('should throw invalid template name error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
       });
 
@@ -108,7 +108,7 @@ describe('Lightning app creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', 'foo'])
-      .it('should throw missing aura parent folder error', ctx => {
+      .it('should throw missing aura parent folder error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
       });
 
@@ -117,7 +117,7 @@ describe('Lightning app creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:lightning:app:create', '--outputdir', 'aura'])
-      .it('should throw missing appname error', ctx => {
+      .it('should throw missing appname error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingAppname'));
       });
 
@@ -130,9 +130,9 @@ describe('Lightning app creation tests:', () => {
         '--appname',
         '/a',
         '--outputdir',
-        'aura'
+        'aura',
       ])
-      .it('should throw invalid non alphanumeric appname error', ctx => {
+      .it('should throw invalid non alphanumeric appname error', (ctx) => {
         expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
@@ -145,9 +145,9 @@ describe('Lightning app creation tests:', () => {
         '--appname',
         '3aa',
         '--outputdir',
-        'aura'
+        'aura',
       ])
-      .it('should throw invalid appname starting with numeric error', ctx => {
+      .it('should throw invalid appname starting with numeric error', (ctx) => {
         expect(ctx.stderr).to.contain(
           nls.localize('NameMustStartWithLetterError')
         );
@@ -162,11 +162,14 @@ describe('Lightning app creation tests:', () => {
         '--appname',
         'a_',
         '--outputdir',
-        'aura'
+        'aura',
       ])
-      .it('should throw invalid appname ending with underscore error', ctx => {
-        expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
-      });
+      .it(
+        'should throw invalid appname ending with underscore error',
+        (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
+        }
+      );
 
     test
       .withOrg()
@@ -177,10 +180,13 @@ describe('Lightning app creation tests:', () => {
         '--appname',
         'a__a',
         '--outputdir',
-        'aura'
+        'aura',
       ])
-      .it('should throw invalid appname with double underscore error', ctx => {
-        expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
-      });
+      .it(
+        'should throw invalid appname with double underscore error',
+        (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
+        }
+      );
   });
 });

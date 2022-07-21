@@ -10,9 +10,7 @@ import { CreateUtil } from '../utils';
 import { AnalyticsTemplateOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class AnalyticsTemplateGenerator extends SfdxGenerator<
-  AnalyticsTemplateOptions
-> {
+export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsTemplateOptions> {
   constructor(args: string | string[], options: AnalyticsTemplateOptions) {
     super(args, options);
     this.sourceRootWithPartialPath(path.join('analytics', 'waveTemplates'));
@@ -80,7 +78,7 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<
       ),
       {
         templateName: templatename,
-        sourceApiVersion: apiversion
+        sourceApiVersion: apiversion,
       }
     );
     this.fs.copyTpl(

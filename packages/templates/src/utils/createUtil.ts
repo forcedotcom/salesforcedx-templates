@@ -40,8 +40,8 @@ export class CreateUtil {
   ): string[] {
     const files = fs
       .readdirSync(path.resolve(__dirname, '..', 'templates', command))
-      .filter(file => filetype.test(file))
-      .map(file => {
+      .filter((file) => filetype.test(file))
+      .map((file) => {
         return file.split('.', 1).toString();
       });
     return files;
@@ -64,13 +64,13 @@ export class CreateUtil {
     }
     const subdirs = fs
       .readdirSync(basedir, { withFileTypes: true })
-      .filter(ent => ent.isDirectory())
-      .map(ent => ent.name);
+      .filter((ent) => ent.isDirectory())
+      .map((ent) => ent.name);
     if (filetype) {
-      return subdirs.filter(dir =>
+      return subdirs.filter((dir) =>
         fs
           .readdirSync(path.join(basedir, dir), { withFileTypes: true })
-          .some(ent => ent.isFile() && filetype.test(ent.name))
+          .some((ent) => ent.isFile() && filetype.test(ent.name))
       );
     }
     return subdirs;

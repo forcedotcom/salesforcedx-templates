@@ -21,23 +21,23 @@ export default class LightningApp extends TemplateCommand {
   );
   public static examples = [
     '$ sfdx force:lightning:app:create -n myapp',
-    '$ sfdx force:lightning:app:create -n myapp -d aura'
+    '$ sfdx force:lightning:app:create -n myapp -d aura',
   ];
   public static help = MessageUtil.buildHelpText(LightningApp.examples, true);
   public static longDescription = MessageUtil.get('LightningLongDescription', [
-    BUNDLE_TYPE
+    BUNDLE_TYPE,
   ]);
 
   protected static flagsConfig = {
     appname: flags.string({
       char: 'n',
       description: MessageUtil.get('LightningNameFlagDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
       longDescription: MessageUtil.get('LightningNameFlagLongDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
@@ -47,20 +47,20 @@ export default class LightningApp extends TemplateCommand {
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningAppFileSuffix,
         'lightningapp'
-      )
+      ),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
       description: MessageUtil.get('LightningInternalFlagDescription'),
-      hidden: true
-    })
+      hidden: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

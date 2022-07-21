@@ -13,7 +13,7 @@ import { MessageUtil, TemplateCommand } from '../../../../utils';
 Messages.importMessagesDirectory(__dirname);
 export default class AnalyticsTemplate extends TemplateCommand {
   public static examples = [
-    '$ sfdx force:analytics:template:create -n myTemplate -d outputdir'
+    '$ sfdx force:analytics:template:create -n myTemplate -d outputdir',
   ];
 
   public static description = MessageUtil.buildDescription(
@@ -34,7 +34,7 @@ export default class AnalyticsTemplate extends TemplateCommand {
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     apiversion: flags.builtin(),
     templatename: flags.string({
@@ -43,8 +43,8 @@ export default class AnalyticsTemplate extends TemplateCommand {
       longDescription: MessageUtil.get(
         'AnalyticsTemplateNameFlagLongDescription'
       ),
-      required: true
-    })
+      required: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

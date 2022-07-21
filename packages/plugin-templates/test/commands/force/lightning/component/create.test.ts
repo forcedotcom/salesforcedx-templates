@@ -26,9 +26,9 @@ export class AuraLightningTestFormatter {
       'Helper.js',
       'Renderer.js',
       '.svg',
-      '.design'
+      '.design',
     ];
-    suffixarray.forEach(element => {
+    suffixarray.forEach((element) => {
       files.push(path.join('aura', pathway, filename + element));
     });
     return files;
@@ -46,11 +46,11 @@ describe('Lightning component creation tests:', () => {
         '--componentname',
         'foo',
         '--outputdir',
-        'aura'
+        'aura',
       ])
       .it(
         'should create lightning aura component files in the aura output directory',
-        ctx => {
+        (ctx) => {
           assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
           assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
           assert.fileContent(
@@ -71,11 +71,11 @@ describe('Lightning component creation tests:', () => {
         '--outputdir',
         'aura',
         '--template',
-        'default'
+        'default',
       ])
       .it(
         'should create lightning aura component files from default template in the aura output directory',
-        ctx => {
+        (ctx) => {
           assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
           assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
           assert.fileContent(
@@ -97,11 +97,11 @@ describe('Lightning component creation tests:', () => {
         'internalflagtest',
         '--outputdir',
         'aura',
-        '--internal'
+        '--internal',
       ])
       .it(
         'should create lightning aura component files in the aura output directory without a -meta.xml file',
-        ctx => {
+        (ctx) => {
           assert.file(
             AuraLightningTestFormatter.fileformatter(
               'internalflagtest',
@@ -132,11 +132,11 @@ describe('Lightning component creation tests:', () => {
         'lwc',
         '--type',
         'lwc',
-        '--internal'
+        '--internal',
       ])
       .it(
         'should create lightning web component files in the lwc output directory with the internal flag for disabling -meta.xml files',
-        ctx => {
+        (ctx) => {
           assert.noFile(
             path.join('lwc', 'internallwctest', 'internallwctest.js-meta.xml')
           );
@@ -166,11 +166,11 @@ describe('Lightning component creation tests:', () => {
         '--outputdir',
         'lwc',
         '--type',
-        'lwc'
+        'lwc',
       ])
       .it(
         'should create lightning web component files in the lwc output directory',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
           assert.file(path.join('lwc', 'foo', 'foo.html'));
           assert.file(path.join('lwc', 'foo', 'foo.js'));
@@ -194,11 +194,11 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'default'
+        'default',
       ])
       .it(
         'should create lightning web component files from default template in the lwc output directory',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
           assert.file(path.join('lwc', 'foo', 'foo.html'));
           assert.file(path.join('lwc', 'foo', 'foo.js'));
@@ -224,11 +224,11 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'analyticsDashboard'
+        'analyticsDashboard',
       ])
       .it(
         'should create analyticsDashboard lwc files in the lwc output directory',
-        ctx => {
+        (ctx) => {
           const jsFile = path.join('lwc', 'foo', 'foo.js');
           const metaFile = path.join('lwc', 'foo', 'foo.js-meta.xml');
           assert.file(metaFile);
@@ -264,11 +264,11 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'analyticsDashboardWithStep'
+        'analyticsDashboardWithStep',
       ])
       .it(
         'should create analyticsDashboardWithStep lwc files in the lwc output directory',
-        ctx => {
+        (ctx) => {
           const jsFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js');
           const metaFile = path.join(
             'lwc',
@@ -311,7 +311,7 @@ describe('Lightning component creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--outputdir', 'aura'])
-      .it('should throw missing component name error', ctx => {
+      .it('should throw missing component name error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingComponentName')
         );
@@ -321,7 +321,7 @@ describe('Lightning component creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--componentname', 'foo'])
-      .it('should throw missing aura parent folder error', ctx => {
+      .it('should throw missing aura parent folder error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
       });
     test
@@ -333,9 +333,9 @@ describe('Lightning component creation tests:', () => {
         '--componentname',
         'foo',
         '--type',
-        'lwc'
+        'lwc',
       ])
-      .it('should throw missing lwc parent folder error', ctx => {
+      .it('should throw missing lwc parent folder error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingLWCFolder'));
       });
     test
@@ -351,9 +351,9 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid template error', ctx => {
+      .it('should throw invalid template error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
       });
     test
@@ -369,13 +369,13 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'aura',
         '--template',
-        'analyticsDashboard'
+        'analyticsDashboard',
       ])
-      .it('should throw missing template error', ctx => {
+      .it('should throw missing template error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingLightningComponentTemplate', [
             'analyticsDashboard',
-            'aura'
+            'aura',
           ])
         );
       });

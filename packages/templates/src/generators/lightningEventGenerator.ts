@@ -10,9 +10,7 @@ import { CreateUtil } from '../utils';
 import { LightningEventOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningEventGenerator extends SfdxGenerator<
-  LightningEventOptions
-> {
+export default class LightningEventGenerator extends SfdxGenerator<LightningEventOptions> {
   constructor(args: string | string[], options: LightningEventOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightningevent');
@@ -29,13 +27,8 @@ export default class LightningEventGenerator extends SfdxGenerator<
   }
 
   public writing() {
-    const {
-      template,
-      outputdir,
-      eventname,
-      apiversion,
-      internal
-    } = this.options;
+    const { template, outputdir, eventname, apiversion, internal } =
+      this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
@@ -46,7 +39,7 @@ export default class LightningEventGenerator extends SfdxGenerator<
         {
           eventname,
           apiVersion: apiversion,
-          description: nls.localize('LightningEventBundle')
+          description: nls.localize('LightningEventBundle'),
         }
       );
     }

@@ -119,7 +119,7 @@ describe('CreateUtil', () => {
         .returns([
           dirent('Template1', true),
           dirent('Template2', true),
-          dirent('afile.txt', false)
+          dirent('afile.txt', false),
         ]);
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType);
@@ -132,7 +132,7 @@ describe('CreateUtil', () => {
         .returns([dirent('Template1', true), dirent('Template2', true)]);
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {
-        subdir: 'aura'
+        subdir: 'aura',
       });
       expect(templates).to.eql(['Template1', 'Template2']);
     });
@@ -143,13 +143,13 @@ describe('CreateUtil', () => {
         .returns([
           dirent('Template1', true),
           dirent('Template2', true),
-          dirent('Template3', true)
+          dirent('Template3', true),
         ]);
       readdirStub
         .withArgs(path.join(auraPath, 'Template1'), { withFileTypes: true })
         .returns([
           dirent('Template1.cmp', false),
-          dirent('Template1Controller.js', false)
+          dirent('Template1Controller.js', false),
         ]);
       readdirStub
         .withArgs(path.join(auraPath, 'Template2'), { withFileTypes: true })
@@ -160,7 +160,7 @@ describe('CreateUtil', () => {
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {
         subdir: 'aura',
-        filetype: /\.cmp$/
+        filetype: /\.cmp$/,
       });
       expect(templates).to.eql(['Template1']);
     });

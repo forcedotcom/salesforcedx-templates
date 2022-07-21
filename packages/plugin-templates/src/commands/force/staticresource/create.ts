@@ -17,7 +17,7 @@ export default class StaticResource extends TemplateCommand {
   public static examples = [
     '$ sfdx force:staticresource:create -n MyResource',
     '$ sfdx force:staticresource:create -n MyResource --contenttype application/json',
-    '$ sfdx force:staticresource:create -n MyResource -d staticresources'
+    '$ sfdx force:staticresource:create -n MyResource -d staticresources',
   ];
   public static help = MessageUtil.buildHelpText(
     StaticResource.examples,
@@ -32,22 +32,22 @@ export default class StaticResource extends TemplateCommand {
       char: 'n',
       description: MessageUtil.get('StaticResourceNameFlagDescription'),
       longDescription: MessageUtil.get('StaticResourceNameFlagLongDescription'),
-      required: true
+      required: true,
     }),
     contenttype: flags.string({
       description: MessageUtil.get('StaticResourceContentTypeFlagDescription'),
       longDescription: MessageUtil.get(
         'StaticResourceContentTypeFlagLongDescription'
       ),
-      default: 'application/zip'
+      default: 'application/zip',
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
-    apiversion: flags.builtin()
+    apiversion: flags.builtin(),
   };
 
   public async run(): Promise<AnyJson> {

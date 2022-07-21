@@ -27,11 +27,11 @@ describe('Visualforce component creation tests:', () => {
         '--componentname',
         'foo',
         '--label',
-        'testlabel'
+        'testlabel',
       ])
       .it(
         'should create foo component using DefaultVFComponent template and default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.component', 'foo.component-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.component'),
@@ -55,14 +55,17 @@ describe('Visualforce component creation tests:', () => {
         '--outputdir',
         'testcomponent',
         '--label',
-        'testlabel'
+        'testlabel',
       ])
-      .it('should create foo component in a folder with a custom name', ctx => {
-        assert.file([
-          path.join('testcomponent', 'foo.component'),
-          path.join('testcomponent', 'foo.component-meta.xml')
-        ]);
-      });
+      .it(
+        'should create foo component in a folder with a custom name',
+        (ctx) => {
+          assert.file([
+            path.join('testcomponent', 'foo.component'),
+            path.join('testcomponent', 'foo.component-meta.xml'),
+          ]);
+        }
+      );
 
     test
       .withOrg()
@@ -75,14 +78,14 @@ describe('Visualforce component creation tests:', () => {
         '--outputdir',
         'classes create',
         '--label',
-        'label'
+        'label',
       ])
       .it(
         'should create foo component in custom folder name that has a space in it',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join('classes create', 'foo.component'),
-            path.join('classes create', 'foo.component-meta.xml')
+            path.join('classes create', 'foo.component-meta.xml'),
           ]);
         }
       );
@@ -94,7 +97,7 @@ describe('Visualforce component creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:visualforce:component:create'])
-      .it('should throw a missing componentname error', ctx => {
+      .it('should throw a missing componentname error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingComponentnameFlag')
         );
@@ -109,11 +112,14 @@ describe('Visualforce component creation tests:', () => {
         '--componentname',
         '/a',
         '--label',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid non alphanumeric componentname error', ctx => {
-        expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
-      });
+      .it(
+        'should throw invalid non alphanumeric componentname error',
+        (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
+        }
+      );
 
     test
       .withOrg()
@@ -124,11 +130,11 @@ describe('Visualforce component creation tests:', () => {
         '--componentname',
         '3aa',
         '--label',
-        'foo'
+        'foo',
       ])
       .it(
         'should throw invalid componentname starting with numeric error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(
             nls.localize('NameMustStartWithLetterError')
           );
@@ -144,11 +150,11 @@ describe('Visualforce component creation tests:', () => {
         '--componentname',
         'a_',
         '--label',
-        'foo'
+        'foo',
       ])
       .it(
         'should throw invalid componentname ending with underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
@@ -162,11 +168,11 @@ describe('Visualforce component creation tests:', () => {
         '--componentname',
         'a__a',
         '--label',
-        'foo'
+        'foo',
       ])
       .it(
         'should throw invalid componentname with double underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );

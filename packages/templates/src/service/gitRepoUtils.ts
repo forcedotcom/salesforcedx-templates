@@ -37,7 +37,7 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
   if (t === undefined) {
     const infoResponse = await got(
       `https://api.github.com/repos/${username}/${name}`
-    ).catch(e => e);
+    ).catch((e) => e);
     if (infoResponse.statusCode !== 200) {
       throw new Error(
         nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href)
@@ -120,7 +120,7 @@ export async function loadCustomTemplatesGitRepo(
     tar.extract(
       {
         cwd: customTemplatesPath,
-        strip: filePath ? filePath.split('/').length + 1 : 1
+        strip: filePath ? filePath.split('/').length + 1 : 1,
       },
       [`${name}-${branch}${filePath ? `/${filePath}` : ''}`]
     )

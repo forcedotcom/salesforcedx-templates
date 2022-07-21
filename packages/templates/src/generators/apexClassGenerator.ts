@@ -9,9 +9,7 @@ import { CreateUtil } from '../utils';
 import { ApexClassOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class ApexClassGenerator extends SfdxGenerator<
-  ApexClassOptions
-> {
+export default class ApexClassGenerator extends SfdxGenerator<ApexClassOptions> {
   constructor(args: string | string[], options: ApexClassOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('apexclass');

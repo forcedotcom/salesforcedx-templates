@@ -30,7 +30,7 @@ describe('SfdxGenerator', () => {
   testEnv.cwd = process.cwd();
   const mockMyGeneratorOptions = {
     env: testEnv,
-    resolved: path.resolve('../../')
+    resolved: path.resolve('../../'),
   };
 
   it('should set default api version and output dir', () => {
@@ -45,7 +45,7 @@ describe('SfdxGenerator', () => {
       doWritingStub,
       match({
         apiversion: API_VERSION,
-        outputdir: process.cwd()
+        outputdir: process.cwd(),
       })
     );
     assert.calledOnce(getDefaultApiVersionStub);

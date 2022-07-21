@@ -25,7 +25,7 @@ const standardfolderarray = [
   'permissionsets',
   'staticresources',
   'tabs',
-  'triggers'
+  'triggers',
 ];
 const filestocopy = [
   '.eslintignore',
@@ -34,7 +34,7 @@ const filestocopy = [
   '.prettierignore',
   '.prettierrc',
   'jest.config.js',
-  'package.json'
+  'package.json',
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 
@@ -45,7 +45,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   constructor(args: string | string[], options: ProjectOptions) {
     // Set customInstallTask to false so that the npm install will be attempted.
     super(args, options, {
-      customInstallTask: false
+      customInstallTask: false,
     });
     this.sourceRootWithPartialPath('project');
   }
@@ -63,14 +63,14 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       manifest,
       ns,
       apiversion,
-      loginurl
+      loginurl,
     } = this.options;
     const folderlayout = [
       outputdir,
       projectname,
       defaultpackagedir,
       'main',
-      'default'
+      'default',
     ];
 
     const scratchDefFile = `${template}/ScratchDef.json`;
@@ -100,7 +100,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         namespace: ns,
         loginurl,
         apiversion,
-        name: projectname
+        name: projectname,
       }
     );
 
@@ -199,7 +199,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
           if (
             key === 'recommendations' &&
             Array.isArray(value) &&
-            !value.some(n => n === analyticsVscodeExt)
+            !value.some((n) => n === analyticsVscodeExt)
           ) {
             value.push(analyticsVscodeExt);
           }

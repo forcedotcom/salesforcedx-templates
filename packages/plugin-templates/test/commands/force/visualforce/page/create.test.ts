@@ -27,11 +27,11 @@ describe('Visualforce page creation tests:', () => {
         '--pagename',
         'foo',
         '--label',
-        'testlabel'
+        'testlabel',
       ])
       .it(
         'should create foo page using DefaultVFPage template and default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.page', 'foo.page-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.page'),
@@ -55,12 +55,12 @@ describe('Visualforce page creation tests:', () => {
         '--outputdir',
         'testpage',
         '--label',
-        'testlabel'
+        'testlabel',
       ])
-      .it('should create foo page in a folder with a custom name', ctx => {
+      .it('should create foo page in a folder with a custom name', (ctx) => {
         assert.file([
           path.join('testpage', 'foo.page'),
-          path.join('testpage', 'foo.page-meta.xml')
+          path.join('testpage', 'foo.page-meta.xml'),
         ]);
       });
 
@@ -75,14 +75,14 @@ describe('Visualforce page creation tests:', () => {
         '--outputdir',
         'folder space',
         '--label',
-        'label'
+        'label',
       ])
       .it(
         'should create foo page in custom folder name that has a space in it',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join('folder space', 'foo.page'),
-            path.join('folder space', 'foo.page-meta.xml')
+            path.join('folder space', 'foo.page-meta.xml'),
           ]);
         }
       );
@@ -94,7 +94,7 @@ describe('Visualforce page creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:visualforce:page:create'])
-      .it('should throw a missing pagename error', ctx => {
+      .it('should throw a missing pagename error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingPagenameFlag')
         );
@@ -109,9 +109,9 @@ describe('Visualforce page creation tests:', () => {
         '--pagename',
         '/a',
         '--label',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid non alphanumeric pagename error', ctx => {
+      .it('should throw invalid non alphanumeric pagename error', (ctx) => {
         expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
@@ -124,13 +124,16 @@ describe('Visualforce page creation tests:', () => {
         '--pagename',
         '3aa',
         '--label',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid pagename starting with numeric error', ctx => {
-        expect(ctx.stderr).to.contain(
-          nls.localize('NameMustStartWithLetterError')
-        );
-      });
+      .it(
+        'should throw invalid pagename starting with numeric error',
+        (ctx) => {
+          expect(ctx.stderr).to.contain(
+            nls.localize('NameMustStartWithLetterError')
+          );
+        }
+      );
 
     test
       .withOrg()
@@ -141,11 +144,14 @@ describe('Visualforce page creation tests:', () => {
         '--pagename',
         'a_',
         '--label',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid pagename ending with underscore error', ctx => {
-        expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
-      });
+      .it(
+        'should throw invalid pagename ending with underscore error',
+        (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
+        }
+      );
 
     test
       .withOrg()
@@ -156,10 +162,13 @@ describe('Visualforce page creation tests:', () => {
         '--pagename',
         'a__a',
         '--label',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid pagename with double underscore error', ctx => {
-        expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
-      });
+      .it(
+        'should throw invalid pagename with double underscore error',
+        (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
+        }
+      );
   });
 });

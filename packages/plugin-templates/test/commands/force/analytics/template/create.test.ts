@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { expect, test } from '@salesforce/command/lib/test';
+import { expect, test } from '@salesforce/command/lib/test/index';
 import { nls } from '@salesforce/templates/lib/i18n';
 import * as path from 'path';
 import * as assert from 'yeoman-assert';
@@ -20,16 +20,16 @@ describe('Analytics template creation tests:', () => {
         '--templatename',
         'foo',
         '--outputdir',
-        'waveTemplates'
+        'waveTemplates',
       ])
       .it(
         'should create analytics template foo using foo as the output name and internal values',
-        ctx => {
+        () => {
           assert.jsonFileContent(
             path.join('waveTemplates', 'foo', 'template-info.json'),
             {
               label: 'foo',
-              assetVersion: 49.0
+              assetVersion: 49.0,
             }
           );
 
@@ -52,12 +52,12 @@ describe('Analytics template creation tests:', () => {
                   text_1: {
                     parameters: {
                       content: {
-                        displayTemplate: 'foo Analytics Dashboard'
-                      }
-                    }
-                  }
-                }
-              }
+                        displayTemplate: 'foo Analytics Dashboard',
+                      },
+                    },
+                  },
+                },
+              },
             }
           );
         }
@@ -71,11 +71,11 @@ describe('Analytics template creation tests:', () => {
         '--templatename',
         'foo',
         '--outputdir',
-        'foo'
+        'foo',
       ])
       .it(
         'should throw error output directory does not contain waveTemplates',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(
             nls.localize('MissingWaveTemplatesDir')
           );
@@ -83,26 +83,26 @@ describe('Analytics template creation tests:', () => {
       );
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:analytics:template:create'])
-      .it('should throw error when missing required name field', ctx => {
+      .it('should throw error when missing required name field', (ctx) => {
         expect(ctx.stderr).to.contain('Missing required flag');
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command([
         'force:analytics:template:create',
         '--templatename',
         'foo$^s',
         '--outputdir',
-        'waveTemplates'
+        'waveTemplates',
       ])
       .it(
         'should throw error with message about invalid characters in name',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
         }
       );

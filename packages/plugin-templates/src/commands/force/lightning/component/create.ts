@@ -25,7 +25,7 @@ export default class LightningComponent extends TemplateCommand {
     '$ sfdx force:lightning:component:create -n mycomponent',
     '$ sfdx force:lightning:component:create -n mycomponent --type lwc',
     '$ sfdx force:lightning:component:create -n mycomponent -d aura',
-    '$ sfdx force:lightning:component:create -n mycomponent --type lwc -d lwc'
+    '$ sfdx force:lightning:component:create -n mycomponent --type lwc -d lwc',
   ];
   public static help = MessageUtil.buildHelpText(
     LightningComponent.examples,
@@ -40,12 +40,12 @@ export default class LightningComponent extends TemplateCommand {
     componentname: flags.string({
       char: 'n',
       description: MessageUtil.get('LightningNameFlagDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
       longDescription: MessageUtil.get('LightningNameFlagLongDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
@@ -54,26 +54,26 @@ export default class LightningComponent extends TemplateCommand {
       default: 'default',
       // Note: keep this list here and LightningComponentOptions#template in-sync with the
       // templates/lightningcomponents/[aura|lwc]/* folders
-      options: ['default', 'analyticsDashboard', 'analyticsDashboardWithStep']
+      options: ['default', 'analyticsDashboard', 'analyticsDashboardWithStep'],
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     apiversion: flags.builtin(),
     type: flags.string({
       description: MessageUtil.get('LightningCmpTypeFlagDescription'),
       longDescription: MessageUtil.get('LightningCmpTypeFlagLongDescription'),
       options: ['aura', 'lwc'],
-      default: 'aura'
+      default: 'aura',
     }),
     internal: flags.boolean({
       char: 'i',
       description: MessageUtil.get('LightningInternalFlagDescription'),
-      hidden: true
-    })
+      hidden: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

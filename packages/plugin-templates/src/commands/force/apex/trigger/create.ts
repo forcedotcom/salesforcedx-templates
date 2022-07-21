@@ -20,7 +20,7 @@ export default class ApexTrigger extends TemplateCommand {
   public static examples = [
     '$ sfdx force:apex:trigger:create -n MyTrigger',
     "$ sfdx force:apex:trigger:create -n MyTrigger -s Account -e 'before insert,after insert'",
-    '$ sfdx force:apex:trigger:create -n MyTrigger -d triggers'
+    '$ sfdx force:apex:trigger:create -n MyTrigger -d triggers',
   ];
   public static help = MessageUtil.buildHelpText(ApexTrigger.examples, false);
   public static longDescription = MessageUtil.get('ApexTriggerLongDescription');
@@ -30,7 +30,7 @@ export default class ApexTrigger extends TemplateCommand {
       char: 'n',
       description: MessageUtil.get('ApexTriggerNameFlagDescription'),
       longDescription: MessageUtil.get('ApexTriggerNameFlagLongDescription'),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
@@ -40,20 +40,20 @@ export default class ApexTrigger extends TemplateCommand {
       options: CreateUtil.getCommandTemplatesForFiletype(
         apexTriggerFileSuffix,
         'apextrigger'
-      )
+      ),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     apiversion: flags.builtin(),
     sobject: flags.string({
       char: 's',
       description: MessageUtil.get('ApexTriggerSObjectFlagDescription'),
       longDescription: MessageUtil.get('ApexTriggerSObjectFlagLongDescription'),
-      default: 'SOBJECT'
+      default: 'SOBJECT',
     }),
     triggerevents: flags.array({
       char: 'e',
@@ -67,9 +67,9 @@ export default class ApexTrigger extends TemplateCommand {
         'after insert',
         'after update',
         'after delete',
-        'after undelete'
-      ]
-    })
+        'after undelete',
+      ],
+    }),
   };
 
   public async run(): Promise<AnyJson> {

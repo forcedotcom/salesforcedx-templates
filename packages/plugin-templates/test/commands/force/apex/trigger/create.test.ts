@@ -25,7 +25,7 @@ describe('Apex trigger creation tests:', () => {
       .command(['force:apex:trigger:create', '--triggername', 'foo'])
       .it(
         'should create foo trigger using ApexTrigger template and default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.trigger', 'foo.trigger-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.trigger'),
@@ -44,14 +44,14 @@ describe('Apex trigger creation tests:', () => {
         '--sobject',
         'customsobject',
         '--outputdir',
-        'apextriggertestfolder'
+        'apextriggertestfolder',
       ])
       .it(
         'should create foo trigger with a targetpath and sobject set',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join('apextriggertestfolder', 'foo.trigger'),
-            path.join('apextriggertestfolder', 'foo.trigger-meta.xml')
+            path.join('apextriggertestfolder', 'foo.trigger-meta.xml'),
           ]);
           assert.fileContent(
             path.join('apextriggertestfolder', 'foo.trigger'),
@@ -71,11 +71,11 @@ describe('Apex trigger creation tests:', () => {
         '--sobject',
         'override',
         '--triggerevents',
-        'after insert'
+        'after insert',
       ])
       .it(
         'should override foo trigger with a different sobject and triggerevent',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.trigger', 'foo.trigger-meta.xml']);
           assert.fileContent(
             'foo.trigger',
@@ -93,14 +93,14 @@ describe('Apex trigger creation tests:', () => {
         '--triggername',
         'foo',
         '--outputdir',
-        'classes create'
+        'classes create',
       ])
       .it(
         'should create foo trigger in custom folder name that has a space in it',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join('classes create', 'foo.trigger'),
-            path.join('classes create', 'foo.trigger-meta.xml')
+            path.join('classes create', 'foo.trigger-meta.xml'),
           ]);
           assert.fileContent(
             path.join('classes create', 'foo.trigger'),
@@ -115,7 +115,7 @@ describe('Apex trigger creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:apex:trigger:create'])
-      .it('should throw a missing trigger name error', ctx => {
+      .it('should throw a missing trigger name error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingTriggernameFlag')
         );
@@ -126,7 +126,7 @@ describe('Apex trigger creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '/a'])
-      .it('should throw invalid non alphanumeric trigger name error', ctx => {
+      .it('should throw invalid non alphanumeric trigger name error', (ctx) => {
         expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
@@ -137,7 +137,7 @@ describe('Apex trigger creation tests:', () => {
       .command(['force:apex:trigger:create', '--triggername', '3aa'])
       .it(
         'should throw invalid trigger name starting with numeric error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(
             nls.localize('NameMustStartWithLetterError')
           );
@@ -151,7 +151,7 @@ describe('Apex trigger creation tests:', () => {
       .command(['force:apex:trigger:create', '--triggername', 'a_'])
       .it(
         'should throw invalid trigger name ending with underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
@@ -163,7 +163,7 @@ describe('Apex trigger creation tests:', () => {
       .command(['force:apex:trigger:create', '--triggername', 'a__a'])
       .it(
         'should throw invalid trigger name with double underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );

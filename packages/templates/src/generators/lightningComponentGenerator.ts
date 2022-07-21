@@ -12,9 +12,7 @@ import { CreateUtil } from '../utils';
 import { LightningComponentOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningComponentGenerator extends SfdxGenerator<
-  LightningComponentOptions
-> {
+export default class LightningComponentGenerator extends SfdxGenerator<LightningComponentOptions> {
   constructor(args: string | string[], options: LightningComponentOptions) {
     super(args, options);
   }
@@ -35,27 +33,21 @@ export default class LightningComponentGenerator extends SfdxGenerator<
 
     if (
       CreateUtil.getCommandTemplatesInSubdirs('lightningcomponent', {
-        subdir: this.options.type
+        subdir: this.options.type,
       }).indexOf(this.options.template) < 0
     ) {
       throw new Error(
         nls.localize('MissingLightningComponentTemplate', [
           this.options.template,
-          this.options.type
+          this.options.type,
         ])
       );
     }
   }
 
   public writing() {
-    const {
-      template,
-      outputdir,
-      componentname,
-      apiversion,
-      type,
-      internal
-    } = this.options;
+    const { template, outputdir, componentname, apiversion, type, internal } =
+      this.options;
 
     if (type === 'aura') {
       this.sourceRootWithPartialPath(
@@ -70,7 +62,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<
           {
             componentname,
             description: nls.localize('LightningComponentBundle'),
-            apiVersion: apiversion
+            apiVersion: apiversion,
           }
         );
       }
@@ -186,7 +178,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<
         {
           pascalCaseComponentName,
           camelCaseComponentName,
-          kebabCaseComponentName
+          kebabCaseComponentName,
         }
       );
 

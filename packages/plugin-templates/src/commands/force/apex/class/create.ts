@@ -19,7 +19,7 @@ export default class ApexClass extends TemplateCommand {
   );
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
-    '$ sfdx force:apex:class:create -n MyClass -d classes'
+    '$ sfdx force:apex:class:create -n MyClass -d classes',
   ];
   public static help = MessageUtil.buildHelpText(ApexClass.examples, false);
   public static longDescription = MessageUtil.get('ApexClassLongDescription');
@@ -29,7 +29,7 @@ export default class ApexClass extends TemplateCommand {
       char: 'n',
       description: MessageUtil.get('ApexClassNameFlagDescription'),
       longDescription: MessageUtil.get('ApexClassNameFlagLongDescription'),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
@@ -39,15 +39,15 @@ export default class ApexClass extends TemplateCommand {
       options: CreateUtil.getCommandTemplatesForFiletype(
         apexClassFileSuffix,
         'apexclass'
-      )
+      ),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
-    apiversion: flags.builtin()
+    apiversion: flags.builtin(),
   };
 
   public async run(): Promise<AnyJson> {

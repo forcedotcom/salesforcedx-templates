@@ -16,7 +16,7 @@ const statuses = [
   'invoke',
   'conflict',
   'identical',
-  'info'
+  'info',
 ];
 
 export class Log {

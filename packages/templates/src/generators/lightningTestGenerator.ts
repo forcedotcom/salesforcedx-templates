@@ -10,9 +10,7 @@ import { CreateUtil } from '../utils';
 import { LightningTestOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningTestGenerator extends SfdxGenerator<
-  LightningTestOptions
-> {
+export default class LightningTestGenerator extends SfdxGenerator<LightningTestOptions> {
   constructor(args: string | string[], options: LightningTestOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightningtest');
@@ -33,7 +31,7 @@ export default class LightningTestGenerator extends SfdxGenerator<
           path.join(outputdir, `${testname}.resource-meta.xml`)
         ),
         {
-          description: nls.localize('LightningTest')
+          description: nls.localize('LightningTest'),
         },
         // @ts-ignore
         { apiName: testname }

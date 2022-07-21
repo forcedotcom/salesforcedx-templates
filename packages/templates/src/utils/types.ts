@@ -33,7 +33,7 @@ export enum TemplateType {
   Project,
   VisualforceComponent,
   VisualforcePage,
-  StaticResource
+  StaticResource,
 }
 
 /**

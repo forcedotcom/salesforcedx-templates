@@ -27,11 +27,11 @@ describe('Lightning test creation tests:', () => {
         '-n',
         'foo',
         '--template',
-        'DefaultLightningTest'
+        'DefaultLightningTest',
       ])
       .it(
         'should create lightning test foo using DefaultLightningTest template',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('foo.resource'));
           assert.file(path.join('foo.resource-meta.xml'));
         }
@@ -47,11 +47,11 @@ describe('Lightning test creation tests:', () => {
           '--outputdir',
           path.join('aura', 'test'),
           '--template',
-          'DefaultLightningTest'
+          'DefaultLightningTest',
         ])
         .it(
           'should create lightning test foo using DefaultLightningTest template and custom output directory',
-          ctx => {
+          (ctx) => {
             assert.file(path.join('aura', 'test', 'foo.resource'));
             assert.file(path.join('aura', 'test', 'foo.resource-meta.xml'));
           }
@@ -66,11 +66,11 @@ describe('Lightning test creation tests:', () => {
           'force:lightning:test:create',
           '-n',
           'internalflagtest',
-          '--internal'
+          '--internal',
         ])
         .it(
           'should create lightning aura component files in the aura output directory without a -meta.xml file',
-          ctx => {
+          (ctx) => {
             assert.file(path.join('internalflagtest.resource'));
             assert.noFile('internalflagtest.resource-meta.xml');
           }
@@ -86,9 +86,9 @@ describe('Lightning test creation tests:', () => {
           '--testname',
           'foo',
           '--template',
-          'foo'
+          'foo',
         ])
-        .it('should throw invalid template name error', ctx => {
+        .it('should throw invalid template name error', (ctx) => {
           expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
         });
       test
@@ -96,7 +96,7 @@ describe('Lightning test creation tests:', () => {
         //.withProject()
         .stderr()
         .command(['force:lightning:test:create', '--outputdir', 'aura'])
-        .it('should throw missing testname error', ctx => {
+        .it('should throw missing testname error', (ctx) => {
           expect(ctx.stderr).to.contain(messages.getMessage('MissingTestName'));
         });
 
@@ -107,7 +107,7 @@ describe('Lightning test creation tests:', () => {
         .command(['force:lightning:test:create', '--testname', '/a'])
         .it(
           'should throw invalid non alphanumeric interfacename error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('AlphaNumericNameError')
             );
@@ -123,11 +123,11 @@ describe('Lightning test creation tests:', () => {
           '--testname',
           '3aa',
           '--outputdir',
-          'aura'
+          'aura',
         ])
         .it(
           'should throw invalid testname starting with numeric error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('NameMustStartWithLetterError')
             );
@@ -141,7 +141,7 @@ describe('Lightning test creation tests:', () => {
         .command(['force:lightning:test:create', '--testname', 'a_'])
         .it(
           'should throw invalid testname ending with underscore error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('EndWithUnderscoreError')
             );
@@ -155,7 +155,7 @@ describe('Lightning test creation tests:', () => {
         .command(['force:lightning:test:create', '--testname', 'a__a'])
         .it(
           'should throw invalid testname with double underscore error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('DoubleUnderscoreError')
             );

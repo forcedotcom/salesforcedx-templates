@@ -15,8 +15,9 @@ Messages.importMessagesDirectory(__dirname);
 
 describe('MessageUtil', () => {
   const extra = 'some extra text';
-  const expectedHelp = `${MessageUtil.get('HelpDefaults') +
-    MessageUtil.get('HelpOutputDirRelative')}`;
+  const expectedHelp = `${
+    MessageUtil.get('HelpDefaults') + MessageUtil.get('HelpOutputDirRelative')
+  }`;
 
   describe('get', () => {
     const messages = Messages.loadMessages(
@@ -82,7 +83,7 @@ describe('MessageUtil', () => {
   describe('buildHelpText', () => {
     const examples = [
       '$ sfdx some:example:command',
-      '$ sfdx some:example:command -t'
+      '$ sfdx some:example:command -t',
     ];
 
     it('should build help text', () => {

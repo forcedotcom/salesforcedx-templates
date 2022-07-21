@@ -32,7 +32,7 @@ describe('Apex class creation tests:', () => {
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it(
         'should create foo class using DefaultApexClass template and default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.cls', 'foo.cls-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.cls'),
@@ -52,14 +52,14 @@ describe('Apex class creation tests:', () => {
         '--outputdir',
         'testfolder',
         '--template',
-        'ApexException'
+        'ApexException',
       ])
       .it(
         'should create foo class with a targetpath set and ApexException template',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join('testfolder', 'foo.cls'),
-            path.join('testfolder', 'foo.cls-meta.xml')
+            path.join('testfolder', 'foo.cls-meta.xml'),
           ]);
           assert.fileContent(
             path.join('testfolder', 'foo.cls'),
@@ -77,9 +77,9 @@ describe('Apex class creation tests:', () => {
         '--classname',
         'foo',
         '--template',
-        'ApexException'
+        'ApexException',
       ])
-      .it('should override foo class using ApexException template', ctx => {
+      .it('should override foo class using ApexException template', (ctx) => {
         assert.file(['foo.cls', 'foo.cls-meta.xml']);
         assert.fileContent('foo.cls', 'public class foo extends Exception');
       });
@@ -93,14 +93,14 @@ describe('Apex class creation tests:', () => {
         '--classname',
         'foo',
         '--outputdir',
-        'classes create'
+        'classes create',
       ])
       .it(
         'should create foo class in custom folder name that has a space in it',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join('classes create', 'foo.cls'),
-            path.join('classes create', 'foo.cls-meta.xml')
+            path.join('classes create', 'foo.cls-meta.xml'),
           ]);
           assert.fileContent(
             path.join('classes create', 'foo.cls'),
@@ -116,7 +116,7 @@ describe('Apex class creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:apex:class:create'])
-      .it('should throw a missing classname error', ctx => {
+      .it('should throw a missing classname error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingClassnameFlag')
         );
@@ -127,7 +127,7 @@ describe('Apex class creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:apex:class:create', '--classname', '/a'])
-      .it('should throw invalid non alphanumeric class name error', ctx => {
+      .it('should throw invalid non alphanumeric class name error', (ctx) => {
         expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
@@ -138,7 +138,7 @@ describe('Apex class creation tests:', () => {
       .command(['force:apex:class:create', '--classname', '3aa'])
       .it(
         'should throw invalid class name starting with numeric error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(
             nls.localize('NameMustStartWithLetterError')
           );
@@ -152,7 +152,7 @@ describe('Apex class creation tests:', () => {
       .command(['force:apex:class:create', '--classname', 'a_'])
       .it(
         'should throw invalid class name ending with underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
@@ -164,7 +164,7 @@ describe('Apex class creation tests:', () => {
       .command(['force:apex:class:create', '--classname', 'a__a'])
       .it(
         'should throw invalid class name with double underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );

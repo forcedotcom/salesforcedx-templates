@@ -29,11 +29,11 @@ describe('Lightning interface creation tests:', () => {
         '--outputdir',
         'aura',
         '--template',
-        'DefaultLightningIntf'
+        'DefaultLightningIntf',
       ])
       .it(
         'should create lightning interface foo using DefaultLightningIntf template and aura output directory',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('aura', 'foo', 'foo.intf'));
           assert.file(path.join('aura', 'foo', 'foo.intf-meta.xml'));
         }
@@ -49,11 +49,11 @@ describe('Lightning interface creation tests:', () => {
           '--outputdir',
           path.join('aura', 'interfacetest'),
           '--template',
-          'DefaultLightningIntf'
+          'DefaultLightningIntf',
         ])
         .it(
           'should create lightning interface foo using DefaultLightningIntf template and custom output directory',
-          ctx => {
+          (ctx) => {
             assert.file(path.join('aura', 'interfacetest', 'foo', 'foo.intf'));
             assert.file(
               path.join('aura', 'interfacetest', 'foo', 'foo.intf-meta.xml')
@@ -73,9 +73,9 @@ describe('Lightning interface creation tests:', () => {
           '--outputdir',
           'aura',
           '--template',
-          'foo'
+          'foo',
         ])
-        .it('should throw invalid template name error', ctx => {
+        .it('should throw invalid template name error', (ctx) => {
           expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
         });
       test
@@ -83,7 +83,7 @@ describe('Lightning interface creation tests:', () => {
         //.withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', 'foo'])
-        .it('should throw missing aura parent folder error', ctx => {
+        .it('should throw missing aura parent folder error', (ctx) => {
           expect(ctx.stderr).to.contain(
             messages.getMessage('MissingAuraFolder')
           );
@@ -93,7 +93,7 @@ describe('Lightning interface creation tests:', () => {
         //.withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--outputdir', 'aura'])
-        .it('should throw missing interfacename error', ctx => {
+        .it('should throw missing interfacename error', (ctx) => {
           expect(ctx.stderr).to.contain(
             messages.getMessage('MissingInterfacename')
           );
@@ -108,11 +108,11 @@ describe('Lightning interface creation tests:', () => {
           '--interfacename',
           '/a',
           '--outputdir',
-          'aura'
+          'aura',
         ])
         .it(
           'should throw invalid non alphanumeric interfacename error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('AlphaNumericNameError')
             );
@@ -128,11 +128,11 @@ describe('Lightning interface creation tests:', () => {
           '--interfacename',
           '3aa',
           '--outputdir',
-          'aura'
+          'aura',
         ])
         .it(
           'should throw invalid interfacename starting with numeric error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('NameMustStartWithLetterError')
             );
@@ -148,11 +148,11 @@ describe('Lightning interface creation tests:', () => {
           '--interfacename',
           'a_',
           '--outputdir',
-          'aura'
+          'aura',
         ])
         .it(
           'should throw invalid interfacename ending with underscore error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('EndWithUnderscoreError')
             );
@@ -168,11 +168,11 @@ describe('Lightning interface creation tests:', () => {
           '--interfacename',
           'a__a',
           '--outputdir',
-          'aura'
+          'aura',
         ])
         .it(
           'should throw invalid interfacename with double underscore error',
-          ctx => {
+          (ctx) => {
             expect(ctx.stderr).to.contain(
               nls.localize('DoubleUnderscoreError')
             );

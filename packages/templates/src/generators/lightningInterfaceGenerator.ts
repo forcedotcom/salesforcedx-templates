@@ -10,9 +10,7 @@ import { CreateUtil } from '../utils';
 import { LightningInterfaceOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningInterfaceGenerator extends SfdxGenerator<
-  LightningInterfaceOptions
-> {
+export default class LightningInterfaceGenerator extends SfdxGenerator<LightningInterfaceOptions> {
   constructor(args: string | string[], options: LightningInterfaceOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightninginterface');
@@ -30,13 +28,8 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<
   }
 
   public writing() {
-    const {
-      template,
-      outputdir,
-      interfacename,
-      apiversion,
-      internal
-    } = this.options;
+    const { template, outputdir, interfacename, apiversion, internal } =
+      this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
@@ -46,7 +39,7 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<
         ),
         {
           apiVersion: apiversion,
-          description: nls.localize('LightningInterfaceBundle')
+          description: nls.localize('LightningInterfaceBundle'),
         }
       );
     }

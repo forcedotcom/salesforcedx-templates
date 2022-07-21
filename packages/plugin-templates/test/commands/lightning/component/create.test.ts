@@ -27,9 +27,9 @@ export class AuraLightningTestFormatter {
       'Helper.js',
       'Renderer.js',
       '.svg',
-      '.design'
+      '.design',
     ];
-    suffixarray.forEach(element => {
+    suffixarray.forEach((element) => {
       files.push(path.join('aura', pathway, filename + element));
     });
     return files;
@@ -47,11 +47,11 @@ describe('Lightning component creation tests:', () => {
         '--componentname',
         'foo',
         '--outputdir',
-        'aura'
+        'aura',
       ])
       .it(
         'should create lightning aura component files in the aura output directory',
-        ctx => {
+        (ctx) => {
           assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
           assert.fileContent(
             path.join('aura', 'foo', 'foo.cmp-meta.xml'),
@@ -70,9 +70,9 @@ describe('Lightning component creation tests:', () => {
         '--outputdir',
         'lwc',
         '--type',
-        'lwc'
+        'lwc',
       ])
-      .it('should force first letter of component name to lowercase', ctx => {
+      .it('should force first letter of component name to lowercase', (ctx) => {
         const camelCaseName = 'fooBar';
         const bundlePath = path.join('lwc', camelCaseName);
         const jsPath = path.join(bundlePath, `${camelCaseName}.js`);
@@ -98,11 +98,11 @@ describe('Lightning component creation tests:', () => {
         '--outputdir',
         'lwc',
         '--type',
-        'lwc'
+        'lwc',
       ])
       .it(
         'should create lightning web component files in the lwc output directory',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('lwc', 'foo', 'foo.html'));
           assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
           assert.file(path.join('lwc', 'foo', 'foo.js'));
@@ -119,7 +119,7 @@ describe('Lightning component creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--outputdir', 'aura'])
-      .it('should throw missing component name error', ctx => {
+      .it('should throw missing component name error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingComponentName')
         );
@@ -129,7 +129,7 @@ describe('Lightning component creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:lightning:component:create', '--componentname', 'foo'])
-      .it('should throw missing aura parent folder error', ctx => {
+      .it('should throw missing aura parent folder error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
       });
     test
@@ -141,9 +141,9 @@ describe('Lightning component creation tests:', () => {
         '--componentname',
         'foo',
         '--type',
-        'lwc'
+        'lwc',
       ])
-      .it('should throw missing lwc parent folder error', ctx => {
+      .it('should throw missing lwc parent folder error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingLWCFolder'));
       });
   });

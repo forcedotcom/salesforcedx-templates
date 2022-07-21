@@ -21,23 +21,23 @@ export default class LightningEvent extends TemplateCommand {
   );
   public static examples = [
     '$ sfdx force:lightning:event:create -n myevent',
-    '$ sfdx force:lightning:event:create -n myevent -d aura'
+    '$ sfdx force:lightning:event:create -n myevent -d aura',
   ];
   public static help = MessageUtil.buildHelpText(LightningEvent.examples, true);
   public static longDescription = MessageUtil.get('LightningLongDescription', [
-    BUNDLE_TYPE
+    BUNDLE_TYPE,
   ]);
 
   protected static flagsConfig = {
     eventname: flags.string({
       char: 'n',
       description: MessageUtil.get('LightningNameFlagDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
       longDescription: MessageUtil.get('LightningNameFlagLongDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
@@ -47,20 +47,20 @@ export default class LightningEvent extends TemplateCommand {
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningEventFileSuffix,
         'lightningevent'
-      )
+      ),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
       description: MessageUtil.get('LightningInternalFlagDescription'),
-      hidden: true
-    })
+      hidden: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

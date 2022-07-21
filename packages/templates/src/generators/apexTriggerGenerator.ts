@@ -9,9 +9,7 @@ import { CreateUtil } from '../utils';
 import { ApexTriggerOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class ApexTriggerGenerator extends SfdxGenerator<
-  ApexTriggerOptions
-> {
+export default class ApexTriggerGenerator extends SfdxGenerator<ApexTriggerOptions> {
   constructor(args: string | string[], options: ApexTriggerOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('apextrigger');
@@ -27,7 +25,7 @@ export default class ApexTriggerGenerator extends SfdxGenerator<
       triggername,
       apiversion,
       triggerevents,
-      sobject
+      sobject,
     } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.trigger`),

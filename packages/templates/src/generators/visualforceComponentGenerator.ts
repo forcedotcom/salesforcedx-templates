@@ -9,9 +9,7 @@ import { CreateUtil } from '../utils';
 import { VisualforceComponentOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class VisualforceComponentGenerator extends SfdxGenerator<
-  VisualforceComponentOptions
-> {
+export default class VisualforceComponentGenerator extends SfdxGenerator<VisualforceComponentOptions> {
   constructor(args: string | string[], options: VisualforceComponentOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('visualforcecomponent');
@@ -23,13 +21,8 @@ export default class VisualforceComponentGenerator extends SfdxGenerator<
   }
 
   public writing() {
-    const {
-      template,
-      outputdir,
-      label,
-      apiversion,
-      componentname
-    } = this.options;
+    const { template, outputdir, label, apiversion, componentname } =
+      this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.component`),
       this.destinationPath(path.join(outputdir, `${componentname}.component`)),

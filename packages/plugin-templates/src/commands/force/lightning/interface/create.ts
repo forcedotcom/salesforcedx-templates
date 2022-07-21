@@ -21,26 +21,26 @@ export default class LightningInterface extends TemplateCommand {
   );
   public static examples = [
     '$ sfdx force:lightning:interface:create -n myinterface',
-    '$ sfdx force:lightning:interface:create -n myinterface -d aura'
+    '$ sfdx force:lightning:interface:create -n myinterface -d aura',
   ];
   public static help = MessageUtil.buildHelpText(
     LightningInterface.examples,
     true
   );
   public static longDescription = MessageUtil.get('LightningLongDescription', [
-    BUNDLE_TYPE
+    BUNDLE_TYPE,
   ]);
 
   protected static flagsConfig = {
     interfacename: flags.string({
       char: 'n',
       description: MessageUtil.get('LightningNameFlagDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
       longDescription: MessageUtil.get('LightningNameFlagLongDescription', [
-        BUNDLE_TYPE
+        BUNDLE_TYPE,
       ]),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
@@ -50,20 +50,20 @@ export default class LightningInterface extends TemplateCommand {
       options: CreateUtil.getCommandTemplatesForFiletype(
         lightningInterfaceFileSuffix,
         'lightninginterface'
-      )
+      ),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     apiversion: flags.builtin(),
     internal: flags.boolean({
       char: 'i',
       description: MessageUtil.get('LightningInternalFlagDescription'),
-      hidden: true
-    })
+      hidden: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

@@ -88,10 +88,7 @@ export class TemplateService {
     }
 
     const generatorClass =
-      TemplateType[templateType]
-        .toString()
-        .charAt(0)
-        .toLowerCase() +
+      TemplateType[templateType].toString().charAt(0).toLowerCase() +
       TemplateType[templateType].toString().slice(1) +
       'Generator';
     const generatorNamespace = `@salesforce/${generatorClass}`;
@@ -116,16 +113,16 @@ export class TemplateService {
           const created = this.adapter.log.getCleanOutput();
           const rawOutput = nls.localize('RawOutput', [
             outputDir,
-            this.adapter.log.getOutput()
+            this.adapter.log.getOutput(),
           ]);
           const result = {
             outputDir,
             created,
-            rawOutput
+            rawOutput,
           };
           resolve(result);
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });

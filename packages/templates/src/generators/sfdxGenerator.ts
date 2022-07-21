@@ -40,7 +40,7 @@ export abstract class SfdxGenerator<
     // custom install task set to true keeps us from getting a warning message about a missing package.json file.
     // Note for generators that need an npm install it should be set to false.
     features: Generator.GeneratorFeatures = {
-      customInstallTask: true
+      customInstallTask: true,
     }
   ) {
     super(args, options, features);

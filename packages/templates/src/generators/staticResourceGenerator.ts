@@ -13,9 +13,7 @@ import { SfdxGenerator } from './sfdxGenerator';
 
 const EXTENSION_TEMPLATES = ['js', 'css', 'json', 'txt'];
 
-export default class StaticResourceGenerator extends SfdxGenerator<
-  StaticResourceOptions
-> {
+export default class StaticResourceGenerator extends SfdxGenerator<StaticResourceOptions> {
   constructor(args: string | string[], options: StaticResourceOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('staticresource');
@@ -63,7 +61,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<
         path.join(outputdir, `${resourcename}.resource-meta.xml`)
       ),
       {
-        contentType: contenttype
+        contentType: contenttype,
       }
     );
   }

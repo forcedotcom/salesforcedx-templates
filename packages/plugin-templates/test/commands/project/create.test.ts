@@ -21,7 +21,7 @@ const standardfolderarray = [
   'permissionsets',
   'staticresources',
   'tabs',
-  'triggers'
+  'triggers',
 ];
 const filestocopy = [
   '.eslintignore',
@@ -30,7 +30,7 @@ const filestocopy = [
   '.prettierignore',
   '.prettierrc',
   'jest.config.js',
-  'package.json'
+  'package.json',
 ];
 const emptyfolderarray = ['aura', 'lwc'];
 const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
@@ -50,7 +50,7 @@ describe('Project creation tests:', () => {
       //.withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'foo'])
-      .it('should create project with default values and foo name', ctx => {
+      .it('should create project with default values and foo name', (ctx) => {
         assert.file([path.join('foo', 'config', 'project-scratch-def.json')]);
         assert.file([path.join('foo', 'scripts', 'soql', 'account.soql')]);
         assert.file([path.join('foo', 'scripts', 'apex', 'hello.apex')]);
@@ -97,7 +97,7 @@ describe('Project creation tests:', () => {
             'default',
             'lwc',
             '.eslintrc.json'
-          )
+          ),
         ]);
         assert.file([
           path.join(
@@ -107,7 +107,7 @@ describe('Project creation tests:', () => {
             'default',
             'aura',
             '.eslintrc.json'
-          )
+          ),
         ]);
         for (const file of filestocopy) {
           assert.file([path.join('foo', file)]);
@@ -130,26 +130,26 @@ describe('Project creation tests:', () => {
         '--projectname',
         'foo',
         '--outputdir',
-        'test outputdir'
+        'test outputdir',
       ])
       .it(
         'should create project with default values and foo name in a custom output directory with spaces in its name',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join(
               'test outputdir',
               'foo',
               'config',
               'project-scratch-def.json'
-            )
+            ),
           ]);
           assert.file([path.join('test outputdir', 'foo', 'README.md')]);
           assert.file([
-            path.join('test outputdir', 'foo', 'sfdx-project.json')
+            path.join('test outputdir', 'foo', 'sfdx-project.json'),
           ]);
           for (const file of vscodearray) {
             assert.file([
-              path.join('test outputdir', 'foo', '.vscode', `${file}.json`)
+              path.join('test outputdir', 'foo', '.vscode', `${file}.json`),
             ]);
           }
           assert.file([
@@ -161,7 +161,7 @@ describe('Project creation tests:', () => {
               'default',
               'lwc',
               '.eslintrc.json'
-            )
+            ),
           ]);
           assert.file([
             path.join(
@@ -172,7 +172,7 @@ describe('Project creation tests:', () => {
               'default',
               'aura',
               '.eslintrc.json'
-            )
+            ),
           ]);
           for (const file of filestocopy) {
             assert.file([path.join('test outputdir', 'foo', file)]);
@@ -203,11 +203,11 @@ describe('Project creation tests:', () => {
         '--projectname',
         'duplicate-project-test',
         '--outputdir',
-        'test outputdir'
+        'test outputdir',
       ])
       .it(
         'should not create duplicate project in the directory where command is executed',
-        ctx => {
+        (ctx) => {
           assert.file(
             path.join('test outputdir', 'duplicate-project-test', 'force-app')
           );
@@ -222,9 +222,9 @@ describe('Project creation tests:', () => {
       .command(['force:project:create', '--projectname', 'foo-project'])
       .it(
         'should create project with default values and foo-project name in a custom output directory with spaces in its name',
-        ctx => {
+        (ctx) => {
           assert.file([
-            path.join('foo-project', 'config', 'project-scratch-def.json')
+            path.join('foo-project', 'config', 'project-scratch-def.json'),
           ]);
           assert.file([path.join('foo-project', 'README.md')]);
           assert.file([path.join('foo-project', 'sfdx-project.json')]);
@@ -239,7 +239,7 @@ describe('Project creation tests:', () => {
               'default',
               'lwc',
               '.eslintrc.json'
-            )
+            ),
           ]);
           for (const file of filestocopy) {
             assert.file([path.join('foo-project', file)]);
@@ -262,11 +262,11 @@ describe('Project creation tests:', () => {
         'force:project:create',
         '--projectname',
         'footest',
-        '--manifest'
+        '--manifest',
       ])
       .it(
         'should create project with footest name and manifest folder',
-        ctx => {
+        (ctx) => {
           assert.file([path.join('footest', 'manifest', 'package.xml')]);
         }
       );
@@ -284,11 +284,11 @@ describe('Project creation tests:', () => {
         '--defaultpackagedir',
         'empty',
         '--namespace',
-        'testnamespace'
+        'testnamespace',
       ])
       .it(
         'should create project with fooempty name, empty template, empty default package directory, and a custom namespace',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('fooempty', '.forceignore'));
           assert.fileContent(
             path.join('fooempty', 'sfdx-project.json'),
@@ -329,11 +329,11 @@ describe('Project creation tests:', () => {
         '--defaultpackagedir',
         'empty',
         '--loginurl',
-        'https://vandelay-industries.my.salesforce.com'
+        'https://vandelay-industries.my.salesforce.com',
       ])
       .it(
         'should create project with fooempty name, empty template, empty default package directory, empty namespace and custom login url',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('fooempty', '.forceignore'));
           assert.fileContent(
             path.join('fooempty', 'sfdx-project.json'),
@@ -375,11 +375,11 @@ describe('Project creation tests:', () => {
         'analytics1',
         '--template',
         'analytics',
-        '--manifest'
+        '--manifest',
       ])
       .it(
         'should create project with analytics1 name using analytics template and a manifest',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('analytics1', '.forceignore'));
           assert.fileContent(
             path.join('analytics1', 'sfdx-project.json'),
@@ -435,15 +435,18 @@ describe('Project creation tests:', () => {
 
     test
       .command(['force:project:create', '-n', 'GitIgnoreTest'])
-      .it('should rename gitignore to .gitignore in standard template', ctx => {
-        const srcPath = path.join(
-          path.dirname(require.resolve('@salesforce/templates')),
-          'templates/project'
-        );
-        assert.noFile(path.join(srcPath, '.gitignore'));
-        assert.file(path.join(srcPath, 'gitignore'));
-        assert.file(path.normalize('GitIgnoreTest/.gitignore'));
-      });
+      .it(
+        'should rename gitignore to .gitignore in standard template',
+        (ctx) => {
+          const srcPath = path.join(
+            path.dirname(require.resolve('@salesforce/templates')),
+            'templates/project'
+          );
+          assert.noFile(path.join(srcPath, '.gitignore'));
+          assert.file(path.join(srcPath, 'gitignore'));
+          assert.file(path.normalize('GitIgnoreTest/.gitignore'));
+        }
+      );
 
     test
       .command([
@@ -451,11 +454,11 @@ describe('Project creation tests:', () => {
         '-n',
         'GitIgnoreTest2',
         '-t',
-        'analytics'
+        'analytics',
       ])
       .it(
         'should rename gitignore to .gitignore in analytics template',
-        ctx => {
+        (ctx) => {
           const srcPath = path.join(
             path.dirname(require.resolve('@salesforce/templates')),
             'templates/project'
@@ -473,7 +476,7 @@ describe('Project creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:project:create'])
-      .it('should throw invalid template name error', ctx => {
+      .it('should throw invalid template name error', (ctx) => {
         expect(ctx.stderr).to.contain(
           messages.getMessage('MissingProjectname')
         );
@@ -487,9 +490,9 @@ describe('Project creation tests:', () => {
         '--projectname',
         'foo',
         '--template',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid template name error', ctx => {
+      .it('should throw invalid template name error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
       });
   });

@@ -9,9 +9,7 @@ import { CreateUtil } from '../utils';
 import { VisualforcePageOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class VisualforcePageGenerator extends SfdxGenerator<
-  VisualforcePageOptions
-> {
+export default class VisualforcePageGenerator extends SfdxGenerator<VisualforcePageOptions> {
   constructor(args: string | string[], options: VisualforcePageOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('visualforcepage');

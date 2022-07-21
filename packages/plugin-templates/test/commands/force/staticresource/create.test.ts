@@ -26,11 +26,11 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'foo',
         '--contenttype',
-        'text/css'
+        'text/css',
       ])
       .it(
         'should create foo css static resource in the default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.css', 'foo.resource-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.css'),
@@ -48,11 +48,11 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'foo',
         '--contenttype',
-        'application/javascript'
+        'application/javascript',
       ])
       .it(
         'should create foo javascript static resource in the default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.js', 'foo.resource-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.js'),
@@ -70,11 +70,11 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'foo',
         '--contenttype',
-        'application/json'
+        'application/json',
       ])
       .it(
         'should create foo json static resource in the default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.json', 'foo.resource-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.json'),
@@ -92,11 +92,11 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'foo',
         '--contenttype',
-        'text/plain'
+        'text/plain',
       ])
       .it(
         'should create foo json static resource in the default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo.txt', 'foo.resource-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo.txt'),
@@ -114,11 +114,11 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'fooPDF',
         '--contenttype',
-        'application/pdf'
+        'application/pdf',
       ])
       .it(
         'should create foo generic static resource in the default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['fooPDF.resource', 'fooPDF.resource-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'fooPDF.resource'),
@@ -134,7 +134,7 @@ describe('Static resource creation tests:', () => {
       .command(['force:staticresource:create', '--resourcename', 'foo'])
       .it(
         'should create foo static resource in the default output directory',
-        ctx => {
+        (ctx) => {
           assert.file(['foo/.gitkeep', 'foo.resource-meta.xml']);
           assert.fileContent(
             path.join(process.cwd(), 'foo/.gitkeep'),
@@ -154,12 +154,12 @@ describe('Static resource creation tests:', () => {
         '--outputdir',
         'resourcesjs',
         '--contenttype',
-        'application/javascript'
+        'application/javascript',
       ])
-      .it('should create foo resource with a targetpath set', ctx => {
+      .it('should create foo resource with a targetpath set', (ctx) => {
         assert.file([
           path.join('resourcesjs', 'srjs.resource-meta.xml'),
-          path.join('resourcesjs', 'srjs.js')
+          path.join('resourcesjs', 'srjs.js'),
         ]);
       });
 
@@ -172,14 +172,14 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'foo',
         '--outputdir',
-        'staticresource create'
+        'staticresource create',
       ])
       .it(
         'should create foo static resource in custom folder name that has a space in it',
-        ctx => {
+        (ctx) => {
           assert.file([
             path.join('staticresource create', 'foo', '.gitkeep'),
-            path.join('staticresource create', 'foo.resource-meta.xml')
+            path.join('staticresource create', 'foo.resource-meta.xml'),
           ]);
           assert.fileContent(
             path.join('staticresource create', 'foo', '.gitkeep'),
@@ -195,7 +195,7 @@ describe('Static resource creation tests:', () => {
       //.withProject()
       .stderr()
       .command(['force:staticresource:create'])
-      .it('should throw a missing resourcename error', ctx => {
+      .it('should throw a missing resourcename error', (ctx) => {
         expect(ctx.stderr).to.contain('Missing required flag');
       });
 
@@ -206,7 +206,7 @@ describe('Static resource creation tests:', () => {
       .command(['force:staticresource:create', '--resourcename', '/a'])
       .it(
         'should throw invalid non alphanumeric static resource name error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
         }
       );
@@ -218,7 +218,7 @@ describe('Static resource creation tests:', () => {
       .command(['force:staticresource:create', '--resourcename', '3aa'])
       .it(
         'should throw invalid static resource name starting with numeric error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(
             nls.localize('NameMustStartWithLetterError')
           );
@@ -232,7 +232,7 @@ describe('Static resource creation tests:', () => {
       .command(['force:staticresource:create', '--resourcename', 'a_'])
       .it(
         'should throw invalid static resource name ending with underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
         }
       );
@@ -244,7 +244,7 @@ describe('Static resource creation tests:', () => {
       .command(['force:staticresource:create', '--resourcename', 'a__a'])
       .it(
         'should throw invalid static resource name with double underscore error',
-        ctx => {
+        (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
         }
       );
@@ -258,9 +258,9 @@ describe('Static resource creation tests:', () => {
         '--resourcename',
         'foo',
         '--contenttype',
-        'notvalid'
+        'notvalid',
       ])
-      .it('should throw an invalid mime type error', ctx => {
+      .it('should throw an invalid mime type error', (ctx) => {
         expect(ctx.stderr).to.contain(nls.localize('InvalidMimeType'));
       });
   });

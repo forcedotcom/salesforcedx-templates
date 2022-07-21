@@ -5,25 +5,34 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "devDependencies": {
-    "@commitlint/cli": "^16",
-    "@commitlint/config-conventional": "^16",
     "@salesforce/dev-config": "^3.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^2.22.0",
+    "@salesforce/dev-scripts": "^2.0.4",
+    "@salesforce/prettier-config": "^0.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "chai": "^4.2.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.1.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-config-salesforce": "^0.1.6",
+    "eslint-config-salesforce-license": "^0.1.6",
+    "eslint-config-salesforce-typescript": "^0.2.7",
     "eslint-plugin-header": "^3.0.0",
-    "eslint-plugin-jsdoc": "^19.1.0",
+    "eslint-plugin-import": "2.24.2",
+    "eslint-plugin-jsdoc": "^35.1.2",
     "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.2.5",
+    "husky": "^7.0.4",
     "lerna": "^4",
     "lint-staged": "^10.2.11",
     "mkdirp": "^0.5.1",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^1.11.1",
-    "typescript": "^3.7.5"
+    "mocha": "^9.1.3",
+    "nyc": "^15.1.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^3.1.0",
+    "sinon": "10.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.1.3"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -40,21 +49,20 @@
   "repository": "forcedotcom/salesforcedx-templates",
   "scripts": {
     "build": "lerna run build",
-    "commit-init": "commitizen init cz-conventional-changelog --save-dev --save-exact --force",
+    "clean": "lerna run clean",
+    "clean-all": "lerna run clean-all",
     "commit": "git-cz",
-    "manifest:generate": "lerna run manifest:generate",
+    "commit-init": "commitizen init cz-conventional-changelog --save-dev --save-exact --force",
+    "compile": "lerna run compile",
+    "docs": "lerna run docs",
+    "format": "lerna run format",
     "lint": "lerna run lint",
+    "manifest:generate": "lerna run manifest:generate",
     "plugin:link": "cd packages/plugin-templates && sfdx plugins:link",
     "plugin:unlink": "cd packages/plugin-templates && sfdx plugins:unlink",
     "postinstall": "lerna bootstrap --no-ci",
-    "test": "lerna run test",
-    "reformat": "prettier --config .prettierrc --write './*.{js,json,md}' './**/*.{ts,json,md}'"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+    "reformat": "prettier --config .prettierrc --write './*.{js,json,md}' './**/*.{ts,json,md}'",
+    "test": "lerna run test"
   },
   "lint-staged": {
     "./{src,test}/**/*.{ts,js}": [

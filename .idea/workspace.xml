@@ -2,15 +2,69 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df447fad-1239-4668-af64-72760c2e0b6a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/bin/run" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/bin/run" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/plugin-templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/analytics/template/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/analytics/template/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/apex/class/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/apex/class/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/apex/trigger/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/apex/trigger/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/app/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/app/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/component/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/component/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/event/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/event/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/interface/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/interface/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/test/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/lightning/test/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/project/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/project/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/staticresource/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/staticresource/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/visualforce/component/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/visualforce/component/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/visualforce/page/create.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/commands/force/visualforce/page/create.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/utils/messageUtil.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/utils/messageUtil.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/plugin-templates/src/utils/templateCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/src/utils/templateCommand.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/analytics/template/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/analytics/template/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/apex/class/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/apex/class/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/apex/trigger/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/apex/trigger/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/app/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/app/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/component/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/component/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/event/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/event/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/interface/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/lightning/interface/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/staticresource/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/staticresource/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/visualforce/component/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/visualforce/component/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/visualforce/page/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/force/visualforce/page/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/app/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/app/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/component/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/component/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/event/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/event/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/interface/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/interface/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/test/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/lightning/test/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/commands/project/create.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/commands/project/create.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/utils/messageUtil.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/utils/messageUtil.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/plugin-templates/test/utils/templateCommand.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/test/utils/templateCommand.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/plugin-templates/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/analyticsTemplateGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/analyticsTemplateGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/apexClassGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/apexClassGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/apexTriggerGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/apexTriggerGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/lightningAppGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/lightningAppGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/lightningComponentGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/lightningComponentGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/lightningEventGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/lightningEventGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/lightningInterfaceGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/lightningInterfaceGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/lightningTestGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/lightningTestGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/projectGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/projectGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/sfdxGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/sfdxGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/staticResourceGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/staticResourceGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/visualforceComponentGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/visualforceComponentGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/generators/visualforcePageGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/generators/visualforcePageGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/i18n/i18n.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/i18n/i18n.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/i18n/localization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/i18n/localization.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/service/gitRepoUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/service/gitRepoUtils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/service/templateService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/service/templateService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/utils/adapter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/utils/adapter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/utils/createUtil.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/utils/createUtil.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/utils/logger.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/utils/logger.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/utils/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/utils/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/test/generators/sfdxGenerator.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/test/generators/sfdxGenerator.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/templates/test/service/templateService.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/test/service/templateService.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/test/utils/adapter.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/test/utils/adapter.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/test/utils/createUtil.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/test/utils/createUtil.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/templates/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
@@ -89,7 +143,7 @@
     "ts.external.directory.path": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/typescript/lib"
   }
 }]]></component>
-  <component name="RunManager" selected="npm.test:deprecation-policy">
+  <component name="RunManager" selected="npm.posttest">
     <configuration name="posttest" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/packages/plugin-templates/package.json" />
       <command value="run" />
@@ -152,8 +206,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.test:deprecation-policy" />
         <item itemvalue="npm.posttest" />
+        <item itemvalue="npm.test:deprecation-policy" />
         <item itemvalue="Mocha.Apex class creation tests:" />
         <item itemvalue="Mocha.Analytics template creation tests:" />
         <item itemvalue="npm.test (1)" />

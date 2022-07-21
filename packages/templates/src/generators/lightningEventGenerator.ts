@@ -10,15 +10,13 @@ import { CreateUtil } from '../utils';
 import { LightningEventOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningEventGenerator extends SfdxGenerator<
-  LightningEventOptions
-> {
+export default class LightningEventGenerator extends SfdxGenerator<LightningEventOptions> {
   constructor(args: string | string[], options: LightningEventOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightningevent');
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.eventname);
     CreateUtil.checkInputs(this.options.template);
 
@@ -28,25 +26,17 @@ export default class LightningEventGenerator extends SfdxGenerator<
     }
   }
 
-  public writing() {
-    const {
-      template,
-      outputdir,
-      eventname,
-      apiversion,
-      internal
-    } = this.options;
+  public writing(): void {
+    const { template, outputdir, eventname, apiversion, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.evt-meta.xml'),
-        this.destinationPath(
-          path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)
-        ),
+        this.destinationPath(path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)),
         {
           eventname,
           apiVersion: apiversion,
-          description: nls.localize('LightningEventBundle')
+          description: nls.localize('LightningEventBundle'),
         }
       );
     }

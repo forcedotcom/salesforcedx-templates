@@ -12,39 +12,27 @@ import { MessageUtil, TemplateCommand } from '../../../../utils';
 
 Messages.importMessagesDirectory(__dirname);
 export default class AnalyticsTemplate extends TemplateCommand {
-  public static examples = [
-    '$ sfdx force:analytics:template:create -n myTemplate -d outputdir'
-  ];
+  public static examples = ['$ sfdx force:analytics:template:create -n myTemplate -d outputdir'];
 
-  public static description = MessageUtil.buildDescription(
-    'AnalyticsTemplateDescription',
-    false
-  );
+  public static description = MessageUtil.buildDescription('AnalyticsTemplateDescription', false);
 
-  public static help = MessageUtil.buildHelpText(
-    AnalyticsTemplate.examples,
-    false
-  );
-  public static longDescription = MessageUtil.get(
-    'AnalyticsTemplateLongDescription'
-  );
+  public static help = MessageUtil.buildHelpText(AnalyticsTemplate.examples, false);
+  public static longDescription = MessageUtil.get('AnalyticsTemplateLongDescription');
 
   protected static flagsConfig = {
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     apiversion: flags.builtin(),
     templatename: flags.string({
       char: 'n',
       description: MessageUtil.get('AnalyticsTemplateNameFlagDescription'),
-      longDescription: MessageUtil.get(
-        'AnalyticsTemplateNameFlagLongDescription'
-      ),
-      required: true
-    })
+      longDescription: MessageUtil.get('AnalyticsTemplateNameFlagLongDescription'),
+      required: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

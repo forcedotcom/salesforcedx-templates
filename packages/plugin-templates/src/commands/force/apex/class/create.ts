@@ -13,13 +13,10 @@ import { MessageUtil, TemplateCommand } from '../../../../utils';
 const apexClassFileSuffix = /.cls$/;
 
 export default class ApexClass extends TemplateCommand {
-  public static description = MessageUtil.buildDescription(
-    'ApexClassDescription',
-    false
-  );
+  public static description = MessageUtil.buildDescription('ApexClassDescription', false);
   public static examples = [
     '$ sfdx force:apex:class:create -n MyClass',
-    '$ sfdx force:apex:class:create -n MyClass -d classes'
+    '$ sfdx force:apex:class:create -n MyClass -d classes',
   ];
   public static help = MessageUtil.buildHelpText(ApexClass.examples, false);
   public static longDescription = MessageUtil.get('ApexClassLongDescription');
@@ -29,25 +26,22 @@ export default class ApexClass extends TemplateCommand {
       char: 'n',
       description: MessageUtil.get('ApexClassNameFlagDescription'),
       longDescription: MessageUtil.get('ApexClassNameFlagLongDescription'),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultApexClass',
-      options: CreateUtil.getCommandTemplatesForFiletype(
-        apexClassFileSuffix,
-        'apexclass'
-      )
+      options: CreateUtil.getCommandTemplatesForFiletype(apexClassFileSuffix, 'apexclass'),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
-    apiversion: flags.builtin()
+    apiversion: flags.builtin(),
   };
 
   public async run(): Promise<AnyJson> {

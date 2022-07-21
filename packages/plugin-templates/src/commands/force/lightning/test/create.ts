@@ -13,49 +13,39 @@ import { MessageUtil, TemplateCommand } from '../../../../utils';
 const lightningTestFileSuffix = /.resource$/;
 
 export default class LightningTest extends TemplateCommand {
-  public static description = MessageUtil.buildDescription(
-    'LightningTestDescription',
-    false
-  );
+  public static description = MessageUtil.buildDescription('LightningTestDescription', false);
   public static examples = [
     '$ sfdx force:lightning:test:create -n MyLightningTest',
-    '$ sfdx force:lightning:test:create -n MyLightningTest -d lightningTests'
+    '$ sfdx force:lightning:test:create -n MyLightningTest -d lightningTests',
   ];
   public static help = MessageUtil.buildHelpText(LightningTest.examples, false);
-  public static longDescription = MessageUtil.get(
-    'LightningTestLongDescription'
-  );
+  public static longDescription = MessageUtil.get('LightningTestLongDescription');
 
   protected static flagsConfig = {
     testname: flags.string({
       char: 'n',
-      description: MessageUtil.get('LightningNameFlagDescription', [
-        MessageUtil.get('Test')
-      ]),
+      description: MessageUtil.get('LightningNameFlagDescription', [MessageUtil.get('Test')]),
       longDescription: MessageUtil.get('LightningTestNameFlagLongDescription'),
-      required: true
+      required: true,
     }),
     template: flags.string({
       char: 't',
       description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultLightningTest',
-      options: CreateUtil.getCommandTemplatesForFiletype(
-        lightningTestFileSuffix,
-        'lightningtest'
-      )
+      options: CreateUtil.getCommandTemplatesForFiletype(lightningTestFileSuffix, 'lightningtest'),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     internal: flags.boolean({
       char: 'i',
       description: MessageUtil.get('LightningInternalFlagDescription'),
-      hidden: true
-    })
+      hidden: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

@@ -35,10 +35,7 @@ export class MessageUtil {
     extra?: string
   ): string {
     return (
-      this.messages.getMessage(descriptionKey, tokens) +
-      '\n' +
-      this.getHelpHead(isLightningBundle) +
-      (extra || '')
+      this.messages.getMessage(descriptionKey, tokens) + '\n' + this.getHelpHead(isLightningBundle) + (extra || '')
     );
   }
 
@@ -52,11 +49,7 @@ export class MessageUtil {
    * @param isLightningBundle If the command is for a lightning bundle
    * @param extra Extra text to append to the help message before the examples
    */
-  public static buildHelpText(
-    examples: string[],
-    isLightningBundle: boolean,
-    extra?: string
-  ): string {
+  public static buildHelpText(examples: string[], isLightningBundle: boolean, extra?: string): string {
     return (
       this.getHelpHead(isLightningBundle) +
       (extra || '') +
@@ -65,10 +58,7 @@ export class MessageUtil {
     );
   }
 
-  private static messages = Messages.loadMessages(
-    '@salesforce/plugin-templates',
-    'messages'
-  );
+  private static messages = Messages.loadMessages('@salesforce/plugin-templates', 'messages');
 
   private static getHelpHead(isLightning: boolean): string {
     return (

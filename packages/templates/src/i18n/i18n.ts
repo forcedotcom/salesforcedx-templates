@@ -22,22 +22,16 @@ export const messages = {
   DoubleUnderscoreError: "Name can't contain 2 consecutive underscores.",
   InvalidMimeType: 'The value of this argument must be a valid MIME type.',
 
-  MissingWaveTemplatesDir:
-    "Analytics templates must have a parent folder named 'waveTemplates'.",
+  MissingWaveTemplatesDir: "Analytics templates must have a parent folder named 'waveTemplates'.",
   MissingAuraDir: "Lightning bundles must have a parent folder named 'aura'.",
   MissingLWCDir: "Lightning bundles must have a parent folder named 'lwc'.",
-  MissingLightningComponentTemplate:
-    'Template %s not available for component type %s.',
+  MissingLightningComponentTemplate: 'Template %s not available for component type %s.',
 
-  localCustomTemplateDoNotExist:
-    'Local custom templates folder %s does not exist',
-  customTemplatesShouldUseHttpsProtocol:
-    'Only HTTPS protocol is supported for custom templates. Got %s.',
-  customTemplatesSupportsGitHubOnly:
-    'Unsupported custom templates repo %s. Only GitHub is supported.',
+  localCustomTemplateDoNotExist: 'Local custom templates folder %s does not exist',
+  customTemplatesShouldUseHttpsProtocol: 'Only HTTPS protocol is supported for custom templates. Got %s.',
+  customTemplatesSupportsGitHubOnly: 'Unsupported custom templates repo %s. Only GitHub is supported.',
   customTemplatesInvalidRepoUrl: 'Invalid custom templates repository URL: %s',
-  customTemplatesCannotRetrieveDefaultBranch:
-    'Cannot retrieve default branch for custom templates repository: %s',
+  customTemplatesCannotRetrieveDefaultBranch: 'Cannot retrieve default branch for custom templates repository: %s',
 
   LightningAppBundle: 'A Lightning Application Bundle',
   LightningComponentBundle: 'A Lightning Component Bundle',
@@ -45,5 +39,5 @@ export const messages = {
   LightningInterfaceBundle: 'A Lightning Interface Bundle',
   LightningTest: 'A Lightning Test',
 
-  RawOutput: 'target dir = %s\n%s'
+  RawOutput: 'target dir = %s\n%s',
 };

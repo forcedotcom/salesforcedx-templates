@@ -12,10 +12,7 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-templates',
-  'messages'
-);
+const messages = Messages.loadMessages('@salesforce/plugin-templates', 'messages');
 
 describe('Lightning event creation tests:', () => {
   describe('Check lightning event creation', () => {
@@ -30,28 +27,19 @@ describe('Lightning event creation tests:', () => {
         '--outputdir',
         'aura',
         '--template',
-        'DefaultLightningEvt'
+        'DefaultLightningEvt',
       ])
-      .it(
-        'should create lightning event foo using DefaultLightningEvt template and aura output directory',
-        ctx => {
-          assert.file(path.join('aura', 'foo', 'foo.evt'));
-          assert.file(path.join('aura', 'foo', 'foo.evt-meta.xml'));
-        }
-      );
+      .it('should create lightning event foo using DefaultLightningEvt template and aura output directory', (ctx) => {
+        assert.file(path.join('aura', 'foo', 'foo.evt'));
+        assert.file(path.join('aura', 'foo', 'foo.evt-meta.xml'));
+      });
 
     test
       .withOrg()
       //.withProject()
       .stdout()
-      .command([
-        'force:lightning:event:create',
-        '--eventname',
-        'foo',
-        '--outputdir',
-        path.join('aura', 'testing')
-      ])
-      .it('should create lightning event foo in a new directory', ctx => {
+      .command(['force:lightning:event:create', '--eventname', 'foo', '--outputdir', path.join('aura', 'testing')])
+      .it('should create lightning event foo in a new directory', (ctx) => {
         assert.file(path.join('aura', 'testing', 'foo', 'foo.evt'));
       });
   }),
@@ -60,16 +48,8 @@ describe('Lightning event creation tests:', () => {
         .withOrg()
         //.withProject()
         .stderr()
-        .command([
-          'force:lightning:event:create',
-          '--eventname',
-          'foo',
-          '--outputdir',
-          'aura',
-          '--template',
-          'foo'
-        ])
-        .it('should throw invalid template name error', ctx => {
+        .command(['force:lightning:event:create', '--eventname', 'foo', '--outputdir', 'aura', '--template', 'foo'])
+        .it('should throw invalid template name error', (ctx) => {
           expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
         });
 
@@ -78,10 +58,8 @@ describe('Lightning event creation tests:', () => {
         //.withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', 'foo'])
-        .it('should throw missing aura parent folder error', ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('MissingAuraFolder')
-          );
+        .it('should throw missing aura parent folder error', (ctx) => {
+          expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
         });
 
       test
@@ -89,24 +67,16 @@ describe('Lightning event creation tests:', () => {
         //.withProject()
         .stderr()
         .command(['force:lightning:event:create', '--outputdir', 'aura'])
-        .it('should throw missing eventname error', ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('MissingEventname')
-          );
+        .it('should throw missing eventname error', (ctx) => {
+          expect(ctx.stderr).to.contain(messages.getMessage('MissingEventname'));
         });
 
       test
         .withOrg()
         //.withProject()
         .stderr()
-        .command([
-          'force:lightning:event:create',
-          '--eventname',
-          '/a',
-          '--outputdir',
-          'aura'
-        ])
-        .it('should throw invalid non alphanumeric eventname error', ctx => {
+        .command(['force:lightning:event:create', '--eventname', '/a', '--outputdir', 'aura'])
+        .it('should throw invalid non alphanumeric eventname error', (ctx) => {
           expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
         });
 
@@ -114,60 +84,27 @@ describe('Lightning event creation tests:', () => {
         .withOrg()
         //.withProject()
         .stderr()
-        .command([
-          'force:lightning:event:create',
-          '--eventname',
-          '3aa',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid eventname starting with numeric error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('NameMustStartWithLetterError')
-            );
-          }
-        );
+        .command(['force:lightning:event:create', '--eventname', '3aa', '--outputdir', 'aura'])
+        .it('should throw invalid eventname starting with numeric error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('NameMustStartWithLetterError'));
+        });
 
       test
         .withOrg()
         //.withProject()
         .stderr()
-        .command([
-          'force:lightning:event:create',
-          '--eventname',
-          'a_',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid eventname ending with underscore error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('EndWithUnderscoreError')
-            );
-          }
-        );
+        .command(['force:lightning:event:create', '--eventname', 'a_', '--outputdir', 'aura'])
+        .it('should throw invalid eventname ending with underscore error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
+        });
 
       test
         .withOrg()
         //.withProject()
         .stderr()
-        .command([
-          'force:lightning:event:create',
-          '--eventname',
-          'a__a',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid eventname with double underscore error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('DoubleUnderscoreError')
-            );
-          }
-        );
+        .command(['force:lightning:event:create', '--eventname', 'a__a', '--outputdir', 'aura'])
+        .it('should throw invalid eventname with double underscore error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
+        });
     });
 });

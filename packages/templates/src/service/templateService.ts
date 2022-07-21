@@ -35,7 +35,7 @@ export class TemplateService {
    * Get an instance of TemplateService
    * @param cwd cwd of current yeoman environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
    */
-  public static getInstance(cwd?: string) {
+  public static getInstance(cwd?: string): TemplateService {
     if (!TemplateService.instance) {
       TemplateService.instance = new TemplateService(cwd);
     } else if (cwd) {
@@ -47,7 +47,7 @@ export class TemplateService {
   /**
    * Getting cwd of current yeoman environment
    */
-  public get cwd() {
+  public get cwd(): string {
     return this.env.cwd;
   }
 
@@ -79,19 +79,14 @@ export class TemplateService {
     templateOptions: TOptions,
     customTemplatesRootPathOrGitRepo?: string
   ): Promise<CreateOutput> {
-    await this.setCustomTemplatesRootPathOrGitRepo(
-      customTemplatesRootPathOrGitRepo
-    );
+    await this.setCustomTemplatesRootPathOrGitRepo(customTemplatesRootPathOrGitRepo);
     if (customTemplatesRootPathOrGitRepo) {
       // In VS Code, if creating using a custom template, we need to reset the yeoman environment
       this.resetEnv();
     }
 
     const generatorClass =
-      TemplateType[templateType]
-        .toString()
-        .charAt(0)
-        .toLowerCase() +
+      TemplateType[templateType].toString().charAt(0).toLowerCase() +
       TemplateType[templateType].toString().slice(1) +
       'Generator';
     const generatorNamespace = `@salesforce/${generatorClass}`;
@@ -99,11 +94,7 @@ export class TemplateService {
     if (!generator) {
       generator = (await import(`../generators/${generatorClass}`)).default;
       const generatorPackagePath = path.join(__dirname, '..', '..');
-      this.env.registerStub(
-        generator!,
-        generatorNamespace,
-        generatorPackagePath
-      );
+      this.env.registerStub(generator!, generatorNamespace, generatorPackagePath);
     }
 
     this.adapter.log.clear();
@@ -114,18 +105,15 @@ export class TemplateService {
         .then(() => {
           const outputDir = path.resolve(this.cwd, templateOptions.outputdir!);
           const created = this.adapter.log.getCleanOutput();
-          const rawOutput = nls.localize('RawOutput', [
-            outputDir,
-            this.adapter.log.getOutput()
-          ]);
+          const rawOutput = nls.localize('RawOutput', [outputDir, this.adapter.log.getOutput()]);
           const result = {
             outputDir,
             created,
-            rawOutput
+            rawOutput,
           };
           resolve(result);
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });
@@ -152,7 +140,7 @@ export class TemplateService {
   public async setCustomTemplatesRootPathOrGitRepo(
     pathOrRepoUri?: string,
     forceLoadingRemoteRepo = false
-  ) {
+  ): Promise<void> {
     if (pathOrRepoUri === undefined) {
       this.customTemplatesRootPath = undefined;
       return;
@@ -162,10 +150,7 @@ export class TemplateService {
       // if pathOrRepoUri is valid url, load the repo
       const url = new URL(pathOrRepoUri);
       if (url) {
-        this.customTemplatesRootPath = await loadCustomTemplatesGitRepo(
-          url,
-          forceLoadingRemoteRepo
-        );
+        this.customTemplatesRootPath = await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo);
       }
     } catch (error) {
       const err = error as FsError;
@@ -177,9 +162,7 @@ export class TemplateService {
       if (fs.existsSync(localTemplatesPath)) {
         this.customTemplatesRootPath = localTemplatesPath;
       } else {
-        throw new Error(
-          nls.localize('localCustomTemplateDoNotExist', localTemplatesPath)
-        );
+        throw new Error(nls.localize('localCustomTemplateDoNotExist', localTemplatesPath));
       }
     }
   }

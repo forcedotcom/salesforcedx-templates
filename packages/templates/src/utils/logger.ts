@@ -9,18 +9,10 @@
 import * as util from 'util';
 
 const padding = ' ';
-const statuses = [
-  'skip',
-  'force',
-  'create',
-  'invoke',
-  'conflict',
-  'identical',
-  'info'
-];
+const statuses = ['skip', 'force', 'create', 'invoke', 'conflict', 'identical', 'info'];
 
 export class Log {
-  private output: string = '';
+  private output = '';
   private cleanOutput: string[] = [];
 
   // tslint:disable-next-line: no-any
@@ -53,21 +45,21 @@ export class Log {
     return this;
   }
 
-  public pad(status: string) {
+  public pad(status: string): string {
     const max = 'identical'.length;
     const delta = max - status.length;
     return delta ? new Array(delta + 1).join(' ') + status : status;
   }
 
-  public setOutput(text: string) {
+  public setOutput(text: string): void {
     this.output = text;
   }
 
-  public setCleanOutput(cleanText: string[]) {
+  public setCleanOutput(cleanText: string[]): void {
     this.cleanOutput = cleanText;
   }
 
-  public clear() {
+  public clear(): void {
     this.output = '';
     this.cleanOutput = [];
   }

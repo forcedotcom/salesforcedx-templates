@@ -17,16 +17,13 @@ import * as yeomanGenerator from 'yeoman-generator';
 
 import { MessageUtil } from './messageUtil';
 export abstract class TemplateCommand extends SfdxCommand {
-  public static buildJson(
-    adapter: ForceGeneratorAdapter,
-    targetDir: string
-  ): CreateOutput {
+  public static buildJson(adapter: ForceGeneratorAdapter, targetDir: string): CreateOutput {
     const cleanOutput = adapter.log.getCleanOutput();
     const rawOutput = `target dir = ${targetDir}\n${adapter.log.getOutput()}`;
     const output = {
       outputDir: targetDir,
       created: cleanOutput,
-      rawOutput
+      rawOutput,
     };
     return output;
   }
@@ -48,9 +45,7 @@ export abstract class TemplateCommand extends SfdxCommand {
   public static async getApiVersion(): Promise<string> {
     try {
       const aggregator = await TemplateCommand.getConfigAggregator();
-      const apiVersionFromConfig = aggregator.getPropertyValue(
-        TemplateCommand.API_VERSION
-      ) as string;
+      const apiVersionFromConfig = aggregator.getPropertyValue(TemplateCommand.API_VERSION) as string;
       return apiVersionFromConfig || TemplateCommand.getDefaultApiVersion();
     } catch (err) {
       return TemplateCommand.getDefaultApiVersion();
@@ -80,9 +75,7 @@ export abstract class TemplateCommand extends SfdxCommand {
 
     const customTemplates = await TemplateCommand.getCustomTemplates();
     if (customTemplates) {
-      await TemplateService.getInstance().setCustomTemplatesRootPathOrGitRepo(
-        customTemplates
-      );
+      await TemplateService.getInstance().setCustomTemplatesRootPathOrGitRepo(customTemplates);
     }
 
     const adapter = new ForceGeneratorAdapter();

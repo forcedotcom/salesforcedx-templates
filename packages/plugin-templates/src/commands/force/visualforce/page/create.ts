@@ -14,23 +14,13 @@ const visualforcePageFileSuffix = /.page$/;
 const VF_TYPE = MessageUtil.get('Page');
 
 export default class VisualforcePage extends TemplateCommand {
-  public static description = MessageUtil.buildDescription(
-    'VFDescription',
-    false,
-    [VF_TYPE]
-  );
+  public static description = MessageUtil.buildDescription('VFDescription', false, [VF_TYPE]);
   public static examples = [
     '$ sfdx force:visualforce:page:create -n mypage -l mylabel',
-    '$ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages'
+    '$ sfdx force:visualforce:page:create -n mypage -l mylabel -d pages',
   ];
-  public static help = MessageUtil.buildHelpText(
-    VisualforcePage.examples,
-    false
-  );
-  public static longDescription = MessageUtil.get('VFLongDescription', [
-    VF_TYPE,
-    VF_TYPE
-  ]);
+  public static help = MessageUtil.buildHelpText(VisualforcePage.examples, false);
+  public static longDescription = MessageUtil.get('VFLongDescription', [VF_TYPE, VF_TYPE]);
 
   protected static flagsConfig = {
     template: flags.string({
@@ -38,30 +28,27 @@ export default class VisualforcePage extends TemplateCommand {
       description: MessageUtil.get('TemplateFlagDescription'),
       longDescription: MessageUtil.get('TemplateFlagLongDescription'),
       default: 'DefaultVFPage',
-      options: CreateUtil.getCommandTemplatesForFiletype(
-        visualforcePageFileSuffix,
-        'visualforcepage'
-      )
+      options: CreateUtil.getCommandTemplatesForFiletype(visualforcePageFileSuffix, 'visualforcepage'),
     }),
     outputdir: flags.string({
       char: 'd',
       description: MessageUtil.get('OutputDirFlagDescription'),
       longDescription: MessageUtil.get('OutputDirFlagLongDescription'),
-      default: '.'
+      default: '.',
     }),
     pagename: flags.string({
       char: 'n',
       description: MessageUtil.get('VFNameFlagDescription', [VF_TYPE]),
       longDescription: MessageUtil.get('VFNameFlagLongDescription', [VF_TYPE]),
-      required: true
+      required: true,
     }),
     apiversion: flags.builtin(),
     label: flags.string({
       char: 'l',
       description: MessageUtil.get('VFLabelFlagDescription', [VF_TYPE]),
       longDescription: MessageUtil.get('VFLabelFlagLongDescription', [VF_TYPE]),
-      required: true
-    })
+      required: true,
+    }),
   };
 
   public async run(): Promise<AnyJson> {

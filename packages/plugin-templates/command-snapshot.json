@@ -1,174 +1,169 @@
 [
     {
-        "command": "commandreference:generate",
-        "flags": [
-            "json",
-            "loglevel",
-            "outputdir",
-            "plugins",
-            "hidden",
-            "erroronwarnings"
-        ]
-    },
-    {
         "command": "force:analytics:template:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
             "json",
             "loglevel",
             "outputdir",
-            "apiversion",
             "templatename"
-        ]
+        ],
+        "alias": []
     },
     {
         "command": "force:apex:class:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
+            "classname",
             "json",
             "loglevel",
-            "classname",
-            "template",
             "outputdir",
-            "apiversion"
-        ]
+            "template"
+        ],
+        "alias": []
     },
     {
         "command": "force:apex:trigger:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
             "json",
             "loglevel",
-            "triggername",
-            "template",
             "outputdir",
-            "apiversion",
             "sobject",
-            "triggerevents"
-        ]
+            "template",
+            "triggerevents",
+            "triggername"
+        ],
+        "alias": []
     },
     {
         "command": "force:lightning:app:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
+            "appname",
+            "internal",
             "json",
             "loglevel",
-            "appname",
-            "template",
             "outputdir",
-            "apiversion",
-            "internal"
-        ]
+            "template"
+        ],
+        "alias": []
     },
     {
         "command": "force:lightning:component:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
+            "componentname",
+            "internal",
             "json",
             "loglevel",
-            "componentname",
-            "template",
             "outputdir",
-            "apiversion",
-            "type",
-            "internal"
-        ]
+            "template",
+            "type"
+        ],
+        "alias": []
     },
     {
         "command": "force:lightning:event:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
+            "eventname",
+            "internal",
             "json",
             "loglevel",
-            "eventname",
-            "template",
             "outputdir",
-            "apiversion",
-            "internal"
-        ]
+            "template"
+        ],
+        "alias": []
     },
     {
         "command": "force:lightning:interface:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
+            "interfacename",
+            "internal",
             "json",
             "loglevel",
-            "interfacename",
-            "template",
             "outputdir",
-            "apiversion",
-            "internal"
-        ]
+            "template"
+        ],
+        "alias": []
     },
     {
         "command": "force:lightning:test:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "internal",
             "json",
             "loglevel",
-            "testname",
-            "template",
             "outputdir",
-            "internal"
-        ]
+            "template",
+            "testname"
+        ],
+        "alias": []
     },
     {
         "command": "force:project:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
-            "json",
-            "loglevel",
-            "projectname",
-            "template",
-            "outputdir",
-            "namespace",
             "defaultpackagedir",
+            "json",
+            "loginurl",
+            "loglevel",
             "manifest",
-            "loginurl"
-        ]
-    },
-    {
-        "command": "force:visualforce:component:create",
-        "flags": [
-            "json",
-            "loglevel",
-            "template",
+            "namespace",
             "outputdir",
-            "componentname",
-            "apiversion",
-            "label"
-        ]
-    },
-    {
-        "command": "force:visualforce:page:create",
-        "flags": [
-            "json",
-            "loglevel",
-            "template",
-            "outputdir",
-            "pagename",
-            "apiversion",
-            "label"
-        ]
+            "projectname",
+            "template"
+        ],
+        "alias": []
     },
     {
         "command": "force:staticresource:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
+            "apiversion",
+            "contenttype",
             "json",
             "loglevel",
             "outputdir",
-            "contenttype",
-            "apiversion",
             "resourcename"
-        ]
+        ],
+        "alias": []
     },
     {
-        "command": "help",
+        "command": "force:visualforce:component:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
-            "all"
-        ]
+            "apiversion",
+            "componentname",
+            "json",
+            "label",
+            "loglevel",
+            "outputdir",
+            "template"
+        ],
+        "alias": []
     },
     {
-        "command": "snapshot:compare",
+        "command": "force:visualforce:page:create",
+        "plugin": "@salesforce/plugin-templates",
         "flags": [
-            "filepath"
-        ]
-    },
-    {
-        "command": "snapshot:generate",
-        "flags": [
-            "filepath"
-        ]
+            "apiversion",
+            "json",
+            "label",
+            "loglevel",
+            "outputdir",
+            "pagename",
+            "template"
+        ],
+        "alias": []
     }
 ]

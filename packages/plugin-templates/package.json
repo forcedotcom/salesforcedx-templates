@@ -133,8 +133,8 @@
     "prepack": "sf-prepack",
     "pretest": "sf-compile-test",
     "test": "sf-test",
-    "test:command-reference": "./bin/run commandreference:generate -p @salesforce/plugin-templates --erroronwarnings",
-    "test:deprecation-policy": "./bin/run snapshot:compare",
+    "test:command-reference": "./bin/dev commandreference:generate -p @salesforce/plugin-templates --erroronwarnings",
+    "test:deprecation-policy": "./bin/dev snapshot:compare",
     "version": "oclif readme && git add README.md"
   }
 }

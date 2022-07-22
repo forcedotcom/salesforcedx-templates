@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="df447fad-1239-4668-af64-72760c2e0b6a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/templates/src/service/gitRepoUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/service/gitRepoUtils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/templates/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/templates/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +73,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.mocha.mocha_node_package_dir": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/packages/plugin-templates/node_modules/mocha",
+    "nodejs.mocha.mocha_node_package_dir": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/packages/templates/node_modules/mocha",
     "nodejs_interpreter_path": "/Users/william.ruemmele/.nvm/versions/node/v16.9.0/bin/node",
     "nodejs_package_manager_path": "yarn",
     "prettierjs.PrettierConfiguration.Package": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/prettier",
@@ -87,7 +81,7 @@
     "ts.external.directory.path": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/typescript/lib"
   }
 }]]></component>
-  <component name="RunManager" selected="npm.test:deprecation-policy">
+  <component name="RunManager" selected="Mocha.TemplateService">
     <configuration name="posttest" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/packages/plugin-templates/package.json" />
       <command value="run" />
@@ -98,8 +92,8 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="test (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/packages/plugin-templates/package.json" />
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
         <script value="test" />
@@ -118,21 +112,6 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Analytics template creation tests:" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <mocha-package>$PROJECT_DIR$/packages/plugin-templates/node_modules/mocha</mocha-package>
-      <working-directory>$PROJECT_DIR$/packages/plugin-templates</working-directory>
-      <pass-parent-env>true</pass-parent-env>
-      <ui>bdd</ui>
-      <extra-mocha-options />
-      <test-kind>SUITE</test-kind>
-      <test-file>$PROJECT_DIR$/packages/plugin-templates/test/commands/force/analytics/template/create.test.ts</test-file>
-      <test-names>
-        <name value="Analytics template creation tests:" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="Apex class creation tests:" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -148,13 +127,28 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="TemplateService" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/packages/templates/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$/packages/templates</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/packages/templates/test/service/templateService.test.ts</test-file>
+      <test-names>
+        <name value="TemplateService" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.test" />
+        <item itemvalue="Mocha.TemplateService" />
         <item itemvalue="npm.test:deprecation-policy" />
         <item itemvalue="npm.posttest" />
         <item itemvalue="Mocha.Apex class creation tests:" />
-        <item itemvalue="Mocha.Analytics template creation tests:" />
-        <item itemvalue="npm.test (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -169,7 +163,7 @@
       <workItem from="1656511010133" duration="407000" />
       <workItem from="1658413274945" duration="1685000" />
       <workItem from="1658415065646" duration="10475000" />
-      <workItem from="1658496981340" duration="1244000" />
+      <workItem from="1658496981340" duration="3029000" />
     </task>
     <servers />
   </component>

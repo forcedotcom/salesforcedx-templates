@@ -43,6 +43,9 @@ GitIgnoreTest2/
 # Eclipse
 .project
 
+# Webstorm
+.idea
+
 # no keys
 *.key
 

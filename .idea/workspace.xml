@@ -3,6 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="df447fad-1239-4668-af64-72760c2e0b6a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/plugin-templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/plugin-templates/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/src/service/gitRepoUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/src/service/gitRepoUtils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/templates/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/packages/templates/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +60,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2BFo51btt92CWIlV0gdeuLmkJQn" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -62,23 +69,24 @@
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;/Users/william.ruemmele/projects/oss/salesforcedx-templates/packages/plugin-templates/node_modules/mocha&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/typescript/lib&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.mocha.mocha_node_package_dir": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/packages/plugin-templates/node_modules/mocha",
+    "nodejs_interpreter_path": "/Users/william.ruemmele/.nvm/versions/node/v16.9.0/bin/node",
+    "nodejs_package_manager_path": "yarn",
+    "prettierjs.PrettierConfiguration.Package": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.nodejs",
+    "ts.external.directory.path": "/Users/william.ruemmele/projects/oss/salesforcedx-templates/node_modules/typescript/lib"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="npm.test:deprecation-policy">
     <configuration name="posttest" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/packages/plugin-templates/package.json" />
@@ -161,6 +169,7 @@
       <workItem from="1656511010133" duration="407000" />
       <workItem from="1658413274945" duration="1685000" />
       <workItem from="1658415065646" duration="10475000" />
+      <workItem from="1658496981340" duration="1244000" />
     </task>
     <servers />
   </component>

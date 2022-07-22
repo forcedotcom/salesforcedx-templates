@@ -18,6 +18,8 @@ import { Stream } from 'stream';
 import * as tar from 'tar';
 import { promisify } from 'util';
 import { nls } from '../i18n';
+import * as ProxyAgent from 'proxy-agent';
+import { getProxyForUrl } from 'proxy-from-env';
 
 interface RepoInfo {
   username: string;
@@ -35,7 +37,8 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
 
   // For repos with no branch information, fetch default branch
   if (t === undefined) {
-    const infoResponse = await got(`https://api.github.com/repos/${username}/${name}`).catch((e) => e);
+    const url = `https://api.github.com/repos/${username}/${name}`;
+    const infoResponse = await got(url, { agent: { https: ProxyAgent(getProxyForUrl(url)) } }).catch((e) => e);
     if (infoResponse.statusCode !== 200) {
       throw new Error(nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href));
     }

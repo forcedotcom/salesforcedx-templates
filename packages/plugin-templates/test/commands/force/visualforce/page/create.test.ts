@@ -17,7 +17,7 @@ describe('Visualforce page creation tests:', () => {
   describe('Check visualforce page creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:visualforce:page:create', '--pagename', 'foo', '--label', 'testlabel'])
       .it('should create foo page using DefaultVFPage template and default output directory', (ctx) => {
@@ -28,7 +28,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:visualforce:page:create',
@@ -45,7 +45,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:visualforce:page:create',
@@ -64,7 +64,7 @@ describe('Visualforce page creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:page:create'])
       .it('should throw a missing pagename error', (ctx) => {
@@ -73,7 +73,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:page:create', '--pagename', '/a', '--label', 'foo'])
       .it('should throw invalid non alphanumeric pagename error', (ctx) => {
@@ -82,7 +82,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:page:create', '--pagename', '3aa', '--label', 'foo'])
       .it('should throw invalid pagename starting with numeric error', (ctx) => {
@@ -91,7 +91,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:page:create', '--pagename', 'a_', '--label', 'foo'])
       .it('should throw invalid pagename ending with underscore error', (ctx) => {
@@ -100,7 +100,7 @@ describe('Visualforce page creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:page:create', '--pagename', 'a__a', '--label', 'foo'])
       .it('should throw invalid pagename with double underscore error', (ctx) => {

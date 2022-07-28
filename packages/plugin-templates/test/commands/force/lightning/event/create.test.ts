@@ -17,7 +17,7 @@ describe('Lightning event creation tests:', () => {
   describe('Check lightning event creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:event:create',
@@ -34,7 +34,7 @@ describe('Lightning event creation tests:', () => {
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:event:create',
@@ -56,7 +56,7 @@ describe('Lightning event creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:lightning:event:create', '--eventname', 'foo', '--outputdir', path.join('aura', 'testing')])
       .it('should create lightning event foo in a new directory', (ctx) => {
@@ -66,7 +66,7 @@ describe('Lightning event creation tests:', () => {
     describe('lightning event failures', () => {
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', 'foo', '--outputdir', 'aura', '--template', 'foo'])
         .it('should throw invalid template name error', (ctx) => {
@@ -75,7 +75,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', 'foo'])
         .it('should throw missing aura parent folder error', (ctx) => {
@@ -84,7 +84,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:event:create', '--outputdir', 'aura'])
         .it('should throw missing eventname error', (ctx) => {
@@ -93,7 +93,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', '/a', '--outputdir', 'aura'])
         .it('should throw invalid non alphanumeric eventname error', (ctx) => {
@@ -102,7 +102,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', '3aa', '--outputdir', 'aura'])
         .it('should throw invalid eventname starting with numeric error', (ctx) => {
@@ -111,7 +111,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', 'a_', '--outputdir', 'aura'])
         .it('should throw invalid eventname ending with underscore error', (ctx) => {
@@ -120,7 +120,7 @@ describe('Lightning event creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:event:create', '--eventname', 'a__a', '--outputdir', 'aura'])
         .it('should throw invalid eventname with double underscore error', (ctx) => {

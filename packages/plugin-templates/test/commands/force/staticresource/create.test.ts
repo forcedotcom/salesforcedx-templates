@@ -19,7 +19,7 @@ describe('Static resource creation tests:', () => {
   describe('Check static resource creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo', '--contenttype', 'text/css'])
       .it('should create foo css static resource in the default output directory', (ctx) => {
@@ -32,7 +32,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo', '--contenttype', 'application/javascript'])
       .it('should create foo javascript static resource in the default output directory', (ctx) => {
@@ -45,7 +45,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo', '--contenttype', 'application/json'])
       .it('should create foo json static resource in the default output directory', (ctx) => {
@@ -58,7 +58,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo', '--contenttype', 'text/plain'])
       .it('should create foo json static resource in the default output directory', (ctx) => {
@@ -71,7 +71,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'fooPDF', '--contenttype', 'application/pdf'])
       .it('should create foo generic static resource in the default output directory', (ctx) => {
@@ -84,7 +84,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo'])
       .it('should create foo static resource in the default output directory', (ctx) => {
@@ -94,7 +94,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:staticresource:create',
@@ -111,7 +111,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:staticresource:create', '--resourcename', 'foo', '--outputdir', 'staticresource create'])
       .it('should create foo static resource in custom folder name that has a space in it', (ctx) => {
@@ -126,7 +126,7 @@ describe('Static resource creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:staticresource:create'])
       .it('should throw a missing resourcename error', (ctx) => {
@@ -135,7 +135,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', '/a'])
       .it('should throw invalid non alphanumeric static resource name error', (ctx) => {
@@ -144,7 +144,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', '3aa'])
       .it('should throw invalid static resource name starting with numeric error', (ctx) => {
@@ -153,7 +153,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', 'a_'])
       .it('should throw invalid static resource name ending with underscore error', (ctx) => {
@@ -162,7 +162,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', 'a__a'])
       .it('should throw invalid static resource name with double underscore error', (ctx) => {
@@ -171,7 +171,7 @@ describe('Static resource creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:staticresource:create', '--resourcename', 'foo', '--contenttype', 'notvalid'])
       .it('should throw an invalid mime type error', (ctx) => {

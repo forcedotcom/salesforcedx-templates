@@ -65,7 +65,7 @@ describe('TemplateCommand', () => {
     const dir = process.cwd();
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should log basic output when json flag is not specified', (output) => {
@@ -75,7 +75,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--json'])
       .it('should log json output when flag is specified', (output) => {
@@ -109,7 +109,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return TEST_CUSTOM_TEMPLATES_REPO;
@@ -122,7 +122,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return TEST_CUSTOM_TEMPLATES_REPO;
@@ -137,7 +137,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return LOCAL_CUSTOM_TEMPLATES;
@@ -150,7 +150,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return LOCAL_CUSTOM_TEMPLATES;
@@ -165,7 +165,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return NON_EXISTENT_LOCAL_PATH;
@@ -177,7 +177,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return NON_EXISTENT_REPO;
@@ -189,7 +189,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return INVALID_URL_REPO;
@@ -201,7 +201,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return HTTP_REPO;
@@ -213,7 +213,7 @@ describe('TemplateCommand', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .stub(ConfigAggregator.prototype, 'getPropertyValue', () => {
         return GITLAB_REPO;

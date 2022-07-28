@@ -39,7 +39,7 @@ describe('Analytics template creation tests:', () => {
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:analytics:template:create', '--templatename', 'foo', '--outputdir', 'foo'])
       .it('should throw error output directory does not contain waveTemplates', (ctx) => {
@@ -47,7 +47,7 @@ describe('Analytics template creation tests:', () => {
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:analytics:template:create'])
       .it('should throw error when missing required name field', (ctx) => {
@@ -55,7 +55,7 @@ describe('Analytics template creation tests:', () => {
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:analytics:template:create', '--templatename', 'foo$^s', '--outputdir', 'waveTemplates'])
       .it('should throw error with message about invalid characters in name', (ctx) => {

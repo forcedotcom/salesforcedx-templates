@@ -17,7 +17,7 @@ describe('Visualforce component creation tests:', () => {
   describe('Check visualforce component creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:visualforce:component:create', '--componentname', 'foo', '--label', 'testlabel'])
       .it('should create foo component using DefaultVFComponent template and default output directory', (ctx) => {
@@ -28,7 +28,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -48,7 +48,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -70,7 +70,7 @@ describe('Visualforce component creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:component:create'])
       .it('should throw a missing componentname error', (ctx) => {
@@ -79,7 +79,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:component:create', '--componentname', '/a', '--label', 'foo'])
       .it('should throw invalid non alphanumeric componentname error', (ctx) => {
@@ -88,7 +88,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:component:create', '--componentname', '3aa', '--label', 'foo'])
       .it('should throw invalid componentname starting with numeric error', (ctx) => {
@@ -97,7 +97,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:component:create', '--componentname', 'a_', '--label', 'foo'])
       .it('should throw invalid componentname ending with underscore error', (ctx) => {
@@ -106,7 +106,7 @@ describe('Visualforce component creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:component:create', '--componentname', 'a__a', '--label', 'foo'])
       .it('should throw invalid componentname with double underscore error', (ctx) => {

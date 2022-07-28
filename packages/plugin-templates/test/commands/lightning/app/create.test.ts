@@ -37,7 +37,7 @@ describe('Lightning app creation tests:', () => {
   describe('Check lightning app creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:app:create',
@@ -59,7 +59,7 @@ describe('Lightning app creation tests:', () => {
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:lightning:app:create', '--appname', 'foo', '--outputdir', path.join('aura', 'testing')])
       .it('should create lightning app foo in a new directory', (ctx) => {
@@ -69,7 +69,7 @@ describe('Lightning app creation tests:', () => {
   describe('lightning app failures', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', 'foo', '--outputdir', 'aura', '--template', 'foo'])
       .it('should throw invalid template name error', (ctx) => {
@@ -78,7 +78,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', 'foo'])
       .it('should throw missing aura parent folder error', (ctx) => {
@@ -87,7 +87,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:app:create', '--outputdir', 'aura'])
       .it('should throw missing appname error', (ctx) => {
@@ -96,7 +96,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', '/a', '--outputdir', 'aura'])
       .it('should throw invalid non alphanumeric appname error', (ctx) => {
@@ -105,7 +105,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', '3aa', '--outputdir', 'aura'])
       .it('should throw invalid appname starting with numeric error', (ctx) => {
@@ -114,7 +114,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', 'a_', '--outputdir', 'aura'])
       .it('should throw invalid appname ending with underscore error', (ctx) => {
@@ -123,7 +123,7 @@ describe('Lightning app creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:app:create', '--appname', 'a__a', '--outputdir', 'aura'])
       .it('should throw invalid appname with double underscore error', (ctx) => {

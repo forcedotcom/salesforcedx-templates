@@ -17,7 +17,7 @@ describe('Apex trigger creation tests:', () => {
   describe('Check apex trigger creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:apex:trigger:create', '--triggername', 'foo'])
       .it('should create foo trigger using ApexTrigger template and default output directory', (ctx) => {
@@ -26,7 +26,7 @@ describe('Apex trigger creation tests:', () => {
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:apex:trigger:create',
@@ -50,7 +50,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:apex:trigger:create',
@@ -68,7 +68,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:apex:trigger:create', '--triggername', 'foo', '--outputdir', 'classes create'])
       .it('should create foo trigger in custom folder name that has a space in it', (ctx) => {
@@ -79,7 +79,7 @@ describe('Apex trigger creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:trigger:create'])
       .it('should throw a missing trigger name error', (ctx) => {
@@ -88,7 +88,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '/a'])
       .it('should throw invalid non alphanumeric trigger name error', (ctx) => {
@@ -97,7 +97,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', '3aa'])
       .it('should throw invalid trigger name starting with numeric error', (ctx) => {
@@ -106,7 +106,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', 'a_'])
       .it('should throw invalid trigger name ending with underscore error', (ctx) => {
@@ -115,7 +115,7 @@ describe('Apex trigger creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:trigger:create', '--triggername', 'a__a'])
       .it('should throw invalid trigger name with double underscore error', (ctx) => {

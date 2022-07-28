@@ -44,7 +44,7 @@ describe('Project creation tests:', () => {
   describe('Check project creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'foo'])
       .it('should create project with default values and foo name', (ctx) => {
@@ -80,7 +80,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'foo', '--outputdir', 'test outputdir'])
       .it(
@@ -105,7 +105,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'duplicate-project-test', '--outputdir', 'test outputdir'])
       .it('should not create duplicate project in the directory where command is executed', (ctx) => {
@@ -115,7 +115,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'foo-project'])
       .it(
@@ -139,7 +139,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'footest', '--manifest'])
       .it('should create project with footest name and manifest folder', (ctx) => {
@@ -148,7 +148,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -177,7 +177,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:project:create',
@@ -210,7 +210,7 @@ describe('Project creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:project:create', '--projectname', 'analytics1', '--template', 'analytics', '--manifest'])
       .it('should create project with analytics1 name using analytics template and a manifest', (ctx) => {
@@ -262,7 +262,7 @@ describe('Project creation tests:', () => {
   describe('project creation failures', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:project:create'])
       .it('should throw invalid template name error', (ctx) => {
@@ -270,7 +270,7 @@ describe('Project creation tests:', () => {
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:project:create', '--projectname', 'foo', '--template', 'foo'])
       .it('should throw invalid template name error', (ctx) => {

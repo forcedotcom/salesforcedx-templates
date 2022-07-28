@@ -17,7 +17,7 @@ describe('Lightning test creation tests:', () => {
   describe('Check lightning test creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:lightning:test:create', '-n', 'foo', '--template', 'DefaultLightningTest'])
       .it('should create lightning test foo using DefaultLightningTest template', (ctx) => {
@@ -26,7 +26,7 @@ describe('Lightning test creation tests:', () => {
       }),
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
         .command([
           'force:lightning:test:create',
@@ -48,7 +48,7 @@ describe('Lightning test creation tests:', () => {
     describe('Check lightning test creation with internal flag', () => {
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
         .command(['force:lightning:test:create', '-n', 'internalflagtest', '--internal'])
         .it(
@@ -62,7 +62,7 @@ describe('Lightning test creation tests:', () => {
     describe('lightning test failures', () => {
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', 'foo', '--template', 'foo'])
         .it('should throw invalid template name error', (ctx) => {
@@ -70,7 +70,7 @@ describe('Lightning test creation tests:', () => {
         });
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--outputdir', 'aura'])
         .it('should throw missing testname error', (ctx) => {
@@ -79,7 +79,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', '/a'])
         .it('should throw invalid non alphanumeric interfacename error', (ctx) => {
@@ -88,7 +88,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', '3aa', '--outputdir', 'aura'])
         .it('should throw invalid testname starting with numeric error', (ctx) => {
@@ -97,7 +97,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', 'a_'])
         .it('should throw invalid testname ending with underscore error', (ctx) => {
@@ -106,7 +106,7 @@ describe('Lightning test creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', 'a__a'])
         .it('should throw invalid testname with double underscore error', (ctx) => {

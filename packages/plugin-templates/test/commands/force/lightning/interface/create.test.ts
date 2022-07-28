@@ -17,7 +17,7 @@ describe('Lightning interface creation tests:', () => {
   describe('Check lightning interface creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:interface:create',
@@ -37,7 +37,7 @@ describe('Lightning interface creation tests:', () => {
       ),
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
         .command([
           'force:lightning:interface:create',
@@ -58,7 +58,7 @@ describe('Lightning interface creation tests:', () => {
         ),
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
         .command([
           'force:lightning:interface:create',
@@ -80,7 +80,7 @@ describe('Lightning interface creation tests:', () => {
     describe('lightning interface failures', () => {
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command([
           'force:lightning:interface:create',
@@ -96,7 +96,7 @@ describe('Lightning interface creation tests:', () => {
         });
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', 'foo'])
         .it('should throw missing aura parent folder error', (ctx) => {
@@ -104,7 +104,7 @@ describe('Lightning interface creation tests:', () => {
         });
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--outputdir', 'aura'])
         .it('should throw missing interfacename error', (ctx) => {
@@ -113,7 +113,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', '/a', '--outputdir', 'aura'])
         .it('should throw invalid non alphanumeric interfacename error', (ctx) => {
@@ -122,7 +122,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', '3aa', '--outputdir', 'aura'])
         .it('should throw invalid interfacename starting with numeric error', (ctx) => {
@@ -131,7 +131,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', 'a_', '--outputdir', 'aura'])
         .it('should throw invalid interfacename ending with underscore error', (ctx) => {
@@ -140,7 +140,7 @@ describe('Lightning interface creation tests:', () => {
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', 'a__a', '--outputdir', 'aura'])
         .it('should throw invalid interfacename with double underscore error', (ctx) => {

@@ -24,7 +24,7 @@ describe('Apex class creation tests:', () => {
   describe('Check apex class creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo'])
       .it('should create foo class using DefaultApexClass template and default output directory', (ctx) => {
@@ -34,7 +34,7 @@ describe('Apex class creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:apex:class:create',
@@ -52,7 +52,7 @@ describe('Apex class creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--template', 'ApexException'])
       .it('should override foo class using ApexException template', (ctx) => {
@@ -62,7 +62,7 @@ describe('Apex class creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command(['force:apex:class:create', '--classname', 'foo', '--outputdir', 'classes create'])
       .it('should create foo class in custom folder name that has a space in it', (ctx) => {
@@ -74,7 +74,7 @@ describe('Apex class creation tests:', () => {
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:class:create'])
       .it('should throw a missing classname error', (ctx) => {
@@ -83,7 +83,7 @@ describe('Apex class creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:class:create', '--classname', '/a'])
       .it('should throw invalid non alphanumeric class name error', (ctx) => {
@@ -92,7 +92,7 @@ describe('Apex class creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:class:create', '--classname', '3aa'])
       .it('should throw invalid class name starting with numeric error', (ctx) => {
@@ -101,7 +101,7 @@ describe('Apex class creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:class:create', '--classname', 'a_'])
       .it('should throw invalid class name ending with underscore error', (ctx) => {
@@ -110,7 +110,7 @@ describe('Apex class creation tests:', () => {
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:apex:class:create', '--classname', 'a__a'])
       .it('should throw invalid class name with double underscore error', (ctx) => {

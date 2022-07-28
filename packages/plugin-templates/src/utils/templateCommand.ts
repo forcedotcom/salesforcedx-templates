@@ -6,7 +6,7 @@
  */
 
 import { SfdxCommand } from '@salesforce/command';
-import { OrgConfigProperties, ConfigAggregator } from '@salesforce/core';
+import { OrgConfigProperties, ConfigAggregator, SfdxPropertyKeys } from '@salesforce/core';
 import { TemplateService } from '@salesforce/templates';
 import { ForceGeneratorAdapter } from '@salesforce/templates/lib/utils';
 import { CreateOutput } from '@salesforce/templates/lib/utils/types';
@@ -45,13 +45,12 @@ export abstract class TemplateCommand extends SfdxCommand {
   public static async getApiVersion(): Promise<string> {
     try {
       const aggregator = await TemplateCommand.getConfigAggregator();
-      const apiVersionFromConfig = aggregator.getPropertyValue(TemplateCommand.API_VERSION) as string;
+      const apiVersionFromConfig = aggregator.getPropertyValue(SfdxPropertyKeys.API_VERSION) as string;
       return apiVersionFromConfig || TemplateCommand.getDefaultApiVersion();
     } catch (err) {
       return TemplateCommand.getDefaultApiVersion();
     }
   }
-  private static API_VERSION = 'apiVersion';
 
   public static async getCustomTemplates() {
     try {

@@ -10,15 +10,13 @@ import { CreateUtil } from '../utils';
 import { LightningAppOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningAppGenerator extends SfdxGenerator<
-  LightningAppOptions
-> {
+export default class LightningAppGenerator extends SfdxGenerator<LightningAppOptions> {
   constructor(args: string | string[], options: LightningAppOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightningapp');
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.appname);
     CreateUtil.checkInputs(this.options.template);
 
@@ -28,18 +26,16 @@ export default class LightningAppGenerator extends SfdxGenerator<
     }
   }
 
-  public writing() {
+  public writing(): void {
     const { template, outputdir, appname, apiversion, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.app-meta.xml'),
-        this.destinationPath(
-          path.join(outputdir, appname, `${appname}.app-meta.xml`)
-        ),
+        this.destinationPath(path.join(outputdir, appname, `${appname}.app-meta.xml`)),
         {
           apiVersion: apiversion,
-          description: nls.localize('LightningAppBundle')
+          description: nls.localize('LightningAppBundle'),
         }
       );
     }
@@ -50,16 +46,12 @@ export default class LightningAppGenerator extends SfdxGenerator<
     ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningAuradoc.auradoc'),
-        this.destinationPath(
-          path.join(outputdir, appname, `${appname}.auradoc`)
-        ),
+        this.destinationPath(path.join(outputdir, appname, `${appname}.auradoc`)),
         {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningController.js'),
-        this.destinationPath(
-          path.join(outputdir, appname, `${appname}Controller.js`)
-        ),
+        this.destinationPath(path.join(outputdir, appname, `${appname}Controller.js`)),
         {}
       ),
       this.fs.copyTpl(
@@ -69,16 +61,12 @@ export default class LightningAppGenerator extends SfdxGenerator<
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningHelper.js'),
-        this.destinationPath(
-          path.join(outputdir, appname, `${appname}Helper.js`)
-        ),
+        this.destinationPath(path.join(outputdir, appname, `${appname}Helper.js`)),
         {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningRenderer.js'),
-        this.destinationPath(
-          path.join(outputdir, appname, `${appname}Renderer.js`)
-        ),
+        this.destinationPath(path.join(outputdir, appname, `${appname}Renderer.js`)),
         {}
       ),
       this.fs.copyTpl(

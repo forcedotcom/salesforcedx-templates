@@ -15,14 +15,10 @@ Messages.importMessagesDirectory(__dirname);
 
 describe('MessageUtil', () => {
   const extra = 'some extra text';
-  const expectedHelp = `${MessageUtil.get('HelpDefaults') +
-    MessageUtil.get('HelpOutputDirRelative')}`;
+  const expectedHelp = `${MessageUtil.get('HelpDefaults') + MessageUtil.get('HelpOutputDirRelative')}`;
 
   describe('get', () => {
-    const messages = Messages.loadMessages(
-      '@salesforce/plugin-templates',
-      'messages'
-    );
+    const messages = Messages.loadMessages('@salesforce/plugin-templates', 'messages');
 
     it('should get a message with a given key', () => {
       expect(MessageUtil.get('Test')).to.equal(messages.getMessage('Test'));
@@ -37,16 +33,12 @@ describe('MessageUtil', () => {
 
   describe('buildDescription', () => {
     it('should build description', () => {
-      expect(MessageUtil.buildDescription('Test', false)).to.equal(
-        MessageUtil.get('Test') + '\n' + expectedHelp
-      );
+      expect(MessageUtil.buildDescription('Test', false)).to.equal(MessageUtil.get('Test') + '\n' + expectedHelp);
     });
 
     it('should build description for lightning bundles', () => {
       const bundleType = MessageUtil.get('App');
-      expect(
-        MessageUtil.buildDescription('LightningDescription', true, [bundleType])
-      ).to.equal(
+      expect(MessageUtil.buildDescription('LightningDescription', true, [bundleType])).to.equal(
         MessageUtil.get('LightningDescription', [bundleType]) +
           '\n' +
           expectedHelp +
@@ -55,21 +47,14 @@ describe('MessageUtil', () => {
     });
 
     it('should build description with extra text', () => {
-      expect(
-        MessageUtil.buildDescription('Test', false, undefined, extra)
-      ).to.equal(MessageUtil.get('Test') + '\n' + expectedHelp + extra);
+      expect(MessageUtil.buildDescription('Test', false, undefined, extra)).to.equal(
+        MessageUtil.get('Test') + '\n' + expectedHelp + extra
+      );
     });
 
     it('should build description for lightning bundles with extra text', () => {
       const bundleType = MessageUtil.get('App');
-      expect(
-        MessageUtil.buildDescription(
-          'LightningDescription',
-          true,
-          [bundleType],
-          extra
-        )
-      ).to.equal(
+      expect(MessageUtil.buildDescription('LightningDescription', true, [bundleType], extra)).to.equal(
         MessageUtil.get('LightningDescription', [bundleType]) +
           '\n' +
           expectedHelp +
@@ -80,10 +65,7 @@ describe('MessageUtil', () => {
   });
 
   describe('buildHelpText', () => {
-    const examples = [
-      '$ sfdx some:example:command',
-      '$ sfdx some:example:command -t'
-    ];
+    const examples = ['$ sfdx some:example:command', '$ sfdx some:example:command -t'];
 
     it('should build help text', () => {
       expect(MessageUtil.buildHelpText(examples, false)).to.equal(

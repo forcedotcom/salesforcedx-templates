@@ -11,34 +11,22 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-templates',
-  'messages'
-);
+const messages = Messages.loadMessages('@salesforce/plugin-templates', 'messages');
 
 describe('Lightning test creation tests:', () => {
   describe('Check lightning test creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
-      .command([
-        'force:lightning:test:create',
-        '-n',
-        'foo',
-        '--template',
-        'DefaultLightningTest'
-      ])
-      .it(
-        'should create lightning test foo using DefaultLightningTest template',
-        ctx => {
-          assert.file(path.join('foo.resource'));
-          assert.file(path.join('foo.resource-meta.xml'));
-        }
-      ),
+      .command(['force:lightning:test:create', '-n', 'foo', '--template', 'DefaultLightningTest'])
+      .it('should create lightning test foo using DefaultLightningTest template', (ctx) => {
+        assert.file(path.join('foo.resource'));
+        assert.file(path.join('foo.resource-meta.xml'));
+      }),
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
         .command([
           'force:lightning:test:create',
@@ -47,11 +35,11 @@ describe('Lightning test creation tests:', () => {
           '--outputdir',
           path.join('aura', 'test'),
           '--template',
-          'DefaultLightningTest'
+          'DefaultLightningTest',
         ])
         .it(
           'should create lightning test foo using DefaultLightningTest template and custom output directory',
-          ctx => {
+          (ctx) => {
             assert.file(path.join('aura', 'test', 'foo.resource'));
             assert.file(path.join('aura', 'test', 'foo.resource-meta.xml'));
           }
@@ -60,17 +48,12 @@ describe('Lightning test creation tests:', () => {
     describe('Check lightning test creation with internal flag', () => {
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
-        .command([
-          'force:lightning:test:create',
-          '-n',
-          'internalflagtest',
-          '--internal'
-        ])
+        .command(['force:lightning:test:create', '-n', 'internalflagtest', '--internal'])
         .it(
           'should create lightning aura component files in the aura output directory without a -meta.xml file',
-          ctx => {
+          (ctx) => {
             assert.file(path.join('internalflagtest.resource'));
             assert.noFile('internalflagtest.resource-meta.xml');
           }
@@ -79,87 +62,55 @@ describe('Lightning test creation tests:', () => {
     describe('lightning test failures', () => {
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
-        .command([
-          'force:lightning:test:create',
-          '--testname',
-          'foo',
-          '--template',
-          'foo'
-        ])
-        .it('should throw invalid template name error', ctx => {
+        .command(['force:lightning:test:create', '--testname', 'foo', '--template', 'foo'])
+        .it('should throw invalid template name error', (ctx) => {
           expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
         });
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--outputdir', 'aura'])
-        .it('should throw missing testname error', ctx => {
+        .it('should throw missing testname error', (ctx) => {
           expect(ctx.stderr).to.contain(messages.getMessage('MissingTestName'));
         });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', '/a'])
-        .it(
-          'should throw invalid non alphanumeric interfacename error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('AlphaNumericNameError')
-            );
-          }
-        );
+        .it('should throw invalid non alphanumeric interfacename error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
+        });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
-        .command([
-          'force:lightning:test:create',
-          '--testname',
-          '3aa',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid testname starting with numeric error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('NameMustStartWithLetterError')
-            );
-          }
-        );
+        .command(['force:lightning:test:create', '--testname', '3aa', '--outputdir', 'aura'])
+        .it('should throw invalid testname starting with numeric error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('NameMustStartWithLetterError'));
+        });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', 'a_'])
-        .it(
-          'should throw invalid testname ending with underscore error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('EndWithUnderscoreError')
-            );
-          }
-        );
+        .it('should throw invalid testname ending with underscore error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
+        });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:test:create', '--testname', 'a__a'])
-        .it(
-          'should throw invalid testname with double underscore error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('DoubleUnderscoreError')
-            );
-          }
-        );
+        .it('should throw invalid testname with double underscore error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
+        });
     });
 });

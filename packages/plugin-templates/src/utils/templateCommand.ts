@@ -6,28 +6,24 @@
  */
 
 import { SfdxCommand } from '@salesforce/command';
-import { Config, ConfigAggregator } from '@salesforce/core';
+import { OrgConfigProperties, ConfigAggregator, SfdxPropertyKeys } from '@salesforce/core';
 import { TemplateService } from '@salesforce/templates';
 import { ForceGeneratorAdapter } from '@salesforce/templates/lib/utils';
 import { CreateOutput } from '@salesforce/templates/lib/utils/types';
 import { AnyJson } from '@salesforce/ts-types';
 import * as path from 'path';
-// @ts-ignore
 import * as yeoman from 'yeoman-environment';
 import * as yeomanGenerator from 'yeoman-generator';
 
 import { MessageUtil } from './messageUtil';
 export abstract class TemplateCommand extends SfdxCommand {
-  public static buildJson(
-    adapter: ForceGeneratorAdapter,
-    targetDir: string
-  ): CreateOutput {
+  public static buildJson(adapter: ForceGeneratorAdapter, targetDir: string): CreateOutput {
     const cleanOutput = adapter.log.getCleanOutput();
     const rawOutput = `target dir = ${targetDir}\n${adapter.log.getOutput()}`;
     const output = {
       outputDir: targetDir,
       created: cleanOutput,
-      rawOutput
+      rawOutput,
     };
     return output;
   }
@@ -49,21 +45,19 @@ export abstract class TemplateCommand extends SfdxCommand {
   public static async getApiVersion(): Promise<string> {
     try {
       const aggregator = await TemplateCommand.getConfigAggregator();
-      const apiVersionFromConfig = aggregator.getPropertyValue(
-        TemplateCommand.API_VERSION
-      ) as string;
+      const apiVersionFromConfig = aggregator.getPropertyValue(SfdxPropertyKeys.API_VERSION) as string;
       return apiVersionFromConfig || TemplateCommand.getDefaultApiVersion();
     } catch (err) {
       return TemplateCommand.getDefaultApiVersion();
     }
   }
-  private static API_VERSION = 'apiVersion';
 
   public static async getCustomTemplates() {
     try {
       const aggregator = await TemplateCommand.getConfigAggregator();
+      // we're still accessing the old `customOrgMetadataTemplates` key, but this is deprecated and we'll use the new key to access the value
       const customTemplatesFromConfig = aggregator.getPropertyValue(
-        Config.CUSTOM_ORG_METADATA_TEMPLATES
+        OrgConfigProperties.ORG_CUSTOM_METADATA_TEMPLATES
       ) as string;
       return customTemplatesFromConfig;
     } catch (err) {
@@ -81,9 +75,7 @@ export abstract class TemplateCommand extends SfdxCommand {
 
     const customTemplates = await TemplateCommand.getCustomTemplates();
     if (customTemplates) {
-      await TemplateService.getInstance().setCustomTemplatesRootPathOrGitRepo(
-        customTemplates
-      );
+      await TemplateService.getInstance().setCustomTemplatesRootPathOrGitRepo(customTemplates);
     }
 
     const adapter = new ForceGeneratorAdapter();

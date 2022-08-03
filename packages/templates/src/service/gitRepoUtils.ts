@@ -18,6 +18,8 @@ import { Stream } from 'stream';
 import * as tar from 'tar';
 import { promisify } from 'util';
 import { nls } from '../i18n';
+import * as ProxyAgent from 'proxy-agent';
+import { getProxyForUrl } from 'proxy-from-env';
 
 interface RepoInfo {
   username: string;
@@ -35,13 +37,10 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
 
   // For repos with no branch information, fetch default branch
   if (t === undefined) {
-    const infoResponse = await got(
-      `https://api.github.com/repos/${username}/${name}`
-    ).catch(e => e);
+    const url = `https://api.github.com/repos/${username}/${name}`;
+    const infoResponse = await got(url, { agent: { https: ProxyAgent(getProxyForUrl(url)) } }).catch((e) => e);
     if (infoResponse.statusCode !== 200) {
-      throw new Error(
-        nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href)
-      );
+      throw new Error(nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href));
     }
     const info = JSON.parse(infoResponse.body);
     return { username, name, branch: info['default_branch'], filePath };
@@ -50,9 +49,7 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
   if (username && name && branch && t === 'tree') {
     return { username, name, branch, filePath };
   } else {
-    throw new Error(
-      nls.localize('customTemplatesInvalidRepoUrl', repoUri.href)
-    );
+    throw new Error(nls.localize('customTemplatesInvalidRepoUrl', repoUri.href));
   }
 }
 
@@ -61,17 +58,10 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
  * @param repoUri repository uri
  * @returns path to store custom templates
  */
-export function getStoragePathForCustomTemplates(repoUri: URL) {
-  const folderHash = crypto
-    .createHash('md5')
-    .update(repoUri.href)
-    .digest('hex');
+export function getStoragePathForCustomTemplates(repoUri: URL): string {
+  const folderHash = crypto.createHash('md5').update(repoUri.href).digest('hex');
 
-  const customTemplatesPath = path.join(
-    Global.DIR,
-    'custom-templates',
-    folderHash
-  );
+  const customTemplatesPath = path.join(Global.DIR, 'custom-templates', folderHash);
   return customTemplatesPath;
 }
 
@@ -81,10 +71,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL) {
  * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
  * @returns path to the local storage location of the repo
  */
-export async function loadCustomTemplatesGitRepo(
-  repoUri: URL,
-  forceLoadingRemoteRepo = false
-) {
+export async function loadCustomTemplatesGitRepo(repoUri: URL, forceLoadingRemoteRepo = false): Promise<string> {
   const customTemplatesPath = getStoragePathForCustomTemplates(repoUri);
   // Do not load the remote repo if already the repo is already downloaded.
   if (fs.existsSync(customTemplatesPath) && !forceLoadingRemoteRepo) {
@@ -92,17 +79,10 @@ export async function loadCustomTemplatesGitRepo(
   }
 
   if (repoUri.protocol !== 'https:') {
-    throw new Error(
-      nls.localize(
-        'customTemplatesShouldUseHttpsProtocol',
-        `"${repoUri.protocol}"`
-      )
-    );
+    throw new Error(nls.localize('customTemplatesShouldUseHttpsProtocol', `"${repoUri.protocol}"`));
   }
   if (repoUri.hostname !== 'github.com') {
-    throw new Error(
-      nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href)
-    );
+    throw new Error(nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href));
   }
 
   const { username, name, branch, filePath } = await getRepoInfo(repoUri);
@@ -114,13 +94,11 @@ export async function loadCustomTemplatesGitRepo(
   // Download the repo and extract to the SFDX global state folder
   const pipeline = promisify(Stream.pipeline);
   await pipeline(
-    got.stream(
-      `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
-    ),
+    got.stream(`https://codeload.github.com/${username}/${name}/tar.gz/${branch}`),
     tar.extract(
       {
         cwd: customTemplatesPath,
-        strip: filePath ? filePath.split('/').length + 1 : 1
+        strip: filePath ? filePath.split('/').length + 1 : 1,
       },
       [`${name}-${branch}${filePath ? `/${filePath}` : ''}`]
     )

@@ -12,14 +12,12 @@ import { CreateUtil } from '../utils';
 import { LightningComponentOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningComponentGenerator extends SfdxGenerator<
-  LightningComponentOptions
-> {
+export default class LightningComponentGenerator extends SfdxGenerator<LightningComponentOptions> {
   constructor(args: string | string[], options: LightningComponentOptions) {
     super(args, options);
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.componentname);
     CreateUtil.checkInputs(this.options.template);
 
@@ -35,174 +33,109 @@ export default class LightningComponentGenerator extends SfdxGenerator<
 
     if (
       CreateUtil.getCommandTemplatesInSubdirs('lightningcomponent', {
-        subdir: this.options.type
+        subdir: this.options.type,
       }).indexOf(this.options.template) < 0
     ) {
-      throw new Error(
-        nls.localize('MissingLightningComponentTemplate', [
-          this.options.template,
-          this.options.type
-        ])
-      );
+      throw new Error(nls.localize('MissingLightningComponentTemplate', [this.options.template, this.options.type]));
     }
   }
 
-  public writing() {
-    const {
-      template,
-      outputdir,
-      componentname,
-      apiversion,
-      type,
-      internal
-    } = this.options;
+  public writing(): void {
+    const { template, outputdir, componentname, apiversion, type, internal } = this.options;
 
     if (type === 'aura') {
-      this.sourceRootWithPartialPath(
-        path.join('lightningcomponent', 'aura', template)
-      );
+      this.sourceRootWithPartialPath(path.join('lightningcomponent', 'aura', template));
       if (!internal) {
         this.fs.copyTpl(
           this.templatePath(`${template}.cmp-meta.xml`),
-          this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.cmp-meta.xml`)
-          ),
+          this.destinationPath(path.join(outputdir, componentname, `${componentname}.cmp-meta.xml`)),
           {
             componentname,
             description: nls.localize('LightningComponentBundle'),
-            apiVersion: apiversion
+            apiVersion: apiversion,
           }
         );
       }
       this.fs.copyTpl(
         this.templatePath(`${template}.auradoc`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.auradoc`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}.auradoc`)),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.cmp`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.cmp`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}.cmp`)),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.css`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.css`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}.css`)),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.design`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.design`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}.design`)),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.svg`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.svg`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}.svg`)),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}Controller.js`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}Controller.js`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}Controller.js`)),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}Helper.js`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}Helper.js`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}Helper.js`)),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}Renderer.js`),
-        this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}Renderer.js`)
-        ),
+        this.destinationPath(path.join(outputdir, componentname, `${componentname}Renderer.js`)),
         {}
       );
     }
 
     if (type === 'lwc') {
-      const pascalCaseComponentName = `${componentname
-        .substring(0, 1)
-        .toUpperCase()}${componentname.substring(1)}`;
-      const camelCaseComponentName = `${componentname
-        .substring(0, 1)
-        .toLowerCase()}${componentname.substring(1)}`;
+      const pascalCaseComponentName = `${componentname.substring(0, 1).toUpperCase()}${componentname.substring(1)}`;
+      const camelCaseComponentName = `${componentname.substring(0, 1).toLowerCase()}${componentname.substring(1)}`;
       const kebabCaseComponentName = componentname
-        .match(
-          /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
-        )!
+        .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)!
         .join('-')
         .toLowerCase();
 
-      this.sourceRootWithPartialPath(
-        path.join('lightningcomponent', 'lwc', template)
-      );
+      this.sourceRootWithPartialPath(path.join('lightningcomponent', 'lwc', template));
       this.fs.copyTpl(
         this.templatePath(`${template}.js`),
-        this.destinationPath(
-          path.join(
-            outputdir,
-            camelCaseComponentName,
-            `${camelCaseComponentName}.js`
-          )
-        ),
+        this.destinationPath(path.join(outputdir, camelCaseComponentName, `${camelCaseComponentName}.js`)),
         { pascalCaseComponentName }
       );
 
       this.fs.copyTpl(
         this.templatePath(`${template}.html`),
-        this.destinationPath(
-          path.join(
-            outputdir,
-            camelCaseComponentName,
-            `${camelCaseComponentName}.html`
-          )
-        ),
+        this.destinationPath(path.join(outputdir, camelCaseComponentName, `${camelCaseComponentName}.html`)),
         {}
       );
 
       this.fs.copyTpl(
         this.templatePath(path.join(`__tests__`, `${template}.test.js`)),
         this.destinationPath(
-          path.join(
-            outputdir,
-            camelCaseComponentName,
-            `__tests__`,
-            `${camelCaseComponentName}.test.js`
-          )
+          path.join(outputdir, camelCaseComponentName, `__tests__`, `${camelCaseComponentName}.test.js`)
         ),
         {
           pascalCaseComponentName,
           camelCaseComponentName,
-          kebabCaseComponentName
+          kebabCaseComponentName,
         }
       );
 
       if (!internal) {
-        const masterLabel = camelCaseToTitleCase(componentname)
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
+        const masterLabel = camelCaseToTitleCase(componentname).replace(/</g, '&lt;').replace(/>/g, '&gt;');
         this.fs.copyTpl(
           this.templatePath(`${template}.js-meta.xml`),
-          this.destinationPath(
-            path.join(
-              outputdir,
-              camelCaseComponentName,
-              `${camelCaseComponentName}.js-meta.xml`
-            )
-          ),
+          this.destinationPath(path.join(outputdir, camelCaseComponentName, `${camelCaseComponentName}.js-meta.xml`)),
           { apiVersion: apiversion, masterLabel }
         );
       }

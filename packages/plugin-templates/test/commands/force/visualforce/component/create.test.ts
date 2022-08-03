@@ -11,42 +11,24 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-templates',
-  'messages'
-);
+const messages = Messages.loadMessages('@salesforce/plugin-templates', 'messages');
 
 describe('Visualforce component creation tests:', () => {
   describe('Check visualforce component creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
-      .command([
-        'force:visualforce:component:create',
-        '--componentname',
-        'foo',
-        '--label',
-        'testlabel'
-      ])
-      .it(
-        'should create foo component using DefaultVFComponent template and default output directory',
-        ctx => {
-          assert.file(['foo.component', 'foo.component-meta.xml']);
-          assert.fileContent(
-            path.join(process.cwd(), 'foo.component'),
-            'This is your new Component'
-          );
-          assert.fileContent(
-            path.join(process.cwd(), 'foo.component-meta.xml'),
-            '<label>testlabel</label>'
-          );
-        }
-      );
+      .command(['force:visualforce:component:create', '--componentname', 'foo', '--label', 'testlabel'])
+      .it('should create foo component using DefaultVFComponent template and default output directory', (ctx) => {
+        assert.file(['foo.component', 'foo.component-meta.xml']);
+        assert.fileContent(path.join(process.cwd(), 'foo.component'), 'This is your new Component');
+        assert.fileContent(path.join(process.cwd(), 'foo.component-meta.xml'), '<label>testlabel</label>');
+      });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -55,18 +37,18 @@ describe('Visualforce component creation tests:', () => {
         '--outputdir',
         'testcomponent',
         '--label',
-        'testlabel'
+        'testlabel',
       ])
-      .it('should create foo component in a folder with a custom name', ctx => {
+      .it('should create foo component in a folder with a custom name', (ctx) => {
         assert.file([
           path.join('testcomponent', 'foo.component'),
-          path.join('testcomponent', 'foo.component-meta.xml')
+          path.join('testcomponent', 'foo.component-meta.xml'),
         ]);
       });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:visualforce:component:create',
@@ -75,100 +57,60 @@ describe('Visualforce component creation tests:', () => {
         '--outputdir',
         'classes create',
         '--label',
-        'label'
+        'label',
       ])
-      .it(
-        'should create foo component in custom folder name that has a space in it',
-        ctx => {
-          assert.file([
-            path.join('classes create', 'foo.component'),
-            path.join('classes create', 'foo.component-meta.xml')
-          ]);
-        }
-      );
+      .it('should create foo component in custom folder name that has a space in it', (ctx) => {
+        assert.file([
+          path.join('classes create', 'foo.component'),
+          path.join('classes create', 'foo.component-meta.xml'),
+        ]);
+      });
   });
 
   describe('Check that all invalid name errors are thrown', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:visualforce:component:create'])
-      .it('should throw a missing componentname error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('MissingComponentnameFlag')
-        );
+      .it('should throw a missing componentname error', (ctx) => {
+        expect(ctx.stderr).to.contain(messages.getMessage('MissingComponentnameFlag'));
       });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
-      .command([
-        'force:visualforce:component:create',
-        '--componentname',
-        '/a',
-        '--label',
-        'foo'
-      ])
-      .it('should throw invalid non alphanumeric componentname error', ctx => {
+      .command(['force:visualforce:component:create', '--componentname', '/a', '--label', 'foo'])
+      .it('should throw invalid non alphanumeric componentname error', (ctx) => {
         expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
       });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
-      .command([
-        'force:visualforce:component:create',
-        '--componentname',
-        '3aa',
-        '--label',
-        'foo'
-      ])
-      .it(
-        'should throw invalid componentname starting with numeric error',
-        ctx => {
-          expect(ctx.stderr).to.contain(
-            nls.localize('NameMustStartWithLetterError')
-          );
-        }
-      );
+      .command(['force:visualforce:component:create', '--componentname', '3aa', '--label', 'foo'])
+      .it('should throw invalid componentname starting with numeric error', (ctx) => {
+        expect(ctx.stderr).to.contain(nls.localize('NameMustStartWithLetterError'));
+      });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
-      .command([
-        'force:visualforce:component:create',
-        '--componentname',
-        'a_',
-        '--label',
-        'foo'
-      ])
-      .it(
-        'should throw invalid componentname ending with underscore error',
-        ctx => {
-          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
-        }
-      );
+      .command(['force:visualforce:component:create', '--componentname', 'a_', '--label', 'foo'])
+      .it('should throw invalid componentname ending with underscore error', (ctx) => {
+        expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
+      });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
-      .command([
-        'force:visualforce:component:create',
-        '--componentname',
-        'a__a',
-        '--label',
-        'foo'
-      ])
-      .it(
-        'should throw invalid componentname with double underscore error',
-        ctx => {
-          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
-        }
-      );
+      .command(['force:visualforce:component:create', '--componentname', 'a__a', '--label', 'foo'])
+      .it('should throw invalid componentname with double underscore error', (ctx) => {
+        expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
+      });
   });
 });

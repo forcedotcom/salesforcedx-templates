@@ -9,20 +9,18 @@ import { CreateUtil } from '../utils';
 import { ApexClassOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class ApexClassGenerator extends SfdxGenerator<
-  ApexClassOptions
-> {
+export default class ApexClassGenerator extends SfdxGenerator<ApexClassOptions> {
   constructor(args: string | string[], options: ApexClassOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('apexclass');
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     CreateUtil.checkInputs(this.options.classname);
   }
 
-  public writing() {
+  public writing(): void {
     const { template, outputdir, classname, apiversion } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.cls`),

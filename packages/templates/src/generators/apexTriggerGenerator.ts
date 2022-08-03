@@ -9,26 +9,17 @@ import { CreateUtil } from '../utils';
 import { ApexTriggerOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class ApexTriggerGenerator extends SfdxGenerator<
-  ApexTriggerOptions
-> {
+export default class ApexTriggerGenerator extends SfdxGenerator<ApexTriggerOptions> {
   constructor(args: string | string[], options: ApexTriggerOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('apextrigger');
   }
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.triggername);
     CreateUtil.checkInputs(this.options.template);
   }
-  public writing() {
-    const {
-      template,
-      outputdir,
-      triggername,
-      apiversion,
-      triggerevents,
-      sobject
-    } = this.options;
+  public writing(): void {
+    const { template, outputdir, triggername, apiversion, triggerevents, sobject } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.trigger`),
       this.destinationPath(path.join(outputdir, `${triggername}.trigger`)),
@@ -36,9 +27,7 @@ export default class ApexTriggerGenerator extends SfdxGenerator<
     ),
       this.fs.copyTpl(
         this.templatePath('_trigger.trigger-meta.xml'),
-        this.destinationPath(
-          path.join(outputdir, `${triggername}.trigger-meta.xml`)
-        ),
+        this.destinationPath(path.join(outputdir, `${triggername}.trigger-meta.xml`)),
         { apiVersion: apiversion }
       );
   }

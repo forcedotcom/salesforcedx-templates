@@ -16,7 +16,7 @@ describe('SfdxGenerator', () => {
   const API_VERSION = '55.0';
   interface MyTemplateOptions extends TemplateOptions {
     // env and resolved are for testing (similar to how yeoman environment instantiates the generators)
-    env: object;
+    env: YeomanEnvironment;
     resolved: string;
   }
   class MyGenerator extends SfdxGenerator<MyTemplateOptions> {
@@ -24,28 +24,25 @@ describe('SfdxGenerator', () => {
     public writing() {
       this.doWriting(this.options);
     }
-    public doWriting(options: object) {}
+    public doWriting(options: MyTemplateOptions & { apiversion: string; outputdir: string }) {}
   }
   const testEnv = YeomanEnvironment.createEnv();
   testEnv.cwd = process.cwd();
-  const mockMyGeneratorOptions = {
+  const mockMyGeneratorOptions: MyTemplateOptions = {
     env: testEnv,
-    resolved: path.resolve('../../')
+    resolved: path.resolve('../../'),
   };
 
   it('should set default api version and output dir', () => {
     const doWritingStub = stub(MyGenerator.prototype, 'doWriting');
-    const getDefaultApiVersionStub = stub(
-      TemplateService,
-      'getDefaultApiVersion'
-    ).returns(API_VERSION);
+    const getDefaultApiVersionStub = stub(TemplateService, 'getDefaultApiVersion').returns(API_VERSION);
     const generator = new MyGenerator([], mockMyGeneratorOptions);
     generator.writing();
     assert.calledWith(
       doWritingStub,
       match({
         apiversion: API_VERSION,
-        outputdir: process.cwd()
+        outputdir: process.cwd(),
       })
     );
     assert.calledOnce(getDefaultApiVersionStub);

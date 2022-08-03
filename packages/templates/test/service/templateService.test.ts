@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { expect } from 'chai';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as fsOriginal from 'fs';
@@ -27,13 +26,13 @@ describe('TemplateService', () => {
   describe('Setting cwd', () => {
     it('should set default cwd of yeoman env to process cwd on getting instance', () => {
       const templateService = TemplateService.getInstance();
-      expect(templateService.cwd).to.equal(process.cwd());
+      chai.expect(templateService.cwd).to.equal(process.cwd());
     });
 
     it('should set cwd of yeoman env on getting instance', () => {
       const mockWorkspacePath = path.join('root', 'project');
       const templateService = TemplateService.getInstance(mockWorkspacePath);
-      expect(templateService.cwd).to.equal(mockWorkspacePath);
+      chai.expect(templateService.cwd).to.equal(mockWorkspacePath);
     });
 
     it('should set cwd of yeoman env', () => {
@@ -41,7 +40,7 @@ describe('TemplateService', () => {
       const mockNewWorkspacePath = path.join('root', 'project2');
       const templateService = TemplateService.getInstance(mockWorkspacePath);
       templateService.cwd = mockNewWorkspacePath;
-      expect(templateService.cwd).to.equal(mockNewWorkspacePath);
+      chai.expect(templateService.cwd).to.equal(mockNewWorkspacePath);
     });
 
     it('should create template', async () => {
@@ -49,16 +48,10 @@ describe('TemplateService', () => {
       await templateService.create(TemplateType.ApexClass, {
         template: 'DefaultApexClass',
         classname: 'LibraryCreateClass',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
+        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
       });
-      const expectedApexClassPath = path.join(
-        'testsoutput',
-        'libraryCreate',
-        'apexClass',
-        'LibraryCreateClass.cls'
-      );
-      const expectedApexClassContent =
-        'public with sharing class LibraryCreateClass';
+      const expectedApexClassPath = path.join('testsoutput', 'libraryCreate', 'apexClass', 'LibraryCreateClass.cls');
+      const expectedApexClassContent = 'public with sharing class LibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'libraryCreate',
@@ -73,24 +66,17 @@ describe('TemplateService', () => {
 `;
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
       assert.fileContent(expectedApexClassPath, expectedApexClassContent);
-      assert.fileContent(
-        expectedApexClassMetaPath,
-        expectedApexClassMetaContent
-      );
+      assert.fileContent(expectedApexClassMetaPath, expectedApexClassMetaContent);
     });
   });
 
   describe('create custom template', () => {
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/main/packages/templates/test/custom-templates';
-    const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
-      new URL(TEST_CUSTOM_TEMPLATES_REPO)
-    );
+    const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(new URL(TEST_CUSTOM_TEMPLATES_REPO));
 
     beforeEach(async () => {
-      await fs.remove(
-        path.join('testsoutput', 'customLibraryCreate', 'apexclass')
-      );
+      await fs.remove(path.join('testsoutput', 'customLibraryCreate', 'apexclass'));
     });
 
     it('should create custom template from local folder', async () => {
@@ -101,11 +87,7 @@ describe('TemplateService', () => {
         {
           template: 'DefaultApexClass',
           classname: 'LibraryCreateClass',
-          outputdir: path.join(
-            'testsoutput',
-            'customLibraryCreate',
-            'apexClass'
-          )
+          outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass'),
         },
         customTemplates
       );
@@ -115,8 +97,7 @@ describe('TemplateService', () => {
         'apexClass',
         'LibraryCreateClass.cls'
       );
-      const expectedApexClassContent =
-        'public with sharing class CustomLibraryCreateClass';
+      const expectedApexClassContent = 'public with sharing class CustomLibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'customLibraryCreate',
@@ -131,10 +112,7 @@ describe('TemplateService', () => {
 `;
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
       assert.fileContent(expectedApexClassPath, expectedApexClassContent);
-      assert.fileContent(
-        expectedApexClassMetaPath,
-        expectedApexClassMetaContent
-      );
+      assert.fileContent(expectedApexClassMetaPath, expectedApexClassMetaContent);
     });
 
     it('should create custom template from GitHub repository', async () => {
@@ -148,11 +126,7 @@ describe('TemplateService', () => {
         {
           template: 'DefaultApexClass',
           classname: 'LibraryCreateClass',
-          outputdir: path.join(
-            'testsoutput',
-            'customLibraryCreate',
-            'apexClass'
-          )
+          outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass'),
         },
         customTemplates
       );
@@ -162,8 +136,7 @@ describe('TemplateService', () => {
         'apexClass',
         'LibraryCreateClass.cls'
       );
-      const expectedApexClassContent =
-        'public with sharing class CustomLibraryCreateClass';
+      const expectedApexClassContent = 'public with sharing class CustomLibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'customLibraryCreate',
@@ -178,10 +151,7 @@ describe('TemplateService', () => {
 `;
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
       assert.fileContent(expectedApexClassPath, expectedApexClassContent);
-      assert.fileContent(
-        expectedApexClassMetaPath,
-        expectedApexClassMetaContent
-      );
+      assert.fileContent(expectedApexClassMetaPath, expectedApexClassMetaContent);
     });
 
     it('should throw error if local custom templates do not exist', async () => {
@@ -194,126 +164,80 @@ describe('TemplateService', () => {
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            )
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass'),
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('localCustomTemplateDoNotExist', localPath)
-        );
+        .should.be.rejectedWith(Error, nls.localize('localCustomTemplateDoNotExist', localPath));
     });
 
     it('should throw error if cannot retrieve default branch', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates =
-        'https://github.com/forcedotcom/this-repo-does-not-exist';
+      const customTemplates = 'https://github.com/forcedotcom/this-repo-does-not-exist';
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            )
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass'),
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize(
-            'customTemplatesCannotRetrieveDefaultBranch',
-            customTemplates
-          )
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesCannotRetrieveDefaultBranch', customTemplates));
     });
 
     it('should throw error if repo url is invalid', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates =
-        'https://github.com/forcedotcom/salesforcedx-templates/invalid-url';
+      const customTemplates = 'https://github.com/forcedotcom/salesforcedx-templates/invalid-url';
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            )
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass'),
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('customTemplatesInvalidRepoUrl', customTemplates)
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesInvalidRepoUrl', customTemplates));
     });
 
     it('should throw error if repo protocol is not https', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
-        'https',
-        'http'
-      );
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace('https', 'http');
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            )
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass'),
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"')
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"'));
     });
 
     it('should throw error if not a GitHub repo', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
-        'github.com',
-        'gitlab.com'
-      );
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace('github.com', 'gitlab.com');
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            )
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass'),
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('customTemplatesSupportsGitHubOnly', customTemplates)
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesSupportsGitHubOnly', customTemplates));
     });
 
     it('should download the repo if the folder does not exist', async () => {
       const existsSyncStub = stub(fsOriginal, 'existsSync');
-      existsSyncStub.callsFake(fsPath => {
+      existsSyncStub.callsFake((fsPath) => {
         if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
           return true;
         }
@@ -326,9 +250,7 @@ describe('TemplateService', () => {
       }
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
-      await templateService.setCustomTemplatesRootPathOrGitRepo(
-        customTemplates
-      );
+      await templateService.setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
       sinonAssert.calledOnce(streamStub);
       streamStub.restore();
@@ -337,7 +259,7 @@ describe('TemplateService', () => {
 
     it('should not download the repo if the folder already exists', async () => {
       const existsSyncStub = stub(fsOriginal, 'existsSync');
-      existsSyncStub.callsFake(fsPath => {
+      existsSyncStub.callsFake((fsPath) => {
         if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
           return true;
         }
@@ -351,9 +273,7 @@ describe('TemplateService', () => {
       fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
-      await templateService.setCustomTemplatesRootPathOrGitRepo(
-        customTemplates
-      );
+      await templateService.setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
       sinonAssert.notCalled(streamStub);
       streamStub.restore();
@@ -362,7 +282,7 @@ describe('TemplateService', () => {
 
     it('should download the repo if the folder already exists, but forcing a redownload', async () => {
       const existsSyncStub = stub(fsOriginal, 'existsSync');
-      existsSyncStub.callsFake(fsPath => {
+      existsSyncStub.callsFake((fsPath) => {
         if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
           return true;
         }
@@ -377,10 +297,7 @@ describe('TemplateService', () => {
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
       const forceLoadingRemoteRepo = true;
-      await templateService.setCustomTemplatesRootPathOrGitRepo(
-        customTemplates,
-        forceLoadingRemoteRepo
-      );
+      await templateService.setCustomTemplatesRootPathOrGitRepo(customTemplates, forceLoadingRemoteRepo);
 
       sinonAssert.calledOnce(streamStub);
       streamStub.restore();
@@ -395,39 +312,34 @@ describe('TemplateService', () => {
       const result = await templateService.create(TemplateType.ApexClass, {
         template: 'DefaultApexClass',
         classname: 'LibraryCreateClass',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
+        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
       });
 
-      expect(result.outputDir).to.equal(
-        path.resolve(process.cwd(), 'testsoutput/libraryCreate/apexClass'),
-        'outputDir property did not match'
-      );
+      chai
+        .expect(result.outputDir)
+        .to.equal(
+          path.resolve(process.cwd(), 'testsoutput/libraryCreate/apexClass'),
+          'outputDir property did not match'
+        );
 
-      expect(result.created).to.eql(
-        [
-          path.normalize(
-            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
-          ),
-          path.normalize(
-            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
-          )
-        ],
-        'Created property did not match'
-      );
+      chai
+        .expect(result.created)
+        .to.eql(
+          [
+            path.normalize('testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'),
+            path.normalize('testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'),
+          ],
+          'Created property did not match'
+        );
 
       const actual = `target dir = ${path.resolve(
         process.cwd(),
         'testsoutput/libraryCreate/apexClass'
       )}\n   create ${path.normalize(
         'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
-      )}\n   create ${path.normalize(
-        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
-      )}\n`;
+      )}\n   create ${path.normalize('testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml')}\n`;
 
-      expect(result.rawOutput).to.equal(
-        actual,
-        'Actual property did not match'
-      );
+      chai.expect(result.rawOutput).to.equal(actual, 'Actual property did not match');
     });
 
     it('should reject if create template fails', async () => {
@@ -437,11 +349,11 @@ describe('TemplateService', () => {
         await templateService.create(TemplateType.ApexClass, {
           template: 'DefaultApexClass',
           classname: 'LibraryCreateClass',
-          outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
+          outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
         });
       } catch (error) {
         const err = error as Error;
-        expect(err.message).to.equal('error');
+        chai.expect(err.message).to.equal('error');
       }
       runStub.restore();
     });

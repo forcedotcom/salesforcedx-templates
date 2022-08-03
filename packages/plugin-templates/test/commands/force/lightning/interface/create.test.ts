@@ -11,16 +11,13 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-templates',
-  'messages'
-);
+const messages = Messages.loadMessages('@salesforce/plugin-templates', 'messages');
 
 describe('Lightning interface creation tests:', () => {
   describe('Check lightning interface creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:interface:create',
@@ -29,18 +26,18 @@ describe('Lightning interface creation tests:', () => {
         '--outputdir',
         'aura',
         '--template',
-        'DefaultLightningIntf'
+        'DefaultLightningIntf',
       ])
       .it(
         'should create lightning interface foo using DefaultLightningIntf template and aura output directory',
-        ctx => {
+        (ctx) => {
           assert.file(path.join('aura', 'foo', 'foo.intf'));
           assert.file(path.join('aura', 'foo', 'foo.intf-meta.xml'));
         }
       ),
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
         .command([
           'force:lightning:interface:create',
@@ -50,20 +47,18 @@ describe('Lightning interface creation tests:', () => {
           'aura',
           '--template',
           'DefaultLightningIntf',
-          '--internal'
+          '--internal',
         ])
         .it(
           'should create lightning interface foo using DefaultLightningIntf template and aura output directory and no -meta.xml file',
-          ctx => {
+          (ctx) => {
             assert.file(path.join('aura', 'foometa', 'foometa.intf'));
-            assert.noFile(
-              path.join('aura', 'foometa', 'foometa.intf-meta.xml')
-            );
+            assert.noFile(path.join('aura', 'foometa', 'foometa.intf-meta.xml'));
           }
         ),
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stdout()
         .command([
           'force:lightning:interface:create',
@@ -72,22 +67,20 @@ describe('Lightning interface creation tests:', () => {
           '--outputdir',
           path.join('aura', 'interfacetest'),
           '--template',
-          'DefaultLightningIntf'
+          'DefaultLightningIntf',
         ])
         .it(
           'should create lightning interface foo using DefaultLightningIntf template and custom output directory',
-          ctx => {
+          (ctx) => {
             assert.file(path.join('aura', 'interfacetest', 'foo', 'foo.intf'));
-            assert.file(
-              path.join('aura', 'interfacetest', 'foo', 'foo.intf-meta.xml')
-            );
+            assert.file(path.join('aura', 'interfacetest', 'foo', 'foo.intf-meta.xml'));
           }
         );
   }),
     describe('lightning interface failures', () => {
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command([
           'force:lightning:interface:create',
@@ -96,110 +89,62 @@ describe('Lightning interface creation tests:', () => {
           '--outputdir',
           'aura',
           '--template',
-          'foo'
+          'foo',
         ])
-        .it('should throw invalid template name error', ctx => {
+        .it('should throw invalid template name error', (ctx) => {
           expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
         });
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--interfacename', 'foo'])
-        .it('should throw missing aura parent folder error', ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('MissingAuraFolder')
-          );
+        .it('should throw missing aura parent folder error', (ctx) => {
+          expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
         });
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
         .command(['force:lightning:interface:create', '--outputdir', 'aura'])
-        .it('should throw missing interfacename error', ctx => {
-          expect(ctx.stderr).to.contain(
-            messages.getMessage('MissingInterfacename')
-          );
+        .it('should throw missing interfacename error', (ctx) => {
+          expect(ctx.stderr).to.contain(messages.getMessage('MissingInterfacename'));
         });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
-        .command([
-          'force:lightning:interface:create',
-          '--interfacename',
-          '/a',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid non alphanumeric interfacename error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('AlphaNumericNameError')
-            );
-          }
-        );
+        .command(['force:lightning:interface:create', '--interfacename', '/a', '--outputdir', 'aura'])
+        .it('should throw invalid non alphanumeric interfacename error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('AlphaNumericNameError'));
+        });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
-        .command([
-          'force:lightning:interface:create',
-          '--interfacename',
-          '3aa',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid interfacename starting with numeric error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('NameMustStartWithLetterError')
-            );
-          }
-        );
+        .command(['force:lightning:interface:create', '--interfacename', '3aa', '--outputdir', 'aura'])
+        .it('should throw invalid interfacename starting with numeric error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('NameMustStartWithLetterError'));
+        });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
-        .command([
-          'force:lightning:interface:create',
-          '--interfacename',
-          'a_',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid interfacename ending with underscore error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('EndWithUnderscoreError')
-            );
-          }
-        );
+        .command(['force:lightning:interface:create', '--interfacename', 'a_', '--outputdir', 'aura'])
+        .it('should throw invalid interfacename ending with underscore error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('EndWithUnderscoreError'));
+        });
 
       test
         .withOrg()
-        //.withProject()
+        .withProject()
         .stderr()
-        .command([
-          'force:lightning:interface:create',
-          '--interfacename',
-          'a__a',
-          '--outputdir',
-          'aura'
-        ])
-        .it(
-          'should throw invalid interfacename with double underscore error',
-          ctx => {
-            expect(ctx.stderr).to.contain(
-              nls.localize('DoubleUnderscoreError')
-            );
-          }
-        );
+        .command(['force:lightning:interface:create', '--interfacename', 'a__a', '--outputdir', 'aura'])
+        .it('should throw invalid interfacename with double underscore error', (ctx) => {
+          expect(ctx.stderr).to.contain(nls.localize('DoubleUnderscoreError'));
+        });
     });
 });

@@ -10,15 +10,13 @@ import { CreateUtil } from '../utils';
 import { LightningInterfaceOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningInterfaceGenerator extends SfdxGenerator<
-  LightningInterfaceOptions
-> {
+export default class LightningInterfaceGenerator extends SfdxGenerator<LightningInterfaceOptions> {
   constructor(args: string | string[], options: LightningInterfaceOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightninginterface');
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.interfacename);
     CreateUtil.checkInputs(this.options.template);
 
@@ -29,32 +27,22 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<
     }
   }
 
-  public writing() {
-    const {
-      template,
-      outputdir,
-      interfacename,
-      apiversion,
-      internal
-    } = this.options;
+  public writing(): void {
+    const { template, outputdir, interfacename, apiversion, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.intf-meta.xml'),
-        this.destinationPath(
-          path.join(outputdir, interfacename, `${interfacename}.intf-meta.xml`)
-        ),
+        this.destinationPath(path.join(outputdir, interfacename, `${interfacename}.intf-meta.xml`)),
         {
           apiVersion: apiversion,
-          description: nls.localize('LightningInterfaceBundle')
+          description: nls.localize('LightningInterfaceBundle'),
         }
       );
     }
     this.fs.copyTpl(
       this.templatePath(`${template}.intf`),
-      this.destinationPath(
-        path.join(outputdir, interfacename, `${interfacename}.intf`)
-      ),
+      this.destinationPath(path.join(outputdir, interfacename, `${interfacename}.intf`)),
       {}
     );
   }

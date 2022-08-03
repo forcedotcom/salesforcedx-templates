@@ -13,15 +13,13 @@ import { SfdxGenerator } from './sfdxGenerator';
 
 const EXTENSION_TEMPLATES = ['js', 'css', 'json', 'txt'];
 
-export default class StaticResourceGenerator extends SfdxGenerator<
-  StaticResourceOptions
-> {
+export default class StaticResourceGenerator extends SfdxGenerator<StaticResourceOptions> {
   constructor(args: string | string[], options: StaticResourceOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('staticresource');
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.resourcename);
 
     if (!extension(this.options.contenttype.toLowerCase())) {
@@ -29,7 +27,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<
     }
   }
 
-  public writing() {
+  public writing(): void {
     const { outputdir, resourcename, contenttype } = this.options;
 
     const ext = extension(contenttype);
@@ -59,11 +57,9 @@ export default class StaticResourceGenerator extends SfdxGenerator<
 
     this.fs.copyTpl(
       this.templatePath('_staticresource.resource-meta.xml'),
-      this.destinationPath(
-        path.join(outputdir, `${resourcename}.resource-meta.xml`)
-      ),
+      this.destinationPath(path.join(outputdir, `${resourcename}.resource-meta.xml`)),
       {
-        contentType: contenttype
+        contentType: contenttype,
       }
     );
   }

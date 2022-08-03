@@ -10,25 +10,13 @@ import * as path from 'path';
 import * as assert from 'yeoman-assert';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-templates',
-  'messages'
-);
+const messages = Messages.loadMessages('@salesforce/plugin-templates', 'messages');
 
 export class AuraLightningTestFormatter {
   public static fileformatter(pathway: string, filename: string): string[] {
     const files: string[] = [];
-    const suffixarray = [
-      '.cmp',
-      '.auradoc',
-      '.css',
-      'Controller.js',
-      'Helper.js',
-      'Renderer.js',
-      '.svg',
-      '.design'
-    ];
-    suffixarray.forEach(element => {
+    const suffixarray = ['.cmp', '.auradoc', '.css', 'Controller.js', 'Helper.js', 'Renderer.js', '.svg', '.design'];
+    suffixarray.forEach((element) => {
       files.push(path.join('aura', pathway, filename + element));
     });
     return files;
@@ -39,30 +27,21 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning aura components creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
-      .command([
-        'force:lightning:component:create',
-        '--componentname',
-        'foo',
-        '--outputdir',
-        'aura'
-      ])
-      .it(
-        'should create lightning aura component files in the aura output directory',
-        ctx => {
-          assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
-          assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
-          assert.fileContent(
-            path.join('aura', 'foo', 'foo.cmp-meta.xml'),
-            '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
-          );
-        }
-      );
+      .command(['force:lightning:component:create', '--componentname', 'foo', '--outputdir', 'aura'])
+      .it('should create lightning aura component files in the aura output directory', (ctx) => {
+        assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
+        assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
+        assert.fileContent(
+          path.join('aura', 'foo', 'foo.cmp-meta.xml'),
+          '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
+        );
+      });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -71,25 +50,22 @@ describe('Lightning component creation tests:', () => {
         '--outputdir',
         'aura',
         '--template',
-        'default'
+        'default',
       ])
-      .it(
-        'should create lightning aura component files from default template in the aura output directory',
-        ctx => {
-          assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
-          assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
-          assert.fileContent(
-            path.join('aura', 'foo', 'foo.cmp-meta.xml'),
-            '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
-          );
-        }
-      );
+      .it('should create lightning aura component files from default template in the aura output directory', (ctx) => {
+        assert.file(AuraLightningTestFormatter.fileformatter('foo', 'foo'));
+        assert.file(path.join('aura', 'foo', 'foo.cmp-meta.xml'));
+        assert.fileContent(
+          path.join('aura', 'foo', 'foo.cmp-meta.xml'),
+          '<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">'
+        );
+      });
   });
 
   describe('Check lightning aura components creation without -meta.xml file', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -97,24 +73,13 @@ describe('Lightning component creation tests:', () => {
         'internalflagtest',
         '--outputdir',
         'aura',
-        '--internal'
+        '--internal',
       ])
       .it(
         'should create lightning aura component files in the aura output directory without a -meta.xml file',
-        ctx => {
-          assert.file(
-            AuraLightningTestFormatter.fileformatter(
-              'internalflagtest',
-              'internalflagtest'
-            )
-          );
-          assert.noFile(
-            path.join(
-              'aura',
-              'internalflagtest',
-              'internalflagtest.cmp-meta.xml'
-            )
-          );
+        (ctx) => {
+          assert.file(AuraLightningTestFormatter.fileformatter('internalflagtest', 'internalflagtest'));
+          assert.noFile(path.join('aura', 'internalflagtest', 'internalflagtest.cmp-meta.xml'));
         }
       );
   });
@@ -122,7 +87,7 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning web components creation without -meta-xml file', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -132,20 +97,14 @@ describe('Lightning component creation tests:', () => {
         'lwc',
         '--type',
         'lwc',
-        '--internal'
+        '--internal',
       ])
       .it(
         'should create lightning web component files in the lwc output directory with the internal flag for disabling -meta.xml files',
-        ctx => {
-          assert.noFile(
-            path.join('lwc', 'internallwctest', 'internallwctest.js-meta.xml')
-          );
-          assert.file(
-            path.join('lwc', 'internallwctest', 'internallwctest.html')
-          );
-          assert.file(
-            path.join('lwc', 'internallwctest', 'internallwctest.js')
-          );
+        (ctx) => {
+          assert.noFile(path.join('lwc', 'internallwctest', 'internallwctest.js-meta.xml'));
+          assert.file(path.join('lwc', 'internallwctest', 'internallwctest.html'));
+          assert.file(path.join('lwc', 'internallwctest', 'internallwctest.js'));
           assert.fileContent(
             path.join('lwc', 'internallwctest', 'internallwctest.js'),
             'export default class Internallwctest extends LightningElement {}'
@@ -157,33 +116,19 @@ describe('Lightning component creation tests:', () => {
   describe('Check lightning web components creation with -meta-xml file', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
-      .command([
-        'force:lightning:component:create',
-        '--componentname',
-        'foo',
-        '--outputdir',
-        'lwc',
-        '--type',
-        'lwc'
-      ])
-      .it(
-        'should create lightning web component files in the lwc output directory',
-        ctx => {
-          assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
-          assert.file(path.join('lwc', 'foo', 'foo.html'));
-          assert.file(path.join('lwc', 'foo', 'foo.js'));
-          assert.fileContent(
-            path.join('lwc', 'foo', 'foo.js'),
-            'export default class Foo extends LightningElement {}'
-          );
-        }
-      );
+      .command(['force:lightning:component:create', '--componentname', 'foo', '--outputdir', 'lwc', '--type', 'lwc'])
+      .it('should create lightning web component files in the lwc output directory', (ctx) => {
+        assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
+        assert.file(path.join('lwc', 'foo', 'foo.html'));
+        assert.file(path.join('lwc', 'foo', 'foo.js'));
+        assert.fileContent(path.join('lwc', 'foo', 'foo.js'), 'export default class Foo extends LightningElement {}');
+      });
 
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -194,26 +139,20 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'default'
+        'default',
       ])
-      .it(
-        'should create lightning web component files from default template in the lwc output directory',
-        ctx => {
-          assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
-          assert.file(path.join('lwc', 'foo', 'foo.html'));
-          assert.file(path.join('lwc', 'foo', 'foo.js'));
-          assert.fileContent(
-            path.join('lwc', 'foo', 'foo.js'),
-            'export default class Foo extends LightningElement {}'
-          );
-        }
-      );
+      .it('should create lightning web component files from default template in the lwc output directory', (ctx) => {
+        assert.file(path.join('lwc', 'foo', 'foo.js-meta.xml'));
+        assert.file(path.join('lwc', 'foo', 'foo.html'));
+        assert.file(path.join('lwc', 'foo', 'foo.js'));
+        assert.fileContent(path.join('lwc', 'foo', 'foo.js'), 'export default class Foo extends LightningElement {}');
+      });
   });
 
   describe('Check analytics dashboard lwc creation', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -224,36 +163,27 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'analyticsDashboard'
+        'analyticsDashboard',
       ])
-      .it(
-        'should create analyticsDashboard lwc files in the lwc output directory',
-        ctx => {
-          const jsFile = path.join('lwc', 'foo', 'foo.js');
-          const metaFile = path.join('lwc', 'foo', 'foo.js-meta.xml');
-          assert.file(metaFile);
-          assert.file(path.join('lwc', 'foo', 'foo.html'));
-          assert.file(jsFile);
-          assert.fileContent(metaFile, '<masterLabel>Foo</masterLabel>');
-          assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
-          assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
-          assert.fileContent(metaFile, '<hasStep>false</hasStep>');
-          assert.fileContent(
-            jsFile,
-            'export default class Foo extends LightningElement {'
-          );
-          assert.fileContent(jsFile, '@api getState;');
-          assert.fileContent(jsFile, '@api setState;');
-          assert.fileContent(jsFile, '@api refresh;');
-          assert.fileContent(
-            jsFile,
-            '@api stateChangedCallback(prevState, newState)'
-          );
-        }
-      );
+      .it('should create analyticsDashboard lwc files in the lwc output directory', (ctx) => {
+        const jsFile = path.join('lwc', 'foo', 'foo.js');
+        const metaFile = path.join('lwc', 'foo', 'foo.js-meta.xml');
+        assert.file(metaFile);
+        assert.file(path.join('lwc', 'foo', 'foo.html'));
+        assert.file(jsFile);
+        assert.fileContent(metaFile, '<masterLabel>Foo</masterLabel>');
+        assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
+        assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
+        assert.fileContent(metaFile, '<hasStep>false</hasStep>');
+        assert.fileContent(jsFile, 'export default class Foo extends LightningElement {');
+        assert.fileContent(jsFile, '@api getState;');
+        assert.fileContent(jsFile, '@api setState;');
+        assert.fileContent(jsFile, '@api refresh;');
+        assert.fileContent(jsFile, '@api stateChangedCallback(prevState, newState)');
+      });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stdout()
       .command([
         'force:lightning:component:create',
@@ -264,83 +194,59 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'analyticsDashboardWithStep'
+        'analyticsDashboardWithStep',
       ])
-      .it(
-        'should create analyticsDashboardWithStep lwc files in the lwc output directory',
-        ctx => {
-          const jsFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js');
-          const metaFile = path.join(
-            'lwc',
-            'fooWithStep',
-            'fooWithStep.js-meta.xml'
-          );
-          assert.file(metaFile);
-          assert.file(path.join('lwc', 'fooWithStep', 'fooWithStep.html'));
-          assert.file(jsFile);
-          assert.fileContent(
-            metaFile,
-            '<masterLabel>Foo With Step</masterLabel>'
-          );
-          assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
-          assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
-          assert.fileContent(metaFile, '<hasStep>true</hasStep>');
-          assert.fileContent(
-            jsFile,
-            'export default class FooWithStep extends LightningElement {'
-          );
-          assert.fileContent(jsFile, '@api getState;');
-          assert.fileContent(jsFile, '@api setState;');
-          assert.fileContent(jsFile, '@api refresh;');
-          assert.fileContent(jsFile, '@api results;');
-          assert.fileContent(jsFile, '@api metadata;');
-          assert.fileContent(jsFile, '@api selection;');
-          assert.fileContent(jsFile, '@api setSelection;');
-          assert.fileContent(jsFile, '@api selectMode;');
-          assert.fileContent(
-            jsFile,
-            '@api stateChangedCallback(prevState, newState)'
-          );
-        }
-      );
+      .it('should create analyticsDashboardWithStep lwc files in the lwc output directory', (ctx) => {
+        const jsFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js');
+        const metaFile = path.join('lwc', 'fooWithStep', 'fooWithStep.js-meta.xml');
+        assert.file(metaFile);
+        assert.file(path.join('lwc', 'fooWithStep', 'fooWithStep.html'));
+        assert.file(jsFile);
+        assert.fileContent(metaFile, '<masterLabel>Foo With Step</masterLabel>');
+        assert.fileContent(metaFile, '<target>analytics__Dashboard</target>');
+        assert.fileContent(metaFile, 'targets="analytics__Dashboard"');
+        assert.fileContent(metaFile, '<hasStep>true</hasStep>');
+        assert.fileContent(jsFile, 'export default class FooWithStep extends LightningElement {');
+        assert.fileContent(jsFile, '@api getState;');
+        assert.fileContent(jsFile, '@api setState;');
+        assert.fileContent(jsFile, '@api refresh;');
+        assert.fileContent(jsFile, '@api results;');
+        assert.fileContent(jsFile, '@api metadata;');
+        assert.fileContent(jsFile, '@api selection;');
+        assert.fileContent(jsFile, '@api setSelection;');
+        assert.fileContent(jsFile, '@api selectMode;');
+        assert.fileContent(jsFile, '@api stateChangedCallback(prevState, newState)');
+      });
   });
 
   describe('lightning component failures', () => {
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:component:create', '--outputdir', 'aura'])
-      .it('should throw missing component name error', ctx => {
-        expect(ctx.stderr).to.contain(
-          messages.getMessage('MissingComponentName')
-        );
+      .it('should throw missing component name error', (ctx) => {
+        expect(ctx.stderr).to.contain(messages.getMessage('MissingComponentName'));
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command(['force:lightning:component:create', '--componentname', 'foo'])
-      .it('should throw missing aura parent folder error', ctx => {
+      .it('should throw missing aura parent folder error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingAuraFolder'));
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
-      .command([
-        'force:lightning:component:create',
-        '--componentname',
-        'foo',
-        '--type',
-        'lwc'
-      ])
-      .it('should throw missing lwc parent folder error', ctx => {
+      .command(['force:lightning:component:create', '--componentname', 'foo', '--type', 'lwc'])
+      .it('should throw missing lwc parent folder error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('MissingLWCFolder'));
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command([
         'force:lightning:component:create',
@@ -351,14 +257,14 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'lwc',
         '--template',
-        'foo'
+        'foo',
       ])
-      .it('should throw invalid template error', ctx => {
+      .it('should throw invalid template error', (ctx) => {
         expect(ctx.stderr).to.contain(messages.getMessage('InvalidTemplate'));
       });
     test
       .withOrg()
-      //.withProject()
+      .withProject()
       .stderr()
       .command([
         'force:lightning:component:create',
@@ -369,14 +275,11 @@ describe('Lightning component creation tests:', () => {
         '--type',
         'aura',
         '--template',
-        'analyticsDashboard'
+        'analyticsDashboard',
       ])
-      .it('should throw missing template error', ctx => {
+      .it('should throw missing template error', (ctx) => {
         expect(ctx.stderr).to.contain(
-          messages.getMessage('MissingLightningComponentTemplate', [
-            'analyticsDashboard',
-            'aura'
-          ])
+          messages.getMessage('MissingLightningComponentTemplate', ['analyticsDashboard', 'aura'])
         );
       });
   });

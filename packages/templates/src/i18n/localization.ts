@@ -55,7 +55,7 @@ export class Message implements LocalizationProvider {
       possibleLabel = `${MISSING_LABEL_MSG} ${label}`;
 
       if (Array.isArray(args) && args.length >= 1) {
-        args.forEach(arg => {
+        args.forEach((arg) => {
           possibleLabel += ` (${arg})`;
         });
       }
@@ -66,9 +66,7 @@ export class Message implements LocalizationProvider {
       const expectedNumArgs = possibleLabel.split('%s').length - 1;
       if (args.length !== expectedNumArgs) {
         // just log it, we might want to hide some in some languages on purpose
-        console.log(
-          `Arguments do not match for label '${label}', got ${args.length} but want ${expectedNumArgs}`
-        );
+        console.log(`Arguments do not match for label '${label}', got ${args.length} but want ${expectedNumArgs}`);
       }
 
       args.unshift(possibleLabel);

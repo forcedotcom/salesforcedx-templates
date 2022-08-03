@@ -9,27 +9,19 @@ import { CreateUtil } from '../utils';
 import { VisualforceComponentOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class VisualforceComponentGenerator extends SfdxGenerator<
-  VisualforceComponentOptions
-> {
+export default class VisualforceComponentGenerator extends SfdxGenerator<VisualforceComponentOptions> {
   constructor(args: string | string[], options: VisualforceComponentOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('visualforcecomponent');
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.componentname);
     CreateUtil.checkInputs(this.options.template);
   }
 
-  public writing() {
-    const {
-      template,
-      outputdir,
-      label,
-      apiversion,
-      componentname
-    } = this.options;
+  public writing(): void {
+    const { template, outputdir, label, apiversion, componentname } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.component`),
       this.destinationPath(path.join(outputdir, `${componentname}.component`)),
@@ -37,9 +29,7 @@ export default class VisualforceComponentGenerator extends SfdxGenerator<
     ),
       this.fs.copyTpl(
         this.templatePath('_component.component-meta.xml'),
-        this.destinationPath(
-          path.join(outputdir, `${componentname}.component-meta.xml`)
-        ),
+        this.destinationPath(path.join(outputdir, `${componentname}.component-meta.xml`)),
         { vfLabel: label, apiVersion: apiversion }
       );
   }

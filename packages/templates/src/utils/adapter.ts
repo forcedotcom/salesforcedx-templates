@@ -15,7 +15,7 @@ export class ForceGeneratorAdapter {
   constructor() {}
 
   public prompt(opt: [generator.Questions], cb: () => void): Promise<Answers> {
-    const promptPromise = new Promise<Answers>(resolve => {
+    const promptPromise = new Promise<Answers>((resolve) => {
       const answers: Answers = {};
       answers[0] = '';
       resolve(answers);

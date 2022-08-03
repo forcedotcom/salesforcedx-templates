@@ -10,30 +10,26 @@ import { CreateUtil } from '../utils';
 import { LightningTestOptions } from '../utils/types';
 import { SfdxGenerator } from './sfdxGenerator';
 
-export default class LightningTestGenerator extends SfdxGenerator<
-  LightningTestOptions
-> {
+export default class LightningTestGenerator extends SfdxGenerator<LightningTestOptions> {
   constructor(args: string | string[], options: LightningTestOptions) {
     super(args, options);
     this.sourceRootWithPartialPath('lightningtest');
   }
 
-  public validateOptions() {
+  public validateOptions(): void {
     CreateUtil.checkInputs(this.options.testname);
     CreateUtil.checkInputs(this.options.template);
   }
 
-  public writing() {
+  public writing(): void {
     const { template, outputdir, testname, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_staticresource.resource-meta.xml'),
-        this.destinationPath(
-          path.join(outputdir, `${testname}.resource-meta.xml`)
-        ),
+        this.destinationPath(path.join(outputdir, `${testname}.resource-meta.xml`)),
         {
-          description: nls.localize('LightningTest')
+          description: nls.localize('LightningTest'),
         },
         // @ts-ignore
         { apiName: testname }

@@ -55,6 +55,7 @@ export abstract class TemplateCommand extends SfdxCommand {
   public static async getCustomTemplates() {
     try {
       const aggregator = await TemplateCommand.getConfigAggregator();
+      // we're still accessing the old `customOrgMetadataTemplates` key, but this is deprecated and we'll use the new key to access the value
       const customTemplatesFromConfig = aggregator.getPropertyValue(
         OrgConfigProperties.ORG_CUSTOM_METADATA_TEMPLATES
       ) as string;

@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Attach",
+      "name": "Attach to Remote",
       "port": 9229,
       "skipFiles": ["<node_internals>/**"]
     },

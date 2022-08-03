@@ -9,15 +9,9 @@ Every PR merge to main gets published automatically and goes through a minor ver
 1. Publisher has a valid CircleCI token for the forcedotcom organization. More info on CircleCI's doc [Create a Personal API token](https://circleci.com/docs/2.0/managing-api-tokens/#creating-a-personal-api-token).
 1. Publisher is a part of the GitHub team 'PDT'.
 
-## Background
-
-After feature/bug work has been QA'd and closed, it's time to prepare those changes for publishing.
-
-The salesforcedx-templates project uses a two-branch strategy. Work that is currently under development is committed to the 'develop' branch. The 'main' branch is what's currently in production or is being staged for production.
-
 ## Publishing to NPM
 
-To publish the changes to npm, we run the task `Publish Library and Plugin`. This task calls the script `publish-workflow.sh` and prompts the user for the required information. The publish-workflow script generates an HTTP Request to the CircleCI API. It tells CircleCI that it wants to run the `publish-workflow` from the `main` branch.
+To publish the changes manually to npm, we run the task `Publish Library and Plugin`. This task calls the script `publish-workflow.sh` and prompts the user for the required information. The publish-workflow script generates an HTTP Request to the CircleCI API. It tells CircleCI that it wants to run the `publish-workflow` from the `main` branch.
 
 ### Publish a major or patch release version
 

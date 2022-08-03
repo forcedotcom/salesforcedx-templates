@@ -36,24 +36,29 @@ yarn build
   1. based on `main` and will be
   1. squash-merged into `main`.
 
-- Hot-fix branches are an exception.
-  - Instead we aim for faster cycles and a generally stable `develop` branch.
-
 ### Making Pull Requests
 
 Take a look at [CONTRIBUTING](../CONTRIBUTING.md) doc for making and merging pull requests.
 
 ## Developing Plugin
 
-To test plugin locally, use `bin/run` in place of `sfdx`. For example:
+To test the plugin locally, you have a few options.
+
+# Option 1: Run the command from the bin/run directory
+
+From within the Templates project, use `bin/run` in place of `sfdx` from within the `plugin-templates` package. For example:
 
 ```sh
 ./bin/run force:apex:class:create --classname 'TestClass' --template 'DefaultApexClass' --outputdir ./testsoutput/myApex/
 ```
 
-To test plugin locally with Salesforce CLI, add `"@salesforce/templates": "file://path/to/packages/templates"` to the plugin's `package.json`.
+# Option 2: Update your project's Templates reference
 
-Link your plugin to Salesforce CLI:
+If your project calls the `templates` package directly, you can add `"@salesforce/templates": "file://absolute/path/to/salesforcedx-templates/packages/templates"` to the plugin's `package.json`. Re-install dependencies to pull in the local files.
+
+# Option 3: Update your CLI
+
+Finally, you can link your plugin to Salesforce CLI, so that when the command is invoked from the CLI, it will use your local plugin. From the top level of salesforcedx-templates:
 
 ```sh
 sfdx plugins:link .

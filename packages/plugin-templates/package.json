@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/plugin-templates",
-  "version": "55.0.0",
+  "version": "55.1.0",
   "main": "index.js",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
@@ -8,7 +8,7 @@
     "@oclif/core": "^1.12.0",
     "@salesforce/command": "^5.2.1",
     "@salesforce/core": "^3.25.1",
-    "@salesforce/templates": "55.0.0",
+    "@salesforce/templates": "55.1.0",
     "tslib": "^1",
     "yeoman-environment": "^3.9.1",
     "yeoman-generator": "^5.6.1"
@@ -16,8 +16,8 @@
   "devDependencies": {
     "@oclif/plugin-command-snapshot": "^3.1.3",
     "@oclif/plugin-help": "^5.1.12",
-    "@salesforce/dev-scripts": "^2.0.4",
     "@salesforce/dev-config": "^3.0.0",
+    "@salesforce/dev-scripts": "^2.0.4",
     "@salesforce/plugin-command-reference": "^1.3.0",
     "@salesforce/prettier-config": "^0.0.2",
     "@salesforce/ts-sinon": "^1.2.2",

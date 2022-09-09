@@ -83,9 +83,6 @@ commands:
     steps:
       - gh-config
       - run:
-          name: Current git tags
-          command: git tag
-      - run:
           name: Create new git tag
           command: |
             PKG_TAG="v$(cat package.json | jq -r .version)"

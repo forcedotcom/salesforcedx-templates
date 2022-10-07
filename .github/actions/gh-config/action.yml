@@ -1,0 +1,20 @@
+name: gh-config
+inputs:
+  cache_timeout:
+    required: false
+    default: 120
+  gh_email:
+    required: false
+    default: "$GH_EMAIL"
+  gh_username:
+    required: false
+    default: Release Bot
+runs:
+  using: composite
+  steps:
+  - name: Configuring GitHub
+    run: |-
+      git config --global credential.helper 'cache --timeout=${{ inputs.cache_timeout }}'
+      git config --global user.email "${{ inputs.gh_email }}"
+      git config --global user.name "${{ inputs.gh_username }}"
+    shell: bash

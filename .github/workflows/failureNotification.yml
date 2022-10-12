@@ -1,4 +1,4 @@
-name: failureNotifications
+name: failureNotification
 
 on:
   workflow_run:
@@ -17,7 +17,6 @@ jobs:
         uses: slackapi/slack-github-action@v1.21.0
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.IDEE_RELEASE_ALERT_SLACK_WEBHOOK }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
         with:
           payload: |
             {

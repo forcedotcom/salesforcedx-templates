@@ -1,16 +1,16 @@
 name: setup-publish
+description: Build, bump, and package
+
 runs:
   using: composite
   steps:
   - uses: "./.github/actions/gh-config"
   - uses: actions/checkout@v2
-  - name: restore_cache
-    uses: actions/cache@v2
+  - name: Setup Node.js
+    uses: actions/setup-node@v3
     with:
-      key: v2-npm-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
-      restore-keys: |-
-        v2-npm-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
-        v2-npm-{{checksum ".circleci/config.yml"}}
+      node-version: latest
+      cache: 'yarn'
   - name: Install dependencies
     run: |-
       yarn --version

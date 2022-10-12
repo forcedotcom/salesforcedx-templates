@@ -1,0 +1,78 @@
+name: publish
+
+on:
+  release:
+    types: [released]
+  # support manual release in case something goes wrong and needs to be repeated or tested
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: tag that needs to publish
+        type: string
+        required: true
+
+jobs:
+  prepublish:
+    defaults:
+      run:
+        working-directory: "~/cli"
+    runs-on: ubuntu-latest
+    container:
+      image: node:16
+    steps:
+    - uses: "./.github/actions/setup-publish"
+    - uses: actions/upload-artifact@v2
+      with:
+        path: |-
+          ./.git
+          ./packages/templates/package.json
+          ./packages/templates/*.tgz
+          ./packages/plugin-templates/.gitignore
+          ./packages/plugin-templates/package.json
+          ./packages/plugin-templates/README.md
+          ./packages/plugin-templates/yarn.lock
+          ./packages/plugin-templates/messages
+          ./packages/plugin-templates/lib
+          ./packages/plugin-templates/bin
+          ./packages/plugin-templates/oclif.manifest.json
+
+  publish-library:
+    defaults:
+      run:
+        working-directory: "~/cli/packages/templates"
+    runs-on: ubuntu-latest
+    container:
+      image: node:16
+    needs:
+    - prepublish
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        path: "~/cli"
+    - name: Set .npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - name: Publish to NPM
+      run: |-
+        RELEASE_VERSION="$(node -pe "require('./package.json').version")"
+        TARFILE=$(ls | grep $RELEASE_VERSION.tgz)
+        echo "publishing to npm using ${TARFILE}"
+        npm publish $TARFILE --access public
+
+  publish-plugin:
+    defaults:
+      run:
+        working-directory: "~/cli/packages/plugin-templates"
+    runs-on: ubuntu-latest
+    container:
+      image: node:16
+    needs:
+    - publish-library
+    steps:
+    - name: CLI NPM Publish
+      uses: salesforcecli/github-workflows/.github/workflows/npmPublish.yml@main
+      with:
+        ctc: true
+        sign: true
+        tag: latest
+        githubTag: ${{ github.event.release.tag_name || inputs.tag }}
+        secrets: inherit

@@ -1,8 +1,10 @@
 name: forcedotcom/salesforcedx-templates/commit-workflow
 on:
   workflow_dispatch:
+    #do we need these?
     inputs:
       fingerprint:
+        description: ''
         required: false
         default: 1e:57:e5:df:0e:82:aa:ff:33:b7:8c:0f:9c:28:56:f3
       publish:
@@ -11,11 +13,12 @@ on:
         required: false
         default: minor
 jobs:
+  #this should be a matrix instead, yeah?
   node-latest:
     defaults:
       run:
         working-directory: "~/cli"
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: node:latest
     steps:
@@ -39,7 +42,7 @@ jobs:
     defaults:
       run:
         working-directory: "~/cli"
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: node:14
     steps:
@@ -63,13 +66,15 @@ jobs:
     defaults:
       run:
         working-directory: "~/cli"
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: node:16
     steps:
     - uses: actions/checkout@v2
+      #todo: add token
     - name: restore_cache
       uses: actions/cache@v2
+      #todo: this should be the github caching instead
       with:
         key: v2-npm-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
         restore-keys: |-
@@ -88,7 +93,7 @@ jobs:
     defaults:
       run:
         working-directory: "~/cli"
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: node:latest
     steps:
@@ -104,7 +109,7 @@ jobs:
           /usr/local/share/.config/yarn
         key: v2-npm-{{checksum ".circleci/config.yml"}}-{{checksum "yarn.lock"}}
   run-win-tests:
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - run: git config --global core.autocrlf false
     - uses: actions/checkout@v2
@@ -130,7 +135,7 @@ jobs:
     defaults:
       run:
         working-directory: "~/cli"
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: node:14
     needs:
@@ -158,7 +163,7 @@ jobs:
     environment:
       name: approval
     if: contains('refs/heads/main', github.ref)
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - run: echo 'approved'
   publish-library:
@@ -166,7 +171,7 @@ jobs:
     defaults:
       run:
         working-directory: "~/cli/packages/templates"
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: node:14
     needs:
@@ -189,7 +194,7 @@ jobs:
     defaults:
       run:
         working-directory: "~/cli/packages/plugin-templates"
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: node:14
     needs:
@@ -198,6 +203,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         path: "~/cli"
+      #todo: 
 #     # This item has no matching transformer
 #     - salesforce_npm_release_management_sign:
 #     # This item has no matching transformer
@@ -220,5 +226,6 @@ jobs:
             echo "Timeout waiting for tag. Exiting job"
             exit 1
         fi
+      #todo: 
 #     # This item has no matching transformer
 #     - salesforce_npm_release_management_verify_signed_package:

@@ -18,7 +18,7 @@ jobs:
         working-directory: "~/cli"
     runs-on: ubuntu-latest
     container:
-      image: node:16
+      image: node:14
     steps:
     - uses: "./.github/actions/setup-publish"
     - uses: actions/upload-artifact@v2
@@ -42,7 +42,7 @@ jobs:
         working-directory: "~/cli/packages/templates"
     runs-on: ubuntu-latest
     container:
-      image: node:16
+      image: node:14
     needs:
     - prepublish
     steps:
@@ -64,7 +64,7 @@ jobs:
         working-directory: "~/cli/packages/plugin-templates"
     runs-on: ubuntu-latest
     container:
-      image: node:16
+      image: node:14
     needs:
     - publish-library
     steps:
@@ -73,6 +73,5 @@ jobs:
       with:
         ctc: true
         sign: true
-        tag: latest
         githubTag: ${{ github.event.release.tag_name || inputs.tag }}
         secrets: inherit

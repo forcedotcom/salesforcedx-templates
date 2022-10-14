@@ -11,18 +11,7 @@ runs:
     with:
       node-version: latest
       cache: 'yarn'
-  - name: Install dependencies
-    run: |-
-      yarn --version
-      node --version
-      yarn
-    shell: bash
-  - name: Bump package version
-    run: |-
-      npx lerna version << pipeline.parameters.publish-type >> --force-publish --no-git-tag-version --exact --yes
-      git add .
-      export RELEASE_TAG="$(node -pe "require('./lerna.json').version")"
-      git commit --allow-empty -m "chore: updated version $RELEASE_TAG [ci skip]"
+  - run: yarn
     shell: bash
   - name: Build project
     run: yarn build

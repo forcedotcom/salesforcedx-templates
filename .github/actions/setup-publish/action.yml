@@ -1,5 +1,5 @@
 name: setup-publish
-description: Build, bump, and package
+description: Build and package to prepare for publishing.
 
 runs:
   using: composite

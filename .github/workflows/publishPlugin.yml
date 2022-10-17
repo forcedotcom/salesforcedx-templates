@@ -23,13 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:14
-    needs:
-    - publish-library
     steps:
     - name: CLI NPM Publish
       uses: salesforcecli/github-workflows/.github/workflows/npmPublish.yml@main
       with:
         ctc: true
         sign: true
-        githubTag: ${{ github.event.release.tag_name || inputs.tag }}
+        githubTag: ${{ inputs.tag }}
         secrets: inherit

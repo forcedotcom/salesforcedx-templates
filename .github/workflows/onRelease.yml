@@ -59,19 +59,9 @@ jobs:
         npm publish $TARFILE --access public
 
   publish-plugin:
-    defaults:
-      run:
-        working-directory: "~/cli/packages/plugin-templates"
-    runs-on: ubuntu-latest
-    container:
-      image: node:14
     needs:
     - publish-library
-    steps:
-    - name: CLI NPM Publish
-      uses: salesforcecli/github-workflows/.github/workflows/npmPublish.yml@main
-      with:
-        ctc: true
-        sign: true
-        githubTag: ${{ github.event.release.tag_name || inputs.tag }}
-        secrets: inherit
+    uses: ./.github/workflows/publishPlugin.yml
+    with:
+      tag: ${{ github.event.release.tag_name }}
+      secrets: inherit

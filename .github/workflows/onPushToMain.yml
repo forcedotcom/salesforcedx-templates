@@ -1,4 +1,6 @@
 name: version, tag and github release
+# todo: after this repo is split out and lerna is removed, return to this gha: 
+# https://github.com/salesforcecli/github-workflows/blob/main/.github/workflows/githubRelease.yml
 
 on:
   push:

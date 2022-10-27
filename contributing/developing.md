@@ -43,55 +43,7 @@ yarn build
 
 Take a look at [CONTRIBUTING](../CONTRIBUTING.md) doc for making and merging pull requests.
 
-## Developing Plugin
-
-To test plugin locally, use `bin/run` in place of `sfdx`. For example:
-
-```sh
-./bin/run force:apex:class:create --classname 'TestClass' --template 'DefaultApexClass' --outputdir ./testsoutput/myApex/
-```
-
-To test plugin locally with Salesforce CLI, add `"@salesforce/templates": "file://path/to/packages/templates"` to the plugin's `package.json`.
-
-Link your plugin to Salesforce CLI:
-
-```sh
-sfdx plugins:link .
-```
-
-Verify plugin is linked:
-
-```sh
-sfdx plugins
-```
-
-### Debugging Your Plugin
-
-We recommend using the Visual Studio Code (VS Code) IDE for your plugin development. Included in the `.vscode` directory of this plugin is a `launch.json` config file, which allows you to attach a debugger to the node process when running your commands.
-
-To debug the `hello:org` command:
-
-1. If you linked your plugin to the Salesforce CLI, call your command with the `dev-suspend` switch:
-
-```sh-session
-$ sfdx hello:org -u myOrg@example.com --dev-suspend
-```
-
-Alternatively, to call your command using the `bin/run` script, set the `NODE_OPTIONS` environment variable to `--inspect-brk` when starting the debugger:
-
-```sh-session
-$ NODE_OPTIONS=--inspect-brk bin/run hello:org -u myOrg@example.com
-```
-
-2. Set some breakpoints in your command code.
-3. Click on the Debug icon in the Activity Bar on the side of VS Code to open up the Debug view.
-4. In the upper left hand corner of VS Code, verify that the "Attach to Remote" launch configuration is selected.
-5. Hit the green play button to the left of the "Attach to Remote" launch configuration window. The debugger should now be suspended on the first line of the program.
-6. Hit the green play button at the top middle of VS Code (this play button is to the right of the play button that you clicked in step #5).
-   <br><img src="../.images/vscodeScreenshot.png" width="480" height="278"><br>
-   Congrats, you are debugging!
-
-## Developing Library
+## Developing the Library
 
 Adding a new template:
 
@@ -101,9 +53,11 @@ Adding a new template:
 - Generator class file should default export a generator class extending `SfdxGenerator`
 - Generator class file should have a name same as the template type's name, except with the first letter lowercased
 
+Consider adding a corresponding command for your new template to be invoked with the CLI in the plugin for templates [here](https://github.com/salesforcecli/plugin-templates).
+
 ## Testing
 
-Run the following to test library and plugin:
+Run the following to test the library:
 
 ```sh
 yarn test

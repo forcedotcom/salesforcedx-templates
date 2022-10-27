@@ -8,7 +8,7 @@
 
 This repository provides:
 
-- [@salesforce/templates](https://www.npmjs.com/package/@salesforce/templates) to support the plugin and [Salesforce VS Code extensions](https://github.com/forcedotcom/salesforcedx-vscode/).
+- [@salesforce/templates](https://www.npmjs.com/package/@salesforce/templates) to support the library and [Salesforce VS Code extensions](https://github.com/forcedotcom/salesforcedx-vscode/).
 
 ## Getting Started
 
@@ -16,4 +16,4 @@ If you're interested in contributing, take a look at the [CONTRIBUTING](CONTRIBU
 
 If you're interested in building the library locally, take a look at the development [doc](contributing/developing.md).
 
-You can find more information about commands that the plugin provide in the [commands](COMMANDS.md) doc
+You can find more information about commands that the related [plugin](https://github.com/salesforcecli/plugin-templates) provides in the [commands](COMMANDS.md) doc

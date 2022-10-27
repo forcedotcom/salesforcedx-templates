@@ -70,6 +70,7 @@
     "build": "yarn run clean:lib && yarn build:templates && yarn compile",
     "build:templates": "node scripts/build-templates",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
+    "commit": "git-cz",
     "compile": "tsc -b",
     "lint": "eslint -c .eslintrc.json --ext .ts ./src ./test",
     "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\""

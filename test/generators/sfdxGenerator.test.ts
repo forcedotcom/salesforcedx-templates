@@ -13,7 +13,7 @@ import { TemplateService } from '../../src/service/templateService';
 import * as YeomanEnvironment from 'yeoman-environment';
 
 describe('SfdxGenerator', () => {
-  const API_VERSION = '55.0';
+  const API_VERSION = '56.0';
   interface MyTemplateOptions extends TemplateOptions {
     // env and resolved are for testing (similar to how yeoman environment instantiates the generators)
     env: YeomanEnvironment;

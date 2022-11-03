@@ -27,7 +27,9 @@ export default class LightningTestGenerator extends SfdxGenerator<LightningTestO
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_staticresource.resource-meta.xml'),
-        this.destinationPath(path.join(outputdir, `${testname}.resource-meta.xml`)),
+        this.destinationPath(
+          path.join(outputdir, `${testname}.resource-meta.xml`)
+        ),
         {
           description: nls.localize('LightningTest'),
         },

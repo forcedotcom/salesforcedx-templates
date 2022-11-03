@@ -34,7 +34,10 @@ export class CreateUtil {
   }
 
   // TODO: switch filetype to a string instead of regex
-  public static getCommandTemplatesForFiletype(filetype: RegExp, command: string): string[] {
+  public static getCommandTemplatesForFiletype(
+    filetype: RegExp,
+    command: string
+  ): string[] {
     const files = fs
       .readdirSync(path.resolve(__dirname, '..', 'templates', command))
       .filter((file) => filetype.test(file))

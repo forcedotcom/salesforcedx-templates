@@ -19,7 +19,14 @@ export default class ApexTriggerGenerator extends SfdxGenerator<ApexTriggerOptio
     CreateUtil.checkInputs(this.options.template);
   }
   public writing(): void {
-    const { template, outputdir, triggername, apiversion, triggerevents, sobject } = this.options;
+    const {
+      template,
+      outputdir,
+      triggername,
+      apiversion,
+      triggerevents,
+      sobject,
+    } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.trigger`),
       this.destinationPath(path.join(outputdir, `${triggername}.trigger`)),
@@ -27,7 +34,9 @@ export default class ApexTriggerGenerator extends SfdxGenerator<ApexTriggerOptio
     ),
       this.fs.copyTpl(
         this.templatePath('_trigger.trigger-meta.xml'),
-        this.destinationPath(path.join(outputdir, `${triggername}.trigger-meta.xml`)),
+        this.destinationPath(
+          path.join(outputdir, `${triggername}.trigger-meta.xml`)
+        ),
         { apiVersion: apiversion }
       );
   }

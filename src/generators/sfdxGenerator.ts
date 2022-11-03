@@ -14,7 +14,9 @@ import { TemplateOptions } from '../utils/types';
 /**
  * Base class for generators
  */
-export abstract class SfdxGenerator<TOptions extends TemplateOptions> extends Generator<Generator.GeneratorOptions> {
+export abstract class SfdxGenerator<
+  TOptions extends TemplateOptions
+> extends Generator<Generator.GeneratorOptions> {
   options!: TOptions & {
     apiversion: string;
     outputdir: string;
@@ -42,7 +44,8 @@ export abstract class SfdxGenerator<TOptions extends TemplateOptions> extends Ge
     }
   ) {
     super(args, options, features);
-    this.options.apiversion = this.options.apiversion ?? TemplateService.getDefaultApiVersion();
+    this.options.apiversion =
+      this.options.apiversion ?? TemplateService.getDefaultApiVersion();
     this.options.outputdir = this.options.outputdir ?? process.cwd();
     this.validateOptions();
   }
@@ -57,7 +60,12 @@ export abstract class SfdxGenerator<TOptions extends TemplateOptions> extends Ge
    * @param partialPath the relative path from the templates folder to templates root folder.
    */
   public sourceRootWithPartialPath(partialPath: string): void {
-    this.builtInTemplatesRootPath = path.join(__dirname, '..', 'templates', partialPath);
+    this.builtInTemplatesRootPath = path.join(
+      __dirname,
+      '..',
+      'templates',
+      partialPath
+    );
     const { customTemplatesRootPath } = TemplateService.getInstance();
     if (!customTemplatesRootPath) {
       this.sourceRoot(path.join(this.builtInTemplatesRootPath));
@@ -77,7 +85,9 @@ export abstract class SfdxGenerator<TOptions extends TemplateOptions> extends Ge
       return customPath;
     } else {
       // files that are builtin and not in the custom template folder
-      return super.templatePath(path.join(this.builtInTemplatesRootPath!, ...paths));
+      return super.templatePath(
+        path.join(this.builtInTemplatesRootPath!, ...paths)
+      );
     }
   }
 }

@@ -29,13 +29,30 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
     const { outputdir, templatename, apiversion } = this.options;
     // tslint:disable-next-line:no-unused-expression
     this.fs.copyTpl(
-      this.templatePath(path.join('DefaultAnalyticsTemplate', 'dashboards', 'basicDashboard.json')),
-      this.destinationPath(path.join(outputdir, templatename, 'dashboards', templatename + 'Dashboard.json')),
+      this.templatePath(
+        path.join(
+          'DefaultAnalyticsTemplate',
+          'dashboards',
+          'basicDashboard.json'
+        )
+      ),
+      this.destinationPath(
+        path.join(
+          outputdir,
+          templatename,
+          'dashboards',
+          templatename + 'Dashboard.json'
+        )
+      ),
       { templateName: templatename }
     );
     this.fs.copyTpl(
-      this.templatePath(path.join('DefaultAnalyticsTemplate', 'app-to-template-rules.json')),
-      this.destinationPath(path.join(outputdir, templatename, 'app-to-template-rules.json')),
+      this.templatePath(
+        path.join('DefaultAnalyticsTemplate', 'app-to-template-rules.json')
+      ),
+      this.destinationPath(
+        path.join(outputdir, templatename, 'app-to-template-rules.json')
+      ),
       {}
     );
     this.fs.copyTpl(
@@ -44,21 +61,33 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
       { templateName: templatename }
     );
     this.fs.copyTpl(
-      this.templatePath(path.join('DefaultAnalyticsTemplate', 'releaseNotes.html')),
-      this.destinationPath(path.join(outputdir, templatename, 'releaseNotes.html')),
+      this.templatePath(
+        path.join('DefaultAnalyticsTemplate', 'releaseNotes.html')
+      ),
+      this.destinationPath(
+        path.join(outputdir, templatename, 'releaseNotes.html')
+      ),
       {}
     );
     this.fs.copyTpl(
-      this.templatePath(path.join('DefaultAnalyticsTemplate', 'template-info.json')),
-      this.destinationPath(path.join(outputdir, templatename, 'template-info.json')),
+      this.templatePath(
+        path.join('DefaultAnalyticsTemplate', 'template-info.json')
+      ),
+      this.destinationPath(
+        path.join(outputdir, templatename, 'template-info.json')
+      ),
       {
         templateName: templatename,
         sourceApiVersion: apiversion,
       }
     );
     this.fs.copyTpl(
-      this.templatePath(path.join('DefaultAnalyticsTemplate', 'template-to-app-rules.json')),
-      this.destinationPath(path.join(outputdir, templatename, 'template-to-app-rules.json')),
+      this.templatePath(
+        path.join('DefaultAnalyticsTemplate', 'template-to-app-rules.json')
+      ),
+      this.destinationPath(
+        path.join(outputdir, templatename, 'template-to-app-rules.json')
+      ),
       {}
     );
     this.fs.copyTpl(
@@ -67,8 +96,12 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
       {}
     );
     this.fs.copyTpl(
-      this.templatePath(path.join('DefaultAnalyticsTemplate', 'variables.json')),
-      this.destinationPath(path.join(outputdir, templatename, 'variables.json')),
+      this.templatePath(
+        path.join('DefaultAnalyticsTemplate', 'variables.json')
+      ),
+      this.destinationPath(
+        path.join(outputdir, templatename, 'variables.json')
+      ),
       {}
     );
   }

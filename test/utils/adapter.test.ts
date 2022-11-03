@@ -10,7 +10,10 @@ import { Answers, ForceGeneratorAdapter } from '../../src/utils';
 describe('prompt', () => {
   it('should return a resolved Answers promise', async () => {
     const adapter = new ForceGeneratorAdapter();
-    const result = await adapter.prompt([{ message: 'Overwrite?', name: 'action', type: 'expand' }], () => {});
+    const result = await adapter.prompt(
+      [{ message: 'Overwrite?', name: 'action', type: 'expand' }],
+      () => {}
+    );
     const answers: Answers = { 0: '' };
     expect(result).to.deep.equal(answers);
   });

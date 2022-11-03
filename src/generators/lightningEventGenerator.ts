@@ -27,12 +27,15 @@ export default class LightningEventGenerator extends SfdxGenerator<LightningEven
   }
 
   public writing(): void {
-    const { template, outputdir, eventname, apiversion, internal } = this.options;
+    const { template, outputdir, eventname, apiversion, internal } =
+      this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.evt-meta.xml'),
-        this.destinationPath(path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)),
+        this.destinationPath(
+          path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)
+        ),
         {
           eventname,
           apiVersion: apiversion,

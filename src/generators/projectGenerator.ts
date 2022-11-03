@@ -55,8 +55,23 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   }
 
   public writing(): void {
-    const { outputdir, projectname, template, defaultpackagedir, manifest, ns, apiversion, loginurl } = this.options;
-    const folderlayout = [outputdir, projectname, defaultpackagedir, 'main', 'default'];
+    const {
+      outputdir,
+      projectname,
+      template,
+      defaultpackagedir,
+      manifest,
+      ns,
+      apiversion,
+      loginurl,
+    } = this.options;
+    const folderlayout = [
+      outputdir,
+      projectname,
+      defaultpackagedir,
+      'main',
+      'default',
+    ];
 
     const scratchDefFile = `${template}/ScratchDef.json`;
     const manifestFile = `${template}/Manifest.xml`;
@@ -65,7 +80,9 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
 
     this.fs.copyTpl(
       this.templatePath(scratchDefFile),
-      this.destinationPath(path.join(outputdir, projectname, 'config', 'project-scratch-def.json')),
+      this.destinationPath(
+        path.join(outputdir, projectname, 'config', 'project-scratch-def.json')
+      ),
       { company: (process.env.USER || 'Demo') + ' company' }
     );
     this.fs.copyTpl(
@@ -75,7 +92,9 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     );
     this.fs.copyTpl(
       this.templatePath('sfdx-project.json'),
-      this.destinationPath(path.join(outputdir, projectname, 'sfdx-project.json')),
+      this.destinationPath(
+        path.join(outputdir, projectname, 'sfdx-project.json')
+      ),
       {
         defaultpackagedir,
         namespace: ns,
@@ -88,7 +107,9 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     if (manifest === true) {
       this.fs.copyTpl(
         this.templatePath(manifestFile),
-        this.destinationPath(path.join(outputdir, projectname, 'manifest', 'package.xml')),
+        this.destinationPath(
+          path.join(outputdir, projectname, 'manifest', 'package.xml')
+        ),
         { apiversion }
       );
     }
@@ -102,33 +123,47 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
-          this.destinationPath(path.join(outputdir, projectname, '.vscode', `${file}.json`)),
+          this.destinationPath(
+            path.join(outputdir, projectname, '.vscode', `${file}.json`)
+          ),
           {}
         );
       }
       this.fs.copyTpl(
         this.templatePath('lwc.eslintrc.json'),
-        this.destinationPath(path.join(...folderlayout, 'lwc', '.eslintrc.json')),
+        this.destinationPath(
+          path.join(...folderlayout, 'lwc', '.eslintrc.json')
+        ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath('aura.eslintrc.json'),
-        this.destinationPath(path.join(...folderlayout, 'aura', '.eslintrc.json')),
+        this.destinationPath(
+          path.join(...folderlayout, 'aura', '.eslintrc.json')
+        ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(path.join(template, soqlQueryFile)),
-        this.destinationPath(path.join(outputdir, projectname, 'scripts', 'soql', soqlQueryFile)),
+        this.destinationPath(
+          path.join(outputdir, projectname, 'scripts', 'soql', soqlQueryFile)
+        ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(path.join(template, anonApexFile)),
-        this.destinationPath(path.join(outputdir, projectname, 'scripts', 'apex', anonApexFile)),
+        this.destinationPath(
+          path.join(outputdir, projectname, 'scripts', 'apex', anonApexFile)
+        ),
         {}
       );
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
-        this.fs.copyTpl(this.templatePath(file), this.destinationPath(path.join(outputdir, projectname, out)), {});
+        this.fs.copyTpl(
+          this.templatePath(file),
+          this.destinationPath(path.join(outputdir, projectname, out)),
+          {}
+        );
       }
     }
 
@@ -150,7 +185,9 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
-          this.destinationPath(path.join(outputdir, projectname, '.vscode', `${file}.json`)),
+          this.destinationPath(
+            path.join(outputdir, projectname, '.vscode', `${file}.json`)
+          ),
           {}
         );
       }
@@ -159,7 +196,11 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         path.join(outputdir, projectname, '.vscode', 'extensions.json'),
         {},
         (key: string, value: unknown) => {
-          if (key === 'recommendations' && Array.isArray(value) && !value.some((n) => n === analyticsVscodeExt)) {
+          if (
+            key === 'recommendations' &&
+            Array.isArray(value) &&
+            !value.some((n) => n === analyticsVscodeExt)
+          ) {
             value.push(analyticsVscodeExt);
           }
           return value;
@@ -167,17 +208,25 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       );
       this.fs.copyTpl(
         this.templatePath('lwc.eslintrc.json'),
-        this.destinationPath(path.join(...folderlayout, 'lwc', '.eslintrc.json')),
+        this.destinationPath(
+          path.join(...folderlayout, 'lwc', '.eslintrc.json')
+        ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath('aura.eslintrc.json'),
-        this.destinationPath(path.join(...folderlayout, 'aura', '.eslintrc.json')),
+        this.destinationPath(
+          path.join(...folderlayout, 'aura', '.eslintrc.json')
+        ),
         {}
       );
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
-        this.fs.copyTpl(this.templatePath(file), this.destinationPath(path.join(outputdir, projectname, out)), {});
+        this.fs.copyTpl(
+          this.templatePath(file),
+          this.destinationPath(path.join(outputdir, projectname, out)),
+          {}
+        );
       }
     }
   }
@@ -197,7 +246,10 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   }
 }
 
-function makeEmptyFolders(toplevelfolders: string[], metadatafolders: string[]) {
+function makeEmptyFolders(
+  toplevelfolders: string[],
+  metadatafolders: string[]
+) {
   let oldfolder = '';
   for (const folder of toplevelfolders) {
     if (!fs.existsSync(path.join(oldfolder, folder))) {

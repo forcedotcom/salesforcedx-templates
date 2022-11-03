@@ -48,7 +48,11 @@ describe('CreateUtil', () => {
 
   describe('getCommandTemplatesForFiletype', () => {
     const templateType = 'apexclass';
-    const templatesPath = path.resolve(__dirname, '../../src/templates', templateType);
+    const templatesPath = path.resolve(
+      __dirname,
+      '../../src/templates',
+      templateType
+    );
 
     let readdirStub: SinonStub;
 
@@ -60,26 +64,37 @@ describe('CreateUtil', () => {
     afterEach(() => readdirStub.restore());
 
     it('should get template names for a given file suffix and folder name', () => {
-      readdirStub.withArgs(templatesPath).returns(['Template.cls', 'Template2.cls']);
+      readdirStub
+        .withArgs(templatesPath)
+        .returns(['Template.cls', 'Template2.cls']);
 
       assertTemplateNames(['Template', 'Template2']);
     });
 
     it('should ignore files that do not have the given suffix', () => {
-      readdirStub.withArgs(templatesPath).returns(['Template.cls', '_class.cls-meta.xml']);
+      readdirStub
+        .withArgs(templatesPath)
+        .returns(['Template.cls', '_class.cls-meta.xml']);
 
       assertTemplateNames(['Template']);
     });
 
     const assertTemplateNames = (names: string[]) => {
-      const templates = CreateUtil.getCommandTemplatesForFiletype(/.cls$/, templateType);
+      const templates = CreateUtil.getCommandTemplatesForFiletype(
+        /.cls$/,
+        templateType
+      );
       expect(templates).to.eql(names);
     };
   });
 
   describe('getCommandTemplatesInSubdirs', () => {
     const templateType = 'lightningcomponent';
-    const templatePath = path.resolve(__dirname, '../../src/templates', templateType);
+    const templatePath = path.resolve(
+      __dirname,
+      '../../src/templates',
+      templateType
+    );
     const auraPath = path.join(templatePath, 'aura');
 
     function dirent(name: string, isDirectory: boolean): fs.Dirent {
@@ -101,7 +116,11 @@ describe('CreateUtil', () => {
     it('should get template names', () => {
       readdirStub
         .withArgs(templatePath, { withFileTypes: true })
-        .returns([dirent('Template1', true), dirent('Template2', true), dirent('afile.txt', false)]);
+        .returns([
+          dirent('Template1', true),
+          dirent('Template2', true),
+          dirent('afile.txt', false),
+        ]);
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType);
       expect(templates).to.eql(['Template1', 'Template2']);
@@ -121,14 +140,23 @@ describe('CreateUtil', () => {
     it('should ignore subdirs that do not have the given file suffix', () => {
       readdirStub
         .withArgs(auraPath, { withFileTypes: true })
-        .returns([dirent('Template1', true), dirent('Template2', true), dirent('Template3', true)]);
+        .returns([
+          dirent('Template1', true),
+          dirent('Template2', true),
+          dirent('Template3', true),
+        ]);
       readdirStub
         .withArgs(path.join(auraPath, 'Template1'), { withFileTypes: true })
-        .returns([dirent('Template1.cmp', false), dirent('Template1Controller.js', false)]);
+        .returns([
+          dirent('Template1.cmp', false),
+          dirent('Template1Controller.js', false),
+        ]);
       readdirStub
         .withArgs(path.join(auraPath, 'Template2'), { withFileTypes: true })
         .returns([dirent('randomfile.html', false)]);
-      readdirStub.withArgs(path.join(auraPath, 'Template3'), { withFileTypes: true }).returns([]);
+      readdirStub
+        .withArgs(path.join(auraPath, 'Template3'), { withFileTypes: true })
+        .returns([]);
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {
         subdir: 'aura',

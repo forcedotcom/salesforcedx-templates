@@ -74,6 +74,7 @@
     "commit": "git-cz",
     "compile": "tsc -b",
     "lint": "eslint -c .eslintrc.json --ext .ts ./src ./test",
+    "lint:fix": "eslint -c .eslintrc.json --ext .ts ./src ./test --fix",
     "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\""
   },
   "config": {

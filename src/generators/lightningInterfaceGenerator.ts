@@ -28,12 +28,15 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<Lightning
   }
 
   public writing(): void {
-    const { template, outputdir, interfacename, apiversion, internal } = this.options;
+    const { template, outputdir, interfacename, apiversion, internal } =
+      this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.intf-meta.xml'),
-        this.destinationPath(path.join(outputdir, interfacename, `${interfacename}.intf-meta.xml`)),
+        this.destinationPath(
+          path.join(outputdir, interfacename, `${interfacename}.intf-meta.xml`)
+        ),
         {
           apiVersion: apiversion,
           description: nls.localize('LightningInterfaceBundle'),
@@ -42,7 +45,9 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<Lightning
     }
     this.fs.copyTpl(
       this.templatePath(`${template}.intf`),
-      this.destinationPath(path.join(outputdir, interfacename, `${interfacename}.intf`)),
+      this.destinationPath(
+        path.join(outputdir, interfacename, `${interfacename}.intf`)
+      ),
       {}
     );
   }

@@ -9,7 +9,15 @@
 import * as util from 'util';
 
 const padding = ' ';
-const statuses = ['skip', 'force', 'create', 'invoke', 'conflict', 'identical', 'info'];
+const statuses = [
+  'skip',
+  'force',
+  'create',
+  'invoke',
+  'conflict',
+  'identical',
+  'info',
+];
 
 export class Log {
   private output = '';

@@ -57,7 +57,9 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
 
     this.fs.copyTpl(
       this.templatePath('_staticresource.resource-meta.xml'),
-      this.destinationPath(path.join(outputdir, `${resourcename}.resource-meta.xml`)),
+      this.destinationPath(
+        path.join(outputdir, `${resourcename}.resource-meta.xml`)
+      ),
       {
         contentType: contenttype,
       }

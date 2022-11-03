@@ -13,10 +13,12 @@
   ],
   "dependencies": {
     "@salesforce/core": "^3.24.0",
+    "@salesforce/kit": "^1.7.1",
     "got": "^11.8.2",
     "mime-types": "^2.1.27",
     "proxy-agent": "^5.0.0",
     "proxy-from-env": "^1.1.0",
+    "shelljs": "^0.8.5",
     "tar": "^6.1.10",
     "tslib": "^1",
     "yeoman-environment": "^3.9.1",
@@ -30,7 +32,6 @@
     "@types/fs-extra": "^8.1.0",
     "@types/got": "^9.6.12",
     "@types/mime-types": "^2.1.0",
-    "@types/mkdirp": "0.5.2",
     "@types/proxy-from-env": "^1.0.1",
     "@types/tar": "^4.0.5",
     "@types/yeoman-assert": "^3.1.1",
@@ -76,6 +77,12 @@
     "lint": "eslint -c .eslintrc.json --ext .ts ./src ./test",
     "lint:fix": "eslint -c .eslintrc.json --ext .ts ./src ./test --fix",
     "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\""
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "yarn run lint"
+    }
   },
   "config": {
     "commitizen": {

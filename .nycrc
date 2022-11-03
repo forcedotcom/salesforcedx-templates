@@ -1,5 +1,10 @@
 {
-  "nyc": {
-    "extends": "@salesforce/dev-config/nyc"
-  }
+  "check-coverage": true,
+  "lines": 75,
+  "statements": 75,
+  "functions": 75,
+  "branches": 75,
+  "reporter": ["text", "lcov"],
+  "cache": false,
+  "include": ["lib**", "src**"]
 }

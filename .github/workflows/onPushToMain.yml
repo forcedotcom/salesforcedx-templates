@@ -1,0 +1,40 @@
+name: version, tag and github release
+# todo: after this repo is split out and lerna is removed, return to this gha:
+# https://github.com/salesforcecli/github-workflows/blob/main/.github/workflows/githubRelease.yml
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.IDEE_GH_TOKEN }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+          cache: 'yarn'
+      - run: yarn
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@d360fad3a42feca6462f72c97c165d60a02d4bf2
+        with:
+          git-user-name: Release Bot
+          git-user-email: ${{ secrets.IDEE_GH_EMAIL }}
+          github-token: ${{ secrets.IDEE_GH_TOKEN }}
+          output-file: false
+          tag-prefix: ''
+          fallback-version: 55.2.0
+      - name: Create Github Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.IDEE_GH_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}

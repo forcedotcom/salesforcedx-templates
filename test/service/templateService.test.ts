@@ -162,7 +162,7 @@ describe('TemplateService', () => {
         'LibraryCreateClass.cls'
       );
       const expectedApexClassContent =
-        'public with sharing class CustomLibraryCreateClass';
+        'public with sharing class LibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'customLibraryCreate',
@@ -172,7 +172,7 @@ describe('TemplateService', () => {
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>${apiVersion}</apiVersion>
-    <status>Inactive</status>
+    <status>Active</status>
 </ApexClass>
 `;
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);

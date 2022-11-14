@@ -4,13 +4,7 @@
   "statements": 75,
   "functions": 75,
   "branches": 75,
-  "reporter": [
-    "text",
-    "lcov"
-  ],
+  "reporter": ["text", "lcov"],
   "cache": false,
-  "include": [
-    "lib**",
-    "src**"
-  ]
+  "include": ["lib**", "src**"]
 }

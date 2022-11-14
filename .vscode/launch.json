@@ -5,13 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
-      "request": "attach",
-      "name": "Attach",
-      "port": 9229,
-      "skipFiles": ["<node_internals>/**"]
-    },
-    {
       "name": "Run All Tests",
       "type": "node",
       "request": "launch",
@@ -19,37 +12,6 @@
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["test"],
       "preLaunchTask": "Compile"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Run Current Test",
-      "program": "${workspaceFolder}/packages/plugin-templates/node_modules/mocha/bin/_mocha",
-      "cwd": "${workspaceFolder}/packages/plugin-templates",
-      "args": ["--inspect", "--no-timeouts", "--colors", "${file}"],
-      "env": {
-        "NODE_ENV": "development",
-        "SFDX_ENV": "development"
-      },
-      "sourceMaps": true,
-      "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart",
-      "preLaunchTask": "Compile"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Run Current Test Without Compile",
-      "program": "${workspaceFolder}/packages/plugin-templates/node_modules/mocha/bin/_mocha",
-      "cwd": "${workspaceFolder}/packages/plugin-templates",
-      "args": ["--inspect", "--no-timeouts", "--colors", "${file}"],
-      "env": {
-        "NODE_ENV": "development",
-        "SFDX_ENV": "development"
-      },
-      "sourceMaps": true,
-      "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }

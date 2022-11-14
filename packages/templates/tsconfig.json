@@ -1,8 +1,0 @@
-{
-  "extends": "../../tsconfig.settings.json",
-  "compilerOptions": {
-    "outDir": "./lib",
-    "allowSyntheticDefaultImports": true
-  },
-  "include": ["./src/**/*"]
-}

@@ -81,7 +81,7 @@ describe('TemplateService', () => {
 
   describe('create custom template', () => {
     const TEST_CUSTOM_TEMPLATES_REPO =
-      'https://github.com/forcedotcom/salesforcedx-templates/tree/main/packages/templates/test/custom-templates';
+      'https://github.com/forcedotcom/salesforcedx-templates/tree/main/test/custom-templates';
     const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
       new URL(TEST_CUSTOM_TEMPLATES_REPO)
     );
@@ -162,7 +162,7 @@ describe('TemplateService', () => {
         'LibraryCreateClass.cls'
       );
       const expectedApexClassContent =
-        'public with sharing class LibraryCreateClass';
+        'public with sharing class CustomLibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'customLibraryCreate',
@@ -172,7 +172,7 @@ describe('TemplateService', () => {
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>${apiVersion}</apiVersion>
-    <status>Active</status>
+    <status>Inactive</status>
 </ApexClass>
 `;
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);

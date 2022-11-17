@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  unit-tests:
-    name: 'Run Unit Tests'
-    runs-on: ubuntu-latest
+  git-config:
+    runs-on: windows-latest
     steps:
       - run: git config --global core.autocrlf false
         shell: bash
-      - uses: salesforcecli/github-workflows/.github/workflows/unitTest.yml@main
+  unit-tests:
+    uses: salesforcecli/github-workflows/.github/workflows/unitTest.yml@main

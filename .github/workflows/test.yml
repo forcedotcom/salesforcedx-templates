@@ -7,4 +7,9 @@ on:
 
 jobs:
   unit-tests:
-    uses: salesforcecli/github-workflows/.github/workflows/unitTest.yml@main
+    name: 'Run Unit Tests'
+    runs-on: ubuntu-latest
+    steps:
+      - run: git config --global core.autocrlf false
+        shell: bash
+      - uses: salesforcecli/github-workflows/.github/workflows/unitTest.yml@main

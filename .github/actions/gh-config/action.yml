@@ -8,5 +8,3 @@ runs:
       shell: bash
     - run: git config user.name 'Release Bot'
       shell: bash
-    - run: git config --global core.autocrlf false
-      shell: bash

@@ -9,5 +9,3 @@ jobs:
     uses: salesforcecli/github-workflows/.github/workflows/githubRelease.yml@gbockus/updateReleaseToIncludeTokenInput
     with:
       ALT_GITHUB_TOKEN: ${{ secrets.IDEE_GH_TOKEN }}
-      ALT_GITHUB_USERNAME: svc-idee-bot
-      ALT_GITHUB_EMAIL: ${{ secrets.IDEE_GH_EMAIL }}

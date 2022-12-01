@@ -6,5 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  unit-tests:
-    uses: salesforcecli/github-workflows/.github/workflows/unitTest.yml@randi/git-config-test-fix
+  linux-unit-tests:
+    uses: ./.github/workflows/unitTestsLinux.yml
+  windows-unit-tests:
+    uses: ./.github/workflows/unitTestsWindows.yml

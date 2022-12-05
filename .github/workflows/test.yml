@@ -1,0 +1,12 @@
+name: tests
+
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+jobs:
+  linux-unit-tests:
+    uses: ./.github/workflows/unitTestsLinux.yml
+  windows-unit-tests:
+    uses: ./.github/workflows/unitTestsWindows.yml

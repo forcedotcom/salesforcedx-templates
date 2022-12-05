@@ -47,8 +47,8 @@ Take a look at [CONTRIBUTING](../CONTRIBUTING.md) doc for making and merging pul
 
 Adding a new template:
 
-1. Define a new template type in `TemplateType`, and add available template options extending `TemplateOptions` in library [types](../packages/templates/src/utils/types.ts).
-2. Create a generator extending [`SfdxGenerator`](../packages/templates/src/generators/sfdxGenerator.ts) in [generators](../packages/templates/src/generators) folder. Take a look at [`ApexClassGenerator`](../packages/templates/src/generators/apexClassGenerator.ts) for an example.
+1. Define a new template type in `TemplateType`, and add available template options extending `TemplateOptions` in library [types](../src/utils/types.ts).
+2. Create a generator extending [`SfdxGenerator`](../src/generators/sfdxGenerator.ts) in [generators](../src/generators) folder. Take a look at [`ApexClassGenerator`](../src/generators/apexClassGenerator.ts) for an example.
 
 - Generator class file should default export a generator class extending `SfdxGenerator`
 - Generator class file should have a name same as the template type's name, except with the first letter lowercased

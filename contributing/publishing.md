@@ -6,7 +6,6 @@ Every PR merge to main gets published automatically and goes through a minor ver
 
 ## Prerequisites
 
-1. Publisher has a valid CircleCI token for the forcedotcom organization. More info on CircleCI's doc [Create a Personal API token](https://circleci.com/docs/2.0/managing-api-tokens/#creating-a-personal-api-token).
 1. Publisher is a part of the GitHub team 'PDT'.
 
 ## Background
@@ -17,13 +16,13 @@ The salesforcedx-templates project uses a two-branch strategy. Work that is curr
 
 ## Publishing to NPM
 
-To publish the changes to npm, we run the task `Publish Library and Plugin`. This task calls the script `publish-workflow.sh` and prompts the user for the required information. The publish-workflow script generates an HTTP Request to the CircleCI API. It tells CircleCI that it wants to run the `publish-workflow` from the `main` branch.
+When a commit is merged to main, we will automatically create the github release, and then publish the changes to npm using our Github Actions.
 
-### Publish a major or patch release version
+### Publish a major or patch release version manually
 
-1. Open the Command Palette (press Ctrl+Shift+P on Windows or Linux, or Cmd+Shift+P on macOS).
-1. Search for `Tasks: Run Task`.
-1. Select `Publish Library and Plugin`.
-1. Enter your CircleCI Token.
-1. Pick if you want it to be major, minor or patch version.
-1. Once the request has been sent, approve the workflow in CircleCI. <b>Note</b>: Only members of the GitHub team 'PDT' can approve the workflow.
+1. Navigate to the `Actions` tab in the repository
+1. Under `Workflows` on the left side, select `Publish`.
+1. Select `Run Workflow` on the top row.
+1. Enter the desired version number, following semantic versioning.
+1. Select `Run Workflow`, and ensure the newest version is published to npm once the workflow completes.
+1. Any failures will notify the pdt release channel internally.

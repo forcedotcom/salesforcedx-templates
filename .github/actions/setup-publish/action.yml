@@ -1,0 +1,24 @@
+name: setup-publish
+description: Build and package to prepare for publishing.
+
+runs:
+  using: composite
+  steps:
+    - uses: './.github/actions/gh-config'
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: latest
+        cache: 'yarn'
+    - run: yarn
+      shell: bash
+    - name: Build project
+      run: yarn build
+      shell: bash
+    - name: Generate plugin manifest
+      run: yarn manifest:generate
+      shell: bash
+    - name: Pack Library
+      run: yarn pack
+      shell: bash

@@ -13,7 +13,7 @@ import { TemplateService } from '../../src/service/templateService';
 import * as YeomanEnvironment from 'yeoman-environment';
 
 describe('SfdxGenerator', () => {
-  const API_VERSION = '56.0';
+  const API_VERSION_STUB = '50';
   interface MyTemplateOptions extends TemplateOptions {
     // env and resolved are for testing (similar to how yeoman environment instantiates the generators)
     env: YeomanEnvironment;
@@ -40,13 +40,13 @@ describe('SfdxGenerator', () => {
     const getDefaultApiVersionStub = stub(
       TemplateService,
       'getDefaultApiVersion'
-    ).returns(API_VERSION);
+    ).returns(API_VERSION_STUB);
     const generator = new MyGenerator([], mockMyGeneratorOptions);
     generator.writing();
     assert.calledWith(
       doWritingStub,
       match({
-        apiversion: API_VERSION,
+        apiversion: API_VERSION_STUB,
         outputdir: process.cwd(),
       })
     );

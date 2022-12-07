@@ -64,7 +64,7 @@ export class TemplateService {
    */
   public static getDefaultApiVersion(): string {
     const packageJsonPath = path.join('..', '..', 'package.json');
-    const versionTrimmed = require(packageJsonPath).version.trim();
+    const versionTrimmed = require(packageJsonPath).salesforceApiVersion.trim();
     return `${versionTrimmed.split('.')[0]}.0`;
   }
 

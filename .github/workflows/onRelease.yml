@@ -1,51 +1,18 @@
-name: publish
-
+# when a github release happens, publish an npm package,
 on:
   release:
     types: [released]
-  # support manual release in case something goes wrong and needs to be repeated or tested
+  # support manual release
   workflow_dispatch:
     inputs:
       tag:
         description: tag that needs to publish
         type: string
         required: true
-
 jobs:
-  prepublish:
-    defaults:
-      run:
-        working-directory: '~/cli'
-    runs-on: ubuntu-latest
-    container:
-      image: node:14
-    steps:
-      - uses: './.github/actions/setup-publish'
-      - uses: actions/upload-artifact@v2
-        with:
-          path: |-
-            ./.git
-            .package.json
-            .*.tgz
-
-  publish-library:
-    defaults:
-      run:
-        working-directory: '~/cli/templates'
-    runs-on: ubuntu-latest
-    container:
-      image: node:14
-    needs:
-      - prepublish
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          path: '~/cli'
-      - name: Set .npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      - name: Publish to NPM
-        run: |-
-          RELEASE_VERSION="$(node -pe "require('./package.json').version")"
-          TARFILE=$(ls | grep $RELEASE_VERSION.tgz)
-          echo "publishing to npm using ${TARFILE}"
-          npm publish $TARFILE --access public
+  npm:
+    uses: salesforcecli/github-workflows/.github/workflows/npmPublish.yml@main
+    with:
+      ctc: false
+      githubTag: ${{ github.event.release.tag_name || inputs.tag }}
+    secrets: inherit

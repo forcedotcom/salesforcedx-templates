@@ -1,3 +1,5 @@
+name: Windows Tests
+
 on:
   workflow_call:
 

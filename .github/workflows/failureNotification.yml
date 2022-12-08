@@ -1,4 +1,4 @@
-name: failureNotification
+name: Failure Notification
 
 on:
   workflow_run:

@@ -68,8 +68,7 @@ describe('TemplateService', () => {
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>${apiVersion}</apiVersion>
     <status>Active</status>
-</ApexClass>
-`;
+</ApexClass>`;
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
       assert.fileContent(expectedApexClassPath, expectedApexClassContent);
       assert.fileContent(
@@ -126,8 +125,7 @@ describe('TemplateService', () => {
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>${apiVersion}</apiVersion>
     <status>Inactive</status>
-</ApexClass>
-`;
+</ApexClass>`;
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
       assert.fileContent(expectedApexClassPath, expectedApexClassContent);
       assert.fileContent(

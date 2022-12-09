@@ -1,3 +1,5 @@
+name: Linux Tests
+
 on:
   workflow_call:
 

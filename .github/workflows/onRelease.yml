@@ -1,3 +1,5 @@
+name: On Release
+
 # when a github release happens, publish an npm package,
 on:
   release:

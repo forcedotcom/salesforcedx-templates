@@ -1,4 +1,4 @@
-name: version, tag and github release
+name: Version, Tag and Github Release
 
 on:
   push:

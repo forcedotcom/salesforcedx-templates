@@ -22,13 +22,13 @@ export default class LightningTestGenerator extends SfdxGenerator<LightningTestO
   }
 
   public writing(): void {
-    const { template, outputdir, testname, internal } = this.options;
+    const { template, testname, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_staticresource.resource-meta.xml'),
         this.destinationPath(
-          path.join(outputdir, `${testname}.resource-meta.xml`)
+          path.join(this.outputdir, `${testname}.resource-meta.xml`)
         ),
         {
           description: nls.localize('LightningTest'),
@@ -39,7 +39,7 @@ export default class LightningTestGenerator extends SfdxGenerator<LightningTestO
     }
     this.fs.copyTpl(
       this.templatePath(`${template}.resource`),
-      this.destinationPath(path.join(outputdir, `${testname}.resource`)),
+      this.destinationPath(path.join(this.outputdir, `${testname}.resource`)),
       { apiName: testname }
     );
   }

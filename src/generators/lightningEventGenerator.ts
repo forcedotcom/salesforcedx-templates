@@ -20,32 +20,33 @@ export default class LightningEventGenerator extends SfdxGenerator<LightningEven
     CreateUtil.checkInputs(this.options.eventname);
     CreateUtil.checkInputs(this.options.template);
 
-    const fileparts = path.resolve(this.options.outputdir).split(path.sep);
+    const fileparts = path.resolve(this.outputdir).split(path.sep);
     if (!this.options.internal && !fileparts.includes('aura')) {
       throw new Error(nls.localize('MissingAuraDir'));
     }
   }
 
   public writing(): void {
-    const { template, outputdir, eventname, apiversion, internal } =
-      this.options;
+    const { template, eventname, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.evt-meta.xml'),
         this.destinationPath(
-          path.join(outputdir, eventname, `${eventname}.evt-meta.xml`)
+          path.join(this.outputdir, eventname, `${eventname}.evt-meta.xml`)
         ),
         {
           eventname,
-          apiVersion: apiversion,
+          apiVersion: this.apiversion,
           description: nls.localize('LightningEventBundle'),
         }
       );
     }
     this.fs.copyTpl(
       this.templatePath(`${template}.evt`),
-      this.destinationPath(path.join(outputdir, eventname, `${eventname}.evt`)),
+      this.destinationPath(
+        path.join(this.outputdir, eventname, `${eventname}.evt`)
+      ),
       {}
     );
   }

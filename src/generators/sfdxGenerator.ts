@@ -17,15 +17,14 @@ import { TemplateOptions } from '../utils/types';
 export abstract class SfdxGenerator<
   TOptions extends TemplateOptions
 > extends Generator<Generator.GeneratorOptions> {
-  options!: TOptions & {
-    apiversion: string;
-    outputdir: string;
-  };
+  options!: TOptions;
 
   /**
    * Set by sourceRootWithPartialPath called in generator
    */
   public builtInTemplatesRootPath?: string;
+  protected outputdir: string;
+  protected apiversion: string;
 
   /**
    * The constructor for the SFDXGenerator.
@@ -44,9 +43,9 @@ export abstract class SfdxGenerator<
     }
   ) {
     super(args, options, features);
-    this.options.apiversion =
+    this.apiversion =
       this.options.apiversion ?? TemplateService.getDefaultApiVersion();
-    this.options.outputdir = this.options.outputdir ?? process.cwd();
+    this.outputdir = this.options.outputdir ?? process.cwd();
     this.validateOptions();
   }
 

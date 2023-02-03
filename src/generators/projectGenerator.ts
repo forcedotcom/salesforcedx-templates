@@ -56,7 +56,6 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
 
   public writing(): void {
     const {
-      outputdir,
       projectname,
       template,
       defaultpackagedir,
@@ -66,7 +65,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       loginurl,
     } = this.options;
     const folderlayout = [
-      outputdir,
+      this.outputdir,
       projectname,
       defaultpackagedir,
       'main',
@@ -81,19 +80,24 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     this.fs.copyTpl(
       this.templatePath(scratchDefFile),
       this.destinationPath(
-        path.join(outputdir, projectname, 'config', 'project-scratch-def.json')
+        path.join(
+          this.outputdir,
+          projectname,
+          'config',
+          'project-scratch-def.json'
+        )
       ),
       { company: (process.env.USER || 'Demo') + ' company' }
     );
     this.fs.copyTpl(
       this.templatePath(`${template}/README.md`),
-      this.destinationPath(path.join(outputdir, projectname, 'README.md')),
+      this.destinationPath(path.join(this.outputdir, projectname, 'README.md')),
       {}
     );
     this.fs.copyTpl(
       this.templatePath('sfdx-project.json'),
       this.destinationPath(
-        path.join(outputdir, projectname, 'sfdx-project.json')
+        path.join(this.outputdir, projectname, 'sfdx-project.json')
       ),
       {
         defaultpackagedir,
@@ -108,7 +112,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       this.fs.copyTpl(
         this.templatePath(manifestFile),
         this.destinationPath(
-          path.join(outputdir, projectname, 'manifest', 'package.xml')
+          path.join(this.outputdir, projectname, 'manifest', 'package.xml')
         ),
         { apiversion }
       );
@@ -118,13 +122,13 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       makeEmptyFolders(folderlayout, standardfolderarray);
 
       // Add Husky directory and hooks
-      this._createHuskyConfig(path.join(outputdir, projectname));
+      this._createHuskyConfig(path.join(this.outputdir, projectname));
 
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
           this.destinationPath(
-            path.join(outputdir, projectname, '.vscode', `${file}.json`)
+            path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
           ),
           {}
         );
@@ -146,14 +150,26 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       this.fs.copyTpl(
         this.templatePath(path.join(template, soqlQueryFile)),
         this.destinationPath(
-          path.join(outputdir, projectname, 'scripts', 'soql', soqlQueryFile)
+          path.join(
+            this.outputdir,
+            projectname,
+            'scripts',
+            'soql',
+            soqlQueryFile
+          )
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(path.join(template, anonApexFile)),
         this.destinationPath(
-          path.join(outputdir, projectname, 'scripts', 'apex', anonApexFile)
+          path.join(
+            this.outputdir,
+            projectname,
+            'scripts',
+            'apex',
+            anonApexFile
+          )
         ),
         {}
       );
@@ -161,7 +177,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, out)),
+          this.destinationPath(path.join(this.outputdir, projectname, out)),
           {}
         );
       }
@@ -171,7 +187,9 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       makeEmptyFolders(folderlayout, emptyfolderarray);
       this.fs.copyTpl(
         this.templatePath('.forceignore'),
-        this.destinationPath(path.join(outputdir, projectname, '.forceignore')),
+        this.destinationPath(
+          path.join(this.outputdir, projectname, '.forceignore')
+        ),
         {}
       );
     }
@@ -180,20 +198,20 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       makeEmptyFolders(folderlayout, analyticsfolderarray);
 
       // Add Husky directory and hooks
-      this._createHuskyConfig(path.join(outputdir, projectname));
+      this._createHuskyConfig(path.join(this.outputdir, projectname));
 
       for (const file of vscodearray) {
         this.fs.copyTpl(
           this.templatePath(`${file}.json`),
           this.destinationPath(
-            path.join(outputdir, projectname, '.vscode', `${file}.json`)
+            path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
           ),
           {}
         );
       }
       // add the analytics vscode extension to the recommendations
       this.fs.extendJSON(
-        path.join(outputdir, projectname, '.vscode', 'extensions.json'),
+        path.join(this.outputdir, projectname, '.vscode', 'extensions.json'),
         {},
         (key: string, value: unknown) => {
           if (
@@ -224,7 +242,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         const out = file === GITIGNORE ? `.${file}` : file;
         this.fs.copyTpl(
           this.templatePath(file),
-          this.destinationPath(path.join(outputdir, projectname, out)),
+          this.destinationPath(path.join(this.outputdir, projectname, out)),
           {}
         );
       }

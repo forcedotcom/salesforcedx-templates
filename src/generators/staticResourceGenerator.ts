@@ -28,7 +28,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
   }
 
   public writing(): void {
-    const { outputdir, resourcename, contenttype } = this.options;
+    const { resourcename, contenttype } = this.options;
 
     const ext = extension(contenttype);
 
@@ -36,21 +36,27 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
       // For types that we have default file, write that (js, css, txt, json)
       this.fs.copyTpl(
         this.templatePath(`empty.${ext}`),
-        this.destinationPath(path.join(outputdir, `${resourcename}.${ext}`)),
+        this.destinationPath(
+          path.join(this.outputdir, `${resourcename}.${ext}`)
+        ),
         {}
       );
     } else if (ext === 'zip') {
       // For zip files, write an empty js file in a folder
       this.fs.copyTpl(
         this.templatePath('_gitkeep'),
-        this.destinationPath(path.join(outputdir, resourcename, '.gitkeep')),
+        this.destinationPath(
+          path.join(this.outputdir, resourcename, '.gitkeep')
+        ),
         {}
       );
     } else {
       // For all other mime types write a generic .resource file
       this.fs.copyTpl(
         this.templatePath('empty.resource'),
-        this.destinationPath(path.join(outputdir, `${resourcename}.resource`)),
+        this.destinationPath(
+          path.join(this.outputdir, `${resourcename}.resource`)
+        ),
         {}
       );
     }
@@ -58,7 +64,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
     this.fs.copyTpl(
       this.templatePath('_staticresource.resource-meta.xml'),
       this.destinationPath(
-        path.join(outputdir, `${resourcename}.resource-meta.xml`)
+        path.join(this.outputdir, `${resourcename}.resource-meta.xml`)
       ),
       {
         contentType: contenttype,

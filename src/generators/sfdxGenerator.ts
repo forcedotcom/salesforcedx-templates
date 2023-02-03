@@ -44,8 +44,8 @@ export abstract class SfdxGenerator<
   ) {
     super(args, options, features);
     this.apiversion =
-      this.options.apiversion ?? TemplateService.getDefaultApiVersion();
-    this.outputdir = this.options.outputdir ?? process.cwd();
+      options.apiversion ?? TemplateService.getDefaultApiVersion();
+    this.outputdir = options.outputdir ?? process.cwd();
     this.validateOptions();
   }
 

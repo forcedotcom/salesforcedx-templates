@@ -20,68 +20,74 @@ export default class LightningAppGenerator extends SfdxGenerator<LightningAppOpt
     CreateUtil.checkInputs(this.options.appname);
     CreateUtil.checkInputs(this.options.template);
 
-    const fileparts = path.resolve(this.options.outputdir).split(path.sep);
+    const fileparts = path.resolve(this.outputdir).split(path.sep);
     if (!fileparts.includes('aura') && !this.options.internal) {
       throw new Error(nls.localize('MissingAuraDir'));
     }
   }
 
   public writing(): void {
-    const { template, outputdir, appname, apiversion, internal } = this.options;
+    const { template, appname, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.app-meta.xml'),
         this.destinationPath(
-          path.join(outputdir, appname, `${appname}.app-meta.xml`)
+          path.join(this.outputdir, appname, `${appname}.app-meta.xml`)
         ),
         {
-          apiVersion: apiversion,
+          apiVersion: this.apiversion,
           description: nls.localize('LightningAppBundle'),
         }
       );
     }
     this.fs.copyTpl(
       this.templatePath(`${template}.app`),
-      this.destinationPath(path.join(outputdir, appname, `${appname}.app`)),
+      this.destinationPath(
+        path.join(this.outputdir, appname, `${appname}.app`)
+      ),
       {}
     ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningAuradoc.auradoc'),
         this.destinationPath(
-          path.join(outputdir, appname, `${appname}.auradoc`)
+          path.join(this.outputdir, appname, `${appname}.auradoc`)
         ),
         {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningController.js'),
         this.destinationPath(
-          path.join(outputdir, appname, `${appname}Controller.js`)
+          path.join(this.outputdir, appname, `${appname}Controller.js`)
         ),
         {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningCss.css'),
-        this.destinationPath(path.join(outputdir, appname, `${appname}.css`)),
+        this.destinationPath(
+          path.join(this.outputdir, appname, `${appname}.css`)
+        ),
         {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningHelper.js'),
         this.destinationPath(
-          path.join(outputdir, appname, `${appname}Helper.js`)
+          path.join(this.outputdir, appname, `${appname}Helper.js`)
         ),
         {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningRenderer.js'),
         this.destinationPath(
-          path.join(outputdir, appname, `${appname}Renderer.js`)
+          path.join(this.outputdir, appname, `${appname}Renderer.js`)
         ),
         {}
       ),
       this.fs.copyTpl(
         this.templatePath('DefaultLightningSVG.svg'),
-        this.destinationPath(path.join(outputdir, appname, `${appname}.svg`)),
+        this.destinationPath(
+          path.join(this.outputdir, appname, `${appname}.svg`)
+        ),
         {}
       );
   }

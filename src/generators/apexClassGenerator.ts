@@ -21,16 +21,18 @@ export default class ApexClassGenerator extends SfdxGenerator<ApexClassOptions> 
   }
 
   public writing(): void {
-    const { template, outputdir, classname, apiversion } = this.options;
+    const { template, classname } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.cls`),
-      this.destinationPath(path.join(outputdir, `${classname}.cls`)),
+      this.destinationPath(path.join(this.outputdir, `${classname}.cls`)),
       { apiName: classname }
     ),
       this.fs.copyTpl(
         this.templatePath('_class.cls-meta.xml'),
-        this.destinationPath(path.join(outputdir, `${classname}.cls-meta.xml`)),
-        { apiName: classname, apiVersion: apiversion }
+        this.destinationPath(
+          path.join(this.outputdir, `${classname}.cls-meta.xml`)
+        ),
+        { apiName: classname, apiVersion: this.apiversion }
       );
   }
 }

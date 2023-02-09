@@ -22,11 +22,13 @@ describe('SfdxGenerator', () => {
   class MyGenerator extends SfdxGenerator<MyTemplateOptions> {
     public validateOptions() {}
     public writing() {
-      this.doWriting(this.options);
+      this.doWriting({
+        ...this.options,
+        apiversion: this.apiversion,
+        outputdir: this.outputdir,
+      });
     }
-    public doWriting(
-      options: MyTemplateOptions & { apiversion: string; outputdir: string }
-    ) {}
+    public doWriting(options: MyTemplateOptions) {}
   }
   const testEnv = YeomanEnvironment.createEnv();
   testEnv.cwd = process.cwd();

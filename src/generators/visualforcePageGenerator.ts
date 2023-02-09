@@ -21,16 +21,18 @@ export default class VisualforcePageGenerator extends SfdxGenerator<VisualforceP
   }
 
   public writing(): void {
-    const { template, outputdir, label, apiversion, pagename } = this.options;
+    const { template, label, pagename } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.page`),
-      this.destinationPath(path.join(outputdir, `${pagename}.page`)),
+      this.destinationPath(path.join(this.outputdir, `${pagename}.page`)),
       {}
     );
     this.fs.copyTpl(
       this.templatePath('_page.page-meta.xml'),
-      this.destinationPath(path.join(outputdir, `${pagename}.page-meta.xml`)),
-      { vfLabel: label, apiVersion: apiversion }
+      this.destinationPath(
+        path.join(this.outputdir, `${pagename}.page-meta.xml`)
+      ),
+      { vfLabel: label, apiVersion: this.apiversion }
     );
   }
 }

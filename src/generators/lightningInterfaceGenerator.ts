@@ -20,7 +20,7 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<Lightning
     CreateUtil.checkInputs(this.options.interfacename);
     CreateUtil.checkInputs(this.options.template);
 
-    const fileparts = path.resolve(this.options.outputdir).split(path.sep);
+    const fileparts = path.resolve(this.outputdir).split(path.sep);
 
     if (!this.options.internal && !fileparts.includes('aura')) {
       throw new Error(nls.localize('MissingAuraDir'));
@@ -28,17 +28,20 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<Lightning
   }
 
   public writing(): void {
-    const { template, outputdir, interfacename, apiversion, internal } =
-      this.options;
+    const { template, interfacename, internal } = this.options;
     // tslint:disable-next-line:no-unused-expression
     if (!internal) {
       this.fs.copyTpl(
         this.templatePath('_auradefinitionbundle.intf-meta.xml'),
         this.destinationPath(
-          path.join(outputdir, interfacename, `${interfacename}.intf-meta.xml`)
+          path.join(
+            this.outputdir,
+            interfacename,
+            `${interfacename}.intf-meta.xml`
+          )
         ),
         {
-          apiVersion: apiversion,
+          apiVersion: this.apiversion,
           description: nls.localize('LightningInterfaceBundle'),
         }
       );
@@ -46,7 +49,7 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<Lightning
     this.fs.copyTpl(
       this.templatePath(`${template}.intf`),
       this.destinationPath(
-        path.join(outputdir, interfacename, `${interfacename}.intf`)
+        path.join(this.outputdir, interfacename, `${interfacename}.intf`)
       ),
       {}
     );

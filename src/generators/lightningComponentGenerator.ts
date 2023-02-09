@@ -21,7 +21,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
     CreateUtil.checkInputs(this.options.componentname);
     CreateUtil.checkInputs(this.options.template);
 
-    const fileparts = path.resolve(this.options.outputdir).split(path.sep);
+    const fileparts = path.resolve(this.outputdir).split(path.sep);
 
     if (!this.options.internal) {
       if (this.options.type === 'lwc' && !fileparts.includes('lwc')) {
@@ -46,8 +46,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
   }
 
   public writing(): void {
-    const { template, outputdir, componentname, apiversion, type, internal } =
-      this.options;
+    const { template, componentname, type, internal } = this.options;
 
     if (type === 'aura') {
       this.sourceRootWithPartialPath(
@@ -57,68 +56,80 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         this.fs.copyTpl(
           this.templatePath(`${template}.cmp-meta.xml`),
           this.destinationPath(
-            path.join(outputdir, componentname, `${componentname}.cmp-meta.xml`)
+            path.join(
+              this.outputdir,
+              componentname,
+              `${componentname}.cmp-meta.xml`
+            )
           ),
           {
             componentname,
             description: nls.localize('LightningComponentBundle'),
-            apiVersion: apiversion,
+            apiVersion: this.apiversion,
           }
         );
       }
       this.fs.copyTpl(
         this.templatePath(`${template}.auradoc`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.auradoc`)
+          path.join(this.outputdir, componentname, `${componentname}.auradoc`)
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.cmp`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.cmp`)
+          path.join(this.outputdir, componentname, `${componentname}.cmp`)
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.css`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.css`)
+          path.join(this.outputdir, componentname, `${componentname}.css`)
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.design`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.design`)
+          path.join(this.outputdir, componentname, `${componentname}.design`)
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}.svg`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}.svg`)
+          path.join(this.outputdir, componentname, `${componentname}.svg`)
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}Controller.js`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}Controller.js`)
+          path.join(
+            this.outputdir,
+            componentname,
+            `${componentname}Controller.js`
+          )
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}Helper.js`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}Helper.js`)
+          path.join(this.outputdir, componentname, `${componentname}Helper.js`)
         ),
         {}
       );
       this.fs.copyTpl(
         this.templatePath(`${template}Renderer.js`),
         this.destinationPath(
-          path.join(outputdir, componentname, `${componentname}Renderer.js`)
+          path.join(
+            this.outputdir,
+            componentname,
+            `${componentname}Renderer.js`
+          )
         ),
         {}
       );
@@ -145,7 +156,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         this.templatePath(`${template}.js`),
         this.destinationPath(
           path.join(
-            outputdir,
+            this.outputdir,
             camelCaseComponentName,
             `${camelCaseComponentName}.js`
           )
@@ -157,7 +168,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         this.templatePath(`${template}.html`),
         this.destinationPath(
           path.join(
-            outputdir,
+            this.outputdir,
             camelCaseComponentName,
             `${camelCaseComponentName}.html`
           )
@@ -169,7 +180,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         this.templatePath(path.join(`__tests__`, `${template}.test.js`)),
         this.destinationPath(
           path.join(
-            outputdir,
+            this.outputdir,
             camelCaseComponentName,
             `__tests__`,
             `${camelCaseComponentName}.test.js`
@@ -190,12 +201,12 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
           this.templatePath(`${template}.js-meta.xml`),
           this.destinationPath(
             path.join(
-              outputdir,
+              this.outputdir,
               camelCaseComponentName,
               `${camelCaseComponentName}.js-meta.xml`
             )
           ),
-          { apiVersion: apiversion, masterLabel }
+          { apiVersion: this.apiversion, masterLabel }
         );
       }
     }

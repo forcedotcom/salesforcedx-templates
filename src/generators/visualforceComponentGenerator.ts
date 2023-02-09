@@ -21,7 +21,7 @@ export default class VisualforceComponentGenerator extends SfdxGenerator<Visualf
   }
 
   public writing(): void {
-    const { template, label, apiversion, componentname } = this.options;
+    const { template, label, componentname } = this.options;
     this.fs.copyTpl(
       this.templatePath(`${template}.component`),
       this.destinationPath(
@@ -34,7 +34,7 @@ export default class VisualforceComponentGenerator extends SfdxGenerator<Visualf
         this.destinationPath(
           path.join(this.outputdir, `${componentname}.component-meta.xml`)
         ),
-        { vfLabel: label, apiVersion: apiversion }
+        { vfLabel: label, apiVersion: this.apiversion }
       );
   }
 }

@@ -55,15 +55,8 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
   }
 
   public writing(): void {
-    const {
-      projectname,
-      template,
-      defaultpackagedir,
-      manifest,
-      ns,
-      apiversion,
-      loginurl,
-    } = this.options;
+    const { projectname, template, defaultpackagedir, manifest, ns, loginurl } =
+      this.options;
     const folderlayout = [
       this.outputdir,
       projectname,
@@ -103,7 +96,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         defaultpackagedir,
         namespace: ns,
         loginurl,
-        apiversion,
+        apiversion: this.apiversion,
         name: projectname,
       }
     );
@@ -114,7 +107,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         this.destinationPath(
           path.join(this.outputdir, projectname, 'manifest', 'package.xml')
         ),
-        { apiversion }
+        { apiversion: this.apiversion }
       );
     }
 

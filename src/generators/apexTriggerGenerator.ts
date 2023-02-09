@@ -24,13 +24,13 @@ export default class ApexTriggerGenerator extends SfdxGenerator<ApexTriggerOptio
       this.templatePath(`${template}.trigger`),
       this.destinationPath(path.join(this.outputdir, `${triggername}.trigger`)),
       { triggername, sobject, triggerEvents: triggerevents }
-    ),
-      this.fs.copyTpl(
-        this.templatePath('_trigger.trigger-meta.xml'),
-        this.destinationPath(
-          path.join(this.outputdir, `${triggername}.trigger-meta.xml`)
-        ),
-        { apiVersion: this.apiversion }
-      );
+    );
+    this.fs.copyTpl(
+      this.templatePath('_trigger.trigger-meta.xml'),
+      this.destinationPath(
+        path.join(this.outputdir, `${triggername}.trigger-meta.xml`)
+      ),
+      { apiVersion: this.apiversion }
+    );
   }
 }

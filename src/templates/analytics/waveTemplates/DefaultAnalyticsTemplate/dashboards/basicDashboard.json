@@ -17,7 +17,11 @@
     "dimensions": []
   },
   "state": {
-    "dataSourceLinks": [],
+    "dataSourceLinksInfo": {
+      "enableAutomaticLinking": false,
+      "excludeRelationships": [],
+      "links": []
+    },
     "filters": [],
     "gridLayouts": [
       {
@@ -69,12 +73,24 @@
       "text_1": {
         "parameters": {
           "content": {
-            "displayTemplate": "<%= templateName %> Analytics Dashboard"
+            "richTextContent": [
+              {
+                "attributes": {
+                  "size": "48px",
+                  "color": "rgb(9, 26, 62)"
+                },
+                "insert": "<%= templateName %> Analytics Dashboard"
+              },
+              {
+                "attributes": {
+                  "align": "center"
+                },
+                "insert": "\n"
+              }
+            ]
           },
-          "fontSize": 48,
-          "showActionMenu": true,
-          "textAlignment": "center",
-          "textColor": "rgb(9, 26, 62)"
+          "interactions": [],
+          "showActionMenu": true
         },
         "type": "text"
       }

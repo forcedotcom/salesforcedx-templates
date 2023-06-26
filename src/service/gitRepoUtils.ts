@@ -18,8 +18,7 @@ import { Stream } from 'stream';
 import * as tar from 'tar';
 import { promisify } from 'util';
 import { nls } from '../i18n';
-import * as ProxyAgent from 'proxy-agent';
-import { getProxyForUrl } from 'proxy-from-env';
+import { ProxyAgent } from 'proxy-agent';
 
 interface RepoInfo {
   username: string;
@@ -39,7 +38,7 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
   if (t === undefined) {
     const url = `https://api.github.com/repos/${username}/${name}`;
     const infoResponse = await got(url, {
-      agent: { https: ProxyAgent(getProxyForUrl(url)) },
+      agent: { https: new ProxyAgent() },
     }).catch((e) => e);
     if (infoResponse.statusCode !== 200) {
       throw new Error(

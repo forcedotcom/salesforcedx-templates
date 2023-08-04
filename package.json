@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "@salesforce/core": "^4.0.1",
-    "@salesforce/kit": "^1.7.1",
+    "@salesforce/kit": "^3.0.8",
     "got": "^11.8.2",
     "mime-types": "^2.1.27",
     "proxy-agent": "^6.2.1",

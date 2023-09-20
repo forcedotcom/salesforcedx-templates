@@ -1,4 +1,4 @@
-name: Failure Notification
+name: Slack Notification
 
 on:
   workflow_run:

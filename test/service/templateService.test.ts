@@ -17,7 +17,7 @@ import * as yeoman from 'yeoman-environment';
 import { TemplateService, TemplateType } from '../../src';
 import { nls } from '../../src/i18n';
 import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';
-import {getProxyForUrl} from 'proxy-from-env';
+import { getProxyForUrl } from 'proxy-from-env';
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -213,7 +213,7 @@ describe('TemplateService', () => {
 
     it('should throw error if cannot retrieve default branch', async () => {
       const mockIt = {
-        getProxyForUrl
+        getProxyForUrl,
       };
       // @ts-ignore - function signature is not compatible with sinon stub
       sandbox.stub(mockIt, 'getProxyForUrl').returns(undefined);

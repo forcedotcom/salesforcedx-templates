@@ -11,12 +11,13 @@ import * as fsOriginal from 'fs';
 import * as fs from 'fs-extra';
 import got from 'got';
 import * as path from 'path';
-import { assert as sinonAssert, spy, stub } from 'sinon';
+import { assert as sinonAssert, spy, stub, createSandbox } from 'sinon';
 import * as assert from 'yeoman-assert';
 import * as yeoman from 'yeoman-environment';
 import { TemplateService, TemplateType } from '../../src';
 import { nls } from '../../src/i18n';
 import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';
+import {getProxyForUrl} from 'proxy-from-env';
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -79,6 +80,8 @@ describe('TemplateService', () => {
   });
 
   describe('create custom template', () => {
+    // add reference to a sinon sandbox
+    const sandbox = createSandbox();
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/main/test/custom-templates';
     const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
@@ -89,6 +92,9 @@ describe('TemplateService', () => {
       await fs.remove(
         path.join('testsoutput', 'customLibraryCreate', 'apexclass')
       );
+    });
+    afterEach(() => {
+      sandbox.restore();
     });
 
     it('should create custom template from local folder', async () => {
@@ -206,6 +212,11 @@ describe('TemplateService', () => {
     });
 
     it('should throw error if cannot retrieve default branch', async () => {
+      const mockIt = {
+        getProxyForUrl
+      };
+      // @ts-ignore - function signature is not compatible with sinon stub
+      sandbox.stub(mockIt, 'getProxyForUrl').returns(undefined);
       const templateService = TemplateService.getInstance(process.cwd());
       const customTemplates =
         'https://github.com/forcedotcom/this-repo-does-not-exist';

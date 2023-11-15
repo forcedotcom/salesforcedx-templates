@@ -18,7 +18,8 @@ import { Stream } from 'stream';
 import * as tar from 'tar';
 import { promisify } from 'util';
 import { nls } from '../i18n';
-import { ProxyAgent } from 'proxy-agent';
+import { HttpsProxyAgent } from 'hpagent';
+import { getProxyForUrl } from 'proxy-from-env';
 
 interface RepoInfo {
   username: string;
@@ -26,6 +27,7 @@ interface RepoInfo {
   branch: string;
   filePath: string;
 }
+
 /**
  * extract repo info from uri
  * @param repoUri uri to git repo
@@ -37,9 +39,24 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
   // For repos with no branch information, fetch default branch
   if (t === undefined) {
     const url = `https://api.github.com/repos/${username}/${name}`;
-    const infoResponse = await got(url, {
-      agent: { https: new ProxyAgent() },
-    }).catch((e) => e);
+    const proxy = getProxyForUrl(url);
+
+    // proxy will be empty string if no proxy is set
+    const infoResponse = await (proxy !== ''
+      ? got(url, {
+          agent: {
+            https: new HttpsProxyAgent({
+              keepAlive: true,
+              keepAliveMsecs: 1000,
+              maxSockets: 256,
+              maxFreeSockets: 256,
+              scheduling: 'lifo',
+              proxy,
+            }),
+          },
+        })
+      : got(url)
+    ).catch((e) => e);
     if (infoResponse.statusCode !== 200) {
       throw new Error(
         nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href)

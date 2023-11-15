@@ -1,3 +1,12 @@
+## [59.0.2](https://github.com/forcedotcom/salesforcedx-templates/compare/59.0.1...59.0.2) (2023-11-15)
+
+
+### Bug Fixes
+
+* upgrade min node engine to 18 ([#570](https://github.com/forcedotcom/salesforcedx-templates/issues/570)) ([6c4a8c2](https://github.com/forcedotcom/salesforcedx-templates/commit/6c4a8c200375af3e8bff6e7372ea9270ef3cb165))
+
+
+
 ## [59.0.1](https://github.com/forcedotcom/salesforcedx-templates/compare/58.0.2...59.0.1) (2023-08-08)
 
 

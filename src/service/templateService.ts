@@ -122,7 +122,7 @@ export class TemplateService {
           };
           resolve(result);
         })
-        .catch((err) => {
+        .catch((err: Error | string) => {
           reject(err);
         });
     });

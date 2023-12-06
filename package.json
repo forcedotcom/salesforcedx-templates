@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/templates",
-  "version": "59.0.2",
+  "version": "59.0.3",
   "salesforceApiVersion": "59",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",

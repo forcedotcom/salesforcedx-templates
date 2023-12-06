@@ -1,3 +1,12 @@
+## [59.0.3](https://github.com/forcedotcom/salesforcedx-templates/compare/59.0.2...59.0.3) (2023-12-06)
+
+
+### Bug Fixes
+
+* bump dep for @salesforce/sfdx-lwc-jest to 3.1.0 ([#573](https://github.com/forcedotcom/salesforcedx-templates/issues/573)) ([1c2fda2](https://github.com/forcedotcom/salesforcedx-templates/commit/1c2fda245d22ad768f300a89414754a796a9d9f2))
+
+
+
 ## [59.0.2](https://github.com/forcedotcom/salesforcedx-templates/compare/59.0.1...59.0.2) (2023-11-15)
 
 

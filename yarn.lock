@@ -789,10 +789,10 @@
   dependencies:
     "@octokit/openapi-types" "^11.2.0"
 
-"@salesforce/core@^5.3.19":
-  version "5.3.19"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.19.tgz#ba5226b0f22bd6db9dacff70f2c654666d84cfd8"
-  integrity sha512-jsgPnlJzLVJOMJfO73kJr3jr/ME1m8Wwtx3aUJq6sefb/sNZ2GvvOn78AzFht1nVhiwBNIyIIS+9PC3LjsQ39w==
+"@salesforce/core@^5.3.20":
+  version "5.3.20"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.20.tgz#4e934d4551bb70423cb1c4115615bc41cffca41e"
+  integrity sha512-y+O6O2c8OYFDrAy2qsG+pAcNxoyL14nmBXcBRRcYA7Huj8ikK+aLJK84PuVAYdQz+hNwImQF+69IWtDkpK4Irg==
   dependencies:
     "@salesforce/kit" "^3.0.15"
     "@salesforce/schemas" "^1.6.1"

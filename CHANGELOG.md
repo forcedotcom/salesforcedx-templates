@@ -1,3 +1,12 @@
+## [59.0.4](https://github.com/forcedotcom/salesforcedx-templates/compare/59.0.3...59.0.4) (2023-12-07)
+
+
+### Bug Fixes
+
+* bump core to 5.3.20 ([#574](https://github.com/forcedotcom/salesforcedx-templates/issues/574)) ([18e90e1](https://github.com/forcedotcom/salesforcedx-templates/commit/18e90e12d40a24f6487ae3afeaf72c3147682796))
+
+
+
 ## [59.0.3](https://github.com/forcedotcom/salesforcedx-templates/compare/59.0.2...59.0.3) (2023-12-06)
 
 

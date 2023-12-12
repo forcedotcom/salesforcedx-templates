@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/templates",
-  "version": "59.0.4",
+  "version": "60.0.0",
   "salesforceApiVersion": "59",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
@@ -13,7 +13,7 @@
     "/messages"
   ],
   "dependencies": {
-    "@salesforce/core": "^5.3.20",
+    "@salesforce/core": "^6.1.0",
     "@salesforce/kit": "^3.0.15",
     "got": "^11.8.2",
     "hpagent": "^1.2.0",

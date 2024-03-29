@@ -1,3 +1,12 @@
+## [60.1.1](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.0...60.1.1) (2024-03-29)
+
+
+### Bug Fixes
+
+* inherit the secrets for the next workflow to consume ([#579](https://github.com/forcedotcom/salesforcedx-templates/issues/579)) ([db9530e](https://github.com/forcedotcom/salesforcedx-templates/commit/db9530e432dae382a3a3560e80cfcf6e81129690))
+
+
+
 # [60.1.0](https://github.com/forcedotcom/salesforcedx-templates/compare/60.0.1...60.1.0) (2024-01-08)
 
 

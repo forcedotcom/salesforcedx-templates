@@ -11,5 +11,6 @@ on:
 jobs:
   call-release-workflow:
     uses: forcedotcom/bundle-publish-scripts/.github/workflows/releaseWithCoreBundle.yml@main
+    secrets: inherit
     with:
       branch: ${{ inputs.branch }}

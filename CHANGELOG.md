@@ -1,3 +1,12 @@
+## [60.1.2](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.1...60.1.2) (2024-04-17)
+
+
+### Bug Fixes
+
+* update salesforce/core ([#581](https://github.com/forcedotcom/salesforcedx-templates/issues/581)) ([57d5072](https://github.com/forcedotcom/salesforcedx-templates/commit/57d507225dd1490c968a7f763f9a8e4e51c2af66))
+
+
+
 ## [60.1.1](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.0...60.1.1) (2024-03-29)
 
 

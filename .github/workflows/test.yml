@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore: [main]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   linux-unit-tests:

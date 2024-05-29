@@ -1,0 +1,21 @@
+name: Test With Core Bunde
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Set the branch to test core bundle'
+        type: string
+        required: false
+        default: main
+
+jobs:
+  build:
+    name: Call build workflow
+    uses: forcedotcom/bundle-publish-scripts/.github/workflows/build.yml@main
+    with:
+      branch: ${{ github.ref_name || inputs.branch }}
+  tests:
+    name: Call tests workflow
+    uses: ./.github/workflows/test.yml

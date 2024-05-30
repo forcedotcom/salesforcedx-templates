@@ -7,9 +7,8 @@
 
 import * as path from 'path';
 import { assert, match, stub } from 'sinon';
-import { TemplateOptions } from '../../';
+import { TemplateOptions, TemplateService } from '../../src';
 import { SfdxGenerator } from '../../src/generators/sfdxGenerator';
-import { TemplateService } from '../../src';
 import * as YeomanEnvironment from 'yeoman-environment';
 
 describe('SfdxGenerator', () => {

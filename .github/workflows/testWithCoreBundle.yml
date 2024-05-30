@@ -1,4 +1,4 @@
-name: Test With Core Bunde
+name: Test With Core Bundle
 on:
   push:
     branches-ignore: [main]

@@ -65,11 +65,13 @@ describe('TemplateService', () => {
         'apexClass',
         'LibraryCreateClass.cls-meta.xml'
       );
-      const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
-<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>${apiVersion}</apiVersion>
-    <status>Active</status>
-</ApexClass>`;
+      const expectedApexClassMetaContent = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">',
+        `    <apiVersion>${apiVersion}</apiVersion>`,
+        '    <status>Active</status>',
+        '</ApexClass>',
+      ].join('\n');
       assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
       assert.fileContent(expectedApexClassPath, expectedApexClassContent);
       assert.fileContent(

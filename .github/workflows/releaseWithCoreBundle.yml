@@ -2,8 +2,7 @@ name: publish templates-bundle
 on:
   workflow_run:
     workflows:
-      - Version, Tag and Github Release
-      - Manual Release
+      - publish
     types:
       - completed
   workflow_dispatch:

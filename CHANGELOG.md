@@ -1,3 +1,20 @@
+## [61.0.1](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.6...61.0.1) (2024-06-07)
+
+
+### Bug Fixes
+
+* bump major ([7552204](https://github.com/forcedotcom/salesforcedx-templates/commit/7552204df7dafcc34bf0c0f5e0bd4246943668ab))
+
+
+
+## [60.1.6](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.4...60.1.6) (2024-06-07)
+
+
+
+## [60.1.4](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.3...60.1.4) (2024-06-07)
+
+
+
 ## [60.1.3](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.2...60.1.3) (2024-06-07)
 
 

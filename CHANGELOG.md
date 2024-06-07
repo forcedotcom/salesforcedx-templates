@@ -1,3 +1,12 @@
+## [60.1.3](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.2...60.1.3) (2024-06-07)
+
+
+### Bug Fixes
+
+* update slack secret var bump to major version ([#586](https://github.com/forcedotcom/salesforcedx-templates/issues/586)) ([7f1e97a](https://github.com/forcedotcom/salesforcedx-templates/commit/7f1e97a00f151844ff3f71edb0b5b7c40a2491a1))
+
+
+
 ## [60.1.2](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.1...60.1.2) (2024-04-17)
 
 

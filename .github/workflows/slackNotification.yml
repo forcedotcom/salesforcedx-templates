@@ -1,4 +1,4 @@
-name: Failure Notification
+name: Slack Notification
 
 on:
   workflow_run:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Announce result
-        uses: slackapi/slack-github-action@v1.22.0
+        uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
             {

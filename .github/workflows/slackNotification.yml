@@ -23,4 +23,4 @@ jobs:
               "result": "${{ github.event.workflow_run.conclusion }}"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.IDEE_RELEASE_ALERT_SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.IDEE_MAIN_SLACK_WEBHOOK }}

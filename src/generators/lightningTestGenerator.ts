@@ -8,12 +8,11 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningTestOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { SfGenerator } from './sfGenerator';
 
-export default class LightningTestGenerator extends SfdxGenerator<LightningTestOptions> {
-  constructor(args: string | string[], options: LightningTestOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('lightningtest');
+export default class LightningTestGenerator extends SfGenerator<LightningTestOptions> {
+  constructor(options: LightningTestOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -21,11 +20,12 @@ export default class LightningTestGenerator extends SfdxGenerator<LightningTestO
     CreateUtil.checkInputs(this.options.template);
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, testname, internal } = this.options;
-    // tslint:disable-next-line:no-unused-expression
+    this.sourceRootWithPartialPath('lightningtest');
+
     if (!internal) {
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('_staticresource.resource-meta.xml'),
         this.destinationPath(
           path.join(this.outputdir, `${testname}.resource-meta.xml`)
@@ -37,7 +37,7 @@ export default class LightningTestGenerator extends SfdxGenerator<LightningTestO
         { apiName: testname }
       );
     }
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(`${template}.resource`),
       this.destinationPath(path.join(this.outputdir, `${testname}.resource`)),
       { apiName: testname }

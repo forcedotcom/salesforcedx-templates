@@ -4,21 +4,20 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-interface StringKeyValueObject<V> {
-  [opt: string]: V;
-}
-export type Answers = StringKeyValueObject<string>;
-export interface CreateOutput {
+
+export type Answers = Record<string, string>;
+
+export type CreateOutput = {
   outputDir: string;
   created: string[];
   rawOutput: string;
-}
+};
 
 /**
  * Available Template types
  * Each template type must have a corresponding generator class:
  * - generator class file should locate in generators/
- * - generator class file should default export a generator class extending SfdxGenerator
+ * - generator class file should default export a generator class extending SfGenerator
  * - generator class file should have a name same as the type name, except with the first letter lowercased
  */
 export enum TemplateType {

@@ -11,19 +11,44 @@ import * as fsOriginal from 'fs';
 import * as fs from 'fs-extra';
 import got from 'got';
 import * as path from 'path';
-import { assert as sinonAssert, spy, stub, createSandbox } from 'sinon';
-import * as assert from 'yeoman-assert';
-import * as yeoman from 'yeoman-environment';
+import { assert, spy, stub, createSandbox } from 'sinon';
 import { TemplateService, TemplateType } from '../../src';
 import { nls } from '../../src/i18n';
 import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';
 import { getProxyForUrl } from 'proxy-from-env';
+import {
+  SfGenerator,
+  setCustomTemplatesRootPathOrGitRepo,
+} from '../../src/generators/sfGenerator';
 
 chai.use(chaiAsPromised);
+chai.config.truncateThreshold = 100000;
 chai.should();
 
+function getDefaultApiVersion(): string {
+  const packageJsonPath = path.join('..', '..', 'package.json');
+  const versionTrimmed = require(packageJsonPath).salesforceApiVersion.trim();
+  return `${versionTrimmed.split('.')[0]}.0`;
+}
+
+function assertFileContent(file: string, regex: string | RegExp) {
+  const exists = fs.existsSync(file);
+  chai.expect(exists).to.be.true;
+
+  const body = fs.readFileSync(file, 'utf8');
+
+  let match = false;
+  if (typeof regex === 'string') {
+    match = body.indexOf(regex) !== -1;
+  } else {
+    match = regex.test(body);
+  }
+
+  chai.expect(match, `${file} did not match '${regex}'. Contained:\n\n${body}`);
+}
+
 describe('TemplateService', () => {
-  const apiVersion = TemplateService.getDefaultApiVersion();
+  const apiVersion = getDefaultApiVersion();
   describe('Setting cwd', () => {
     it('should set default cwd of yeoman env to process cwd on getting instance', () => {
       const templateService = TemplateService.getInstance();
@@ -72,9 +97,9 @@ describe('TemplateService', () => {
         '    <status>Active</status>',
         '</ApexClass>',
       ].join('\n');
-      assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
-      assert.fileContent(expectedApexClassPath, expectedApexClassContent);
-      assert.fileContent(
+
+      assertFileContent(expectedApexClassPath, expectedApexClassContent);
+      assertFileContent(
         expectedApexClassMetaPath,
         expectedApexClassMetaContent
       );
@@ -134,9 +159,9 @@ describe('TemplateService', () => {
     <apiVersion>${apiVersion}</apiVersion>
     <status>Inactive</status>
 </ApexClass>`;
-      assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
-      assert.fileContent(expectedApexClassPath, expectedApexClassContent);
-      assert.fileContent(
+
+      assertFileContent(expectedApexClassPath, expectedApexClassContent);
+      assertFileContent(
         expectedApexClassMetaPath,
         expectedApexClassMetaContent
       );
@@ -181,9 +206,8 @@ describe('TemplateService', () => {
     <status>Inactive</status>
 </ApexClass>
 `;
-      assert.file([expectedApexClassPath, expectedApexClassMetaPath]);
-      assert.fileContent(expectedApexClassPath, expectedApexClassContent);
-      assert.fileContent(
+      assertFileContent(expectedApexClassPath, expectedApexClassContent);
+      assertFileContent(
         expectedApexClassMetaPath,
         expectedApexClassMetaContent
       );
@@ -330,17 +354,14 @@ describe('TemplateService', () => {
         return fs.existsSync(fsPath);
       });
       const streamStub = spy(got, 'stream');
-      const templateService = TemplateService.getInstance(process.cwd());
       if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
         fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       }
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
-      await templateService.setCustomTemplatesRootPathOrGitRepo(
-        customTemplates
-      );
+      await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
-      sinonAssert.calledOnce(streamStub);
+      assert.calledOnce(streamStub);
       streamStub.restore();
       existsSyncStub.restore();
     });
@@ -354,18 +375,16 @@ describe('TemplateService', () => {
         return fs.existsSync(fsPath);
       });
       const streamStub = spy(got, 'stream');
-      const templateService = TemplateService.getInstance(process.cwd());
+
       if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
         fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       }
       fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
-      await templateService.setCustomTemplatesRootPathOrGitRepo(
-        customTemplates
-      );
+      await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
-      sinonAssert.notCalled(streamStub);
+      assert.notCalled(streamStub);
       streamStub.restore();
       existsSyncStub.restore();
     });
@@ -379,7 +398,6 @@ describe('TemplateService', () => {
         return fs.existsSync(fsPath);
       });
       const streamStub = spy(got, 'stream');
-      const templateService = TemplateService.getInstance(process.cwd());
       if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
         fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       }
@@ -387,12 +405,12 @@ describe('TemplateService', () => {
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
       const forceLoadingRemoteRepo = true;
-      await templateService.setCustomTemplatesRootPathOrGitRepo(
+      await setCustomTemplatesRootPathOrGitRepo(
         customTemplates,
         forceLoadingRemoteRepo
       );
 
-      sinonAssert.calledOnce(streamStub);
+      assert.calledOnce(streamStub);
       streamStub.restore();
       existsSyncStub.restore();
     });
@@ -432,9 +450,9 @@ describe('TemplateService', () => {
       const actual = `target dir = ${path.resolve(
         process.cwd(),
         'testsoutput/libraryCreate/apexClass'
-      )}\n   create ${path.normalize(
+      )}\n  create ${path.normalize(
         'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
-      )}\n   create ${path.normalize(
+      )}\n  create ${path.normalize(
         'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
       )}\n`;
 
@@ -444,7 +462,9 @@ describe('TemplateService', () => {
     });
 
     it('should reject if create template fails', async () => {
-      const runStub = stub(yeoman.prototype, 'run').rejects(new Error('error'));
+      const generatorStub = stub(SfGenerator.prototype, 'run').throws(
+        new Error('error')
+      );
       const templateService = TemplateService.getInstance(process.cwd());
       try {
         await templateService.create(TemplateType.ApexClass, {
@@ -452,11 +472,13 @@ describe('TemplateService', () => {
           classname: 'LibraryCreateClass',
           outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
         });
+        throw new Error('should have thrown an error');
       } catch (error) {
         const err = error as Error;
         chai.expect(err.message).to.equal('error');
+      } finally {
+        generatorStub.restore();
       }
-      runStub.restore();
     });
   });
 });

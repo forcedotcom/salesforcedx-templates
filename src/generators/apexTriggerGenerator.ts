@@ -7,25 +7,26 @@
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ApexTriggerOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { SfGenerator } from './sfGenerator';
 
-export default class ApexTriggerGenerator extends SfdxGenerator<ApexTriggerOptions> {
-  constructor(args: string | string[], options: ApexTriggerOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('apextrigger');
+export default class ApexTriggerGenerator extends SfGenerator<ApexTriggerOptions> {
+  constructor(options: ApexTriggerOptions) {
+    super(options);
   }
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.triggername);
     CreateUtil.checkInputs(this.options.template);
   }
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, triggername, triggerevents, sobject } = this.options;
-    this.fs.copyTpl(
+    this.sourceRootWithPartialPath('apextrigger');
+
+    await this.render(
       this.templatePath(`${template}.trigger`),
       this.destinationPath(path.join(this.outputdir, `${triggername}.trigger`)),
       { triggername, sobject, triggerEvents: triggerevents }
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath('_trigger.trigger-meta.xml'),
       this.destinationPath(
         path.join(this.outputdir, `${triggername}.trigger-meta.xml`)

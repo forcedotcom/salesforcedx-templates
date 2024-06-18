@@ -7,12 +7,11 @@
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { VisualforceComponentOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { SfGenerator } from './sfGenerator';
 
-export default class VisualforceComponentGenerator extends SfdxGenerator<VisualforceComponentOptions> {
-  constructor(args: string | string[], options: VisualforceComponentOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('visualforcecomponent');
+export default class VisualforceComponentGenerator extends SfGenerator<VisualforceComponentOptions> {
+  constructor(options: VisualforceComponentOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -20,16 +19,18 @@ export default class VisualforceComponentGenerator extends SfdxGenerator<Visualf
     CreateUtil.checkInputs(this.options.template);
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, label, componentname } = this.options;
-    this.fs.copyTpl(
+    this.sourceRootWithPartialPath('visualforcecomponent');
+
+    await this.render(
       this.templatePath(`${template}.component`),
       this.destinationPath(
         path.join(this.outputdir, `${componentname}.component`)
       ),
       {}
     ),
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('_component.component-meta.xml'),
         this.destinationPath(
           path.join(this.outputdir, `${componentname}.component-meta.xml`)

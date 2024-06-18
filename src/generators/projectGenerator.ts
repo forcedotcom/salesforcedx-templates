@@ -5,10 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as fs from 'fs';
+import { readFile, writeFile } from 'node:fs/promises';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ProjectOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { SfGenerator } from './sfGenerator';
 
 const GITIGNORE = 'gitignore';
 const HUSKY_FOLDER = '.husky';
@@ -40,12 +41,21 @@ const emptyfolderarray = ['aura', 'lwc'];
 const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
 const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
 
-export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
-  constructor(args: string | string[], options: ProjectOptions) {
-    // Set customInstallTask to false so that the npm install will be attempted.
-    super(args, options, {
-      customInstallTask: false,
-    });
+async function extendJSON(
+  filepath: string,
+  replacer?: (this: any, key: string, value: any) => any
+) {
+  const originalContent = JSON.parse(
+    await readFile(filepath, 'utf8').catch(() => '{}')
+  );
+
+  const newContent = JSON.stringify(originalContent, replacer, 2);
+  await writeFile(filepath, newContent);
+}
+
+export default class ProjectGenerator extends SfGenerator<ProjectOptions> {
+  constructor(options: ProjectOptions) {
+    super(options);
     this.sourceRootWithPartialPath('project');
   }
 
@@ -53,7 +63,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     CreateUtil.checkInputs(this.options.template);
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { projectname, template, defaultpackagedir, manifest, ns, loginurl } =
       this.options;
     const folderlayout = [
@@ -69,7 +79,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     const soqlQueryFile = 'account.soql';
     const anonApexFile = 'hello.apex';
 
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(scratchDefFile),
       this.destinationPath(
         path.join(
@@ -81,12 +91,12 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       ),
       { company: (process.env.USER || 'Demo') + ' company' }
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(`${template}/README.md`),
       this.destinationPath(path.join(this.outputdir, projectname, 'README.md')),
       {}
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath('sfdx-project.json'),
       this.destinationPath(
         path.join(this.outputdir, projectname, 'sfdx-project.json')
@@ -101,7 +111,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     );
 
     if (manifest === true) {
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(manifestFile),
         this.destinationPath(
           path.join(this.outputdir, projectname, 'manifest', 'package.xml')
@@ -117,7 +127,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       this._createHuskyConfig(path.join(this.outputdir, projectname));
 
       for (const file of vscodearray) {
-        this.fs.copyTpl(
+        await this.render(
           this.templatePath(`${file}.json`),
           this.destinationPath(
             path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
@@ -125,21 +135,21 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
           {}
         );
       }
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('lwc.eslintrc.json'),
         this.destinationPath(
           path.join(...folderlayout, 'lwc', '.eslintrc.json')
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('aura.eslintrc.json'),
         this.destinationPath(
           path.join(...folderlayout, 'aura', '.eslintrc.json')
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(path.join(template, soqlQueryFile)),
         this.destinationPath(
           path.join(
@@ -152,7 +162,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(path.join(template, anonApexFile)),
         this.destinationPath(
           path.join(
@@ -167,7 +177,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       );
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
-        this.fs.copyTpl(
+        await this.render(
           this.templatePath(file),
           this.destinationPath(path.join(this.outputdir, projectname, out)),
           {}
@@ -177,7 +187,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
 
     if (template === 'empty') {
       makeEmptyFolders(folderlayout, emptyfolderarray);
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('.forceignore'),
         this.destinationPath(
           path.join(this.outputdir, projectname, '.forceignore')
@@ -193,7 +203,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       this._createHuskyConfig(path.join(this.outputdir, projectname));
 
       for (const file of vscodearray) {
-        this.fs.copyTpl(
+        await this.render(
           this.templatePath(`${file}.json`),
           this.destinationPath(
             path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
@@ -202,9 +212,8 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
         );
       }
       // add the analytics vscode extension to the recommendations
-      this.fs.extendJSON(
+      await extendJSON(
         path.join(this.outputdir, projectname, '.vscode', 'extensions.json'),
-        {},
         (key: string, value: unknown) => {
           if (
             key === 'recommendations' &&
@@ -216,14 +225,14 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
           return value;
         }
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('lwc.eslintrc.json'),
         this.destinationPath(
           path.join(...folderlayout, 'lwc', '.eslintrc.json')
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('aura.eslintrc.json'),
         this.destinationPath(
           path.join(...folderlayout, 'aura', '.eslintrc.json')
@@ -232,7 +241,7 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
       );
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
-        this.fs.copyTpl(
+        await this.render(
           this.templatePath(file),
           this.destinationPath(path.join(this.outputdir, projectname, out)),
           {}
@@ -241,13 +250,13 @@ export default class ProjectGenerator extends SfdxGenerator<ProjectOptions> {
     }
   }
 
-  private _createHuskyConfig(projectRootDir: string) {
+  private async _createHuskyConfig(projectRootDir: string) {
     const huskyDirPath = path.join(projectRootDir, HUSKY_FOLDER);
     if (!fs.existsSync(huskyDirPath)) {
       fs.mkdirSync(huskyDirPath);
     }
     for (const file of huskyhookarray) {
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(path.join(HUSKY_FOLDER, file)),
         this.destinationPath(path.join(huskyDirPath, file)),
         {}

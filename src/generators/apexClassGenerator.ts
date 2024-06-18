@@ -7,12 +7,11 @@
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ApexClassOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { SfGenerator } from './sfGenerator';
 
-export default class ApexClassGenerator extends SfdxGenerator<ApexClassOptions> {
-  constructor(args: string | string[], options: ApexClassOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('apexclass');
+export default class ApexClassGenerator extends SfGenerator<ApexClassOptions> {
+  constructor(options: ApexClassOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -20,19 +19,22 @@ export default class ApexClassGenerator extends SfdxGenerator<ApexClassOptions> 
     CreateUtil.checkInputs(this.options.classname);
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, classname } = this.options;
-    this.fs.copyTpl(
+    this.sourceRootWithPartialPath('apexclass');
+
+    await this.render(
       this.templatePath(`${template}.cls`),
       this.destinationPath(path.join(this.outputdir, `${classname}.cls`)),
       { apiName: classname }
-    ),
-      this.fs.copyTpl(
-        this.templatePath('_class.cls-meta.xml'),
-        this.destinationPath(
-          path.join(this.outputdir, `${classname}.cls-meta.xml`)
-        ),
-        { apiName: classname, apiVersion: this.apiversion }
-      );
+    );
+
+    await this.render(
+      this.templatePath('_class.cls-meta.xml'),
+      this.destinationPath(
+        path.join(this.outputdir, `${classname}.cls-meta.xml`)
+      ),
+      { apiName: classname, apiVersion: this.apiversion }
+    );
   }
 }

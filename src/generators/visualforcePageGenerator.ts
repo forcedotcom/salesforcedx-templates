@@ -7,9 +7,9 @@
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { VisualforcePageOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class VisualforcePageGenerator extends SfGenerator<VisualforcePageOptions> {
+export default class VisualforcePageGenerator extends BaseGenerator<VisualforcePageOptions> {
   constructor(options: VisualforcePageOptions) {
     super(options);
   }

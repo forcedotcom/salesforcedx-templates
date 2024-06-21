@@ -8,9 +8,9 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { AnalyticsTemplateOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class AnalyticsTemplateGenerator extends SfGenerator<AnalyticsTemplateOptions> {
+export default class AnalyticsTemplateGenerator extends BaseGenerator<AnalyticsTemplateOptions> {
   constructor(options: AnalyticsTemplateOptions) {
     super(options);
   }

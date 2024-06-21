@@ -10,9 +10,9 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningComponentOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class LightningComponentGenerator extends SfGenerator<LightningComponentOptions> {
+export default class LightningComponentGenerator extends BaseGenerator<LightningComponentOptions> {
   constructor(options: LightningComponentOptions) {
     super(options);
   }

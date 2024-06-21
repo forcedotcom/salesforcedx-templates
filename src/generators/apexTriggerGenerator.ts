@@ -7,9 +7,9 @@
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ApexTriggerOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class ApexTriggerGenerator extends SfGenerator<ApexTriggerOptions> {
+export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptions> {
   constructor(options: ApexTriggerOptions) {
     super(options);
   }

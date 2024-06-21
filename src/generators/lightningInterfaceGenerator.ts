@@ -8,9 +8,9 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningInterfaceOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class LightningInterfaceGenerator extends SfGenerator<LightningInterfaceOptions> {
+export default class LightningInterfaceGenerator extends BaseGenerator<LightningInterfaceOptions> {
   constructor(options: LightningInterfaceOptions) {
     super(options);
   }

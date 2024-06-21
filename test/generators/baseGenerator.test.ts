@@ -5,24 +5,20 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as path from 'path';
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 import { TemplateOptions } from '../../src';
-import { SfGenerator } from '../../src/generators/sfGenerator';
+import {
+  BaseGenerator,
+  getDefaultApiVersion,
+} from '../../src/generators/baseGenerator';
 
-function getDefaultApiVersion(): string {
-  const packageJsonPath = path.join('..', '..', 'package.json');
-  const versionTrimmed = require(packageJsonPath).salesforceApiVersion.trim();
-  return `${versionTrimmed.split('.')[0]}.0`;
-}
-
-describe('SfGenerator', () => {
+describe('BaseGenerator', () => {
   const API_VERSION = getDefaultApiVersion();
   interface MyTemplateOptions extends TemplateOptions {
     customProp: boolean;
   }
-  class MyGenerator extends SfGenerator<MyTemplateOptions> {
+  class MyGenerator extends BaseGenerator<MyTemplateOptions> {
     public validateOptions() {}
     public async generate() {
       this.doWriting({
@@ -62,5 +58,12 @@ describe('SfGenerator', () => {
 
     new MyGenerator(mockMyGeneratorOptions);
     expect(validateOptionsStub.calledOnce).to.be.true;
+  });
+});
+
+describe('getDefaultApiVersion', () => {
+  it('should return the default api version', async () => {
+    const pjson = await import('../../package.json');
+    expect(getDefaultApiVersion()).to.equal(`${pjson.salesforceApiVersion}.0`);
   });
 });

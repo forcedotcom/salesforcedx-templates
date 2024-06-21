@@ -5,11 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as fs from 'fs';
-import { readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ProjectOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
 const GITIGNORE = 'gitignore';
 const HUSKY_FOLDER = '.husky';
@@ -53,7 +53,7 @@ async function extendJSON(
   await writeFile(filepath, newContent);
 }
 
-export default class ProjectGenerator extends SfGenerator<ProjectOptions> {
+export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   constructor(options: ProjectOptions) {
     super(options);
     this.sourceRootWithPartialPath('project');
@@ -121,7 +121,7 @@ export default class ProjectGenerator extends SfGenerator<ProjectOptions> {
     }
 
     if (template === 'standard') {
-      makeEmptyFolders(folderlayout, standardfolderarray);
+      await makeEmptyFolders(folderlayout, standardfolderarray);
 
       // Add Husky directory and hooks
       this._createHuskyConfig(path.join(this.outputdir, projectname));
@@ -186,7 +186,7 @@ export default class ProjectGenerator extends SfGenerator<ProjectOptions> {
     }
 
     if (template === 'empty') {
-      makeEmptyFolders(folderlayout, emptyfolderarray);
+      await makeEmptyFolders(folderlayout, emptyfolderarray);
       await this.render(
         this.templatePath('.forceignore'),
         this.destinationPath(
@@ -197,7 +197,7 @@ export default class ProjectGenerator extends SfGenerator<ProjectOptions> {
     }
 
     if (template === 'analytics') {
-      makeEmptyFolders(folderlayout, analyticsfolderarray);
+      await makeEmptyFolders(folderlayout, analyticsfolderarray);
 
       // Add Husky directory and hooks
       this._createHuskyConfig(path.join(this.outputdir, projectname));
@@ -265,20 +265,11 @@ export default class ProjectGenerator extends SfGenerator<ProjectOptions> {
   }
 }
 
-function makeEmptyFolders(
+async function makeEmptyFolders(
   toplevelfolders: string[],
   metadatafolders: string[]
 ) {
-  let oldfolder = '';
-  for (const folder of toplevelfolders) {
-    if (!fs.existsSync(path.join(oldfolder, folder))) {
-      fs.mkdirSync(path.join(oldfolder, folder));
-    }
-    oldfolder = path.join(oldfolder, folder);
-  }
-  for (const newfolder of metadatafolders) {
-    if (!fs.existsSync(path.join(oldfolder, newfolder))) {
-      fs.mkdirSync(path.join(oldfolder, newfolder));
-    }
+  for (const folder of metadatafolders) {
+    await mkdir(path.join(...toplevelfolders, folder), { recursive: true });
   }
 }

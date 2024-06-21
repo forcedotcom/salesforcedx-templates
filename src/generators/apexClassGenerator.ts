@@ -7,9 +7,9 @@
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ApexClassOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class ApexClassGenerator extends SfGenerator<ApexClassOptions> {
+export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> {
   constructor(options: ApexClassOptions) {
     super(options);
   }

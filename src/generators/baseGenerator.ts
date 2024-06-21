@@ -6,25 +6,17 @@
  */
 
 import * as fs from 'fs';
-import { access, mkdir, writeFile, readFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import * as path from 'path';
 import { CreateOutput, TemplateOptions } from '../utils/types';
 import { renderFile } from 'ejs';
 import { nls } from '../i18n';
 import { loadCustomTemplatesGitRepo } from '../service/gitRepoUtils';
 
-async function pathExists(path: string): Promise<boolean> {
-  return access(path)
-    .then(() => true)
-    .catch(() => false);
-}
-
 async function outputFile(file: string, data: string): Promise<void> {
   const dir = path.dirname(file);
 
-  if (!(await pathExists(dir))) {
-    await mkdir(dir, { recursive: true });
-  }
+  await mkdir(dir, { recursive: true });
 
   return writeFile(file, data);
 }
@@ -74,7 +66,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
 /**
  * Look up package version of @salesforce/templates package to supply a default API version
  */
-function getDefaultApiVersion(): string {
+export function getDefaultApiVersion(): string {
   const packageJsonPath = path.join('..', '..', 'package.json');
   const versionTrimmed = require(packageJsonPath).salesforceApiVersion.trim();
   return `${versionTrimmed.split('.')[0]}.0`;
@@ -173,7 +165,7 @@ abstract class NotYeoman {
   }
 }
 
-export abstract class SfGenerator<
+export abstract class BaseGenerator<
   TOptions extends TemplateOptions
 > extends NotYeoman {
   /**

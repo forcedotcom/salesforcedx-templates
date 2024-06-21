@@ -17,19 +17,15 @@ import { nls } from '../../src/i18n';
 import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';
 import { getProxyForUrl } from 'proxy-from-env';
 import {
-  SfGenerator,
+  BaseGenerator,
   setCustomTemplatesRootPathOrGitRepo,
-} from '../../src/generators/sfGenerator';
+  getDefaultApiVersion,
+} from '../../src/generators/baseGenerator';
+import { importGenerator } from '../../src/service/templateService';
 
 chai.use(chaiAsPromised);
 chai.config.truncateThreshold = 100000;
 chai.should();
-
-function getDefaultApiVersion(): string {
-  const packageJsonPath = path.join('..', '..', 'package.json');
-  const versionTrimmed = require(packageJsonPath).salesforceApiVersion.trim();
-  return `${versionTrimmed.split('.')[0]}.0`;
-}
 
 function assertFileContent(file: string, regex: string | RegExp) {
   const exists = fs.existsSync(file);
@@ -361,7 +357,7 @@ describe('TemplateService', () => {
 
       await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
-      assert.calledOnce(streamStub);
+      assert.callCount(streamStub, 1);
       streamStub.restore();
       existsSyncStub.restore();
     });
@@ -462,7 +458,7 @@ describe('TemplateService', () => {
     });
 
     it('should reject if create template fails', async () => {
-      const generatorStub = stub(SfGenerator.prototype, 'run').throws(
+      const generatorStub = stub(BaseGenerator.prototype, 'run').throws(
         new Error('error')
       );
       const templateService = TemplateService.getInstance(process.cwd());
@@ -479,6 +475,438 @@ describe('TemplateService', () => {
       } finally {
         generatorStub.restore();
       }
+    });
+  });
+
+  describe('Generators', () => {
+    it('should have a generator for each TemplateType', async () => {
+      const templateTypes = Object.values(TemplateType).filter(
+        (v) => !isNaN(Number(v))
+      );
+
+      for (const templateType of templateTypes) {
+        try {
+          // @ts-expect-error because we loose type safety when iterating over the values of an enum
+          const generator = await importGenerator(templateType);
+          chai.expect(generator).to.not.be.undefined;
+        } catch {
+          throw new Error(
+            `No generator found for template type: ${
+              TemplateType[templateType as number]
+            }`
+          );
+        }
+      }
+    });
+
+    it('should create AnalyticsTemplate', async () => {
+      await fs.remove(
+        path.join('testsoutput', 'libraryCreate', 'waveTemplates')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.AnalyticsTemplate,
+        {
+          templatename: 'analytics',
+          outputdir: path.join('testsoutput', 'libraryCreate', 'waveTemplates'),
+        }
+      );
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/waveTemplates/analytics/dashboards/analyticsDashboard.json',
+            'testsoutput/libraryCreate/waveTemplates/analytics/app-to-template-rules.json',
+            'testsoutput/libraryCreate/waveTemplates/analytics/folder.json',
+            'testsoutput/libraryCreate/waveTemplates/analytics/releaseNotes.html',
+            'testsoutput/libraryCreate/waveTemplates/analytics/template-info.json',
+            'testsoutput/libraryCreate/waveTemplates/analytics/template-to-app-rules.json',
+            'testsoutput/libraryCreate/waveTemplates/analytics/ui.json',
+            'testsoutput/libraryCreate/waveTemplates/analytics/variables.json',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create ApexClass', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'apexClass'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.ApexClass, {
+        template: 'DefaultApexClass',
+        classname: 'LibraryCreateClass',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls',
+            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create ApexTrigger', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'apexTrigger'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.ApexTrigger, {
+        triggername: 'LibraryCreateTrigger',
+        sobject: 'Account',
+        event: 'before insert',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'apexTrigger'),
+        template: 'ApexTrigger',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/apexTrigger/LibraryCreateTrigger.trigger',
+            'testsoutput/libraryCreate/apexTrigger/LibraryCreateTrigger.trigger-meta.xml',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create LightningApp', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.LightningApp, {
+        appname: 'LibraryCreateApp',
+        internal: false,
+        outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
+        template: 'DefaultLightningApp',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.app-meta.xml',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.app',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.auradoc',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateAppController.js',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.css',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateAppHelper.js',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateAppRenderer.js',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.svg',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create LightningComponent (aura)', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.LightningComponent,
+        {
+          componentname: 'LibraryCreateComponent',
+          outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
+          template: 'default',
+          type: 'aura',
+        }
+      );
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponent.cmp-meta.xml',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponent.auradoc',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponent.cmp',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponent.css',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponent.design',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponent.svg',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentController.js',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentHelper.js',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentRenderer.js',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create LightningComponent (lwc)', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.LightningComponent,
+        {
+          componentname: 'LibraryCreateComponent',
+          outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
+          template: 'default',
+          type: 'lwc',
+        }
+      );
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.html',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/__tests__/libraryCreateComponent.test.js',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js-meta.xml',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create LightningEvent', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.LightningEvent, {
+        eventname: 'LibraryCreateEvent',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
+        template: 'DefaultLightningEvt',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/aura/LibraryCreateEvent/LibraryCreateEvent.evt-meta.xml',
+            'testsoutput/libraryCreate/aura/LibraryCreateEvent/LibraryCreateEvent.evt',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create LightningInterface', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.LightningInterface,
+        {
+          interfacename: 'LibraryCreateInterface',
+          outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
+          template: 'DefaultLightningIntf',
+        }
+      );
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/aura/LibraryCreateInterface/LibraryCreateInterface.intf-meta.xml',
+            'testsoutput/libraryCreate/aura/LibraryCreateInterface/LibraryCreateInterface.intf',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create LightningTest', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.LightningTest, {
+        testname: 'LibraryCreateTest',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
+        template: 'DefaultLightningTest',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/aura/LibraryCreateTest.resource-meta.xml',
+            'testsoutput/libraryCreate/aura/LibraryCreateTest.resource',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create Project (standard)', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+        projectname: 'LibraryCreateProject',
+        template: 'standard',
+        defaultpackagedir: 'force-app',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.forceignore',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.gitignore',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.husky/pre-commit',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.prettierignore',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.prettierrc',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.vscode/extensions.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.vscode/launch.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.vscode/settings.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/README.md',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/config/project-scratch-def.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/force-app/main/default/aura/.eslintrc.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/force-app/main/default/lwc/.eslintrc.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/jest.config.js',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/package.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/scripts/apex/hello.apex',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/scripts/soql/account.soql',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/sfdx-project.json',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create Project (empty)', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+        projectname: 'LibraryCreateProject',
+        template: 'empty',
+        defaultpackagedir: 'force-app',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/project/LibraryCreateProject/config/project-scratch-def.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/README.md',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/sfdx-project.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.forceignore',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create Project (analytics)', async () => {
+      await fs.remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+        projectname: 'LibraryCreateProject',
+        template: 'analytics',
+        defaultpackagedir: 'force-app',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/project/LibraryCreateProject/config/project-scratch-def.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/README.md',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/sfdx-project.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.husky/pre-commit',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.vscode/extensions.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.vscode/launch.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.vscode/settings.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/force-app/main/default/lwc/.eslintrc.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/force-app/main/default/aura/.eslintrc.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.forceignore',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.gitignore',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.prettierignore',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.prettierrc',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/jest.config.js',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/package.json',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create StaticResource', async () => {
+      await fs.remove(
+        path.join('testsoutput', 'libraryCreate', 'staticResource')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.StaticResource, {
+        resourcename: 'LibraryCreateResource',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'staticResource'),
+        template: 'empty',
+        contenttype: 'application/zip',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/staticResource/LibraryCreateResource/.gitkeep',
+            'testsoutput/libraryCreate/staticResource/LibraryCreateResource.resource-meta.xml',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create VisualforceComponent', async () => {
+      await fs.remove(
+        path.join('testsoutput', 'libraryCreate', 'visualforceComponent')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.VisualforceComponent,
+        {
+          componentname: 'LibraryCreateComponent',
+          label: 'LibraryCreateComponent',
+          outputdir: path.join(
+            'testsoutput',
+            'libraryCreate',
+            'visualforceComponent'
+          ),
+          template: 'DefaultVFComponent',
+        }
+      );
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/visualforceComponent/LibraryCreateComponent.component',
+            'testsoutput/libraryCreate/visualforceComponent/LibraryCreateComponent.component-meta.xml',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
+    it('should create VisualforcePage', async () => {
+      await fs.remove(
+        path.join('testsoutput', 'libraryCreate', 'visualforcePage')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.VisualforcePage,
+        {
+          pagename: 'LibraryCreatePage',
+          label: 'LibraryCreatePage',
+          outputdir: path.join(
+            'testsoutput',
+            'libraryCreate',
+            'visualforcePage'
+          ),
+          template: 'DefaultVFPage',
+        }
+      );
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/visualforcePage/LibraryCreatePage.page',
+            'testsoutput/libraryCreate/visualforcePage/LibraryCreatePage.page-meta.xml',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
     });
   });
 });

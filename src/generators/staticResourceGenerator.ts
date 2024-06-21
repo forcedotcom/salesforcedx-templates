@@ -9,11 +9,11 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { StaticResourceOptions } from '../utils/types';
-import { SfGenerator } from './sfGenerator';
+import { BaseGenerator } from './baseGenerator';
 
 const EXTENSION_TEMPLATES = ['js', 'css', 'json', 'txt'];
 
-export default class StaticResourceGenerator extends SfGenerator<StaticResourceOptions> {
+export default class StaticResourceGenerator extends BaseGenerator<StaticResourceOptions> {
   constructor(options: StaticResourceOptions) {
     super(options);
   }

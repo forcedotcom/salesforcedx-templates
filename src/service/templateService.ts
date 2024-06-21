@@ -11,7 +11,7 @@ import {
   TemplateType,
 } from '../utils/types';
 
-async function importGenerator(templateType: TemplateType) {
+export async function importGenerator(templateType: TemplateType) {
   const generatorClass =
     TemplateType[templateType].toString().charAt(0).toLowerCase() +
     TemplateType[templateType].toString().slice(1) +
@@ -32,7 +32,7 @@ export class TemplateService {
 
   /**
    * Get an instance of TemplateService
-   * @param cwd cwd of current yeoman environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
+   * @param cwd cwd of current environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
    */
   public static getInstance(cwd?: string): TemplateService {
     if (!TemplateService.instance) {
@@ -44,14 +44,14 @@ export class TemplateService {
   }
 
   /**
-   * Getting cwd of current yeoman environment
+   * Getting cwd of current environment
    */
   public get cwd(): string {
     return this._cwd;
   }
 
   /**
-   * Setting cwd of current yeoman environment
+   * Setting cwd of current environment
    * In VS Code, it's typically the root workspace path
    */
   public set cwd(cwd: string) {

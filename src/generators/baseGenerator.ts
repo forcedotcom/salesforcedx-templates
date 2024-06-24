@@ -236,11 +236,7 @@ export abstract class BaseGenerator<
 
     await this.generate();
 
-    const created = [
-      ...this.changes.created,
-      ...this.changes.identical,
-      ...this.changes.forced,
-    ];
+    const created = [...this.changes.created, ...this.changes.forced];
     const outputDir = path.resolve(cwd, this.outputdir);
     const rawOutput = nls.localize('RawOutput', [
       outputDir,

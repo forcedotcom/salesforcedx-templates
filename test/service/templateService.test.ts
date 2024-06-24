@@ -7,11 +7,11 @@
 
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-import * as fsOriginal from 'fs';
-import * as fs from 'fs-extra';
+import * as fs from 'fs';
+import { rm } from 'node:fs/promises';
 import got from 'got';
 import * as path from 'path';
-import { assert, spy, stub, createSandbox } from 'sinon';
+import * as sinon from 'sinon';
 import { TemplateService, TemplateType } from '../../src';
 import { nls } from '../../src/i18n';
 import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';
@@ -26,6 +26,10 @@ import { importGenerator } from '../../src/service/templateService';
 chai.use(chaiAsPromised);
 chai.config.truncateThreshold = 100000;
 chai.should();
+
+async function remove(file: string) {
+  await rm(file, { force: true, recursive: true });
+}
 
 function assertFileContent(file: string, regex: string | RegExp) {
   const exists = fs.existsSync(file);
@@ -103,8 +107,6 @@ describe('TemplateService', () => {
   });
 
   describe('create custom template', () => {
-    // add reference to a sinon sandbox
-    const sandbox = createSandbox();
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/main/test/custom-templates';
     const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
@@ -112,12 +114,12 @@ describe('TemplateService', () => {
     );
 
     beforeEach(async () => {
-      await fs.remove(
+      await remove(
         path.join('testsoutput', 'customLibraryCreate', 'apexclass')
       );
     });
     afterEach(() => {
-      sandbox.restore();
+      sinon.restore();
     });
 
     it('should create custom template from local folder', async () => {
@@ -166,9 +168,8 @@ describe('TemplateService', () => {
     it('should create custom template from GitHub repository', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
-      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
-        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
-      }
+      await remove(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
+
       await templateService.create(
         TemplateType.ApexClass,
         {
@@ -238,7 +239,7 @@ describe('TemplateService', () => {
         getProxyForUrl,
       };
       // @ts-ignore - function signature is not compatible with sinon stub
-      sandbox.stub(mockIt, 'getProxyForUrl').returns(undefined);
+      sinon.stub(mockIt, 'getProxyForUrl').returns(undefined);
       const templateService = TemplateService.getInstance(process.cwd());
       const customTemplates =
         'https://github.com/forcedotcom/this-repo-does-not-exist';
@@ -342,61 +343,42 @@ describe('TemplateService', () => {
     });
 
     it('should download the repo if the folder does not exist', async () => {
-      const existsSyncStub = stub(fsOriginal, 'existsSync');
-      existsSyncStub.callsFake((fsPath) => {
-        if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
-          return true;
-        }
-        return fs.existsSync(fsPath);
-      });
-      const streamStub = spy(got, 'stream');
-      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
-        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
-      }
+      sinon
+        .stub(fs, 'existsSync')
+        .withArgs(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)
+        .returns(false);
+      const streamStub = sinon.spy(got, 'stream');
+      await remove(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
       await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
-      assert.callCount(streamStub, 1);
-      streamStub.restore();
-      existsSyncStub.restore();
+      sinon.assert.callCount(streamStub, 1);
     });
 
     it('should not download the repo if the folder already exists', async () => {
-      const existsSyncStub = stub(fsOriginal, 'existsSync');
-      existsSyncStub.callsFake((fsPath) => {
-        if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
-          return true;
-        }
-        return fs.existsSync(fsPath);
-      });
-      const streamStub = spy(got, 'stream');
+      sinon
+        .stub(fs, 'existsSync')
+        .withArgs(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)
+        .returns(true);
+      const streamStub = sinon.spy(got, 'stream');
 
-      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
-        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
-      }
+      await remove(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
       await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
-      assert.notCalled(streamStub);
-      streamStub.restore();
-      existsSyncStub.restore();
+      sinon.assert.notCalled(streamStub);
     });
 
     it('should download the repo if the folder already exists, but forcing a redownload', async () => {
-      const existsSyncStub = stub(fsOriginal, 'existsSync');
-      existsSyncStub.callsFake((fsPath) => {
-        if (fsPath === TEST_CUSTOM_TEMPLATES_REPO) {
-          return true;
-        }
-        return fs.existsSync(fsPath);
-      });
-      const streamStub = spy(got, 'stream');
-      if (fs.existsSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)) {
-        fs.removeSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
-      }
+      sinon
+        .stub(fs, 'existsSync')
+        .withArgs(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)
+        .returns(true);
+      const streamStub = sinon.spy(got, 'stream');
+      await remove(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
@@ -406,15 +388,16 @@ describe('TemplateService', () => {
         forceLoadingRemoteRepo
       );
 
-      assert.calledOnce(streamStub);
-      streamStub.restore();
-      existsSyncStub.restore();
+      sinon.assert.calledOnce(streamStub);
     });
   }).timeout(20000);
 
   describe('create template', () => {
+    afterEach(() => {
+      sinon.restore();
+    });
     it('create template should return created output', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'apexClass'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'apexClass'));
       const templateService = TemplateService.getInstance(process.cwd());
       const result = await templateService.create(TemplateType.ApexClass, {
         template: 'DefaultApexClass',
@@ -458,9 +441,7 @@ describe('TemplateService', () => {
     });
 
     it('should reject if create template fails', async () => {
-      const generatorStub = stub(BaseGenerator.prototype, 'run').throws(
-        new Error('error')
-      );
+      sinon.stub(BaseGenerator.prototype, 'run').throws(new Error('error'));
       const templateService = TemplateService.getInstance(process.cwd());
       try {
         await templateService.create(TemplateType.ApexClass, {
@@ -472,8 +453,6 @@ describe('TemplateService', () => {
       } catch (error) {
         const err = error as Error;
         chai.expect(err.message).to.equal('error');
-      } finally {
-        generatorStub.restore();
       }
     });
   });
@@ -500,9 +479,7 @@ describe('TemplateService', () => {
     });
 
     it('should create AnalyticsTemplate', async () => {
-      await fs.remove(
-        path.join('testsoutput', 'libraryCreate', 'waveTemplates')
-      );
+      await remove(path.join('testsoutput', 'libraryCreate', 'waveTemplates'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
         TemplateType.AnalyticsTemplate,
@@ -531,7 +508,7 @@ describe('TemplateService', () => {
     });
 
     it('should create ApexClass', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'apexClass'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'apexClass'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.ApexClass, {
         template: 'DefaultApexClass',
@@ -552,7 +529,7 @@ describe('TemplateService', () => {
     });
 
     it('should create ApexTrigger', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'apexTrigger'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'apexTrigger'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.ApexTrigger, {
         triggername: 'LibraryCreateTrigger',
@@ -575,7 +552,7 @@ describe('TemplateService', () => {
     });
 
     it('should create LightningApp', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.LightningApp, {
         appname: 'LibraryCreateApp',
@@ -603,7 +580,7 @@ describe('TemplateService', () => {
     });
 
     it('should create LightningComponent (aura)', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
         TemplateType.LightningComponent,
@@ -635,7 +612,7 @@ describe('TemplateService', () => {
     });
 
     it('should create LightningComponent (lwc)', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
         TemplateType.LightningComponent,
@@ -662,7 +639,7 @@ describe('TemplateService', () => {
     });
 
     it('should create LightningEvent', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.LightningEvent, {
         eventname: 'LibraryCreateEvent',
@@ -683,7 +660,7 @@ describe('TemplateService', () => {
     });
 
     it('should create LightningInterface', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
         TemplateType.LightningInterface,
@@ -707,7 +684,7 @@ describe('TemplateService', () => {
     });
 
     it('should create LightningTest', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'aura'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.LightningTest, {
         testname: 'LibraryCreateTest',
@@ -728,7 +705,7 @@ describe('TemplateService', () => {
     });
 
     it('should create Project (standard)', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.Project, {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
@@ -765,7 +742,7 @@ describe('TemplateService', () => {
     });
 
     it('should create Project (empty)', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.Project, {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
@@ -789,7 +766,7 @@ describe('TemplateService', () => {
     });
 
     it('should create Project (analytics)', async () => {
-      await fs.remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.Project, {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
@@ -824,9 +801,7 @@ describe('TemplateService', () => {
     });
 
     it('should create StaticResource', async () => {
-      await fs.remove(
-        path.join('testsoutput', 'libraryCreate', 'staticResource')
-      );
+      await remove(path.join('testsoutput', 'libraryCreate', 'staticResource'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.StaticResource, {
         resourcename: 'LibraryCreateResource',
@@ -848,7 +823,7 @@ describe('TemplateService', () => {
     });
 
     it('should create VisualforceComponent', async () => {
-      await fs.remove(
+      await remove(
         path.join('testsoutput', 'libraryCreate', 'visualforceComponent')
       );
       const templateService = TemplateService.getInstance();
@@ -879,7 +854,7 @@ describe('TemplateService', () => {
     });
 
     it('should create VisualforcePage', async () => {
-      await fs.remove(
+      await remove(
         path.join('testsoutput', 'libraryCreate', 'visualforcePage')
       );
       const templateService = TemplateService.getInstance();

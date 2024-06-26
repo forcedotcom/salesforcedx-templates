@@ -1,3 +1,12 @@
+# [61.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.1.0...61.2.0) (2024-06-26)
+
+
+### Features
+
+* bump @salesforce/core from v7 to v8 ([#588](https://github.com/forcedotcom/salesforcedx-templates/issues/588)) ([2d4285b](https://github.com/forcedotcom/salesforcedx-templates/commit/2d4285b09d73ab70d74a1b06c22a24a9e4e3e69c))
+
+
+
 # [61.1.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.0.1...61.1.0) (2024-06-26)
 
 

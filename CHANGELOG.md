@@ -1,3 +1,12 @@
+# [61.1.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.0.1...61.1.0) (2024-06-26)
+
+
+### Features
+
+* remove dependency on yeoman ([#587](https://github.com/forcedotcom/salesforcedx-templates/issues/587)) ([813b0db](https://github.com/forcedotcom/salesforcedx-templates/commit/813b0dbc355059ff7c21ce207df5af42ee8bf4f0))
+
+
+
 ## [61.0.1](https://github.com/forcedotcom/salesforcedx-templates/compare/60.1.6...61.0.1) (2024-06-07)
 
 

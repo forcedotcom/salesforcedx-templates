@@ -8,12 +8,11 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningEventOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class LightningEventGenerator extends SfdxGenerator<LightningEventOptions> {
-  constructor(args: string | string[], options: LightningEventOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('lightningevent');
+export default class LightningEventGenerator extends BaseGenerator<LightningEventOptions> {
+  constructor(options: LightningEventOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -26,11 +25,12 @@ export default class LightningEventGenerator extends SfdxGenerator<LightningEven
     }
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, eventname, internal } = this.options;
-    // tslint:disable-next-line:no-unused-expression
+    this.sourceRootWithPartialPath('lightningevent');
+
     if (!internal) {
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('_auradefinitionbundle.evt-meta.xml'),
         this.destinationPath(
           path.join(this.outputdir, eventname, `${eventname}.evt-meta.xml`)
@@ -42,7 +42,7 @@ export default class LightningEventGenerator extends SfdxGenerator<LightningEven
         }
       );
     }
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(`${template}.evt`),
       this.destinationPath(
         path.join(this.outputdir, eventname, `${eventname}.evt`)

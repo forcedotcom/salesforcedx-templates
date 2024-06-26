@@ -10,11 +10,11 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningComponentOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class LightningComponentGenerator extends SfdxGenerator<LightningComponentOptions> {
-  constructor(args: string | string[], options: LightningComponentOptions) {
-    super(args, options);
+export default class LightningComponentGenerator extends BaseGenerator<LightningComponentOptions> {
+  constructor(options: LightningComponentOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -45,7 +45,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
     }
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, componentname, type, internal } = this.options;
 
     if (type === 'aura') {
@@ -53,7 +53,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         path.join('lightningcomponent', 'aura', template)
       );
       if (!internal) {
-        this.fs.copyTpl(
+        await this.render(
           this.templatePath(`${template}.cmp-meta.xml`),
           this.destinationPath(
             path.join(
@@ -69,42 +69,42 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
           }
         );
       }
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}.auradoc`),
         this.destinationPath(
           path.join(this.outputdir, componentname, `${componentname}.auradoc`)
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}.cmp`),
         this.destinationPath(
           path.join(this.outputdir, componentname, `${componentname}.cmp`)
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}.css`),
         this.destinationPath(
           path.join(this.outputdir, componentname, `${componentname}.css`)
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}.design`),
         this.destinationPath(
           path.join(this.outputdir, componentname, `${componentname}.design`)
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}.svg`),
         this.destinationPath(
           path.join(this.outputdir, componentname, `${componentname}.svg`)
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}Controller.js`),
         this.destinationPath(
           path.join(
@@ -115,14 +115,14 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}Helper.js`),
         this.destinationPath(
           path.join(this.outputdir, componentname, `${componentname}Helper.js`)
         ),
         {}
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}Renderer.js`),
         this.destinationPath(
           path.join(
@@ -152,7 +152,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
       this.sourceRootWithPartialPath(
         path.join('lightningcomponent', 'lwc', template)
       );
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}.js`),
         this.destinationPath(
           path.join(
@@ -164,7 +164,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         { pascalCaseComponentName }
       );
 
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`${template}.html`),
         this.destinationPath(
           path.join(
@@ -176,7 +176,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         {}
       );
 
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(path.join(`__tests__`, `${template}.test.js`)),
         this.destinationPath(
           path.join(
@@ -197,7 +197,7 @@ export default class LightningComponentGenerator extends SfdxGenerator<Lightning
         const masterLabel = camelCaseToTitleCase(componentname)
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;');
-        this.fs.copyTpl(
+        await this.render(
           this.templatePath(`${template}.js-meta.xml`),
           this.destinationPath(
             path.join(

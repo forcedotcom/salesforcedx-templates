@@ -9,14 +9,13 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { StaticResourceOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { BaseGenerator } from './baseGenerator';
 
 const EXTENSION_TEMPLATES = ['js', 'css', 'json', 'txt'];
 
-export default class StaticResourceGenerator extends SfdxGenerator<StaticResourceOptions> {
-  constructor(args: string | string[], options: StaticResourceOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('staticresource');
+export default class StaticResourceGenerator extends BaseGenerator<StaticResourceOptions> {
+  constructor(options: StaticResourceOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -27,14 +26,15 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
     }
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { resourcename, contenttype } = this.options;
+    this.sourceRootWithPartialPath('staticresource');
 
     const ext = extension(contenttype);
 
     if (ext && EXTENSION_TEMPLATES.includes(ext)) {
       // For types that we have default file, write that (js, css, txt, json)
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath(`empty.${ext}`),
         this.destinationPath(
           path.join(this.outputdir, `${resourcename}.${ext}`)
@@ -43,7 +43,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
       );
     } else if (ext === 'zip') {
       // For zip files, write an empty js file in a folder
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('_gitkeep'),
         this.destinationPath(
           path.join(this.outputdir, resourcename, '.gitkeep')
@@ -52,7 +52,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
       );
     } else {
       // For all other mime types write a generic .resource file
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('empty.resource'),
         this.destinationPath(
           path.join(this.outputdir, `${resourcename}.resource`)
@@ -61,7 +61,7 @@ export default class StaticResourceGenerator extends SfdxGenerator<StaticResourc
       );
     }
 
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath('_staticresource.resource-meta.xml'),
       this.destinationPath(
         path.join(this.outputdir, `${resourcename}.resource-meta.xml`)

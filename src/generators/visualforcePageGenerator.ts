@@ -7,12 +7,11 @@
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { VisualforcePageOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class VisualforcePageGenerator extends SfdxGenerator<VisualforcePageOptions> {
-  constructor(args: string | string[], options: VisualforcePageOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('visualforcepage');
+export default class VisualforcePageGenerator extends BaseGenerator<VisualforcePageOptions> {
+  constructor(options: VisualforcePageOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -20,14 +19,16 @@ export default class VisualforcePageGenerator extends SfdxGenerator<VisualforceP
     CreateUtil.checkInputs(this.options.template);
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, label, pagename } = this.options;
-    this.fs.copyTpl(
+    this.sourceRootWithPartialPath('visualforcepage');
+
+    await this.render(
       this.templatePath(`${template}.page`),
       this.destinationPath(path.join(this.outputdir, `${pagename}.page`)),
       {}
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath('_page.page-meta.xml'),
       this.destinationPath(
         path.join(this.outputdir, `${pagename}.page-meta.xml`)

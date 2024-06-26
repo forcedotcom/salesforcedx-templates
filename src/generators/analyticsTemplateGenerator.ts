@@ -8,12 +8,11 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { AnalyticsTemplateOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsTemplateOptions> {
-  constructor(args: string | string[], options: AnalyticsTemplateOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath(path.join('analytics', 'waveTemplates'));
+export default class AnalyticsTemplateGenerator extends BaseGenerator<AnalyticsTemplateOptions> {
+  constructor(options: AnalyticsTemplateOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -25,10 +24,11 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
     }
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { templatename } = this.options;
-    // tslint:disable-next-line:no-unused-expression
-    this.fs.copyTpl(
+    this.sourceRootWithPartialPath(path.join('analytics', 'waveTemplates'));
+
+    await this.render(
       this.templatePath(
         path.join(
           'DefaultAnalyticsTemplate',
@@ -46,7 +46,7 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
       ),
       { templateName: templatename }
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(
         path.join('DefaultAnalyticsTemplate', 'app-to-template-rules.json')
       ),
@@ -55,14 +55,14 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
       ),
       {}
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'folder.json')),
       this.destinationPath(
         path.join(this.outputdir, templatename, 'folder.json')
       ),
       { templateName: templatename }
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(
         path.join('DefaultAnalyticsTemplate', 'releaseNotes.html')
       ),
@@ -71,7 +71,7 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
       ),
       {}
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(
         path.join('DefaultAnalyticsTemplate', 'template-info.json')
       ),
@@ -83,7 +83,7 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
         sourceApiVersion: this.apiversion,
       }
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(
         path.join('DefaultAnalyticsTemplate', 'template-to-app-rules.json')
       ),
@@ -92,12 +92,12 @@ export default class AnalyticsTemplateGenerator extends SfdxGenerator<AnalyticsT
       ),
       {}
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'ui.json')),
       this.destinationPath(path.join(this.outputdir, templatename, 'ui.json')),
       {}
     );
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(
         path.join('DefaultAnalyticsTemplate', 'variables.json')
       ),

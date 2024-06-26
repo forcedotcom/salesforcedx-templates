@@ -8,12 +8,11 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningInterfaceOptions } from '../utils/types';
-import { SfdxGenerator } from './sfdxGenerator';
+import { BaseGenerator } from './baseGenerator';
 
-export default class LightningInterfaceGenerator extends SfdxGenerator<LightningInterfaceOptions> {
-  constructor(args: string | string[], options: LightningInterfaceOptions) {
-    super(args, options);
-    this.sourceRootWithPartialPath('lightninginterface');
+export default class LightningInterfaceGenerator extends BaseGenerator<LightningInterfaceOptions> {
+  constructor(options: LightningInterfaceOptions) {
+    super(options);
   }
 
   public validateOptions(): void {
@@ -27,11 +26,12 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<Lightning
     }
   }
 
-  public writing(): void {
+  public async generate(): Promise<void> {
     const { template, interfacename, internal } = this.options;
-    // tslint:disable-next-line:no-unused-expression
+    this.sourceRootWithPartialPath('lightninginterface');
+
     if (!internal) {
-      this.fs.copyTpl(
+      await this.render(
         this.templatePath('_auradefinitionbundle.intf-meta.xml'),
         this.destinationPath(
           path.join(
@@ -46,7 +46,7 @@ export default class LightningInterfaceGenerator extends SfdxGenerator<Lightning
         }
       );
     }
-    this.fs.copyTpl(
+    await this.render(
       this.templatePath(`${template}.intf`),
       this.destinationPath(
         path.join(this.outputdir, interfacename, `${interfacename}.intf`)

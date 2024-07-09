@@ -196,7 +196,7 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
 
       if (template === 'typeScript') {
         await this.render(
-          this.templatePath('.gitignore'),
+          this.templatePath('gitignore'),
           this.destinationPath(
             path.join(this.outputdir, camelCaseComponentName, '.gitignore')
           ),

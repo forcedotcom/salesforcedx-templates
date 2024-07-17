@@ -154,7 +154,7 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
         path.join('lightningcomponent', 'lwc', template)
       );
       await this.render(
-        this.templatePath(`${template}.js`),
+        this.templatePath(`${template}.${ext}`),
         this.destinationPath(
           path.join(
             this.outputdir,
@@ -178,7 +178,7 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
       );
 
       await this.render(
-        this.templatePath(path.join(`__tests__`, `${template}.test.js`)),
+        this.templatePath(path.join(`__tests__`, `${template}.test.${ext}`)),
         this.destinationPath(
           path.join(
             this.outputdir,

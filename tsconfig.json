@@ -5,5 +5,6 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["./src/templates/lightningcomponent/lwc/typeScript/*"]
 }

@@ -67,5 +67,8 @@
     "@typescript-eslint/no-non-null-assertion": ["off"],
     "@typescript-eslint/no-var-requires": ["off"]
   },
-  "ignorePatterns": ["*.js"]
+  "ignorePatterns": [
+    "*.js",
+    "src/templates/lightningcomponent/lwc/typeScript/*"
+  ]
 }

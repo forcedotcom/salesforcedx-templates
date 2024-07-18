@@ -148,17 +148,18 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
         )!
         .join('-')
         .toLowerCase();
+      const ext = template === 'typeScript' ? 'ts' : 'js';
 
       this.sourceRootWithPartialPath(
         path.join('lightningcomponent', 'lwc', template)
       );
       await this.render(
-        this.templatePath(`${template}.js`),
+        this.templatePath(`${template}.${ext}`),
         this.destinationPath(
           path.join(
             this.outputdir,
             camelCaseComponentName,
-            `${camelCaseComponentName}.js`
+            `${camelCaseComponentName}.${ext}`
           )
         ),
         { pascalCaseComponentName }
@@ -177,13 +178,13 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
       );
 
       await this.render(
-        this.templatePath(path.join(`__tests__`, `${template}.test.js`)),
+        this.templatePath(path.join(`__tests__`, `${template}.test.${ext}`)),
         this.destinationPath(
           path.join(
             this.outputdir,
             camelCaseComponentName,
             `__tests__`,
-            `${camelCaseComponentName}.test.js`
+            `${camelCaseComponentName}.test.${ext}`
           )
         ),
         {
@@ -192,6 +193,16 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
           kebabCaseComponentName,
         }
       );
+
+      if (template === 'typeScript') {
+        await this.render(
+          this.templatePath('gitignore'),
+          this.destinationPath(
+            path.join(this.outputdir, camelCaseComponentName, '.gitignore')
+          ),
+          {}
+        );
+      }
 
       if (!internal) {
         const masterLabel = camelCaseToTitleCase(componentname)

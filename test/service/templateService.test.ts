@@ -638,6 +638,34 @@ describe('TemplateService', () => {
         );
     });
 
+    it('should create LightningComponent (lwc) with TypeScript', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.LightningComponent,
+        {
+          componentname: 'LibraryCreateComponent',
+          outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
+          template: 'typeScript',
+          type: 'lwc',
+        }
+      );
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.ts',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.html',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/__tests__/libraryCreateComponent.test.ts',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js-meta.xml',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/.gitignore',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
     it('should create LightningEvent', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();

@@ -1,3 +1,16 @@
+# [61.3.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.2.1...61.3.0) (2024-07-18)
+
+
+### Features
+
+* add typescript template for lwc ([#590](https://github.com/forcedotcom/salesforcedx-templates/issues/590)) ([5dc9ae4](https://github.com/forcedotcom/salesforcedx-templates/commit/5dc9ae4c3cfab942f69e78fcd86743be51f9099c))
+
+
+
+## [61.2.1](https://github.com/forcedotcom/salesforcedx-templates/compare/61.2.0...61.2.1) (2024-07-05)
+
+
+
 # [61.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.1.0...61.2.0) (2024-06-26)
 
 

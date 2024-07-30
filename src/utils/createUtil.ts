@@ -6,14 +6,11 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import * as os from 'node:os';
 import { nls } from '../i18n';
 
 /* tslint:disable:no-unused-expression */
 
 export class CreateUtil {
-  private static SFDX_STATE_FOLDER = '.sfdx';
-
   public static checkInputs(flagValue: string): string {
     const alphaRegExp = /^\w+$/;
 
@@ -77,12 +74,5 @@ export class CreateUtil {
       );
     }
     return subdirs;
-  }
-
-  /**
-   * The full system path to the preferred global state folder
-   */
-  public static get DIR(): string {
-    return path.join(os.homedir(), CreateUtil.SFDX_STATE_FOLDER);
   }
 }

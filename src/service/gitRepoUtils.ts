@@ -9,13 +9,13 @@
  * See https://github.com/vercel/next.js for more information
  */
 
-import { CreateUtil } from '../utils';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import got from 'got';
 import * as path from 'path';
 import { Stream } from 'stream';
 import * as tar from 'tar';
+import * as os from 'node:os';
 import { promisify } from 'util';
 import { nls } from '../i18n';
 import { HttpsProxyAgent } from 'hpagent';
@@ -26,6 +26,15 @@ interface RepoInfo {
   name: string;
   branch: string;
   filePath: string;
+}
+
+const SFDX_STATE_FOLDER = '.sfdx';
+
+/**
+ * The full system path to the preferred global state folder
+ */
+export function DIR(): string {
+  return path.join(os.homedir(), SFDX_STATE_FOLDER);
 }
 
 /**
@@ -86,11 +95,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
     .update(repoUri.href)
     .digest('hex');
 
-  const customTemplatesPath = path.join(
-    CreateUtil.DIR,
-    'custom-templates',
-    folderHash
-  );
+  const customTemplatesPath = path.join(DIR(), 'custom-templates', folderHash);
   return customTemplatesPath;
 }
 

@@ -9,7 +9,7 @@
  * See https://github.com/vercel/next.js for more information
  */
 
-import { Global } from '@salesforce/core';
+import { CreateUtil } from '../utils';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import got from 'got';
@@ -87,7 +87,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
     .digest('hex');
 
   const customTemplatesPath = path.join(
-    Global.DIR,
+    CreateUtil.DIR,
     'custom-templates',
     folderHash
   );

@@ -11,6 +11,7 @@ import { assert, expect } from 'chai';
 import * as fs from 'fs';
 import * as path from 'path';
 import { SinonStub, stub } from 'sinon';
+import * as os from 'os';
 
 /* tslint:disable: no-unused-expression */
 describe('CreateUtil', () => {
@@ -86,6 +87,20 @@ describe('CreateUtil', () => {
       );
       expect(templates).to.eql(names);
     };
+  });
+
+  describe('DIR', () => {
+    let homedirStub: SinonStub;
+    beforeEach(() => {
+      homedirStub = stub(os, 'homedir');
+    });
+    it('should return DIR', () => {
+      const homedir = '/Users/johndoe';
+      homedirStub.returns(homedir);
+      const sfdxStateFolder = '.sfdx';
+      const dir = CreateUtil.DIR;
+      expect(dir).to.eql(path.join(homedir, sfdxStateFolder));
+    });
   });
 
   describe('getCommandTemplatesInSubdirs', () => {

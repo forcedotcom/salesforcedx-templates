@@ -1,3 +1,12 @@
+# [61.4.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.3.0...61.4.0) (2024-07-30)
+
+
+### Features
+
+* remove core from dependencies ([#592](https://github.com/forcedotcom/salesforcedx-templates/issues/592)) ([f4dc06d](https://github.com/forcedotcom/salesforcedx-templates/commit/f4dc06d8b9ce2f35d84c820474f3aad62020f1de))
+
+
+
 # [61.3.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.2.1...61.3.0) (2024-07-18)
 
 

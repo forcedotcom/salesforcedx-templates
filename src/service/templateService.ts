@@ -5,18 +5,55 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import {
-  type CreateOutput,
-  type TemplateOptions,
-  TemplateType,
-} from '../utils/types';
+import { type CreateOutput, TemplateType } from '../utils/types';
+import analyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
+import apexClassGenerator from '../generators/apexClassGenerator';
+import apexTriggerGenerator from '../generators/apexTriggerGenerator';
+import lightningAppGenerator from '../generators/lightningAppGenerator';
+import lightningComponentGenerator from '../generators/lightningComponentGenerator';
+import lightningEventGenerator from '../generators/lightningEventGenerator';
+import lightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
+import lightningTestGenerator from '../generators/lightningTestGenerator';
+import projectGenerator from '../generators/projectGenerator';
+import staticResourceGenerator from '../generators/staticResourceGenerator';
+import visualforceComponentGenerator from '../generators/visualforceComponentGenerator';
+import visualforcePageGenerator from '../generators/visualforcePageGenerator';
+
+type Generators =
+  | typeof analyticsTemplateGenerator
+  | typeof apexClassGenerator
+  | typeof apexTriggerGenerator
+  | typeof lightningAppGenerator
+  | typeof lightningComponentGenerator
+  | typeof lightningEventGenerator
+  | typeof lightningTestGenerator
+  | typeof lightningInterfaceGenerator
+  | typeof projectGenerator
+  | typeof staticResourceGenerator
+  | typeof visualforceComponentGenerator
+  | typeof visualforcePageGenerator;
+
+const generators = new Map<string, Generators>([
+  ['analyticsTemplateGenerator', analyticsTemplateGenerator],
+  ['apexClassGenerator', apexClassGenerator],
+  ['apexTriggerGenerator', apexTriggerGenerator],
+  ['lightningAppGenerator', lightningAppGenerator],
+  ['lightningComponentGenerator', lightningComponentGenerator],
+  ['lightningEventGenerator', lightningEventGenerator],
+  ['lightningInterfaceGenerator', lightningInterfaceGenerator],
+  ['lightningTestGenerator', lightningTestGenerator],
+  ['projectGenerator', projectGenerator],
+  ['staticResourceGenerator', staticResourceGenerator],
+  ['visualforceComponentGenerator', visualforceComponentGenerator],
+  ['visualforcePageGenerator', visualforcePageGenerator],
+]);
 
 export async function importGenerator(templateType: TemplateType) {
   const generatorClass =
     TemplateType[templateType].toString().charAt(0).toLowerCase() +
     TemplateType[templateType].toString().slice(1) +
     'Generator';
-  return (await import(`../generators/${generatorClass}`)).default;
+  return generators.get(generatorClass) as Generators;
 }
 
 /**
@@ -64,9 +101,9 @@ export class TemplateService {
    * @param templateOptions template options
    * @param customTemplatesRootPathOrGitRepo custom templates root path or git repo. If not specified, use built-in templates
    */
-  public async create<TOptions extends TemplateOptions>(
+  public async create(
     templateType: TemplateType,
-    templateOptions: TOptions,
+    templateOptions: any,
     customTemplatesRootPathOrGitRepo?: string
   ): Promise<CreateOutput> {
     const runOptions = {

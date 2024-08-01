@@ -1,15 +1,15 @@
 {
-  "name": "@salesforce/templates",
+  "name": "@salesforce/templates-bundle",
   "version": "61.4.0",
   "salesforceApiVersion": "61",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
-  "main": "lib/index.js",
+  "main": "dist/src/index.js",
   "author": "Salesforce",
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "license": "BSD-3-Clause",
   "files": [
-    "/lib",
+    "/dist",
     "/messages"
   ],
   "dependencies": {
@@ -50,6 +50,7 @@
     "eslint-plugin-prettier": "^3.1.3",
     "husky": "^8.0.3",
     "mocha": "^10.4.0",
+    "npm-dts": "^1.3.12",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^3.1.0",
@@ -69,6 +70,7 @@
   "scripts": {
     "build": "yarn run clean:lib && yarn build:templates && yarn compile",
     "build:templates": "node scripts/build-templates",
+    "bundle": "yarn build && node scripts/esbuild.config.js",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "commit": "git-cz",
     "compile": "tsc -b",

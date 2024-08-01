@@ -1,5 +1,5 @@
 {
-  "name": "@salesforce/templates-bundle",
+  "name": "@salesforce/templates",
   "version": "61.4.0",
   "salesforceApiVersion": "61",
   "description": "Salesforce JS library for templates",

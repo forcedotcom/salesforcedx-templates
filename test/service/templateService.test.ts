@@ -458,7 +458,7 @@ describe('TemplateService', () => {
   });
 
   describe('Generators', () => {
-    it('should have a generator for each TemplateType', async () => {
+    it('should have a generator for each TemplateType', () => {
       const templateTypes = Object.values(TemplateType).filter(
         (v) => !isNaN(Number(v))
       );
@@ -466,7 +466,7 @@ describe('TemplateService', () => {
       for (const templateType of templateTypes) {
         try {
           // @ts-expect-error because we loose type safety when iterating over the values of an enum
-          const generator = await importGenerator(templateType);
+          const generator = importGenerator(templateType);
           chai.expect(generator).to.not.be.undefined;
         } catch {
           throw new Error(
@@ -476,6 +476,12 @@ describe('TemplateService', () => {
           );
         }
       }
+    });
+
+    it('should return an error if the generator does not exist', () => {
+      chai
+        .expect(() => importGenerator(20 as TemplateType))
+        .to.throw(Error, nls.localize('templateTypeNotFound'));
     });
 
     it('should create AnalyticsTemplate', async () => {

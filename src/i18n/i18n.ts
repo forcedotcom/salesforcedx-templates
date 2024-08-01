@@ -38,12 +38,11 @@ export const messages = {
   customTemplatesInvalidRepoUrl: 'Invalid custom templates repository URL: %s',
   customTemplatesCannotRetrieveDefaultBranch:
     'Cannot retrieve default branch for custom templates repository: %s',
-
   LightningAppBundle: 'A Lightning Application Bundle',
   LightningComponentBundle: 'A Lightning Component Bundle',
   LightningEventBundle: 'A Lightning Event Bundle',
   LightningInterfaceBundle: 'A Lightning Interface Bundle',
   LightningTest: 'A Lightning Test',
-
+  templateTypeNotFound: 'The template type does not exist',
   RawOutput: 'target dir = %s\n%s',
 };

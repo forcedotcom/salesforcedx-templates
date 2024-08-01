@@ -68,7 +68,6 @@
   "scripts": {
     "build": "yarn run clean:lib && yarn build:templates && yarn compile",
     "build:templates": "node scripts/build-templates",
-    "bundle": "yarn build && node scripts/esbuild.config.js",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "commit": "git-cz",
     "compile": "tsc -b",

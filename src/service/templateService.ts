@@ -69,9 +69,9 @@ export class TemplateService {
    * @param templateOptions template options
    * @param customTemplatesRootPathOrGitRepo custom templates root path or git repo. If not specified, use built-in templates
    */
-  public create(
+  public create<TOptions extends TemplateOptions>(
     templateType: TemplateType,
-    templateOptions: any,
+    templateOptions: TOptions,
     customTemplatesRootPathOrGitRepo?: string
   ): Promise<CreateOutput> {
     const runOptions = {

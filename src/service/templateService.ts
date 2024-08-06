@@ -7,16 +7,21 @@
 
 import {
   type CreateOutput,
-  type TemplateOptions,
+  GeneratorClass,
+  generators,
+  TemplateOptions,
   TemplateType,
 } from '../utils/types';
+import { nls } from '../i18n';
 
-export async function importGenerator(templateType: TemplateType) {
-  const generatorClass =
-    TemplateType[templateType].toString().charAt(0).toLowerCase() +
-    TemplateType[templateType].toString().slice(1) +
-    'Generator';
-  return (await import(`../generators/${generatorClass}`)).default;
+export function importGenerator<TOptions extends TemplateOptions>(
+  templateType: TemplateType
+): GeneratorClass<TOptions> {
+  const generator = generators.get(templateType);
+  if (!generator) {
+    throw new Error(nls.localize('templateTypeNotFound'));
+  }
+  return generator;
 }
 
 /**
@@ -64,7 +69,7 @@ export class TemplateService {
    * @param templateOptions template options
    * @param customTemplatesRootPathOrGitRepo custom templates root path or git repo. If not specified, use built-in templates
    */
-  public async create<TOptions extends TemplateOptions>(
+  public create<TOptions extends TemplateOptions>(
     templateType: TemplateType,
     templateOptions: TOptions,
     customTemplatesRootPathOrGitRepo?: string
@@ -74,7 +79,7 @@ export class TemplateService {
       customTemplatesRootPathOrGitRepo,
     };
 
-    const Generator = await importGenerator(templateType);
+    const Generator = importGenerator(templateType);
     const instance = new Generator(templateOptions);
     return instance.run(runOptions);
   }

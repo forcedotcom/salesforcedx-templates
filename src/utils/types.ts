@@ -5,11 +5,37 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-export type CreateOutput = {
-  outputDir: string;
-  created: string[];
-  rawOutput: string;
-};
+import AnalyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
+import ApexClassGenerator from '../generators/apexClassGenerator';
+import ApexTriggerGenerator from '../generators/apexTriggerGenerator';
+import LightningAppGenerator from '../generators/lightningAppGenerator';
+import LightningComponentGenerator from '../generators/lightningComponentGenerator';
+import LightningEventGenerator from '../generators/lightningEventGenerator';
+import LightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
+import LightningTestGenerator from '../generators/lightningTestGenerator';
+import ProjectGenerator from '../generators/projectGenerator';
+import StaticResourceGenerator from '../generators/staticResourceGenerator';
+import VisualforceComponentGenerator from '../generators/visualforceComponentGenerator';
+import VisualforcePageGenerator from '../generators/visualforcePageGenerator';
+import { BaseGenerator } from '../generators/baseGenerator';
+
+export type GeneratorClass<TOptions extends TemplateOptions> = new (
+  options: TOptions
+) => BaseGenerator<TOptions>;
+
+export type Generators =
+  | typeof AnalyticsTemplateGenerator
+  | typeof ApexClassGenerator
+  | typeof ApexTriggerGenerator
+  | typeof LightningAppGenerator
+  | typeof LightningComponentGenerator
+  | typeof LightningEventGenerator
+  | typeof LightningTestGenerator
+  | typeof LightningInterfaceGenerator
+  | typeof ProjectGenerator
+  | typeof StaticResourceGenerator
+  | typeof VisualforceComponentGenerator
+  | typeof VisualforcePageGenerator;
 
 /**
  * Available Template types
@@ -32,6 +58,27 @@ export enum TemplateType {
   VisualforcePage,
   StaticResource,
 }
+
+export const generators = new Map<TemplateType, GeneratorClass<any>>([
+  [TemplateType.AnalyticsTemplate, AnalyticsTemplateGenerator],
+  [TemplateType.ApexClass, ApexClassGenerator],
+  [TemplateType.ApexTrigger, ApexTriggerGenerator],
+  [TemplateType.LightningApp, LightningAppGenerator],
+  [TemplateType.LightningComponent, LightningComponentGenerator],
+  [TemplateType.LightningEvent, LightningEventGenerator],
+  [TemplateType.LightningInterface, LightningInterfaceGenerator],
+  [TemplateType.LightningTest, LightningTestGenerator],
+  [TemplateType.Project, ProjectGenerator],
+  [TemplateType.StaticResource, StaticResourceGenerator],
+  [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
+  [TemplateType.VisualforcePage, VisualforcePageGenerator],
+]);
+
+export type CreateOutput = {
+  outputDir: string;
+  created: string[];
+  rawOutput: string;
+};
 
 /**
  * Template Options

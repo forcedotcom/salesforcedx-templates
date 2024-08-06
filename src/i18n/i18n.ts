@@ -44,4 +44,5 @@ export const messages = {
   LightningInterfaceBundle: 'A Lightning Interface Bundle',
   LightningTest: 'A Lightning Test',
   RawOutput: 'target dir = %s\n%s',
+  templateTypeNotFound: 'The template type does not exist',
 };

@@ -460,7 +460,7 @@ describe('TemplateService', () => {
   describe('Generators', () => {
     it('should have a generator for each TemplateType', () => {
       const templateTypes = Object.values(TemplateType).filter(
-        (v) => !isNaN(Number(v))
+        (value) => typeof value === 'number'
       );
 
       for (const templateType of templateTypes) {

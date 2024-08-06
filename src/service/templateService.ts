@@ -5,11 +5,22 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { type CreateOutput, TemplateType } from '../utils/types';
-import { Generators, generators } from '../generators';
+import {
+  type CreateOutput,
+  GeneratorClass,
+  generators,
+  TemplateOptions,
+  TemplateType,
+} from '../utils/types';
+import { nls } from '../i18n';
 
-export function importGenerator(templateType: TemplateType) {
-  const generator = generators.get(templateType) as Generators;
+export function importGenerator<TOptions extends TemplateOptions>(
+  templateType: TemplateType
+): GeneratorClass<TOptions> {
+  const generator = generators.get(templateType);
+  if (!generator) {
+    throw new Error(nls.localize('templateTypeNotFound'));
+  }
   return generator;
 }
 

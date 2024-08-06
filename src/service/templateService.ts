@@ -7,20 +7,9 @@
 
 import { type CreateOutput, TemplateType } from '../utils/types';
 import { Generators, generators } from '../generators';
-import { nls } from '../i18n';
 
 export function importGenerator(templateType: TemplateType) {
-  let generatorClass;
-  try {
-    generatorClass =
-      TemplateType[templateType].toString().charAt(0).toLowerCase() +
-      TemplateType[templateType].toString().slice(1) +
-      'Generator';
-  } catch (error) {
-    throw new Error(nls.localize('templateTypeNotFound'));
-  }
-
-  const generator = generators.get(generatorClass) as Generators;
+  const generator = generators.get(templateType) as Generators;
   return generator;
 }
 

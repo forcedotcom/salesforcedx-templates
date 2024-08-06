@@ -478,12 +478,6 @@ describe('TemplateService', () => {
       }
     });
 
-    it('should return an error if the generator does not exist', () => {
-      chai
-        .expect(() => importGenerator(20 as TemplateType))
-        .to.throw(Error, nls.localize('templateTypeNotFound'));
-    });
-
     it('should create AnalyticsTemplate', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'waveTemplates'));
       const templateService = TemplateService.getInstance();

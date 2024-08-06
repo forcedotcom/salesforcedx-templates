@@ -4,6 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+import { TemplateType } from '../utils/types';
 import analyticsTemplateGenerator from './analyticsTemplateGenerator';
 import apexClassGenerator from './apexClassGenerator';
 import apexTriggerGenerator from './apexTriggerGenerator';
@@ -31,17 +32,17 @@ export type Generators =
   | typeof visualforceComponentGenerator
   | typeof visualforcePageGenerator;
 
-export const generators = new Map<string, Generators>([
-  ['analyticsTemplateGenerator', analyticsTemplateGenerator],
-  ['apexClassGenerator', apexClassGenerator],
-  ['apexTriggerGenerator', apexTriggerGenerator],
-  ['lightningAppGenerator', lightningAppGenerator],
-  ['lightningComponentGenerator', lightningComponentGenerator],
-  ['lightningEventGenerator', lightningEventGenerator],
-  ['lightningInterfaceGenerator', lightningInterfaceGenerator],
-  ['lightningTestGenerator', lightningTestGenerator],
-  ['projectGenerator', projectGenerator],
-  ['staticResourceGenerator', staticResourceGenerator],
-  ['visualforceComponentGenerator', visualforceComponentGenerator],
-  ['visualforcePageGenerator', visualforcePageGenerator],
+export const generators = new Map<TemplateType, Generators>([
+  [TemplateType.AnalyticsTemplate, analyticsTemplateGenerator],
+  [TemplateType.ApexClass, apexClassGenerator],
+  [TemplateType.ApexTrigger, apexTriggerGenerator],
+  [TemplateType.LightningApp, lightningAppGenerator],
+  [TemplateType.LightningComponent, lightningComponentGenerator],
+  [TemplateType.LightningEvent, lightningEventGenerator],
+  [TemplateType.LightningInterface, lightningInterfaceGenerator],
+  [TemplateType.LightningTest, lightningTestGenerator],
+  [TemplateType.Project, projectGenerator],
+  [TemplateType.VisualforceComponent, visualforceComponentGenerator],
+  [TemplateType.VisualforcePage, visualforcePageGenerator],
+  [TemplateType.StaticResource, staticResourceGenerator],
 ]);

@@ -193,6 +193,12 @@ export abstract class BaseGenerator<
    * @param partialPath the relative path from the templates folder to templates root folder.
    */
   public sourceRootWithPartialPath(partialPath: string): void {
+    /**
+     * CAUTION:
+     * PLEASE make sure the relative path from this function to /templates does NOT change!
+     * The core VSCode extension bundles /templates separately, so the change of the relative path will make bundling fail!
+     * Reach out to mingxuanzhang@salesforce.com if unsure.
+     */
     this.builtInTemplatesRootPath = path.join(
       __dirname,
       '..',

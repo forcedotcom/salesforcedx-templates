@@ -12,7 +12,7 @@ import { CreateOutput, TemplateOptions } from '../utils/types';
 import { renderFile } from 'ejs';
 import { nls } from '../i18n';
 import { loadCustomTemplatesGitRepo } from '../service/gitRepoUtils';
-import * as packageJson from '../../package.json';
+import * as CONSTANTS from '../utils/constants.json';
 
 async function outputFile(file: string, data: string): Promise<void> {
   const dir = path.dirname(file);
@@ -68,7 +68,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
  * Look up package version of @salesforce/templates package to supply a default API version
  */
 export function getDefaultApiVersion(): string {
-  const versionTrimmed = packageJson.salesforceApiVersion.trim();
+  const versionTrimmed = CONSTANTS.salesforceApiVersion.trim();
   return `${versionTrimmed.split('.')[0]}.0`;
 }
 

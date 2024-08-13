@@ -63,7 +63,9 @@ describe('BaseGenerator', () => {
 
 describe('getDefaultApiVersion', () => {
   it('should return the default api version', async () => {
-    const pjson = await import('../../package.json');
-    expect(getDefaultApiVersion()).to.equal(`${pjson.salesforceApiVersion}.0`);
+    const constants = await import('../../src/utils/constants.json');
+    expect(getDefaultApiVersion()).to.equal(
+      `${constants.salesforceApiVersion}.0`
+    );
   });
 });

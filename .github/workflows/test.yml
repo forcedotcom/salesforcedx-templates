@@ -26,7 +26,7 @@ jobs:
         run: |
           yarn install  --network-timeout 600000
           yarn remove @salesforce/templates
-          yarn add forcedotcom/salesforcdx-templates#${{ github.sha }}
+          yarn add forcedotcom/salesforcedx-templates#${{ github.sha }}
           npx yarn-deduplicate
           yarn install  --network-timeout 600000
       - name: install/build @salesforce/templates in node_modules

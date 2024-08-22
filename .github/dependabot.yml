@@ -3,5 +3,20 @@ updates:
   - package-ecosystem: npm
     directory: '/src/templates/project'
     schedule:
-      interval: daily
-    open-pull-requests-limit: 10
+      interval: 'weekly'
+      day: 'saturday'
+    versioning-strategy: 'increase'
+    labels:
+      - 'dependencies'
+    open-pull-requests-limit: 5
+    pull-request-branch-name:
+      separator: '-'
+    commit-message:
+      # cause a release for non-dev-deps
+      prefix: fix(deps)
+      # no release for dev-deps
+      prefix-development: chore(dev-deps)
+    ignore:
+      - dependency-name: '@salesforce/dev-scripts'
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']

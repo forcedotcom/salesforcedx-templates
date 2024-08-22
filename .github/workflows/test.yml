@@ -10,3 +10,19 @@ jobs:
     uses: ./.github/workflows/unitTestsLinux.yml
   windows-unit-tests:
     uses: ./.github/workflows/unitTestsWindows.yml
+  xNuts:
+    needs: linux-unit-tests
+    uses: salesforcecli/github-workflows/.github/workflows/externalNut.yml@main
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'windows-latest']
+    with:
+      packageName: '@salesforce/templates'
+      externalProjectGitUrl: 'https://github.com/salesforcecli/plugin-templates'
+      ignoreScripts: true
+      os: ${{ matrix.os }}
+      preSwapCommands: 'yarn upgrade @salesforce/core; npx yarn-deduplicate; yarn install'
+      preExternalBuildCommands: 'npm why @salesforce/core --json'
+      useCache: false
+    secrets: inherit

@@ -24,6 +24,7 @@ jobs:
           repository: 'salesforcecli/plugin-templates'
       - name: Swap dependency
         run: |
+          yarn add husky --dev
           yarn husky install
           yarn install  --network-timeout 600000
           yarn remove @salesforce/templates

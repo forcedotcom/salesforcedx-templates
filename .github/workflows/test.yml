@@ -18,6 +18,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Install CLI
+        uses: salesforcecli/github-workflows/.github/actions/retry@main
+        with:
+          max_attempts: 3
+          command: npm install -g @salesforce/cli@nightly shx yarn-deduplicate --omit=dev
+          timeout_minutes: 20
       - name: Checkout to external project
         uses: actions/checkout@v4
         with:

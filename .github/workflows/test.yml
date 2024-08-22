@@ -15,11 +15,9 @@ jobs:
     uses: salesforcecli/github-workflows/.github/workflows/externalNut.yml@main
     strategy:
       fail-fast: false
-      matrix:
-        os: ['ubuntu-latest', 'windows-latest']
     with:
       packageName: '@salesforce/templates'
       externalProjectGitUrl: 'https://github.com/salesforcecli/plugin-templates'
-      os: ${{ matrix.os }}
+      os: 'ubuntu-latest'
       useCache: false
     secrets: inherit

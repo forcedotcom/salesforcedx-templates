@@ -34,7 +34,7 @@ jobs:
         run: |
           yarn add husky --dev
           yarn husky install
-          yarn install  --network-timeout 600000
+          yarn install  --network-timeout 600000 --ignore-scripts
           yarn compile
       - name: Build the external project (where the tests are)
         run: yarn compile

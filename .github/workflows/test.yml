@@ -21,7 +21,7 @@ jobs:
       - name: Checkout to external project
         uses: actions/checkout@v4
         with:
-          repository: 'https://github.com/salesforcecli/plugin-templates'
+          repository: 'salesforcecli/plugin-templates'
       - name: Swap dependency
         run: |
           yarn install  --network-timeout 600000

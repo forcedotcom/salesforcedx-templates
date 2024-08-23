@@ -7,7 +7,7 @@ const currDir = process.cwd();
 const libDir = path.join(currDir, 'lib');
 const libTemplatesDir = path.join(libDir, 'templates');
 const srcTemplatesDir = path.join(currDir, 'src', 'templates');
-const libUtilsDir = path.join(libDir, 'lib', 'utils');
+const libUtilsDir = path.join(libDir, 'utils');
 const srcUtilsDir = path.join(currDir, 'src', 'utils');
 
 if (!fs.existsSync(libDir)) {

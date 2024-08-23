@@ -43,7 +43,7 @@ jobs:
           yarn install  --network-timeout 600000
           yarn build
       - name: Build the external project (where the tests are)
-        run: yarn compile
+        run: yarn build
       - name: Run tests
         uses: salesforcecli/github-workflows/.github/actions/retry@main
         with:

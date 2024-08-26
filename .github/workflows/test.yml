@@ -10,3 +10,43 @@ jobs:
     uses: ./.github/workflows/unitTestsLinux.yml
   windows-unit-tests:
     uses: ./.github/workflows/unitTestsWindows.yml
+  external-test:
+    name: run tests in plugin-templates
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Install CLI
+        uses: salesforcecli/github-workflows/.github/actions/retry@main
+        with:
+          max_attempts: 3
+          command: npm install -g @salesforce/cli@nightly shx yarn-deduplicate --omit=dev
+          timeout_minutes: 20
+      - name: Checkout to external project
+        uses: actions/checkout@v4
+        with:
+          repository: 'salesforcecli/plugin-templates'
+      - name: Swap dependency
+        run: |
+          yarn install  --network-timeout 600000
+          yarn remove @salesforce/templates
+          yarn add forcedotcom/salesforcedx-templates#${{ github.sha }}
+          npx yarn-deduplicate
+          yarn install  --network-timeout 600000
+      - name: install/build @salesforce/templates in node_modules
+        working-directory: node_modules/@salesforce/templates
+        run: |
+          yarn add husky --dev
+          yarn husky install
+          yarn install  --network-timeout 600000
+          yarn build
+      - name: Build the external project (where the tests are)
+        run: yarn build
+      - name: Run tests
+        uses: salesforcecli/github-workflows/.github/actions/retry@main
+        with:
+          max_attempts: 3
+          command: yarn test:nuts
+          retry_on: error

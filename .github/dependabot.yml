@@ -1,7 +1,15 @@
 version: 2
 updates:
+  # For sf project templates
   - package-ecosystem: npm
     directory: '/src/templates/project'
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+
+  # For all @salesforce/templates library
+  - package-ecosystem: npm
+    directory: '/'
     schedule:
       interval: 'weekly'
       day: 'saturday'

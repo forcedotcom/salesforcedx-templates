@@ -12,7 +12,7 @@ import { CreateOutput, TemplateOptions } from '../utils/types';
 import { renderFile } from 'ejs';
 import { nls } from '../i18n';
 import { loadCustomTemplatesGitRepo } from '../service/gitRepoUtils';
-import * as CONSTANTS from '../utils/constants.json';
+import { DEFAULT_API_VERSION } from '../utils/constants';
 
 async function outputFile(file: string, data: string): Promise<void> {
   const dir = path.dirname(file);
@@ -68,8 +68,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
  * Look up package version of @salesforce/templates package to supply a default API version
  */
 export function getDefaultApiVersion(): string {
-  const versionTrimmed = CONSTANTS.salesforceApiVersion.trim();
-  return `${versionTrimmed.split('.')[0]}.0`;
+  return DEFAULT_API_VERSION;
 }
 
 abstract class NotYeoman {

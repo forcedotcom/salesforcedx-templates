@@ -18,6 +18,6 @@ If you're interested in building the library locally, take a look at the develop
 
 You can find more information about commands that the related [plugin](https://github.com/salesforcecli/plugin-templates) provides in the [commands](COMMANDS.md) doc.
 
-## Bump salesforceApiVersion
+## Bump DEFAULT_API_VERSION
 
-`salesforceApiVersion` is maintained in `src/utils/constants.json`. Please bump the value every time there is a major release.
+`DEFAULT_API_VERSION` is maintained in `src/utils/constants.ts`. Please bump the value every time there is a major release.

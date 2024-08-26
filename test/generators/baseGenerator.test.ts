@@ -60,12 +60,3 @@ describe('BaseGenerator', () => {
     expect(validateOptionsStub.calledOnce).to.be.true;
   });
 });
-
-describe('getDefaultApiVersion', () => {
-  it('should return the default api version', async () => {
-    const constants = await import('../../src/utils/constants.json');
-    expect(getDefaultApiVersion()).to.equal(
-      `${constants.salesforceApiVersion}.0`
-    );
-  });
-});

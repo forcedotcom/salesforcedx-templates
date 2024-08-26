@@ -1,3 +1,24 @@
+## [61.4.4](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.3...61.4.4) (2024-08-26)
+
+
+### Bug Fixes
+
+* move default api version to a constant ([#598](https://github.com/forcedotcom/salesforcedx-templates/issues/598)) ([c848819](https://github.com/forcedotcom/salesforcedx-templates/commit/c848819ff904d29d3b091dc6f24e9dd8983f0fcd))
+
+
+
+## [61.4.3](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.2...61.4.3) (2024-08-13)
+
+
+
+## [61.4.2](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.1...61.4.2) (2024-08-13)
+
+
+
+## [61.4.1](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.0...61.4.1) (2024-08-06)
+
+
+
 # [61.4.0](https://github.com/forcedotcom/salesforcedx-templates/compare/61.3.0...61.4.0) (2024-07-30)
 
 

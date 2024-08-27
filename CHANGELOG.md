@@ -1,3 +1,12 @@
+## [61.4.6](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.5...61.4.6) (2024-08-27)
+
+
+### Bug Fixes
+
+* **deps:** bump braces from 3.0.2 to 3.0.3 ([cf40eec](https://github.com/forcedotcom/salesforcedx-templates/commit/cf40eec44ed61e0cf16c16f73361f66ec7c56c19))
+
+
+
 ## [61.4.5](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.4...61.4.5) (2024-08-27)
 
 

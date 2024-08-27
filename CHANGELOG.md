@@ -1,3 +1,12 @@
+## [61.4.7](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.6...61.4.7) (2024-08-27)
+
+
+### Bug Fixes
+
+* **deps:** bump word-wrap from 1.2.3 to 1.2.5 ([9c32cf4](https://github.com/forcedotcom/salesforcedx-templates/commit/9c32cf405fb05751020eabf39047eca163d49b87))
+
+
+
 ## [61.4.6](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.5...61.4.6) (2024-08-27)
 
 

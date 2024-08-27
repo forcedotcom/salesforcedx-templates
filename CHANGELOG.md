@@ -1,3 +1,12 @@
+## [61.4.5](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.4...61.4.5) (2024-08-27)
+
+
+### Bug Fixes
+
+* **deps:** bump micromatch from 4.0.5 to 4.0.8 ([facb7f6](https://github.com/forcedotcom/salesforcedx-templates/commit/facb7f6baf17f0b1c3d746afefed356f83542df5))
+
+
+
 ## [61.4.4](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.3...61.4.4) (2024-08-26)
 
 

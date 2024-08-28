@@ -1,3 +1,12 @@
+## [61.4.9](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.8...61.4.9) (2024-08-28)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 6.2.0 to 6.2.1 ([ddb8df2](https://github.com/forcedotcom/salesforcedx-templates/commit/ddb8df28714d8b14de5fe79ce9d90b5365b9818e))
+
+
+
 ## [61.4.8](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.7...61.4.8) (2024-08-28)
 
 

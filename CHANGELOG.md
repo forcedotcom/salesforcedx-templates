@@ -1,3 +1,12 @@
+## [61.4.8](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.7...61.4.8) (2024-08-28)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/traverse from 7.17.3 to 7.25.4 ([956527a](https://github.com/forcedotcom/salesforcedx-templates/commit/956527a26510a6805831fbc46ca554d37a787863))
+
+
+
 ## [61.4.7](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.6...61.4.7) (2024-08-27)
 
 

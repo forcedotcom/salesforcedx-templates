@@ -1,3 +1,3 @@
 <aura:application>
 
-</aura:application>	
+</aura:application>

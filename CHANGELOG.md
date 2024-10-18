@@ -1,3 +1,16 @@
+## [62.0.2](https://github.com/forcedotcom/salesforcedx-templates/compare/62.0.1...62.0.2) (2024-10-18)
+
+
+### Bug Fixes
+
+* revert to eslint 8 ([#623](https://github.com/forcedotcom/salesforcedx-templates/issues/623)) ([168bca5](https://github.com/forcedotcom/salesforcedx-templates/commit/168bca54000c076af7cc8d3dcc1dd99395194468))
+
+
+
+## [62.0.1](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.12...62.0.1) (2024-10-07)
+
+
+
 ## [61.4.12](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.11...61.4.12) (2024-10-02)
 
 

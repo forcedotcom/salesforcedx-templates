@@ -1,3 +1,12 @@
+## [61.4.12](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.11...61.4.12) (2024-10-02)
+
+
+### Bug Fixes
+
+* avoid delta between templates locally and on org ([#616](https://github.com/forcedotcom/salesforcedx-templates/issues/616)) ([31e806c](https://github.com/forcedotcom/salesforcedx-templates/commit/31e806ce07723094cff385d7a9f3ff7f3d2d3b89))
+
+
+
 ## [61.4.11](https://github.com/forcedotcom/salesforcedx-templates/compare/61.4.10...61.4.11) (2024-09-15)
 
 

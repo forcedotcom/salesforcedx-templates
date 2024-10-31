@@ -31,3 +31,5 @@ updates:
       - dependency-name: '@salesforce/dev-scripts'
       - dependency-name: '*'
         update-types: ['version-update:semver-major']
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']

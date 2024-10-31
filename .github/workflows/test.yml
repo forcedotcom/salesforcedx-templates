@@ -10,6 +10,19 @@ jobs:
     uses: ./.github/workflows/unitTestsLinux.yml
   windows-unit-tests:
     uses: ./.github/workflows/unitTestsWindows.yml
+  test-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: yarn
+      - uses: salesforcecli/github-workflows/.github/actions/yarnInstallWithRetries@main
+      - name: Build the project
+        run: yarn build
+      - name: check if bundling runs into failures
+        run: node scripts/testEsbuild.js
   external-test:
     name: run tests in plugin-templates
     runs-on: 'ubuntu-latest'

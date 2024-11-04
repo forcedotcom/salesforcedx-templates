@@ -37,6 +37,7 @@
     "chai-as-promised": "^7.1.2",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
+    "esbuild": "^0.24.0",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-salesforce": "^0.1.6",
@@ -54,6 +55,7 @@
     "shelljs": "^0.8.5",
     "shx": "^0.3.4",
     "sinon": "^18",
+    "ts-morph": "^24.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },

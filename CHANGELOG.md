@@ -1,3 +1,12 @@
+## [62.0.4](https://github.com/forcedotcom/salesforcedx-templates/compare/62.0.3...62.0.4) (2024-11-17)
+
+
+### Bug Fixes
+
+* **deps:** bump cross-spawn from 7.0.3 to 7.0.5 ([f11c920](https://github.com/forcedotcom/salesforcedx-templates/commit/f11c92027d01d9f2e4451617d938e8cc9546b9a9))
+
+
+
 ## [62.0.3](https://github.com/forcedotcom/salesforcedx-templates/compare/62.0.2...62.0.3) (2024-10-31)
 
 

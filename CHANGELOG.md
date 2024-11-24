@@ -1,3 +1,12 @@
+## [62.0.5](https://github.com/forcedotcom/salesforcedx-templates/compare/62.0.4...62.0.5) (2024-11-24)
+
+
+### Bug Fixes
+
+* **deps:** bump tslib from 2.6.2 to 2.8.1 ([641b8b0](https://github.com/forcedotcom/salesforcedx-templates/commit/641b8b0b1c8edaf23fa26ea5a53a48210946d3b0))
+
+
+
 ## [62.0.4](https://github.com/forcedotcom/salesforcedx-templates/compare/62.0.3...62.0.4) (2024-11-17)
 
 

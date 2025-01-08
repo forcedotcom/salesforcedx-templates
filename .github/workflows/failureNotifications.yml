@@ -16,7 +16,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.26.0
         env:
           # for non-CLI-team-owned plugins, you can send this anywhere you like
-          SLACK_WEBHOOK_URL: ${{ secrets.CLI_ALERTS_SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.IDEE_RELEASE_ALERT_SLACK_WEBHOOK }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
         with:
           # Payload can be visually tested here: https://app.slack.com/block-kit-builder/T01GST6QY0G#%7B%22blocks%22:%5B%5D%7D

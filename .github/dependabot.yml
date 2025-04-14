@@ -9,6 +9,8 @@ updates:
     ignore:
       - dependency-name: 'eslint'
         update-types: ['version-update:semver-major']
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
 
   # For all @salesforce/templates library
   - package-ecosystem: npm

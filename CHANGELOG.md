@@ -1,3 +1,12 @@
+## [63.0.3](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.2...63.0.3) (2025-04-15)
+
+
+### Bug Fixes
+
+* fix import in lwc test ([#661](https://github.com/forcedotcom/salesforcedx-templates/issues/661)) ([bda5b9e](https://github.com/forcedotcom/salesforcedx-templates/commit/bda5b9e41684f2f06911b8f62242be6d7098f47a))
+
+
+
 ## [63.0.2](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.1...63.0.2) (2025-04-14)
 
 

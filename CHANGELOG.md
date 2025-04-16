@@ -1,3 +1,12 @@
+## [63.0.4](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.3...63.0.4) (2025-04-16)
+
+
+### Bug Fixes
+
+* update deps so they are all compatible and npm install as well as lwc tests can run ([#662](https://github.com/forcedotcom/salesforcedx-templates/issues/662)) ([2cd6513](https://github.com/forcedotcom/salesforcedx-templates/commit/2cd65132fbb375e270053500fd07abd80c8d6e75))
+
+
+
 ## [63.0.3](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.2...63.0.3) (2025-04-15)
 
 

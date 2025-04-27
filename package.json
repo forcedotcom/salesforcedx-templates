@@ -37,7 +37,7 @@
     "chai-as-promised": "^7.1.2",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "esbuild": "^0.25.2",
+    "esbuild": "^0.25.3",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-salesforce": "^0.1.6",

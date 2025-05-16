@@ -1,3 +1,8 @@
+/*
+SFGITREPONAME
+SFGITBRANCHNAME
+SFGITCOMMIT
+*/
 /**
  * Email services are automated processes that use Apex classes
  * to process the contents, headers, and attachments of inbound

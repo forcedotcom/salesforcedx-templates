@@ -8,7 +8,7 @@ const globals = require('globals');
 module.exports = defineConfig([
     // Aura configuration
     {
-        files: ['force-app/main/default/aura/**/*.js'],
+        files: ['**/aura/**/*.js'],
         extends: [
             ...auraConfig.configs.recommended,
             ...auraConfig.configs.locker
@@ -17,13 +17,13 @@ module.exports = defineConfig([
 
     // LWC configuration
     {
-        files: ['force-app/main/default/lwc/**/*.js'],
+        files: ['**/lwc/**/*.js'],
         extends: [lwcConfig]
     },
 
     // LWC configuration with override for LWC test files
     {
-        files: ['force-app/main/default/lwc/**/*.test.js'],
+        files: ['**/lwc/**/*.test.js'],
         extends: [lwcConfig],
         rules: {
             '@lwc/lwc/no-unexpected-wire-adapter-usages': 'off'
@@ -37,7 +37,7 @@ module.exports = defineConfig([
 
     // Jest mocks configuration
     {
-        files: ['force-app/test/jest-mocks/**/*.js'],
+        files: ['**/jest-mocks/**/*.js'],
         languageOptions: {
             sourceType: 'module',
             ecmaVersion: 'latest',

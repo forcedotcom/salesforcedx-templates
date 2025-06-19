@@ -22,6 +22,7 @@ const standardfolderarray = [
   'contentassets',
   'flexipages',
   'layouts',
+  'lwc',
   'objects',
   'permissionsets',
   'staticresources',
@@ -126,6 +127,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       // Add Husky directory and hooks
       this._createHuskyConfig(path.join(this.outputdir, projectname));
 
+      // VSCode config files
       for (const file of vscodearray) {
         await this.render(
           this.templatePath(`${file}.json`),
@@ -135,20 +137,17 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
           {}
         );
       }
+
+      // ESLint config (file is renamed to avoid conflict with generator project)
       await this.render(
-        this.templatePath('lwc.eslintrc.json'),
+        this.templatePath('project.eslint.config.js'),
         this.destinationPath(
-          path.join(...folderlayout, 'lwc', '.eslintrc.json')
+          path.join(this.outputdir, projectname, 'eslint.config.js')
         ),
         {}
       );
-      await this.render(
-        this.templatePath('aura.eslintrc.json'),
-        this.destinationPath(
-          path.join(...folderlayout, 'aura', '.eslintrc.json')
-        ),
-        {}
-      );
+
+      // SOQL sample file
       await this.render(
         this.templatePath(path.join(template, soqlQueryFile)),
         this.destinationPath(
@@ -162,6 +161,8 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         ),
         {}
       );
+
+      // Apex sample script
       await this.render(
         this.templatePath(path.join(template, anonApexFile)),
         this.destinationPath(
@@ -175,6 +176,8 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         ),
         {}
       );
+
+      // Copy project root level files
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
         await this.render(
@@ -202,6 +205,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       // Add Husky directory and hooks
       this._createHuskyConfig(path.join(this.outputdir, projectname));
 
+      // VSCode config files
       for (const file of vscodearray) {
         await this.render(
           this.templatePath(`${file}.json`),
@@ -211,6 +215,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
           {}
         );
       }
+
       // add the analytics vscode extension to the recommendations
       await extendJSON(
         path.join(this.outputdir, projectname, '.vscode', 'extensions.json'),
@@ -225,20 +230,17 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
           return value;
         }
       );
+
+      // ESLint config (file is renamed to avoid conflict with generator project)
       await this.render(
-        this.templatePath('lwc.eslintrc.json'),
+        this.templatePath('project.eslint.config.js'),
         this.destinationPath(
-          path.join(...folderlayout, 'lwc', '.eslintrc.json')
+          path.join(this.outputdir, projectname, 'eslint.config.js')
         ),
         {}
       );
-      await this.render(
-        this.templatePath('aura.eslintrc.json'),
-        this.destinationPath(
-          path.join(...folderlayout, 'aura', '.eslintrc.json')
-        ),
-        {}
-      );
+
+      // Copy project root level files
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
         await this.render(

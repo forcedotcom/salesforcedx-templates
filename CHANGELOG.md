@@ -1,3 +1,12 @@
+# [64.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/64.1.0...64.2.0) (2025-06-19)
+
+
+### Features
+
+* add ESLint 9 support to template ([#619](https://github.com/forcedotcom/salesforcedx-templates/issues/619)) ([#669](https://github.com/forcedotcom/salesforcedx-templates/issues/669)) ([19bd111](https://github.com/forcedotcom/salesforcedx-templates/commit/19bd1115d6a6c2e9f1176f63a1bb98530d42c933))
+
+
+
 # [64.1.0](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.4...64.1.0) (2025-06-06)
 
 

@@ -1,3 +1,12 @@
+## [64.2.1](https://github.com/forcedotcom/salesforcedx-templates/compare/64.2.0...64.2.1) (2025-07-22)
+
+
+### Bug Fixes
+
+* **deps:** bump form-data from 2.5.1 to 2.5.5 ([061f6f4](https://github.com/forcedotcom/salesforcedx-templates/commit/061f6f4a476287e4c0ff12c7a1b880e458557788))
+
+
+
 # [64.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/64.1.0...64.2.0) (2025-06-19)
 
 

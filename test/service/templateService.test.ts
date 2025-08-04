@@ -8,7 +8,6 @@
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as fs from 'fs';
-import { rm } from 'node:fs/promises';
 import got from 'got';
 import * as path from 'path';
 import * as sinon from 'sinon';
@@ -28,7 +27,7 @@ chai.config.truncateThreshold = 100000;
 chai.should();
 
 async function remove(file: string) {
-  await rm(file, { force: true, recursive: true });
+  await fs.promises.rm(file, { force: true, recursive: true });
 }
 
 function assertFileContent(file: string, regex: string | RegExp) {
@@ -465,7 +464,6 @@ describe('TemplateService', () => {
 
       for (const templateType of templateTypes) {
         try {
-          // @ts-expect-error because we loose type safety when iterating over the values of an enum
           const generator = importGenerator(templateType);
           chai.expect(generator).to.not.be.undefined;
         } catch {

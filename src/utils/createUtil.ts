@@ -8,8 +8,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { nls } from '../i18n';
 
-/* tslint:disable:no-unused-expression */
-
 export class CreateUtil {
   public static checkInputs(flagValue: string): string {
     const alphaRegExp = /^\w+$/;

@@ -7,7 +7,6 @@
 
 import * as util from 'util';
 const MISSING_LABEL_MSG = '!!! MISSING LABEL !!!';
-// tslint:disable: no-any
 export interface LocalizationProvider {
   localize(label: string, args?: string | string[]): string;
 }

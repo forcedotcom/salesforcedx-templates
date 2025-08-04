@@ -7,7 +7,7 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     ignore:
-      - dependency-name: 'eslint'
+      - dependency-name: '*'
         update-types: ['version-update:semver-major']
 
   # For all @salesforce/templates library
@@ -28,8 +28,6 @@ updates:
       # no release for dev-deps
       prefix-development: chore(dev-deps)
     ignore:
-      - dependency-name: 'eslint'
-        update-types: ['version-update:semver-major']
       - dependency-name: '@salesforce/dev-scripts'
       - dependency-name: '*'
         update-types: ['version-update:semver-major']

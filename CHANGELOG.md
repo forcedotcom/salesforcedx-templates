@@ -1,3 +1,56 @@
+## [64.2.1](https://github.com/forcedotcom/salesforcedx-templates/compare/64.2.0...64.2.1) (2025-07-22)
+
+
+### Bug Fixes
+
+* **deps:** bump form-data from 2.5.1 to 2.5.5 ([061f6f4](https://github.com/forcedotcom/salesforcedx-templates/commit/061f6f4a476287e4c0ff12c7a1b880e458557788))
+
+
+
+# [64.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/64.1.0...64.2.0) (2025-06-19)
+
+
+### Features
+
+* add ESLint 9 support to template ([#619](https://github.com/forcedotcom/salesforcedx-templates/issues/619)) ([#669](https://github.com/forcedotcom/salesforcedx-templates/issues/669)) ([19bd111](https://github.com/forcedotcom/salesforcedx-templates/commit/19bd1115d6a6c2e9f1176f63a1bb98530d42c933))
+
+
+
+# [64.1.0](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.4...64.1.0) (2025-06-06)
+
+
+### Features
+
+* update the api version to v64 ([1cac9dc](https://github.com/forcedotcom/salesforcedx-templates/commit/1cac9dc20db03dc7f20a085d2ed74f35c3026dcc))
+
+
+
+## [63.0.4](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.3...63.0.4) (2025-04-16)
+
+
+### Bug Fixes
+
+* update deps so they are all compatible and npm install as well as lwc tests can run ([#662](https://github.com/forcedotcom/salesforcedx-templates/issues/662)) ([2cd6513](https://github.com/forcedotcom/salesforcedx-templates/commit/2cd65132fbb375e270053500fd07abd80c8d6e75))
+
+
+
+## [63.0.3](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.2...63.0.3) (2025-04-15)
+
+
+### Bug Fixes
+
+* fix import in lwc test ([#661](https://github.com/forcedotcom/salesforcedx-templates/issues/661)) ([bda5b9e](https://github.com/forcedotcom/salesforcedx-templates/commit/bda5b9e41684f2f06911b8f62242be6d7098f47a))
+
+
+
+## [63.0.2](https://github.com/forcedotcom/salesforcedx-templates/compare/63.0.1...63.0.2) (2025-04-14)
+
+
+
+## [63.0.1](https://github.com/forcedotcom/salesforcedx-templates/compare/62.0.5...63.0.1) (2025-02-06)
+
+
+
 ## [62.0.5](https://github.com/forcedotcom/salesforcedx-templates/compare/62.0.4...62.0.5) (2024-11-24)
 
 

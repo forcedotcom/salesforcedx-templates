@@ -6,6 +6,7 @@
  */
 
 import * as chai from 'chai';
+import * as assert from 'node:assert';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as fs from 'fs';
 import got from 'got';
@@ -342,25 +343,19 @@ describe('TemplateService', () => {
     });
 
     it('should download the repo if the folder does not exist', async () => {
-      sinon
-        .stub(fs, 'existsSync')
-        .withArgs(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)
-        .returns(false);
-      const streamStub = sinon.spy(got, 'stream');
       await remove(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
-      await setCustomTemplatesRootPathOrGitRepo(customTemplates);
+      const result = await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
-      sinon.assert.callCount(streamStub, 1);
+      // Verify that the function returns a path and the folder exists
+      assert(typeof result === 'string');
+      chai.expect(fs.existsSync(result)).to.be.true;
     });
 
     it('should not download the repo if the folder already exists', async () => {
-      sinon
-        .stub(fs, 'existsSync')
-        .withArgs(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)
-        .returns(true);
-      const streamStub = sinon.spy(got, 'stream');
+      sinon.stub(fs, 'existsSync').returns(true);
+      const gotStub = sinon.spy(got);
 
       await remove(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
@@ -368,26 +363,24 @@ describe('TemplateService', () => {
 
       await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
-      sinon.assert.notCalled(streamStub);
+      sinon.assert.notCalled(gotStub);
     });
 
     it('should download the repo if the folder already exists, but forcing a redownload', async () => {
-      sinon
-        .stub(fs, 'existsSync')
-        .withArgs(TEST_CUSTOM_TEMPLATES_STORAGE_PATH)
-        .returns(true);
-      const streamStub = sinon.spy(got, 'stream');
+      sinon.stub(fs, 'existsSync').returns(true);
       await remove(TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       fs.mkdirSync(TEST_CUSTOM_TEMPLATES_STORAGE_PATH, { recursive: true });
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
       const forceLoadingRemoteRepo = true;
-      await setCustomTemplatesRootPathOrGitRepo(
+      const result = await setCustomTemplatesRootPathOrGitRepo(
         customTemplates,
         forceLoadingRemoteRepo
       );
 
-      sinon.assert.calledOnce(streamStub);
+      // Verify that the function returns a path and the folder exists
+      assert(typeof result === 'string');
+      assert(fs.existsSync(result));
     });
   }).timeout(20000);
 

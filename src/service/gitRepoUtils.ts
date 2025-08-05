@@ -13,10 +13,9 @@ import * as crypto from 'crypto';
 import * as fs from 'fs';
 import got from 'got';
 import * as path from 'path';
-import { Stream } from 'stream';
 import { extract } from 'tar';
 import * as os from 'node:os';
-import { promisify } from 'util';
+
 import { nls } from '../i18n';
 import { HttpsProxyAgent } from 'hpagent';
 import { getProxyForUrl } from 'proxy-from-env';
@@ -134,19 +133,24 @@ export async function loadCustomTemplatesGitRepo(
   await fs.promises.mkdir(customTemplatesPath, { recursive: true });
 
   // Download the repo and extract to the SFDX global state folder
-  const pipeline = promisify(Stream.pipeline);
-  await pipeline(
-    got.stream(
-      `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
-    ),
-    extract(
-      {
-        cwd: customTemplatesPath,
-        strip: filePath ? filePath.split('/').length + 1 : 1,
-      },
-      [`${name}-${branch}${filePath ? `/${filePath}` : ''}`]
-    )
+  const response = await got(
+    `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
   );
+
+  // Create a temporary file to extract from
+  const tempFile = path.join(customTemplatesPath, 'temp.tar.gz');
+  await fs.promises.writeFile(tempFile, new Uint8Array(response.rawBody));
+
+  try {
+    await extract({
+      cwd: customTemplatesPath,
+      strip: filePath ? filePath.split('/').length + 1 : 1,
+      file: tempFile,
+    });
+  } finally {
+    // Clean up the temporary file
+    await fs.promises.unlink(tempFile).catch(() => {});
+  }
 
   return customTemplatesPath;
 }

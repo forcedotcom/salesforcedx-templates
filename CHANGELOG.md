@@ -1,3 +1,12 @@
+## [64.2.2](https://github.com/forcedotcom/salesforcedx-templates/compare/64.2.1...64.2.2) (2025-08-05)
+
+
+### Bug Fixes
+
+* **deps:** dependabot updates that hadn't automerged ([#679](https://github.com/forcedotcom/salesforcedx-templates/issues/679)) ([797ebe1](https://github.com/forcedotcom/salesforcedx-templates/commit/797ebe161a3117802026f9a0000f73914371476b))
+
+
+
 ## [64.2.1](https://github.com/forcedotcom/salesforcedx-templates/compare/64.2.0...64.2.1) (2025-07-22)
 
 

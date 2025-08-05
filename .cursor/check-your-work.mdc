@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+
+After making changes, check your changes
+`yarn compile`
+`yarn lint` // linter can have warnings
+`yarn test` // unit/local tests
+
+You can run a single unit test like `yarn mocha <pathToTest>`

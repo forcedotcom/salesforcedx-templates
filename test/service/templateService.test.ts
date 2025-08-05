@@ -380,7 +380,7 @@ describe('TemplateService', () => {
 
       // Verify that the function returns a path and the folder exists
       assert(typeof result === 'string');
-      assert(fs.existsSync(result));
+      chai.expect(fs.existsSync(result)).to.be.true;
     });
   }).timeout(20000);
 

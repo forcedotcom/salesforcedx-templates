@@ -14,7 +14,7 @@ import * as fs from 'fs';
 import got from 'got';
 import * as path from 'path';
 import { Stream } from 'stream';
-import * as tar from 'tar';
+import { extract } from 'tar';
 import * as os from 'node:os';
 import { promisify } from 'util';
 import { nls } from '../i18n';
@@ -131,9 +131,7 @@ export async function loadCustomTemplatesGitRepo(
 
   const { username, name, branch, filePath } = await getRepoInfo(repoUri);
 
-  if (!fs.existsSync(customTemplatesPath)) {
-    fs.mkdirSync(customTemplatesPath, { recursive: true });
-  }
+  await fs.promises.mkdir(customTemplatesPath, { recursive: true });
 
   // Download the repo and extract to the SFDX global state folder
   const pipeline = promisify(Stream.pipeline);
@@ -141,7 +139,7 @@ export async function loadCustomTemplatesGitRepo(
     got.stream(
       `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
     ),
-    tar.extract(
+    extract(
       {
         cwd: customTemplatesPath,
         strip: filePath ? filePath.split('/').length + 1 : 1,

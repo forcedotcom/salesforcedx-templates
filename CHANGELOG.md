@@ -1,3 +1,12 @@
+# [64.3.0](https://github.com/forcedotcom/salesforcedx-templates/compare/64.2.2...64.3.0) (2025-08-25)
+
+
+### Features
+
+* exclude .sf folder from search ([#681](https://github.com/forcedotcom/salesforcedx-templates/issues/681)) ([66f85fa](https://github.com/forcedotcom/salesforcedx-templates/commit/66f85fa287f42dd478df48cea0601c94bb1730ba))
+
+
+
 ## [64.2.2](https://github.com/forcedotcom/salesforcedx-templates/compare/64.2.1...64.2.2) (2025-08-05)
 
 

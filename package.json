@@ -12,7 +12,7 @@
     "/messages"
   ],
   "dependencies": {
-    "@salesforce/kit": "^3.2.3",
+    "@salesforce/kit": "^3.2.4",
     "ejs": "^3.1.10",
     "got": "^11.8.6",
     "hpagent": "^1.2.0",

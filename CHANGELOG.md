@@ -1,3 +1,12 @@
+# [65.1.0](https://github.com/forcedotcom/salesforcedx-templates/compare/64.3.2...65.1.0) (2025-10-03)
+
+
+### Features
+
+* update the api version to v65 ([2b32339](https://github.com/forcedotcom/salesforcedx-templates/commit/2b32339121853e1164617f7102cddfde0be4acf2))
+
+
+
 ## [64.3.2](https://github.com/forcedotcom/salesforcedx-templates/compare/64.3.1...64.3.2) (2025-09-28)
 
 

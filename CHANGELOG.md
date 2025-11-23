@@ -1,3 +1,12 @@
+## [65.1.2](https://github.com/forcedotcom/salesforcedx-templates/compare/65.1.1...65.1.2) (2025-11-23)
+
+
+### Bug Fixes
+
+* **deps:** bump mime-types and @types/mime-types ([7f78bd8](https://github.com/forcedotcom/salesforcedx-templates/commit/7f78bd8d75bee904d049e1a892feaa592605bcbd))
+
+
+
 ## [65.1.1](https://github.com/forcedotcom/salesforcedx-templates/compare/65.1.0...65.1.1) (2025-10-31)
 
 

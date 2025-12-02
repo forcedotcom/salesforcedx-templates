@@ -1,3 +1,12 @@
+## [65.1.3](https://github.com/forcedotcom/salesforcedx-templates/compare/65.1.2...65.1.3) (2025-12-02)
+
+
+### Bug Fixes
+
+* **deps:** bump mdast-util-to-hast from 13.2.0 to 13.2.1 ([444df14](https://github.com/forcedotcom/salesforcedx-templates/commit/444df14d52c83280c87a8715a902d9b572939d18))
+
+
+
 ## [65.1.2](https://github.com/forcedotcom/salesforcedx-templates/compare/65.1.1...65.1.2) (2025-11-23)
 
 

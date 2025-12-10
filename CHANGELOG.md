@@ -1,3 +1,12 @@
+# [65.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/65.1.3...65.2.0) (2025-12-10)
+
+
+### Features
+
+* add web application template ([#699](https://github.com/forcedotcom/salesforcedx-templates/issues/699)) ([0761ace](https://github.com/forcedotcom/salesforcedx-templates/commit/0761ace8c02ddf87dd71869da3cf2ef6474c37f4))
+
+
+
 ## [65.1.3](https://github.com/forcedotcom/salesforcedx-templates/compare/65.1.2...65.1.3) (2025-12-02)
 
 

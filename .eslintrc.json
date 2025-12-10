@@ -66,6 +66,7 @@
   },
   "ignorePatterns": [
     "*.js",
-    "src/templates/lightningcomponent/lwc/typeScript/*"
+    "src/templates/lightningcomponent/lwc/typeScript/*",
+    "src/templates/reactBasic/**/*"
   ]
 }

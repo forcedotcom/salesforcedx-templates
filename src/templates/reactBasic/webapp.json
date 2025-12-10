@@ -1,0 +1,17 @@
+{
+  "outputDir": "dist",
+  "scripts": {
+    "dev": "npm run dev",
+    "build": "npm run build",
+    "previewUrl": "http://localhost:3000"
+  },
+  "routing": {
+    "rewrites": [
+      { "route": "/app/*", "rewrite": "pages/index.html" }
+    ],
+    "redirects": [],
+    "fallback": "pages/index.html",
+    "trailingSlash": "auto",
+    "fileBasedRouting": true
+  }
+}

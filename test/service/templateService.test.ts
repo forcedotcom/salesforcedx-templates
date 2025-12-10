@@ -931,5 +931,46 @@ describe('TemplateService', () => {
             .sort()
         );
     });
+
+    it('should create WebApplication (reactBasic)', async () => {
+      await remove(
+        path.join('testsoutput', 'libraryCreate', 'webApplications')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.WebApplication, {
+        webappname: 'LibraryCreateReactApp',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'webApplications'),
+        template: 'reactBasic',
+        internal: true,
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/index.html',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/webapp.json',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/LibraryCreateReactApp.webApplication-meta.xml',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/package.json',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vite.config.ts',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/tsconfig.json',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/tsconfig.node.json',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/tailwind.config.js',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/postcss.config.js',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/main.tsx',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/App.tsx',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/routes.ts',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/vite-env.d.ts',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/components/Navigation.tsx',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/Home.tsx',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/About.tsx',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/NotFound.tsx',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/styles/global.css',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/test-setup/setup.ts',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
   });
 });

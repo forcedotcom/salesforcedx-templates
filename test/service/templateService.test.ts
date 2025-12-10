@@ -906,5 +906,30 @@ describe('TemplateService', () => {
             .sort()
         );
     });
+
+    it('should create WebApplication', async () => {
+      await remove(
+        path.join('testsoutput', 'libraryCreate', 'webApplications')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.WebApplication, {
+        webappname: 'LibraryCreateWebApp',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'webApplications'),
+        template: 'default',
+        internal: true,
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/index.html',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/webapp.json',
+            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/LibraryCreateWebApp.webApplication-meta.xml',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
   });
 });

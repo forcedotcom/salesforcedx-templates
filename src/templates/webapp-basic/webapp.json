@@ -1,0 +1,11 @@
+{
+  "outputDir": "dist",
+  "routing": {
+    "rewrites": [
+      {
+        "route": "/*",
+        "rewrite": "index.html"
+      }
+    ]
+  }
+}

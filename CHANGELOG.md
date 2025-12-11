@@ -1,3 +1,12 @@
+# [65.4.0](https://github.com/forcedotcom/salesforcedx-templates/compare/65.3.0...65.4.0) (2025-12-11)
+
+
+### Features
+
+* standardize template folder names to lowercase ([#701](https://github.com/forcedotcom/salesforcedx-templates/issues/701)) ([823d45c](https://github.com/forcedotcom/salesforcedx-templates/commit/823d45cd5deab87662b2f7b85707c20a69bf716e))
+
+
+
 # [65.3.0](https://github.com/forcedotcom/salesforcedx-templates/compare/65.2.0...65.3.0) (2025-12-11)
 
 

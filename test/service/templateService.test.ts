@@ -932,7 +932,7 @@ describe('TemplateService', () => {
         );
     });
 
-    it('should create WebApplication (reactBasic)', async () => {
+    it('should create WebApplication (reactbasic)', async () => {
       await remove(
         path.join('testsoutput', 'libraryCreate', 'webApplications')
       );
@@ -940,7 +940,7 @@ describe('TemplateService', () => {
       const result = await templateService.create(TemplateType.WebApplication, {
         webappname: 'LibraryCreateReactApp',
         outputdir: path.join('testsoutput', 'libraryCreate', 'webApplications'),
-        template: 'reactBasic',
+        template: 'reactbasic',
         internal: true,
       });
 

@@ -191,7 +191,7 @@ export interface StaticResourceOptions extends TemplateOptions {
 
 export interface WebApplicationOptions extends TemplateOptions {
   webappname: string;
-  template: 'default' | 'reactBasic';
+  template: string;
   masterlabel?: string;
   internal?: boolean;
 }

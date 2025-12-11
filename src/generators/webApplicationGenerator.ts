@@ -28,14 +28,15 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
 
   public async generate(): Promise<void> {
     const { template, webappname } = this.options;
+    const normalizedTemplate = template.toLowerCase();
     const masterLabel =
       this.options.masterlabel || camelCaseToTitleCase(webappname);
     const webappDir = path.join(this.outputdir, webappname);
 
     await this.generateSharedMetadata(webappDir, webappname, masterLabel);
 
-    switch (template) {
-      case 'reactBasic':
+    switch (normalizedTemplate) {
+      case 'reactbasic':
         await this.generateReactBasic(webappDir, webappname, masterLabel);
         break;
       default:
@@ -48,7 +49,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath('webapp-basic');
+    this.sourceRootWithPartialPath('webappbasic');
 
     await this.render(
       this.templatePath('_webapplication.webApplication-meta.xml'),
@@ -63,7 +64,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappDir: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath('webapp-basic');
+    this.sourceRootWithPartialPath('webappbasic');
 
     await this.render(
       this.templatePath('index.html'),
@@ -83,7 +84,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath('reactBasic');
+    this.sourceRootWithPartialPath('reactbasic');
 
     await this.render(
       this.templatePath('index.html'),

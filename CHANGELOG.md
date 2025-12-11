@@ -1,3 +1,12 @@
+# [65.3.0](https://github.com/forcedotcom/salesforcedx-templates/compare/65.2.0...65.3.0) (2025-12-11)
+
+
+### Features
+
+* add reactBasic template for web applications ([#700](https://github.com/forcedotcom/salesforcedx-templates/issues/700)) ([f3676af](https://github.com/forcedotcom/salesforcedx-templates/commit/f3676af750272c274df944359fc1beea72b100bc))
+
+
+
 # [65.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/65.1.3...65.2.0) (2025-12-10)
 
 

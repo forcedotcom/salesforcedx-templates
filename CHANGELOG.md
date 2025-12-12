@@ -1,3 +1,7 @@
+## [65.4.1](https://github.com/forcedotcom/salesforcedx-templates/compare/65.4.0...65.4.1) (2025-12-12)
+
+
+
 # [65.4.0](https://github.com/forcedotcom/salesforcedx-templates/compare/65.3.0...65.4.0) (2025-12-11)
 
 

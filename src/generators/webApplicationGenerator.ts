@@ -27,29 +27,18 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
   }
 
   public async generate(): Promise<void> {
-    const { template, webappname } = this.options;
-    const normalizedTemplate = template.toLowerCase();
+    const { webappname } = this.options;
+    const template = this.options.template.toLowerCase();
     const masterLabel =
       this.options.masterlabel || camelCaseToTitleCase(webappname);
     const webappDir = path.join(this.outputdir, webappname);
 
-    await this.generateSharedMetadata(webappDir, webappname, masterLabel);
-
-    switch (normalizedTemplate) {
-      case 'reactbasic':
-        await this.generateReactBasic(webappDir, webappname, masterLabel);
-        break;
-      default:
-        await this.generateWebAppBasic(webappDir, masterLabel);
-    }
-  }
-
-  private async generateSharedMetadata(
-    webappDir: string,
-    webappname: string,
-    masterLabel: string
-  ): Promise<void> {
-    this.sourceRootWithPartialPath('webappbasic');
+    this.sourceRootWithPartialPath(
+      path.join(
+        'webapplication',
+        template === 'reactbasic' ? 'reactbasic' : 'webappbasic'
+      )
+    );
 
     await this.render(
       this.templatePath('_webapplication.webApplication-meta.xml'),
@@ -58,33 +47,6 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
-  }
-
-  private async generateWebAppBasic(
-    webappDir: string,
-    masterLabel: string
-  ): Promise<void> {
-    this.sourceRootWithPartialPath('webappbasic');
-
-    await this.render(
-      this.templatePath('index.html'),
-      this.destinationPath(path.join(webappDir, 'index.html')),
-      { masterLabel }
-    );
-
-    await this.render(
-      this.templatePath('webapp.json'),
-      this.destinationPath(path.join(webappDir, 'webapp.json')),
-      {}
-    );
-  }
-
-  private async generateReactBasic(
-    webappDir: string,
-    webappname: string,
-    masterLabel: string
-  ): Promise<void> {
-    this.sourceRootWithPartialPath('reactbasic');
 
     await this.render(
       this.templatePath('index.html'),
@@ -98,96 +60,100 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       {}
     );
 
-    await this.render(
-      this.templatePath('package.json'),
-      this.destinationPath(path.join(webappDir, 'package.json')),
-      { webappname }
-    );
-    await this.render(
-      this.templatePath('vite.config.ts'),
-      this.destinationPath(path.join(webappDir, 'vite.config.ts')),
-      {}
-    );
-    await this.render(
-      this.templatePath('tsconfig.json'),
-      this.destinationPath(path.join(webappDir, 'tsconfig.json')),
-      {}
-    );
-    await this.render(
-      this.templatePath('tsconfig.node.json'),
-      this.destinationPath(path.join(webappDir, 'tsconfig.node.json')),
-      {}
-    );
-    await this.render(
-      this.templatePath('tailwind.config.js'),
-      this.destinationPath(path.join(webappDir, 'tailwind.config.js')),
-      {}
-    );
-    await this.render(
-      this.templatePath('postcss.config.js'),
-      this.destinationPath(path.join(webappDir, 'postcss.config.js')),
-      {}
-    );
+    if (template === 'reactbasic') {
+      await this.render(
+        this.templatePath('package.json'),
+        this.destinationPath(path.join(webappDir, 'package.json')),
+        { webappname }
+      );
+      await this.render(
+        this.templatePath('vite.config.ts'),
+        this.destinationPath(path.join(webappDir, 'vite.config.ts')),
+        {}
+      );
+      await this.render(
+        this.templatePath('tsconfig.json'),
+        this.destinationPath(path.join(webappDir, 'tsconfig.json')),
+        {}
+      );
+      await this.render(
+        this.templatePath('tsconfig.node.json'),
+        this.destinationPath(path.join(webappDir, 'tsconfig.node.json')),
+        {}
+      );
+      await this.render(
+        this.templatePath('tailwind.config.js'),
+        this.destinationPath(path.join(webappDir, 'tailwind.config.js')),
+        {}
+      );
+      await this.render(
+        this.templatePath('postcss.config.js'),
+        this.destinationPath(path.join(webappDir, 'postcss.config.js')),
+        {}
+      );
 
-    await this.render(
-      this.templatePath(path.join('src', 'main.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'main.tsx')),
-      {}
-    );
-    await this.render(
-      this.templatePath(path.join('src', 'App.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'App.tsx')),
-      {}
-    );
-    await this.render(
-      this.templatePath(path.join('src', 'routes.ts')),
-      this.destinationPath(path.join(webappDir, 'src', 'routes.ts')),
-      {}
-    );
-    await this.render(
-      this.templatePath(path.join('src', 'vite-env.d.ts')),
-      this.destinationPath(path.join(webappDir, 'src', 'vite-env.d.ts')),
-      {}
-    );
+      await this.render(
+        this.templatePath(path.join('src', 'main.tsx')),
+        this.destinationPath(path.join(webappDir, 'src', 'main.tsx')),
+        {}
+      );
+      await this.render(
+        this.templatePath(path.join('src', 'App.tsx')),
+        this.destinationPath(path.join(webappDir, 'src', 'App.tsx')),
+        {}
+      );
+      await this.render(
+        this.templatePath(path.join('src', 'routes.ts')),
+        this.destinationPath(path.join(webappDir, 'src', 'routes.ts')),
+        {}
+      );
+      await this.render(
+        this.templatePath(path.join('src', 'vite-env.d.ts')),
+        this.destinationPath(path.join(webappDir, 'src', 'vite-env.d.ts')),
+        {}
+      );
 
-    await this.render(
-      this.templatePath(path.join('src', 'components', 'Navigation.tsx')),
-      this.destinationPath(
-        path.join(webappDir, 'src', 'components', 'Navigation.tsx')
-      ),
-      {}
-    );
+      await this.render(
+        this.templatePath(path.join('src', 'components', 'Navigation.tsx')),
+        this.destinationPath(
+          path.join(webappDir, 'src', 'components', 'Navigation.tsx')
+        ),
+        {}
+      );
 
-    await this.render(
-      this.templatePath(path.join('src', 'pages', 'Home.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'pages', 'Home.tsx')),
-      {}
-    );
-    await this.render(
-      this.templatePath(path.join('src', 'pages', 'About.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'pages', 'About.tsx')),
-      {}
-    );
-    await this.render(
-      this.templatePath(path.join('src', 'pages', 'NotFound.tsx')),
-      this.destinationPath(
-        path.join(webappDir, 'src', 'pages', 'NotFound.tsx')
-      ),
-      {}
-    );
+      await this.render(
+        this.templatePath(path.join('src', 'pages', 'Home.tsx')),
+        this.destinationPath(path.join(webappDir, 'src', 'pages', 'Home.tsx')),
+        {}
+      );
+      await this.render(
+        this.templatePath(path.join('src', 'pages', 'About.tsx')),
+        this.destinationPath(path.join(webappDir, 'src', 'pages', 'About.tsx')),
+        {}
+      );
+      await this.render(
+        this.templatePath(path.join('src', 'pages', 'NotFound.tsx')),
+        this.destinationPath(
+          path.join(webappDir, 'src', 'pages', 'NotFound.tsx')
+        ),
+        {}
+      );
 
-    await this.render(
-      this.templatePath(path.join('src', 'styles', 'global.css')),
-      this.destinationPath(path.join(webappDir, 'src', 'styles', 'global.css')),
-      {}
-    );
+      await this.render(
+        this.templatePath(path.join('src', 'styles', 'global.css')),
+        this.destinationPath(
+          path.join(webappDir, 'src', 'styles', 'global.css')
+        ),
+        {}
+      );
 
-    await this.render(
-      this.templatePath(path.join('src', 'test-setup', 'setup.ts')),
-      this.destinationPath(
-        path.join(webappDir, 'src', 'test-setup', 'setup.ts')
-      ),
-      {}
-    );
+      await this.render(
+        this.templatePath(path.join('src', 'test-setup', 'setup.ts')),
+        this.destinationPath(
+          path.join(webappDir, 'src', 'test-setup', 'setup.ts')
+        ),
+        {}
+      );
+    }
   }
 }

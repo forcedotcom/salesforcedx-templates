@@ -58,12 +58,14 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       );
       templatePath = path.join(path.dirname(packageJsonPath), 'dist');
       if (!fs.existsSync(templatePath)) {
-        throw new Error('Template path not found');
+        throw new Error(`Template path, "${templatePath}", not found`);
       }
-    } catch {
-      throw new Error(
+    } catch (error) {
+      const err = new Error(
         "Web application templates not found. Install '@sfdc-webapps/base-web-app'."
       );
+      (err as any).cause = error; // Type casting to bypass the check
+      throw err;
     }
 
     this.sourceRoot(templatePath);
@@ -111,12 +113,14 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
         'base-reference-app'
       );
       if (!fs.existsSync(templatePath)) {
-        throw new Error('Template path not found');
+        throw new Error(`Template path, "${templatePath}", not found`);
       }
-    } catch {
-      throw new Error(
+    } catch (error) {
+      const err = new Error(
         "Web application templates not found. Install '@sfdc-webapps/base-reference-app'."
       );
+      (err as any).cause = error; // Type casting to bypass the check
+      throw err;
     }
 
     this.sourceRoot(templatePath);
@@ -153,7 +157,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
   private async copyDirectoryRecursive(
     sourceDir: string,
     destDir: string,
-    excludeFiles: Set<string> = new Set()
+    excludeFiles: ReadonlySet<string> = new Set()
   ): Promise<void> {
     if (!fs.existsSync(sourceDir)) {
       return;

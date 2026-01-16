@@ -911,12 +911,12 @@
 
 "@sfdc-webapps/base-reference-app@^1.0.6":
   version "1.0.6"
-  resolved "https://nexus-proxy.repo.local.sfdc.net/nexus/content/groups/npm-all/@sfdc-webapps/base-reference-app/-/base-reference-app-1.0.6.tgz#af752456e53e628ada44f360e7975b215db376a0"
+  resolved "https://registry.yarnpkg.com/@sfdc-webapps/base-reference-app/-/base-reference-app-1.0.6.tgz#af752456e53e628ada44f360e7975b215db376a0"
   integrity sha512-9tlydXK/InnUFNYN4VYw9w+N91HTDVvT57VwCDfwlILN+306+oXirf002fx94Wktk+X/CaG5fl32SVtEkKy/JQ==
 
 "@sfdc-webapps/base-web-app@^1.0.6":
   version "1.0.6"
-  resolved "https://nexus-proxy.repo.local.sfdc.net/nexus/content/groups/npm-all/@sfdc-webapps/base-web-app/-/base-web-app-1.0.6.tgz#5881f1e9e97ee8e2cac7a467d1523a5d2b67744a"
+  resolved "https://registry.yarnpkg.com/@sfdc-webapps/base-web-app/-/base-web-app-1.0.6.tgz#5881f1e9e97ee8e2cac7a467d1523a5d2b67744a"
   integrity sha512-arRsMRuNxAn9bgrxCdNdAwdmvZdGxal4fNXpHxYLla+zPK/vd/CLJC8j9pj5KcU28JBKV10pueFe8aW6DiSYHg==
 
 "@shikijs/core@1.29.2":

@@ -1,0 +1,10 @@
+{
+  "type" : "sfdc_cms__site",
+  "title" : "<%- siteName %>",
+  "contentBody" : {
+    "appContainer" : false,
+    "authenticationType" : "AUTHENTICATED",
+    "geoBotsAllowed" : false
+  },
+  "urlName" : "<%= urlName %>"
+}

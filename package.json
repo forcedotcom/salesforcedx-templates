@@ -63,8 +63,9 @@
     "node": ">=18.18.2"
   },
   "scripts": {
-    "build": "yarn run clean:lib && yarn build:templates && yarn compile",
+    "build": "yarn run clean:lib && yarn copy-webapp-templates && yarn build:templates && yarn compile",
     "build:templates": "node scripts/build-templates",
+    "copy-webapp-templates": "node scripts/copy-webapp-templates",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "commit": "git-cz",
     "compile": "tsc -b",

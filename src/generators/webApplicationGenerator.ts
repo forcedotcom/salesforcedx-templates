@@ -49,28 +49,8 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    let templatePath: string;
+    this.sourceRootWithPartialPath(path.join('webapplication', 'webappbasic'));
 
-    // 1. resolve the template from npm package
-    try {
-      const packageJsonPath = require.resolve(
-        '@sfdc-webapps/base-web-app/package.json'
-      );
-      templatePath = path.join(path.dirname(packageJsonPath), 'dist');
-      if (!fs.existsSync(templatePath)) {
-        throw new Error(`Template path, "${templatePath}", not found`);
-      }
-    } catch (error) {
-      const err = new Error(
-        "Web application templates not found. Install '@sfdc-webapps/base-web-app'."
-      );
-      (err as any).cause = error; // Type casting to bypass the check
-      throw err;
-    }
-
-    this.sourceRoot(templatePath);
-
-    // 2. render paramterized templates
     await this.render(
       this.templatePath('_webapplication.webApplication-meta.xml'),
       this.destinationPath(
@@ -85,7 +65,8 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       { masterLabel }
     );
 
-    // 3. copy the rest of the files over
+    // Copy the rest of the files over
+    const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,
@@ -98,34 +79,8 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    let templatePath: string;
+    this.sourceRootWithPartialPath(path.join('webapplication', 'reactbasic'));
 
-    // 1. resolve the template from npm package
-    try {
-      const packageJsonPath = require.resolve(
-        '@sfdc-webapps/base-reference-app/package.json'
-      );
-      templatePath = path.join(
-        path.dirname(packageJsonPath),
-        'dist',
-        'digitalExperiences',
-        'webApplications',
-        'base-reference-app'
-      );
-      if (!fs.existsSync(templatePath)) {
-        throw new Error(`Template path, "${templatePath}", not found`);
-      }
-    } catch (error) {
-      const err = new Error(
-        "Web application templates not found. Install '@sfdc-webapps/base-reference-app'."
-      );
-      (err as any).cause = error; // Type casting to bypass the check
-      throw err;
-    }
-
-    this.sourceRoot(templatePath);
-
-    // 2. render paramterized templates
     await this.render(
       this.templatePath('_webapplication.webApplication-meta.xml'),
       this.destinationPath(
@@ -146,7 +101,8 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       { webappname }
     );
 
-    // 3. copy the rest of the files over
+    // Copy the rest of the files over
+    const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,

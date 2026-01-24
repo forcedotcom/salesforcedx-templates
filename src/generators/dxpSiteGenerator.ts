@@ -13,6 +13,8 @@ import { nls } from '../i18n';
 const TEMPLATE_ROOT = 'dxpsite';
 
 export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
+  private uuidCache: Record<string, string> = {};
+
   constructor(options: DxpSiteOptions) {
     super(options);
   }
@@ -349,7 +351,7 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
       await this.render(
         this.templatePath('sfdc_cms__view', view, 'content.json'),
         this.destinationPath(path.join(viewPath, 'content.json')),
-        {}
+        { uuid: this.generateUUID.bind(this) }
       );
       await this.render(
         this.templatePath('sfdc_cms__view', view, '_meta.json'),
@@ -357,6 +359,18 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
         {}
       );
     }
+  }
+
+  private generateUUID(key: string | undefined): string {
+    if (!key) {
+      return crypto.randomUUID();
+    }
+
+    if (!this.uuidCache[key]) {
+      this.uuidCache[key] = crypto.randomUUID();
+    }
+
+    return this.uuidCache[key];
   }
 
   private toSiteDevName(sitename: string): string {

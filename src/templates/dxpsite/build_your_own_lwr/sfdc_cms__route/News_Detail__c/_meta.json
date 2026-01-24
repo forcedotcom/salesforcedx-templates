@@ -1,5 +1,5 @@
 {
-  "apiName" : "News_Detail__c",
-  "type" : "sfdc_cms__route",
-  "path" : "routes"
+  "apiName": "News_Detail__c",
+  "type": "sfdc_cms__route",
+  "path": "routes"
 }

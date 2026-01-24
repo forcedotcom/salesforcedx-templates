@@ -336,4 +336,114 @@ describe('DxpSiteGenerator', () => {
       );
     });
   });
+
+  describe('UUID generation', () => {
+    let renderStub: sinon.SinonStub;
+
+    beforeEach(() => {
+      renderStub = sinon
+        .stub(DxpSiteGenerator.prototype as any, 'render')
+        .resolves();
+    });
+
+    it('should pass UUID function to view content render calls', async () => {
+      const generator = new DxpSiteGenerator(defaultMockInputs);
+      await generator.generate();
+
+      const viewContentCalls = renderStub
+        .getCalls()
+        .filter(
+          (call) =>
+            call.args[1].includes('sfdc_cms__view') &&
+            call.args[1].includes('content.json')
+        );
+
+      expect(viewContentCalls.length).to.be.greaterThan(0);
+      viewContentCalls.forEach((call) => {
+        expect(call.args[2]).to.have.property('uuid');
+        expect(call.args[2].uuid).to.be.a('function');
+      });
+    });
+
+    it('should generate valid UUID format', async () => {
+      const generator = new DxpSiteGenerator(defaultMockInputs);
+      await generator.generate();
+
+      const viewContentCalls = renderStub
+        .getCalls()
+        .filter(
+          (call) =>
+            call.args[1].includes('sfdc_cms__view') &&
+            call.args[1].includes('content.json')
+        );
+
+      expect(viewContentCalls.length).to.be.greaterThan(0);
+      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const uuid = uuidFunction();
+      const uuidRegex =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      expect(uuid).to.match(uuidRegex);
+    });
+
+    it('should cache UUIDs by key', async () => {
+      const generator = new DxpSiteGenerator(defaultMockInputs);
+      await generator.generate();
+
+      const viewContentCalls = renderStub
+        .getCalls()
+        .filter(
+          (call) =>
+            call.args[1].includes('sfdc_cms__view') &&
+            call.args[1].includes('content.json')
+        );
+
+      expect(viewContentCalls.length).to.be.greaterThan(0);
+      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const key = 'test-key';
+      const firstCall = uuidFunction(key);
+      const secondCall = uuidFunction(key);
+
+      expect(firstCall).to.equal(secondCall);
+    });
+
+    it('should generate different UUIDs for different keys', async () => {
+      const generator = new DxpSiteGenerator(defaultMockInputs);
+      await generator.generate();
+
+      const viewContentCalls = renderStub
+        .getCalls()
+        .filter(
+          (call) =>
+            call.args[1].includes('sfdc_cms__view') &&
+            call.args[1].includes('content.json')
+        );
+
+      expect(viewContentCalls.length).to.be.greaterThan(0);
+      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const firstKey = uuidFunction('key1');
+      const secondKey = uuidFunction('key2');
+
+      expect(firstKey).to.not.equal(secondKey);
+    });
+
+    it('should generate different UUIDs when called without key', async () => {
+      const generator = new DxpSiteGenerator(defaultMockInputs);
+      await generator.generate();
+
+      const viewContentCalls = renderStub
+        .getCalls()
+        .filter(
+          (call) =>
+            call.args[1].includes('sfdc_cms__view') &&
+            call.args[1].includes('content.json')
+        );
+
+      expect(viewContentCalls.length).to.be.greaterThan(0);
+      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const uuid1 = uuidFunction();
+      const uuid2 = uuidFunction();
+
+      expect(uuid1).to.not.equal(uuid2);
+    });
+  });
 });

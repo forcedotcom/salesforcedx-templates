@@ -1,5 +1,5 @@
 {
-  "apiName" : "Too_Many_Requests",
-  "type" : "sfdc_cms__route",
-  "path" : "routes"
+  "apiName": "Too_Many_Requests",
+  "type": "sfdc_cms__route",
+  "path": "routes"
 }

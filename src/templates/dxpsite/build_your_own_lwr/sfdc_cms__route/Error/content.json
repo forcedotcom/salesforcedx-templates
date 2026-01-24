@@ -1,12 +1,12 @@
 {
-  "type" : "sfdc_cms__route",
-  "title" : "Error",
-  "contentBody" : {
-    "activeViewId" : "error",
-    "configurationTags" : [ ],
-    "pageAccess" : "UseParent",
-    "routeType" : "error",
-    "urlPrefix" : "error"
+  "type": "sfdc_cms__route",
+  "title": "Error",
+  "contentBody": {
+    "activeViewId": "error",
+    "configurationTags": [],
+    "pageAccess": "UseParent",
+    "routeType": "error",
+    "urlPrefix": "error"
   },
-  "urlName" : "error"
+  "urlName": "error"
 }

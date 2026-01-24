@@ -1,5 +1,5 @@
 {
-  "apiName" : "scopedHeaderAndFooter",
-  "type" : "sfdc_cms__themeLayout",
-  "path" : "themeLayouts"
+  "apiName": "scopedHeaderAndFooter",
+  "type": "sfdc_cms__themeLayout",
+  "path": "themeLayouts"
 }

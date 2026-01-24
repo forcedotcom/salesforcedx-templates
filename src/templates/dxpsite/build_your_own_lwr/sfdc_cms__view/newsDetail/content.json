@@ -14,21 +14,21 @@
             "layoutDirectionTablet" : "column",
             "maxContentWidth" : "",
             "sectionColumnGutterWidth" : "",
-            "sectionConfig" : "{\"UUID\":\"c634d694-eb02-436e-8b5f-4f141171b473\",\"columns\":[{\"UUID\":\"58e36d8e-b8a3-45ed-946e-b9b5e059dc13\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":[]}]}",
+            "sectionConfig" : "{\"UUID\":\"<%= uuid('newsDetail_section') %>\",\"columns\":[{\"UUID\":\"<%= uuid('newsDetail_col1') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":[]}]}",
             "sectionMinHeight" : "",
             "sectionVerticalAlign" : "flex-start"
           },
           "children" : [ {
-            "id" : "58e36d8e-b8a3-45ed-946e-b9b5e059dc13",
+            "id" : "<%= uuid('newsDetail_col1') %>",
             "name" : "col1",
             "title" : "Column 1",
             "type" : "region"
           } ],
           "definition" : "community_layout:section",
-          "id" : "c634d694-eb02-436e-8b5f-4f141171b473",
+          "id" : "<%= uuid('newsDetail_section') %>",
           "type" : "component"
         } ],
-        "id" : "7a1bac13-3bd1-4e44-9b68-758ab03bba6f",
+        "id" : "<%= uuid() %>",
         "name" : "content",
         "title" : "Content",
         "type" : "region"
@@ -41,16 +41,16 @@
             "recordId" : "{!recordId}"
           },
           "definition" : "community_builder:seoAssistant",
-          "id" : "c1b297fe-9758-4dda-9175-19619695b5ce",
+          "id" : "<%= uuid() %>",
           "type" : "component"
         } ],
-        "id" : "9ccbf48e-9dba-4ef9-8125-44a3faf2b3c9",
+        "id" : "<%= uuid() %>",
         "name" : "sfdcHiddenRegion",
         "title" : "sfdcHiddenRegion",
         "type" : "region"
       } ],
       "definition" : "community_layout:sldsFlexibleLayout",
-      "id" : "76c658af-84f5-4245-953b-26856ad3cd63",
+      "id" : "<%= uuid() %>",
       "type" : "component"
     },
     "dataProviders" : [ ],

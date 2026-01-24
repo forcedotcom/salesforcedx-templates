@@ -1,5 +1,5 @@
 {
-  "apiName" : "Forgot_Password",
-  "type" : "sfdc_cms__route",
-  "path" : "routes"
+  "apiName": "Forgot_Password",
+  "type": "sfdc_cms__route",
+  "path": "routes"
 }

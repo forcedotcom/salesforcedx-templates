@@ -323,7 +323,7 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
       await this.render(
         this.templatePath('sfdc_cms__themeLayout', layout, 'content.json'),
         this.destinationPath(path.join(layoutPath, 'content.json')),
-        { uuid: this.generateUUID.bind(this) }
+        { uuid: this.generateUUID.bind(this, `themeLayout_${layout}`) }
       );
       await this.render(
         this.templatePath('sfdc_cms__themeLayout', layout, '_meta.json'),
@@ -351,7 +351,7 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
       await this.render(
         this.templatePath('sfdc_cms__view', view, 'content.json'),
         this.destinationPath(path.join(viewPath, 'content.json')),
-        { uuid: this.generateUUID.bind(this) }
+        { uuid: this.generateUUID.bind(this, `view_${view}`) }
       );
       await this.render(
         this.templatePath('sfdc_cms__view', view, '_meta.json'),
@@ -361,11 +361,12 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
     }
   }
 
-  private generateUUID(key: string | undefined): string {
+  private generateUUID(namepsace: string, key: string | undefined): string {
     if (!key) {
       return crypto.randomUUID();
     }
 
+    key = `${namepsace}:${key}`;
     if (!this.uuidCache[key]) {
       this.uuidCache[key] = crypto.randomUUID();
     }

@@ -21,20 +21,20 @@
                 "layoutDirectionTablet": "column",
                 "maxContentWidth": "",
                 "sectionColumnGutterWidth": "",
-                "sectionConfig": "{\"UUID\":\"<%= uuid('scopedHeaderAndFooter_header_section') %>\",\"columns\":[{\"UUID\":\"<%= uuid('scopedHeaderAndFooter_headerSection') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"headerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+                "sectionConfig": "{\"UUID\":\"<%= uuid('headerSection') %>\",\"columns\":[{\"UUID\":\"<%= uuid('headerCol1') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"headerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
                 "sectionMinHeight": "",
                 "sectionVerticalAlign": "flex-start"
               },
               "children": [
                 {
-                  "id": "<%= uuid('scopedHeaderAndFooter_headerSection') %>",
+                  "id": "<%= uuid('headerCol1') %>",
                   "name": "headerSection",
                   "title": "Theme Header",
                   "type": "region"
                 }
               ],
               "definition": "community_layout:section",
-              "id": "<%= uuid('scopedHeaderAndFooter_header_section') %>",
+              "id": "<%= uuid('headerSection') %>",
               "type": "component"
             }
           ],
@@ -55,20 +55,20 @@
                 "layoutDirectionTablet": "column",
                 "maxContentWidth": "",
                 "sectionColumnGutterWidth": "",
-                "sectionConfig": "{\"UUID\":\"<%= uuid('scopedHeaderAndFooter_footer_section') %>\",\"columns\":[{\"UUID\":\"<%= uuid('scopedHeaderAndFooter_footerSection') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"footerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+                "sectionConfig": "{\"UUID\":\"<%= uuid('footerSection') %>\",\"columns\":[{\"UUID\":\"<%= uuid('footerCol1') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"footerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
                 "sectionMinHeight": "",
                 "sectionVerticalAlign": "flex-start"
               },
               "children": [
                 {
-                  "id": "<%= uuid('scopedHeaderAndFooter_footerSection') %>",
+                  "id": "<%= uuid('footerCol1') %>",
                   "name": "footerSection",
                   "title": "Theme Footer",
                   "type": "region"
                 }
               ],
               "definition": "community_layout:section",
-              "id": "<%= uuid('scopedHeaderAndFooter_footer_section') %>",
+              "id": "<%= uuid('footerSection') %>",
               "type": "component"
             }
           ],

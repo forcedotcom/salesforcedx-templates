@@ -16,7 +16,7 @@
                 "layoutDirectionTablet": "column",
                 "maxContentWidth": "",
                 "sectionColumnGutterWidth": "",
-                "sectionConfig": "{\"UUID\":\"<%= uuid('tooManyRequests_section') %>\",\"columns\":[{\"UUID\":\"<%= uuid('tooManyRequests_col1') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+                "sectionConfig": "{\"UUID\":\"<%= uuid('section') %>\",\"columns\":[{\"UUID\":\"<%= uuid('col1') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
                 "sectionMinHeight": "",
                 "sectionVerticalAlign": "flex-start"
               },
@@ -39,14 +39,14 @@
                       "type": "component"
                     }
                   ],
-                  "id": "<%= uuid('tooManyRequests_col1') %>",
+                  "id": "<%= uuid('col1') %>",
                   "name": "col1",
                   "title": "Column 1",
                   "type": "region"
                 }
               ],
               "definition": "community_layout:section",
-              "id": "<%= uuid('tooManyRequests_section') %>",
+              "id": "<%= uuid('section') %>",
               "type": "component"
             }
           ],

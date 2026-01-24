@@ -14,7 +14,7 @@
             "layoutDirectionTablet" : "column",
             "maxContentWidth" : "",
             "sectionColumnGutterWidth" : "",
-            "sectionConfig" : "{\"UUID\":\"<%= uuid('serviceNotAvailable_section') %>\",\"columns\":[{\"UUID\":\"<%= uuid('serviceNotAvailable_col1') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+            "sectionConfig" : "{\"UUID\":\"<%= uuid('section') %>\",\"columns\":[{\"UUID\":\"<%= uuid('col1') %>\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
             "sectionMinHeight" : "",
             "sectionVerticalAlign" : "flex-start"
           },
@@ -28,13 +28,13 @@
               "id" : "<%= uuid() %>",
               "type" : "component"
             } ],
-            "id" : "<%= uuid('serviceNotAvailable_col1') %>",
+            "id" : "<%= uuid('col1') %>",
             "name" : "col1",
             "title" : "Column 1",
             "type" : "region"
           } ],
           "definition" : "community_layout:section",
-          "id" : "<%= uuid('serviceNotAvailable_section') %>",
+          "id" : "<%= uuid('section') %>",
           "type" : "component"
         } ],
         "id" : "<%= uuid() %>",

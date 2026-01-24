@@ -203,6 +203,8 @@ describe('DxpSiteGenerator', () => {
           );
         expect(viewContentCall, `Expected view content for ${view}`).to.exist;
         expect(viewMetaCall, `Expected view meta for ${view}`).to.exist;
+        expect(viewContentCall!.args[2]).to.have.property('uuid');
+        expect(viewContentCall!.args[2].uuid).to.be.a('function');
       });
     });
 
@@ -228,6 +230,8 @@ describe('DxpSiteGenerator', () => {
         expect(layoutContentCall, `Expected layout content for ${layout}`).to
           .exist;
         expect(layoutMetaCall, `Expected layout meta for ${layout}`).to.exist;
+        expect(layoutContentCall!.args[2]).to.have.property('uuid');
+        expect(layoutContentCall!.args[2].uuid).to.be.a('function');
       });
     });
 
@@ -344,25 +348,6 @@ describe('DxpSiteGenerator', () => {
       renderStub = sinon
         .stub(DxpSiteGenerator.prototype as any, 'render')
         .resolves();
-    });
-
-    it('should pass UUID function to view content render calls', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
-      await generator.generate();
-
-      const viewContentCalls = renderStub
-        .getCalls()
-        .filter(
-          (call) =>
-            call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
-        );
-
-      expect(viewContentCalls.length).to.be.greaterThan(0);
-      viewContentCalls.forEach((call) => {
-        expect(call.args[2]).to.have.property('uuid');
-        expect(call.args[2].uuid).to.be.a('function');
-      });
     });
 
     it('should generate valid UUID format', async () => {

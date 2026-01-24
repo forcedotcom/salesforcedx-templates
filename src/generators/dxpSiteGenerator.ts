@@ -323,7 +323,7 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
       await this.render(
         this.templatePath('sfdc_cms__themeLayout', layout, 'content.json'),
         this.destinationPath(path.join(layoutPath, 'content.json')),
-        {}
+        { uuid: this.generateUUID.bind(this) }
       );
       await this.render(
         this.templatePath('sfdc_cms__themeLayout', layout, '_meta.json'),

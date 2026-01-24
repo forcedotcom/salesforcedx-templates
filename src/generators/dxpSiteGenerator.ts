@@ -105,7 +105,7 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
 
   private async generateDigitalExperienceConfig(
     siteName: string,
-    siteDevName: string,
+    picassoSiteDevName: string,
     urlPathPrefix: string
   ): Promise<void> {
     await this.render(
@@ -114,23 +114,26 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
         path.join(
           this.outputdir,
           'digitalExperienceConfigs',
-          `${siteDevName}.digitalExperienceConfig-meta.xml`
+          `${picassoSiteDevName}.digitalExperienceConfig-meta.xml`
         )
       ),
-      { siteName, siteDevName, urlPathPrefix }
+      { siteName, picassoSiteDevName, urlPathPrefix }
     );
   }
 
   private async generateDEBMeta(
     bundlePath: string,
-    siteDevName: string
+    picassoSiteDevName: string
   ): Promise<void> {
     await this.render(
       this.templatePath('_digitalExperience.xml'),
       this.destinationPath(
-        path.join(bundlePath, `${siteDevName}.digitalExperience-meta.xml`)
+        path.join(
+          bundlePath,
+          `${picassoSiteDevName}.digitalExperience-meta.xml`
+        )
       ),
-      { siteDevName }
+      { picassoSiteDevName }
     );
   }
 
@@ -263,13 +266,17 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
   private async generateDEBSite(
     bundlePath: string,
     siteName: string,
-    siteDevName: string
+    picassoSiteDevName: string
   ): Promise<void> {
     const urlName = siteName
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-') // keep only alphanumeric characters
       .replace(/-$/, ''); // remove trailing hyphen
-    const sitePath = path.join(bundlePath, 'sfdc_cms__site', siteDevName);
+    const sitePath = path.join(
+      bundlePath,
+      'sfdc_cms__site',
+      picassoSiteDevName
+    );
     siteName = JSON.stringify(siteName) // escape special characters since this needs to be a JSON string
       .slice(1, -1); // remove quotes added by JSON.stringify
     await this.render(
@@ -280,7 +287,7 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
     await this.render(
       this.templatePath('sfdc_cms__site', '_meta.json'),
       this.destinationPath(path.join(sitePath, '_meta.json')),
-      { siteDevName }
+      { picassoSiteDevName }
     );
   }
 

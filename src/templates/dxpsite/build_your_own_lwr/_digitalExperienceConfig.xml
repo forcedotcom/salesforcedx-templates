@@ -4,5 +4,5 @@
     <site>
         <urlPathPrefix><%= urlPathPrefix %></urlPathPrefix>
     </site>
-    <space>site/<%= siteDevName %></space>
+    <space>site/<%= picassoSiteDevName %></space>
 </DigitalExperienceConfig>

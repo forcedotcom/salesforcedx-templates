@@ -1,3 +1,12 @@
+## [65.4.4](https://github.com/forcedotcom/salesforcedx-templates/compare/65.4.3...65.4.4) (2026-01-25)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 7.5.4 to 7.5.6 ([3f5bdfb](https://github.com/forcedotcom/salesforcedx-templates/commit/3f5bdfb941a1a0c7b8a768e3b126291c2ed31a21))
+
+
+
 ## [65.4.3](https://github.com/forcedotcom/salesforcedx-templates/compare/65.4.2...65.4.3) (2026-01-22)
 
 

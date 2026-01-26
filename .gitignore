@@ -60,3 +60,6 @@ oclif.manifest.json
 
 # file generated for publishing
 *.tgz
+
+# ignore webapplication which is built from npm
+src/templates/webapplication/

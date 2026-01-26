@@ -8,15 +8,15 @@
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 import * as path from 'path';
+import { CreateUtil, DxpSiteOptions } from '../../src';
 import DxpSiteGenerator from '../../src/generators/dxpSiteGenerator';
-import { DxpSiteOptions } from '../../src/utils/types';
-import { CreateUtil } from '../../src/utils';
 
 describe('DxpSiteGenerator', () => {
   const defaultMockInputs: DxpSiteOptions = {
+    template: 'build_your_own_lwr',
     sitename: 'TestSite',
     urlpathprefix: 'testprefix',
-    template: 'build_your_own_lwr',
+    adminemail: 'test@salesforce.com',
   };
 
   afterEach(() => {
@@ -80,6 +80,7 @@ describe('DxpSiteGenerator', () => {
         siteDevName: 'TestSite',
         picassoSiteDevName: 'TestSite1',
         urlPathPrefix: 'testprefix',
+        adminEmail: 'test@salesforce.com',
       });
     });
 
@@ -267,9 +268,8 @@ describe('DxpSiteGenerator', () => {
 
     it('should generate site content with correct urlName transformation', async () => {
       const options: DxpSiteOptions = {
+        ...defaultMockInputs,
         sitename: 'My "Test" Site!',
-        urlpathprefix: 'testprefix',
-        template: 'build_your_own_lwr',
       };
       const generator = new DxpSiteGenerator(options);
       await generator.generate();
@@ -305,9 +305,8 @@ describe('DxpSiteGenerator', () => {
       ([description, sitename, expectedDevName, expectedPicassoDevName]) => {
         it(`should transform site name: ${description}`, async () => {
           const options: DxpSiteOptions = {
+            ...defaultMockInputs,
             sitename,
-            urlpathprefix: 'testprefix',
-            template: 'build_your_own_lwr',
           };
           const generator = new DxpSiteGenerator(options);
           await generator.generate();
@@ -325,9 +324,8 @@ describe('DxpSiteGenerator', () => {
 
     it('should encode special characters in network file name', async () => {
       const options: DxpSiteOptions = {
+        ...defaultMockInputs,
         sitename: "Site ~!.'()@#$%&+= Name",
-        urlpathprefix: 'testprefix',
-        template: 'build_your_own_lwr',
       };
       const generator = new DxpSiteGenerator(options);
       await generator.generate();

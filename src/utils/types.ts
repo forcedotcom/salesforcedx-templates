@@ -201,7 +201,8 @@ export interface WebApplicationOptions extends TemplateOptions {
 }
 
 export interface DxpSiteOptions extends TemplateOptions {
+  template: string;
   sitename: string;
   urlpathprefix: string;
-  template: 'build_your_own_lwr';
+  adminemail: string;
 }

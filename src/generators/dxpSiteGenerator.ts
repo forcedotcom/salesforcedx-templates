@@ -20,6 +20,8 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
   }
 
   public validateOptions(): void {
+    CreateUtil.checkInputs(this.options.template);
+
     // site name allows anything, but we will strip it down for dev name
 
     // url path prefix must be strictly alphanumeric, no "-" or "_", can start with a number
@@ -30,12 +32,10 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
         nls.localize('AlphaNumericValidationError', 'url-path-prefix')
       );
     }
-
-    CreateUtil.checkInputs(this.options.template);
   }
 
   public async generate(): Promise<void> {
-    const { sitename, urlpathprefix, template } = this.options;
+    const { template, sitename, urlpathprefix, adminemail } = this.options;
 
     const siteDevName = this.toSiteDevName(sitename);
     const picassoSiteDevName = this.toPicassoSiteDevName(siteDevName);
@@ -46,7 +46,8 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
       sitename,
       siteDevName,
       picassoSiteDevName,
-      urlpathprefix
+      urlpathprefix,
+      adminemail
     );
 
     await this.generateCustomSite(sitename, siteDevName, urlpathprefix);
@@ -79,7 +80,8 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
     siteName: string,
     siteDevName: string,
     picassoSiteDevName: string,
-    urlPathPrefix: string
+    urlPathPrefix: string,
+    adminEmail: string
   ): Promise<void> {
     const fileName = this.encodeForFileName(siteName);
     await this.render(
@@ -87,7 +89,7 @@ export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
       this.destinationPath(
         path.join(this.outputdir, 'networks', `${fileName}.network-meta.xml`)
       ),
-      { siteName, siteDevName, picassoSiteDevName, urlPathPrefix }
+      { siteName, siteDevName, picassoSiteDevName, urlPathPrefix, adminEmail }
     );
   }
 

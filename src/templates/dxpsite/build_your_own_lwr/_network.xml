@@ -6,7 +6,7 @@
     <communityRoles/>
     <disableReputationRecordConversations>true</disableReputationRecordConversations>
     <emailSenderName><%= siteName %></emailSenderName>
-    <emailSenderAddress>admin@salesforce.com</emailSenderAddress>
+    <emailSenderAddress><%= adminEmail %></emailSenderAddress>
     <embeddedLoginEnabled>false</embeddedLoginEnabled>
     <enableApexCDNCaching>true</enableApexCDNCaching>
     <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>

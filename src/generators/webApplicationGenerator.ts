@@ -5,7 +5,9 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { camelCaseToTitleCase } from '@salesforce/kit';
+import * as fs from 'fs';
 import * as path from 'path';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { WebApplicationOptions } from '../utils/types';
@@ -63,10 +65,12 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       { masterLabel }
     );
 
-    await this.render(
-      this.templatePath('webapp.json'),
-      this.destinationPath(path.join(webappDir, 'webapp.json')),
-      {}
+    // Copy the rest of the files over
+    const templatePath = this.sourceRoot();
+    await this.copyDirectoryRecursive(
+      templatePath,
+      webappDir,
+      new Set(['_webapplication.webApplication-meta.xml'])
     );
   }
 
@@ -92,111 +96,59 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     );
 
     await this.render(
-      this.templatePath('webapp.json'),
-      this.destinationPath(path.join(webappDir, 'webapp.json')),
-      {}
-    );
-
-    await this.render(
       this.templatePath('package.json'),
       this.destinationPath(path.join(webappDir, 'package.json')),
       { webappname }
     );
 
-    await this.render(
-      this.templatePath('vite.config.ts'),
-      this.destinationPath(path.join(webappDir, 'vite.config.ts')),
-      {}
+    // Copy the rest of the files over
+    const templatePath = this.sourceRoot();
+    await this.copyDirectoryRecursive(
+      templatePath,
+      webappDir,
+      new Set(['_webapplication.webApplication-meta.xml'])
     );
+  }
 
-    await this.render(
-      this.templatePath('tsconfig.json'),
-      this.destinationPath(path.join(webappDir, 'tsconfig.json')),
-      {}
-    );
+  private async copyDirectoryRecursive(
+    sourceDir: string,
+    destDir: string,
+    excludeFiles: ReadonlySet<string> = new Set()
+  ): Promise<void> {
+    if (!fs.existsSync(sourceDir)) {
+      return;
+    }
 
-    await this.render(
-      this.templatePath('tsconfig.node.json'),
-      this.destinationPath(path.join(webappDir, 'tsconfig.node.json')),
-      {}
-    );
+    await mkdir(destDir, { recursive: true });
 
-    await this.render(
-      this.templatePath('tailwind.config.js'),
-      this.destinationPath(path.join(webappDir, 'tailwind.config.js')),
-      {}
-    );
+    const entries = fs.readdirSync(sourceDir, { withFileTypes: true });
 
-    await this.render(
-      this.templatePath('postcss.config.js'),
-      this.destinationPath(path.join(webappDir, 'postcss.config.js')),
-      {}
-    );
+    for (const entry of entries) {
+      const sourcePath = path.join(sourceDir, entry.name);
+      const destPath = path.join(destDir, entry.name);
 
-    await this.render(
-      this.templatePath(path.join('src', 'main.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'main.tsx')),
-      {}
-    );
+      // Skip template files that were rendered
+      if (excludeFiles.has(entry.name)) {
+        continue;
+      }
 
-    await this.render(
-      this.templatePath(path.join('src', 'App.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'App.tsx')),
-      {}
-    );
+      // Skip files that already exist
+      if (fs.existsSync(destPath)) {
+        continue;
+      }
 
-    await this.render(
-      this.templatePath(path.join('src', 'routes.ts')),
-      this.destinationPath(path.join(webappDir, 'src', 'routes.ts')),
-      {}
-    );
+      if (entry.isDirectory()) {
+        await this.copyDirectoryRecursive(sourcePath, destPath, excludeFiles);
+      } else {
+        // Copy file and track it
+        const content = await readFile(sourcePath);
+        await mkdir(path.dirname(destPath), { recursive: true });
+        await writeFile(destPath, content as Uint8Array);
 
-    await this.render(
-      this.templatePath(path.join('src', 'vite-env.d.ts')),
-      this.destinationPath(path.join(webappDir, 'src', 'vite-env.d.ts')),
-      {}
-    );
-
-    await this.render(
-      this.templatePath(path.join('src', 'components', 'Navigation.tsx')),
-      this.destinationPath(
-        path.join(webappDir, 'src', 'components', 'Navigation.tsx')
-      ),
-      {}
-    );
-
-    await this.render(
-      this.templatePath(path.join('src', 'pages', 'Home.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'pages', 'Home.tsx')),
-      {}
-    );
-
-    await this.render(
-      this.templatePath(path.join('src', 'pages', 'About.tsx')),
-      this.destinationPath(path.join(webappDir, 'src', 'pages', 'About.tsx')),
-      {}
-    );
-
-    await this.render(
-      this.templatePath(path.join('src', 'pages', 'NotFound.tsx')),
-      this.destinationPath(
-        path.join(webappDir, 'src', 'pages', 'NotFound.tsx')
-      ),
-      {}
-    );
-
-    await this.render(
-      this.templatePath(path.join('src', 'styles', 'global.css')),
-      this.destinationPath(path.join(webappDir, 'src', 'styles', 'global.css')),
-      {}
-    );
-
-    await this.render(
-      this.templatePath(path.join('src', 'test-setup', 'setup.ts')),
-      this.destinationPath(
-        path.join(webappDir, 'src', 'test-setup', 'setup.ts')
-      ),
-      {}
-    );
+        // Register the created file
+        const relativePath = path.relative(process.cwd(), destPath);
+        this.changes.created.push(relativePath);
+      }
+    }
   }
 }

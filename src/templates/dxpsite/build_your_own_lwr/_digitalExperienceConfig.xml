@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DigitalExperienceConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><%= siteName %></label>
+    <site>
+        <urlPathPrefix><%= urlPathPrefix %></urlPathPrefix>
+    </site>
+    <space>site/<%= picassoSiteDevName %></space>
+</DigitalExperienceConfig>

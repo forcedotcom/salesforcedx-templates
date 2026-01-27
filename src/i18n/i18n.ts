@@ -47,4 +47,6 @@ export const messages = {
   LightningTest: 'A Lightning Test',
   RawOutput: 'target dir = %s\n%s',
   templateTypeNotFound: 'The template type does not exist',
+
+  AlphaNumericValidationError: '%s must contain only alphanumeric characters.',
 };

@@ -16,6 +16,7 @@ import {
 import { nls } from '../i18n';
 
 const VALID_TEMPLATES = ['RecordPage', 'AppPage', 'HomePage'] as const;
+const MAX_SECONDARY_FIELDS = 11;
 
 export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> {
   constructor(options: FlexipageOptions) {
@@ -37,6 +38,17 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
 
     if (this.options.template === 'RecordPage' && !this.options.entityName) {
       throw new Error(nls.localize('RecordPageRequiresEntityName'));
+    }
+
+    // Validate secondary fields limit (dynamicHighlights supports max 11 secondary fields)
+    const secondaryFieldsCount = this.options.secondaryFields?.length ?? 0;
+    if (secondaryFieldsCount > MAX_SECONDARY_FIELDS) {
+      throw new Error(
+        nls.localize('TooManySecondaryFields', [
+          secondaryFieldsCount.toString(),
+          MAX_SECONDARY_FIELDS.toString(),
+        ])
+      );
     }
 
     // Ensure output directory includes 'flexipages' folder

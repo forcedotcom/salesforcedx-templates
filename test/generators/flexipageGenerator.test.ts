@@ -99,6 +99,57 @@ describe('FlexipageGenerator', () => {
       }).to.throw(/entityName/i);
     });
 
+    it('should validate max 11 secondary fields', () => {
+      expect(() => {
+        new FlexipageGenerator({
+          flexipagename: 'TestPage',
+          template: 'RecordPage',
+          outputdir: outputDir,
+          entityName: 'Account',
+          secondaryFields: [
+            'Field1',
+            'Field2',
+            'Field3',
+            'Field4',
+            'Field5',
+            'Field6',
+            'Field7',
+            'Field8',
+            'Field9',
+            'Field10',
+            'Field11',
+            'Field12',
+          ],
+          internal: true,
+        });
+      }).to.throw(/Too many secondary fields/i);
+    });
+
+    it('should allow up to 11 secondary fields', () => {
+      expect(() => {
+        new FlexipageGenerator({
+          flexipagename: 'TestPage',
+          template: 'RecordPage',
+          outputdir: outputDir,
+          entityName: 'Account',
+          secondaryFields: [
+            'Field1',
+            'Field2',
+            'Field3',
+            'Field4',
+            'Field5',
+            'Field6',
+            'Field7',
+            'Field8',
+            'Field9',
+            'Field10',
+            'Field11',
+          ],
+          internal: true,
+        });
+      }).to.not.throw();
+    });
+
     it('should not append flexipages to outputdir when it already contains flexipages', () => {
       const outputDirWithFlexipages = path.join('testsoutput', 'flexipages');
       const generator = new FlexipageGenerator({
@@ -346,7 +397,9 @@ describe('FlexipageGenerator', () => {
         await generator.generate();
         expect.fail('Should have thrown an error');
       } catch (error: any) {
-        expect(error.message).to.match(/template.*not found|MissingFlexipageTemplate/i);
+        expect(error.message).to.match(
+          /template.*not found|MissingFlexipageTemplate/i
+        );
       }
     });
 
@@ -392,7 +445,10 @@ describe('FlexipageGenerator', () => {
       await generator.generate();
 
       // Check main file was created
-      const expectedFile = path.join(outputDir, 'SubdirTest.flexipage-meta.xml');
+      const expectedFile = path.join(
+        outputDir,
+        'SubdirTest.flexipage-meta.xml'
+      );
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'Subdir Test Page');
 
@@ -427,7 +483,10 @@ describe('FlexipageGenerator', () => {
 
       // Create a non-template file (e.g., a README or config)
       const nonTemplateFile = path.join(customFlexipageDir, 'README.md');
-      await fs.promises.writeFile(nonTemplateFile, '# Custom Template\nThis is a readme.');
+      await fs.promises.writeFile(
+        nonTemplateFile,
+        '# Custom Template\nThis is a readme.'
+      );
 
       const generator = new FlexipageGenerator({
         flexipagename: 'CopyTest',
@@ -495,7 +554,8 @@ describe('FlexipageGenerator', () => {
       await generator.generate();
 
       // The static.txt file should be marked as identical
-      expect(generator.changes.identical.some((f) => f.includes('static.txt'))).to.be.true;
+      expect(generator.changes.identical.some((f) => f.includes('static.txt')))
+        .to.be.true;
     });
 
     it('should handle conflicting existing files', async () => {
@@ -542,9 +602,11 @@ describe('FlexipageGenerator', () => {
       await generator.generate();
 
       // The config.json file should be marked as conflicted and forced
-      expect(generator.changes.conflicted.some((f) => f.includes('config.json'))).to.be
-        .true;
-      expect(generator.changes.forced.some((f) => f.includes('config.json'))).to.be.true;
+      expect(
+        generator.changes.conflicted.some((f) => f.includes('config.json'))
+      ).to.be.true;
+      expect(generator.changes.forced.some((f) => f.includes('config.json'))).to
+        .be.true;
 
       // The file should have been overwritten with new content
       const newContent = fs.readFileSync(existingFile, 'utf8');

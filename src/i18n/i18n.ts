@@ -53,6 +53,8 @@ export const messages = {
     'Invalid FlexiPage template "%s". Valid templates are: %s',
   RecordPageRequiresEntityName:
     'RecordPage template requires an entityName option (e.g., "Account", "Opportunity", "Custom_Object__c").',
+  TooManySecondaryFields:
+    'Too many secondary fields specified (%s). The Dynamic Highlights Panel supports a maximum of %s secondary fields.',
   MissingFlexipageTemplate:
     'FlexiPage template "%s" not found in repository: %s. Please verify the template name is correct.',
   FailedToLoadFlexipageTemplatesRepo:

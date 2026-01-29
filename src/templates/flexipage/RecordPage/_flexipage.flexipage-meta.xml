@@ -107,14 +107,19 @@
         <type>Facet</type>
     </flexiPageRegions>
     <!-- Field Section: Detail Fields -->
+    <% 
+    // Use detailFields if provided, otherwise default fields
+    const allDetailFields = (detailFields && detailFields.length > 0) 
+        ? detailFields 
+        : ['Name', 'OwnerId', 'CreatedById', 'LastModifiedById'];
+    // Split fields into two columns
+    const midpoint = Math.ceil(allDetailFields.length / 2);
+    const column1Fields = allDetailFields.slice(0, midpoint);
+    const column2Fields = allDetailFields.slice(midpoint);
+    %>
+    <!-- Column 1 Fields -->
     <flexiPageRegions>
-        <% 
-        // Use detailFields if provided, otherwise default fields
-        const allDetailFields = (detailFields && detailFields.length > 0) 
-            ? detailFields 
-            : ['Name', 'OwnerId', 'CreatedById', 'LastModifiedById'];
-        %>
-        <% allDetailFields.forEach((field, index) => { %>
+        <% column1Fields.forEach((field, index) => { %>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -122,25 +127,56 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.<%= field %></fieldItem>
-                <identifier>Record<%= field.replace(/\./g, '_') %>DetailField<%= index %></identifier>
+                <identifier>Record<%= field.replace(/\./g, '_') %>Column1Field<%= index %></identifier>
             </fieldInstance>
         </itemInstances>
         <% }); %>
-        <name>Facet-FieldSection-Fields</name>
+        <name>Facet-FieldSection-Column1</name>
         <type>Facet</type>
     </flexiPageRegions>
-    <!-- Field Section: Column Facet -->
+    <!-- Column 2 Fields -->
+    <% if (column2Fields.length > 0) { %>
+    <flexiPageRegions>
+        <% column2Fields.forEach((field, index) => { %>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.<%= field %></fieldItem>
+                <identifier>Record<%= field.replace(/\./g, '_') %>Column2Field<%= index %></identifier>
+            </fieldInstance>
+        </itemInstances>
+        <% }); %>
+        <name>Facet-FieldSection-Column2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <% } %>
+    <!-- Field Section: Column Facets -->
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-FieldSection-Fields</value>
+                    <value>Facet-FieldSection-Column1</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column1</identifier>
             </componentInstance>
         </itemInstances>
+        <% if (column2Fields.length > 0) { %>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-FieldSection-Column2</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <% } %>
         <name>Facet-FieldSection-Columns</name>
         <type>Facet</type>
     </flexiPageRegions>

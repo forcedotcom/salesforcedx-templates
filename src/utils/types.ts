@@ -8,6 +8,7 @@
 import AnalyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
 import ApexClassGenerator from '../generators/apexClassGenerator';
 import ApexTriggerGenerator from '../generators/apexTriggerGenerator';
+import FlexipageGenerator from '../generators/flexipageGenerator';
 import LightningAppGenerator from '../generators/lightningAppGenerator';
 import LightningComponentGenerator from '../generators/lightningComponentGenerator';
 import LightningEventGenerator from '../generators/lightningEventGenerator';
@@ -28,6 +29,7 @@ export type Generators =
   | typeof AnalyticsTemplateGenerator
   | typeof ApexClassGenerator
   | typeof ApexTriggerGenerator
+  | typeof FlexipageGenerator
   | typeof LightningAppGenerator
   | typeof LightningComponentGenerator
   | typeof LightningEventGenerator
@@ -50,6 +52,7 @@ export enum TemplateType {
   AnalyticsTemplate,
   ApexClass,
   ApexTrigger,
+  Flexipage,
   LightningApp,
   LightningComponent,
   LightningEvent,
@@ -66,6 +69,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.AnalyticsTemplate, AnalyticsTemplateGenerator],
   [TemplateType.ApexClass, ApexClassGenerator],
   [TemplateType.ApexTrigger, ApexTriggerGenerator],
+  [TemplateType.Flexipage, FlexipageGenerator],
   [TemplateType.LightningApp, LightningAppGenerator],
   [TemplateType.LightningComponent, LightningComponentGenerator],
   [TemplateType.LightningEvent, LightningEventGenerator],
@@ -194,4 +198,19 @@ export interface WebApplicationOptions extends TemplateOptions {
   template: string;
   masterlabel?: string;
   internal?: boolean;
+}
+
+export interface FlexipageOptions extends TemplateOptions {
+  flexipagename: string;
+  template: 'RecordPage' | 'AppPage' | 'HomePage';
+  flexipageTemplatesGitRepo?: string; // Optional - uses local templates if not provided
+  forceLoadingRemoteRepo?: boolean;
+  masterlabel?: string;
+  description?: string;
+  internal?: boolean;
+  // RecordPage specific options
+  entityName?: string; // Required for RecordPage (e.g., 'Account', 'Rental_Property__c')
+  primaryField?: string; // Single primary field for dynamic highlights (e.g., 'Name')
+  secondaryFields?: string[]; // Secondary fields for dynamic highlights (e.g., ['Industry', 'AnnualRevenue'])
+  detailFields?: string[]; // Fields to display in the Details tab field section (e.g., ['Name', 'Phone', 'Industry'])
 }

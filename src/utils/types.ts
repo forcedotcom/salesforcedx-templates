@@ -13,6 +13,7 @@ import LightningComponentGenerator from '../generators/lightningComponentGenerat
 import LightningEventGenerator from '../generators/lightningEventGenerator';
 import LightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
 import LightningTestGenerator from '../generators/lightningTestGenerator';
+import DxpSiteGenerator from '../generators/dxpSiteGenerator';
 import ProjectGenerator from '../generators/projectGenerator';
 import StaticResourceGenerator from '../generators/staticResourceGenerator';
 import VisualforceComponentGenerator from '../generators/visualforceComponentGenerator';
@@ -33,6 +34,7 @@ export type Generators =
   | typeof LightningEventGenerator
   | typeof LightningTestGenerator
   | typeof LightningInterfaceGenerator
+  | typeof DxpSiteGenerator
   | typeof ProjectGenerator
   | typeof StaticResourceGenerator
   | typeof VisualforceComponentGenerator
@@ -55,6 +57,7 @@ export enum TemplateType {
   LightningEvent,
   LightningInterface,
   LightningTest,
+  DxpSite,
   Project,
   VisualforceComponent,
   VisualforcePage,
@@ -71,6 +74,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.LightningEvent, LightningEventGenerator],
   [TemplateType.LightningInterface, LightningInterfaceGenerator],
   [TemplateType.LightningTest, LightningTestGenerator],
+  [TemplateType.DxpSite, DxpSiteGenerator],
   [TemplateType.Project, ProjectGenerator],
   [TemplateType.StaticResource, StaticResourceGenerator],
   [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
@@ -194,4 +198,11 @@ export interface WebApplicationOptions extends TemplateOptions {
   template: string;
   masterlabel?: string;
   internal?: boolean;
+}
+
+export interface DxpSiteOptions extends TemplateOptions {
+  template: string;
+  sitename: string;
+  urlpathprefix: string;
+  adminemail: string;
 }

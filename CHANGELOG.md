@@ -1,3 +1,12 @@
+# [65.5.0](https://github.com/forcedotcom/salesforcedx-templates/compare/65.4.4...65.5.0) (2026-01-30)
+
+
+### Features
+
+* add FlexiPage generator for RecordPage, AppPage, and HomePage templates W-21017394  ([#710](https://github.com/forcedotcom/salesforcedx-templates/issues/710)) ([ec45e10](https://github.com/forcedotcom/salesforcedx-templates/commit/ec45e10aef1595e3dfca32d56a3f9181dbd87c80))
+
+
+
 ## [65.4.4](https://github.com/forcedotcom/salesforcedx-templates/compare/65.4.3...65.4.4) (2026-01-25)
 
 

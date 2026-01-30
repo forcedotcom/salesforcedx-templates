@@ -404,20 +404,16 @@ describe('FlexipageGenerator', () => {
     });
 
     it('should handle subdirectories in custom templates', async () => {
-      // Create custom template with subdirectory structure
-      const customFlexipageDir = path.join(
+      // Create custom template with subdirectory structure containing a template file
+      const customSubdir = path.join(
         customTemplatesDir,
         'flexipage',
         'HomePage',
         'subdir'
       );
-      await fs.promises.mkdir(customFlexipageDir, { recursive: true });
+      await fs.promises.mkdir(customSubdir, { recursive: true });
 
-      // Create a non-template file in subdirectory
-      const subFile = path.join(customFlexipageDir, 'helper.txt');
-      await fs.promises.writeFile(subFile, 'Helper content');
-
-      // Create the template file in parent
+      // Create the main template file
       const templateFile = path.join(
         customTemplatesDir,
         'flexipage',
@@ -429,6 +425,20 @@ describe('FlexipageGenerator', () => {
         `<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel><%= masterlabel %></masterLabel>
+    <type>HomePage</type>
+</FlexiPage>`
+      );
+
+      // Create a template file in subdirectory
+      const subTemplateFile = path.join(
+        customSubdir,
+        '_flexipage.flexipage-meta.xml'
+      );
+      await fs.promises.writeFile(
+        subTemplateFile,
+        `<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel><%= masterlabel %> Sub</masterLabel>
     <type>HomePage</type>
 </FlexiPage>`
       );
@@ -452,165 +462,14 @@ describe('FlexipageGenerator', () => {
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'Subdir Test Page');
 
-      // Check subdirectory file was copied
-      const expectedSubFile = path.join(outputDir, 'subdir', 'helper.txt');
+      // Check subdirectory template file was also processed
+      const expectedSubFile = path.join(
+        outputDir,
+        'subdir',
+        'SubdirTest.flexipage-meta.xml'
+      );
       assertFileExists(expectedSubFile);
-      assertFileContent(expectedSubFile, 'Helper content');
-    });
-
-    it('should copy non-template files as-is', async () => {
-      // Create custom template directory
-      const customFlexipageDir = path.join(
-        customTemplatesDir,
-        'flexipage',
-        'HomePage'
-      );
-      await fs.promises.mkdir(customFlexipageDir, { recursive: true });
-
-      // Create a template file
-      const templateFile = path.join(
-        customFlexipageDir,
-        '_flexipage.flexipage-meta.xml'
-      );
-      await fs.promises.writeFile(
-        templateFile,
-        `<?xml version="1.0" encoding="UTF-8"?>
-<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <masterLabel><%= masterlabel %></masterLabel>
-    <type>HomePage</type>
-</FlexiPage>`
-      );
-
-      // Create a non-template file (e.g., a README or config)
-      const nonTemplateFile = path.join(customFlexipageDir, 'README.md');
-      await fs.promises.writeFile(
-        nonTemplateFile,
-        '# Custom Template\nThis is a readme.'
-      );
-
-      const generator = new FlexipageGenerator({
-        flexipagename: 'CopyTest',
-        template: 'HomePage',
-        outputdir: outputDir,
-        flexipageTemplatesGitRepo: customTemplatesDir,
-        masterlabel: 'Copy Test Page',
-        internal: true,
-      });
-
-      await generator.generate();
-
-      // Check template file was rendered
-      const expectedFile = path.join(outputDir, 'CopyTest.flexipage-meta.xml');
-      assertFileExists(expectedFile);
-      assertFileContent(expectedFile, 'Copy Test Page');
-
-      // Check non-template file was copied as-is
-      const copiedReadme = path.join(outputDir, 'README.md');
-      assertFileExists(copiedReadme);
-      assertFileContent(copiedReadme, '# Custom Template');
-    });
-
-    it('should handle identical existing files', async () => {
-      // Create custom template directory
-      const customFlexipageDir = path.join(
-        customTemplatesDir,
-        'flexipage',
-        'HomePage'
-      );
-      await fs.promises.mkdir(customFlexipageDir, { recursive: true });
-
-      // Create template file
-      const templateFile = path.join(
-        customFlexipageDir,
-        '_flexipage.flexipage-meta.xml'
-      );
-      await fs.promises.writeFile(
-        templateFile,
-        `<?xml version="1.0" encoding="UTF-8"?>
-<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <masterLabel><%= masterlabel %></masterLabel>
-    <type>HomePage</type>
-</FlexiPage>`
-      );
-
-      // Create a non-template file
-      const staticFile = path.join(customFlexipageDir, 'static.txt');
-      await fs.promises.writeFile(staticFile, 'Static content');
-
-      // Create output dir and pre-existing identical file
-      await fs.promises.mkdir(outputDir, { recursive: true });
-      const existingFile = path.join(outputDir, 'static.txt');
-      await fs.promises.writeFile(existingFile, 'Static content');
-
-      const generator = new FlexipageGenerator({
-        flexipagename: 'IdenticalTest',
-        template: 'HomePage',
-        outputdir: outputDir,
-        flexipageTemplatesGitRepo: customTemplatesDir,
-        masterlabel: 'Identical Test Page',
-        internal: true,
-      });
-
-      await generator.generate();
-
-      // The static.txt file should be marked as identical
-      expect(generator.changes.identical.some((f) => f.includes('static.txt')))
-        .to.be.true;
-    });
-
-    it('should handle conflicting existing files', async () => {
-      // Create custom template directory
-      const customFlexipageDir = path.join(
-        customTemplatesDir,
-        'flexipage',
-        'HomePage'
-      );
-      await fs.promises.mkdir(customFlexipageDir, { recursive: true });
-
-      // Create template file
-      const templateFile = path.join(
-        customFlexipageDir,
-        '_flexipage.flexipage-meta.xml'
-      );
-      await fs.promises.writeFile(
-        templateFile,
-        `<?xml version="1.0" encoding="UTF-8"?>
-<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <masterLabel><%= masterlabel %></masterLabel>
-    <type>HomePage</type>
-</FlexiPage>`
-      );
-
-      // Create a non-template file
-      const staticFile = path.join(customFlexipageDir, 'config.json');
-      await fs.promises.writeFile(staticFile, '{"version": 2}');
-
-      // Create output dir and pre-existing different file
-      await fs.promises.mkdir(outputDir, { recursive: true });
-      const existingFile = path.join(outputDir, 'config.json');
-      await fs.promises.writeFile(existingFile, '{"version": 1}');
-
-      const generator = new FlexipageGenerator({
-        flexipagename: 'ConflictTest',
-        template: 'HomePage',
-        outputdir: outputDir,
-        flexipageTemplatesGitRepo: customTemplatesDir,
-        masterlabel: 'Conflict Test Page',
-        internal: true,
-      });
-
-      await generator.generate();
-
-      // The config.json file should be marked as conflicted and forced
-      expect(
-        generator.changes.conflicted.some((f) => f.includes('config.json'))
-      ).to.be.true;
-      expect(generator.changes.forced.some((f) => f.includes('config.json'))).to
-        .be.true;
-
-      // The file should have been overwritten with new content
-      const newContent = fs.readFileSync(existingFile, 'utf8');
-      expect(newContent).to.include('"version": 2');
+      assertFileContent(expectedSubFile, 'Subdir Test Page Sub');
     });
   });
 });

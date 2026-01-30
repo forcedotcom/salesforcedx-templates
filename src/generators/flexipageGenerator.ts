@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as fs from 'fs';
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir } from 'node:fs/promises';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { FlexipageOptions } from '../utils/types';
@@ -153,15 +153,9 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
           destPath,
           templateVars
         );
-      } else if (entry.isFile()) {
-        // Process files
-        if (this.isTemplateFile(entry.name)) {
-          // Render as EJS template
-          await this.render(sourcePath, destPath, templateVars);
-        } else {
-          // Copy file as-is
-          await this.copyFile(sourcePath, destPath);
-        }
+      } else if (entry.isFile() && this.isTemplateFile(entry.name)) {
+        // Render template files only (skip non-template files)
+        await this.render(sourcePath, destPath, templateVars);
       }
     }
   }
@@ -171,31 +165,5 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
    */
   private isTemplateFile(filename: string): boolean {
     return filename.endsWith('.flexipage-meta.xml');
-  }
-
-  /**
-   * Copy file as-is without rendering
-   */
-  private async copyFile(source: string, dest: string): Promise<void> {
-    const content = await readFile(source, 'utf8');
-    const relativePath = path.relative(process.cwd(), dest);
-    const existing = await readFile(dest, 'utf8').catch(() => null);
-
-    if (existing) {
-      if (content.trim() === existing.trim()) {
-        this.changes.identical.push(relativePath);
-        return;
-      } else {
-        this.changes.conflicted.push(relativePath);
-        this.changes.forced.push(relativePath);
-      }
-    } else {
-      this.changes.created.push(relativePath);
-    }
-
-    // Ensure destination directory exists
-    const destDir = path.dirname(dest);
-    await fs.promises.mkdir(destDir, { recursive: true });
-    await fs.promises.writeFile(dest, content);
   }
 }

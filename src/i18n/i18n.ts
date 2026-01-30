@@ -59,4 +59,6 @@ export const messages = {
     'FlexiPage template "%s" not found in repository: %s. Please verify the template name is correct.',
   FailedToLoadFlexipageTemplatesRepo:
     'Failed to load the FlexiPage templates repository. Please verify the URL is correct and accessible.',
+
+  AlphaNumericValidationError: '%s must contain only alphanumeric characters.',
 };

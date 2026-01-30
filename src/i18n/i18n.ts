@@ -28,6 +28,8 @@ export const messages = {
   MissingLWCDir: "Lightning bundles must have a parent folder named 'lwc'.",
   MissingWebApplicationsDir:
     "Web applications must have a parent folder named 'webApplications'.",
+  MissingFlexipagesDir:
+    "FlexiPages must have a parent folder named 'flexipages'.",
   MissingLightningComponentTemplate:
     'Template %s not available for component type %s.',
 
@@ -47,6 +49,16 @@ export const messages = {
   LightningTest: 'A Lightning Test',
   RawOutput: 'target dir = %s\n%s',
   templateTypeNotFound: 'The template type does not exist',
+  InvalidFlexipageTemplate:
+    'Invalid FlexiPage template "%s". Valid templates are: %s',
+  RecordPageRequiresEntityName:
+    'RecordPage template requires an entityName option (e.g., "Account", "Opportunity", "Custom_Object__c").',
+  TooManySecondaryFields:
+    'Too many secondary fields specified (%s). The Dynamic Highlights Panel supports a maximum of %s secondary fields.',
+  MissingFlexipageTemplate:
+    'FlexiPage template "%s" not found in repository: %s. Please verify the template name is correct.',
+  FailedToLoadFlexipageTemplatesRepo:
+    'Failed to load the FlexiPage templates repository. Please verify the URL is correct and accessible.',
 
   AlphaNumericValidationError: '%s must contain only alphanumeric characters.',
 };

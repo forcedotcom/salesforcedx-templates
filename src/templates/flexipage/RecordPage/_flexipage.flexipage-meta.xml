@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  RecordPage FlexiPage Template
+  
+  Template Variables Available:
+  - flexipagename: The name of the FlexiPage
+  - masterlabel: The display label
+  - description: The page description
+  - apiVersion: The Salesforce API version
+  - entityName: The SObject API name (e.g., 'Account', 'Rental_Property__c')
+  - primaryField: Single primary field API name for dynamic highlights (e.g., 'Name')
+  - secondaryFields: Array of secondary field API names for dynamic highlights
+  - detailFields: Array of field API names for the Details tab field section
+-->
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <% if (primaryField) { %>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.<%= primaryField %></fieldItem>
+                <identifier>Record<%= primaryField.replace(/\./g, '_') %>PrimaryField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-PrimaryFields</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <% } %>
+    <% if (secondaryFields && secondaryFields.length > 0) { %>
+    <flexiPageRegions>
+        <% secondaryFields.forEach((field, index) => { %>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.<%= field %></fieldItem>
+                <identifier>Record<%= field.replace(/\./g, '_') %>SecondaryField<%= index %></identifier>
+            </fieldInstance>
+        </itemInstances>
+        <% }); %>
+        <name>Facet-SecondaryFields</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <% } %>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <% if (primaryField) { %>
+                <componentInstanceProperties>
+                    <name>primaryField</name>
+                    <value>Facet-PrimaryFields</value>
+                </componentInstanceProperties>
+                <% } %>
+                <% if (secondaryFields && secondaryFields.length > 0) { %>
+                <componentInstanceProperties>
+                    <name>secondaryFields</name>
+                    <value>Facet-SecondaryFields</value>
+                </componentInstanceProperties>
+                <% } %>
+                <componentName>record_flexipage:dynamicHighlights</componentName>
+                <identifier>record_flexipage_dynamicHighlights</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>relatedTabContent</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <!-- Field Section: Detail Fields -->
+    <% 
+    // Use detailFields if provided, otherwise default fields
+    const allDetailFields = (detailFields && detailFields.length > 0) 
+        ? detailFields 
+        : ['Name', 'OwnerId', 'CreatedById', 'LastModifiedById'];
+    // Split fields into two columns
+    const midpoint = Math.ceil(allDetailFields.length / 2);
+    const column1Fields = allDetailFields.slice(0, midpoint);
+    const column2Fields = allDetailFields.slice(midpoint);
+    %>
+    <!-- Column 1 Fields -->
+    <flexiPageRegions>
+        <% column1Fields.forEach((field, index) => { %>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.<%= field %></fieldItem>
+                <identifier>Record<%= field.replace(/\./g, '_') %>Column1Field<%= index %></identifier>
+            </fieldInstance>
+        </itemInstances>
+        <% }); %>
+        <name>Facet-FieldSection-Column1</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <!-- Column 2 Fields -->
+    <% if (column2Fields.length > 0) { %>
+    <flexiPageRegions>
+        <% column2Fields.forEach((field, index) => { %>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.<%= field %></fieldItem>
+                <identifier>Record<%= field.replace(/\./g, '_') %>Column2Field<%= index %></identifier>
+            </fieldInstance>
+        </itemInstances>
+        <% }); %>
+        <name>Facet-FieldSection-Column2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <% } %>
+    <!-- Field Section: Column Facets -->
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-FieldSection-Column1</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <% if (column2Fields.length > 0) { %>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-FieldSection-Column2</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <% } %>
+        <name>Facet-FieldSection-Columns</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <!-- Field Section Component -->
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-FieldSection-Columns</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Information</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>detailTabContent</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>relatedTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.relatedLists</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>relatedListsTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>detailTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>maintabs</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>maintabs</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_activities:activityPanel</componentName>
+                <identifier>runtime_sales_activities_activityPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>activityTabContent</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>feedTabContent</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>activityTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.activity</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>activityTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>feedTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.collaborate</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>collaborateTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>sidebartabs</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>sidebartabs</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>sidebar</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <description><%= description %></description>
+    <masterLabel><%= masterlabel %></masterLabel>
+    <sobjectType><%= entityName %></sobjectType>
+    <template>
+        <name>flexipage:recordHomeTemplateDesktop</name>
+    </template>
+    <type>RecordPage</type>
+</FlexiPage>

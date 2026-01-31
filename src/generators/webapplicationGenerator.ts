@@ -10,11 +10,11 @@ import * as path from 'path';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { WebApplicationOptions } from '../utils/types';
+import { WebapplicationOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
-export default class WebApplicationGenerator extends BaseGenerator<WebApplicationOptions> {
-  constructor(options: WebApplicationOptions) {
+export default class WebapplicationGenerator extends BaseGenerator<WebapplicationOptions> {
+  constructor(options: WebapplicationOptions) {
     super(options);
   }
 

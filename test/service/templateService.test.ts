@@ -907,12 +907,12 @@ describe('TemplateService', () => {
         );
     });
 
-    it('should create WebApplication', async () => {
+    it('should create Webapplication', async () => {
       await remove(
         path.join('testsoutput', 'libraryCreate', 'webapplications')
       );
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(TemplateType.WebApplication, {
+      const result = await templateService.create(TemplateType.Webapplication, {
         webappname: 'LibraryCreateWebApp',
         outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
         template: 'default',
@@ -932,12 +932,12 @@ describe('TemplateService', () => {
         );
     });
 
-    it('should create WebApplication (reactbasic)', async () => {
+    it('should create Webapplication (reactbasic)', async () => {
       await remove(
         path.join('testsoutput', 'libraryCreate', 'webapplications')
       );
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(TemplateType.WebApplication, {
+      const result = await templateService.create(TemplateType.Webapplication, {
         webappname: 'LibraryCreateReactApp',
         outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
         template: 'reactbasic',

@@ -23,7 +23,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     CreateUtil.checkInputs(this.options.template);
 
     const fileparts = path.resolve(this.outputdir).split(path.sep);
-    if (!this.options.internal && !fileparts.includes('webApplications')) {
+    if (!this.options.internal && !fileparts.includes('webapplications')) {
       throw new Error(nls.localize('MissingWebApplicationsDir'));
     }
   }
@@ -52,25 +52,18 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     this.sourceRootWithPartialPath(path.join('webapplication', 'webappbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webApplication-meta.xml'),
+      this.templatePath('_webapplication.webapplication-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webApplication-meta.xml`)
+        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
 
-    await this.render(
-      this.templatePath('index.html'),
-      this.destinationPath(path.join(webappDir, 'index.html')),
-      { masterLabel }
-    );
-
-    // Copy the rest of the files over
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,
-      new Set(['_webapplication.webApplication-meta.xml'])
+      new Set(['_webapplication.webapplication-meta.xml'])
     );
   }
 
@@ -82,17 +75,11 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     this.sourceRootWithPartialPath(path.join('webapplication', 'reactbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webApplication-meta.xml'),
+      this.templatePath('_webapplication.webapplication-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webApplication-meta.xml`)
+        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
-    );
-
-    await this.render(
-      this.templatePath('index.html'),
-      this.destinationPath(path.join(webappDir, 'index.html')),
-      { masterLabel }
     );
 
     await this.render(
@@ -101,12 +88,11 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       { webappname }
     );
 
-    // Copy the rest of the files over
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,
-      new Set(['_webapplication.webApplication-meta.xml'])
+      new Set(['_webapplication.webapplication-meta.xml', 'package.json'])
     );
   }
 
@@ -132,14 +118,9 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
         continue;
       }
 
-      // Skip files that already exist
-      if (fs.existsSync(destPath)) {
-        continue;
-      }
-
       if (entry.isDirectory()) {
         await this.copyDirectoryRecursive(sourcePath, destPath, excludeFiles);
-      } else {
+      } else if (!fs.existsSync(destPath)) {
         // Copy file and track it
         const content = await readFile(sourcePath);
         await mkdir(path.dirname(destPath), { recursive: true });

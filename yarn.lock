@@ -909,15 +909,15 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.12.tgz#60420622812a7ec7e46d220667bc29b42dc247ff"
   integrity sha512-BIJyduJC18Kc8z+arUm5AZ9VkPRyw1KKAm+Tk+9LT99eOzhNilyfKzhZ4t+tG2lIGgnJpmytZfVDZ0e2kFul8g==
 
-"@sfdc-webapps/base-reference-app@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@sfdc-webapps/base-reference-app/-/base-reference-app-1.0.6.tgz#af752456e53e628ada44f360e7975b215db376a0"
-  integrity sha512-9tlydXK/InnUFNYN4VYw9w+N91HTDVvT57VwCDfwlILN+306+oXirf002fx94Wktk+X/CaG5fl32SVtEkKy/JQ==
+"@salesforce/webapp-template-base-react-app-experimental@^1.3.5":
+  version "1.3.5"
+  resolved "https://nexus-proxy.repo.local.sfdc.net/nexus/content/groups/npm-all/@salesforce/webapp-template-base-react-app-experimental/-/webapp-template-base-react-app-experimental-1.3.5.tgz#767cf314b7db4c5521bfb1653007d2b3e751c19a"
+  integrity sha512-r9nU8j9Lj3oewy5nzBvAB/Rc02NpdnPaTBpq/GU9CUoIvnyWBIHS0NILiPPqwfW6VHs2I0eQ1VZZnYyN513ixA==
 
-"@sfdc-webapps/base-web-app@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@sfdc-webapps/base-web-app/-/base-web-app-1.0.6.tgz#5881f1e9e97ee8e2cac7a467d1523a5d2b67744a"
-  integrity sha512-arRsMRuNxAn9bgrxCdNdAwdmvZdGxal4fNXpHxYLla+zPK/vd/CLJC8j9pj5KcU28JBKV10pueFe8aW6DiSYHg==
+"@salesforce/webapp-template-base-web-app-experimental@^1.3.5":
+  version "1.3.5"
+  resolved "https://nexus-proxy.repo.local.sfdc.net/nexus/content/groups/npm-all/@salesforce/webapp-template-base-web-app-experimental/-/webapp-template-base-web-app-experimental-1.3.5.tgz#9b85135705a9217e07981a3565981f65835e8ec3"
+  integrity sha512-18I1vt0OblJa6jACkMfcPRZxBeS6QJmFO5M89cjgAeJZZTr/1PEzN7yPYH0khgeTTvtwEbBweHtoLkU2+fEgCA==
 
 "@shikijs/core@1.29.2":
   version "1.29.2"

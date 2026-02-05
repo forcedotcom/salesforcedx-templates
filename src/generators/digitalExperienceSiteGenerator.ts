@@ -6,16 +6,16 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { DxpSiteOptions } from '../utils/types';
+import { DigitalExperienceSiteOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 import { nls } from '../i18n';
 
-const TEMPLATE_ROOT = 'dxpsite';
+const TEMPLATE_ROOT = 'digitalExperienceSite';
 
-export default class DxpSiteGenerator extends BaseGenerator<DxpSiteOptions> {
+export default class DigitalExperienceSiteGenerator extends BaseGenerator<DigitalExperienceSiteOptions> {
   private uuidCache: Record<string, string> = {};
 
-  constructor(options: DxpSiteOptions) {
+  constructor(options: DigitalExperienceSiteOptions) {
     super(options);
   }
 

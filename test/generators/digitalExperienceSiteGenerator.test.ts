@@ -8,12 +8,12 @@
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 import * as path from 'path';
-import { CreateUtil, DxpSiteOptions } from '../../src';
-import DxpSiteGenerator from '../../src/generators/dxpSiteGenerator';
+import { CreateUtil, DigitalExperienceSiteOptions } from '../../src';
+import DigitalExperienceSiteGenerator from '../../src/generators/digitalExperienceSiteGenerator';
 
-describe('DxpSiteGenerator', () => {
-  const defaultMockInputs: DxpSiteOptions = {
-    template: 'build_your_own_lwr',
+describe('DigitalExperienceSiteGenerator', () => {
+  const defaultMockInputs: DigitalExperienceSiteOptions = {
+    template: 'BuildYourOwnLWR',
     sitename: 'TestSite',
     urlpathprefix: 'testprefix',
     adminemail: 'test@salesforce.com',
@@ -30,8 +30,13 @@ describe('DxpSiteGenerator', () => {
       ['empty string', ''],
     ].forEach(([description, urlpathprefix]) => {
       it(`should accept urlpathprefix ${description}`, () => {
-        const options: DxpSiteOptions = { ...defaultMockInputs, urlpathprefix };
-        expect(() => new DxpSiteGenerator(options)).to.not.throw();
+        const options: DigitalExperienceSiteOptions = {
+          ...defaultMockInputs,
+          urlpathprefix,
+        };
+        expect(
+          () => new DigitalExperienceSiteGenerator(options)
+        ).to.not.throw();
       });
     });
 
@@ -41,8 +46,11 @@ describe('DxpSiteGenerator', () => {
       ['special characters', 'test@prefix!'],
     ].forEach(([description, urlpathprefix]) => {
       it(`should reject urlpathprefix with ${description}`, () => {
-        const options: DxpSiteOptions = { ...defaultMockInputs, urlpathprefix };
-        expect(() => new DxpSiteGenerator(options)).to.throw(
+        const options: DigitalExperienceSiteOptions = {
+          ...defaultMockInputs,
+          urlpathprefix,
+        };
+        expect(() => new DigitalExperienceSiteGenerator(options)).to.throw(
           'url-path-prefix must contain only alphanumeric characters.'
         );
       });
@@ -50,8 +58,8 @@ describe('DxpSiteGenerator', () => {
 
     it('should call CreateUtil.checkInputs for template validation', () => {
       const checkInputsStub = sinon.stub(CreateUtil, 'checkInputs').returns('');
-      new DxpSiteGenerator(defaultMockInputs);
-      expect(checkInputsStub.calledOnceWith('build_your_own_lwr')).to.be.true;
+      new DigitalExperienceSiteGenerator(defaultMockInputs);
+      expect(checkInputsStub.calledOnceWith('BuildYourOwnLWR')).to.be.true;
     });
   });
 
@@ -60,12 +68,12 @@ describe('DxpSiteGenerator', () => {
 
     beforeEach(() => {
       renderStub = sinon
-        .stub(DxpSiteGenerator.prototype as any, 'render')
+        .stub(DigitalExperienceSiteGenerator.prototype as any, 'render')
         .resolves();
     });
 
     it('should generate network file with correct path and variables', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const networkCall = renderStub
@@ -85,7 +93,7 @@ describe('DxpSiteGenerator', () => {
     });
 
     it('should generate custom site file with correct path and variables', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const siteCall = renderStub
@@ -103,7 +111,7 @@ describe('DxpSiteGenerator', () => {
     });
 
     it('should generate digital experience config file', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const configCall = renderStub
@@ -121,7 +129,7 @@ describe('DxpSiteGenerator', () => {
     });
 
     it('should generate digital experience bundle meta', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const metaCall = renderStub
@@ -150,7 +158,7 @@ describe('DxpSiteGenerator', () => {
       'Too_Many_Requests',
     ].forEach((route) => {
       it(`should generate route: ${route}`, async () => {
-        const generator = new DxpSiteGenerator(defaultMockInputs);
+        const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
         const routeContentCall = renderStub
@@ -185,7 +193,7 @@ describe('DxpSiteGenerator', () => {
       'tooManyRequests',
     ].forEach((view) => {
       it(`should generate view: ${view}`, async () => {
-        const generator = new DxpSiteGenerator(defaultMockInputs);
+        const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
         const viewContentCall = renderStub
@@ -211,7 +219,7 @@ describe('DxpSiteGenerator', () => {
 
     ['scopedHeaderAndFooter', 'snaThemeLayout'].forEach((layout) => {
       it(`should generate theme layout: ${layout}`, async () => {
-        const generator = new DxpSiteGenerator(defaultMockInputs);
+        const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
         const layoutContentCall = renderStub
@@ -248,7 +256,7 @@ describe('DxpSiteGenerator', () => {
       ['theme', 'sfdc_cms__theme', 'Build_Your_Own_LWR'],
     ].forEach(([name, type, folder]) => {
       it(`should generate ${name} files`, async () => {
-        const generator = new DxpSiteGenerator(defaultMockInputs);
+        const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
         const contentCall = renderStub
@@ -267,11 +275,11 @@ describe('DxpSiteGenerator', () => {
     });
 
     it('should generate site content with correct urlName transformation', async () => {
-      const options: DxpSiteOptions = {
+      const options: DigitalExperienceSiteOptions = {
         ...defaultMockInputs,
         sitename: 'My "Test" Site!',
       };
-      const generator = new DxpSiteGenerator(options);
+      const generator = new DigitalExperienceSiteGenerator(options);
       await generator.generate();
 
       const siteContentCall = renderStub
@@ -292,7 +300,7 @@ describe('DxpSiteGenerator', () => {
 
     beforeEach(() => {
       renderStub = sinon
-        .stub(DxpSiteGenerator.prototype as any, 'render')
+        .stub(DigitalExperienceSiteGenerator.prototype as any, 'render')
         .resolves();
     });
 
@@ -304,11 +312,11 @@ describe('DxpSiteGenerator', () => {
     ].forEach(
       ([description, sitename, expectedDevName, expectedPicassoDevName]) => {
         it(`should transform site name: ${description}`, async () => {
-          const options: DxpSiteOptions = {
+          const options: DigitalExperienceSiteOptions = {
             ...defaultMockInputs,
             sitename,
           };
-          const generator = new DxpSiteGenerator(options);
+          const generator = new DigitalExperienceSiteGenerator(options);
           await generator.generate();
 
           const networkCall = renderStub
@@ -323,11 +331,11 @@ describe('DxpSiteGenerator', () => {
     );
 
     it('should encode special characters in network file name', async () => {
-      const options: DxpSiteOptions = {
+      const options: DigitalExperienceSiteOptions = {
         ...defaultMockInputs,
         sitename: "Site ~!.'()@#$%&+= Name",
       };
-      const generator = new DxpSiteGenerator(options);
+      const generator = new DigitalExperienceSiteGenerator(options);
       await generator.generate();
 
       const networkCall = renderStub
@@ -344,12 +352,12 @@ describe('DxpSiteGenerator', () => {
 
     beforeEach(() => {
       renderStub = sinon
-        .stub(DxpSiteGenerator.prototype as any, 'render')
+        .stub(DigitalExperienceSiteGenerator.prototype as any, 'render')
         .resolves();
     });
 
     it('should generate valid UUID format', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const viewContentCalls = renderStub
@@ -369,7 +377,7 @@ describe('DxpSiteGenerator', () => {
     });
 
     it('should cache UUIDs by key', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const viewContentCalls = renderStub
@@ -390,7 +398,7 @@ describe('DxpSiteGenerator', () => {
     });
 
     it('should generate different UUIDs for different keys', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const viewContentCalls = renderStub
@@ -410,7 +418,7 @@ describe('DxpSiteGenerator', () => {
     });
 
     it('should generate different UUIDs when called without key', async () => {
-      const generator = new DxpSiteGenerator(defaultMockInputs);
+      const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
       const viewContentCalls = renderStub

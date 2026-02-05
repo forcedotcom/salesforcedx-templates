@@ -13,7 +13,7 @@ import DxpSiteGenerator from '../../src/generators/dxpSiteGenerator';
 
 describe('DxpSiteGenerator', () => {
   const defaultMockInputs: DxpSiteOptions = {
-    template: 'build_your_own_lwr',
+    template: 'BuildYourOwnLWR',
     sitename: 'TestSite',
     urlpathprefix: 'testprefix',
     adminemail: 'test@salesforce.com',
@@ -51,7 +51,7 @@ describe('DxpSiteGenerator', () => {
     it('should call CreateUtil.checkInputs for template validation', () => {
       const checkInputsStub = sinon.stub(CreateUtil, 'checkInputs').returns('');
       new DxpSiteGenerator(defaultMockInputs);
-      expect(checkInputsStub.calledOnceWith('build_your_own_lwr')).to.be.true;
+      expect(checkInputsStub.calledOnceWith('BuildYourOwnLWR')).to.be.true;
     });
   });
 

@@ -1,3 +1,14 @@
+## [65.5.2](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.1...65.5.2) (2026-02-05)
+
+
+### Bug Fixes
+
+* cleaning up webapplication name ([40f4946](https://github.com/forcedotcom/salesforcedx-templates/commit/40f4946d732043728ddb0745e7be03abbae4e979))
+* fixing lockfile ([7e27690](https://github.com/forcedotcom/salesforcedx-templates/commit/7e27690966201ae01b6dfd6d5c6f718d60b16048))
+* replacing web npm package with the latest ([58d1f2a](https://github.com/forcedotcom/salesforcedx-templates/commit/58d1f2ae97bd1604f7c639d9834b4dee87adcf99))
+
+
+
 ## [65.5.1](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.0...65.5.1) (2026-02-05)
 
 

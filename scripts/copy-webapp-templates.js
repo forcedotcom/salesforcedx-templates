@@ -13,15 +13,21 @@ function copyNpmTemplateToSrc(packageName, destSubpath) {
 
     // Determine source path based on package
     let sourceDir;
-    if (packageName === '@sfdc-webapps/base-web-app') {
+    if (
+      packageName === '@salesforce/webapp-template-base-web-app-experimental'
+    ) {
       sourceDir = path.join(packageDir, 'dist');
-    } else if (packageName === '@sfdc-webapps/base-reference-app') {
+    } else if (
+      packageName === '@salesforce/webapp-template-base-react-app-experimental'
+    ) {
       sourceDir = path.join(
         packageDir,
-        'dist',
-        'digitalExperiences',
-        'webApplications',
-        'base-reference-app'
+        'src',
+        'force-app',
+        'main',
+        'default',
+        'webapplications',
+        'base-react-app'
       );
     }
 
@@ -63,8 +69,14 @@ function copyNpmTemplateToSrc(packageName, destSubpath) {
 
 function copyWebappTemplates() {
   console.log('Copying web application templates from npm packages...');
-  copyNpmTemplateToSrc('@sfdc-webapps/base-web-app', 'webappbasic');
-  copyNpmTemplateToSrc('@sfdc-webapps/base-reference-app', 'reactbasic');
+  copyNpmTemplateToSrc(
+    '@salesforce/webapp-template-base-web-app-experimental',
+    'webappbasic'
+  );
+  copyNpmTemplateToSrc(
+    '@salesforce/webapp-template-base-react-app-experimental',
+    'reactbasic'
+  );
   console.log('Web application templates copied successfully.');
 }
 

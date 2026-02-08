@@ -909,12 +909,12 @@ describe('TemplateService', () => {
 
     it('should create WebApplication', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'webApplications')
+        path.join('testsoutput', 'libraryCreate', 'webapplications')
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.WebApplication, {
         webappname: 'LibraryCreateWebApp',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'webApplications'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
         template: 'default',
         internal: true,
       });
@@ -923,9 +923,9 @@ describe('TemplateService', () => {
         .expect(result.created.sort())
         .to.deep.equal(
           [
-            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/index.html',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/webapp.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/LibraryCreateWebApp.webApplication-meta.xml',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/src/index.html',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/webapplication.json',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/LibraryCreateWebApp.webapplication-meta.xml',
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -934,12 +934,12 @@ describe('TemplateService', () => {
 
     it('should create WebApplication (reactbasic)', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'webApplications')
+        path.join('testsoutput', 'libraryCreate', 'webapplications')
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.WebApplication, {
         webappname: 'LibraryCreateReactApp',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'webApplications'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
         template: 'reactbasic',
         internal: true,
       });
@@ -948,37 +948,37 @@ describe('TemplateService', () => {
         .expect(result.created.sort())
         .to.deep.equal(
           [
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/.prettierignore',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/.prettierrc',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/LibraryCreateReactApp.webApplication-meta.xml',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/README.md',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/eslint.config.js',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/index.html',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/package-lock.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/package.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/app.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/appLayout.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/book.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/copy.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/rocket.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/star.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/codey-1.png',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/codey-2.png',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/codey-3.png',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/vibe-codey.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/About.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/Home.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/NotFound.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/routes.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/styles/global.css',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/tsconfig.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/tsconfig.node.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vite-env.d.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vite.config.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vitest-env.d.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vitest.config.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vitest.setup.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/webapp.json',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/.prettierignore',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/.prettierrc',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/LibraryCreateReactApp.webapplication-meta.xml',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/eslint.config.js',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/index.html',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/package.json',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/api/graphql-operations-types.ts',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/api/utils/query/highRevenueAccountsQuery.graphql',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/app.tsx',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/appLayout.tsx',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/book.svg',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/copy.svg',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/rocket.svg',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/star.svg',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/codey-1.png',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/codey-2.png',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/codey-3.png',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/vibe-codey.svg',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/pages/About.tsx',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/pages/Home.tsx',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/pages/NotFound.tsx',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/routes.tsx',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/styles/global.css',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/tsconfig.json',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/tsconfig.node.json',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vite-env.d.ts',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vite.config.ts',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vitest-env.d.ts',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vitest.config.ts',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vitest.setup.ts',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/webapplication.json',
           ]
             .map((p) => path.normalize(p))
             .sort()

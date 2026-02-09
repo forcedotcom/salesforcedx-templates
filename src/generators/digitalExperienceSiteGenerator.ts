@@ -10,7 +10,7 @@ import { DigitalExperienceSiteOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 import { nls } from '../i18n';
 
-const TEMPLATE_ROOT = 'digitalExperienceSite';
+const TEMPLATE_ROOT = 'digitalexperiencesite';
 
 export default class DigitalExperienceSiteGenerator extends BaseGenerator<DigitalExperienceSiteOptions> {
   private uuidCache: Record<string, string> = {};

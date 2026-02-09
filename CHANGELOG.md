@@ -1,3 +1,12 @@
+## [65.5.3](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.2...65.5.3) (2026-02-09)
+
+
+### Bug Fixes
+
+* template root letter casing ([2677d65](https://github.com/forcedotcom/salesforcedx-templates/commit/2677d65debe1dec2e2dfc0238376114a4935a2c7))
+
+
+
 ## [65.5.2](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.1...65.5.2) (2026-02-05)
 
 

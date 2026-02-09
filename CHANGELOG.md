@@ -1,3 +1,12 @@
+## [65.5.4](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.3...65.5.4) (2026-02-09)
+
+
+### Bug Fixes
+
+* try path reset ([f372d39](https://github.com/forcedotcom/salesforcedx-templates/commit/f372d39b7f663fc24038ff820051ca1745fb8cb4))
+
+
+
 ## [65.5.3](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.2...65.5.3) (2026-02-09)
 
 

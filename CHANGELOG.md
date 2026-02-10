@@ -1,3 +1,12 @@
+## [65.5.5](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.4...65.5.5) (2026-02-10)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/webapp-template-base-web-app-experimental ([35fdb6f](https://github.com/forcedotcom/salesforcedx-templates/commit/35fdb6fec6c6040fd51fcbec2572cd2961f6c34b))
+
+
+
 ## [65.5.4](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.3...65.5.4) (2026-02-09)
 
 

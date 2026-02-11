@@ -1,3 +1,12 @@
+## [65.5.8](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.7...65.5.8) (2026-02-11)
+
+
+### Bug Fixes
+
+* moving web app deps to dev dep ([139166f](https://github.com/forcedotcom/salesforcedx-templates/commit/139166fe02ca08f20176411a46917fbd578faf1c))
+
+
+
 ## [65.5.7](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.6...65.5.7) (2026-02-10)
 
 

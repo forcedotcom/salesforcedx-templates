@@ -1,3 +1,48 @@
+## [65.5.8](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.7...65.5.8) (2026-02-11)
+
+
+### Bug Fixes
+
+* moving web app deps to dev dep ([139166f](https://github.com/forcedotcom/salesforcedx-templates/commit/139166fe02ca08f20176411a46917fbd578faf1c))
+
+
+
+## [65.5.7](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.6...65.5.7) (2026-02-10)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 7.5.6 to 7.5.7 ([aab33b1](https://github.com/forcedotcom/salesforcedx-templates/commit/aab33b1127f93816770067cb45493bed92f783f3))
+
+
+
+## [65.5.6](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.5...65.5.6) (2026-02-10)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/webapp-template-base-react-app-experimental ([73758ff](https://github.com/forcedotcom/salesforcedx-templates/commit/73758ff925e4871a1c76c29419cd74dc7a09937b))
+
+
+
+## [65.5.5](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.4...65.5.5) (2026-02-10)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/webapp-template-base-web-app-experimental ([35fdb6f](https://github.com/forcedotcom/salesforcedx-templates/commit/35fdb6fec6c6040fd51fcbec2572cd2961f6c34b))
+
+
+
+## [65.5.4](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.3...65.5.4) (2026-02-09)
+
+
+### Bug Fixes
+
+* try path reset ([f372d39](https://github.com/forcedotcom/salesforcedx-templates/commit/f372d39b7f663fc24038ff820051ca1745fb8cb4))
+
+
+
 ## [65.5.3](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.2...65.5.3) (2026-02-09)
 
 

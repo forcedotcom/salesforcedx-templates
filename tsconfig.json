@@ -8,6 +8,7 @@
   "include": ["./src/**/*"],
   "exclude": [
     "./src/templates/lightningcomponent/lwc/typeScript/*",
-    "./src/templates/webapplication/reactbasic/**/*"
+    "./src/templates/webapplication/reactbasic/**/*",
+    "./src/templates/webapplication/webapplications/**/*"
   ]
 }

@@ -8,7 +8,6 @@ import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as fs from 'fs';
 import * as path from 'path';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
-import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { WebApplicationOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -22,9 +21,13 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     CreateUtil.checkInputs(this.options.webappname);
     CreateUtil.checkInputs(this.options.template);
 
-    const fileparts = path.resolve(this.outputdir).split(path.sep);
-    if (!this.options.internal && !fileparts.includes('webapplications')) {
-      throw new Error(nls.localize('MissingWebApplicationsDir'));
+    // Ensure output directory includes 'webapplications' folder
+    if (!this.options.internal) {
+      const fileparts = path.resolve(this.outputdir).split(path.sep).filter(Boolean);
+      const endsWithWebApplications = fileparts[fileparts.length - 1] === 'webapplications';
+      if (!endsWithWebApplications) {
+        this.outputdir = path.join(this.outputdir, 'webapplications');
+      }
     }
   }
 

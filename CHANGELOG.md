@@ -1,3 +1,13 @@
+## [65.5.9](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.8...65.5.9) (2026-02-13)
+
+
+### Bug Fixes
+
+* exclude webapplications templates from TypeScript compilation ([eda0c11](https://github.com/forcedotcom/salesforcedx-templates/commit/eda0c11e83cec738c84c81d7b05aa09b8a666e1c))
+* use endsWith logic to validate webapplications folder ([c719628](https://github.com/forcedotcom/salesforcedx-templates/commit/c719628bb6c905bc11554c784340e812830770a0))
+
+
+
 ## [65.5.8](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.7...65.5.8) (2026-02-11)
 
 

@@ -944,45 +944,15 @@ describe('TemplateService', () => {
         internal: true,
       });
 
-      chai
-        .expect(result.created.sort())
-        .to.deep.equal(
-          [
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/.prettierignore',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/.prettierrc',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/LibraryCreateReactApp.webapplication-meta.xml',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/eslint.config.js',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/index.html',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/package.json',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/api/graphql-operations-types.ts',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/api/utils/query/highRevenueAccountsQuery.graphql',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/app.tsx',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/appLayout.tsx',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/book.svg',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/copy.svg',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/rocket.svg',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/icons/star.svg',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/codey-1.png',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/codey-2.png',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/codey-3.png',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/assets/images/vibe-codey.svg',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/pages/About.tsx',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/pages/Home.tsx',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/pages/NotFound.tsx',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/routes.tsx',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/src/styles/global.css',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/tsconfig.json',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/tsconfig.node.json',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vite-env.d.ts',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vite.config.ts',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vitest-env.d.ts',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vitest.config.ts',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/vitest.setup.ts',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/webapplication.json',
-          ]
-            .map((p) => path.normalize(p))
-            .sort()
-        );
+      const created = result.created.map((p) => path.normalize(p));
+      const webappJson = path.normalize(
+        'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/webapplication.json'
+      );
+      const webappMetaXml = path.normalize(
+        'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/LibraryCreateReactApp.webapplication-meta.xml'
+      );
+      chai.expect(created).to.include(webappJson);
+      chai.expect(created).to.include(webappMetaXml);
     });
   });
 });

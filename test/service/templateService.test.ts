@@ -823,6 +823,101 @@ describe('TemplateService', () => {
         );
     });
 
+    it('should create Project (react-b2e) from built-in template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const fixtureRoot = path.join(
+        __dirname,
+        '..',
+        'fixtures',
+        'project-templates'
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'MyReactB2eApp',
+          template: 'react-b2e',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2eApp/config/project-scratch-def.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2eApp/sfdx-project.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2eApp/sample.txt'
+          )
+        );
+      const samplePath = path.join(
+        result.outputDir,
+        'MyReactB2eApp',
+        'sample.txt'
+      );
+      chai.expect(fs.existsSync(samplePath)).to.be.true;
+      const sampleContent = fs.readFileSync(samplePath, 'utf8');
+      chai.expect(sampleContent).to.include('MyReactB2eApp');
+    });
+
+    it('should create Project (react-b2x) from built-in template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const fixtureRoot = path.join(
+        __dirname,
+        '..',
+        'fixtures',
+        'project-templates'
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'MyReactB2xApp',
+          template: 'react-b2x',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2xApp/config/project-scratch-def.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2xApp/sample.txt'
+          )
+        );
+      const samplePath = path.join(
+        result.outputDir,
+        'MyReactB2xApp',
+        'sample.txt'
+      );
+      chai.expect(fs.existsSync(samplePath)).to.be.true;
+      const sampleContent = fs.readFileSync(samplePath, 'utf8');
+      chai.expect(sampleContent).to.include('MyReactB2xApp');
+    });
+
     it('should create StaticResource', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'staticResource'));
       const templateService = TemplateService.getInstance();

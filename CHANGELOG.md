@@ -1,3 +1,12 @@
+## [65.5.11](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.10...65.5.11) (2026-02-20)
+
+
+### Bug Fixes
+
+* updating webapp dependency to the latest @W-20226218@ ([#725](https://github.com/forcedotcom/salesforcedx-templates/issues/725)) ([d2abffe](https://github.com/forcedotcom/salesforcedx-templates/commit/d2abffed19286f93ecd0b44c61972cae49d095f8))
+
+
+
 ## [65.5.10](https://github.com/forcedotcom/salesforcedx-templates/compare/65.5.9...65.5.10) (2026-02-20)
 
 

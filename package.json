@@ -25,7 +25,7 @@
     "@salesforce/dev-config": "^4.3.2",
     "@salesforce/dev-scripts": "^11.0.2",
     "@salesforce/webapp-template-base-react-app-experimental": "^1.30.0",
-    "@salesforce/webapp-template-base-web-app-experimental": "^1.30.0",
+    "@salesforce/webapp-template-base-web-app-experimental": "^1.48.1",
     "@salesforce/prettier-config": "^0.0.4",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",

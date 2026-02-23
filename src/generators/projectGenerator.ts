@@ -5,10 +5,15 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as fs from 'fs';
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ProjectOptions } from '../utils/types';
+import {
+  BUILT_IN_FULL_TEMPLATES,
+  FULL_TEMPLATE_DEFAULT_NAMES,
+  generateFromProjectTemplateDir,
+} from '../utils/webappTemplateUtils';
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_PROJECT_TEMPLATES = [
@@ -18,81 +23,6 @@ const VALID_PROJECT_TEMPLATES = [
   'react-b2e',
   'react-b2x',
 ] as const;
-
-/** File extensions that should be processed as EJS templates */
-const EJS_EXTENSIONS = new Set([
-  '.json',
-  '.js',
-  '.ts',
-  '.jsx',
-  '.tsx',
-  '.md',
-  '.txt',
-  '.xml',
-  '.html',
-  '.yml',
-  '.yaml',
-  '.env',
-  '.cfg',
-  '.config.js',
-  '.config.ts',
-]);
-
-/** Templates that have a full folder under src/templates/project/ (populated at build time from npm) */
-const BUILT_IN_FULL_TEMPLATES = new Set(['react-b2e', 'react-b2x']);
-
-/**
- * Default app/site names embedded in each full template; all are renamed to the project name.
- * Order matters: replace longer (suffix) first to avoid partial replacements.
- */
-const FULL_TEMPLATE_DEFAULT_NAMES: Record<
-  string,
-  { base: string; withSuffix: string }
-> = {
-  'react-b2e': {
-    base: 'appreacttemplateb2e',
-    withSuffix: 'appreacttemplateb2e1',
-  },
-  'react-b2x': {
-    base: 'appreacttemplateb2x',
-    withSuffix: 'appreacttemplateb2x1',
-  },
-};
-
-/** Directories to skip when walking a full template dir (e.g. node_modules) */
-const FULL_TEMPLATE_SKIP_DIRS = new Set(['node_modules', '.git']);
-
-/** Heuristic: treat as text if no null byte in the first chunk and decodable as UTF-8 */
-function isLikelyText(filename: string, buffer: Buffer): boolean {
-  const ext = path.extname(filename).toLowerCase();
-  const binaryExts = new Set([
-    '.png',
-    '.jpg',
-    '.jpeg',
-    '.gif',
-    '.ico',
-    '.svg',
-    '.woff',
-    '.woff2',
-    '.ttf',
-    '.eot',
-    '.pdf',
-    '.zip',
-  ]);
-  if (binaryExts.has(ext)) {
-    return false;
-  }
-  const chunk = buffer.slice(0, 1024);
-  if (chunk.includes(0)) {
-    return false;
-  }
-  try {
-    chunk.toString('utf8');
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 const GITIGNORE = 'gitignore';
 const HUSKY_FOLDER = '.husky';
@@ -376,107 +306,21 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         company: (process.env.USER || 'Demo') + ' company',
       };
       const nameReplacements = FULL_TEMPLATE_DEFAULT_NAMES[template];
-      await this.generateFromProjectTemplateDir(
+      await generateFromProjectTemplateDir(
         templateDir,
         projectDir,
         templateVars,
-        nameReplacements
-          ? [
-              [nameReplacements.withSuffix, projectname + '1'],
-              [nameReplacements.base, projectname],
-            ]
-          : undefined
+        {
+          nameReplacements: nameReplacements
+            ? [
+                [nameReplacements.withSuffix, projectname + '1'],
+                [nameReplacements.base, projectname],
+              ]
+            : undefined,
+          renderEjs: (filePath, data) => this.renderToBuffer(filePath, data),
+          onFileCreated: (destPath) => this.registerChange(destPath),
+        }
       );
-    }
-  }
-
-  /**
-   * Recursively walk a full project template directory (e.g. react-b2e, react-b2x),
-   * rendering EJS for text files and copying the rest. Renames template default app/site
-   * names (e.g. appreacttemplateb2e) to the project name in paths and file contents.
-   */
-  private async generateFromProjectTemplateDir(
-    sourceDir: string,
-    destDir: string,
-    templateVars: Record<string, unknown>,
-    nameReplacements?: [string, string][]
-  ): Promise<void> {
-    if (!fs.existsSync(sourceDir)) {
-      return;
-    }
-
-    const applyReplacements = (s: string): string => {
-      if (!nameReplacements) {
-        return s;
-      }
-      let out = s;
-      for (const [from, to] of nameReplacements) {
-        out = out.split(from).join(to);
-      }
-      return out;
-    };
-
-    const entries = await readdir(sourceDir, { withFileTypes: true });
-
-    for (const entry of entries) {
-      const sourcePath = path.join(sourceDir, entry.name);
-
-      if (entry.isDirectory()) {
-        if (FULL_TEMPLATE_SKIP_DIRS.has(entry.name)) {
-          continue;
-        }
-        const destName = applyReplacements(entry.name);
-        const destPath = path.join(destDir, destName);
-        await mkdir(destPath, { recursive: true });
-        await this.generateFromProjectTemplateDir(
-          sourcePath,
-          destPath,
-          templateVars,
-          nameReplacements
-        );
-        continue;
-      }
-
-      if (!entry.isFile()) {
-        continue;
-      }
-
-      const destName = applyReplacements(entry.name);
-      const destPath = path.join(destDir, destName);
-      const ext = path.extname(entry.name);
-      const isEjsTemplate =
-        EJS_EXTENSIONS.has(ext) ||
-        entry.name.endsWith('.config.js') ||
-        entry.name.endsWith('.config.ts');
-
-      if (isEjsTemplate) {
-        try {
-          const rendered = await this.renderToBuffer(sourcePath, templateVars);
-          const content = applyReplacements(rendered);
-          await mkdir(path.dirname(destPath), { recursive: true });
-          await writeFile(destPath, content, 'utf8');
-          this.registerChange(destPath);
-        } catch {
-          const raw = await readFile(sourcePath);
-          const str = raw.toString('utf8');
-          const content = applyReplacements(str);
-          await mkdir(path.dirname(destPath), { recursive: true });
-          await writeFile(destPath, content, 'utf8');
-          this.registerChange(destPath);
-        }
-      } else {
-        await mkdir(path.dirname(destPath), { recursive: true });
-        const content = await readFile(sourcePath);
-        const isText = isLikelyText(entry.name, content);
-        if (isText && nameReplacements?.length) {
-          const str = content.toString('utf8');
-          const replaced = applyReplacements(str);
-          await writeFile(destPath, replaced, 'utf8');
-        } else {
-          await writeFile(destPath, new Uint8Array(content));
-        }
-        this.registerChange(destPath);
-      }
     }
   }
 

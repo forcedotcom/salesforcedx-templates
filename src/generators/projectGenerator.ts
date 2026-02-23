@@ -11,8 +11,8 @@ import { CreateUtil } from '../utils';
 import { ProjectOptions } from '../utils/types';
 import {
   BUILT_IN_FULL_TEMPLATES,
-  FULL_TEMPLATE_DEFAULT_NAMES,
-  generateFromProjectTemplateDir,
+  generateBuiltInFullTemplate,
+  renderEjsFile,
 } from '../utils/webappTemplateUtils';
 import { BaseGenerator } from './baseGenerator';
 
@@ -293,56 +293,22 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     }
 
     if (BUILT_IN_FULL_TEMPLATES.has(template)) {
-      const templateDir = this.templatePath(template);
-      const projectDir = path.join(this.outputdir, projectname);
-      const templateVars = {
-        projectname,
+      await generateBuiltInFullTemplate(template, projectname, {
+        templateDir: this.templatePath(template),
+        projectDir: path.join(this.outputdir, projectname),
         defaultpackagedir,
-        namespace: ns,
         ns,
         loginurl,
         apiversion: this.apiversion,
-        name: projectname,
-        company: (process.env.USER || 'Demo') + ' company',
-      };
-      const nameReplacements = FULL_TEMPLATE_DEFAULT_NAMES[template];
-      await generateFromProjectTemplateDir(
-        templateDir,
-        projectDir,
-        templateVars,
-        {
-          nameReplacements: nameReplacements
-            ? [
-                [nameReplacements.withSuffix, projectname + '1'],
-                [nameReplacements.base, projectname],
-              ]
-            : undefined,
-          renderEjs: (filePath, data) => this.renderToBuffer(filePath, data),
-          onFileCreated: (destPath) => this.registerChange(destPath),
-        }
-      );
+        renderEjs: renderEjsFile,
+        onFileCreated: (destPath) => this.registerChange(destPath),
+      });
     }
   }
 
   private registerChange(destPath: string): void {
     const relativePath = path.relative(process.cwd(), destPath);
     this.changes.created.push(relativePath);
-  }
-
-  private async renderToBuffer(
-    sourcePath: string,
-    data: Record<string, unknown>
-  ): Promise<string> {
-    const { renderFile } = await import('ejs');
-    return new Promise((resolve, reject) => {
-      renderFile(sourcePath, data, (err, str) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(str ?? '');
-        }
-      });
-    });
   }
 
   private async _createHuskyConfig(projectRootDir: string) {

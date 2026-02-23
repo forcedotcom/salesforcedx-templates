@@ -83,6 +83,85 @@ export function isLikelyText(filename: string, buffer: Buffer): boolean {
   }
 }
 
+/** Renders an EJS template file with the given data (stateless, no generator dependency). */
+export async function renderEjsFile(
+  sourcePath: string,
+  data: Record<string, unknown>
+): Promise<string> {
+  const { renderFile } = await import('ejs');
+  return new Promise((resolve, reject) => {
+    renderFile(sourcePath, data, (err, str) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(str ?? '');
+      }
+    });
+  });
+}
+
+export type GenerateBuiltInFullTemplateOptions = {
+  templateDir: string;
+  projectDir: string;
+  defaultpackagedir: string;
+  ns: string;
+  loginurl: string;
+  apiversion: string;
+  /** Renders an EJS template file; use renderEjsFile from this module */
+  renderEjs: (
+    filePath: string,
+    data: Record<string, unknown>
+  ) => Promise<string>;
+  /** Called for each file created (e.g. to push to generator changes) */
+  onFileCreated: (destPath: string) => void;
+};
+
+/**
+ * Generate project files from a built-in full template (e.g. react-b2e, react-b2x).
+ * Builds template vars and name replacements and delegates to generateFromProjectTemplateDir.
+ */
+export async function generateBuiltInFullTemplate(
+  template: string,
+  projectname: string,
+  options: GenerateBuiltInFullTemplateOptions
+): Promise<void> {
+  const {
+    templateDir,
+    projectDir,
+    defaultpackagedir,
+    ns,
+    loginurl,
+    apiversion,
+    renderEjs,
+    onFileCreated,
+  } = options;
+
+  const templateVars = {
+    projectname,
+    defaultpackagedir,
+    namespace: ns,
+    ns,
+    loginurl,
+    apiversion,
+    name: projectname,
+    company: (process.env.USER || 'Demo') + ' company',
+  };
+
+  const nameReplacementsEntry = FULL_TEMPLATE_DEFAULT_NAMES[template];
+  const nameReplacements = nameReplacementsEntry
+    ? ([
+        [nameReplacementsEntry.withSuffix, projectname + '1'],
+        [nameReplacementsEntry.base, projectname],
+      ] as [string, string][])
+    : undefined;
+
+  await generateFromProjectTemplateDir(templateDir, projectDir, templateVars, {
+    nameReplacements,
+    renderEjs,
+    onFileCreated,
+  });
+}
+
 export type GenerateFromProjectTemplateDirOptions = {
   /** Pairs of [from, to] for renaming template default app/site names to project name */
   nameReplacements?: [string, string][];

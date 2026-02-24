@@ -1,3 +1,12 @@
+# [66.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.1.1...66.2.0) (2026-02-24)
+
+
+### Features
+
+* adding react project generation ([ebaa973](https://github.com/forcedotcom/salesforcedx-templates/commit/ebaa9731c480787d6703bc2c5eb4d5b61b1cd1c6))
+
+
+
 ## [66.1.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.1.0...66.1.1) (2026-02-22)
 
 

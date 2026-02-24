@@ -9,7 +9,20 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { ProjectOptions } from '../utils/types';
+import {
+  BUILT_IN_FULL_TEMPLATES,
+  generateBuiltInFullTemplate,
+  renderEjsFile,
+} from '../utils/webappTemplateUtils';
 import { BaseGenerator } from './baseGenerator';
+
+const VALID_PROJECT_TEMPLATES = [
+  'standard',
+  'empty',
+  'analytics',
+  'react-b2e',
+  'react-b2x',
+] as const;
 
 const GITIGNORE = 'gitignore';
 const HUSKY_FOLDER = '.husky';
@@ -60,11 +73,36 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     this.sourceRootWithPartialPath('project');
   }
 
+  /**
+   * Returns template path for primary; if it doesn't exist, returns fallback path.
+   * Used so react-b2e/react-b2x can omit shared files and fall back to standard.
+   */
+  private templatePathWithFallback(primary: string, fallback: string): string {
+    const primaryPath = this.templatePath(primary);
+    return fs.existsSync(primaryPath)
+      ? primaryPath
+      : this.templatePath(fallback);
+  }
+
   public validateOptions(): void {
-    CreateUtil.checkInputs(this.options.template);
+    CreateUtil.checkInputs(this.options.projectname);
+    if (
+      !VALID_PROJECT_TEMPLATES.includes(
+        this.options.template as (typeof VALID_PROJECT_TEMPLATES)[number]
+      )
+    ) {
+      throw new Error(
+        `Invalid project template: ${
+          this.options.template
+        }. Valid options: ${VALID_PROJECT_TEMPLATES.join(', ')}`
+      );
+    }
   }
 
   public async generate(): Promise<void> {
+    // Re-apply source root so customTemplatesRootPath (set in run()) is used when provided
+    this.sourceRootWithPartialPath('project');
+
     const { projectname, template, defaultpackagedir, manifest, ns, loginurl } =
       this.options;
     const folderlayout = [
@@ -81,7 +119,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     const anonApexFile = 'hello.apex';
 
     await this.render(
-      this.templatePath(scratchDefFile),
+      this.templatePathWithFallback(scratchDefFile, 'standard/ScratchDef.json'),
       this.destinationPath(
         path.join(
           this.outputdir,
@@ -93,7 +131,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       { company: (process.env.USER || 'Demo') + ' company' }
     );
     await this.render(
-      this.templatePath(`${template}/README.md`),
+      this.templatePathWithFallback(
+        `${template}/README.md`,
+        'standard/README.md'
+      ),
       this.destinationPath(path.join(this.outputdir, projectname, 'README.md')),
       {}
     );
@@ -113,7 +154,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
     if (manifest === true) {
       await this.render(
-        this.templatePath(manifestFile),
+        this.templatePathWithFallback(manifestFile, 'standard/Manifest.xml'),
         this.destinationPath(
           path.join(this.outputdir, projectname, 'manifest', 'package.xml')
         ),
@@ -250,6 +291,24 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         );
       }
     }
+
+    if (BUILT_IN_FULL_TEMPLATES.has(template)) {
+      await generateBuiltInFullTemplate(template, projectname, {
+        templateDir: this.templatePath(template),
+        projectDir: path.join(this.outputdir, projectname),
+        defaultpackagedir,
+        ns,
+        loginurl,
+        apiversion: this.apiversion,
+        renderEjs: renderEjsFile,
+        onFileCreated: (destPath) => this.registerChange(destPath),
+      });
+    }
+  }
+
+  private registerChange(destPath: string): void {
+    const relativePath = path.relative(process.cwd(), destPath);
+    this.changes.created.push(relativePath);
   }
 
   private async _createHuskyConfig(projectRootDir: string) {

@@ -24,6 +24,8 @@
   "devDependencies": {
     "@salesforce/dev-config": "^4.3.2",
     "@salesforce/dev-scripts": "^11.0.2",
+    "@salesforce/webapp-template-app-react-template-b2e-experimental": "^1.48.0",
+    "@salesforce/webapp-template-app-react-template-b2x-experimental": "^1.48.0",
     "@salesforce/webapp-template-base-react-app-experimental": "^1.48.1",
     "@salesforce/webapp-template-base-web-app-experimental": "^1.48.1",
     "@salesforce/prettier-config": "^0.0.4",
@@ -63,9 +65,9 @@
     "node": ">=18.18.2"
   },
   "scripts": {
-    "build": "yarn run clean:lib && yarn build:copy-webapp-templates && yarn build:templates && yarn compile",
+    "build": "yarn run clean:lib && yarn build:copy-templates && yarn build:templates && yarn compile",
     "build:templates": "node scripts/build-templates",
-    "build:copy-webapp-templates": "node scripts/copy-webapp-templates",
+    "build:copy-templates": "node scripts/copy-templates",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "commit": "git-cz",
     "compile": "tsc -b",

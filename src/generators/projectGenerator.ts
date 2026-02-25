@@ -85,15 +85,14 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   }
 
   public validateOptions(): void {
-    CreateUtil.checkInputs(this.options.projectname);
+    CreateUtil.checkInputs(this.options.template);
     if (
       !VALID_PROJECT_TEMPLATES.includes(
         this.options.template as (typeof VALID_PROJECT_TEMPLATES)[number]
       )
     ) {
       throw new Error(
-        `Invalid project template: ${
-          this.options.template
+        `Invalid project template: ${this.options.template
         }. Valid options: ${VALID_PROJECT_TEMPLATES.join(', ')}`
       );
     }

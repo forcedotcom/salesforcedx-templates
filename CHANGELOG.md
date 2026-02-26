@@ -1,3 +1,12 @@
+## [66.2.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.2.0...66.2.1) (2026-02-26)
+
+
+### Bug Fixes
+
+* reverting projectname validation to template and updating react type names @W-20226218@ ([#733](https://github.com/forcedotcom/salesforcedx-templates/issues/733)) ([dce1330](https://github.com/forcedotcom/salesforcedx-templates/commit/dce1330e5c4d11f068377f23e2d41d6e7c82b4a9))
+
+
+
 # [66.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.1.1...66.2.0) (2026-02-24)
 
 

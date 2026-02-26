@@ -20,8 +20,8 @@ const VALID_PROJECT_TEMPLATES = [
   'standard',
   'empty',
   'analytics',
-  'react-b2e',
-  'react-b2x',
+  'reactb2e',
+  'reactb2x',
 ] as const;
 
 const GITIGNORE = 'gitignore';
@@ -75,7 +75,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
   /**
    * Returns template path for primary; if it doesn't exist, returns fallback path.
-   * Used so react-b2e/react-b2x can omit shared files and fall back to standard.
+   * Used so reactb2e/reactb2x can omit shared files and fall back to standard.
    */
   private templatePathWithFallback(primary: string, fallback: string): string {
     const primaryPath = this.templatePath(primary);
@@ -85,7 +85,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   }
 
   public validateOptions(): void {
-    CreateUtil.checkInputs(this.options.projectname);
+    CreateUtil.checkInputs(this.options.template);
     if (
       !VALID_PROJECT_TEMPLATES.includes(
         this.options.template as (typeof VALID_PROJECT_TEMPLATES)[number]

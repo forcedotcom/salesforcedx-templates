@@ -31,18 +31,18 @@ const TEMPLATES = [
       ),
     destSubpath: 'webapplication/reactbasic',
   },
-  // Project templates (react-b2e, react-b2x)
+  // Project templates (reactb2e, reactb2x)
   {
     packageName:
       '@salesforce/webapp-template-app-react-template-b2e-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'project/react-b2e',
+    destSubpath: 'project/reactb2e',
   },
   {
     packageName:
       '@salesforce/webapp-template-app-react-template-b2x-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'project/react-b2x',
+    destSubpath: 'project/reactb2x',
   },
 ];
 

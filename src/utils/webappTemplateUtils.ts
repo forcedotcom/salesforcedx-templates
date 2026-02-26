@@ -28,7 +28,7 @@ export const EJS_EXTENSIONS = new Set([
 ]);
 
 /** Templates that have a full folder under src/templates/project/ (populated at build time from npm) */
-export const BUILT_IN_FULL_TEMPLATES = new Set(['react-b2e', 'react-b2x']);
+export const BUILT_IN_FULL_TEMPLATES = new Set(['reactb2e', 'reactb2x']);
 
 /**
  * Default app/site names embedded in each full template; all are renamed to the project name.
@@ -38,11 +38,11 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
   string,
   { base: string; withSuffix: string }
 > = {
-  'react-b2e': {
+  reactb2e: {
     base: 'appreacttemplateb2e',
     withSuffix: 'appreacttemplateb2e1',
   },
-  'react-b2x': {
+  reactb2x: {
     base: 'appreacttemplateb2x',
     withSuffix: 'appreacttemplateb2x1',
   },
@@ -50,6 +50,14 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
 
 /** Directories to skip when walking a full template dir (e.g. node_modules) */
 export const FULL_TEMPLATE_SKIP_DIRS = new Set(['node_modules', '.git']);
+
+/**
+ * Returns a string containing only alphanumeric characters [A-Za-z0-9].
+ * Used for folder and file names under webapplications, which must be alphanumeric.
+ */
+export function toAlphanumericForPath(name: string): string {
+  return name.replace(/[^A-Za-z0-9]/g, '');
+}
 
 /** Heuristic: treat as text if no null byte in the first chunk and decodable as UTF-8 */
 export function isLikelyText(filename: string, buffer: Buffer): boolean {
@@ -117,7 +125,7 @@ export type GenerateBuiltInFullTemplateOptions = {
 };
 
 /**
- * Generate project files from a built-in full template (e.g. react-b2e, react-b2x).
+ * Generate project files from a built-in full template (e.g. reactb2e, reactb2x).
  * Builds template vars and name replacements and delegates to generateFromProjectTemplateDir.
  */
 export async function generateBuiltInFullTemplate(
@@ -148,10 +156,11 @@ export async function generateBuiltInFullTemplate(
   };
 
   const nameReplacementsEntry = FULL_TEMPLATE_DEFAULT_NAMES[template];
+  const projectnameAlphanumeric = toAlphanumericForPath(projectname);
   const nameReplacements = nameReplacementsEntry
     ? ([
-        [nameReplacementsEntry.withSuffix, projectname + '1'],
-        [nameReplacementsEntry.base, projectname],
+        [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],
+        [nameReplacementsEntry.base, projectnameAlphanumeric],
       ] as [string, string][])
     : undefined;
 
@@ -175,7 +184,7 @@ export type GenerateFromProjectTemplateDirOptions = {
 };
 
 /**
- * Recursively walk a full project template directory (e.g. react-b2e, react-b2x),
+ * Recursively walk a full project template directory (e.g. reactb2e, reactb2x),
  * rendering EJS for text files and copying the rest. Renames template default app/site
  * names (e.g. appreacttemplateb2e) to the project name in paths and file contents.
  */

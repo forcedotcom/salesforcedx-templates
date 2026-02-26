@@ -825,12 +825,8 @@ describe('TemplateService', () => {
 
     it('should create Project (reactb2e) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
-      const fixtureRoot = path.join(
-        __dirname,
-        '..',
-        'fixtures',
-        'project-templates'
-      );
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
         TemplateType.Project,
@@ -876,12 +872,8 @@ describe('TemplateService', () => {
 
     it('should create Project (reactb2x) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
-      const fixtureRoot = path.join(
-        __dirname,
-        '..',
-        'fixtures',
-        'project-templates'
-      );
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
         TemplateType.Project,
@@ -916,6 +908,31 @@ describe('TemplateService', () => {
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
       chai.expect(sampleContent).to.include('MyReactB2xApp');
+    });
+
+    it('should use alphanumeric name for webapplications under reactb2e template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'My_React_B2e_App',
+          template: 'reactb2e',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai.expect(result.created).to.not.be.empty;
+      const projectDir = path.join(result.outputDir, 'My_React_B2e_App');
+      chai.expect(fs.existsSync(projectDir)).to.be.true;
+      const appnamePath = path.join(projectDir, 'appname.txt');
+      chai.expect(fs.existsSync(appnamePath)).to.be.true;
+      const appnameContent = fs.readFileSync(appnamePath, 'utf8');
+      chai.expect(appnameContent.trim()).to.equal('MyReactB2eApp');
     });
 
     it('should create StaticResource', async () => {

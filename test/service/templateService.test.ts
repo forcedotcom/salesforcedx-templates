@@ -823,7 +823,7 @@ describe('TemplateService', () => {
         );
     });
 
-    it('should create Project (react-b2e) from built-in template', async () => {
+    it('should create Project (reactb2e) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const fixtureRoot = path.join(
         __dirname,
@@ -837,7 +837,7 @@ describe('TemplateService', () => {
         {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'MyReactB2eApp',
-          template: 'react-b2e',
+          template: 'reactb2e',
           defaultpackagedir: 'force-app',
         },
         fixtureRoot
@@ -874,7 +874,7 @@ describe('TemplateService', () => {
       chai.expect(sampleContent).to.include('MyReactB2eApp');
     });
 
-    it('should create Project (react-b2x) from built-in template', async () => {
+    it('should create Project (reactb2x) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const fixtureRoot = path.join(
         __dirname,
@@ -888,7 +888,7 @@ describe('TemplateService', () => {
         {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'MyReactB2xApp',
-          template: 'react-b2x',
+          template: 'reactb2x',
           defaultpackagedir: 'force-app',
         },
         fixtureRoot

@@ -174,7 +174,7 @@ export interface ProjectOptions extends TemplateOptions {
    * Note that namespace is a reserved keyword for yeoman generator
    */
   ns: string;
-  template: 'standard' | 'empty' | 'analytics' | 'react-b2e' | 'react-b2x';
+  template: 'standard' | 'empty' | 'analytics' | 'reactb2e' | 'reactb2x';
   manifest: boolean;
   loginurl: string;
 }

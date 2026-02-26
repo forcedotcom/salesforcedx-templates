@@ -65,5 +65,5 @@ oclif.manifest.json
 src/templates/webapplication/
 
 # ignore project templates copied from npm during build (copy-templates)
-src/templates/project/react-b2e/
-src/templates/project/react-b2x/
+src/templates/project/reactb2e/
+src/templates/project/reactb2x/

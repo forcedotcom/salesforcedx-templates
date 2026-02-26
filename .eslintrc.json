@@ -68,7 +68,7 @@
     "*.js",
     "src/templates/lightningcomponent/lwc/typeScript/*",
     "src/templates/webapplication/reactbasic/**/*",
-    "src/templates/project/react-b2e/**/*",
-    "src/templates/project/react-b2x/**/*"
+    "src/templates/project/reactb2e/**/*",
+    "src/templates/project/reactb2x/**/*"
   ]
 }

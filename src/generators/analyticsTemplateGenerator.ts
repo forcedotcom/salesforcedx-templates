@@ -7,12 +7,12 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { AnalyticsTemplateOptions } from '../utils/types';
+import { AnalyticsTemplateOptions, GeneratorContext } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class AnalyticsTemplateGenerator extends BaseGenerator<AnalyticsTemplateOptions> {
-  constructor(options: AnalyticsTemplateOptions) {
-    super(options);
+  constructor(options: AnalyticsTemplateOptions, context?: GeneratorContext) {
+    super(options, context);
   }
 
   public validateOptions(): void {

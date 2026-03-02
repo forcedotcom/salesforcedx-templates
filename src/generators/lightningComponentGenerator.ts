@@ -9,12 +9,12 @@ import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { LightningComponentOptions } from '../utils/types';
+import { GeneratorContext, LightningComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningComponentGenerator extends BaseGenerator<LightningComponentOptions> {
-  constructor(options: LightningComponentOptions) {
-    super(options);
+  constructor(options: LightningComponentOptions, context?: GeneratorContext) {
+    super(options, context);
   }
 
   public validateOptions(): void {

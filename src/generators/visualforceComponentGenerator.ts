@@ -6,12 +6,15 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { VisualforceComponentOptions } from '../utils/types';
+import { GeneratorContext, VisualforceComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class VisualforceComponentGenerator extends BaseGenerator<VisualforceComponentOptions> {
-  constructor(options: VisualforceComponentOptions) {
-    super(options);
+  constructor(
+    options: VisualforceComponentOptions,
+    context?: GeneratorContext
+  ) {
+    super(options, context);
   }
 
   public validateOptions(): void {

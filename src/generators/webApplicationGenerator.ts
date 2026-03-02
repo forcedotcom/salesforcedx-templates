@@ -5,17 +5,15 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { camelCaseToTitleCase } from '@salesforce/kit';
-import * as fs from 'fs';
 import * as path from 'path';
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { WebApplicationOptions } from '../utils/types';
+import { GeneratorContext, WebApplicationOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class WebApplicationGenerator extends BaseGenerator<WebApplicationOptions> {
-  constructor(options: WebApplicationOptions) {
-    super(options);
+  constructor(options: WebApplicationOptions, context?: GeneratorContext) {
+    super(options, context);
   }
 
   public validateOptions(): void {
@@ -115,13 +113,13 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     destDir: string,
     excludeFiles: ReadonlySet<string> = new Set()
   ): Promise<void> {
-    if (!fs.existsSync(sourceDir)) {
+    if (!this._fs.existsSync(sourceDir)) {
       return;
     }
 
-    await mkdir(destDir, { recursive: true });
+    await this._fs.promises.mkdir(destDir, { recursive: true });
 
-    const entries = fs.readdirSync(sourceDir, { withFileTypes: true });
+    const entries = this._fs.readdirSync(sourceDir, { withFileTypes: true });
 
     for (const entry of entries) {
       const sourcePath = path.join(sourceDir, entry.name);
@@ -133,7 +131,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
       }
 
       // Skip files that already exist
-      if (fs.existsSync(destPath)) {
+      if (this._fs.existsSync(destPath)) {
         continue;
       }
 
@@ -141,12 +139,14 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
         await this.copyDirectoryRecursive(sourcePath, destPath, excludeFiles);
       } else {
         // Copy file and track it
-        const content = await readFile(sourcePath);
-        await mkdir(path.dirname(destPath), { recursive: true });
-        await writeFile(destPath, content as Uint8Array);
+        const content = await this._fs.promises.readFile(sourcePath);
+        await this._fs.promises.mkdir(path.dirname(destPath), {
+          recursive: true,
+        });
+        await this._fs.promises.writeFile(destPath, content as Uint8Array);
 
         // Register the created file
-        const relativePath = path.relative(process.cwd(), destPath);
+        const relativePath = path.relative(this._cwd, destPath);
         this.changes.created.push(relativePath);
       }
     }

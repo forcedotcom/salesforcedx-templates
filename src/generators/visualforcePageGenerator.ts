@@ -6,12 +6,12 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { VisualforcePageOptions } from '../utils/types';
+import { GeneratorContext, VisualforcePageOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class VisualforcePageGenerator extends BaseGenerator<VisualforcePageOptions> {
-  constructor(options: VisualforcePageOptions) {
-    super(options);
+  constructor(options: VisualforcePageOptions, context?: GeneratorContext) {
+    super(options, context);
   }
 
   public validateOptions(): void {

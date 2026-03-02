@@ -7,12 +7,12 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { LightningInterfaceOptions } from '../utils/types';
+import { GeneratorContext, LightningInterfaceOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningInterfaceGenerator extends BaseGenerator<LightningInterfaceOptions> {
-  constructor(options: LightningInterfaceOptions) {
-    super(options);
+  constructor(options: LightningInterfaceOptions, context?: GeneratorContext) {
+    super(options, context);
   }
 
   public validateOptions(): void {

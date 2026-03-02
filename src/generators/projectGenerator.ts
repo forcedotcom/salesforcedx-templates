@@ -4,11 +4,9 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as fs from 'fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { ProjectOptions } from '../utils/types';
+import { GeneratorContext, ProjectOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 const GITIGNORE = 'gitignore';
@@ -42,22 +40,22 @@ const emptyfolderarray = ['aura', 'lwc'];
 const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
 const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
 
-async function extendJSON(
-  filepath: string,
-  replacer?: (this: any, key: string, value: any) => any
-) {
-  const originalContent = JSON.parse(
-    await readFile(filepath, 'utf8').catch(() => '{}')
-  );
-
-  const newContent = JSON.stringify(originalContent, replacer, 2);
-  await writeFile(filepath, newContent);
-}
-
 export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
-  constructor(options: ProjectOptions) {
-    super(options);
+  constructor(options: ProjectOptions, context?: GeneratorContext) {
+    super(options, context);
     this.sourceRootWithPartialPath('project');
+  }
+
+  private async extendJSON(
+    filepath: string,
+    replacer?: (this: any, key: string, value: any) => any
+  ) {
+    const originalContent = JSON.parse(
+      await this._fs.promises.readFile(filepath, 'utf8').catch(() => '{}')
+    );
+
+    const newContent = JSON.stringify(originalContent, replacer, 2);
+    await this._fs.promises.writeFile(filepath, newContent);
   }
 
   public validateOptions(): void {
@@ -122,7 +120,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     }
 
     if (template === 'standard') {
-      await makeEmptyFolders(folderlayout, standardfolderarray);
+      await this.makeEmptyFolders(folderlayout, standardfolderarray);
 
       // Add Husky directory and hooks
       this._createHuskyConfig(path.join(this.outputdir, projectname));
@@ -189,7 +187,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     }
 
     if (template === 'empty') {
-      await makeEmptyFolders(folderlayout, emptyfolderarray);
+      await this.makeEmptyFolders(folderlayout, emptyfolderarray);
       await this.render(
         this.templatePath('.forceignore'),
         this.destinationPath(
@@ -200,7 +198,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     }
 
     if (template === 'analytics') {
-      await makeEmptyFolders(folderlayout, analyticsfolderarray);
+      await this.makeEmptyFolders(folderlayout, analyticsfolderarray);
 
       // Add Husky directory and hooks
       this._createHuskyConfig(path.join(this.outputdir, projectname));
@@ -217,7 +215,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       }
 
       // add the analytics vscode extension to the recommendations
-      await extendJSON(
+      await this.extendJSON(
         path.join(this.outputdir, projectname, '.vscode', 'extensions.json'),
         (key: string, value: unknown) => {
           if (
@@ -254,8 +252,8 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
   private async _createHuskyConfig(projectRootDir: string) {
     const huskyDirPath = path.join(projectRootDir, HUSKY_FOLDER);
-    if (!fs.existsSync(huskyDirPath)) {
-      fs.mkdirSync(huskyDirPath);
+    if (!this._fs.existsSync(huskyDirPath)) {
+      this._fs.mkdirSync(huskyDirPath);
     }
     for (const file of huskyhookarray) {
       await this.render(
@@ -265,13 +263,15 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       );
     }
   }
-}
 
-async function makeEmptyFolders(
-  toplevelfolders: string[],
-  metadatafolders: string[]
-) {
-  for (const folder of metadatafolders) {
-    await mkdir(path.join(...toplevelfolders, folder), { recursive: true });
+  private async makeEmptyFolders(
+    toplevelfolders: string[],
+    metadatafolders: string[]
+  ) {
+    for (const folder of metadatafolders) {
+      await this._fs.promises.mkdir(path.join(...toplevelfolders, folder), {
+        recursive: true,
+      });
+    }
   }
 }

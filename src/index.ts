@@ -7,5 +7,6 @@
 
 import { TemplateService } from './service/templateService';
 export { TemplateService };
+export type { GeneratorContext } from './utils/types';
 export * from './utils/types';
 export * from './utils/createUtil';

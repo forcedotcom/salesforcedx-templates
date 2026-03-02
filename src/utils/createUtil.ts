@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as fs from 'fs';
+import * as nodeFs from 'fs';
 import * as path from 'path';
 import { nls } from '../i18n';
 
@@ -34,10 +34,14 @@ export class CreateUtil {
   // TODO: switch filetype to a string instead of regex
   public static getCommandTemplatesForFiletype(
     filetype: RegExp,
-    command: string
+    command: string,
+    fs: typeof nodeFs = nodeFs,
+    templatesRootPath?: string
   ): string[] {
+    const basePath =
+      templatesRootPath ?? path.resolve(__dirname, '..', 'templates');
     const files = fs
-      .readdirSync(path.resolve(__dirname, '..', 'templates', command))
+      .readdirSync(path.resolve(basePath, command))
       .filter((file) => filetype.test(file))
       .map((file) => {
         return file.split('.', 1).toString();
@@ -54,9 +58,13 @@ export class CreateUtil {
    */
   public static getCommandTemplatesInSubdirs(
     command: string,
-    { filetype, subdir }: { filetype?: RegExp; subdir?: string } = {}
+    { filetype, subdir }: { filetype?: RegExp; subdir?: string } = {},
+    fs: typeof nodeFs = nodeFs,
+    templatesRootPath?: string
   ): string[] {
-    let basedir = path.resolve(__dirname, '..', 'templates', command);
+    const basePath =
+      templatesRootPath ?? path.resolve(__dirname, '..', 'templates');
+    let basedir = path.resolve(basePath, command);
     if (subdir) {
       basedir = path.join(basedir, subdir);
     }

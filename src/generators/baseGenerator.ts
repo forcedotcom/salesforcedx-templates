@@ -5,22 +5,17 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as fs from 'fs';
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import * as nodeFs from 'fs';
 import * as path from 'path';
-import { CreateOutput, TemplateOptions } from '../utils/types';
-import { renderFile } from 'ejs';
+import { render } from 'ejs';
 import { nls } from '../i18n';
 import { loadCustomTemplatesGitRepo } from '../service/gitRepoUtils';
 import { DEFAULT_API_VERSION } from '../utils/constants';
-
-async function outputFile(file: string, data: string): Promise<void> {
-  const dir = path.dirname(file);
-
-  await mkdir(dir, { recursive: true });
-
-  return writeFile(file, data);
-}
+import {
+  CreateOutput,
+  GeneratorContext,
+  TemplateOptions,
+} from '../utils/types';
 
 type Changes = {
   created: string[];
@@ -35,7 +30,8 @@ interface FsError extends Error {
 
 export async function setCustomTemplatesRootPathOrGitRepo(
   pathOrRepoUri?: string,
-  forceLoadingRemoteRepo = false
+  forceLoadingRemoteRepo = false,
+  fs: typeof nodeFs = nodeFs
 ): Promise<string | undefined> {
   if (pathOrRepoUri === undefined) {
     return;
@@ -45,7 +41,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
     // if pathOrRepoUri is valid url, load the repo
     const url = new URL(pathOrRepoUri);
     if (url) {
-      return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo);
+      return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }
   } catch (error) {
     const err = error as FsError;
@@ -78,12 +74,18 @@ abstract class NotYeoman {
     identical: [],
     forced: [],
   };
+  protected readonly _fs: typeof nodeFs;
+  protected readonly _cwd: string;
   private _sourceRoot: string;
   private _destinationRoot: string;
 
-  public constructor() {
-    this._sourceRoot = this.sourceRoot(path.join(__dirname, '..', 'templates'));
-    this._destinationRoot = this.destinationRoot(process.cwd());
+  public constructor(context?: GeneratorContext) {
+    this._fs = context?.fs ?? nodeFs;
+    this._cwd = context?.cwd ?? process.cwd();
+    const defaultTemplatesRoot =
+      context?.templatesRootPath ?? path.join(__dirname, '..', 'templates');
+    this._sourceRoot = this.sourceRoot(defaultTemplatesRoot);
+    this._destinationRoot = this.destinationRoot(this._cwd);
   }
 
   public destinationPath(...dest: string[]): string {
@@ -100,12 +102,12 @@ abstract class NotYeoman {
     if (typeof rootPath === 'string') {
       this._destinationRoot = path.resolve(rootPath);
 
-      if (!fs.existsSync(this._destinationRoot)) {
-        fs.mkdirSync(this._destinationRoot, { recursive: true });
+      if (!this._fs.existsSync(this._destinationRoot)) {
+        this._fs.mkdirSync(this._destinationRoot, { recursive: true });
       }
     }
 
-    return this._destinationRoot || process.cwd();
+    return this._destinationRoot || this._cwd;
   }
 
   public sourceRoot(rootPath?: string): string {
@@ -131,18 +133,14 @@ abstract class NotYeoman {
     destination: string,
     data?: Record<string, unknown>
   ): Promise<void> {
-    const rendered = await new Promise<string>((resolve, reject) => {
-      renderFile(source, data ?? {}, (err, str) => {
-        if (err) {
-          reject(err);
-        }
-        return resolve(str);
-      });
-    });
+    const template = await this._fs.promises.readFile(source, 'utf8');
+    const rendered = render(template, data ?? {});
 
     if (rendered) {
-      const relativePath = path.relative(process.cwd(), destination);
-      const existing = await readFile(destination, 'utf8').catch(() => null);
+      const relativePath = path.relative(this._cwd, destination);
+      const existing = await this._fs.promises
+        .readFile(destination, 'utf8')
+        .catch(() => null);
       if (existing) {
         if (rendered.trim() === existing.trim()) {
           this.register('identical', relativePath);
@@ -155,7 +153,9 @@ abstract class NotYeoman {
         this.register('created', relativePath);
       }
 
-      await outputFile(destination, rendered);
+      const dir = path.dirname(destination);
+      await this._fs.promises.mkdir(dir, { recursive: true });
+      await this._fs.promises.writeFile(destination, rendered);
     }
   }
 
@@ -174,16 +174,19 @@ export abstract class BaseGenerator<
   protected outputdir: string;
   protected apiversion: string;
   private customTemplatesRootPath: string | undefined;
+  private readonly _templatesRootPath: string | undefined;
 
   /**
    * The constructor for the SfGenerator.
    *
    * @param options SfGenerator specific options.
+   * @param context optional generator context for fs and template path injection
    */
-  constructor(public options: TOptions) {
-    super();
+  constructor(public options: TOptions, context?: GeneratorContext) {
+    super(context);
+    this._templatesRootPath = context?.templatesRootPath;
     this.apiversion = options.apiversion ?? getDefaultApiVersion();
-    this.outputdir = options.outputdir ?? process.cwd();
+    this.outputdir = options.outputdir ?? this._cwd;
     this.validateOptions();
   }
 
@@ -192,23 +195,19 @@ export abstract class BaseGenerator<
    * @param partialPath the relative path from the templates folder to templates root folder.
    */
   public sourceRootWithPartialPath(partialPath: string): void {
-    /**
-     * CAUTION:
-     * PLEASE make sure the relative path from this function to /templates does NOT change!
-     * The core VSCode extension bundles /templates separately, so the change of the relative path will make bundling fail!
-     * Reach out to mingxuanzhang@salesforce.com if unsure.
-     */
     this.builtInTemplatesRootPath = path.join(
-      __dirname,
-      '..',
-      'templates',
+      this._templatesRootPath ?? path.join(__dirname, '..', 'templates'),
       partialPath
     );
     // set generator source directory to custom templates root if available
     if (!this.customTemplatesRootPath) {
       this.sourceRoot(path.join(this.builtInTemplatesRootPath));
     } else {
-      if (fs.existsSync(path.join(this.customTemplatesRootPath, partialPath))) {
+      if (
+        this._fs.existsSync(
+          path.join(this.customTemplatesRootPath, partialPath)
+        )
+      ) {
         this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
       }
     }
@@ -219,7 +218,7 @@ export abstract class BaseGenerator<
     // If we have set a custom template root, the source root should have already been set.
     // Otherwise we'll fallback to the built-in templates
     const customPath = super.templatePath(...paths);
-    if (fs.existsSync(customPath)) {
+    if (this._fs.existsSync(customPath)) {
       return customPath;
     } else {
       // files that are builtin and not in the custom template folder
@@ -234,9 +233,11 @@ export abstract class BaseGenerator<
     customTemplatesRootPathOrGitRepo?: string;
     sourceRootPartial?: string;
   }): Promise<CreateOutput> {
-    const cwd = opts?.cwd ?? process.cwd();
+    const cwd = opts?.cwd ?? this._cwd;
     this.customTemplatesRootPath = await setCustomTemplatesRootPathOrGitRepo(
-      opts?.customTemplatesRootPathOrGitRepo
+      opts?.customTemplatesRootPathOrGitRepo,
+      false,
+      this._fs
     );
 
     await this.generate();

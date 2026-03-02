@@ -7,9 +7,10 @@
 
 import {
   type CreateOutput,
-  GeneratorClass,
+  type GeneratorClass,
+  type GeneratorContext,
   generators,
-  TemplateOptions,
+  type TemplateOptions,
   TemplateType,
 } from '../utils/types';
 import { nls } from '../i18n';
@@ -30,20 +31,31 @@ export function importGenerator<TOptions extends TemplateOptions>(
 export class TemplateService {
   private static instance: TemplateService;
   private _cwd: string;
+  private _context: GeneratorContext | undefined;
 
-  constructor(cwd: string = process.cwd()) {
-    this._cwd = cwd;
+  constructor(cwd?: string, context?: GeneratorContext) {
+    this._cwd = cwd ?? context?.cwd ?? process.cwd();
+    this._context = context;
   }
 
   /**
    * Get an instance of TemplateService
    * @param cwd cwd of current environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
+   * @param context optional generator context with fs and templatesRootPath
    */
-  public static getInstance(cwd?: string): TemplateService {
+  public static getInstance(
+    cwd?: string,
+    context?: GeneratorContext
+  ): TemplateService {
     if (!TemplateService.instance) {
-      TemplateService.instance = new TemplateService(cwd);
-    } else if (cwd) {
-      TemplateService.instance.cwd = cwd;
+      TemplateService.instance = new TemplateService(cwd, context);
+    } else {
+      if (cwd) {
+        TemplateService.instance.cwd = cwd;
+      }
+      if (context) {
+        TemplateService.instance._context = context;
+      }
     }
     return TemplateService.instance;
   }
@@ -80,7 +92,10 @@ export class TemplateService {
     };
 
     const Generator = importGenerator(templateType);
-    const instance = new Generator(templateOptions);
+    const instance = new Generator(templateOptions, {
+      ...this._context,
+      cwd: this._cwd,
+    });
     return instance.run(runOptions);
   }
 }

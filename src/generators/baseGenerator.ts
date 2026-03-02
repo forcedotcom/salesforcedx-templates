@@ -9,8 +9,10 @@ import * as nodeFs from 'fs';
 import * as path from 'path';
 import { render } from 'ejs';
 import { nls } from '../i18n';
-import { loadCustomTemplatesGitRepo } from '../service/gitRepoUtils';
-import { DEFAULT_API_VERSION } from '../utils/constants';
+import {
+  DEFAULT_API_VERSION,
+  dirnameTemplatesDefault,
+} from '../utils/constants';
 import {
   CreateOutput,
   GeneratorContext,
@@ -40,7 +42,10 @@ export async function setCustomTemplatesRootPathOrGitRepo(
   try {
     // if pathOrRepoUri is valid url, load the repo
     const url = new URL(pathOrRepoUri);
-    if (url) {
+    if (process.env.ESBUILD_PLATFORM !== 'web' && url) {
+      const { loadCustomTemplatesGitRepo } = await import(
+        '../service/gitRepoUtils'
+      );
       return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }
   } catch (error) {
@@ -83,7 +88,7 @@ abstract class NotYeoman {
     this._fs = context?.fs ?? nodeFs;
     this._cwd = context?.cwd ?? process.cwd();
     const defaultTemplatesRoot =
-      context?.templatesRootPath ?? path.join(__dirname, '..', 'templates');
+      context?.templatesRootPath ?? dirnameTemplatesDefault;
     this._sourceRoot = this.sourceRoot(defaultTemplatesRoot);
     this._destinationRoot = this.destinationRoot(this._cwd);
   }
@@ -196,7 +201,7 @@ export abstract class BaseGenerator<
    */
   public sourceRootWithPartialPath(partialPath: string): void {
     this.builtInTemplatesRootPath = path.join(
-      this._templatesRootPath ?? path.join(__dirname, '..', 'templates'),
+      this._templatesRootPath ?? dirnameTemplatesDefault ?? '',
       partialPath
     );
     // set generator source directory to custom templates root if available

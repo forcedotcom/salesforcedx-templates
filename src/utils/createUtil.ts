@@ -6,6 +6,7 @@
  */
 import * as nodeFs from 'fs';
 import * as path from 'path';
+import { dirnameTemplatesDefault } from './constants';
 import { nls } from '../i18n';
 
 export class CreateUtil {
@@ -38,8 +39,7 @@ export class CreateUtil {
     fs: typeof nodeFs = nodeFs,
     templatesRootPath?: string
   ): string[] {
-    const basePath =
-      templatesRootPath ?? path.resolve(__dirname, '..', 'templates');
+    const basePath = templatesRootPath ?? dirnameTemplatesDefault ?? '';
     const files = fs
       .readdirSync(path.resolve(basePath, command))
       .filter((file) => filetype.test(file))
@@ -62,8 +62,7 @@ export class CreateUtil {
     fs: typeof nodeFs = nodeFs,
     templatesRootPath?: string
   ): string[] {
-    const basePath =
-      templatesRootPath ?? path.resolve(__dirname, '..', 'templates');
+    const basePath = templatesRootPath ?? dirnameTemplatesDefault ?? '';
     let basedir = path.resolve(basePath, command);
     if (subdir) {
       basedir = path.join(basedir, subdir);

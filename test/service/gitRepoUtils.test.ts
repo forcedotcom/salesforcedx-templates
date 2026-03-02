@@ -15,6 +15,9 @@ describe('DIR', () => {
   beforeEach(() => {
     homedirStub = stub(os, 'homedir');
   });
+  afterEach(() => {
+    homedirStub.restore();
+  });
   it('should return DIR', () => {
     const homedir = '/Users/johndoe';
     homedirStub.returns(homedir);

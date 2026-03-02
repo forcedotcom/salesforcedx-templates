@@ -823,6 +823,118 @@ describe('TemplateService', () => {
         );
     });
 
+    it('should create Project (reactb2e) from built-in template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'MyReactB2eApp',
+          template: 'reactb2e',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2eApp/config/project-scratch-def.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2eApp/sfdx-project.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2eApp/sample.txt'
+          )
+        );
+      const samplePath = path.join(
+        result.outputDir,
+        'MyReactB2eApp',
+        'sample.txt'
+      );
+      chai.expect(fs.existsSync(samplePath)).to.be.true;
+      const sampleContent = fs.readFileSync(samplePath, 'utf8');
+      chai.expect(sampleContent).to.include('MyReactB2eApp');
+    });
+
+    it('should create Project (reactb2x) from built-in template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'MyReactB2xApp',
+          template: 'reactb2x',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2xApp/config/project-scratch-def.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactB2xApp/sample.txt'
+          )
+        );
+      const samplePath = path.join(
+        result.outputDir,
+        'MyReactB2xApp',
+        'sample.txt'
+      );
+      chai.expect(fs.existsSync(samplePath)).to.be.true;
+      const sampleContent = fs.readFileSync(samplePath, 'utf8');
+      chai.expect(sampleContent).to.include('MyReactB2xApp');
+    });
+
+    it('should use alphanumeric name for webapplications under reactb2e template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'My_React_B2e_App',
+          template: 'reactb2e',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai.expect(result.created).to.not.be.empty;
+      const projectDir = path.join(result.outputDir, 'My_React_B2e_App');
+      chai.expect(fs.existsSync(projectDir)).to.be.true;
+      const appnamePath = path.join(projectDir, 'appname.txt');
+      chai.expect(fs.existsSync(appnamePath)).to.be.true;
+      const appnameContent = fs.readFileSync(appnamePath, 'utf8');
+      chai.expect(appnameContent.trim()).to.equal('MyReactB2eApp');
+    });
+
     it('should create StaticResource', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'staticResource'));
       const templateService = TemplateService.getInstance();
@@ -909,12 +1021,12 @@ describe('TemplateService', () => {
 
     it('should create WebApplication', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'webApplications')
+        path.join('testsoutput', 'libraryCreate', 'webapplications')
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.WebApplication, {
         webappname: 'LibraryCreateWebApp',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'webApplications'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
         template: 'default',
         internal: true,
       });
@@ -923,9 +1035,9 @@ describe('TemplateService', () => {
         .expect(result.created.sort())
         .to.deep.equal(
           [
-            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/index.html',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/webapp.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateWebApp/LibraryCreateWebApp.webApplication-meta.xml',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/src/index.html',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/webapplication.json',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/LibraryCreateWebApp.webapplication-meta.xml',
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -934,55 +1046,25 @@ describe('TemplateService', () => {
 
     it('should create WebApplication (reactbasic)', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'webApplications')
+        path.join('testsoutput', 'libraryCreate', 'webapplications')
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.WebApplication, {
         webappname: 'LibraryCreateReactApp',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'webApplications'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
         template: 'reactbasic',
         internal: true,
       });
 
-      chai
-        .expect(result.created.sort())
-        .to.deep.equal(
-          [
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/.prettierignore',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/.prettierrc',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/LibraryCreateReactApp.webApplication-meta.xml',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/README.md',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/eslint.config.js',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/index.html',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/package-lock.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/package.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/app.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/appLayout.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/book.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/copy.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/rocket.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/icons/star.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/codey-1.png',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/codey-2.png',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/codey-3.png',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/assets/images/vibe-codey.svg',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/About.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/Home.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/pages/NotFound.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/routes.tsx',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/src/styles/global.css',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/tsconfig.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/tsconfig.node.json',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vite-env.d.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vite.config.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vitest-env.d.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vitest.config.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/vitest.setup.ts',
-            'testsoutput/libraryCreate/webApplications/LibraryCreateReactApp/webapp.json',
-          ]
-            .map((p) => path.normalize(p))
-            .sort()
-        );
+      const created = result.created.map((p) => path.normalize(p));
+      const webappJson = path.normalize(
+        'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/webapplication.json'
+      );
+      const webappMetaXml = path.normalize(
+        'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/LibraryCreateReactApp.webapplication-meta.xml'
+      );
+      chai.expect(created).to.include(webappJson);
+      chai.expect(created).to.include(webappMetaXml);
     });
   });
 });

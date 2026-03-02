@@ -6,7 +6,7 @@
  */
 import * as path from 'path';
 
-export const DEFAULT_API_VERSION = '65.0';
+export const DEFAULT_API_VERSION = '66.0';
 
 export const dirnameTemplatesDefault =
   process.env.ESBUILD_PLATFORM !== 'web'

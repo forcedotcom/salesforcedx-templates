@@ -6,14 +6,10 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { ApexClassOptions, GeneratorContext } from '../utils/types';
+import { ApexClassOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> {
-  constructor(options: ApexClassOptions, context?: GeneratorContext) {
-    super(options, context);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     CreateUtil.checkInputs(this.options.classname);

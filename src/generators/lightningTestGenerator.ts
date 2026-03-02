@@ -7,14 +7,10 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { GeneratorContext, LightningTestOptions } from '../utils/types';
+import { LightningTestOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningTestGenerator extends BaseGenerator<LightningTestOptions> {
-  constructor(options: LightningTestOptions, context?: GeneratorContext) {
-    super(options, context);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.testname);
     CreateUtil.checkInputs(this.options.template);

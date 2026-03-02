@@ -41,8 +41,12 @@ const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
 const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
 
 export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
-  constructor(options: ProjectOptions, context?: GeneratorContext) {
-    super(options, context);
+  constructor(
+    options: ProjectOptions,
+    context?: GeneratorContext,
+    cwd?: string
+  ) {
+    super(options, context, cwd);
     this.sourceRootWithPartialPath('project');
   }
 

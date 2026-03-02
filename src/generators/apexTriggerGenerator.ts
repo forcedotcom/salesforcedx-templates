@@ -6,13 +6,10 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { ApexTriggerOptions, GeneratorContext } from '../utils/types';
+import { ApexTriggerOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptions> {
-  constructor(options: ApexTriggerOptions, context?: GeneratorContext) {
-    super(options, context);
-  }
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.triggername);
     CreateUtil.checkInputs(this.options.template);

@@ -84,9 +84,9 @@ abstract class NotYeoman {
   private _sourceRoot: string;
   private _destinationRoot: string;
 
-  public constructor(context?: GeneratorContext) {
+  public constructor(context?: GeneratorContext, cwd?: string) {
     this._fs = context?.fs ?? nodeFs;
-    this._cwd = context?.cwd ?? process.cwd();
+    this._cwd = cwd ?? process.cwd();
     const defaultTemplatesRoot =
       context?.templatesRootPath ?? dirnameTemplatesDefault;
     this._sourceRoot = this.sourceRoot(defaultTemplatesRoot);
@@ -187,8 +187,12 @@ export abstract class BaseGenerator<
    * @param options SfGenerator specific options.
    * @param context optional generator context for fs and template path injection
    */
-  constructor(public options: TOptions, context?: GeneratorContext) {
-    super(context);
+  constructor(
+    public options: TOptions,
+    context?: GeneratorContext,
+    cwd?: string
+  ) {
+    super(context, cwd);
     this._templatesRootPath = context?.templatesRootPath;
     this.apiversion = options.apiversion ?? getDefaultApiVersion();
     this.outputdir = options.outputdir ?? this._cwd;

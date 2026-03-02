@@ -34,7 +34,7 @@ export class TemplateService {
   private _context: GeneratorContext | undefined;
 
   constructor(cwd?: string, context?: GeneratorContext) {
-    this._cwd = cwd ?? context?.cwd ?? process.cwd();
+    this._cwd = cwd ?? process.cwd();
     this._context = context;
   }
 
@@ -92,10 +92,7 @@ export class TemplateService {
     };
 
     const Generator = importGenerator(templateType);
-    const instance = new Generator(templateOptions, {
-      ...this._context,
-      cwd: this._cwd,
-    });
+    const instance = new Generator(templateOptions, this._context, this._cwd);
     return instance.run(runOptions);
   }
 }

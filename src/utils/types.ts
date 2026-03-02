@@ -22,20 +22,20 @@ import { BaseGenerator } from '../generators/baseGenerator';
 
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
   options: TOptions,
-  context?: GeneratorContext
+  context?: GeneratorContext,
+  cwd?: string
 ) => BaseGenerator<TOptions>;
 
 /**
  * Optional context for generators allowing fs and template path injection.
  * When not provided, defaults to Node's fs and __dirname-based template resolution.
+ * cwd is owned by TemplateService; pass via constructor param.
  */
 export type GeneratorContext = {
   /** Node-fs-compatible object. Defaults to require('node:fs'). Pass memfs for web. */
   readonly fs?: typeof import('node:fs');
   /** Absolute path to built-in templates root. Overrides __dirname-based resolution. */
   readonly templatesRootPath?: string;
-  /** Working directory for output paths. Defaults to process.cwd(). */
-  readonly cwd?: string;
 };
 
 export type Generators =

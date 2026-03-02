@@ -8,14 +8,10 @@ import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { GeneratorContext, WebApplicationOptions } from '../utils/types';
+import { WebApplicationOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class WebApplicationGenerator extends BaseGenerator<WebApplicationOptions> {
-  constructor(options: WebApplicationOptions, context?: GeneratorContext) {
-    super(options, context);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.webappname);
     CreateUtil.checkInputs(this.options.template);

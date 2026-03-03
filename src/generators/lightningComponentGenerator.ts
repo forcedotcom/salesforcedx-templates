@@ -13,10 +13,6 @@ import { LightningComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningComponentGenerator extends BaseGenerator<LightningComponentOptions> {
-  constructor(options: LightningComponentOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.componentname);
     CreateUtil.checkInputs(this.options.template);

@@ -11,10 +11,6 @@ import { LightningAppOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningAppGenerator extends BaseGenerator<LightningAppOptions> {
-  constructor(options: LightningAppOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.appname);
     CreateUtil.checkInputs(this.options.template);

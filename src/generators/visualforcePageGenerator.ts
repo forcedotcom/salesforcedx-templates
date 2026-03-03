@@ -10,10 +10,6 @@ import { VisualforcePageOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class VisualforcePageGenerator extends BaseGenerator<VisualforcePageOptions> {
-  constructor(options: VisualforcePageOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.pagename);
     CreateUtil.checkInputs(this.options.template);

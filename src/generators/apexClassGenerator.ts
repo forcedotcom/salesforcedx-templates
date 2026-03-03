@@ -10,10 +10,6 @@ import { ApexClassOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> {
-  constructor(options: ApexClassOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     CreateUtil.checkInputs(this.options.classname);

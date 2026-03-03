@@ -11,10 +11,6 @@ import { LightningInterfaceOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningInterfaceGenerator extends BaseGenerator<LightningInterfaceOptions> {
-  constructor(options: LightningInterfaceOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.interfacename);
     CreateUtil.checkInputs(this.options.template);

@@ -10,10 +10,6 @@ import { VisualforceComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class VisualforceComponentGenerator extends BaseGenerator<VisualforceComponentOptions> {
-  constructor(options: VisualforceComponentOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.componentname);
     CreateUtil.checkInputs(this.options.template);

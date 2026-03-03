@@ -11,10 +11,6 @@ import { LightningTestOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningTestGenerator extends BaseGenerator<LightningTestOptions> {
-  constructor(options: LightningTestOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.testname);
     CreateUtil.checkInputs(this.options.template);

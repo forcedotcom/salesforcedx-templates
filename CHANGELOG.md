@@ -1,3 +1,12 @@
+## [66.3.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.0...66.3.1) (2026-03-04)
+
+
+### Bug Fixes
+
+* **recordpage flexipage template:** remove deprecated chatter component and tab from template ([#735](https://github.com/forcedotcom/salesforcedx-templates/issues/735)) ([e769f8b](https://github.com/forcedotcom/salesforcedx-templates/commit/e769f8b0879f01cd947a80d16e4aa11c81e6e2de))
+
+
+
 # [66.3.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.2.1...66.3.0) (2026-03-03)
 
 

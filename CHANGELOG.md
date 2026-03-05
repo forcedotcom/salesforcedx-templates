@@ -1,3 +1,12 @@
+## [66.3.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.1...66.3.2) (2026-03-05)
+
+
+### Bug Fixes
+
+* update webapp-template devDependencies to ^1.71.0 @W-21338760@ ([#736](https://github.com/forcedotcom/salesforcedx-templates/issues/736)) ([47bce33](https://github.com/forcedotcom/salesforcedx-templates/commit/47bce33a81cc7dae60d897c32a3061f9d0497caf))
+
+
+
 ## [66.3.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.0...66.3.1) (2026-03-04)
 
 

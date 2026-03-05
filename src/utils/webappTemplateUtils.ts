@@ -8,6 +8,54 @@ import * as fs from 'fs';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'path';
 
+/**
+ * Trim trailing whitespace from a filename segment and warn when it differs.
+ * Upstream packages occasionally ship files whose names end with a space
+ * (e.g. "lds-guide-graphql.md "), which produces invalid OPC Part URIs
+ * when vsce builds the .vsix.
+ */
+function sanitizeSegment(name: string): string {
+  const trimmed = name.trimEnd();
+  if (trimmed !== name) {
+    console.warn(
+      `[webappTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`
+    );
+  }
+  return trimmed;
+}
+
+/**
+ * Recursively copy a directory tree from src to dest, trimming trailing
+ * whitespace from every path segment so that upstream filenames with stray
+ * spaces never leak into the output.
+ *
+ * This is a drop-in replacement for `fs.cpSync(src, dest, { recursive: true })`
+ * that is resilient to the "trailing-space filename" issue seen in
+ * `@salesforce/templates`.
+ */
+export function copyTreeSanitized(src: string, dest: string): void {
+  const stat = fs.statSync(src);
+  if (stat.isFile()) {
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.copyFileSync(src, dest);
+    return;
+  }
+  if (!stat.isDirectory()) {
+    return;
+  }
+  fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const sanitized = sanitizeSegment(entry.name);
+    const srcChild = path.join(src, entry.name);
+    const destChild = path.join(dest, sanitized);
+    if (entry.isDirectory()) {
+      copyTreeSanitized(srcChild, destChild);
+    } else if (entry.isFile()) {
+      fs.copyFileSync(srcChild, destChild);
+    }
+  }
+}
+
 /** File extensions that should be processed as EJS templates */
 export const EJS_EXTENSIONS = new Set([
   '.json',
@@ -214,13 +262,15 @@ export async function generateFromProjectTemplateDir(
   const entries = await readdir(sourceDir, { withFileTypes: true });
 
   for (const entry of entries) {
-    const sourcePath = path.join(sourceDir, entry.name);
+    const rawName = entry.name;
+    const safeName = sanitizeSegment(rawName);
+    const sourcePath = path.join(sourceDir, rawName);
 
     if (entry.isDirectory()) {
-      if (FULL_TEMPLATE_SKIP_DIRS.has(entry.name)) {
+      if (FULL_TEMPLATE_SKIP_DIRS.has(safeName)) {
         continue;
       }
-      const destName = applyReplacements(entry.name);
+      const destName = applyReplacements(safeName);
       const destPath = path.join(destDir, destName);
       await mkdir(destPath, { recursive: true });
       await generateFromProjectTemplateDir(
@@ -236,13 +286,13 @@ export async function generateFromProjectTemplateDir(
       continue;
     }
 
-    const destName = applyReplacements(entry.name);
+    const destName = applyReplacements(safeName);
     const destPath = path.join(destDir, destName);
-    const ext = path.extname(entry.name);
+    const ext = path.extname(safeName);
     const isEjsTemplate =
       EJS_EXTENSIONS.has(ext) ||
-      entry.name.endsWith('.config.js') ||
-      entry.name.endsWith('.config.ts');
+      safeName.endsWith('.config.js') ||
+      safeName.endsWith('.config.ts');
 
     if (isEjsTemplate) {
       try {

@@ -100,6 +100,71 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
 export const FULL_TEMPLATE_SKIP_DIRS = new Set(['node_modules', '.git']);
 
 /**
+ * Max path length allowed by pack:verify for Windows (sf max allowable path length).
+ * Used by tests to preemptively fail if template paths exceed this.
+ */
+export const WINDOWS_MAX_ALLOWABLE_PATH_LENGTH = 127;
+
+/**
+ * Path segment placeholders used in template dirs; replaced only during project generation.
+ * Short names keep lib/templates paths short.
+ */
+export const PACKAGE_DIR_PLACEHOLDER = '_p_';
+/** Replaced with defaultpackagedir (e.g. force-app). */
+export const MAIN_DEFAULT_PLACEHOLDER = '_m_';
+/** Replaced with literal "main/default". */
+export const WEBAPPLICATIONS_PLACEHOLDER = '_w_';
+/** Replaced with literal "webapplications". */
+export const APP_PLACEHOLDER = '_a_';
+/** Replaced with project name (alphanumeric) for the web app folder. */
+export const DIGITAL_EXPERIENCES_PLACEHOLDER = '_d_';
+/** Replaced with literal "digitalExperiences". */
+export const SITE_PLACEHOLDER = '_s_';
+/** Replaced with literal "site". */
+export const APP_SUFFIX_PLACEHOLDER = '_a1_';
+/** Replaced with project name + "1" (e.g. digital experience site folder). */
+export const A4DRULES_PLACEHOLDER = '_r_';
+/** Replaced with literal ".a4drules". */
+export const A4D_SKILL_AGENTFORCE_PLACEHOLDER = '_k_';
+/** Replaced with literal "feature-react-agentforce-conversation-client-embedded-agent". */
+
+/** All placeholder keys; used by tests to assert sync with copy-templates.js */
+export const PLACEHOLDER_KEYS = [
+  'PACKAGE_DIR_PLACEHOLDER',
+  'MAIN_DEFAULT_PLACEHOLDER',
+  'WEBAPPLICATIONS_PLACEHOLDER',
+  'APP_PLACEHOLDER',
+  'DIGITAL_EXPERIENCES_PLACEHOLDER',
+  'SITE_PLACEHOLDER',
+  'APP_SUFFIX_PLACEHOLDER',
+  'A4DRULES_PLACEHOLDER',
+  'A4D_SKILL_AGENTFORCE_PLACEHOLDER',
+] as const;
+
+type PlaceholderReplacementCtx = {
+  defaultpackagedir: string;
+  projectnameAlphanumeric: string;
+};
+
+/** Single table: placeholder → literal or getter. Build nameReplacements from this. */
+const BUILT_IN_PLACEHOLDER_REPLACEMENTS: Array<
+  [string, string | ((ctx: PlaceholderReplacementCtx) => string)]
+> = [
+  [PACKAGE_DIR_PLACEHOLDER, (ctx) => ctx.defaultpackagedir],
+  [MAIN_DEFAULT_PLACEHOLDER, 'main/default'],
+  [WEBAPPLICATIONS_PLACEHOLDER, 'webapplications'],
+  [APP_PLACEHOLDER, (ctx) => ctx.projectnameAlphanumeric],
+  [DIGITAL_EXPERIENCES_PLACEHOLDER, 'digitalExperiences'],
+  [SITE_PLACEHOLDER, 'site'],
+  [APP_SUFFIX_PLACEHOLDER, (ctx) => ctx.projectnameAlphanumeric + '1'],
+  [A4DRULES_PLACEHOLDER, '.a4drules'],
+  [
+    A4D_SKILL_AGENTFORCE_PLACEHOLDER,
+    'feature-react-agentforce-conversation-client-embedded-agent',
+  ],
+];
+
+/**
  * Returns a string containing only alphanumeric characters [A-Za-z0-9].
  * Used for folder and file names under webapplications, which must be alphanumeric.
  */
@@ -205,12 +270,21 @@ export async function generateBuiltInFullTemplate(
 
   const nameReplacementsEntry = FULL_TEMPLATE_DEFAULT_NAMES[template];
   const projectnameAlphanumeric = toAlphanumericForPath(projectname);
-  const nameReplacements = nameReplacementsEntry
-    ? ([
-        [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],
-        [nameReplacementsEntry.base, projectnameAlphanumeric],
-      ] as [string, string][])
-    : undefined;
+  const replacementCtx: PlaceholderReplacementCtx = {
+    defaultpackagedir,
+    projectnameAlphanumeric,
+  };
+  const nameReplacements: [string, string][] =
+    BUILT_IN_PLACEHOLDER_REPLACEMENTS.map(([placeholder, value]) => [
+      placeholder,
+      typeof value === 'function' ? value(replacementCtx) : value,
+    ]);
+  if (nameReplacementsEntry) {
+    nameReplacements.push(
+      [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],
+      [nameReplacementsEntry.base, projectnameAlphanumeric]
+    );
+  }
 
   await generateFromProjectTemplateDir(templateDir, projectDir, templateVars, {
     nameReplacements,

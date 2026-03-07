@@ -8,6 +8,8 @@ import * as fs from 'fs';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'path';
 
+import templatePlaceholdersSpec from './template-placeholders';
+
 /**
  * Trim trailing whitespace from a filename segment and warn when it differs.
  * Upstream packages occasionally ship files whose names end with a space
@@ -146,23 +148,34 @@ type PlaceholderReplacementCtx = {
   projectnameAlphanumeric: string;
 };
 
-/** Single table: placeholder → literal or getter. Build nameReplacements from this. */
-const BUILT_IN_PLACEHOLDER_REPLACEMENTS: Array<
-  [string, string | ((ctx: PlaceholderReplacementCtx) => string)]
-> = [
-  [PACKAGE_DIR_PLACEHOLDER, (ctx) => ctx.defaultpackagedir],
-  [MAIN_DEFAULT_PLACEHOLDER, 'main/default'],
-  [WEBAPPLICATIONS_PLACEHOLDER, 'webapplications'],
-  [APP_PLACEHOLDER, (ctx) => ctx.projectnameAlphanumeric],
-  [DIGITAL_EXPERIENCES_PLACEHOLDER, 'digitalExperiences'],
-  [SITE_PLACEHOLDER, 'site'],
-  [APP_SUFFIX_PLACEHOLDER, (ctx) => ctx.projectnameAlphanumeric + '1'],
-  [A4DRULES_PLACEHOLDER, '.a4drules'],
-  [
-    A4D_SKILL_AGENTFORCE_PLACEHOLDER,
-    'feature-react-agentforce-conversation-client-embedded-agent',
-  ],
-];
+type TemplatePlaceholderEntry = {
+  key?: string;
+  placeholder: string;
+  dirInNpm: string;
+  parent: string;
+  toPath?: string;
+  removeEmptySibling?: string;
+  /** Literal string or key: defaultpackagedir | projectname | projectname1 */
+  replacement: string;
+};
+
+const TEMPLATE_PLACEHOLDERS_SPEC = templatePlaceholdersSpec as TemplatePlaceholderEntry[];
+
+function resolveReplacement(
+  replacement: string,
+  ctx: PlaceholderReplacementCtx
+): string {
+  switch (replacement) {
+    case 'defaultpackagedir':
+      return ctx.defaultpackagedir;
+    case 'projectname':
+      return ctx.projectnameAlphanumeric;
+    case 'projectname1':
+      return ctx.projectnameAlphanumeric + '1';
+    default:
+      return replacement;
+  }
+}
 
 /**
  * Returns a string containing only alphanumeric characters [A-Za-z0-9].
@@ -275,10 +288,14 @@ export async function generateBuiltInFullTemplate(
     projectnameAlphanumeric,
   };
   const nameReplacements: [string, string][] =
-    BUILT_IN_PLACEHOLDER_REPLACEMENTS.map(([placeholder, value]) => [
-      placeholder,
-      typeof value === 'function' ? value(replacementCtx) : value,
+    TEMPLATE_PLACEHOLDERS_SPEC.map((entry) => [
+      entry.placeholder,
+      resolveReplacement(entry.replacement, replacementCtx),
     ]);
+  nameReplacements.push(
+    [APP_PLACEHOLDER, projectnameAlphanumeric],
+    [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1']
+  );
   if (nameReplacementsEntry) {
     nameReplacements.push(
       [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],

@@ -1,0 +1,5 @@
+{
+  "orgName": "<%= company %>",
+  "edition": "Developer",
+  "features": []
+}

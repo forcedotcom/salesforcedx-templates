@@ -789,6 +789,30 @@ describe('TemplateService', () => {
         );
     });
 
+    it('should create Project (nativemobile)', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+        projectname: 'LibraryCreateNativeMobile',
+        template: 'nativemobile',
+        defaultpackagedir: 'force-app',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/config/project-scratch-def.json',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/README.md',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/sfdx-project.json',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/.forceignore',
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
     it('should create Project (analytics)', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const templateService = TemplateService.getInstance();

@@ -20,6 +20,7 @@ const VALID_PROJECT_TEMPLATES = [
   'analytics',
   'reactb2e',
   'reactb2x',
+  'nativemobile',
 ] as const;
 
 const GITIGNORE = 'gitignore';
@@ -231,7 +232,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       }
     }
 
-    if (template === 'empty') {
+    if (template === 'empty' || template === 'nativemobile') {
       await this.makeEmptyFolders(folderlayout, emptyfolderarray);
       await this.render(
         this.templatePath('.forceignore'),

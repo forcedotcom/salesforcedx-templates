@@ -179,7 +179,7 @@ export abstract class BaseGenerator<
   protected outputdir: string;
   protected apiversion: string;
   private customTemplatesRootPath: string | undefined;
-  private readonly _templatesRootPath: string | undefined;
+  protected readonly templatesRootPath: string | undefined;
 
   /**
    * The constructor for the SfGenerator.
@@ -193,7 +193,7 @@ export abstract class BaseGenerator<
     cwd?: string
   ) {
     super(context, cwd);
-    this._templatesRootPath = context?.templatesRootPath;
+    this.templatesRootPath = context?.templatesRootPath;
     this.apiversion = options.apiversion ?? getDefaultApiVersion();
     this.outputdir = options.outputdir ?? this._cwd;
     this.validateOptions();
@@ -205,7 +205,7 @@ export abstract class BaseGenerator<
    */
   public sourceRootWithPartialPath(partialPath: string): void {
     this.builtInTemplatesRootPath = path.join(
-      this._templatesRootPath ?? dirnameTemplatesDefault ?? '',
+      this.templatesRootPath ?? dirnameTemplatesDefault ?? '',
       partialPath
     );
     // set generator source directory to custom templates root if available

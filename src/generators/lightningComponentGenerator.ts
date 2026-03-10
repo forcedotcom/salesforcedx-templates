@@ -28,9 +28,12 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
     }
 
     if (
-      CreateUtil.getCommandTemplatesInSubdirs('lightningcomponent', {
-        subdir: this.options.type,
-      }).indexOf(this.options.template) < 0
+      CreateUtil.getCommandTemplatesInSubdirs(
+        'lightningcomponent',
+        { subdir: this.options.type },
+        undefined,
+        this.templatesRootPath
+      ).indexOf(this.options.template) < 0
     ) {
       throw new Error(
         nls.localize('MissingLightningComponentTemplate', [

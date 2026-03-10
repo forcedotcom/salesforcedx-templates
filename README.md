@@ -10,6 +10,16 @@ This repository provides:
 
 - [@salesforce/templates](https://www.npmjs.com/package/@salesforce/templates) to support the library and [Salesforce VS Code extensions](https://github.com/forcedotcom/salesforcedx-vscode/).
 
+### Consumer build requirements (e.g. salesforcedx-vscode)
+
+Repos that **bundle** `@salesforce/templates` (e.g. with esbuild) and use a templates manifest must:
+
+1. **Copy built-in templates into the bundle output** before the bundle step that runs `generateTemplatesManifest`. The published package includes templates at `lib/templates`. You can copy from that path, or use the exported path:
+   - `getBuiltinTemplatesPath` (returns the resolved path to `lib/templates` when not on the web platform; `undefined` on web).
+2. **Wireit / task order**: Ensure the script that populates `dist/templates` (or your equivalent) runs **before** the `vscode:bundle` (or similar) task. Otherwise the bundle step will fail with `ENOENT: no such file or directory, scandir '.../dist/templates'`.
+
+Template paths inside the package are kept short (via placeholders in `lib/templates`) so they stay within Windows path limits used by `pack:verify`.
+
 ## Getting Started
 
 If you're interested in contributing, take a look at the [CONTRIBUTING](CONTRIBUTING.md) guide.

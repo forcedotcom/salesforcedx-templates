@@ -62,4 +62,41 @@ export default [
     toPath: 'skills/_k_',
     replacement: 'feature-react-agentforce-conversation-client-embedded-agent',
   },
+  // Path shortening under app folder (reactb2e/reactb2x) for Windows path length.
+  {
+    key: 'FEATURES_PLACEHOLDER',
+    placeholder: '_f_',
+    dirInNpm: 'features',
+    parent: '_a_',
+    subpath: 'src',
+    replacement: 'features',
+  },
+  {
+    key: 'GLOBAL_SEARCH_PLACEHOLDER',
+    placeholder: '_gs_',
+    dirInNpm: 'global-search',
+    parent: '_f_',
+    replacement: 'global-search',
+  },
+  {
+    key: 'COMPONENTS_PLACEHOLDER',
+    placeholder: '_c_',
+    dirInNpm: 'components',
+    parent: '_gs_',
+    replacement: 'components',
+  },
+  {
+    key: 'DETAIL_PLACEHOLDER',
+    placeholder: '_det_',
+    dirInNpm: 'detail',
+    parent: '_c_',
+    replacement: 'detail',
+  },
+  {
+    key: 'FORMATTED_PLACEHOLDER',
+    placeholder: '_fmt_',
+    dirInNpm: 'formatted',
+    parent: '_det_',
+    replacement: 'formatted',
+  },
 ];

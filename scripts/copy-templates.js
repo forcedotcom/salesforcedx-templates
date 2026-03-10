@@ -32,8 +32,16 @@ function renameDirToPlaceholder(parentDir, dirName, toPath) {
 
 /** Optional renames keyed by parent placeholder; from dir comes from config. */
 const PROJECT_OPTIONAL_RENAMES = [
-  { parent: '_w_', getFrom: (config) => config.appFolderInNpm ?? null, to: '_a_' },
-  { parent: '_s_', getFrom: (config) => config.appSiteFolderInNpm ?? null, to: '_a1_' },
+  {
+    parent: '_w_',
+    getFrom: (config) => config.appFolderInNpm ?? null,
+    to: '_a_',
+  },
+  {
+    parent: '_s_',
+    getFrom: (config) => config.appSiteFolderInNpm ?? null,
+    to: '_a1_',
+  },
 ];
 
 const currDir = process.cwd();
@@ -111,11 +119,21 @@ function copyTemplate(config) {
     if (config.destSubpath.startsWith('project/')) {
       const paths = { dest: destDir };
 
+      function getParentPath(step) {
+        const base = paths[step.parent];
+        if (!base) return null;
+        return step.subpath ? path.join(base, step.subpath) : base;
+      }
+
       for (const step of TEMPLATE_PLACEHOLDERS_SPEC) {
-        const parentPath = paths[step.parent];
+        const parentPath = getParentPath(step);
         if (!parentPath) continue;
         const toPath = step.toPath ?? step.placeholder;
-        const newPath = renameDirToPlaceholder(parentPath, step.dirInNpm, toPath);
+        const newPath = renameDirToPlaceholder(
+          parentPath,
+          step.dirInNpm,
+          toPath
+        );
         if (newPath) {
           if (!toPath.includes(path.sep)) {
             paths[step.placeholder] = newPath;
@@ -134,7 +152,25 @@ function copyTemplate(config) {
         if (!fromDir) continue;
         const parentPath = paths[step.parent];
         if (parentPath) {
-          renameDirToPlaceholder(parentPath, fromDir, step.to);
+          const newPath = renameDirToPlaceholder(parentPath, fromDir, step.to);
+          if (newPath) {
+            paths[step.to] = newPath;
+          }
+        }
+      }
+
+      // Path-shortening steps under _a_ (features, global-search, etc.); _a_ is set by optional renames above.
+      for (const step of TEMPLATE_PLACEHOLDERS_SPEC) {
+        const parentPath = getParentPath(step);
+        if (!parentPath) continue;
+        const toPath = step.toPath ?? step.placeholder;
+        const newPath = renameDirToPlaceholder(
+          parentPath,
+          step.dirInNpm,
+          toPath
+        );
+        if (newPath && !toPath.includes(path.sep)) {
+          paths[step.placeholder] = newPath;
         }
       }
     }
@@ -157,13 +193,11 @@ function copyAllTemplates() {
 }
 
 /** Derived from template-placeholders.json + optional _a_/_a1_; matches webappTemplateUtils PLACEHOLDER_KEYS. */
-const PLACEHOLDERS = Object.fromEntries(
-  [
-    ...TEMPLATE_PLACEHOLDERS_SPEC.map((e) => [e.key, e.placeholder]),
-    ['APP_PLACEHOLDER', '_a_'],
-    ['APP_SUFFIX_PLACEHOLDER', '_a1_'],
-  ]
-);
+const PLACEHOLDERS = Object.fromEntries([
+  ...TEMPLATE_PLACEHOLDERS_SPEC.map((e) => [e.key, e.placeholder]),
+  ['APP_PLACEHOLDER', '_a_'],
+  ['APP_SUFFIX_PLACEHOLDER', '_a1_'],
+]);
 
 module.exports = { copyAllTemplates, PLACEHOLDERS };
 

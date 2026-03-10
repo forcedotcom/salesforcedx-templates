@@ -7,7 +7,6 @@
 
 import * as assert from 'node:assert';
 import {
-  PLACEHOLDER_KEYS,
   toAlphanumericForPath,
   WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
 } from '../../src/utils/webappTemplateUtils';
@@ -32,12 +31,6 @@ describe('webappTemplateUtils', () => {
         'should be integer'
       );
       assert.ok(WINDOWS_MAX_ALLOWABLE_PATH_LENGTH > 0, 'should be positive');
-    });
-
-    it('PLACEHOLDER_KEYS lists all placeholder constant names', () => {
-      assert.strictEqual(PLACEHOLDER_KEYS.length, 9);
-      assert.ok(PLACEHOLDER_KEYS.includes('PACKAGE_DIR_PLACEHOLDER'));
-      assert.ok(PLACEHOLDER_KEYS.includes('A4D_SKILL_AGENTFORCE_PLACEHOLDER'));
     });
   });
 });

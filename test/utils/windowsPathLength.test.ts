@@ -21,6 +21,11 @@ import {
   APP_SUFFIX_PLACEHOLDER,
   A4DRULES_PLACEHOLDER,
   A4D_SKILL_AGENTFORCE_PLACEHOLDER,
+  FEATURES_PLACEHOLDER,
+  GLOBAL_SEARCH_PLACEHOLDER,
+  COMPONENTS_PLACEHOLDER,
+  DETAIL_PLACEHOLDER,
+  FORMATTED_PLACEHOLDER,
 } from '../../src/utils/webappTemplateUtils';
 
 const copyTemplatesPath = path.join(
@@ -40,10 +45,19 @@ const WEBAPP_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
   APP_SUFFIX_PLACEHOLDER,
   A4DRULES_PLACEHOLDER,
   A4D_SKILL_AGENTFORCE_PLACEHOLDER,
+  FEATURES_PLACEHOLDER,
+  GLOBAL_SEARCH_PLACEHOLDER,
+  COMPONENTS_PLACEHOLDER,
+  DETAIL_PLACEHOLDER,
+  FORMATTED_PLACEHOLDER,
 };
 
-/** Path prefix for templates in the published package (lib/ is in "files"). */
-const PACKAGE_TEMPLATES_PREFIX = 'lib/templates/project/';
+/**
+ * Path prefix for template paths as seen by pack:verify in the CLI (tmp/sf).
+ * pack:verify measures paths under node_modules, e.g. node_modules/@salesforce/templates/lib/...
+ */
+const PACKAGE_TEMPLATES_PREFIX =
+  'node_modules/@salesforce/templates/lib/templates/project/';
 
 function* walkFiles(dir: string, relativeTo: string): Generator<string> {
   if (!fs.existsSync(dir)) {
@@ -110,7 +124,7 @@ describe('Windows path length (pack:verify)', () => {
 
       for (const rel of walkFiles(templateDir, templateDir)) {
         const packagePath = PACKAGE_TEMPLATES_PREFIX + templateName + '/' + rel;
-        if (packagePath.length > WINDOWS_MAX_ALLOWABLE_PATH_LENGTH) {
+        if (packagePath.length >= WINDOWS_MAX_ALLOWABLE_PATH_LENGTH) {
           longPaths.push({ length: packagePath.length, path: packagePath });
         }
       }

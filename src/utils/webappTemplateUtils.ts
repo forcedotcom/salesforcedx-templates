@@ -102,10 +102,13 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
 export const FULL_TEMPLATE_SKIP_DIRS = new Set(['node_modules', '.git']);
 
 /**
- * Max path length allowed by pack:verify for Windows (sf max allowable path length).
- * Used by tests to preemptively fail if template paths exceed this.
+ * Max path length for package paths allowed by `sf pack:verify` on Windows.
+ * Matches the "supported allowable path length" from ensureWindowsPathLengths in
+ * salesforcecli/cli (plugin-release-management): 259 - supportedBaseWindowsPath.length
+ * with --windows-username-buffer 34 (e.g. supported username length 34 → base path 102 → 157).
+ * Paths with length >= this value fail pack:verify.
  */
-export const WINDOWS_MAX_ALLOWABLE_PATH_LENGTH = 127;
+export const WINDOWS_MAX_ALLOWABLE_PATH_LENGTH = 157;
 
 /**
  * Path segment placeholders used in template dirs; replaced only during project generation.
@@ -129,6 +132,16 @@ export const A4DRULES_PLACEHOLDER = '_r_';
 /** Replaced with literal ".a4drules". */
 export const A4D_SKILL_AGENTFORCE_PLACEHOLDER = '_k_';
 /** Replaced with literal "feature-react-agentforce-conversation-client-embedded-agent". */
+/** Replaced with literal "features" (under app src; short for Windows path length). */
+export const FEATURES_PLACEHOLDER = '_f_';
+/** Replaced with literal "global-search". */
+export const GLOBAL_SEARCH_PLACEHOLDER = '_gs_';
+/** Replaced with literal "components". */
+export const COMPONENTS_PLACEHOLDER = '_c_';
+/** Replaced with literal "detail". */
+export const DETAIL_PLACEHOLDER = '_det_';
+/** Replaced with literal "formatted". */
+export const FORMATTED_PLACEHOLDER = '_fmt_';
 
 /** All placeholder keys; used by tests to assert sync with copy-templates.js */
 export const PLACEHOLDER_KEYS = [
@@ -141,6 +154,11 @@ export const PLACEHOLDER_KEYS = [
   'APP_SUFFIX_PLACEHOLDER',
   'A4DRULES_PLACEHOLDER',
   'A4D_SKILL_AGENTFORCE_PLACEHOLDER',
+  'FEATURES_PLACEHOLDER',
+  'GLOBAL_SEARCH_PLACEHOLDER',
+  'COMPONENTS_PLACEHOLDER',
+  'DETAIL_PLACEHOLDER',
+  'FORMATTED_PLACEHOLDER',
 ] as const;
 
 type PlaceholderReplacementCtx = {
@@ -159,7 +177,8 @@ type TemplatePlaceholderEntry = {
   replacement: string;
 };
 
-const TEMPLATE_PLACEHOLDERS_SPEC = templatePlaceholdersSpec as TemplatePlaceholderEntry[];
+const TEMPLATE_PLACEHOLDERS_SPEC =
+  templatePlaceholdersSpec as TemplatePlaceholderEntry[];
 
 function resolveReplacement(
   replacement: string,
@@ -287,11 +306,12 @@ export async function generateBuiltInFullTemplate(
     defaultpackagedir,
     projectnameAlphanumeric,
   };
-  const nameReplacements: [string, string][] =
-    TEMPLATE_PLACEHOLDERS_SPEC.map((entry) => [
+  const nameReplacements: [string, string][] = TEMPLATE_PLACEHOLDERS_SPEC.map(
+    (entry) => [
       entry.placeholder,
       resolveReplacement(entry.replacement, replacementCtx),
-    ]);
+    ]
+  );
   nameReplacements.push(
     [APP_PLACEHOLDER, projectnameAlphanumeric],
     [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1']

@@ -1,3 +1,12 @@
+## [66.4.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.0...66.4.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* **templates:** pass templatesRootPath to LWC validation W-21481349 ([#746](https://github.com/forcedotcom/salesforcedx-templates/issues/746)) ([30066e9](https://github.com/forcedotcom/salesforcedx-templates/commit/30066e96a6f4320db0863481543276c927acec5e))
+
+
+
 # [66.4.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.3...66.4.0) (2026-03-10)
 
 

@@ -31,7 +31,7 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
       CreateUtil.getCommandTemplatesInSubdirs(
         'lightningcomponent',
         { subdir: this.options.type },
-        undefined,
+        this._fs,
         this.templatesRootPath
       ).indexOf(this.options.template) < 0
     ) {

@@ -139,7 +139,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         'standard/README.md'
       ),
       this.destinationPath(path.join(this.outputdir, projectname, 'README.md')),
-      {}
+      { projectname }
     );
     await this.render(
       this.templatePath('sfdx-project.json'),
@@ -232,7 +232,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       }
     }
 
-    if (template === 'empty' || template === 'nativemobile') {
+    if (template === 'empty') {
       await this.makeEmptyFolders(folderlayout, emptyfolderarray);
       await this.render(
         this.templatePath('.forceignore'),
@@ -240,6 +240,148 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
           path.join(this.outputdir, projectname, '.forceignore')
         ),
         {}
+      );
+    }
+
+    if (template === 'nativemobile') {
+      await this.makeEmptyFolders(folderlayout, emptyfolderarray);
+      await this.render(
+        this.templatePath('.forceignore'),
+        this.destinationPath(
+          path.join(this.outputdir, projectname, '.forceignore')
+        ),
+        {}
+      );
+
+      // Derive a camelCase app name from the project name for CAMA metadata
+      const appName =
+        projectname.charAt(0).toLowerCase() +
+        projectname.slice(1).replace(/[^a-zA-Z0-9]/g, '');
+      // Human-readable label: insert spaces before uppercase runs
+      const appLabel = projectname
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/[_-]/g, ' ')
+        .trim();
+
+      const camaData = { appName, appLabel, projectname };
+      const ecBase = path.join(
+        ...folderlayout,
+        'digitalExperiences',
+        'experiencecontainer',
+        appName
+      );
+
+      // DigitalExperienceBundle meta XML
+      await this.render(
+        this.templatePath('nativemobile/digitalExperience-meta.xml'),
+        this.destinationPath(
+          path.join(ecBase, `${appName}.digitalExperience-meta.xml`)
+        ),
+        camaData
+      );
+
+      // EC Definition
+      await this.render(
+        this.templatePath('nativemobile/ecDefinition-meta.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaECDefinition',
+            appName,
+            '_meta.json'
+          )
+        ),
+        camaData
+      );
+      await this.render(
+        this.templatePath('nativemobile/ecDefinition-content.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaECDefinition',
+            appName,
+            'content.json'
+          )
+        ),
+        camaData
+      );
+
+      // App Metadata
+      await this.render(
+        this.templatePath('nativemobile/appMetadata-meta.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaAppMetadata',
+            'appMetadata',
+            '_meta.json'
+          )
+        ),
+        camaData
+      );
+      await this.render(
+        this.templatePath('nativemobile/appMetadata-content.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaAppMetadata',
+            'appMetadata',
+            'content.json'
+          )
+        ),
+        camaData
+      );
+
+      // Build Metadata
+      await this.render(
+        this.templatePath('nativemobile/buildMetadata-meta.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaBuildMetadata',
+            'buildMetadata',
+            '_meta.json'
+          )
+        ),
+        camaData
+      );
+      await this.render(
+        this.templatePath('nativemobile/buildMetadata-content.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaBuildMetadata',
+            'buildMetadata',
+            'content.json'
+          )
+        ),
+        camaData
+      );
+
+      // Home Screen
+      await this.render(
+        this.templatePath('nativemobile/homeScreen-meta.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaScreen',
+            'homeScreen',
+            '_meta.json'
+          )
+        ),
+        camaData
+      );
+      await this.render(
+        this.templatePath('nativemobile/homeScreen-content.json'),
+        this.destinationPath(
+          path.join(
+            ecBase,
+            'experience__camaScreen',
+            'homeScreen',
+            'content.json'
+          )
+        ),
+        camaData
       );
     }
 

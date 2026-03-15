@@ -177,6 +177,7 @@ export interface ProjectOptions extends TemplateOptions {
   template: 'standard' | 'empty' | 'analytics' | 'reactb2e' | 'reactb2x';
   manifest: boolean;
   loginurl: string;
+  lwcLanguage?: 'javascript' | 'typescript';
 }
 
 export interface VisualforceComponentOptions extends TemplateOptions {

@@ -5,6 +5,7 @@
     "lib": ["ES2022", "DOM"],
     "outDir": "dist",
     "rootDir": ".",
+    "sourceMap": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "resolveJsonModule": true,

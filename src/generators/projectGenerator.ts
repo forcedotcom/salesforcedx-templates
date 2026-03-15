@@ -157,6 +157,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         loginurl,
         apiversion: this.apiversion,
         name: projectname,
+        lwcLanguage,
       }
     );
 

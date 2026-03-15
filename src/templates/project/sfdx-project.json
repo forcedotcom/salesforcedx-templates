@@ -8,5 +8,6 @@
   "name": "<%= name %>",
   "namespace": "<%= namespace %>",
   "sfdcLoginUrl": "<%= loginurl %>",
-  "sourceApiVersion": "<%= apiversion %>"
+  "sourceApiVersion": "<%= apiversion %>"<% if (lwcLanguage) { %>,
+  "defaultLWCLanguage": "<%= lwcLanguage %>"<% } %>
 }

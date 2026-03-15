@@ -27,7 +27,7 @@
     "@salesforce/webapp-template-app-react-template-b2e-experimental": "^1.101.3",
     "@salesforce/webapp-template-app-react-template-b2x-experimental": "^1.80.0",
     "@salesforce/webapp-template-base-react-app-experimental": "^1.80.0",
-    "@salesforce/webapp-template-base-web-app-experimental": "^1.80.0",
+    "@salesforce/webapp-template-base-web-app-experimental": "^1.101.3",
     "@salesforce/prettier-config": "^0.0.4",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",

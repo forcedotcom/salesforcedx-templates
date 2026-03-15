@@ -103,8 +103,16 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     // Re-apply source root so customTemplatesRootPath (set in run()) is used when provided
     this.sourceRootWithPartialPath('project');
 
-    const { projectname, template, defaultpackagedir, manifest, ns, loginurl } =
-      this.options;
+    const {
+      projectname,
+      template,
+      defaultpackagedir,
+      manifest,
+      ns,
+      loginurl,
+      lwcLanguage,
+    } = this.options;
+    const isTypeScript = lwcLanguage === 'typescript';
     const folderlayout = [
       this.outputdir,
       projectname,
@@ -180,8 +188,11 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       }
 
       // ESLint config (file is renamed to avoid conflict with generator project)
+      const eslintTemplate = isTypeScript
+        ? 'project.eslint.typescript.config.js'
+        : 'project.eslint.config.js';
       await this.render(
-        this.templatePath('project.eslint.config.js'),
+        this.templatePath(eslintTemplate),
         this.destinationPath(
           path.join(this.outputdir, projectname, 'eslint.config.js')
         ),
@@ -221,23 +232,61 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       // Copy project root level files
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
+        let templateFile = file;
+
+        // Use TypeScript-specific templates if TypeScript is selected
+        if (isTypeScript) {
+          if (file === 'package.json') {
+            templateFile = 'package.typescript.json';
+          } else if (file === '.forceignore') {
+            templateFile = '.forceignore.typescript';
+          } else if (file === GITIGNORE) {
+            templateFile = 'gitignore.typescript';
+          }
+        }
+
         await this.render(
-          this.templatePath(file),
+          this.templatePath(templateFile),
           this.destinationPath(path.join(this.outputdir, projectname, out)),
           {}
+        );
+      }
+
+      // Generate TypeScript configuration files if TypeScript is selected
+      if (isTypeScript) {
+        await this.render(
+          this.templatePath('tsconfig.json'),
+          this.destinationPath(
+            path.join(this.outputdir, projectname, 'tsconfig.json')
+          ),
+          { defaultpackagedir }
         );
       }
     }
 
     if (template === 'empty') {
       await makeEmptyFolders(folderlayout, emptyfolderarray);
+      const forceignoreTemplate = isTypeScript
+        ? '.forceignore.typescript'
+        : '.forceignore';
       await this.render(
-        this.templatePath('.forceignore'),
+        this.templatePath(forceignoreTemplate),
         this.destinationPath(
           path.join(this.outputdir, projectname, '.forceignore')
         ),
         {}
       );
+
+      // Generate TypeScript configuration files if TypeScript is selected
+      if (isTypeScript) {
+        await this.render(
+          this.templatePath('tsconfig.json'),
+          this.destinationPath(
+            path.join(this.outputdir, projectname, 'tsconfig.json')
+          ),
+          { defaultpackagedir }
+        );
+      }
     }
 
     if (template === 'analytics') {
@@ -273,8 +322,11 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       );
 
       // ESLint config (file is renamed to avoid conflict with generator project)
+      const eslintTemplate = isTypeScript
+        ? 'project.eslint.typescript.config.js'
+        : 'project.eslint.config.js';
       await this.render(
-        this.templatePath('project.eslint.config.js'),
+        this.templatePath(eslintTemplate),
         this.destinationPath(
           path.join(this.outputdir, projectname, 'eslint.config.js')
         ),
@@ -284,10 +336,34 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       // Copy project root level files
       for (const file of filestocopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
+        let templateFile = file;
+
+        // Use TypeScript-specific templates if TypeScript is selected
+        if (isTypeScript) {
+          if (file === 'package.json') {
+            templateFile = 'package.typescript.json';
+          } else if (file === '.forceignore') {
+            templateFile = '.forceignore.typescript';
+          } else if (file === GITIGNORE) {
+            templateFile = 'gitignore.typescript';
+          }
+        }
+
         await this.render(
-          this.templatePath(file),
+          this.templatePath(templateFile),
           this.destinationPath(path.join(this.outputdir, projectname, out)),
           {}
+        );
+      }
+
+      // Generate TypeScript configuration files if TypeScript is selected
+      if (isTypeScript) {
+        await this.render(
+          this.templatePath('tsconfig.json'),
+          this.destinationPath(
+            path.join(this.outputdir, projectname, 'tsconfig.json')
+          ),
+          { defaultpackagedir }
         );
       }
     }

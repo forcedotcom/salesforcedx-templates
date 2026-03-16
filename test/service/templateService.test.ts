@@ -1070,9 +1070,10 @@ describe('TemplateService', () => {
         .expect(result.created.sort())
         .to.deep.equal(
           [
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/LibraryCreateWebApp.webapplication-meta.xml',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/README.md',
             'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/src/index.html',
             'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/webapplication.json',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/LibraryCreateWebApp.webapplication-meta.xml',
           ]
             .map((p) => path.normalize(p))
             .sort()

@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/templates",
-  "version": "66.3.1",
+  "version": "66.4.1",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "main": "lib/index.js",
@@ -24,10 +24,10 @@
   "devDependencies": {
     "@salesforce/dev-config": "^4.3.2",
     "@salesforce/dev-scripts": "^11.0.2",
-    "@salesforce/webapp-template-app-react-template-b2e-experimental": "^1.48.0",
-    "@salesforce/webapp-template-app-react-template-b2x-experimental": "^1.48.0",
-    "@salesforce/webapp-template-base-react-app-experimental": "^1.48.1",
-    "@salesforce/webapp-template-base-web-app-experimental": "^1.48.1",
+    "@salesforce/webapp-template-app-react-template-b2e-experimental": "^1.101.3",
+    "@salesforce/webapp-template-app-react-template-b2x-experimental": "^1.101.3",
+    "@salesforce/webapp-template-base-react-app-experimental": "^1.101.3",
+    "@salesforce/webapp-template-base-web-app-experimental": "^1.101.3",
     "@salesforce/prettier-config": "^0.0.4",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",
@@ -39,7 +39,7 @@
     "chai-as-promised": "^7.1.2",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "esbuild": "^0.27.3",
+    "esbuild": "^0.27.4",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-salesforce": "^0.1.6",
@@ -65,7 +65,7 @@
     "node": ">=18.18.2"
   },
   "scripts": {
-    "build": "yarn run clean:lib && yarn build:copy-templates && yarn build:templates && yarn compile",
+    "build": "yarn run clean:lib && yarn compile && yarn build:copy-templates && yarn build:templates",
     "build:templates": "node scripts/build-templates",
     "build:copy-templates": "node scripts/copy-templates",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",

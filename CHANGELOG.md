@@ -1,3 +1,40 @@
+## [66.4.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.0...66.4.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* **templates:** pass templatesRootPath to LWC validation W-21481349 ([#746](https://github.com/forcedotcom/salesforcedx-templates/issues/746)) ([30066e9](https://github.com/forcedotcom/salesforcedx-templates/commit/30066e96a6f4320db0863481543276c927acec5e))
+
+
+
+# [66.4.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.3...66.4.0) (2026-03-10)
+
+
+### Features
+
+* shorten project template paths for Windows (pack:verify) ([0d39394](https://github.com/forcedotcom/salesforcedx-templates/commit/0d39394bc61bb8c7e71b07d3592e932c2cb0b32b))
+* shorten template paths for Windows (pack:verify), align with CLI limit 157 ([10281f3](https://github.com/forcedotcom/salesforcedx-templates/commit/10281f3ec8530e4b1307b22a5ce0bd501e9b2015))
+
+
+
+## [66.3.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.2...66.3.3) (2026-03-06)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 7.5.9 to 7.5.10 ([25fc36a](https://github.com/forcedotcom/salesforcedx-templates/commit/25fc36a15a9ea1aa17f631ceec10cca8f77e8dd0))
+
+
+
+## [66.3.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.1...66.3.2) (2026-03-05)
+
+
+### Bug Fixes
+
+* update webapp-template devDependencies to ^1.71.0 @W-21338760@ ([#736](https://github.com/forcedotcom/salesforcedx-templates/issues/736)) ([47bce33](https://github.com/forcedotcom/salesforcedx-templates/commit/47bce33a81cc7dae60d897c32a3061f9d0497caf))
+
+
+
 ## [66.3.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.0...66.3.1) (2026-03-04)
 
 

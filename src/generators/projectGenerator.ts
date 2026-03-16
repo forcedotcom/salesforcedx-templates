@@ -179,8 +179,15 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
       // VSCode config files
       for (const file of vscodearray) {
+        let templateFile = `${file}.json`;
+
+        // Use TypeScript-specific settings if TypeScript is selected
+        if (isTypeScript && file === 'settings') {
+          templateFile = 'settings.typescript.json';
+        }
+
         await this.render(
-          this.templatePath(`${file}.json`),
+          this.templatePath(templateFile),
           this.destinationPath(
             path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
           ),
@@ -298,8 +305,15 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
       // VSCode config files
       for (const file of vscodearray) {
+        let templateFile = `${file}.json`;
+
+        // Use TypeScript-specific settings if TypeScript is selected
+        if (isTypeScript && file === 'settings') {
+          templateFile = 'settings.typescript.json';
+        }
+
         await this.render(
-          this.templatePath(`${file}.json`),
+          this.templatePath(templateFile),
           this.destinationPath(
             path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
           ),

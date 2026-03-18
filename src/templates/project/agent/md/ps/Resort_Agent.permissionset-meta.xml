@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CheckWeather</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CurrentDate</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>WeatherService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Enables perms required by service agents.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Resort Agent</label>
+    <license>Einstein Agent</license>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RunFlow</name>
+    </userPermissions>
+</PermissionSet>

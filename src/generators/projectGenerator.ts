@@ -20,6 +20,7 @@ const VALID_PROJECT_TEMPLATES = [
   'analytics',
   'reactb2e',
   'reactb2x',
+  'agent',
 ] as const;
 
 const GITIGNORE = 'gitignore';
@@ -52,6 +53,53 @@ const emptyfolderarray = ['aura', 'lwc'];
 
 const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
 const analyticsVscodeExt = 'salesforce.analyticsdx-vscode';
+
+const agentfolderarray = [
+  'aiAuthoringBundles',
+  'bots',
+  'classes',
+  'flows',
+  'genAiPlannerBundles',
+  'genAiPromptTemplates',
+  'permissionsetgroups',
+  'permissionsets',
+];
+
+const agentMetadataMap: Array<{ src: string; destDir: string }> = [
+  {
+    src: 'aab/Local_Info_Agent.bundle-meta.xml',
+    destDir: 'aiAuthoringBundles/Local_Info_Agent',
+  },
+  {
+    src: 'aab/Local_Info_Agent.agent',
+    destDir: 'aiAuthoringBundles/Local_Info_Agent',
+  },
+  { src: 'apex/CheckWeather.cls', destDir: 'classes' },
+  { src: 'apex/CheckWeather.cls-meta.xml', destDir: 'classes' },
+  { src: 'apex/CurrentDate.cls', destDir: 'classes' },
+  { src: 'apex/CurrentDate.cls-meta.xml', destDir: 'classes' },
+  { src: 'apex/CurrentDateTest.cls', destDir: 'classes' },
+  { src: 'apex/CurrentDateTest.cls-meta.xml', destDir: 'classes' },
+  { src: 'apex/WeatherService.cls', destDir: 'classes' },
+  { src: 'apex/WeatherService.cls-meta.xml', destDir: 'classes' },
+  { src: 'apex/WeatherServiceTest.cls', destDir: 'classes' },
+  { src: 'apex/WeatherServiceTest.cls-meta.xml', destDir: 'classes' },
+  { src: 'flow/Get_Resort_Hours.flow-meta.xml', destDir: 'flows' },
+  {
+    src: 'gapt/Get_Event_Info.genAiPromptTemplate-meta.xml',
+    destDir: 'genAiPromptTemplates',
+  },
+  { src: 'ps/Resort_Agent.permissionset-meta.xml', destDir: 'permissionsets' },
+  { src: 'ps/Resort_Admin.permissionset-meta.xml', destDir: 'permissionsets' },
+  {
+    src: 'psg/AFDX_Agent_Perms.permissionsetgroup-meta.xml',
+    destDir: 'permissionsetgroups',
+  },
+  {
+    src: 'psg/AFDX_User_Perms.permissionsetgroup-meta.xml',
+    destDir: 'permissionsetgroups',
+  },
+];
 
 export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   constructor(
@@ -289,6 +337,48 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         await this.render(
           this.templatePath(file),
           this.destinationPath(path.join(this.outputdir, projectname, out)),
+          {}
+        );
+      }
+    }
+
+    if (template === 'agent') {
+      await this.makeEmptyFolders(folderlayout, agentfolderarray);
+
+      this._createHuskyConfig(path.join(this.outputdir, projectname));
+
+      for (const file of vscodearray) {
+        await this.render(
+          this.templatePath(`${file}.json`),
+          this.destinationPath(
+            path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
+          ),
+          {}
+        );
+      }
+
+      await this.render(
+        this.templatePath('project.eslint.config.js'),
+        this.destinationPath(
+          path.join(this.outputdir, projectname, 'eslint.config.js')
+        ),
+        {}
+      );
+
+      for (const file of filestocopy) {
+        const out = file === GITIGNORE ? `.${file}` : file;
+        await this.render(
+          this.templatePath(file),
+          this.destinationPath(path.join(this.outputdir, projectname, out)),
+          {}
+        );
+      }
+
+      for (const { src, destDir } of agentMetadataMap) {
+        const fileName = path.basename(src);
+        await this.render(
+          this.templatePath(path.join('agent', 'md', src)),
+          this.destinationPath(path.join(...folderlayout, destDir, fileName)),
           {}
         );
       }

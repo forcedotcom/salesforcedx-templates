@@ -789,6 +789,41 @@ describe('TemplateService', () => {
         );
     });
 
+    it('should create Project (nativemobile)', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+        projectname: 'LibraryCreateNativeMobile',
+        template: 'nativemobile',
+        defaultpackagedir: 'force-app',
+      });
+
+      const ecBase =
+        'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/force-app/main/default/digitalExperiences/experiencecontainer/libraryCreateNativeMobile';
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/config/project-scratch-def.json',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/README.md',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/sfdx-project.json',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/.forceignore',
+            `${ecBase}/libraryCreateNativeMobile.digitalExperience-meta.xml`,
+            `${ecBase}/experience__camaECDefinition/libraryCreateNativeMobile/_meta.json`,
+            `${ecBase}/experience__camaECDefinition/libraryCreateNativeMobile/content.json`,
+            `${ecBase}/experience__camaAppMetadata/appMetadata/_meta.json`,
+            `${ecBase}/experience__camaAppMetadata/appMetadata/content.json`,
+            `${ecBase}/experience__camaBuildMetadata/buildMetadata/_meta.json`,
+            `${ecBase}/experience__camaBuildMetadata/buildMetadata/content.json`,
+            `${ecBase}/experience__camaScreen/homeScreen/_meta.json`,
+            `${ecBase}/experience__camaScreen/homeScreen/content.json`,
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
     it('should create Project (analytics)', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const templateService = TemplateService.getInstance();

@@ -1,0 +1,29 @@
+{
+  "type": "experience__camaAppMetadata",
+  "title": "App Metadata",
+  "contentBody": {
+    "name": "<%= appLabel %>",
+    "description": "",
+    "version": "1.0.0",
+    "url": "",
+    "templateID": "1",
+    "tabs": [
+      {
+        "id": "home",
+        "label": "Home",
+        "icon": "house.fill",
+        "screen": "homeScreen"
+      }
+    ],
+    "toolbarActions": {
+      "notifications": false,
+      "search": false,
+      "agentforce": false
+    },
+    "theme": {
+      "accentColor": "#0176D3",
+      "primaryColor": "#000000",
+      "secondaryColor": "#B3B3B3"
+    }
+  }
+}

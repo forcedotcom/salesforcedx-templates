@@ -194,7 +194,8 @@ export interface ProjectOptions extends TemplateOptions {
     | 'analytics'
     | 'reactb2e'
     | 'reactb2x'
-    | 'agent';
+    | 'agent'
+    | 'nativemobile';
   manifest: boolean;
   loginurl: string;
 }

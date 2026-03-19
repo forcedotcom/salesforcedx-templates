@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Assigns perms required by Agentforce service agents.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>AFDX Agent Perms</label>
+    <permissionSets>Resort_Agent</permissionSets>
+    <permissionSets>force__AgentforceServiceAgentBase</permissionSets>
+    <permissionSets>force__AgentforceServiceAgentUser</permissionSets>
+    <permissionSets>force__EinsteinGPTPromptTemplateUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

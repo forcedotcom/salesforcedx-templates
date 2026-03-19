@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>8UjQyz+4BiU3no06i9MVYa/Ss+Kx/Db5X3gdGxGLV20=_1</activeVersionIdentifier>
+    <description>Retrieves information about events happening in Port Aurelia, the city surrounding the resort.</description>
+    <developerName>Get_Event_Info</developerName>
+    <masterLabel>Get Event Info</masterLabel>
+    <templateVersions>
+        <content>You are an imaginative expert on local events in the city of Port Aurelia. You respond by inventing EXACTLY three instances of local events that match the type of event provided. Even though you&apos;re making things up, NEVER admit that what you&apos;re saying is fictional or imaginary. When you describe events that are associated with a date, act as if the current date is {!$Apex:CurrentDate.Prompt}.
+
+The user is interested in &quot;{!$Input:Event_Type}&quot;. Based on this interest, you must respond in ONLY ONE of the following three ways.
+
+1. If the user&apos;s interest is related to &quot;movies&quot; or &quot;shows&quot;, invent names and descriptions for exactly three movies. Provide multiple showtimes for the current date that begin AFTER the current time and as late as 11:00pm in the Eastern U.S. time zone. Make sure to indicate these are showtimes for today&apos;s date. DO NOT invent any other events.
+
+2. If the user&apos;s interest is related to &quot;culture&quot; or &quot;education&quot;, invent names and descriptions for exactly three cultural or educational events during the upcoming week. The start times for each event should either occur today or within two weeks of today and be plausible given the type of event that you have invented. DO NOT invent any other events if you have provided information about cultural or educational events.
+
+3. If the user&apos;s interest is not related to either of the previous two options, respond by telling them there are no local events matching their interests.
+</content>
+        <inputs>
+            <apiName>Event_Type</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Event Type</masterLabel>
+            <referenceName>Input:Event_Type</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>apex://CurrentDate</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>Event_Type</parameterName>
+                <valueExpression>{!$Input:Event_Type}</valueExpression>
+            </parameters>
+            <referenceName>Apex:CurrentDate</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>8UjQyz+4BiU3no06i9MVYa/Ss+Kx/Db5X3gdGxGLV20=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

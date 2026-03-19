@@ -1,0 +1,15 @@
+{
+  "name": "salesforce-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Salesforce App",
+  "scripts": {
+    "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
+  },
+  "devDependencies": {
+    "@prettier/plugin-xml": "^3.4.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-apex": "^2.2.6"
+  }
+}

@@ -4,7 +4,7 @@ This Salesforce DX project contains a sample agent called Local Info Agent that 
 
 The agent demonstrates:
 
-- Three types of agent actions (Invocable Apex, Prompt Template, and Flow).
+- Three types of subagents (Invocable Apex, Prompt Template, and Flow).
 - Mutable variables.
 - Flow control with `available when`.
 - Deterministic branching with `if/else` in reasoning instructions.
@@ -60,7 +60,7 @@ These are the interesting metadata components associated with the Local Info Age
 
 | Component | Type | Purpose |
 |---|---|---|
-| `Local_Info_Agent.agent` | Agent Script | The agent definition — topics, reasoning, variables, and flow control. |
+| `Local_Info_Agent.agent` | Agent Script | The agent definition — tools, reasoning, variables, and flow control. |
 | `CheckWeather` | Apex Class | Invocable Apex. Checks current weather conditions for a given location. |
 | `CurrentDate` | Apex Class | Invocable Apex. Returns the current date for use by the agent. |
 | `WeatherService` | Apex Class | Provides mock weather data for the resort. |

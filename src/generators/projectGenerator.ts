@@ -50,6 +50,13 @@ const filestocopy = [
   'jest.config.js',
   'package.json',
 ];
+const agentFilesToCopy = [
+  '.forceignore',
+  GITIGNORE,
+  '.prettierignore',
+  '.prettierrc',
+  'package.json',
+];
 const emptyfolderarray = ['aura', 'lwc'];
 
 const analyticsfolderarray = ['aura', 'classes', 'lwc', 'waveTemplates'];
@@ -488,8 +495,6 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     if (template === 'agent') {
       await this.makeEmptyFolders(folderlayout, agentfolderarray);
 
-      this._createHuskyConfig(path.join(this.outputdir, projectname));
-
       for (const file of vscodearray) {
         await this.render(
           this.templatePath(`${file}.json`),
@@ -500,18 +505,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         );
       }
 
-      await this.render(
-        this.templatePath('project.eslint.config.js'),
-        this.destinationPath(
-          path.join(this.outputdir, projectname, 'eslint.config.js')
-        ),
-        {}
-      );
-
-      for (const file of filestocopy) {
+      for (const file of agentFilesToCopy) {
         const out = file === GITIGNORE ? `.${file}` : file;
         await this.render(
-          this.templatePath(file),
+          this.templatePathWithFallback(path.join(template, file), file),
           this.destinationPath(path.join(this.outputdir, projectname, out)),
           {}
         );

@@ -909,25 +909,25 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.12.tgz#60420622812a7ec7e46d220667bc29b42dc247ff"
   integrity sha512-BIJyduJC18Kc8z+arUm5AZ9VkPRyw1KKAm+Tk+9LT99eOzhNilyfKzhZ4t+tG2lIGgnJpmytZfVDZ0e2kFul8g==
 
-"@salesforce/webapp-template-app-react-template-b2e-experimental@^1.101.3":
-  version "1.101.3"
-  resolved "https://registry.npmjs.org/@salesforce/webapp-template-app-react-template-b2e-experimental/-/webapp-template-app-react-template-b2e-experimental-1.101.3.tgz#e3f7ef5f9f5c145f929718beed5381929c70bbfa"
-  integrity sha512-HEnL2FC58NidzkOGGpk9BNeWJXRE0vfdzVWpJt/FPos0OPi5Y726C81uG4g5MU4asO3YK/EL+HQf+tZdztCGFw==
+"@salesforce/webapp-template-app-react-template-b2e-experimental@^1.109.8":
+  version "1.109.8"
+  resolved "https://registry.npmjs.org/@salesforce/webapp-template-app-react-template-b2e-experimental/-/webapp-template-app-react-template-b2e-experimental-1.109.8.tgz#b85fb6442313d0a94a4addd6cee7a6f85431d89c"
+  integrity sha512-am+9OmOGgTLWT3M8+S+7V0JZ9I+Br38l063iaQ94qEkniIKU5halWqluD9uECdjWDIGtG2+mkwYyROyyLOl0ng==
 
-"@salesforce/webapp-template-app-react-template-b2x-experimental@^1.101.3":
-  version "1.101.3"
-  resolved "https://registry.npmjs.org/@salesforce/webapp-template-app-react-template-b2x-experimental/-/webapp-template-app-react-template-b2x-experimental-1.101.3.tgz#7cbc9b2b3c3c8159caf8dbc768ea89886ee27923"
-  integrity sha512-xDz2uQtnObu3x0lzpmRt0QI1C3rPOt9I9IEeOopwoj2K16E2zaWzrYu3BiQZzXSzMSbHgXZId0hgS0DXSbQ1eQ==
+"@salesforce/webapp-template-app-react-template-b2x-experimental@^1.109.8":
+  version "1.109.8"
+  resolved "https://registry.npmjs.org/@salesforce/webapp-template-app-react-template-b2x-experimental/-/webapp-template-app-react-template-b2x-experimental-1.109.8.tgz#846f15515230bb2e84da3143231dffbbab574a1b"
+  integrity sha512-7nHDLyI9JVKMsQt6HMgzCkz7K3DSVuZQeqcm/W3oHQ4SSA8p3W3zcVyrOapgA1VuPyf2ZzUbwlYOBVE1NonfKA==
 
-"@salesforce/webapp-template-base-react-app-experimental@^1.101.3":
-  version "1.101.3"
-  resolved "https://registry.npmjs.org/@salesforce/webapp-template-base-react-app-experimental/-/webapp-template-base-react-app-experimental-1.101.3.tgz#9ac4a8d71e569a4a7adc92ad37e6422001915ee9"
-  integrity sha512-g64j+1sB22ELZuFGX6CnOApabtGGseAa+Ks/FXiFTBZMjP40boLg1NC00uo1CVxOpyshHgIyPY4xB5URMPhM3A==
+"@salesforce/webapp-template-base-react-app-experimental@^1.109.8":
+  version "1.109.8"
+  resolved "https://registry.npmjs.org/@salesforce/webapp-template-base-react-app-experimental/-/webapp-template-base-react-app-experimental-1.109.8.tgz#6bf4572c980d26687c703e1fd23857fc3dc33479"
+  integrity sha512-bMFYGlMCJUcKPkABvvJAlLJ1jIFji/7eEPkqugA+dbEZVDntVy0LaS2S0rNwem3xDJ/X+P0SKllt7hB7THqktA==
 
-"@salesforce/webapp-template-base-web-app-experimental@^1.101.3":
-  version "1.101.3"
-  resolved "https://registry.npmjs.org/@salesforce/webapp-template-base-web-app-experimental/-/webapp-template-base-web-app-experimental-1.101.3.tgz#66998283e9d10fd503096a2d1f3988728bb86a08"
-  integrity sha512-Su11RvfYeeHkuL4cQOmkyEKUwuHu94S1K0jMB3hc2EMRjiFKUKPdyhnlvjcpsAs0lMn6jU0wi0FM2UsjiI3wog==
+"@salesforce/webapp-template-base-web-app-experimental@^1.109.8":
+  version "1.109.8"
+  resolved "https://registry.npmjs.org/@salesforce/webapp-template-base-web-app-experimental/-/webapp-template-base-web-app-experimental-1.109.8.tgz#07173456cbf9e5541769cdf2bdf093a49c6b0bac"
+  integrity sha512-RhRwlT5Ijlg2fgzuRkRU3JiiGjhAE9E2+3Y8biJAakPN96oUHjadjvx3nFQSFFgAKqEkM0ov/OVM5VJXJspOSg==
 
 "@shikijs/core@1.29.2":
   version "1.29.2"

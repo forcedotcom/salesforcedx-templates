@@ -1,3 +1,12 @@
+## [66.5.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.1...66.5.2) (2026-03-20)
+
+
+### Bug Fixes
+
+* **flexipage templates:** remove org-dependent identifiers from templates ([66c7c43](https://github.com/forcedotcom/salesforcedx-templates/commit/66c7c438e3e232f80e924f779538c3cf3fcc52f5))
+
+
+
 ## [66.5.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.0...66.5.1) (2026-03-20)
 
 

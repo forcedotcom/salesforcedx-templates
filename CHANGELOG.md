@@ -1,3 +1,12 @@
+## [66.5.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.0...66.5.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* **deps:** bump flatted from 3.2.6 to 3.4.2 ([407e01c](https://github.com/forcedotcom/salesforcedx-templates/commit/407e01c3b5cca44ffad5198cee414d98f1f06b28))
+
+
+
 # [66.5.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.2...66.5.0) (2026-03-19)
 
 

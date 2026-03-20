@@ -1,3 +1,21 @@
+## [66.5.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.0...66.5.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* **deps:** bump flatted from 3.2.6 to 3.4.2 ([407e01c](https://github.com/forcedotcom/salesforcedx-templates/commit/407e01c3b5cca44ffad5198cee414d98f1f06b28))
+
+
+
+# [66.5.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.2...66.5.0) (2026-03-19)
+
+
+### Features
+
+* add an agent project template @W-21522177 ([#753](https://github.com/forcedotcom/salesforcedx-templates/issues/753)) ([c0511bd](https://github.com/forcedotcom/salesforcedx-templates/commit/c0511bd5f0c380ee6e094ba74fdbba09db27adfa))
+
+
+
 ## [66.4.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.1...66.4.2) (2026-03-17)
 
 

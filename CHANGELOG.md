@@ -1,3 +1,12 @@
+## [66.5.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.3...66.5.4) (2026-03-20)
+
+
+### Bug Fixes
+
+* add info about scratch orgs to README ([#759](https://github.com/forcedotcom/salesforcedx-templates/issues/759)) ([1df7c2e](https://github.com/forcedotcom/salesforcedx-templates/commit/1df7c2eede51a23b3d61c57710c9442e3252715e))
+
+
+
 ## [66.5.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.2...66.5.3) (2026-03-20)
 
 

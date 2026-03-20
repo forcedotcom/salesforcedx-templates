@@ -79,12 +79,8 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <description>
-        <%= description %>
-    </description>
-    <masterLabel>
-        <%= masterlabel %>
-    </masterLabel>
+    <description><%= description %></description>
+    <masterLabel><%= masterlabel %></masterLabel>
     <template>
         <name>home:desktopTemplate</name>
     </template>

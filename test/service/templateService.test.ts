@@ -823,6 +823,95 @@ describe('TemplateService', () => {
         );
     });
 
+    it('should create Project (standard) with TypeScript', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'tsproject'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'tsproject'),
+        projectname: 'TypeScriptProject',
+        template: 'standard',
+        defaultpackagedir: 'force-app',
+        lwcLanguage: 'typescript',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.include.members(
+          [
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/tsconfig.json',
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/.forceignore',
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/.gitignore',
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/package.json',
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/sfdx-project.json',
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/eslint.config.js',
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/.vscode/settings.json',
+          ].map((p) => path.normalize(p))
+        );
+
+      // Verify tsconfig.json was created
+      const tsconfigPath = path.join(
+        'testsoutput',
+        'libraryCreate',
+        'tsproject',
+        'TypeScriptProject',
+        'tsconfig.json'
+      );
+      chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
+
+      // Verify sfdx-project.json has defaultLWCLanguage
+      const projectJsonPath = path.join(
+        'testsoutput',
+        'libraryCreate',
+        'tsproject',
+        'TypeScriptProject',
+        'sfdx-project.json'
+      );
+      const projectJsonContent = JSON.parse(
+        fs.readFileSync(projectJsonPath, 'utf-8')
+      );
+      chai.expect(projectJsonContent.defaultLWCLanguage).to.equal('typescript');
+    });
+
+    it('should create Project (analytics) with TypeScript', async () => {
+      await remove(
+        path.join('testsoutput', 'libraryCreate', 'tsanalyticsproject')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join(
+          'testsoutput',
+          'libraryCreate',
+          'tsanalyticsproject'
+        ),
+        projectname: 'TSAnalyticsProject',
+        template: 'analytics',
+        defaultpackagedir: 'force-app',
+        lwcLanguage: 'typescript',
+      });
+
+      chai
+        .expect(result.created.sort())
+        .to.include.members(
+          [
+            'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/tsconfig.json',
+            'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/.forceignore',
+            'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/eslint.config.js',
+            'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/.vscode/settings.json',
+            'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/sfdx-project.json',
+          ].map((p) => path.normalize(p))
+        );
+
+      // Verify TypeScript-specific files
+      const tsconfigPath = path.join(
+        'testsoutput',
+        'libraryCreate',
+        'tsanalyticsproject',
+        'TSAnalyticsProject',
+        'tsconfig.json'
+      );
+      chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
+    });
+
     it('should create Project (reactb2e) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser

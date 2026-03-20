@@ -54,6 +54,16 @@ You can preview how the agent works right in VS Code using the Agentforce DX pan
 
 To preview in simulated mode, right-click the `Local_Info_Agent.agent` file and choose **AFDX: Preview This Agent**.  In the Agentforce DX panel that opens, click **Start Simulation**.  Then enter a question in the chat box at the bottom, such as `What's the weather like?`.  The agent simulates an answer. 
 
+## Agentforce-Ready Scratch Orgs
+
+This template includes a scratch org configuration file (`config/project-scratch-def.json`) that contains the required settings and features for creating an Agentforce-ready scratch org. 
+
+Here's an example of creating a scratch org using the file; it assumes you've already authorized the Dev Hub org with alias `DevHub`:
+
+```bash
+sf org create scratch --definition-file config/project-scratch-def.json --alias AgentScratchOrg --set-default --target-dev-hub DevHub
+```
+
 ## What's Inside This DX Project?
 
 These are the interesting metadata components associated with the Local Info Agent. All the component source files are in the `force-app/main/default` package directory under their associated metadata directory, such as `classes` for Apex classes.

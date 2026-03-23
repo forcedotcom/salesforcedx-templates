@@ -26,8 +26,7 @@ module.exports = defineConfig([
             parser: tsparser,
             parserOptions: {
                 ecmaVersion: 'latest',
-                sourceType: 'module',
-                project: true
+                sourceType: 'module'
             }
         },
         plugins: {
@@ -47,8 +46,7 @@ module.exports = defineConfig([
             parser: tsparser,
             parserOptions: {
                 ecmaVersion: 'latest',
-                sourceType: 'module',
-                project: true
+                sourceType: 'module'
             },
             globals: {
                 ...globals.node

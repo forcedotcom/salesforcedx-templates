@@ -43,9 +43,7 @@ export class CreateUtil {
     const files = fs
       .readdirSync(path.resolve(basePath, command))
       .filter((file) => filetype.test(file))
-      .map((file) => {
-        return file.split('.', 1).toString();
-      });
+      .map((file) => file.split('.', 1)[0]);
     return files;
   }
 

@@ -72,6 +72,13 @@ export default [
     replacement: 'features',
   },
   {
+    key: 'OBJECT_SEARCH_PLACEHOLDER',
+    placeholder: '_os_',
+    dirInNpm: 'object-search',
+    parent: '_f_',
+    replacement: 'object-search',
+  },
+  {
     key: 'GLOBAL_SEARCH_PLACEHOLDER',
     placeholder: '_gs_',
     dirInNpm: 'global-search',

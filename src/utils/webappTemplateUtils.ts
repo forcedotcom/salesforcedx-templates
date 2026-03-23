@@ -134,6 +134,8 @@ export const A4D_SKILL_AGENTFORCE_PLACEHOLDER = '_k_';
 /** Replaced with literal "feature-react-agentforce-conversation-client-embedded-agent". */
 /** Replaced with literal "features" (under app src; short for Windows path length). */
 export const FEATURES_PLACEHOLDER = '_f_';
+/** Replaced with literal "object-search". */
+export const OBJECT_SEARCH_PLACEHOLDER = '_os_';
 /** Replaced with literal "global-search". */
 export const GLOBAL_SEARCH_PLACEHOLDER = '_gs_';
 /** Replaced with literal "components". */
@@ -155,6 +157,7 @@ export const PLACEHOLDER_KEYS = [
   'A4DRULES_PLACEHOLDER',
   'A4D_SKILL_AGENTFORCE_PLACEHOLDER',
   'FEATURES_PLACEHOLDER',
+  'OBJECT_SEARCH_PLACEHOLDER',
   'GLOBAL_SEARCH_PLACEHOLDER',
   'COMPONENTS_PLACEHOLDER',
   'DETAIL_PLACEHOLDER',

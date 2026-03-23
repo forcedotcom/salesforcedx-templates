@@ -14,10 +14,6 @@ import { BaseGenerator } from './baseGenerator';
 const EXTENSION_TEMPLATES = ['js', 'css', 'json', 'txt'];
 
 export default class StaticResourceGenerator extends BaseGenerator<StaticResourceOptions> {
-  constructor(options: StaticResourceOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.resourcename);
 

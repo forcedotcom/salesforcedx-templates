@@ -11,10 +11,6 @@ import { AnalyticsTemplateOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class AnalyticsTemplateGenerator extends BaseGenerator<AnalyticsTemplateOptions> {
-  constructor(options: AnalyticsTemplateOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.templatename);
 

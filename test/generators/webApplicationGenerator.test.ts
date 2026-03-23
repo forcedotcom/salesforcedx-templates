@@ -42,7 +42,10 @@ describe('WebApplicationGenerator', () => {
     });
 
     it('should not append webapplications to outputdir when it already ends with webapplications', () => {
-      const outputDirWithWebApplications = path.join('testsoutput', 'webapplications');
+      const outputDirWithWebApplications = path.join(
+        'testsoutput',
+        'webapplications'
+      );
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
@@ -50,7 +53,9 @@ describe('WebApplicationGenerator', () => {
         internal: false,
       });
       // The outputdir should remain unchanged since it already ends with 'webapplications'
-      expect((generator as any).outputdir).to.equal(outputDirWithWebApplications);
+      expect((generator as any).outputdir).to.equal(
+        outputDirWithWebApplications
+      );
     });
 
     it('should append webapplications to outputdir when not internal and outputdir does not end with webapplications', () => {
@@ -76,7 +81,9 @@ describe('WebApplicationGenerator', () => {
         internal: true,
       });
       // The outputdir should remain unchanged when internal is true
-      expect((generator as any).outputdir).to.equal(outputDirWithoutWebApplications);
+      expect((generator as any).outputdir).to.equal(
+        outputDirWithoutWebApplications
+      );
     });
 
     it('should handle paths with webapplications in the middle but not at the end', () => {
@@ -93,7 +100,12 @@ describe('WebApplicationGenerator', () => {
       });
       // The outputdir should have 'webapplications' appended since it doesn't end with it
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'webapplications', 'somefolder', 'webapplications')
+        path.join(
+          'testsoutput',
+          'webapplications',
+          'somefolder',
+          'webapplications'
+        )
       );
     });
   });

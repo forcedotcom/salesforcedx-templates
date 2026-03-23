@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Assigns perms required by AFDX admin users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>AFDX User Perms</label>
+    <permissionSets>Resort_Admin</permissionSets>
+    <permissionSets>force__AgentforceServiceAgentBuilder</permissionSets>
+    <permissionSets>force__CopilotSalesforceAdmin</permissionSets>
+    <permissionSets>force__CopilotSalesforceUser</permissionSets>
+    <permissionSets>force__EinsteinGPTPromptTemplateManager</permissionSets>
+    <permissionSets>force__EinsteinGPTPromptTemplateUser</permissionSets>
+
+    <status>Updated</status>
+</PermissionSetGroup>

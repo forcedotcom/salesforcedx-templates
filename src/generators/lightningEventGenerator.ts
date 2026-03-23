@@ -11,10 +11,6 @@ import { LightningEventOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningEventGenerator extends BaseGenerator<LightningEventOptions> {
-  constructor(options: LightningEventOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.eventname);
     CreateUtil.checkInputs(this.options.template);

@@ -10,9 +10,6 @@ import { ApexTriggerOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptions> {
-  constructor(options: ApexTriggerOptions) {
-    super(options);
-  }
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.triggername);
     CreateUtil.checkInputs(this.options.template);

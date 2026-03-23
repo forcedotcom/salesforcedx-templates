@@ -1,3 +1,124 @@
+## [66.5.6](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.5...66.5.6) (2026-03-23)
+
+
+
+## [66.5.5](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.4...66.5.5) (2026-03-22)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 7.5.11 to 7.5.12 ([73a159b](https://github.com/forcedotcom/salesforcedx-templates/commit/73a159bc3aaa2ec609b8ec8e1f8b9d06bb47f3fc))
+
+
+
+## [66.5.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.3...66.5.4) (2026-03-20)
+
+
+### Bug Fixes
+
+* add info about scratch orgs to README ([#759](https://github.com/forcedotcom/salesforcedx-templates/issues/759)) ([1df7c2e](https://github.com/forcedotcom/salesforcedx-templates/commit/1df7c2eede51a23b3d61c57710c9442e3252715e))
+
+
+
+## [66.5.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.2...66.5.3) (2026-03-20)
+
+
+
+## [66.5.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.1...66.5.2) (2026-03-20)
+
+
+### Bug Fixes
+
+* **flexipage templates:** remove org-dependent identifiers from templates ([66c7c43](https://github.com/forcedotcom/salesforcedx-templates/commit/66c7c438e3e232f80e924f779538c3cf3fcc52f5))
+
+
+
+## [66.5.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.0...66.5.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* **deps:** bump flatted from 3.2.6 to 3.4.2 ([407e01c](https://github.com/forcedotcom/salesforcedx-templates/commit/407e01c3b5cca44ffad5198cee414d98f1f06b28))
+
+
+
+# [66.5.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.2...66.5.0) (2026-03-19)
+
+
+### Features
+
+* add an agent project template @W-21522177 ([#753](https://github.com/forcedotcom/salesforcedx-templates/issues/753)) ([c0511bd](https://github.com/forcedotcom/salesforcedx-templates/commit/c0511bd5f0c380ee6e094ba74fdbba09db27adfa))
+
+
+
+## [66.4.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.1...66.4.2) (2026-03-17)
+
+
+
+## [66.4.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.4.0...66.4.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* **templates:** pass templatesRootPath to LWC validation W-21481349 ([#746](https://github.com/forcedotcom/salesforcedx-templates/issues/746)) ([30066e9](https://github.com/forcedotcom/salesforcedx-templates/commit/30066e96a6f4320db0863481543276c927acec5e))
+
+
+
+# [66.4.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.3...66.4.0) (2026-03-10)
+
+
+### Features
+
+* shorten project template paths for Windows (pack:verify) ([0d39394](https://github.com/forcedotcom/salesforcedx-templates/commit/0d39394bc61bb8c7e71b07d3592e932c2cb0b32b))
+* shorten template paths for Windows (pack:verify), align with CLI limit 157 ([10281f3](https://github.com/forcedotcom/salesforcedx-templates/commit/10281f3ec8530e4b1307b22a5ce0bd501e9b2015))
+
+
+
+## [66.3.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.2...66.3.3) (2026-03-06)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 7.5.9 to 7.5.10 ([25fc36a](https://github.com/forcedotcom/salesforcedx-templates/commit/25fc36a15a9ea1aa17f631ceec10cca8f77e8dd0))
+
+
+
+## [66.3.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.1...66.3.2) (2026-03-05)
+
+
+### Bug Fixes
+
+* update webapp-template devDependencies to ^1.71.0 @W-21338760@ ([#736](https://github.com/forcedotcom/salesforcedx-templates/issues/736)) ([47bce33](https://github.com/forcedotcom/salesforcedx-templates/commit/47bce33a81cc7dae60d897c32a3061f9d0497caf))
+
+
+
+## [66.3.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.3.0...66.3.1) (2026-03-04)
+
+
+### Bug Fixes
+
+* **recordpage flexipage template:** remove deprecated chatter component and tab from template ([#735](https://github.com/forcedotcom/salesforcedx-templates/issues/735)) ([e769f8b](https://github.com/forcedotcom/salesforcedx-templates/commit/e769f8b0879f01cd947a80d16e4aa11c81e6e2de))
+
+
+
+# [66.3.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.2.1...66.3.0) (2026-03-03)
+
+
+### Features
+
+* accept fs and templatesRootPath options for web compatibility W-19481261 ([#734](https://github.com/forcedotcom/salesforcedx-templates/issues/734)) ([771f110](https://github.com/forcedotcom/salesforcedx-templates/commit/771f1106fd9088281c41b5a19fb9dabdec9c60a2))
+
+
+
+## [66.2.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.2.0...66.2.1) (2026-02-26)
+
+
+### Bug Fixes
+
+* reverting projectname validation to template and updating react type names @W-20226218@ ([#733](https://github.com/forcedotcom/salesforcedx-templates/issues/733)) ([dce1330](https://github.com/forcedotcom/salesforcedx-templates/commit/dce1330e5c4d11f068377f23e2d41d6e7c82b4a9))
+
+
+
 # [66.2.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.1.1...66.2.0) (2026-02-24)
 
 

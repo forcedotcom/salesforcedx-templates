@@ -1,0 +1,5 @@
+{
+  "apiName": "<%= appName %>",
+  "type": "experience__camaECDefinition",
+  "path": "<%= appName %>"
+}

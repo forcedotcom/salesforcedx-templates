@@ -23,8 +23,22 @@ import WebApplicationGenerator from '../generators/webApplicationGenerator';
 import { BaseGenerator } from '../generators/baseGenerator';
 
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
-  options: TOptions
+  options: TOptions,
+  context?: GeneratorContext,
+  cwd?: string
 ) => BaseGenerator<TOptions>;
+
+/**
+ * Optional context for generators allowing fs and template path injection.
+ * When not provided, defaults to Node's fs and __dirname-based template resolution.
+ * cwd is owned by TemplateService; pass via constructor param.
+ */
+export type GeneratorContext = {
+  /** Node-fs-compatible object. Defaults to require('node:fs'). Pass memfs for web. */
+  readonly fs?: typeof import('node:fs');
+  /** Absolute path to built-in templates root. Overrides __dirname-based resolution. */
+  readonly templatesRootPath?: string;
+};
 
 export type Generators =
   | typeof AnalyticsTemplateGenerator
@@ -174,7 +188,14 @@ export interface ProjectOptions extends TemplateOptions {
    * Note that namespace is a reserved keyword for yeoman generator
    */
   ns: string;
-  template: 'standard' | 'empty' | 'analytics' | 'reactb2e' | 'reactb2x';
+  template:
+    | 'standard'
+    | 'empty'
+    | 'analytics'
+    | 'reactb2e'
+    | 'reactb2x'
+    | 'agent'
+    | 'nativemobile';
   manifest: boolean;
   loginurl: string;
   lwcLanguage?: 'javascript' | 'typescript';

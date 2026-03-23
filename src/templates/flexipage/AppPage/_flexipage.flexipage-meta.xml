@@ -16,15 +16,19 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>dashboardName</name>
-                    <value>Program_Dashboard_sfdcSESv60</value>
+                    <name>tabs</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>standard-AppLauncher</value>
+                        </valueListItems>
+                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideOnError</name>
-                    <value>true</value>
+                    <name>title</name>
+                    <value>Launchpad</value>
                 </componentInstanceProperties>
-                <componentName>desktopDashboards:embeddedDashboard</componentName>
-                <identifier>desktopDashboards_embeddedDashboard</identifier>
+                <componentName>runtime_mobilesapp:launchPadTileList</componentName>
+                <identifier>runtime_mobilesapp_launchPadTileList</identifier>
             </componentInstance>
         </itemInstances>
         <name>region1</name>
@@ -40,13 +44,10 @@
                             <value>Account</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Asset</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Case</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Contact</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Lead</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -62,6 +63,10 @@
                 <identifier>flexipage_recentItems</identifier>
             </componentInstance>
         </itemInstances>
+        <name>region2</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -90,20 +95,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>region2</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>context</name>
-                    <value>BOOKMARKS</value>
-                </componentInstanceProperties>
-                <componentName>forceChatter:exposedFeed</componentName>
-                <identifier>forceChatter_exposedFeed</identifier>
             </componentInstance>
         </itemInstances>
         <name>region3</name>

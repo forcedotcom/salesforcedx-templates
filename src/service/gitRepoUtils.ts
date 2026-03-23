@@ -10,7 +10,7 @@
  */
 
 import * as crypto from 'crypto';
-import * as fs from 'fs';
+import * as nodeFs from 'fs';
 import got from 'got';
 import * as path from 'path';
 import { extract } from 'tar';
@@ -102,11 +102,13 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
  * Load custom templates Git repo. Currently only supports GitHub.
  * @param repoUri repo uri
  * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
+ * @param fs node-fs-compatible object, defaults to node:fs
  * @returns path to the local storage location of the repo
  */
 export async function loadCustomTemplatesGitRepo(
   repoUri: URL,
-  forceLoadingRemoteRepo = false
+  forceLoadingRemoteRepo = false,
+  fs: typeof nodeFs = nodeFs
 ): Promise<string> {
   const customTemplatesPath = getStoragePathForCustomTemplates(repoUri);
   // Do not load the remote repo if already the repo is already downloaded.

@@ -789,6 +789,41 @@ describe('TemplateService', () => {
         );
     });
 
+    it('should create Project (nativemobile)', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+        projectname: 'LibraryCreateNativeMobile',
+        template: 'nativemobile',
+        defaultpackagedir: 'force-app',
+      });
+
+      const ecBase =
+        'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/force-app/main/default/digitalExperiences/experiencecontainer/libraryCreateNativeMobile';
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/config/project-scratch-def.json',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/README.md',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/sfdx-project.json',
+            'testsoutput/libraryCreate/project/LibraryCreateNativeMobile/.forceignore',
+            `${ecBase}/libraryCreateNativeMobile.digitalExperience-meta.xml`,
+            `${ecBase}/experience__camaECDefinition/libraryCreateNativeMobile/_meta.json`,
+            `${ecBase}/experience__camaECDefinition/libraryCreateNativeMobile/content.json`,
+            `${ecBase}/experience__camaAppMetadata/appMetadata/_meta.json`,
+            `${ecBase}/experience__camaAppMetadata/appMetadata/content.json`,
+            `${ecBase}/experience__camaBuildMetadata/buildMetadata/_meta.json`,
+            `${ecBase}/experience__camaBuildMetadata/buildMetadata/content.json`,
+            `${ecBase}/experience__camaScreen/homeScreen/_meta.json`,
+            `${ecBase}/experience__camaScreen/homeScreen/content.json`,
+          ]
+            .map((p) => path.normalize(p))
+            .sort()
+        );
+    });
+
     it('should create Project (analytics)', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const templateService = TemplateService.getInstance();
@@ -910,7 +945,70 @@ describe('TemplateService', () => {
         'tsconfig.json'
       );
       chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
-    });
+=======
+    it('should create Project (agent)', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const result = await templateService.create(TemplateType.Project, {
+        outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+        projectname: 'LibraryCreateProject',
+        template: 'agent',
+        defaultpackagedir: 'force-app',
+      });
+
+      const p = 'testsoutput/libraryCreate/project/LibraryCreateProject';
+      const md = `${p}/force-app/main/default`;
+
+      chai
+        .expect(result.created.sort())
+        .to.deep.equal(
+          [
+            `${p}/config/project-scratch-def.json`,
+            `${p}/README.md`,
+            `${p}/sfdx-project.json`,
+            `${p}/.vscode/extensions.json`,
+            `${p}/.vscode/launch.json`,
+            `${p}/.vscode/settings.json`,
+            `${p}/.forceignore`,
+            `${p}/.gitignore`,
+            `${p}/.prettierignore`,
+            `${p}/.prettierrc`,
+            `${p}/package.json`,
+            `${md}/aiAuthoringBundles/Local_Info_Agent/Local_Info_Agent.bundle-meta.xml`,
+            `${md}/aiAuthoringBundles/Local_Info_Agent/Local_Info_Agent.agent`,
+            `${md}/classes/CheckWeather.cls`,
+            `${md}/classes/CheckWeather.cls-meta.xml`,
+            `${md}/classes/CurrentDate.cls`,
+            `${md}/classes/CurrentDate.cls-meta.xml`,
+            `${md}/classes/CurrentDateTest.cls`,
+            `${md}/classes/CurrentDateTest.cls-meta.xml`,
+            `${md}/classes/WeatherService.cls`,
+            `${md}/classes/WeatherService.cls-meta.xml`,
+            `${md}/classes/WeatherServiceTest.cls`,
+            `${md}/classes/WeatherServiceTest.cls-meta.xml`,
+            `${md}/flows/Get_Resort_Hours.flow-meta.xml`,
+            `${md}/genAiPromptTemplates/Get_Event_Info.genAiPromptTemplate-meta.xml`,
+            `${md}/permissionsets/Resort_Agent.permissionset-meta.xml`,
+            `${md}/permissionsets/Resort_Admin.permissionset-meta.xml`,
+            `${md}/permissionsetgroups/AFDX_Agent_Perms.permissionsetgroup-meta.xml`,
+            `${md}/permissionsetgroups/AFDX_User_Perms.permissionsetgroup-meta.xml`,
+          ]
+            .map((f) => path.normalize(f))
+            .sort()
+        );
+
+      assertFileContent(
+        path.join(result.outputDir, 'LibraryCreateProject', 'README.md'),
+        '# Agentforce Project'
+      );
+      assertFileContent(
+        path.join(
+          result.outputDir,
+          'LibraryCreateProject',
+          'config',
+          'project-scratch-def.json'
+        ),
+        'einsteinGptSettings'
+      );
 
     it('should create Project (reactb2e) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
@@ -1124,9 +1222,10 @@ describe('TemplateService', () => {
         .expect(result.created.sort())
         .to.deep.equal(
           [
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/LibraryCreateWebApp.webapplication-meta.xml',
+            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/README.md',
             'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/src/index.html',
             'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/webapplication.json',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/LibraryCreateWebApp.webapplication-meta.xml',
           ]
             .map((p) => path.normalize(p))
             .sort()

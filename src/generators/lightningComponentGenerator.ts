@@ -13,10 +13,6 @@ import { LightningComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningComponentGenerator extends BaseGenerator<LightningComponentOptions> {
-  constructor(options: LightningComponentOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.componentname);
     CreateUtil.checkInputs(this.options.template);
@@ -32,9 +28,12 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
     }
 
     if (
-      CreateUtil.getCommandTemplatesInSubdirs('lightningcomponent', {
-        subdir: this.options.type,
-      }).indexOf(this.options.template) < 0
+      CreateUtil.getCommandTemplatesInSubdirs(
+        'lightningcomponent',
+        { subdir: this.options.type },
+        this._fs,
+        this.templatesRootPath
+      ).indexOf(this.options.template) < 0
     ) {
       throw new Error(
         nls.localize('MissingLightningComponentTemplate', [

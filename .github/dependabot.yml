@@ -29,5 +29,25 @@ updates:
       prefix-development: chore(dev-deps)
     ignore:
       - dependency-name: '@salesforce/dev-scripts'
+      - dependency-name: '@salesforce/webapp-*'
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+
+  # Daily updates for @salesforce/webapp-* packages
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    versioning-strategy: 'increase'
+    allow:
+      - dependency-name: '@salesforce/webapp-*'
+    labels:
+      - 'dependencies'
+    open-pull-requests-limit: 5
+    pull-request-branch-name:
+      separator: '-'
+    commit-message:
+      prefix: chore(dev-deps)
+    ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-major']

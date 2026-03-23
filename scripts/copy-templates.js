@@ -7,6 +7,43 @@ const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
 
+/** Single source: shared with src/utils/webappTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
+const TEMPLATE_PLACEHOLDERS_SPEC = require(path.join(
+  __dirname,
+  '..',
+  'lib',
+  'utils',
+  'template-placeholders.js'
+)).default;
+
+/**
+ * Renames a directory to a placeholder name if it exists. Keeps template paths short for Windows.
+ * @returns {string|undefined} The placeholder path if renamed, otherwise undefined.
+ */
+function renameDirToPlaceholder(parentDir, dirName, toPath) {
+  const fullPath = path.join(parentDir, dirName);
+  if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
+    const placeholderPath = path.join(parentDir, toPath);
+    fs.renameSync(fullPath, placeholderPath);
+    return placeholderPath;
+  }
+  return undefined;
+}
+
+/** Optional renames keyed by parent placeholder; from dir comes from config. */
+const PROJECT_OPTIONAL_RENAMES = [
+  {
+    parent: '_w_',
+    getFrom: (config) => config.appFolderInNpm ?? null,
+    to: '_a_',
+  },
+  {
+    parent: '_s_',
+    getFrom: (config) => config.appSiteFolderInNpm ?? null,
+    to: '_a1_',
+  },
+];
+
 const currDir = process.cwd();
 const templatesRoot = path.join(currDir, 'src', 'templates');
 
@@ -37,12 +74,16 @@ const TEMPLATES = [
       '@salesforce/webapp-template-app-react-template-b2e-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactb2e',
+    appFolderInNpm: 'appreacttemplateb2e',
+    appSiteFolderInNpm: 'appreacttemplateb2e1',
   },
   {
     packageName:
       '@salesforce/webapp-template-app-react-template-b2x-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactb2x',
+    appFolderInNpm: 'appreacttemplateb2x',
+    appSiteFolderInNpm: 'appreacttemplateb2x1',
   },
 ];
 
@@ -73,6 +114,67 @@ function copyTemplate(config) {
       process.exit(1);
     }
 
+    // Shorten paths per template-placeholders.json; placeholders replaced at generation in webappTemplateUtils.
+    // Missing dirs are skipped; no failure.
+    if (config.destSubpath.startsWith('project/')) {
+      const paths = { dest: destDir };
+
+      function getParentPath(step) {
+        const base = paths[step.parent];
+        if (!base) return null;
+        return step.subpath ? path.join(base, step.subpath) : base;
+      }
+
+      for (const step of TEMPLATE_PLACEHOLDERS_SPEC) {
+        const parentPath = getParentPath(step);
+        if (!parentPath) continue;
+        const toPath = step.toPath ?? step.placeholder;
+        const newPath = renameDirToPlaceholder(
+          parentPath,
+          step.dirInNpm,
+          toPath
+        );
+        if (newPath) {
+          if (!toPath.includes(path.sep)) {
+            paths[step.placeholder] = newPath;
+          }
+          if (step.removeEmptySibling) {
+            const emptyDir = path.join(parentPath, step.removeEmptySibling);
+            if (fs.existsSync(emptyDir)) {
+              fs.rmSync(emptyDir, { recursive: true });
+            }
+          }
+        }
+      }
+
+      for (const step of PROJECT_OPTIONAL_RENAMES) {
+        const fromDir = step.getFrom(config);
+        if (!fromDir) continue;
+        const parentPath = paths[step.parent];
+        if (parentPath) {
+          const newPath = renameDirToPlaceholder(parentPath, fromDir, step.to);
+          if (newPath) {
+            paths[step.to] = newPath;
+          }
+        }
+      }
+
+      // Path-shortening steps under _a_ (features, global-search, etc.); _a_ is set by optional renames above.
+      for (const step of TEMPLATE_PLACEHOLDERS_SPEC) {
+        const parentPath = getParentPath(step);
+        if (!parentPath) continue;
+        const toPath = step.toPath ?? step.placeholder;
+        const newPath = renameDirToPlaceholder(
+          parentPath,
+          step.dirInNpm,
+          toPath
+        );
+        if (newPath && !toPath.includes(path.sep)) {
+          paths[step.placeholder] = newPath;
+        }
+      }
+    }
+
     console.log(
       `Copied ${config.packageName} to src/templates/${config.destSubpath}`
     );
@@ -90,7 +192,14 @@ function copyAllTemplates() {
   console.log('Templates copied successfully.');
 }
 
-module.exports = copyAllTemplates;
+/** Derived from template-placeholders.json + optional _a_/_a1_; matches webappTemplateUtils PLACEHOLDER_KEYS. */
+const PLACEHOLDERS = Object.fromEntries([
+  ...TEMPLATE_PLACEHOLDERS_SPEC.map((e) => [e.key, e.placeholder]),
+  ['APP_PLACEHOLDER', '_a_'],
+  ['APP_SUFFIX_PLACEHOLDER', '_a1_'],
+]);
+
+module.exports = { copyAllTemplates, PLACEHOLDERS };
 
 if (require.main === module) {
   copyAllTemplates();

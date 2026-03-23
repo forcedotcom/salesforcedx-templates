@@ -1010,6 +1010,7 @@ describe('TemplateService', () => {
         'einsteinGptSettings'
       );
 
+    });
     it('should create Project (reactb2e) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser

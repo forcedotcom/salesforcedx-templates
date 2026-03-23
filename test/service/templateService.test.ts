@@ -945,7 +945,7 @@ describe('TemplateService', () => {
         'tsconfig.json'
       );
       chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
-=======
+    });
     it('should create Project (agent)', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       const result = await templateService.create(TemplateType.Project, {

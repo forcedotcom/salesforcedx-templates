@@ -18,6 +18,7 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@lwc/eslint-plugin-lwc": "^3.1.0",
     "@prettier/plugin-xml": "^3.4.1",
     "@salesforce/eslint-config-lwc": "^4.0.0",
@@ -30,11 +31,12 @@
     "eslint": "^9.29.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.14.0",
+    "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.5.3",
     "prettier-plugin-apex": "^2.2.6",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.0"
   },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,ts,json,md,page,trigger,xml,yaml,yml}": [

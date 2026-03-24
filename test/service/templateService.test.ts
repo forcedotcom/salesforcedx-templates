@@ -948,6 +948,7 @@ describe('TemplateService', () => {
     });
     it('should create Project (agent)', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.Project, {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
         projectname: 'LibraryCreateProject',
@@ -1009,7 +1010,6 @@ describe('TemplateService', () => {
         ),
         'einsteinGptSettings'
       );
-
     });
     it('should create Project (reactb2e) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));

@@ -95,15 +95,20 @@ function generateLockfile(destDir) {
   console.log(`Generating package-lock.json in ${destDir}...`);
   try {
     execSync(
-      'npm install --package-lock-only --registry=https://registry.npmjs.org',
+      'npm install --package-lock-only --no-audit --no-fund --registry=https://registry.npmjs.org',
       {
         cwd: destDir,
         stdio: 'inherit',
       }
     );
+
+    // Safety check: sometimes npm creates an empty node_modules folder
+    const ghostModules = path.join(destDir, 'node_modules');
+    if (fs.existsSync(ghostModules)) {
+      shell.rm('-rf', ghostModules);
+    }
   } catch (error) {
-    console.error(`Failed to generate lockfile in ${destDir}:`, error.message);
-    process.exit(1);
+    throw new Error(`Failed to generate lockfile in ${destDir}: ${error.message}`);
   }
 }
 

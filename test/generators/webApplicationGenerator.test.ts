@@ -24,7 +24,7 @@ describe('WebApplicationGenerator', () => {
         new WebApplicationGenerator({
           webappname: '',
           template: 'default',
-          outputdir: path.join('testsoutput', 'webapplications'),
+          outputdir: path.join('testsoutput', 'webui'),
           internal: true,
         });
       }).to.throw();
@@ -35,77 +35,65 @@ describe('WebApplicationGenerator', () => {
         new WebApplicationGenerator({
           webappname: 'TestWebApp',
           template: '',
-          outputdir: path.join('testsoutput', 'webapplications'),
+          outputdir: path.join('testsoutput', 'webui'),
           internal: true,
         });
       }).to.throw();
     });
 
-    it('should not append webapplications to outputdir when it already ends with webapplications', () => {
-      const outputDirWithWebApplications = path.join(
-        'testsoutput',
-        'webapplications'
-      );
+    it('should not append webui to outputdir when it already ends with webui', () => {
+      const outputDirWithWebui = path.join('testsoutput', 'webui');
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
-        outputdir: outputDirWithWebApplications,
+        outputdir: outputDirWithWebui,
         internal: false,
       });
-      // The outputdir should remain unchanged since it already ends with 'webapplications'
+      // The outputdir should remain unchanged since it already ends with 'webui'
+      expect((generator as any).outputdir).to.equal(outputDirWithWebui);
+    });
+
+    it('should append webui to outputdir when not internal and outputdir does not end with webui', () => {
+      const outputDirWithoutWebui = path.join('testsoutput', 'mydir');
+      const generator = new WebApplicationGenerator({
+        webappname: 'TestWebApp',
+        template: 'default',
+        outputdir: outputDirWithoutWebui,
+        internal: false,
+      });
+      // The outputdir should have 'webui' appended
       expect((generator as any).outputdir).to.equal(
-        outputDirWithWebApplications
+        path.join('testsoutput', 'mydir', 'webui')
       );
     });
 
-    it('should append webapplications to outputdir when not internal and outputdir does not end with webapplications', () => {
-      const outputDirWithoutWebApplications = path.join('testsoutput', 'mydir');
+    it('should not append webui when internal is true', () => {
+      const outputDirWithoutWebui = path.join('testsoutput', 'mydir');
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
-        outputdir: outputDirWithoutWebApplications,
-        internal: false,
-      });
-      // The outputdir should have 'webapplications' appended
-      expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', 'webapplications')
-      );
-    });
-
-    it('should not append webapplications when internal is true', () => {
-      const outputDirWithoutWebApplications = path.join('testsoutput', 'mydir');
-      const generator = new WebApplicationGenerator({
-        webappname: 'TestWebApp',
-        template: 'default',
-        outputdir: outputDirWithoutWebApplications,
+        outputdir: outputDirWithoutWebui,
         internal: true,
       });
       // The outputdir should remain unchanged when internal is true
-      expect((generator as any).outputdir).to.equal(
-        outputDirWithoutWebApplications
-      );
+      expect((generator as any).outputdir).to.equal(outputDirWithoutWebui);
     });
 
-    it('should handle paths with webapplications in the middle but not at the end', () => {
-      const outputDirWithWebApplicationsInMiddle = path.join(
+    it('should handle paths with webui in the middle but not at the end', () => {
+      const outputDirWithWebuiInMiddle = path.join(
         'testsoutput',
-        'webapplications',
+        'webui',
         'somefolder'
       );
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
-        outputdir: outputDirWithWebApplicationsInMiddle,
+        outputdir: outputDirWithWebuiInMiddle,
         internal: false,
       });
-      // The outputdir should have 'webapplications' appended since it doesn't end with it
+      // The outputdir should have 'webui' appended since it doesn't end with it
       expect((generator as any).outputdir).to.equal(
-        path.join(
-          'testsoutput',
-          'webapplications',
-          'somefolder',
-          'webapplications'
-        )
+        path.join('testsoutput', 'webui', 'somefolder', 'webui')
       );
     });
   });

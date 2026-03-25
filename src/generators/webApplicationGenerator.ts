@@ -15,16 +15,15 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     CreateUtil.checkInputs(this.options.webappname);
     CreateUtil.checkInputs(this.options.template);
 
-    // Ensure output directory includes 'webapplications' folder
+    // Ensure output directory includes 'webui' folder
     if (!this.options.internal) {
       const fileparts = path
         .resolve(this.outputdir)
         .split(path.sep)
         .filter(Boolean);
-      const endsWithWebApplications =
-        fileparts[fileparts.length - 1] === 'webapplications';
-      if (!endsWithWebApplications) {
-        this.outputdir = path.join(this.outputdir, 'webapplications');
+      const endsWithWebui = fileparts[fileparts.length - 1] === 'webui';
+      if (!endsWithWebui) {
+        this.outputdir = path.join(this.outputdir, 'webui');
       }
     }
   }

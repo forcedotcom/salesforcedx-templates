@@ -23,6 +23,7 @@ import {
   A4D_SKILL_AGENTFORCE_PLACEHOLDER,
   FEATURES_PLACEHOLDER,
   OBJECT_SEARCH_PLACEHOLDER,
+  EXAMPLES_PLACEHOLDER,
   GLOBAL_SEARCH_PLACEHOLDER,
   COMPONENTS_PLACEHOLDER,
   DETAIL_PLACEHOLDER,
@@ -48,6 +49,7 @@ const WEBAPP_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
   A4D_SKILL_AGENTFORCE_PLACEHOLDER,
   FEATURES_PLACEHOLDER,
   OBJECT_SEARCH_PLACEHOLDER,
+  EXAMPLES_PLACEHOLDER,
   GLOBAL_SEARCH_PLACEHOLDER,
   COMPONENTS_PLACEHOLDER,
   DETAIL_PLACEHOLDER,
@@ -103,7 +105,7 @@ describe('Placeholder sync (copy-templates.js ↔ webappTemplateUtils.ts)', () =
 });
 
 describe('Windows path length (pack:verify)', () => {
-  it('project template paths (reactb2e, reactb2x) stay within Windows max allowable path length', function () {
+  it('project template paths (reactinternalapp, reactexternalapp) stay within Windows max allowable path length', function () {
     const templatesRoot = getTemplateRoot();
     if (!templatesRoot) {
       this.skip();

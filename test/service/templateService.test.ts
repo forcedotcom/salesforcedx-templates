@@ -924,7 +924,7 @@ describe('TemplateService', () => {
       );
     });
 
-    it('should create Project (reactb2e) from built-in template', async () => {
+    it('should create Project (reactinternalapp) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
       const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
@@ -933,8 +933,8 @@ describe('TemplateService', () => {
         TemplateType.Project,
         {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
-          projectname: 'MyReactB2eApp',
-          template: 'reactb2e',
+          projectname: 'MyReactInternalApp',
+          template: 'reactinternalapp',
           defaultpackagedir: 'force-app',
         },
         fixtureRoot
@@ -944,34 +944,34 @@ describe('TemplateService', () => {
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactB2eApp/config/project-scratch-def.json'
+            'testsoutput/libraryCreate/project/MyReactInternalApp/config/project-scratch-def.json'
           )
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactB2eApp/sfdx-project.json'
+            'testsoutput/libraryCreate/project/MyReactInternalApp/sfdx-project.json'
           )
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactB2eApp/sample.txt'
+            'testsoutput/libraryCreate/project/MyReactInternalApp/sample.txt'
           )
         );
       const samplePath = path.join(
         result.outputDir,
-        'MyReactB2eApp',
+        'MyReactInternalApp',
         'sample.txt'
       );
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
-      chai.expect(sampleContent).to.include('MyReactB2eApp');
+      chai.expect(sampleContent).to.include('MyReactInternalApp');
     });
 
-    it('should create Project (reactb2x) from built-in template', async () => {
+    it('should create Project (reactexternalapp) from built-in template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
       const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
@@ -980,8 +980,8 @@ describe('TemplateService', () => {
         TemplateType.Project,
         {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
-          projectname: 'MyReactB2xApp',
-          template: 'reactb2x',
+          projectname: 'MyReactExternalApp',
+          template: 'reactexternalapp',
           defaultpackagedir: 'force-app',
         },
         fixtureRoot
@@ -991,27 +991,27 @@ describe('TemplateService', () => {
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactB2xApp/config/project-scratch-def.json'
+            'testsoutput/libraryCreate/project/MyReactExternalApp/config/project-scratch-def.json'
           )
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactB2xApp/sample.txt'
+            'testsoutput/libraryCreate/project/MyReactExternalApp/sample.txt'
           )
         );
       const samplePath = path.join(
         result.outputDir,
-        'MyReactB2xApp',
+        'MyReactExternalApp',
         'sample.txt'
       );
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
-      chai.expect(sampleContent).to.include('MyReactB2xApp');
+      chai.expect(sampleContent).to.include('MyReactExternalApp');
     });
 
-    it('should use alphanumeric name for webapplications under reactb2e template', async () => {
+    it('should use alphanumeric name for webapplications under reactinternalapp template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
       const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
@@ -1020,20 +1020,20 @@ describe('TemplateService', () => {
         TemplateType.Project,
         {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
-          projectname: 'My_React_B2e_App',
-          template: 'reactb2e',
+          projectname: 'My_React_Internal_App',
+          template: 'reactinternalapp',
           defaultpackagedir: 'force-app',
         },
         fixtureRoot
       );
 
       chai.expect(result.created).to.not.be.empty;
-      const projectDir = path.join(result.outputDir, 'My_React_B2e_App');
+      const projectDir = path.join(result.outputDir, 'My_React_Internal_App');
       chai.expect(fs.existsSync(projectDir)).to.be.true;
       const appnamePath = path.join(projectDir, 'appname.txt');
       chai.expect(fs.existsSync(appnamePath)).to.be.true;
       const appnameContent = fs.readFileSync(appnamePath, 'utf8');
-      chai.expect(appnameContent.trim()).to.equal('MyReactB2eApp');
+      chai.expect(appnameContent.trim()).to.equal('MyReactInternalApp');
     });
 
     it('should create StaticResource', async () => {

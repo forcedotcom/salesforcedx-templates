@@ -78,7 +78,7 @@ const TEMPLATES = [
     destSubpath: 'project/reactb2e',
     appFolderInNpm: 'appreacttemplateb2e',
     appSiteFolderInNpm: 'appreacttemplateb2e1',
-    generateLockfile: true,
+    lockfileDir: '_p_/_m_/_w_/_a_',
   },
   {
     packageName:
@@ -87,7 +87,7 @@ const TEMPLATES = [
     destSubpath: 'project/reactb2x',
     appFolderInNpm: 'appreacttemplateb2x',
     appSiteFolderInNpm: 'appreacttemplateb2x1',
-    generateLockfile: true,
+    lockfileDir: '_p_/_m_/_w_/_a_',
   },
 ];
 
@@ -197,6 +197,16 @@ function copyTemplate(config) {
 
     if (config.generateLockfile) {
       generateLockfile(destDir);
+    }
+
+    if (config.lockfileDir) {
+      const lockfileTarget = path.join(destDir, config.lockfileDir);
+      generateLockfile(lockfileTarget);
+      // Remove root-level lockfile copied from npm source
+      const rootLockfile = path.join(destDir, 'package-lock.json');
+      if (fs.existsSync(rootLockfile)) {
+        fs.unlinkSync(rootLockfile);
+      }
     }
 
     console.log(

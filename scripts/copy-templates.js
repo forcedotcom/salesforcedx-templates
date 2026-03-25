@@ -68,22 +68,22 @@ const TEMPLATES = [
       ),
     destSubpath: 'webapplication/reactbasic',
   },
-  // Project templates (reactb2e, reactb2x)
+  // Project templates (reactinternalapp, reactexternalapp)
   {
     packageName:
       '@salesforce/webapp-template-app-react-template-b2e-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'project/reactb2e',
-    appFolderInNpm: 'appreacttemplateb2e',
-    appSiteFolderInNpm: 'appreacttemplateb2e1',
+    destSubpath: 'project/reactinternalapp',
+    appFolderInNpm: 'reactinternalapp',
+    appSiteFolderInNpm: 'reactinternalapp1',
   },
   {
     packageName:
       '@salesforce/webapp-template-app-react-template-b2x-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'project/reactb2x',
-    appFolderInNpm: 'appreacttemplateb2x',
-    appSiteFolderInNpm: 'appreacttemplateb2x1',
+    destSubpath: 'project/reactexternalapp',
+    appFolderInNpm: 'reactexternalapp',
+    appSiteFolderInNpm: 'reactexternalapp1',
   },
 ];
 

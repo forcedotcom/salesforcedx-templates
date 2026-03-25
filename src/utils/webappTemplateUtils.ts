@@ -78,7 +78,10 @@ export const EJS_EXTENSIONS = new Set([
 ]);
 
 /** Templates that have a full folder under src/templates/project/ (populated at build time from npm) */
-export const BUILT_IN_FULL_TEMPLATES = new Set(['reactb2e', 'reactb2x']);
+export const BUILT_IN_FULL_TEMPLATES = new Set([
+  'reactinternalapp',
+  'reactexternalapp',
+]);
 
 /**
  * Default app/site names embedded in each full template; all are renamed to the project name.
@@ -88,13 +91,13 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
   string,
   { base: string; withSuffix: string }
 > = {
-  reactb2e: {
-    base: 'appreacttemplateb2e',
-    withSuffix: 'appreacttemplateb2e1',
+  reactinternalapp: {
+    base: 'reactinternalapp',
+    withSuffix: 'reactinternalapp1',
   },
-  reactb2x: {
-    base: 'appreacttemplateb2x',
-    withSuffix: 'appreacttemplateb2x1',
+  reactexternalapp: {
+    base: 'reactexternalapp',
+    withSuffix: 'reactexternalapp1',
   },
 };
 
@@ -136,6 +139,8 @@ export const A4D_SKILL_AGENTFORCE_PLACEHOLDER = '_k_';
 export const FEATURES_PLACEHOLDER = '_f_';
 /** Replaced with literal "object-search". */
 export const OBJECT_SEARCH_PLACEHOLDER = '_os_';
+/** Replaced with literal "__examples__". */
+export const EXAMPLES_PLACEHOLDER = '_ex_';
 /** Replaced with literal "global-search". */
 export const GLOBAL_SEARCH_PLACEHOLDER = '_gs_';
 /** Replaced with literal "components". */
@@ -158,6 +163,7 @@ export const PLACEHOLDER_KEYS = [
   'A4D_SKILL_AGENTFORCE_PLACEHOLDER',
   'FEATURES_PLACEHOLDER',
   'OBJECT_SEARCH_PLACEHOLDER',
+  'EXAMPLES_PLACEHOLDER',
   'GLOBAL_SEARCH_PLACEHOLDER',
   'COMPONENTS_PLACEHOLDER',
   'DETAIL_PLACEHOLDER',
@@ -273,7 +279,7 @@ export type GenerateBuiltInFullTemplateOptions = {
 };
 
 /**
- * Generate project files from a built-in full template (e.g. reactb2e, reactb2x).
+ * Generate project files from a built-in full template (e.g. reactinternalapp, reactexternalapp).
  * Builds template vars and name replacements and delegates to generateFromProjectTemplateDir.
  */
 export async function generateBuiltInFullTemplate(
@@ -346,9 +352,9 @@ export type GenerateFromProjectTemplateDirOptions = {
 };
 
 /**
- * Recursively walk a full project template directory (e.g. reactb2e, reactb2x),
+ * Recursively walk a full project template directory (e.g. reactinternalapp, reactexternalapp),
  * rendering EJS for text files and copying the rest. Renames template default app/site
- * names (e.g. appreacttemplateb2e) to the project name in paths and file contents.
+ * names (e.g. reactinternalapp) to the project name in paths and file contents.
  */
 export async function generateFromProjectTemplateDir(
   sourceDir: string,

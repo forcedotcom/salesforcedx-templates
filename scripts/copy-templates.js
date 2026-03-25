@@ -5,6 +5,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 const shell = require('shelljs');
 
 /** Single source: shared with src/utils/webappTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
@@ -67,6 +68,7 @@ const TEMPLATES = [
         'base-react-app'
       ),
     destSubpath: 'webapplication/reactbasic',
+    generateLockfile: true,
   },
   // Project templates (reactb2e, reactb2x)
   {
@@ -76,6 +78,7 @@ const TEMPLATES = [
     destSubpath: 'project/reactb2e',
     appFolderInNpm: 'appreacttemplateb2e',
     appSiteFolderInNpm: 'appreacttemplateb2e1',
+    generateLockfile: true,
   },
   {
     packageName:
@@ -84,8 +87,25 @@ const TEMPLATES = [
     destSubpath: 'project/reactb2x',
     appFolderInNpm: 'appreacttemplateb2x',
     appSiteFolderInNpm: 'appreacttemplateb2x1',
+    generateLockfile: true,
   },
 ];
+
+function generateLockfile(destDir) {
+  console.log(`Generating package-lock.json in ${destDir}...`);
+  try {
+    execSync(
+      'npm install --package-lock-only --registry=https://registry.npmjs.org',
+      {
+        cwd: destDir,
+        stdio: 'inherit',
+      }
+    );
+  } catch (error) {
+    console.error(`Failed to generate lockfile in ${destDir}:`, error.message);
+    process.exit(1);
+  }
+}
 
 function copyTemplate(config) {
   try {
@@ -173,6 +193,10 @@ function copyTemplate(config) {
           paths[step.placeholder] = newPath;
         }
       }
+    }
+
+    if (config.generateLockfile) {
+      generateLockfile(destDir);
     }
 
     console.log(

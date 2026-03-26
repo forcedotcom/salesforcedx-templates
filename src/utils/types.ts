@@ -198,6 +198,7 @@ export interface ProjectOptions extends TemplateOptions {
     | 'nativemobile';
   manifest: boolean;
   loginurl: string;
+  lwcLanguage?: 'javascript' | 'typescript';
 }
 
 export interface VisualforceComponentOptions extends TemplateOptions {

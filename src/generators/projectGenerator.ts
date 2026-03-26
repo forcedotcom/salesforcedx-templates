@@ -142,6 +142,108 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       : this.templatePath(fallback);
   }
 
+  /**
+   * Returns the appropriate template path based on whether TypeScript is enabled.
+   * TypeScript-specific templates are organized in a typescript/ subdirectory.
+   * Only files that have TypeScript-specific variants are looked up there.
+   */
+  private getTemplatePath(
+    file: string,
+    isTypeScript: boolean
+  ): string {
+    // Files that have TypeScript-specific variants
+    const tsSpecificFiles = [
+      'package.json',
+      '.forceignore',
+      GITIGNORE,
+      'project.eslint.config.js',
+      'settings.json'
+    ];
+
+    const hasTypescriptVariant = tsSpecificFiles.includes(file);
+    const subdir = isTypeScript && hasTypescriptVariant ? 'typescript' : '';
+
+    return this.templatePath(subdir, file);
+  }
+
+  /**
+   * Generates TypeScript configuration file if TypeScript is enabled.
+   */
+  private async generateTypeScriptConfig(
+    isTypeScript: boolean,
+    projectname: string,
+    defaultpackagedir: string
+  ): Promise<void> {
+    if (isTypeScript) {
+      await this.render(
+        this.templatePath('tsconfig.json'),
+        this.destinationPath(
+          path.join(this.outputdir, projectname, 'tsconfig.json')
+        ),
+        { defaultpackagedir }
+      );
+    }
+  }
+
+  /**
+   * Generates ESLint configuration file with appropriate template for JS or TS.
+   */
+  private async generateEslintConfig(
+    isTypeScript: boolean,
+    projectname: string
+  ): Promise<void> {
+    await this.render(
+      this.getTemplatePath('project.eslint.config.js', isTypeScript),
+      this.destinationPath(
+        path.join(this.outputdir, projectname, 'eslint.config.js')
+      ),
+      {}
+    );
+  }
+
+  /**
+   * Generates VSCode settings with TypeScript-specific configuration if needed.
+   */
+  private async generateVSCodeSettings(
+    isTypeScript: boolean,
+    projectname: string
+  ): Promise<void> {
+    for (const file of vscodearray) {
+      const templateFile = `${file}.json`;
+
+      // Use TypeScript directory for settings file when TypeScript is enabled
+      const templatePath = isTypeScript && file === 'settings'
+        ? this.getTemplatePath(templateFile, true)
+        : this.templatePath(templateFile);
+
+      await this.render(
+        templatePath,
+        this.destinationPath(
+          path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
+        ),
+        {}
+      );
+    }
+  }
+
+  /**
+   * Copies project root level files with TypeScript-specific variants when applicable.
+   */
+  private async copyProjectFiles(
+    isTypeScript: boolean,
+    projectname: string
+  ): Promise<void> {
+    for (const file of filestocopy) {
+      const out = file === GITIGNORE ? `.${file}` : file;
+
+      await this.render(
+        this.getTemplatePath(file, isTypeScript),
+        this.destinationPath(path.join(this.outputdir, projectname, out)),
+        {}
+      );
+    }
+  }
+
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     if (
@@ -155,14 +257,32 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         }. Valid options: ${VALID_PROJECT_TEMPLATES.join(', ')}`
       );
     }
+
+    // Validate lwcLanguage if provided
+    if (
+      this.options.lwcLanguage &&
+      !['javascript', 'typescript'].includes(this.options.lwcLanguage)
+    ) {
+      throw new Error(
+        `Invalid lwcLanguage value: '${this.options.lwcLanguage}'. Must be 'javascript' or 'typescript'.`
+      );
+    }
   }
 
   public async generate(): Promise<void> {
     // Re-apply source root so customTemplatesRootPath (set in run()) is used when provided
     this.sourceRootWithPartialPath('project');
 
-    const { projectname, template, defaultpackagedir, manifest, ns, loginurl } =
-      this.options;
+    const {
+      projectname,
+      template,
+      defaultpackagedir,
+      manifest,
+      ns,
+      loginurl,
+      lwcLanguage,
+    } = this.options;
+    const isTypeScript = lwcLanguage === 'typescript';
     const folderlayout = [
       this.outputdir,
       projectname,
@@ -207,6 +327,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         loginurl,
         apiversion: this.apiversion,
         name: projectname,
+        lwcLanguage,
       }
     );
 
@@ -227,24 +348,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       this._createHuskyConfig(path.join(this.outputdir, projectname));
 
       // VSCode config files
-      for (const file of vscodearray) {
-        await this.render(
-          this.templatePath(`${file}.json`),
-          this.destinationPath(
-            path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
-          ),
-          {}
-        );
-      }
+      await this.generateVSCodeSettings(isTypeScript, projectname);
 
-      // ESLint config (file is renamed to avoid conflict with generator project)
-      await this.render(
-        this.templatePath('project.eslint.config.js'),
-        this.destinationPath(
-          path.join(this.outputdir, projectname, 'eslint.config.js')
-        ),
-        {}
-      );
+      // ESLint config
+      await this.generateEslintConfig(isTypeScript, projectname);
 
       // SOQL sample file
       await this.render(
@@ -277,25 +384,41 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       );
 
       // Copy project root level files
-      for (const file of filestocopy) {
-        const out = file === GITIGNORE ? `.${file}` : file;
-        await this.render(
-          this.templatePath(file),
-          this.destinationPath(path.join(this.outputdir, projectname, out)),
-          {}
-        );
-      }
+      await this.copyProjectFiles(isTypeScript, projectname);
+
+      // Generate TypeScript configuration files if TypeScript is selected
+      await this.generateTypeScriptConfig(isTypeScript, projectname, defaultpackagedir);
     }
 
     if (template === 'empty') {
       await this.makeEmptyFolders(folderlayout, emptyfolderarray);
-      await this.render(
-        this.templatePath('.forceignore'),
-        this.destinationPath(
-          path.join(this.outputdir, projectname, '.forceignore')
-        ),
-        {}
-      );
+
+      // For TypeScript projects, generate full toolchain
+      if (isTypeScript) {
+        // Add Husky directory and hooks
+        this._createHuskyConfig(path.join(this.outputdir, projectname));
+
+        // VSCode config files
+        await this.generateVSCodeSettings(isTypeScript, projectname);
+
+        // ESLint config
+        await this.generateEslintConfig(isTypeScript, projectname);
+
+        // Copy project root level files (includes package.json, .gitignore, etc.)
+        await this.copyProjectFiles(isTypeScript, projectname);
+
+        // Generate TypeScript configuration
+        await this.generateTypeScriptConfig(isTypeScript, projectname, defaultpackagedir);
+      } else {
+        // For JavaScript projects, just copy .forceignore
+        await this.render(
+          this.templatePath('.forceignore'),
+          this.destinationPath(
+            path.join(this.outputdir, projectname, '.forceignore')
+          ),
+          {}
+        );
+      }
     }
 
     if (template === 'nativemobile') {
@@ -447,15 +570,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       this._createHuskyConfig(path.join(this.outputdir, projectname));
 
       // VSCode config files
-      for (const file of vscodearray) {
-        await this.render(
-          this.templatePath(`${file}.json`),
-          this.destinationPath(
-            path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
-          ),
-          {}
-        );
-      }
+      await this.generateVSCodeSettings(isTypeScript, projectname);
 
       // add the analytics vscode extension to the recommendations
       await this.extendJSON(
@@ -472,24 +587,14 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         }
       );
 
-      // ESLint config (file is renamed to avoid conflict with generator project)
-      await this.render(
-        this.templatePath('project.eslint.config.js'),
-        this.destinationPath(
-          path.join(this.outputdir, projectname, 'eslint.config.js')
-        ),
-        {}
-      );
+      // ESLint config
+      await this.generateEslintConfig(isTypeScript, projectname);
 
       // Copy project root level files
-      for (const file of filestocopy) {
-        const out = file === GITIGNORE ? `.${file}` : file;
-        await this.render(
-          this.templatePath(file),
-          this.destinationPath(path.join(this.outputdir, projectname, out)),
-          {}
-        );
-      }
+      await this.copyProjectFiles(isTypeScript, projectname);
+
+      // Generate TypeScript configuration files if TypeScript is selected
+      await this.generateTypeScriptConfig(isTypeScript, projectname, defaultpackagedir);
     }
 
     if (template === 'agent') {

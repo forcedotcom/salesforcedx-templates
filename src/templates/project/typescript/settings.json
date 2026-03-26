@@ -1,0 +1,10 @@
+{
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/.sf": true,
+    "**/.sfdx": true,
+    "**/dist": true
+  },
+  "salesforcedx-vscode-lwc.preview.typeScriptSupport": true
+}

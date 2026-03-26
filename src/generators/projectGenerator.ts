@@ -18,8 +18,8 @@ const VALID_PROJECT_TEMPLATES = [
   'standard',
   'empty',
   'analytics',
-  'reactb2e',
-  'reactb2x',
+  'reactinternalapp',
+  'reactexternalapp',
   'agent',
   'nativemobile',
 ] as const;
@@ -133,7 +133,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
   /**
    * Returns template path for primary; if it doesn't exist, returns fallback path.
-   * Used so reactb2e/reactb2x can omit shared files and fall back to standard.
+   * Used so reactinternalapp/reactexternalapp can omit shared files and fall back to standard.
    */
   private templatePathWithFallback(primary: string, fallback: string): string {
     const primaryPath = this.templatePath(primary);

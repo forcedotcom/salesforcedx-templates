@@ -1,3 +1,12 @@
+# [66.6.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.6...66.6.0) (2026-03-25)
+
+
+### Features
+
+* rename react web app templates ([#768](https://github.com/forcedotcom/salesforcedx-templates/issues/768)) ([eee2d2e](https://github.com/forcedotcom/salesforcedx-templates/commit/eee2d2eacbe5967d3cf2cf08dee34fd34465b33b))
+
+
+
 ## [66.5.6](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.5...66.5.6) (2026-03-23)
 
 

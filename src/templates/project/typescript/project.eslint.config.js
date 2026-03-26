@@ -3,8 +3,7 @@ const eslintJs = require('@eslint/js');
 const jestPlugin = require('eslint-plugin-jest');
 const auraConfig = require('@salesforce/eslint-plugin-aura');
 const lwcConfig = require('@salesforce/eslint-config-lwc/recommended-ts');
-const tseslint = require('@typescript-eslint/eslint-plugin');
-const tsparser = require('@typescript-eslint/parser');
+const tseslint = require('typescript-eslint');
 const globals = require('globals');
 
 module.exports = defineConfig([
@@ -21,16 +20,20 @@ module.exports = defineConfig([
     // Following internal Salesforce pattern: single TypeScript ESLint parser for both
     {
         files: ['**/lwc/**/*.{js,ts}'],
-        extends: [lwcConfig],
+        extends: [
+            lwcConfig,
+            ...tseslint.configs.base,
+            ...tseslint.configs.recommended
+        ],
         languageOptions: {
-            parser: tsparser,
+            parser: tseslint.parser,
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module'
             }
         },
         plugins: {
-            '@typescript-eslint': tseslint
+            '@typescript-eslint': tseslint.plugin
         },
         rules: {
             '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
@@ -41,9 +44,13 @@ module.exports = defineConfig([
     // LWC test files configuration
     {
         files: ['**/lwc/**/*.test.{js,ts}'],
-        extends: [lwcConfig],
+        extends: [
+            lwcConfig,
+            ...tseslint.configs.base,
+            ...tseslint.configs.recommended
+        ],
         languageOptions: {
-            parser: tsparser,
+            parser: tseslint.parser,
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module'
@@ -53,7 +60,7 @@ module.exports = defineConfig([
             }
         },
         plugins: {
-            '@typescript-eslint': tseslint
+            '@typescript-eslint': tseslint.plugin
         },
         rules: {
             '@lwc/lwc/no-unexpected-wire-adapter-usages': 'off',

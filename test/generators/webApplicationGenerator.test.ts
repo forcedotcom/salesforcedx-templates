@@ -9,6 +9,7 @@ import * as chai from 'chai';
 import * as path from 'path';
 import * as sinon from 'sinon';
 import WebApplicationGenerator from '../../src/generators/webApplicationGenerator';
+import { WEBUI_DIR } from '../../src/utils/constants';
 
 chai.config.truncateThreshold = 100000;
 const { expect } = chai;
@@ -24,7 +25,7 @@ describe('WebApplicationGenerator', () => {
         new WebApplicationGenerator({
           webappname: '',
           template: 'default',
-          outputdir: path.join('testsoutput', 'webui'),
+          outputdir: path.join('testsoutput', WEBUI_DIR),
           internal: true,
         });
       }).to.throw();
@@ -35,21 +36,21 @@ describe('WebApplicationGenerator', () => {
         new WebApplicationGenerator({
           webappname: 'TestWebApp',
           template: '',
-          outputdir: path.join('testsoutput', 'webui'),
+          outputdir: path.join('testsoutput', WEBUI_DIR),
           internal: true,
         });
       }).to.throw();
     });
 
     it('should not append webui to outputdir when it already ends with webui', () => {
-      const outputDirWithWebui = path.join('testsoutput', 'webui');
+      const outputDirWithWebui = path.join('testsoutput', WEBUI_DIR);
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
         outputdir: outputDirWithWebui,
         internal: false,
       });
-      // The outputdir should remain unchanged since it already ends with 'webui'
+      // The outputdir should remain unchanged since it already ends with WEBUI_DIR
       expect((generator as any).outputdir).to.equal(outputDirWithWebui);
     });
 
@@ -61,9 +62,9 @@ describe('WebApplicationGenerator', () => {
         outputdir: outputDirWithoutWebui,
         internal: false,
       });
-      // The outputdir should have 'webui' appended
+      // The outputdir should have WEBUI_DIR appended
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', 'webui')
+        path.join('testsoutput', 'mydir', WEBUI_DIR)
       );
     });
 
@@ -82,7 +83,7 @@ describe('WebApplicationGenerator', () => {
     it('should handle paths with webui in the middle but not at the end', () => {
       const outputDirWithWebuiInMiddle = path.join(
         'testsoutput',
-        'webui',
+        WEBUI_DIR,
         'somefolder'
       );
       const generator = new WebApplicationGenerator({
@@ -91,9 +92,9 @@ describe('WebApplicationGenerator', () => {
         outputdir: outputDirWithWebuiInMiddle,
         internal: false,
       });
-      // The outputdir should have 'webui' appended since it doesn't end with it
+      // The outputdir should have WEBUI_DIR appended since it doesn't end with it
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'webui', 'somefolder', 'webui')
+        path.join('testsoutput', WEBUI_DIR, 'somefolder', WEBUI_DIR)
       );
     });
   });

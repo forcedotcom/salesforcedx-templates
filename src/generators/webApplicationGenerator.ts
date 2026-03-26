@@ -7,6 +7,7 @@
 import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
+import { WEBUI_DIR } from '../utils/constants';
 import { WebApplicationOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
@@ -21,9 +22,9 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
         .resolve(this.outputdir)
         .split(path.sep)
         .filter(Boolean);
-      const endsWithWebui = fileparts[fileparts.length - 1] === 'webui';
+      const endsWithWebui = fileparts[fileparts.length - 1] === WEBUI_DIR;
       if (!endsWithWebui) {
-        this.outputdir = path.join(this.outputdir, 'webui');
+        this.outputdir = path.join(this.outputdir, WEBUI_DIR);
       }
     }
   }

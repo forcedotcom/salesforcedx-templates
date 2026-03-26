@@ -213,6 +213,36 @@ export function toAlphanumericForPath(name: string): string {
   return name.replace(/[^A-Za-z0-9]/g, '');
 }
 
+/**
+ * For sfdc_cms__site content.json files, the urlName must be lowercase.
+ * Name replacements preserve casing from the project name, so we need to
+ * post-process the JSON to enforce this constraint.
+ */
+export function ensureLowercaseUrlName(
+  content: string,
+  destPath: string
+): string {
+  if (
+    path.basename(destPath) !== 'content.json' ||
+    !destPath.includes(`sfdc_cms__site${path.sep}`)
+  ) {
+    return content;
+  }
+  try {
+    const parsed = JSON.parse(content);
+    if (typeof parsed.urlName === 'string') {
+      const lower = parsed.urlName.toLowerCase();
+      if (lower !== parsed.urlName) {
+        parsed.urlName = lower;
+        return JSON.stringify(parsed, null, 2) + '\n';
+      }
+    }
+  } catch {
+    // not valid JSON, return as-is
+  }
+  return content;
+}
+
 /** Heuristic: treat as text if no null byte in the first chunk and decodable as UTF-8 */
 export function isLikelyText(filename: string, buffer: Buffer): boolean {
   const ext = path.extname(filename).toLowerCase();
@@ -417,14 +447,20 @@ export async function generateFromProjectTemplateDir(
     if (isEjsTemplate) {
       try {
         const rendered = await renderEjs(sourcePath, templateVars);
-        const content = applyReplacements(rendered);
+        const content = ensureLowercaseUrlName(
+          applyReplacements(rendered),
+          destPath
+        );
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
         onFileCreated(destPath);
       } catch {
         const raw = await readFile(sourcePath);
         const str = raw.toString('utf8');
-        const content = applyReplacements(str);
+        const content = ensureLowercaseUrlName(
+          applyReplacements(str),
+          destPath
+        );
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
         onFileCreated(destPath);
@@ -435,7 +471,10 @@ export async function generateFromProjectTemplateDir(
       const isText = isLikelyText(entry.name, content);
       if (isText && nameReplacements?.length) {
         const str = content.toString('utf8');
-        const replaced = applyReplacements(str);
+        const replaced = ensureLowercaseUrlName(
+          applyReplacements(str),
+          destPath
+        );
         await writeFile(destPath, replaced, 'utf8');
       } else {
         await writeFile(destPath, new Uint8Array(content));

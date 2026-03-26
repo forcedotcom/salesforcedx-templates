@@ -14,8 +14,7 @@ deploy-options.json
 # LWC Jest coverage reports
 coverage/
 
-# TypeScript build output (local compilation only)
-dist/
+# TypeScript build info
 *.tsbuildinfo
 
 # Logs

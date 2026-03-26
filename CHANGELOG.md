@@ -1,3 +1,12 @@
+## [66.6.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.6.0...66.6.1) (2026-03-26)
+
+
+### Bug Fixes
+
+* enforce lowercase urlName in generated cms site content ([#770](https://github.com/forcedotcom/salesforcedx-templates/issues/770)) ([74bbe6e](https://github.com/forcedotcom/salesforcedx-templates/commit/74bbe6e09b237e55bf89d54ba234a7517b9a48aa))
+
+
+
 # [66.6.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.5.6...66.6.0) (2026-03-25)
 
 

@@ -143,27 +143,27 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   }
 
   /**
-   * Returns the appropriate template file name based on whether TypeScript is enabled.
-   * Handles special naming for TypeScript-specific templates.
+   * Returns the appropriate template path based on whether TypeScript is enabled.
+   * TypeScript-specific templates are organized in a typescript/ subdirectory.
+   * Only files that have TypeScript-specific variants are looked up there.
    */
-  private getTemplateFile(
+  private getTemplatePath(
     file: string,
     isTypeScript: boolean
   ): string {
-    if (!isTypeScript) {
-      return file;
-    }
+    // Files that have TypeScript-specific variants
+    const tsSpecificFiles = [
+      'package.json',
+      '.forceignore',
+      GITIGNORE,
+      'project.eslint.config.js',
+      'settings.json'
+    ];
 
-    // Map standard files to their TypeScript equivalents
-    if (file === 'package.json') {
-      return 'package.typescript.json';
-    } else if (file === '.forceignore') {
-      return '.forceignore.typescript';
-    } else if (file === GITIGNORE) {
-      return 'gitignore.typescript';
-    }
+    const hasTypescriptVariant = tsSpecificFiles.includes(file);
+    const subdir = isTypeScript && hasTypescriptVariant ? 'typescript' : '';
 
-    return file;
+    return this.templatePath(subdir, file);
   }
 
   /**
@@ -192,11 +192,8 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     isTypeScript: boolean,
     projectname: string
   ): Promise<void> {
-    const eslintTemplate = isTypeScript
-      ? 'project.eslint.typescript.config.js'
-      : 'project.eslint.config.js';
     await this.render(
-      this.templatePath(eslintTemplate),
+      this.getTemplatePath('project.eslint.config.js', isTypeScript),
       this.destinationPath(
         path.join(this.outputdir, projectname, 'eslint.config.js')
       ),
@@ -212,15 +209,15 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     projectname: string
   ): Promise<void> {
     for (const file of vscodearray) {
-      let templateFile = `${file}.json`;
+      const templateFile = `${file}.json`;
 
-      // Use TypeScript-specific settings if TypeScript is selected
-      if (isTypeScript && file === 'settings') {
-        templateFile = 'settings.typescript.json';
-      }
+      // Use TypeScript directory for settings file when TypeScript is enabled
+      const templatePath = isTypeScript && file === 'settings'
+        ? this.getTemplatePath(templateFile, true)
+        : this.templatePath(templateFile);
 
       await this.render(
-        this.templatePath(templateFile),
+        templatePath,
         this.destinationPath(
           path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
         ),
@@ -238,10 +235,9 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   ): Promise<void> {
     for (const file of filestocopy) {
       const out = file === GITIGNORE ? `.${file}` : file;
-      const templateFile = this.getTemplateFile(file, isTypeScript);
 
       await this.render(
-        this.templatePath(templateFile),
+        this.getTemplatePath(file, isTypeScript),
         this.destinationPath(path.join(this.outputdir, projectname, out)),
         {}
       );

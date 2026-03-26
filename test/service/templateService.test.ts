@@ -893,7 +893,7 @@ describe('TemplateService', () => {
       );
       chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
 
-      // Verify sfdx-project.json has defaultLWCLanguage
+      // Verify sfdx-project.json has defaultLwcLanguage
       const projectJsonPath = path.join(
         'testsoutput',
         'libraryCreate',
@@ -904,7 +904,7 @@ describe('TemplateService', () => {
       const projectJsonContent = JSON.parse(
         fs.readFileSync(projectJsonPath, 'utf-8')
       );
-      chai.expect(projectJsonContent.defaultLWCLanguage).to.equal('typescript');
+      chai.expect(projectJsonContent.defaultLwcLanguage).to.equal('typescript');
     });
 
     it('should create Project (analytics) with TypeScript', async () => {

@@ -17,4 +17,4 @@ dist/
 
 # TypeScript configuration (not deployed)
 tsconfig.json
-**/tsconfig*.json
+**/tsconfig.*.json

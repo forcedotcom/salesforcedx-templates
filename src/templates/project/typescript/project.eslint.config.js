@@ -42,29 +42,16 @@ module.exports = defineConfig([
     },
 
     // LWC test files configuration
+    // Test files match the main LWC config, only need to specify differences
     {
         files: ['**/lwc/**/*.test.{js,ts}'],
-        extends: [
-            lwcConfig,
-            ...tseslint.configs.base,
-            ...tseslint.configs.recommended
-        ],
         languageOptions: {
-            parser: tseslint.parser,
-            parserOptions: {
-                ecmaVersion: 'latest',
-                sourceType: 'module'
-            },
             globals: {
                 ...globals.node
             }
         },
-        plugins: {
-            '@typescript-eslint': tseslint.plugin
-        },
         rules: {
-            '@lwc/lwc/no-unexpected-wire-adapter-usages': 'off',
-            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+            '@lwc/lwc/no-unexpected-wire-adapter-usages': 'off'
         }
     },
 

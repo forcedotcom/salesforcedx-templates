@@ -7,6 +7,7 @@
 import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
+import { UI_BUNDLES_DIR } from '../utils/constants';
 import { WebApplicationOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
@@ -15,16 +16,16 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     CreateUtil.checkInputs(this.options.webappname);
     CreateUtil.checkInputs(this.options.template);
 
-    // Ensure output directory includes 'webapplications' folder
+    // Ensure output directory includes 'uiBundles' folder
     if (!this.options.internal) {
       const fileparts = path
         .resolve(this.outputdir)
         .split(path.sep)
         .filter(Boolean);
-      const endsWithWebApplications =
-        fileparts[fileparts.length - 1] === 'webapplications';
-      if (!endsWithWebApplications) {
-        this.outputdir = path.join(this.outputdir, 'webapplications');
+      const endsWithUiBundles =
+        fileparts[fileparts.length - 1] === UI_BUNDLES_DIR;
+      if (!endsWithUiBundles) {
+        this.outputdir = path.join(this.outputdir, UI_BUNDLES_DIR);
       }
     }
   }

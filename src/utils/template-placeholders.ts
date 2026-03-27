@@ -30,7 +30,7 @@ export default [
     placeholder: '_w_',
     dirInNpm: 'webapplications',
     parent: '_m_',
-    replacement: 'webapplications',
+    replacement: 'uiBundles',
   },
   {
     key: 'DIGITAL_EXPERIENCES_PLACEHOLDER',

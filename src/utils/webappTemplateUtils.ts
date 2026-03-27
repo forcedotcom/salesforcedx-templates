@@ -92,12 +92,12 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
   { base: string; withSuffix: string }
 > = {
   reactinternalapp: {
-    base: 'reactinternalapp',
-    withSuffix: 'reactinternalapp1',
+    base: 'appreacttemplateb2e',
+    withSuffix: 'appreacttemplateb2e1',
   },
   reactexternalapp: {
-    base: 'reactexternalapp',
-    withSuffix: 'reactexternalapp1',
+    base: 'appreacttemplateb2x',
+    withSuffix: 'appreacttemplateb2x1',
   },
 };
 

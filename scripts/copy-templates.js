@@ -74,16 +74,15 @@ const TEMPLATES = [
       '@salesforce/webapp-template-app-react-template-b2e-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactinternalapp',
-    appFolderInNpm: 'reactinternalapp',
-    appSiteFolderInNpm: 'reactinternalapp1',
+    appFolderInNpm: 'appreacttemplateb2e',
   },
   {
     packageName:
       '@salesforce/webapp-template-app-react-template-b2x-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactexternalapp',
-    appFolderInNpm: 'reactexternalapp',
-    appSiteFolderInNpm: 'reactexternalapp1',
+    appFolderInNpm: 'appreacttemplateb2x',
+    appSiteFolderInNpm: 'appreacttemplateb2x1',
   },
 ];
 

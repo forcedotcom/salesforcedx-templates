@@ -5,6 +5,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 const shell = require('shelljs');
 
 /** Single source: shared with src/utils/webappTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
@@ -67,6 +68,7 @@ const TEMPLATES = [
         'base-react-app'
       ),
     destSubpath: 'webapplication/reactbasic',
+    generateLockfile: true,
   },
   // Project templates (reactinternalapp, reactexternalapp)
   {
@@ -76,6 +78,7 @@ const TEMPLATES = [
     destSubpath: 'project/reactinternalapp',
     appFolderInNpm: 'reactinternalapp',
     appSiteFolderInNpm: 'reactinternalapp1',
+    lockfileDir: '_p_/_m_/_w_/_a_',
   },
   {
     packageName:
@@ -84,8 +87,30 @@ const TEMPLATES = [
     destSubpath: 'project/reactexternalapp',
     appFolderInNpm: 'reactexternalapp',
     appSiteFolderInNpm: 'reactexternalapp1',
+    lockfileDir: '_p_/_m_/_w_/_a_',
   },
 ];
+
+function generateLockfile(destDir) {
+  console.log(`Generating package-lock.json in ${destDir}...`);
+  try {
+    execSync(
+      'npm install --package-lock-only --no-audit --no-fund --registry=https://registry.npmjs.org',
+      {
+        cwd: destDir,
+        stdio: 'inherit',
+      }
+    );
+
+    // Safety check: sometimes npm creates an empty node_modules folder
+    const ghostModules = path.join(destDir, 'node_modules');
+    if (fs.existsSync(ghostModules)) {
+      shell.rm('-rf', ghostModules);
+    }
+  } catch (error) {
+    throw new Error(`Failed to generate lockfile in ${destDir}: ${error.message}`);
+  }
+}
 
 function copyTemplate(config) {
   try {
@@ -172,6 +197,20 @@ function copyTemplate(config) {
         if (newPath && !toPath.includes(path.sep)) {
           paths[step.placeholder] = newPath;
         }
+      }
+    }
+
+    if (config.generateLockfile) {
+      generateLockfile(destDir);
+    }
+
+    if (config.lockfileDir) {
+      const lockfileTarget = path.join(destDir, config.lockfileDir);
+      generateLockfile(lockfileTarget);
+      // Remove root-level lockfile copied from npm source
+      const rootLockfile = path.join(destDir, 'package-lock.json');
+      if (fs.existsSync(rootLockfile)) {
+        fs.unlinkSync(rootLockfile);
       }
     }
 

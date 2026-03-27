@@ -9,7 +9,7 @@ import * as chai from 'chai';
 import * as path from 'path';
 import * as sinon from 'sinon';
 import WebApplicationGenerator from '../../src/generators/webApplicationGenerator';
-import { WEBUI_DIR } from '../../src/utils/constants';
+import { UI_BUNDLES_DIR } from '../../src/utils/constants';
 
 chai.config.truncateThreshold = 100000;
 const { expect } = chai;
@@ -25,7 +25,7 @@ describe('WebApplicationGenerator', () => {
         new WebApplicationGenerator({
           webappname: '',
           template: 'default',
-          outputdir: path.join('testsoutput', WEBUI_DIR),
+          outputdir: path.join('testsoutput', UI_BUNDLES_DIR),
           internal: true,
         });
       }).to.throw();
@@ -36,65 +36,65 @@ describe('WebApplicationGenerator', () => {
         new WebApplicationGenerator({
           webappname: 'TestWebApp',
           template: '',
-          outputdir: path.join('testsoutput', WEBUI_DIR),
+          outputdir: path.join('testsoutput', UI_BUNDLES_DIR),
           internal: true,
         });
       }).to.throw();
     });
 
-    it('should not append webui to outputdir when it already ends with webui', () => {
-      const outputDirWithWebui = path.join('testsoutput', WEBUI_DIR);
+    it('should not append uiBundles to outputdir when it already ends with uiBundles', () => {
+      const outputDirWithUiBundles = path.join('testsoutput', UI_BUNDLES_DIR);
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
-        outputdir: outputDirWithWebui,
+        outputdir: outputDirWithUiBundles,
         internal: false,
       });
-      // The outputdir should remain unchanged since it already ends with WEBUI_DIR
-      expect((generator as any).outputdir).to.equal(outputDirWithWebui);
+      // The outputdir should remain unchanged since it already ends with UI_BUNDLES_DIR
+      expect((generator as any).outputdir).to.equal(outputDirWithUiBundles);
     });
 
-    it('should append webui to outputdir when not internal and outputdir does not end with webui', () => {
-      const outputDirWithoutWebui = path.join('testsoutput', 'mydir');
+    it('should append uiBundles to outputdir when not internal and outputdir does not end with uiBundles', () => {
+      const outputDirWithoutUiBundles = path.join('testsoutput', 'mydir');
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
-        outputdir: outputDirWithoutWebui,
+        outputdir: outputDirWithoutUiBundles,
         internal: false,
       });
-      // The outputdir should have WEBUI_DIR appended
+      // The outputdir should have UI_BUNDLES_DIR appended
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', WEBUI_DIR)
+        path.join('testsoutput', 'mydir', UI_BUNDLES_DIR)
       );
     });
 
-    it('should not append webui when internal is true', () => {
-      const outputDirWithoutWebui = path.join('testsoutput', 'mydir');
+    it('should not append uiBundles when internal is true', () => {
+      const outputDirWithoutUiBundles = path.join('testsoutput', 'mydir');
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
-        outputdir: outputDirWithoutWebui,
+        outputdir: outputDirWithoutUiBundles,
         internal: true,
       });
       // The outputdir should remain unchanged when internal is true
-      expect((generator as any).outputdir).to.equal(outputDirWithoutWebui);
+      expect((generator as any).outputdir).to.equal(outputDirWithoutUiBundles);
     });
 
-    it('should handle paths with webui in the middle but not at the end', () => {
-      const outputDirWithWebuiInMiddle = path.join(
+    it('should handle paths with uiBundles in the middle but not at the end', () => {
+      const outputDirWithUiBundlesInMiddle = path.join(
         'testsoutput',
-        WEBUI_DIR,
+        UI_BUNDLES_DIR,
         'somefolder'
       );
       const generator = new WebApplicationGenerator({
         webappname: 'TestWebApp',
         template: 'default',
-        outputdir: outputDirWithWebuiInMiddle,
+        outputdir: outputDirWithUiBundlesInMiddle,
         internal: false,
       });
-      // The outputdir should have WEBUI_DIR appended since it doesn't end with it
+      // The outputdir should have UI_BUNDLES_DIR appended since it doesn't end with it
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', WEBUI_DIR, 'somefolder', WEBUI_DIR)
+        path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder', UI_BUNDLES_DIR)
       );
     });
   });

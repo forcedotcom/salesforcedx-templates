@@ -192,8 +192,8 @@ export interface ProjectOptions extends TemplateOptions {
     | 'standard'
     | 'empty'
     | 'analytics'
-    | 'reactinternalapp'
-    | 'reactexternalapp'
+    | 'reactb2e'
+    | 'reactb2x'
     | 'agent'
     | 'nativemobile';
   manifest: boolean;

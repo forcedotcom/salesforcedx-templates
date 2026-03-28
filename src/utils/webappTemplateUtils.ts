@@ -124,7 +124,7 @@ export const MAIN_DEFAULT_PLACEHOLDER = '_m_';
 export const WEBAPPLICATIONS_PLACEHOLDER = '_w_';
 /** Replaced with literal "webapplications". */
 export const APP_PLACEHOLDER = '_a_';
-/** Replaced with project name (alphanumeric) for the web app folder. */
+/** Replaced with project name (alphanumeric) for the UI bundle folder. */
 export const DIGITAL_EXPERIENCES_PLACEHOLDER = '_d_';
 /** Replaced with literal "digitalExperiences". */
 export const SITE_PLACEHOLDER = '_s_';

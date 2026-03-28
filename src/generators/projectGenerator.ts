@@ -435,11 +435,13 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       const appName =
         projectname.charAt(0).toLowerCase() +
         projectname.slice(1).replace(/[^a-zA-Z0-9]/g, '');
-      // Human-readable label: insert spaces before uppercase runs
+      // Human-readable label: insert spaces before uppercase runs and digits
       const appLabel = projectname
         .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/([a-zA-Z])(\d)/g, '$1 $2')
         .replace(/[_-]/g, ' ')
-        .trim();
+        .trim()
+        .toLowerCase();
 
       const camaData = { appName, appLabel, projectname };
       const ecBase = path.join(

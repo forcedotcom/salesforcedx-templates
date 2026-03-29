@@ -122,7 +122,7 @@ export const PACKAGE_DIR_PLACEHOLDER = '_p_';
 export const MAIN_DEFAULT_PLACEHOLDER = '_m_';
 /** Replaced with literal "main/default". */
 export const WEBAPPLICATIONS_PLACEHOLDER = '_w_';
-/** Replaced with literal "webapplications". */
+/** Replaced with literal "uiBundles". */
 export const APP_PLACEHOLDER = '_a_';
 /** Replaced with project name (alphanumeric) for the UI bundle folder. */
 export const DIGITAL_EXPERIENCES_PLACEHOLDER = '_d_';
@@ -207,7 +207,7 @@ function resolveReplacement(
 
 /**
  * Returns a string containing only alphanumeric characters [A-Za-z0-9].
- * Used for folder and file names under webapplications, which must be alphanumeric.
+ * Used for folder and file names under uiBundles, which must be alphanumeric.
  */
 export function toAlphanumericForPath(name: string): string {
   return name.replace(/[^A-Za-z0-9]/g, '');

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * Copies npm-based templates into src/templates/ (webapplication and project).
+ * Copies npm-based templates into src/templates/ (uiBundles and project).
  * Run as part of build: yarn build:copy-templates
  */
 const fs = require('fs');
@@ -52,7 +52,7 @@ const TEMPLATES = [
   {
     packageName: '@salesforce/webapp-template-base-web-app-experimental',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'webapplication/webappbasic',
+    destSubpath: 'uiBundles/webappbasic',
   },
   {
     packageName: '@salesforce/webapp-template-base-react-app-experimental',
@@ -66,7 +66,7 @@ const TEMPLATES = [
         'webapplications',
         'base-react-app'
       ),
-    destSubpath: 'webapplication/reactbasic',
+    destSubpath: 'uiBundles/reactbasic',
   },
   // Project templates (reactinternalapp, reactexternalapp)
   {
@@ -111,6 +111,20 @@ function copyTemplate(config) {
     if (result.code !== 0) {
       console.error(`Failed to copy files: ${result.stderr}`);
       process.exit(1);
+    }
+
+    // Rename legacy npm filenames to match the ui-bundle convention
+    if (config.destSubpath.startsWith('uiBundles/')) {
+      const renames = [
+        ['_webapplication.webapplication-meta.xml', '_uibundle.uibundle-meta.xml'],
+        ['webapplication.json', 'ui-bundle.json'],
+      ];
+      for (const [oldName, newName] of renames) {
+        const oldPath = path.join(destDir, oldName);
+        if (fs.existsSync(oldPath)) {
+          fs.renameSync(oldPath, path.join(destDir, newName));
+        }
+      }
     }
 
     // Shorten paths per template-placeholders.json; placeholders replaced at generation in webappTemplateUtils.

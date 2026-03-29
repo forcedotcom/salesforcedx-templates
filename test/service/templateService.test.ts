@@ -1099,7 +1099,7 @@ describe('TemplateService', () => {
       chai.expect(sampleContent).to.include('MyReactExternalApp');
     });
 
-    it('should use alphanumeric name for webapplications under reactinternalapp template', async () => {
+    it('should use alphanumeric name for uiBundles under reactinternalapp template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
       const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
@@ -1210,12 +1210,12 @@ describe('TemplateService', () => {
 
     it('should create WebApplication', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'webapplications')
+        path.join('testsoutput', 'libraryCreate', 'uiBundles')
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.WebApplication, {
         webappname: 'LibraryCreateWebApp',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'uiBundles'),
         template: 'default',
         internal: true,
       });
@@ -1224,10 +1224,10 @@ describe('TemplateService', () => {
         .expect(result.created.sort())
         .to.deep.equal(
           [
-            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/LibraryCreateWebApp.webapplication-meta.xml',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/README.md',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/src/index.html',
-            'testsoutput/libraryCreate/webapplications/LibraryCreateWebApp/webapplication.json',
+            'testsoutput/libraryCreate/uiBundles/LibraryCreateWebApp/LibraryCreateWebApp.uibundle-meta.xml',
+            'testsoutput/libraryCreate/uiBundles/LibraryCreateWebApp/README.md',
+            'testsoutput/libraryCreate/uiBundles/LibraryCreateWebApp/src/index.html',
+            'testsoutput/libraryCreate/uiBundles/LibraryCreateWebApp/ui-bundle.json',
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -1236,25 +1236,25 @@ describe('TemplateService', () => {
 
     it('should create WebApplication (reactbasic)', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'webapplications')
+        path.join('testsoutput', 'libraryCreate', 'uiBundles')
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.WebApplication, {
         webappname: 'LibraryCreateReactApp',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'webapplications'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'uiBundles'),
         template: 'reactbasic',
         internal: true,
       });
 
       const created = result.created.map((p) => path.normalize(p));
-      const webappJson = path.normalize(
-        'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/webapplication.json'
+      const uiBundleJson = path.normalize(
+        'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/ui-bundle.json'
       );
-      const webappMetaXml = path.normalize(
-        'testsoutput/libraryCreate/webapplications/LibraryCreateReactApp/LibraryCreateReactApp.webapplication-meta.xml'
+      const uiBundleMetaXml = path.normalize(
+        'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/LibraryCreateReactApp.uibundle-meta.xml'
       );
-      chai.expect(created).to.include(webappJson);
-      chai.expect(created).to.include(webappMetaXml);
+      chai.expect(created).to.include(uiBundleJson);
+      chai.expect(created).to.include(uiBundleMetaXml);
     });
   });
 });

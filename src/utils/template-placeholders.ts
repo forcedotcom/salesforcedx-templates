@@ -28,7 +28,7 @@ export default [
   {
     key: 'WEBAPPLICATIONS_PLACEHOLDER',
     placeholder: '_w_',
-    dirInNpm: 'webapplications',
+    dirInNpm: 'uiBundles',
     parent: '_m_',
     replacement: 'uiBundles',
   },

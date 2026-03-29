@@ -51,12 +51,12 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath(path.join('webapplication', 'webappbasic'));
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'webappbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webapplication-meta.xml'),
+      this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
+        path.join(webappDir, `${webappname}.uibundle-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
@@ -65,7 +65,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,
-      new Set(['_webapplication.webapplication-meta.xml'])
+      new Set(['_uibundle.uibundle-meta.xml'])
     );
   }
 
@@ -74,12 +74,12 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath(path.join('webapplication', 'reactbasic'));
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'reactbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webapplication-meta.xml'),
+      this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
+        path.join(webappDir, `${webappname}.uibundle-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
@@ -94,7 +94,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,
-      new Set(['_webapplication.webapplication-meta.xml', 'package.json'])
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
     );
   }
 

@@ -26,8 +26,8 @@ export const messages = {
     "Analytics templates must have a parent folder named 'waveTemplates'.",
   MissingAuraDir: "Lightning bundles must have a parent folder named 'aura'.",
   MissingLWCDir: "Lightning bundles must have a parent folder named 'lwc'.",
-  MissingWebApplicationsDir:
-    "Web applications must have a parent folder named 'webapplications'.",
+  MissingUIBundlesDir:
+    "UI bundles must have a parent folder named 'uiBundles'.",
   MissingFlexipagesDir:
     "FlexiPages must have a parent folder named 'flexipages'.",
   MissingLightningComponentTemplate:

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /*
- * Copies npm-based templates into src/templates/ (webapplication and project).
+ * Copies npm-based templates into src/templates/ (uiBundles and project).
  * Run as part of build: yarn build:copy-templates
  */
 const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
 
-/** Single source: shared with src/utils/webappTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
+/** Single source: shared with src/utils/uiBundleTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
 const TEMPLATE_PLACEHOLDERS_SPEC = require(path.join(
   __dirname,
   '..',
@@ -50,12 +50,12 @@ const templatesRoot = path.join(currDir, 'src', 'templates');
 const TEMPLATES = [
   // Web application templates
   {
-    packageName: '@salesforce/webapp-template-base-web-app-experimental',
+    packageName: '@salesforce/ui-bundle-template-base-web-app',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'webapplication/webappbasic',
+    destSubpath: 'uiBundles/webappbasic',
   },
   {
-    packageName: '@salesforce/webapp-template-base-react-app-experimental',
+    packageName: '@salesforce/ui-bundle-template-base-react-app',
     getSourceDir: (packageDir) =>
       path.join(
         packageDir,
@@ -63,27 +63,23 @@ const TEMPLATES = [
         'force-app',
         'main',
         'default',
-        'webapplications',
+        'uiBundles',
         'base-react-app'
       ),
-    destSubpath: 'webapplication/reactbasic',
+    destSubpath: 'uiBundles/reactbasic',
   },
   // Project templates (reactinternalapp, reactexternalapp)
   {
-    packageName:
-      '@salesforce/webapp-template-app-react-template-b2e-experimental',
+    packageName: '@salesforce/ui-bundle-template-app-react-template-b2e',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactinternalapp',
     appFolderInNpm: 'reactinternalapp',
-    appSiteFolderInNpm: 'reactinternalapp1',
   },
   {
-    packageName:
-      '@salesforce/webapp-template-app-react-template-b2x-experimental',
+    packageName: '@salesforce/ui-bundle-template-app-react-template-b2x',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactexternalapp',
     appFolderInNpm: 'reactexternalapp',
-    appSiteFolderInNpm: 'reactexternalapp1',
   },
 ];
 
@@ -114,7 +110,32 @@ function copyTemplate(config) {
       process.exit(1);
     }
 
-    // Shorten paths per template-placeholders.json; placeholders replaced at generation in webappTemplateUtils.
+    // Remove build/test artifacts that may exist in source packages
+    const artifactDirs = [
+      'node_modules',
+      'build',
+      'dist',
+      'e2e',
+      'playwright-report',
+      'test-results',
+      'coverage',
+      '.nyc_output',
+    ];
+    const artifactFiles = ['package-lock.json', 'tsconfig.tsbuildinfo'];
+    for (const dir of artifactDirs) {
+      const dirPath = path.join(destDir, dir);
+      if (fs.existsSync(dirPath)) {
+        shell.rm('-rf', dirPath);
+      }
+    }
+    for (const file of artifactFiles) {
+      const filePath = path.join(destDir, file);
+      if (fs.existsSync(filePath)) {
+        shell.rm('-f', filePath);
+      }
+    }
+
+    // Shorten paths per template-placeholders.json; placeholders replaced at generation in uiBundleTemplateUtils.
     // Missing dirs are skipped; no failure.
     if (config.destSubpath.startsWith('project/')) {
       const paths = { dest: destDir };
@@ -192,7 +213,7 @@ function copyAllTemplates() {
   console.log('Templates copied successfully.');
 }
 
-/** Derived from template-placeholders.json + optional _a_/_a1_; matches webappTemplateUtils PLACEHOLDER_KEYS. */
+/** Derived from template-placeholders.json + optional _a_/_a1_; matches uiBundleTemplateUtils PLACEHOLDER_KEYS. */
 const PLACEHOLDERS = Object.fromEntries([
   ...TEMPLATE_PLACEHOLDERS_SPEC.map((e) => [e.key, e.placeholder]),
   ['APP_PLACEHOLDER', '_a_'],

@@ -19,7 +19,7 @@ import ProjectGenerator from '../generators/projectGenerator';
 import StaticResourceGenerator from '../generators/staticResourceGenerator';
 import VisualforceComponentGenerator from '../generators/visualforceComponentGenerator';
 import VisualforcePageGenerator from '../generators/visualforcePageGenerator';
-import WebApplicationGenerator from '../generators/webApplicationGenerator';
+import UIBundleGenerator from '../generators/uiBundleGenerator';
 import { BaseGenerator } from '../generators/baseGenerator';
 
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
@@ -55,7 +55,7 @@ export type Generators =
   | typeof StaticResourceGenerator
   | typeof VisualforceComponentGenerator
   | typeof VisualforcePageGenerator
-  | typeof WebApplicationGenerator;
+  | typeof UIBundleGenerator;
 
 /**
  * Available Template types
@@ -79,7 +79,7 @@ export enum TemplateType {
   VisualforceComponent,
   VisualforcePage,
   StaticResource,
-  WebApplication,
+  UIBundle,
 }
 
 export const generators = new Map<TemplateType, GeneratorClass<any>>([
@@ -97,7 +97,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.StaticResource, StaticResourceGenerator],
   [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
   [TemplateType.VisualforcePage, VisualforcePageGenerator],
-  [TemplateType.WebApplication, WebApplicationGenerator],
+  [TemplateType.UIBundle, UIBundleGenerator],
 ]);
 
 export type CreateOutput = {
@@ -219,8 +219,8 @@ export interface StaticResourceOptions extends TemplateOptions {
   template: 'empty';
 }
 
-export interface WebApplicationOptions extends TemplateOptions {
-  webappname: string;
+export interface UIBundleOptions extends TemplateOptions {
+  bundlename: string;
   template: string;
   masterlabel?: string;
   internal?: boolean;

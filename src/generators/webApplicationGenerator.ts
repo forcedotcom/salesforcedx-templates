@@ -7,6 +7,7 @@
 import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
+import { UI_BUNDLES_DIR } from '../utils/constants';
 import { WebApplicationOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
@@ -15,16 +16,16 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     CreateUtil.checkInputs(this.options.webappname);
     CreateUtil.checkInputs(this.options.template);
 
-    // Ensure output directory includes 'webapplications' folder
+    // Ensure output directory includes 'uiBundles' folder
     if (!this.options.internal) {
       const fileparts = path
         .resolve(this.outputdir)
         .split(path.sep)
         .filter(Boolean);
-      const endsWithWebApplications =
-        fileparts[fileparts.length - 1] === 'webapplications';
-      if (!endsWithWebApplications) {
-        this.outputdir = path.join(this.outputdir, 'webapplications');
+      const endsWithUiBundles =
+        fileparts[fileparts.length - 1] === UI_BUNDLES_DIR;
+      if (!endsWithUiBundles) {
+        this.outputdir = path.join(this.outputdir, UI_BUNDLES_DIR);
       }
     }
   }
@@ -50,12 +51,12 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath(path.join('webapplication', 'webappbasic'));
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'webappbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webapplication-meta.xml'),
+      this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
+        path.join(webappDir, `${webappname}.uibundle-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
@@ -64,7 +65,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,
-      new Set(['_webapplication.webapplication-meta.xml'])
+      new Set(['_uibundle.uibundle-meta.xml'])
     );
   }
 
@@ -73,12 +74,12 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     webappname: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath(path.join('webapplication', 'reactbasic'));
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'reactbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webapplication-meta.xml'),
+      this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
+        path.join(webappDir, `${webappname}.uibundle-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
@@ -93,7 +94,7 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     await this.copyDirectoryRecursive(
       templatePath,
       webappDir,
-      new Set(['_webapplication.webapplication-meta.xml', 'package.json'])
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
     );
   }
 

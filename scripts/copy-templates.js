@@ -50,12 +50,12 @@ const templatesRoot = path.join(currDir, 'src', 'templates');
 const TEMPLATES = [
   // Web application templates
   {
-    packageName: '@salesforce/webapp-template-base-web-app-experimental',
+    packageName: '@salesforce/ui-bundle-template-base-web-app',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'uiBundles/webappbasic',
   },
   {
-    packageName: '@salesforce/webapp-template-base-react-app-experimental',
+    packageName: '@salesforce/ui-bundle-template-base-react-app',
     getSourceDir: (packageDir) =>
       path.join(
         packageDir,
@@ -71,14 +71,14 @@ const TEMPLATES = [
   // Project templates (reactinternalapp, reactexternalapp)
   {
     packageName:
-      '@salesforce/webapp-template-app-react-template-b2e-experimental',
+      '@salesforce/ui-bundle-template-app-react-template-b2e',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactinternalapp',
     appFolderInNpm: 'appreacttemplateb2e',
   },
   {
     packageName:
-      '@salesforce/webapp-template-app-react-template-b2x-experimental',
+      '@salesforce/ui-bundle-template-app-react-template-b2x',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactexternalapp',
     appFolderInNpm: 'appreacttemplateb2x',

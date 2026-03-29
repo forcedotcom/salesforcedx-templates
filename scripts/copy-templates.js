@@ -63,7 +63,7 @@ const TEMPLATES = [
         'force-app',
         'main',
         'default',
-        'webapplications',
+        'uiBundles',
         'base-react-app'
       ),
     destSubpath: 'uiBundles/reactbasic',
@@ -111,6 +111,22 @@ function copyTemplate(config) {
     if (result.code !== 0) {
       console.error(`Failed to copy files: ${result.stderr}`);
       process.exit(1);
+    }
+
+    // Remove build/test artifacts that may exist in source packages
+    const artifactDirs = ['node_modules', 'build', 'dist', 'e2e', 'playwright-report', 'test-results', 'coverage', '.nyc_output'];
+    const artifactFiles = ['package-lock.json', 'tsconfig.tsbuildinfo'];
+    for (const dir of artifactDirs) {
+      const dirPath = path.join(destDir, dir);
+      if (fs.existsSync(dirPath)) {
+        shell.rm('-rf', dirPath);
+      }
+    }
+    for (const file of artifactFiles) {
+      const filePath = path.join(destDir, file);
+      if (fs.existsSync(filePath)) {
+        shell.rm('-f', filePath);
+      }
     }
 
     // Rename legacy npm filenames to match the ui-bundle convention

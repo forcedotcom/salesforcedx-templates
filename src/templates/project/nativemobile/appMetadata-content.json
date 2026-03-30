@@ -11,19 +11,39 @@
       {
         "id": "home",
         "label": "Home",
-        "icon": "house.fill",
-        "screen": "homeScreen"
+        "icon": "utility:home",
+        "screenAPIName": "homeScreen"
       }
     ],
     "toolbarActions": {
       "notifications": false,
-      "search": false,
-      "agentforce": false
+      "search": false
     },
     "theme": {
-      "accentColor": "#0176D3",
-      "primaryColor": "#000000",
-      "secondaryColor": "#B3B3B3"
+      "colors": {
+        "accent1": "#7526E3",
+        "accent2": "#7526E3",
+        "accentContainer1": "#7526E3",
+        "accentContainer2": "#342761",
+        "border2": "#7526E3",
+        "onSurface1": "#181818",
+        "onSurface2": "#444444",
+        "onSurface3": "#747474"
+      },
+      "dimensions": {
+        "spacing": {
+          "spacing5": 20
+        },
+        "sizing": {
+          "sizing3": 6
+        }
+      },
+      "typography": {
+        "titlesScale5Regular": {
+          "fontSize": 28,
+          "lineHeight": 36
+        }
+      }
     }
   }
 }

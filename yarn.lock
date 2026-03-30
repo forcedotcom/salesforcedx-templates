@@ -911,22 +911,22 @@
 
 "@salesforce/ui-bundle-template-app-react-template-b2e@^1.117.5":
   version "1.117.5"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-1.117.5.tgz#a3fbb887ddbc2d9b6be7d608edb2975604864e78"
+  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-1.117.5.tgz#a3fbb887ddbc2d9b6be7d608edb2975604864e78"
   integrity sha512-b671MtrszJoq8wlJYSCqtTs2XXkg7KAKvlVDegjArJZokhYDnRj7mIwgptUrOp+DikigkJpKVW3n8Q+6v61Xsw==
 
 "@salesforce/ui-bundle-template-app-react-template-b2x@^1.117.5":
   version "1.117.5"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-1.117.5.tgz#ceb93ac093f2ddd96ea5bd5691f9af52d34c351f"
+  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-1.117.5.tgz#ceb93ac093f2ddd96ea5bd5691f9af52d34c351f"
   integrity sha512-K20memGj9pb1xCbS1BvyVdF41FbjSohBC4gwr2VYkldm2vRSbzxmX7WA9r/X7JKjFsb76T4O6Yr1DqfLjdZjkQ==
 
 "@salesforce/ui-bundle-template-base-react-app@^1.117.5":
   version "1.117.5"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-1.117.5.tgz#5e4d07ab0ee87e32cfc90acc4900708bc7de2434"
+  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-1.117.5.tgz#5e4d07ab0ee87e32cfc90acc4900708bc7de2434"
   integrity sha512-JpO10P1r9QX1Ebci50puE/SmPBsTPD1MzmX0q+N6+QDgrR+LRy4EPhYbK5LogNQw1CHo39/zp8sUU0R4wpRUHA==
 
 "@salesforce/ui-bundle-template-base-web-app@^1.117.5":
   version "1.117.5"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-1.117.5.tgz#96daa815e7f396417cfb577a16e701a282f63324"
+  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-1.117.5.tgz#96daa815e7f396417cfb577a16e701a282f63324"
   integrity sha512-hHhn0iPn9hEjt/fIi1jCBLtcm2JI7ea1bjMpdCQev5m2YUxigZBbD178FEULfG19FgIUdjYd/71YD7W0xWX72g==
 
 "@shikijs/core@1.29.2":

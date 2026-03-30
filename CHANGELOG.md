@@ -1,3 +1,12 @@
+# [66.7.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.6.2...66.7.0) (2026-03-30)
+
+
+### Features
+
+* rename webapplications output dir to uiBundles @W-21674925@ ([#772](https://github.com/forcedotcom/salesforcedx-templates/issues/772)) ([0b0418e](https://github.com/forcedotcom/salesforcedx-templates/commit/0b0418e64e18d3bb948a66759edcfa2c04c82bbc))
+
+
+
 ## [66.6.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.6.1...66.6.2) (2026-03-26)
 
 

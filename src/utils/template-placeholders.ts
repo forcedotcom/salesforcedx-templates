@@ -6,7 +6,7 @@
  */
 
 /**
- * Single source for placeholder rename (copy-templates) and replacement (webappTemplateUtils).
+ * Single source for placeholder rename (copy-templates) and replacement (uiBundleTemplateUtils).
  * Do not add .json - this .ts is compiled to lib/ so no copy step is needed.
  */
 export default [
@@ -26,11 +26,18 @@ export default [
     replacement: 'main/default',
   },
   {
-    key: 'WEBAPPLICATIONS_PLACEHOLDER',
+    key: 'UI_BUNDLES_PLACEHOLDER',
     placeholder: '_w_',
-    dirInNpm: 'webapplications',
+    dirInNpm: 'uiBundles',
     parent: '_m_',
-    replacement: 'webapplications',
+    replacement: 'uiBundles',
+  },
+  {
+    key: 'DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER',
+    placeholder: '_dc_',
+    dirInNpm: 'digitalExperienceConfigs',
+    parent: '_m_',
+    replacement: 'digitalExperienceConfigs',
   },
   {
     key: 'DIGITAL_EXPERIENCES_PLACEHOLDER',

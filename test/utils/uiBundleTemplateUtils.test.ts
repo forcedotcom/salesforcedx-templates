@@ -11,9 +11,9 @@ import {
   ensureLowercaseUrlName,
   toAlphanumericForPath,
   WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
-} from '../../src/utils/webappTemplateUtils';
+} from '../../src/utils/uiBundleTemplateUtils';
 
-describe('webappTemplateUtils', () => {
+describe('uiBundleTemplateUtils', () => {
   describe('toAlphanumericForPath', () => {
     it('strips non-alphanumeric characters', () => {
       assert.strictEqual(toAlphanumericForPath('My App'), 'MyApp');

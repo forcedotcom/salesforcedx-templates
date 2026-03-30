@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/templates",
-  "version": "66.6.2",
+  "version": "66.7.0",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "main": "lib/index.js",
@@ -24,11 +24,11 @@
   "devDependencies": {
     "@salesforce/dev-config": "^4.3.2",
     "@salesforce/dev-scripts": "^11.0.2",
-    "@salesforce/webapp-template-app-react-template-b2e-experimental": "^1.114.0",
-    "@salesforce/webapp-template-app-react-template-b2x-experimental": "^1.114.0",
-    "@salesforce/webapp-template-base-react-app-experimental": "^1.114.0",
-    "@salesforce/webapp-template-base-web-app-experimental": "^1.114.0",
     "@salesforce/prettier-config": "^0.0.4",
+    "@salesforce/ui-bundle-template-app-react-template-b2e": "^1.117.3",
+    "@salesforce/ui-bundle-template-app-react-template-b2x": "^1.117.3",
+    "@salesforce/ui-bundle-template-base-react-app": "^1.117.3",
+    "@salesforce/ui-bundle-template-base-web-app": "^1.117.3",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",
     "@types/mime-types": "^3.0.1",

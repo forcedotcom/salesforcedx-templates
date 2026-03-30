@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "@salesforce/kit": "^3.2.4",
-    "ejs": "^3.1.10",
+    "ejs": "^5.0.1",
     "got": "^11.8.6",
     "hpagent": "^1.2.0",
     "mime-types": "^3.0.2",

@@ -11,7 +11,7 @@ import {
   BUILT_IN_FULL_TEMPLATES,
   generateBuiltInFullTemplate,
   renderEjsFile,
-} from '../utils/webappTemplateUtils';
+} from '../utils/uiBundleTemplateUtils';
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_PROJECT_TEMPLATES = [

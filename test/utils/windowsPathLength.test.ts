@@ -14,8 +14,9 @@ import {
   WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
   PACKAGE_DIR_PLACEHOLDER,
   MAIN_DEFAULT_PLACEHOLDER,
-  WEBAPPLICATIONS_PLACEHOLDER,
+  UI_BUNDLES_PLACEHOLDER,
   APP_PLACEHOLDER,
+  DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER,
   DIGITAL_EXPERIENCES_PLACEHOLDER,
   SITE_PLACEHOLDER,
   APP_SUFFIX_PLACEHOLDER,
@@ -28,7 +29,7 @@ import {
   COMPONENTS_PLACEHOLDER,
   DETAIL_PLACEHOLDER,
   FORMATTED_PLACEHOLDER,
-} from '../../src/utils/webappTemplateUtils';
+} from '../../src/utils/uiBundleTemplateUtils';
 
 const copyTemplatesPath = path.join(
   __dirname,
@@ -36,12 +37,13 @@ const copyTemplatesPath = path.join(
 );
 const { PLACEHOLDERS: copyScriptPlaceholders } = require(copyTemplatesPath);
 
-/** Map of placeholder key → value for sync assertion (single source: webappTemplateUtils). */
-const WEBAPP_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
+/** Map of placeholder key → value for sync assertion (single source: uiBundleTemplateUtils). */
+const UI_BUNDLE_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
   PACKAGE_DIR_PLACEHOLDER,
   MAIN_DEFAULT_PLACEHOLDER,
-  WEBAPPLICATIONS_PLACEHOLDER,
+  UI_BUNDLES_PLACEHOLDER,
   APP_PLACEHOLDER,
+  DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER,
   DIGITAL_EXPERIENCES_PLACEHOLDER,
   SITE_PLACEHOLDER,
   APP_SUFFIX_PLACEHOLDER,
@@ -92,12 +94,12 @@ function getTemplateRoot(): string {
   return '';
 }
 
-describe('Placeholder sync (copy-templates.js ↔ webappTemplateUtils.ts)', () => {
-  it('placeholder constants in copy-templates.js match webappTemplateUtils.ts', () => {
+describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', () => {
+  it('placeholder constants in copy-templates.js match uiBundleTemplateUtils.ts', () => {
     for (const key of PLACEHOLDER_KEYS) {
       assert.strictEqual(
         copyScriptPlaceholders[key],
-        WEBAPP_PLACEHOLDERS[key],
+        UI_BUNDLE_PLACEHOLDERS[key],
         `Mismatch for ${key}`
       );
     }

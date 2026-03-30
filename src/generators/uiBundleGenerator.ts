@@ -7,55 +7,56 @@
 import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { WebApplicationOptions } from '../utils/types';
+import { UI_BUNDLES_DIR } from '../utils/constants';
+import { UIBundleOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
-export default class WebApplicationGenerator extends BaseGenerator<WebApplicationOptions> {
+export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
   public validateOptions(): void {
-    CreateUtil.checkInputs(this.options.webappname);
+    CreateUtil.checkInputs(this.options.bundlename);
     CreateUtil.checkInputs(this.options.template);
 
-    // Ensure output directory includes 'webapplications' folder
+    // Ensure output directory includes 'uiBundles' folder
     if (!this.options.internal) {
       const fileparts = path
         .resolve(this.outputdir)
         .split(path.sep)
         .filter(Boolean);
-      const endsWithWebApplications =
-        fileparts[fileparts.length - 1] === 'webapplications';
-      if (!endsWithWebApplications) {
-        this.outputdir = path.join(this.outputdir, 'webapplications');
+      const endsWithUiBundles =
+        fileparts[fileparts.length - 1] === UI_BUNDLES_DIR;
+      if (!endsWithUiBundles) {
+        this.outputdir = path.join(this.outputdir, UI_BUNDLES_DIR);
       }
     }
   }
 
   public async generate(): Promise<void> {
-    const { webappname } = this.options;
+    const { bundlename } = this.options;
     const template = this.options.template.toLowerCase();
     const masterLabel =
-      this.options.masterlabel || camelCaseToTitleCase(webappname);
-    const webappDir = path.join(this.outputdir, webappname);
+      this.options.masterlabel || camelCaseToTitleCase(bundlename);
+    const bundleDir = path.join(this.outputdir, bundlename);
 
     switch (template) {
       case 'reactbasic':
-        await this.generateReactBasic(webappDir, webappname, masterLabel);
+        await this.generateReactBasic(bundleDir, bundlename, masterLabel);
         break;
       default:
-        await this.generateDefault(webappDir, webappname, masterLabel);
+        await this.generateDefault(bundleDir, bundlename, masterLabel);
     }
   }
 
   private async generateDefault(
-    webappDir: string,
-    webappname: string,
+    bundleDir: string,
+    bundlename: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath(path.join('webapplication', 'webappbasic'));
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'webappbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webapplication-meta.xml'),
+      this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
@@ -63,37 +64,37 @@ export default class WebApplicationGenerator extends BaseGenerator<WebApplicatio
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
-      webappDir,
-      new Set(['_webapplication.webapplication-meta.xml'])
+      bundleDir,
+      new Set(['_uibundle.uibundle-meta.xml'])
     );
   }
 
   private async generateReactBasic(
-    webappDir: string,
-    webappname: string,
+    bundleDir: string,
+    bundlename: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath(path.join('webapplication', 'reactbasic'));
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'reactbasic'));
 
     await this.render(
-      this.templatePath('_webapplication.webapplication-meta.xml'),
+      this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(webappDir, `${webappname}.webapplication-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
       ),
       { apiVersion: this.apiversion, masterLabel }
     );
 
     await this.render(
       this.templatePath('package.json'),
-      this.destinationPath(path.join(webappDir, 'package.json')),
-      { webappname }
+      this.destinationPath(path.join(bundleDir, 'package.json')),
+      { bundlename }
     );
 
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
-      webappDir,
-      new Set(['_webapplication.webapplication-meta.xml', 'package.json'])
+      bundleDir,
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
     );
   }
 

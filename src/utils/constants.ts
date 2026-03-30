@@ -8,6 +8,8 @@ import * as path from 'path';
 
 export const DEFAULT_API_VERSION = '66.0';
 
+export const UI_BUNDLES_DIR = 'uiBundles';
+
 export const dirnameTemplatesDefault =
   process.env.ESBUILD_PLATFORM !== 'web'
     ? path.join(__dirname, '..', 'templates')

@@ -20,7 +20,7 @@ function sanitizeSegment(name: string): string {
   const trimmed = name.trimEnd();
   if (trimmed !== name) {
     console.warn(
-      `[webappTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`
+      `[uiBundleTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`
     );
   }
   return trimmed;
@@ -92,12 +92,12 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
   { base: string; withSuffix: string }
 > = {
   reactinternalapp: {
-    base: 'reactinternalapp',
-    withSuffix: 'reactinternalapp1',
+    base: 'appreacttemplateb2e',
+    withSuffix: 'appreacttemplateb2e1',
   },
   reactexternalapp: {
-    base: 'reactexternalapp',
-    withSuffix: 'reactexternalapp1',
+    base: 'appreacttemplateb2x',
+    withSuffix: 'appreacttemplateb2x1',
   },
 };
 
@@ -121,10 +121,12 @@ export const PACKAGE_DIR_PLACEHOLDER = '_p_';
 /** Replaced with defaultpackagedir (e.g. force-app). */
 export const MAIN_DEFAULT_PLACEHOLDER = '_m_';
 /** Replaced with literal "main/default". */
-export const WEBAPPLICATIONS_PLACEHOLDER = '_w_';
-/** Replaced with literal "webapplications". */
+export const UI_BUNDLES_PLACEHOLDER = '_w_';
+/** Replaced with the app folder name. */
 export const APP_PLACEHOLDER = '_a_';
-/** Replaced with project name (alphanumeric) for the web app folder. */
+/** Replaced with project name (alphanumeric) for the UI bundle folder. */
+export const DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER = '_dc_';
+/** Replaced with literal "digitalExperienceConfigs". */
 export const DIGITAL_EXPERIENCES_PLACEHOLDER = '_d_';
 /** Replaced with literal "digitalExperiences". */
 export const SITE_PLACEHOLDER = '_s_';
@@ -154,8 +156,9 @@ export const FORMATTED_PLACEHOLDER = '_fmt_';
 export const PLACEHOLDER_KEYS = [
   'PACKAGE_DIR_PLACEHOLDER',
   'MAIN_DEFAULT_PLACEHOLDER',
-  'WEBAPPLICATIONS_PLACEHOLDER',
+  'UI_BUNDLES_PLACEHOLDER',
   'APP_PLACEHOLDER',
+  'DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER',
   'DIGITAL_EXPERIENCES_PLACEHOLDER',
   'SITE_PLACEHOLDER',
   'APP_SUFFIX_PLACEHOLDER',
@@ -207,7 +210,7 @@ function resolveReplacement(
 
 /**
  * Returns a string containing only alphanumeric characters [A-Za-z0-9].
- * Used for folder and file names under webapplications, which must be alphanumeric.
+ * Used for folder and file names under uiBundles, which must be alphanumeric.
  */
 export function toAlphanumericForPath(name: string): string {
   return name.replace(/[^A-Za-z0-9]/g, '');

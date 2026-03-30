@@ -11,7 +11,7 @@
       {
         "id": "home",
         "label": "Home",
-        "icon": "house.fill",
+        "icon": "utility:home",
         "screenAPIName": "homeScreen"
       }
     ],

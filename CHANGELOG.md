@@ -1,3 +1,12 @@
+## [66.7.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.0...66.7.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* update default template names to match template keys ([#782](https://github.com/forcedotcom/salesforcedx-templates/issues/782)) ([179adfd](https://github.com/forcedotcom/salesforcedx-templates/commit/179adfd12be90ca2d3e244f035704654a56b5949))
+
+
+
 # [66.7.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.6.2...66.7.0) (2026-03-30)
 
 

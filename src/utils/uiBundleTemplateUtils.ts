@@ -354,16 +354,18 @@ export async function generateBuiltInFullTemplate(
       resolveReplacement(entry.replacement, replacementCtx),
     ]
   );
-  nameReplacements.push(
-    [APP_PLACEHOLDER, projectnameAlphanumeric],
-    [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1']
-  );
+  // Add template-specific name replacements BEFORE placeholder replacements
+  // to avoid double-replacement (e.g., _a_ -> reactexternalapptest, then reactexternalapp -> reactexternalapptest again)
   if (nameReplacementsEntry) {
-    nameReplacements.push(
+    nameReplacements.unshift(
       [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],
       [nameReplacementsEntry.base, projectnameAlphanumeric]
     );
   }
+  nameReplacements.push(
+    [APP_PLACEHOLDER, projectnameAlphanumeric],
+    [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1']
+  );
 
   await generateFromProjectTemplateDir(templateDir, projectDir, templateVars, {
     nameReplacements,

@@ -1,3 +1,12 @@
+## [66.7.5](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.4...66.7.5) (2026-03-31)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/kit from 3.2.4 to 3.2.6 ([8200e35](https://github.com/forcedotcom/salesforcedx-templates/commit/8200e35c208332468585b8fec05ddbbd3b48739f))
+
+
+
 ## [66.7.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.3...66.7.4) (2026-03-30)
 
 

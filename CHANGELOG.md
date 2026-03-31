@@ -1,3 +1,12 @@
+## [66.7.7](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.6...66.7.7) (2026-03-31)
+
+
+### Bug Fixes
+
+* updating ui bundles to the latest @W-21814993@ ([#786](https://github.com/forcedotcom/salesforcedx-templates/issues/786)) ([82a57ad](https://github.com/forcedotcom/salesforcedx-templates/commit/82a57ad33bc14e5335f397e284c57d2d04454233))
+
+
+
 ## [66.7.6](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.5...66.7.6) (2026-03-31)
 
 

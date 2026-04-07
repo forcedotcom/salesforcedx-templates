@@ -3,6 +3,7 @@
  * Copies npm-based templates into src/templates/ (uiBundles and project).
  * Run as part of build: yarn build:copy-templates
  */
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
@@ -196,6 +197,16 @@ function copyTemplate(config) {
       }
     }
 
+    // npm strips .gitignore during publish; restore it for project templates
+    // by copying the standard project gitignore template.
+    if (config.destSubpath.startsWith('project/')) {
+      const gitignoreSrc = path.join(templatesRoot, 'project', 'gitignore');
+      const gitignoreDest = path.join(destDir, '.gitignore');
+      if (fs.existsSync(gitignoreSrc) && !fs.existsSync(gitignoreDest)) {
+        fs.copyFileSync(gitignoreSrc, gitignoreDest);
+      }
+    }
+
     console.log(
       `Copied ${config.packageName} to src/templates/${config.destSubpath}`
     );
@@ -210,7 +221,72 @@ function copyAllTemplates() {
   for (const config of TEMPLATES) {
     copyTemplate(config);
   }
+  generateUiBundleLockFiles(templatesRoot);
   console.log('Templates copied successfully.');
+}
+
+/**
+ * Generate package-lock.json for uibundle directories that contain a package.json.
+ * These directories are under uiBundles/ (standalone templates) or _w_/ (placeholder
+ * for uiBundles in project templates). The lock file ships with the template so that
+ * `npm ci` works out of the box when users scaffold a new bundle.
+ */
+function generateUiBundleLockFiles(templatesDir) {
+  const uiBundleDirs = findUiBundlePackageJsonDirs(templatesDir);
+  for (const dir of uiBundleDirs) {
+    const rel = path.relative(currDir, dir);
+    console.log(`Generating package-lock.json in ${rel}`);
+    try {
+      execSync('npm install --package-lock-only --ignore-scripts', {
+        cwd: dir,
+        stdio: 'pipe',
+      });
+    } catch (error) {
+      console.error(
+        `Failed to generate package-lock.json in ${rel}: ${error.message}`
+      );
+      process.exit(1);
+    }
+  }
+}
+
+/**
+ * Walk the templates directory and collect every directory that:
+ *  1. Contains a package.json, AND
+ *  2. Lives under a path segment named "uiBundles" or "_w_" (the build-time placeholder).
+ */
+function findUiBundlePackageJsonDirs(dir) {
+  const results = [];
+
+  function walk(current, insideUiBundles) {
+    let entries;
+    try {
+      entries = fs.readdirSync(current, { withFileTypes: true });
+    } catch {
+      return;
+    }
+
+    const hasPackageJson = entries.some(
+      (e) => e.isFile() && e.name === 'package.json'
+    );
+    if (insideUiBundles && hasPackageJson) {
+      results.push(current);
+      return; // no need to descend further
+    }
+
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      const isUiBundleSegment =
+        entry.name === 'uiBundles' || entry.name === '_w_';
+      walk(
+        path.join(current, entry.name),
+        insideUiBundles || isUiBundleSegment
+      );
+    }
+  }
+
+  walk(dir, false);
+  return results;
 }
 
 /** Derived from template-placeholders.json + optional _a_/_a1_; matches uiBundleTemplateUtils PLACEHOLDER_KEYS. */

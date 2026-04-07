@@ -1,3 +1,12 @@
+## [66.7.9](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.8...66.7.9) (2026-04-07)
+
+
+### Bug Fixes
+
+* generate package-lock.json for uibundle templates and bump ui-bundle deps to 1.120.6 ([#794](https://github.com/forcedotcom/salesforcedx-templates/issues/794)) ([49ae356](https://github.com/forcedotcom/salesforcedx-templates/commit/49ae3569314b752b066290f2553427d3aa7fdfca))
+
+
+
 ## [66.7.8](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.7...66.7.8) (2026-04-01)
 
 

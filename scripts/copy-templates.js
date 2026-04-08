@@ -197,16 +197,6 @@ function copyTemplate(config) {
       }
     }
 
-    // npm strips .gitignore during publish; restore it for project templates
-    // by copying the standard project gitignore template.
-    if (config.destSubpath.startsWith('project/')) {
-      const gitignoreSrc = path.join(templatesRoot, 'project', 'gitignore');
-      const gitignoreDest = path.join(destDir, '.gitignore');
-      if (fs.existsSync(gitignoreSrc) && !fs.existsSync(gitignoreDest)) {
-        fs.copyFileSync(gitignoreSrc, gitignoreDest);
-      }
-    }
-
     console.log(
       `Copied ${config.packageName} to src/templates/${config.destSubpath}`
     );

@@ -372,6 +372,19 @@ export async function generateBuiltInFullTemplate(
     renderEjs,
     onFileCreated,
   });
+
+  // npm renames .gitignore → .npmignore on install, so template packages
+  // lose their .gitignore. Use the standard project gitignore template
+  // (stored without the dot, so npm leaves it alone).
+  const gitignoreDest = path.join(projectDir, '.gitignore');
+  if (!fs.existsSync(gitignoreDest)) {
+    const gitignoreSrc = path.join(templateDir, '..', 'gitignore');
+    if (fs.existsSync(gitignoreSrc)) {
+      const content = await readFile(gitignoreSrc, 'utf8');
+      await writeFile(gitignoreDest, content, 'utf8');
+      onFileCreated(gitignoreDest);
+    }
+  }
 }
 
 export type GenerateFromProjectTemplateDirOptions = {

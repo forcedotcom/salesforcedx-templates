@@ -1,3 +1,12 @@
+## [66.7.10](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.9...66.7.10) (2026-04-08)
+
+
+### Bug Fixes
+
+* adding gitignore on template generation for ui bundles @W-21940169@ ([#795](https://github.com/forcedotcom/salesforcedx-templates/issues/795)) ([cf6d39e](https://github.com/forcedotcom/salesforcedx-templates/commit/cf6d39ed9166732200b8a84da27679afe961389f))
+
+
+
 ## [66.7.9](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.8...66.7.9) (2026-04-07)
 
 

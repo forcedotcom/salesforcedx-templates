@@ -25,7 +25,7 @@
     "@salesforce/dev-config": "^4.3.3",
     "@salesforce/dev-scripts": "^11.0.2",
     "@salesforce/prettier-config": "^0.0.4",
-    "@salesforce/ui-bundle-template-app-react-template-b2e": "^1.122.1",
+    "@salesforce/ui-bundle-template-app-react-template-b2e": "^1.123.0",
     "@salesforce/ui-bundle-template-app-react-template-b2x": "^1.122.1",
     "@salesforce/ui-bundle-template-base-react-app": "^1.122.1",
     "@salesforce/ui-bundle-template-base-web-app": "^1.122.1",

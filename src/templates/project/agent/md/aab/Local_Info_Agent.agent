@@ -181,7 +181,7 @@ subagent local_events:
             check_events: @actions.check_events
                 description: "Look up local events matching the guest's interests"
                 available when @variables.guest_interests != ""
-                with Event_Type = @variables.guest_interests
+                with "Input:Event_Type" = @variables.guest_interests
 
     actions:
         check_events:

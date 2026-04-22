@@ -1,3 +1,12 @@
+## [66.7.11](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.10...66.7.11) (2026-04-16)
+
+
+### Bug Fixes
+
+* use prefix when referencing prompt template input vars @W-22012138 ([#801](https://github.com/forcedotcom/salesforcedx-templates/issues/801)) ([87a9706](https://github.com/forcedotcom/salesforcedx-templates/commit/87a9706abdb775f129e960b2bd5ee86576582c10))
+
+
+
 ## [66.7.10](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.9...66.7.10) (2026-04-08)
 
 

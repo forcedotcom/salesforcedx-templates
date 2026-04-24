@@ -1,14 +1,23 @@
 /*
- * Copyright (c) 2019, salesforce.com, inc.
- * All rights reserved.
- * Licensed under the BSD 3-Clause license.
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ * Copyright 2026, Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 import * as fs from 'node:fs';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'node:path';
 
-import templatePlaceholdersSpec from './template-placeholders';
+import templatePlaceholdersSpec from './templatePlaceholders';
 
 /**
  * Trim trailing whitespace from a filename segment and warn when it differs.
@@ -200,12 +209,12 @@ export function ensureLowercaseUrlName(
     return content;
   }
   try {
-    const parsed = JSON.parse(content);
+    const parsed = JSON.parse(content) as { urlName?: unknown };
     if (typeof parsed.urlName === 'string') {
       const lower = parsed.urlName.toLowerCase();
       if (lower !== parsed.urlName) {
         parsed.urlName = lower;
-        return JSON.stringify(parsed, null, 2) + '\n';
+        return JSON.stringify(parsed, undefined, 2) + '\n';
       }
     }
   } catch {

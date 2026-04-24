@@ -14,7 +14,7 @@ import * as nodeFs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
 import { extract } from 'tar';
-import got from 'got';
+import got, { type Response } from 'got';
 
 import { HttpsProxyAgent } from 'hpagent';
 import { getProxyForUrl } from 'proxy-from-env';
@@ -32,7 +32,7 @@ const SFDX_STATE_FOLDER = '.sfdx';
 /**
  * The full system path to the preferred global state folder
  */
-export function DIR(): string {
+export function getGlobalStateDir(): string {
   return path.join(os.homedir(), SFDX_STATE_FOLDER);
 }
 
@@ -51,8 +51,9 @@ async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
     const proxy = getProxyForUrl(url);
 
     // proxy will be empty string if no proxy is set
-    const infoResponse = await (
-      proxy !== ''
+    let infoResponse: Response<string>;
+    try {
+      infoResponse = await (proxy !== ''
         ? got(url, {
             agent: {
               https: new HttpsProxyAgent({
@@ -65,8 +66,15 @@ async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
               }),
             },
           })
-        : got(url)
-    ).catch((e) => e);
+        : got(url));
+    } catch {
+      throw new Error(
+        nls.localize(
+          'customTemplatesCannotRetrieveDefaultBranch',
+          repoUri.href,
+        ),
+      );
+    }
     if (infoResponse.statusCode !== 200) {
       throw new Error(
         nls.localize(
@@ -75,8 +83,8 @@ async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
         ),
       );
     }
-    const info = JSON.parse(infoResponse.body);
-    return { username, name, branch: info['default_branch'], filePath };
+    const info = JSON.parse(infoResponse.body) as { default_branch: string };
+    return { username, name, branch: info.default_branch, filePath };
   }
 
   if (username && name && branch && t === 'tree') {
@@ -100,7 +108,11 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
     .update(repoUri.href)
     .digest('hex');
 
-  const customTemplatesPath = path.join(DIR(), 'custom-templates', folderHash);
+  const customTemplatesPath = path.join(
+    getGlobalStateDir(),
+    'custom-templates',
+    folderHash,
+  );
   return customTemplatesPath;
 }
 

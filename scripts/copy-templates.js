@@ -35,9 +35,9 @@ function cpSyncSanitized(src, dest) {
   }
 }
 
-/** Single source: shared with src/utils/uiBundleTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
+/** Single source: shared with src/utils/uiBundleTemplateUtils.ts (compiled to lib/utils/templatePlaceholders.js) */
 const TEMPLATE_PLACEHOLDERS_SPEC = require(
-  path.join(__dirname, '..', 'lib', 'utils', 'template-placeholders.js'),
+  path.join(__dirname, '..', 'lib', 'utils', 'templatePlaceholders.js'),
 ).default;
 
 /**

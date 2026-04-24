@@ -8,8 +8,7 @@
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",
   "license": "BSD-3-Clause",
   "files": [
-    "/lib",
-    "/messages"
+    "/lib"
   ],
   "dependencies": {
     "@salesforce/kit": "^3.2.6",
@@ -18,7 +17,7 @@
     "got": "^11.8.6",
     "hpagent": "^1.2.0",
     "mime-types": "^3.0.2",
-    "proxy-from-env": "^1.1.0",
+    "proxy-from-env": "^2.1.0",
     "tar": "^7.5.13"
   },
   "devDependencies": {
@@ -37,8 +36,6 @@
     "@typescript-eslint/eslint-plugin": "^8.59.0",
     "@typescript-eslint/parser": "^8.59.0",
     "@vitest/coverage-v8": "^4.1.5",
-    "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.28.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
@@ -48,37 +45,161 @@
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-jsdoc": "^46.10.1",
     "eslint-plugin-sf-plugin": "^1.20.33",
+    "husky": "^9.1.7",
     "knip": "^6.6.2",
     "prettier": "^3.8.3",
     "pretty-quick": "^4.2.2",
     "shx": "^0.4.0",
     "ts-morph": "^24.0.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.5",
+    "wireit": "^0.14.12"
   },
   "engines": {
     "node": ">=22.0.0"
   },
   "scripts": {
-    "build": "yarn run clean:lib && yarn compile && yarn build:copy-templates && yarn build:templates",
-    "build:templates": "node scripts/build-templates",
-    "build:copy-templates": "node scripts/copy-templates",
-    "clean:lib": "shx rm -rf lib && shx rm -rf coverage",
-    "commit": "git-cz",
-    "compile": "tsc -b",
-    "lint": "eslint -c .eslintrc.json --ext .ts ./src ./test",
+    "build": "wireit",
+    "build:copy-templates": "wireit",
+    "build:templates": "wireit",
+    "clean:lib": "shx rm -rf lib coverage .wireit .eslintcache",
+    "compile": "wireit",
+    "check:knip": "wireit",
+    "lint": "wireit",
     "lint:fix": "eslint -c .eslintrc.json --ext .ts ./src ./test --fix",
-    "test": "vitest run --coverage",
+    "precommit": "wireit",
+    "prepare": "husky",
+    "prepush": "wireit",
+    "scanTs": "wireit",
+    "test": "wireit",
     "test:hook": "vitest run",
     "test:watch": "vitest",
-    "check:knip": "knip --no-exit-code"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+    "verify-for-bundling": "wireit"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "wireit": {
+    "compile": {
+      "command": "tsc -b",
+      "files": [
+        "src/**/*.ts",
+        "!src/templates/**",
+        "tsconfig.json",
+        "tsconfig.settings.json"
+      ],
+      "output": [
+        "lib/**",
+        ".tsbuildinfo"
+      ],
+      "clean": "if-file-deleted"
+    },
+    "lint": {
+      "command": "eslint -c .eslintrc.json --ext .ts ./src ./test --cache --cache-location .eslintcache",
+      "files": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        ".eslintrc.json",
+        "tsconfig.eslint.json",
+        "tsconfig.json",
+        "tsconfig.settings.json"
+      ],
+      "output": []
+    },
+    "scanTs": {
+      "command": "node scripts/scanTs.js",
+      "dependencies": [
+        "compile"
+      ],
+      "files": [
+        "scripts/scanTs.js"
+      ],
+      "output": []
+    },
+    "check:knip": {
+      "command": "knip --include exports,types,nsExports,nsTypes --no-config-hints",
+      "dependencies": [
+        "compile"
+      ],
+      "files": [
+        "knip.json",
+        "test/**/*.ts",
+        "scripts/*.js",
+        "package.json"
+      ],
+      "output": []
+    },
+    "build:copy-templates": {
+      "command": "node scripts/copy-templates.js",
+      "dependencies": [
+        "compile"
+      ],
+      "files": [
+        "scripts/copy-templates.js",
+        "package.json"
+      ],
+      "output": [
+        "src/templates/uiBundles/**",
+        "src/templates/project/reactinternalapp/**",
+        "src/templates/project/reactexternalapp/**"
+      ],
+      "clean": false
+    },
+    "build:templates": {
+      "command": "node scripts/build-templates.js",
+      "dependencies": [
+        "build:copy-templates"
+      ],
+      "files": [
+        "src/templates/**",
+        "scripts/build-templates.js"
+      ],
+      "output": [
+        "lib/templates/**"
+      ]
+    },
+    "build": {
+      "dependencies": [
+        "build:templates"
+      ]
+    },
+    "test": {
+      "command": "vitest run --coverage",
+      "dependencies": [
+        "build"
+      ],
+      "files": [
+        "vitest.config.ts"
+      ],
+      "output": [
+        "coverage/**"
+      ]
+    },
+    "verify-for-bundling": {
+      "command": "node scripts/verify-for-bundling.js",
+      "dependencies": [
+        "build"
+      ],
+      "files": [
+        "scripts/verify-for-bundling.js"
+      ],
+      "output": []
+    },
+    "precommit": {
+      "dependencies": [
+        "compile",
+        "lint",
+        "check:knip",
+        "scanTs"
+      ]
+    },
+    "prepush": {
+      "dependencies": [
+        "precommit",
+        "build",
+        "test",
+        "verify-for-bundling"
+      ]
+    }
   }
 }

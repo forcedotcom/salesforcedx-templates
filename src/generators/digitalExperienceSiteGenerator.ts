@@ -1,8 +1,17 @@
 /*
- * Copyright (c) 2026, salesforce.com, inc.
- * All rights reserved.
- * Licensed under the BSD 3-Clause license.
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ * Copyright 2026, Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 import * as crypto from 'node:crypto';
 import * as path from 'node:path';
@@ -16,7 +25,7 @@ const TEMPLATE_ROOT = 'digitalexperiencesite';
 export default class DigitalExperienceSiteGenerator extends BaseGenerator<DigitalExperienceSiteOptions> {
   private uuidCache: Record<string, string> = {};
 
-  constructor(options: DigitalExperienceSiteOptions) {
+  public constructor(options: DigitalExperienceSiteOptions) {
     super(options);
   }
 
@@ -38,8 +47,8 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
   public async generate(): Promise<void> {
     const { template, sitename, urlpathprefix, adminemail } = this.options;
 
-    const siteDevName = this.toSiteDevName(sitename);
-    const picassoSiteDevName = this.toPicassoSiteDevName(siteDevName);
+    const siteDevName = toSiteDevName(sitename);
+    const picassoSiteDevName = toPicassoSiteDevName(siteDevName);
 
     this.sourceRootWithPartialPath(path.join(TEMPLATE_ROOT, template));
 
@@ -84,7 +93,7 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     urlPathPrefix: string,
     adminEmail: string,
   ): Promise<void> {
-    const fileName = this.encodeForFileName(siteName);
+    const fileName = encodeForFileName(siteName);
     await this.render(
       this.templatePath('_network.xml'),
       this.destinationPath(
@@ -282,12 +291,12 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       'sfdc_cms__site',
       picassoSiteDevName,
     );
-    siteName = JSON.stringify(siteName) // escape special characters since this needs to be a JSON string
+    const escapedSiteName = JSON.stringify(siteName) // escape special characters since this needs to be a JSON string
       .slice(1, -1); // remove quotes added by JSON.stringify
     await this.render(
       this.templatePath('sfdc_cms__site', 'content.json'),
       this.destinationPath(path.join(sitePath, 'content.json')),
-      { siteName, urlName },
+      { siteName: escapedSiteName, urlName },
     );
     await this.render(
       this.templatePath('sfdc_cms__site', '_meta.json'),
@@ -369,39 +378,36 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       return crypto.randomUUID();
     }
 
-    key = `${namepsace}:${key}`;
-    if (!this.uuidCache[key]) {
-      this.uuidCache[key] = crypto.randomUUID();
+    const cacheKey = `${namepsace}:${key}`;
+    if (!this.uuidCache[cacheKey]) {
+      this.uuidCache[cacheKey] = crypto.randomUUID();
     }
 
-    return this.uuidCache[key];
-  }
-
-  private toSiteDevName(sitename: string): string {
-    return sitename
-      .replace(/[^a-zA-Z0-9]+/g, '_') // remove non-alphanumeric characters
-      .replace(/_$/, '') // remove trailing underscore
-      .replace(/^([0-9])/, 'X$1'); // prefix with X if it starts with a number
-  }
-
-  private toPicassoSiteDevName(siteDevName: string): string {
-    return `${siteDevName}1`;
-  }
-
-  private encodeForFileName(str: string): string {
-    const charMap = {
-      '~': '%7E',
-      '!': '%21',
-      '.': '%2E',
-      "'": '%27',
-      '(': '%28',
-      ')': '%29',
-    };
-
-    // encodeURIComponent is for URL, so we need additional steps to match filename
-    // encoding from the server
-    return encodeURIComponent(str)
-      .replace(/%20/g, ' ')
-      .replace(/[~!.'()]/g, (char) => charMap[char as keyof typeof charMap]);
+    return this.uuidCache[cacheKey];
   }
 }
+
+const toSiteDevName = (sitename: string): string =>
+  sitename
+    .replace(/[^a-zA-Z0-9]+/g, '_') // remove non-alphanumeric characters
+    .replace(/_$/, '') // remove trailing underscore
+    .replace(/^([0-9])/, 'X$1'); // prefix with X if it starts with a number
+
+const toPicassoSiteDevName = (siteDevName: string): string => `${siteDevName}1`;
+
+const encodeForFileName = (str: string): string => {
+  const charMap = {
+    '~': '%7E',
+    '!': '%21',
+    '.': '%2E',
+    "'": '%27',
+    '(': '%28',
+    ')': '%29',
+  };
+
+  // encodeURIComponent is for URL, so we need additional steps to match filename
+  // encoding from the server
+  return encodeURIComponent(str)
+    .replace(/%20/g, ' ')
+    .replace(/[~!.'()]/g, (char) => charMap[char as keyof typeof charMap]);
+};

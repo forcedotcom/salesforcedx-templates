@@ -13,14 +13,10 @@
     "plugin:sf-plugin/library"
   ],
   "rules": {
-    "curly": "error",
     "eqeqeq": "error",
     "no-buffer-constructor": "error",
     "no-debugger": "warn",
     "no-duplicate-imports": "error",
-    "no-extra-semi": "warn",
-    "no-unsafe-finally": "warn",
-    "no-unused-labels": "warn",
     "no-restricted-globals": [
       "warn",
       "name",
@@ -33,39 +29,39 @@
       "context"
     ], // non-complete list of globals that are easy to access unintentionally
     "jsdoc/no-types": "warn",
-    "semi": "warn",
-    "header/header": [
-      2,
-      "block",
-      [
-        "",
-        {
-          "pattern": " \\* Copyright \\(c\\) \\d{4}, salesforce\\.com, inc\\.",
-          "template": " * Copyright (c) 2021, salesforce.com, inc."
-        },
-        " * All rights reserved.",
-        " * Licensed under the BSD 3-Clause license.",
-        " * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause",
-        " "
-      ]
+    "unicorn/no-null": "error",
+    "unicorn/filename-case": ["warn", { "case": "camelCase" }],
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      { "selector": "typeLike", "format": ["PascalCase"] },
+      {
+        "selector": "variable",
+        "format": ["camelCase", "UPPER_CASE"],
+        "leadingUnderscore": "allow"
+      },
+      { "selector": "function", "format": ["camelCase"] },
+      {
+        "selector": "parameter",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
+      },
+      {
+        "selector": "classProperty",
+        "format": ["camelCase", "UPPER_CASE"],
+        "leadingUnderscore": "allow"
+      },
+      { "selector": "enumMember", "format": ["PascalCase", "UPPER_CASE"] }
     ],
     "no-underscore-dangle": "off",
     "no-await-in-loop": "off",
     "no-console": "off",
-    "class-methods-use-this": "off",
+    "class-methods-use-this": "error",
     "@typescript-eslint/member-ordering": "off",
-    "@typescript-eslint/explicit-member-accessibility": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off",
-    "@typescript-eslint/no-unsafe-call": "off",
-    "@typescript-eslint/no-unsafe-member-access": "off",
-    "@typescript-eslint/no-unsafe-return": "off",
-    "@typescript-eslint/no-unsafe-argument": "off",
-    "@typescript-eslint/no-unused-vars": ["off"],
-    "@typescript-eslint/no-empty-function": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
     "@typescript-eslint/ban-ts-comment": ["off"],
-    "@typescript-eslint/no-non-null-assertion": ["off"],
-    "@typescript-eslint/no-var-requires": ["off"],
+    // eslint-config-salesforce-typescript sets these to "error" but they no longer exist in the
+    // installed @typescript-eslint plugin version. ESLint validates "error"-severity rule definitions
+    // even after eslint-config-prettier turns them off, so we must explicitly disable them here.
     "@typescript-eslint/member-delimiter-style": ["off"],
     "@typescript-eslint/quotes": ["off"],
     "@typescript-eslint/type-annotation-spacing": ["off"]
@@ -74,6 +70,11 @@
     {
       "files": ["test/**/*.ts"],
       "rules": {
+        "class-methods-use-this": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/no-unused-expressions": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/explicit-function-return-type": "off",

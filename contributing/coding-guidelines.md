@@ -1,41 +1,23 @@
 # Coding Guidelines
 
-When possible, the following are enforced through the code formatter
-(Prettier.js) and eslint rules.
+Formatting (indentation, quotes) is enforced by Prettier. Naming and type conventions are enforced by ESLint. The following covers what cannot be automated.
 
 ---
 
-## Indentation
-
-We use spaces, not tabs.
-
 ## Names
 
-- Use PascalCase for `type` names
-- Use UPPERCASE_WITH_SPACES for `enum` values and constants
-- Use camelCase for `function` and `method` names
-- Use camelCase for `property` names and `local variables`
 - Use whole words in names when possible
-- Use camelCase for file names (name files after the main Type it exports)
 
 ## Conventions
 
 - Create a folder for each major sub-area
-- In the folder, create an `index.ts` that exports the public-facing API for that
-  sub-area.
-- Tests can refer directly to the `.ts` files; other consumers should refer to the
-  `index.ts` file.
+- Import directly from source files; do not create barrel `index.ts` re-export files
 
 ## Comments
 
-- Use comments sparingly because comments always become outdated quickly.
-- If you must, use JSDoc style comments.
+- Use comments sparingly — they become outdated quickly
+- Use JSDoc style where comments are needed
 
 ## Strings
 
-- Use 'single quotes'
-- All strings visible to the user need to be externalized in a `messages.ts` file.
-
-## null and undefined
-
-Use `undefined`, do not use `null`.
+- All strings visible to the user need to be externalized in a `messages.ts` file

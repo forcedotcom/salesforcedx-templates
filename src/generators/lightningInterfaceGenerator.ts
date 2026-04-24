@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as path from 'path';
+import * as path from 'node:path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningInterfaceOptions } from '../utils/types';
@@ -33,21 +33,21 @@ export default class LightningInterfaceGenerator extends BaseGenerator<Lightning
           path.join(
             this.outputdir,
             interfacename,
-            `${interfacename}.intf-meta.xml`
-          )
+            `${interfacename}.intf-meta.xml`,
+          ),
         ),
         {
           apiVersion: this.apiversion,
           description: nls.localize('LightningInterfaceBundle'),
-        }
+        },
       );
     }
     await this.render(
       this.templatePath(`${template}.intf`),
       this.destinationPath(
-        path.join(this.outputdir, interfacename, `${interfacename}.intf`)
+        path.join(this.outputdir, interfacename, `${interfacename}.intf`),
       ),
-      {}
+      {},
     );
   }
 }

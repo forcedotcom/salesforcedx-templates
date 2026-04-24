@@ -4,10 +4,10 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as nodeFs from 'fs';
-import * as path from 'path';
-import { dirnameTemplatesDefault } from './constants';
+import * as nodeFs from 'node:fs';
+import * as path from 'node:path';
 import { nls } from '../i18n';
+import { dirnameTemplatesDefault } from './constants';
 
 export class CreateUtil {
   public static checkInputs(flagValue: string): string {
@@ -21,12 +21,10 @@ export class CreateUtil {
     if (!letterStartRegExp.test(flagValue)) {
       throw new Error(nls.localize('NameMustStartWithLetterError'));
     }
-    const endUnderscore = /_$/;
-    if (endUnderscore.test(flagValue)) {
+    if (flagValue.endsWith('_')) {
       throw new Error(nls.localize('EndWithUnderscoreError'));
     }
-    const dblUnderscore = /__/;
-    if (dblUnderscore.test(flagValue)) {
+    if (flagValue.includes('__')) {
       throw new Error(nls.localize('DoubleUnderscoreError'));
     }
     return '';
@@ -37,20 +35,19 @@ export class CreateUtil {
     filetype: RegExp,
     command: string,
     fs: typeof nodeFs = nodeFs,
-    templatesRootPath?: string
+    templatesRootPath?: string,
   ): string[] {
     const basePath = templatesRootPath ?? dirnameTemplatesDefault ?? '';
     const files = fs
       .readdirSync(path.resolve(basePath, command))
       .filter((file) => filetype.test(file))
-      .map((file) => {
-        return file.split('.', 1).toString();
-      });
+      .map((file) => file.split('.', 1).toString());
     return files;
   }
 
   /** Get the names of directories that contain matching template files.
    * This will look in directories under the command/subdir folder.
+   *
    * @param command the command name
    * @param filetype optional file name pattern to match on in the subdirectories
    * @param subdir optional subdirectory under `templates/${command}`
@@ -60,7 +57,7 @@ export class CreateUtil {
     command: string,
     { filetype, subdir }: { filetype?: RegExp; subdir?: string } = {},
     fs: typeof nodeFs = nodeFs,
-    templatesRootPath?: string
+    templatesRootPath?: string,
   ): string[] {
     const basePath = templatesRootPath ?? dirnameTemplatesDefault ?? '';
     let basedir = path.resolve(basePath, command);
@@ -75,7 +72,7 @@ export class CreateUtil {
       return subdirs.filter((dir) =>
         fs
           .readdirSync(path.join(basedir, dir), { withFileTypes: true })
-          .some((ent) => ent.isFile() && filetype.test(ent.name))
+          .some((ent) => ent.isFile() && filetype.test(ent.name)),
       );
     }
     return subdirs;

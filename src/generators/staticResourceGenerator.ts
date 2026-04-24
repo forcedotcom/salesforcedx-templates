@@ -4,8 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+import * as path from 'node:path';
 import { extension } from 'mime-types';
-import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { StaticResourceOptions } from '../utils/types';
@@ -33,38 +33,38 @@ export default class StaticResourceGenerator extends BaseGenerator<StaticResourc
       await this.render(
         this.templatePath(`empty.${ext}`),
         this.destinationPath(
-          path.join(this.outputdir, `${resourcename}.${ext}`)
+          path.join(this.outputdir, `${resourcename}.${ext}`),
         ),
-        {}
+        {},
       );
     } else if (ext === 'zip') {
       // For zip files, write an empty js file in a folder
       await this.render(
         this.templatePath('_gitkeep'),
         this.destinationPath(
-          path.join(this.outputdir, resourcename, '.gitkeep')
+          path.join(this.outputdir, resourcename, '.gitkeep'),
         ),
-        {}
+        {},
       );
     } else {
       // For all other mime types write a generic .resource file
       await this.render(
         this.templatePath('empty.resource'),
         this.destinationPath(
-          path.join(this.outputdir, `${resourcename}.resource`)
+          path.join(this.outputdir, `${resourcename}.resource`),
         ),
-        {}
+        {},
       );
     }
 
     await this.render(
       this.templatePath('_staticresource.resource-meta.xml'),
       this.destinationPath(
-        path.join(this.outputdir, `${resourcename}.resource-meta.xml`)
+        path.join(this.outputdir, `${resourcename}.resource-meta.xml`),
       ),
       {
         contentType: contenttype,
-      }
+      },
     );
   }
 }

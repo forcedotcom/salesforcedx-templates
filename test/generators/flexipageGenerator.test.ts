@@ -5,8 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TemplateService, TemplateType } from '../../src/index';
 import FlexipageGenerator from '../../src/generators/flexipageGenerator';
@@ -26,7 +26,7 @@ const assertFileContent = (file: string, regex: string | RegExp) => {
   const body = fs.readFileSync(file, 'utf8');
 
   const match =
-    typeof regex === 'string' ? body.indexOf(regex) !== -1 : regex.test(body);
+    typeof regex === 'string' ? body.includes(regex) : regex.test(body);
 
   expect(match, `${file} did not match '${regex}'. Contained:\n\n${body}`).toBe(
     true,

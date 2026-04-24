@@ -14,9 +14,9 @@ import {
 
 describe('BaseGenerator', () => {
   const API_VERSION = getDefaultApiVersion();
-  interface MyTemplateOptions extends TemplateOptions {
+  type MyTemplateOptions = {
     customProp: boolean;
-  }
+  } & TemplateOptions;
   class MyGenerator extends BaseGenerator<MyTemplateOptions> {
     public validateOptions() {}
     public async generate() {

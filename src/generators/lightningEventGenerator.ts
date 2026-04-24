@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as path from 'path';
+import * as path from 'node:path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningEventOptions } from '../utils/types';
@@ -29,21 +29,21 @@ export default class LightningEventGenerator extends BaseGenerator<LightningEven
       await this.render(
         this.templatePath('_auradefinitionbundle.evt-meta.xml'),
         this.destinationPath(
-          path.join(this.outputdir, eventname, `${eventname}.evt-meta.xml`)
+          path.join(this.outputdir, eventname, `${eventname}.evt-meta.xml`),
         ),
         {
           eventname,
           apiVersion: this.apiversion,
           description: nls.localize('LightningEventBundle'),
-        }
+        },
       );
     }
     await this.render(
       this.templatePath(`${template}.evt`),
       this.destinationPath(
-        path.join(this.outputdir, eventname, `${eventname}.evt`)
+        path.join(this.outputdir, eventname, `${eventname}.evt`),
       ),
-      {}
+      {},
     );
   }
 }

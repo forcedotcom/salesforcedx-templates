@@ -16,7 +16,7 @@ import {
 import { nls } from '../i18n';
 
 export function importGenerator<TOptions extends TemplateOptions>(
-  templateType: TemplateType
+  templateType: TemplateType,
 ): GeneratorClass<TOptions> {
   const generator = generators.get(templateType);
   if (!generator) {
@@ -40,12 +40,13 @@ export class TemplateService {
 
   /**
    * Get an instance of TemplateService
+   *
    * @param cwd cwd of current environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
    * @param context optional generator context with fs and templatesRootPath
    */
   public static getInstance(
     cwd?: string,
-    context?: GeneratorContext
+    context?: GeneratorContext,
   ): TemplateService {
     if (!TemplateService.instance) {
       TemplateService.instance = new TemplateService(cwd, context);
@@ -77,6 +78,7 @@ export class TemplateService {
 
   /**
    * Create using templates
+   *
    * @param templateType template type
    * @param templateOptions template options
    * @param customTemplatesRootPathOrGitRepo custom templates root path or git repo. If not specified, use built-in templates
@@ -84,7 +86,7 @@ export class TemplateService {
   public create<TOptions extends TemplateOptions>(
     templateType: TemplateType,
     templateOptions: TOptions,
-    customTemplatesRootPathOrGitRepo?: string
+    customTemplatesRootPathOrGitRepo?: string,
   ): Promise<CreateOutput> {
     const runOptions = {
       cwd: this.cwd,

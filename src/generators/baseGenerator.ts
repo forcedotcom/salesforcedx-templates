@@ -5,8 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as nodeFs from 'fs';
-import * as path from 'path';
+import * as nodeFs from 'node:fs';
+import * as path from 'node:path';
 import { render } from 'ejs';
 import { nls } from '../i18n';
 import {
@@ -26,9 +26,9 @@ type Changes = {
   forced: string[];
 };
 
-interface FsError extends Error {
+type FsError = {
   code: string;
-}
+} & Error;
 
 export async function setCustomTemplatesRootPathOrGitRepo(
   pathOrRepoUri?: string,
@@ -102,7 +102,7 @@ abstract class NotYeoman {
     return filepath;
   }
 
-  public destinationRoot(rootPath?: string) {
+  public destinationRoot(rootPath?: string): string {
     if (typeof rootPath === 'string') {
       this._destinationRoot = path.resolve(rootPath);
 
@@ -200,6 +200,7 @@ export abstract class BaseGenerator<
 
   /**
    * Set source root to built-in templates or custom templates root if available.
+   *
    * @param partialPath the relative path from the templates folder to templates root folder.
    */
   public sourceRootWithPartialPath(partialPath: string): void {
@@ -210,14 +211,10 @@ export abstract class BaseGenerator<
     // set generator source directory to custom templates root if available
     if (!this.customTemplatesRootPath) {
       this.sourceRoot(path.join(this.builtInTemplatesRootPath));
-    } else {
-      if (
-        this._fs.existsSync(
-          path.join(this.customTemplatesRootPath, partialPath),
-        )
-      ) {
-        this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
-      }
+    } else if (
+      this._fs.existsSync(path.join(this.customTemplatesRootPath, partialPath))
+    ) {
+      this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
     }
   }
 

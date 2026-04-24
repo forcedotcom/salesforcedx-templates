@@ -99,12 +99,11 @@ describe('Windows path length (pack:verify)', () => {
       return;
     }
 
-    const rels = (
-      fs.readdirSync(templatesRoot, {
+    const rels = fs
+      .readdirSync(templatesRoot, {
         recursive: true,
         withFileTypes: true,
-      }) as fs.Dirent[]
-    )
+      })
       .filter((d) => d.isFile())
       .map((d) =>
         path

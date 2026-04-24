@@ -6,14 +6,14 @@
  */
 
 import assert from 'node:assert';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import got from 'got';
-import * as path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { getProxyForUrl } from 'proxy-from-env';
 import { TemplateService, TemplateType } from '../../src/index';
 import { nls } from '../../src/i18n/index';
 import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';
-import { getProxyForUrl } from 'proxy-from-env';
 import {
   BaseGenerator,
   setCustomTemplatesRootPathOrGitRepo,
@@ -36,7 +36,7 @@ const assertFileContent = (file: string, regex: string | RegExp) => {
   const body = fs.readFileSync(file, 'utf8');
 
   const match =
-    typeof regex === 'string' ? body.indexOf(regex) !== -1 : regex.test(body);
+    typeof regex === 'string' ? body.includes(regex) : regex.test(body);
 
   expect(match, `${file} did not match '${regex}'. Contained:\n\n${body}`).toBe(
     true,
@@ -440,7 +440,7 @@ describe('TemplateService', () => {
         } catch {
           throw new Error(
             `No generator found for template type: ${
-              TemplateType[templateType as number]
+              TemplateType[templateType]
             }`,
           );
         }

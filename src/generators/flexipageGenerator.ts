@@ -4,16 +4,16 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import { readdir } from 'node:fs/promises';
-import * as path from 'path';
+import * as path from 'node:path';
 import { CreateUtil } from '../utils';
 import { FlexipageOptions } from '../utils/types';
+import { nls } from '../i18n';
 import {
   BaseGenerator,
   setCustomTemplatesRootPathOrGitRepo,
 } from './baseGenerator';
-import { nls } from '../i18n';
 
 const VALID_TEMPLATES = ['RecordPage', 'AppPage', 'HomePage'] as const;
 const MAX_SECONDARY_FIELDS = 11;
@@ -27,7 +27,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     CreateUtil.checkInputs(this.options.flexipagename);
     CreateUtil.checkInputs(this.options.template);
 
-    if (!VALID_TEMPLATES.includes(this.options.template as any)) {
+    if (!VALID_TEMPLATES.includes(this.options.template)) {
       throw new Error(
         nls.localize(
           'InvalidFlexipageTemplate',
@@ -108,11 +108,11 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     // Prepare EJS template variables
     const templateVars = {
       flexipagename,
-      masterlabel: masterlabel || flexipagename,
-      description: description || '',
+      masterlabel: masterlabel ?? flexipagename,
+      description: description ?? '',
       apiVersion: this.apiversion,
-      entityName: entityName || '',
-      primaryField: primaryField || '',
+      entityName: entityName ?? '',
+      primaryField: primaryField ?? '',
       secondaryFields: Array.isArray(secondaryFields) ? secondaryFields : [],
       detailFields: Array.isArray(detailFields) ? detailFields : [],
     };

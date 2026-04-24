@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as path from 'path';
+import * as path from 'node:path';
 import { CreateUtil } from '../utils';
 import { ApexClassOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -22,15 +22,15 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
     await this.render(
       this.templatePath(`${template}.cls`),
       this.destinationPath(path.join(this.outputdir, `${classname}.cls`)),
-      { apiName: classname }
+      { apiName: classname },
     );
 
     await this.render(
       this.templatePath('_class.cls-meta.xml'),
       this.destinationPath(
-        path.join(this.outputdir, `${classname}.cls-meta.xml`)
+        path.join(this.outputdir, `${classname}.cls-meta.xml`),
       ),
-      { apiName: classname, apiVersion: this.apiversion }
+      { apiName: classname, apiVersion: this.apiversion },
     );
   }
 }

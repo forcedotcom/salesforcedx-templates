@@ -1,5 +1,5 @@
 /* eslint header/header: off */
-/*---------------------------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) 2021 Vercel, Inc. All rights reserved.
  *  Licensed under the MIT License. See OSSREADME.json in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -9,23 +9,23 @@
  * See https://github.com/vercel/next.js for more information
  */
 
-import * as crypto from 'crypto';
-import * as nodeFs from 'fs';
-import got from 'got';
-import * as path from 'path';
-import { extract } from 'tar';
+import * as crypto from 'node:crypto';
+import * as nodeFs from 'node:fs';
+import * as path from 'node:path';
 import * as os from 'node:os';
+import { extract } from 'tar';
+import got from 'got';
 
-import { nls } from '../i18n';
 import { HttpsProxyAgent } from 'hpagent';
 import { getProxyForUrl } from 'proxy-from-env';
+import { nls } from '../i18n';
 
-interface RepoInfo {
+type RepoInfo = {
   username: string;
   name: string;
   branch: string;
   filePath: string;
-}
+};
 
 const SFDX_STATE_FOLDER = '.sfdx';
 
@@ -38,6 +38,7 @@ export function DIR(): string {
 
 /**
  * extract repo info from uri
+ *
  * @param repoUri uri to git repo
  */
 async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
@@ -89,6 +90,7 @@ async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
 
 /**
  * Returns a path to store custom templates from a Git repo
+ *
  * @param repoUri repository uri
  * @returns path to store custom templates
  */
@@ -104,6 +106,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
 
 /**
  * Load custom templates Git repo. Currently only supports GitHub.
+ *
  * @param repoUri repo uri
  * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
  * @param fs node-fs-compatible object, defaults to node:fs

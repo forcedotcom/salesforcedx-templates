@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as path from 'path';
+import * as path from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import UIBundleGenerator from '../../src/generators/uiBundleGenerator';
 import { UI_BUNDLES_DIR } from '../../src/utils/constants';

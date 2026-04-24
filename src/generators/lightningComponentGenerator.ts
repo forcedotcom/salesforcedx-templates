@@ -5,8 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import * as path from 'node:path';
 import { camelCaseToTitleCase } from '@salesforce/kit';
-import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { LightningComponentOptions } from '../utils/types';
@@ -28,12 +28,12 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
     }
 
     if (
-      CreateUtil.getCommandTemplatesInSubdirs(
+      !CreateUtil.getCommandTemplatesInSubdirs(
         'lightningcomponent',
         { subdir: this.options.type },
         this._fs,
         this.templatesRootPath,
-      ).indexOf(this.options.template) < 0
+      ).includes(this.options.template)
     ) {
       throw new Error(
         nls.localize(

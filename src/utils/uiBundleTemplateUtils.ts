@@ -4,9 +4,9 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
-import * as path from 'path';
+import * as path from 'node:path';
 
 import templatePlaceholdersSpec from './template-placeholders';
 
@@ -307,7 +307,7 @@ export async function generateBuiltInFullTemplate(
     loginurl,
     apiversion,
     name: projectname,
-    company: (process.env.USER || 'Demo') + ' company',
+    company: `${process.env.USER ?? 'Demo'} company`,
   };
 
   const nameReplacementsEntry = FULL_TEMPLATE_DEFAULT_NAMES[template];
@@ -316,12 +316,11 @@ export async function generateBuiltInFullTemplate(
     defaultpackagedir,
     projectnameAlphanumeric,
   };
-  const nameReplacements: [string, string][] = TEMPLATE_PLACEHOLDERS_SPEC.map(
-    (entry) => [
+  const nameReplacements: Array<[string, string]> =
+    TEMPLATE_PLACEHOLDERS_SPEC.map((entry) => [
       entry.placeholder,
       resolveReplacement(entry.replacement, replacementCtx),
-    ],
-  );
+    ]);
   // Add template-specific name replacements BEFORE placeholder replacements
   // to avoid double-replacement (e.g., _a_ -> reactexternalapptest, then reactexternalapp -> reactexternalapptest again)
   if (nameReplacementsEntry) {
@@ -357,7 +356,7 @@ export async function generateBuiltInFullTemplate(
 
 type GenerateFromProjectTemplateDirOptions = {
   /** Pairs of [from, to] for renaming template default app/site names to project name */
-  nameReplacements?: [string, string][];
+  nameReplacements?: Array<[string, string]>;
   /** Renders an EJS template file with the given data; used for template files */
   renderEjs: (
     filePath: string,

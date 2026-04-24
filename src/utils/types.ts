@@ -25,7 +25,7 @@ import { BaseGenerator } from '../generators/baseGenerator';
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
   options: TOptions,
   context?: GeneratorContext,
-  cwd?: string
+  cwd?: string,
 ) => BaseGenerator<TOptions>;
 
 /**
@@ -110,16 +110,16 @@ export type CreateOutput = {
  * Template Options
  * If not supplied, the apiversion and outputdir use default values.
  */
-export interface TemplateOptions {
+export type TemplateOptions = {
   apiversion?: string;
   outputdir?: string;
-}
+};
 
-export interface AnalyticsTemplateOptions extends TemplateOptions {
+export type AnalyticsTemplateOptions = {
   templatename: string;
-}
+} & TemplateOptions;
 
-export interface ApexClassOptions extends TemplateOptions {
+export type ApexClassOptions = {
   template:
     | 'DefaultApexClass'
     | 'BasicUnitTest'
@@ -127,7 +127,7 @@ export interface ApexClassOptions extends TemplateOptions {
     | 'ApexException'
     | 'InboundEmailService';
   classname: string;
-}
+} & TemplateOptions;
 
 type ApexTriggerEvent =
   | 'before insert'
@@ -138,20 +138,20 @@ type ApexTriggerEvent =
   | 'after delete'
   | 'after undelete';
 
-export interface ApexTriggerOptions extends TemplateOptions {
+export type ApexTriggerOptions = {
   triggername: string;
   triggerevents: ApexTriggerEvent[];
   sobject: string;
   template: 'ApexTrigger';
-}
+} & TemplateOptions;
 
-export interface LightningAppOptions extends TemplateOptions {
+export type LightningAppOptions = {
   appname: string;
   template: 'DefaultLightningApp';
   internal: boolean;
-}
+} & TemplateOptions;
 
-export interface LightningComponentOptions extends TemplateOptions {
+export type LightningComponentOptions = {
   componentname: string;
   template:
     | 'default'
@@ -160,27 +160,27 @@ export interface LightningComponentOptions extends TemplateOptions {
     | 'typeScript';
   type: 'aura' | 'lwc';
   internal: boolean;
-}
+} & TemplateOptions;
 
-export interface LightningEventOptions extends TemplateOptions {
+export type LightningEventOptions = {
   eventname: string;
   template: 'DefaultLightningEvt';
   internal: boolean;
-}
+} & TemplateOptions;
 
-export interface LightningInterfaceOptions extends TemplateOptions {
+export type LightningInterfaceOptions = {
   interfacename: string;
   template: 'DefaultLightningIntf';
   internal: boolean;
-}
+} & TemplateOptions;
 
-export interface LightningTestOptions extends TemplateOptions {
+export type LightningTestOptions = {
   template: 'DefaultLightningTest';
   testname: string;
   internal: boolean;
-}
+} & TemplateOptions;
 
-export interface ProjectOptions extends TemplateOptions {
+export type ProjectOptions = {
   projectname: string;
   defaultpackagedir: string;
   /**
@@ -199,34 +199,34 @@ export interface ProjectOptions extends TemplateOptions {
   manifest: boolean;
   loginurl: string;
   lwcLanguage?: 'javascript' | 'typescript';
-}
+} & TemplateOptions;
 
-export interface VisualforceComponentOptions extends TemplateOptions {
+export type VisualforceComponentOptions = {
   componentname: string;
   label: string;
   template: 'DefaultVFComponent';
-}
+} & TemplateOptions;
 
-export interface VisualforcePageOptions extends TemplateOptions {
+export type VisualforcePageOptions = {
   pagename: string;
   label: string;
   template: 'DefaultVFPage';
-}
+} & TemplateOptions;
 
-export interface StaticResourceOptions extends TemplateOptions {
+export type StaticResourceOptions = {
   resourcename: string;
   contenttype: string;
   template: 'empty';
-}
+} & TemplateOptions;
 
-export interface UIBundleOptions extends TemplateOptions {
+export type UIBundleOptions = {
   bundlename: string;
   template: string;
   masterlabel?: string;
   internal?: boolean;
-}
+} & TemplateOptions;
 
-export interface FlexipageOptions extends TemplateOptions {
+export type FlexipageOptions = {
   flexipagename: string;
   template: 'RecordPage' | 'AppPage' | 'HomePage';
   flexipageTemplatesGitRepo?: string; // Optional - uses local templates if not provided
@@ -239,11 +239,11 @@ export interface FlexipageOptions extends TemplateOptions {
   primaryField?: string; // Single primary field for dynamic highlights (e.g., 'Name')
   secondaryFields?: string[]; // Secondary fields for dynamic highlights (e.g., ['Industry', 'AnnualRevenue'])
   detailFields?: string[]; // Fields to display in the Details tab field section (e.g., ['Name', 'Phone', 'Industry'])
-}
+} & TemplateOptions;
 
-export interface DigitalExperienceSiteOptions extends TemplateOptions {
+export type DigitalExperienceSiteOptions = {
   template: string;
   sitename: string;
   urlpathprefix: string;
   adminemail: string;
-}
+} & TemplateOptions;

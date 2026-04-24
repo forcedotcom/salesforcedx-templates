@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as path from 'path';
+import * as path from 'node:path';
 import { CreateUtil } from '../utils';
 import { ApexTriggerOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -21,14 +21,14 @@ export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptio
     await this.render(
       this.templatePath(`${template}.trigger`),
       this.destinationPath(path.join(this.outputdir, `${triggername}.trigger`)),
-      { triggername, sobject, triggerEvents: triggerevents }
+      { triggername, sobject, triggerEvents: triggerevents },
     );
     await this.render(
       this.templatePath('_trigger.trigger-meta.xml'),
       this.destinationPath(
-        path.join(this.outputdir, `${triggername}.trigger-meta.xml`)
+        path.join(this.outputdir, `${triggername}.trigger-meta.xml`),
       ),
-      { apiVersion: this.apiversion }
+      { apiVersion: this.apiversion },
     );
   }
 }

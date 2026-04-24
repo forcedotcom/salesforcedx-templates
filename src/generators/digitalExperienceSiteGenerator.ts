@@ -15,7 +15,7 @@
  */
 import * as crypto from 'node:crypto';
 import * as path from 'node:path';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { DigitalExperienceSiteOptions } from '../utils/types';
 import { nls } from '../i18n';
 import { BaseGenerator } from './baseGenerator';

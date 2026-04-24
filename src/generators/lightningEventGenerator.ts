@@ -15,7 +15,7 @@
  */
 import * as path from 'node:path';
 import { nls } from '../i18n';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { LightningEventOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 

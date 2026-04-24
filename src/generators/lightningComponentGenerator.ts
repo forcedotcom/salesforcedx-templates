@@ -17,7 +17,7 @@
 import * as path from 'node:path';
 import { camelCaseToTitleCase } from '@salesforce/kit';
 import { nls } from '../i18n';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { LightningComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 

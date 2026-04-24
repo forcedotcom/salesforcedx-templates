@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as path from 'node:path';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { GeneratorContext, ProjectOptions } from '../utils/types';
 import {
   BUILT_IN_FULL_TEMPLATES,

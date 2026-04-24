@@ -16,7 +16,7 @@
 import * as path from 'node:path';
 import { extension } from 'mime-types';
 import { nls } from '../i18n';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { StaticResourceOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 

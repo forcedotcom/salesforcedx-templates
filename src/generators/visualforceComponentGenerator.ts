@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as path from 'node:path';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { VisualforceComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 

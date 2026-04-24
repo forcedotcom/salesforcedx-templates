@@ -16,7 +16,7 @@
 import * as fs from 'node:fs';
 import { readdir } from 'node:fs/promises';
 import * as path from 'node:path';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { FlexipageOptions } from '../utils/types';
 import { nls } from '../i18n';
 import {

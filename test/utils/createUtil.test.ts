@@ -17,7 +17,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { nls, MessageKey } from '../../src/i18n/index';
-import { CreateUtil } from '../../src/utils';
+import { CreateUtil } from '../../src/utils/createUtil';
 
 vi.mock('fs', async (importOriginal) => {
   const actual = await importOriginal<typeof import('fs')>();

@@ -15,7 +15,7 @@
  */
 import * as path from 'node:path';
 import { camelCaseToTitleCase } from '@salesforce/kit';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { UI_BUNDLES_DIR } from '../utils/constants';
 import { UIBundleOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';

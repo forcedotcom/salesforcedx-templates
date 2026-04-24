@@ -3,13 +3,17 @@
   "compilerOptions": {
     "outDir": "./lib",
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "plugins": [{ "name": "@salesforce/vscode-i18n/tsPlugin" }]
   },
   "include": ["./src/**/*"],
   "exclude": [
     "./src/templates/lightningcomponent/lwc/typeScript/*",
     "./src/templates/uiBundles/reactbasic/**/*",
     "./src/templates/project/reactinternalapp/**/*",
-    "./src/templates/project/reactexternalapp/**/*"
+    "./src/templates/project/reactexternalapp/**/*",
+    "./src/templates/project/reactb2e/**/*",
+    "./src/templates/project/reactb2x/**/*",
+    "./src/templates/webapplication/**/*"
   ]
 }

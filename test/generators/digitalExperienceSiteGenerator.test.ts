@@ -5,10 +5,17 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as sinon from 'sinon';
-import { expect } from 'chai';
 import * as path from 'path';
-import { CreateUtil, DigitalExperienceSiteOptions } from '../../src';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockInstance,
+} from 'vitest';
+import { CreateUtil, DigitalExperienceSiteOptions } from '../../src/index';
 import DigitalExperienceSiteGenerator from '../../src/generators/digitalExperienceSiteGenerator';
 
 describe('DigitalExperienceSiteGenerator', () => {
@@ -20,7 +27,7 @@ describe('DigitalExperienceSiteGenerator', () => {
   };
 
   afterEach(() => {
-    sinon.restore();
+    vi.restoreAllMocks();
   });
 
   describe('validateOptions', () => {
@@ -34,9 +41,7 @@ describe('DigitalExperienceSiteGenerator', () => {
           ...defaultMockInputs,
           urlpathprefix,
         };
-        expect(
-          () => new DigitalExperienceSiteGenerator(options)
-        ).to.not.throw();
+        expect(() => new DigitalExperienceSiteGenerator(options)).not.toThrow();
       });
     });
 
@@ -50,40 +55,46 @@ describe('DigitalExperienceSiteGenerator', () => {
           ...defaultMockInputs,
           urlpathprefix,
         };
-        expect(() => new DigitalExperienceSiteGenerator(options)).to.throw(
-          'url-path-prefix must contain only alphanumeric characters.'
+        expect(() => new DigitalExperienceSiteGenerator(options)).toThrow(
+          'url-path-prefix must contain only alphanumeric characters.',
         );
       });
     });
 
     it('should call CreateUtil.checkInputs for template validation', () => {
-      const checkInputsStub = sinon.stub(CreateUtil, 'checkInputs').returns('');
+      const checkInputsSpy = vi
+        .spyOn(CreateUtil, 'checkInputs')
+        .mockReturnValue('');
       new DigitalExperienceSiteGenerator(defaultMockInputs);
-      expect(checkInputsStub.calledOnceWith('BuildYourOwnLWR')).to.be.true;
+      expect(checkInputsSpy).toHaveBeenCalledOnce();
+      expect(checkInputsSpy).toHaveBeenCalledWith('BuildYourOwnLWR');
     });
   });
 
   describe('generate', () => {
-    let renderStub: sinon.SinonStub;
+    let renderSpy: MockInstance;
 
     beforeEach(() => {
-      renderStub = sinon
-        .stub(DigitalExperienceSiteGenerator.prototype as any, 'render')
-        .resolves();
+      renderSpy = vi
+        .spyOn(DigitalExperienceSiteGenerator.prototype as any, 'render')
+        .mockResolvedValue(undefined);
     });
+
+    const findCall = (matcher: (args: any[]) => boolean) =>
+      renderSpy.mock.calls.find((args) => matcher(args));
 
     it('should generate network file with correct path and variables', async () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const networkCall = renderStub
-        .getCalls()
-        .find((call) => call.args[1].includes('network-meta.xml'));
-      expect(networkCall).to.exist;
-      expect(networkCall!.args[1]).to.include(
-        path.join('networks', 'TestSite.network-meta.xml')
+      const networkCall = findCall((args) =>
+        args[1].includes('network-meta.xml'),
       );
-      expect(networkCall!.args[2]).to.deep.equal({
+      expect(networkCall).toBeDefined();
+      expect(networkCall![1]).toContain(
+        path.join('networks', 'TestSite.network-meta.xml'),
+      );
+      expect(networkCall![2]).toEqual({
         siteName: 'TestSite',
         siteDevName: 'TestSite',
         picassoSiteDevName: 'TestSite1',
@@ -96,14 +107,12 @@ describe('DigitalExperienceSiteGenerator', () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const siteCall = renderStub
-        .getCalls()
-        .find((call) => call.args[1].includes('site-meta.xml'));
-      expect(siteCall).to.exist;
-      expect(siteCall!.args[1]).to.include(
-        path.join('sites', 'TestSite.site-meta.xml')
+      const siteCall = findCall((args) => args[1].includes('site-meta.xml'));
+      expect(siteCall).toBeDefined();
+      expect(siteCall![1]).toContain(
+        path.join('sites', 'TestSite.site-meta.xml'),
       );
-      expect(siteCall!.args[2]).to.deep.equal({
+      expect(siteCall![2]).toEqual({
         siteName: 'TestSite',
         siteDevName: 'TestSite',
         urlPathPrefix: 'testprefix',
@@ -114,17 +123,15 @@ describe('DigitalExperienceSiteGenerator', () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const configCall = renderStub
-        .getCalls()
-        .find((call) =>
-          call.args[1].includes('digitalExperienceConfig-meta.xml')
-        );
-      expect(configCall).to.exist;
-      expect(configCall!.args[1]).to.include(
+      const configCall = findCall((args) =>
+        args[1].includes('digitalExperienceConfig-meta.xml'),
+      );
+      expect(configCall).toBeDefined();
+      expect(configCall![1]).toContain(
         path.join(
           'digitalExperienceConfigs',
-          'TestSite1.digitalExperienceConfig-meta.xml'
-        )
+          'TestSite1.digitalExperienceConfig-meta.xml',
+        ),
       );
     });
 
@@ -132,17 +139,17 @@ describe('DigitalExperienceSiteGenerator', () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const metaCall = renderStub
-        .getCalls()
-        .find((call) => call.args[1].includes('digitalExperience-meta.xml'));
-      expect(metaCall).to.exist;
-      expect(metaCall!.args[1]).to.include(
+      const metaCall = findCall((args) =>
+        args[1].includes('digitalExperience-meta.xml'),
+      );
+      expect(metaCall).toBeDefined();
+      expect(metaCall![1]).toContain(
         path.join(
           'digitalExperiences',
           'site',
           'TestSite1',
-          'TestSite1.digitalExperience-meta.xml'
-        )
+          'TestSite1.digitalExperience-meta.xml',
+        ),
       );
     });
 
@@ -161,23 +168,17 @@ describe('DigitalExperienceSiteGenerator', () => {
         const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
-        const routeContentCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(
-              path.join('sfdc_cms__route', route, 'content.json')
-            )
-          );
-        const routeMetaCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(
-              path.join('sfdc_cms__route', route, '_meta.json')
-            )
-          );
-        expect(routeContentCall, `Expected route content for ${route}`).to
-          .exist;
-        expect(routeMetaCall, `Expected route meta for ${route}`).to.exist;
+        const routeContentCall = findCall((args) =>
+          args[1].includes(path.join('sfdc_cms__route', route, 'content.json')),
+        );
+        const routeMetaCall = findCall((args) =>
+          args[1].includes(path.join('sfdc_cms__route', route, '_meta.json')),
+        );
+        expect(
+          routeContentCall,
+          `Expected route content for ${route}`,
+        ).toBeDefined();
+        expect(routeMetaCall, `Expected route meta for ${route}`).toBeDefined();
       });
     });
 
@@ -196,24 +197,19 @@ describe('DigitalExperienceSiteGenerator', () => {
         const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
-        const viewContentCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(
-              path.join('sfdc_cms__view', view, 'content.json')
-            )
-          );
-        const viewMetaCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(
-              path.join('sfdc_cms__view', view, '_meta.json')
-            )
-          );
-        expect(viewContentCall, `Expected view content for ${view}`).to.exist;
-        expect(viewMetaCall, `Expected view meta for ${view}`).to.exist;
-        expect(viewContentCall!.args[2]).to.have.property('uuid');
-        expect(viewContentCall!.args[2].uuid).to.be.a('function');
+        const viewContentCall = findCall((args) =>
+          args[1].includes(path.join('sfdc_cms__view', view, 'content.json')),
+        );
+        const viewMetaCall = findCall((args) =>
+          args[1].includes(path.join('sfdc_cms__view', view, '_meta.json')),
+        );
+        expect(
+          viewContentCall,
+          `Expected view content for ${view}`,
+        ).toBeDefined();
+        expect(viewMetaCall, `Expected view meta for ${view}`).toBeDefined();
+        expect(viewContentCall![2]).toHaveProperty('uuid');
+        expect(typeof viewContentCall![2].uuid).toBe('function');
       });
     });
 
@@ -222,25 +218,26 @@ describe('DigitalExperienceSiteGenerator', () => {
         const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
-        const layoutContentCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(
-              path.join('sfdc_cms__themeLayout', layout, 'content.json')
-            )
-          );
-        const layoutMetaCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(
-              path.join('sfdc_cms__themeLayout', layout, '_meta.json')
-            )
-          );
-        expect(layoutContentCall, `Expected layout content for ${layout}`).to
-          .exist;
-        expect(layoutMetaCall, `Expected layout meta for ${layout}`).to.exist;
-        expect(layoutContentCall!.args[2]).to.have.property('uuid');
-        expect(layoutContentCall!.args[2].uuid).to.be.a('function');
+        const layoutContentCall = findCall((args) =>
+          args[1].includes(
+            path.join('sfdc_cms__themeLayout', layout, 'content.json'),
+          ),
+        );
+        const layoutMetaCall = findCall((args) =>
+          args[1].includes(
+            path.join('sfdc_cms__themeLayout', layout, '_meta.json'),
+          ),
+        );
+        expect(
+          layoutContentCall,
+          `Expected layout content for ${layout}`,
+        ).toBeDefined();
+        expect(
+          layoutMetaCall,
+          `Expected layout meta for ${layout}`,
+        ).toBeDefined();
+        expect(layoutContentCall![2]).toHaveProperty('uuid');
+        expect(typeof layoutContentCall![2].uuid).toBe('function');
       });
     });
 
@@ -259,18 +256,14 @@ describe('DigitalExperienceSiteGenerator', () => {
         const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
         await generator.generate();
 
-        const contentCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(path.join(type, folder, 'content.json'))
-          );
-        const metaCall = renderStub
-          .getCalls()
-          .find((call) =>
-            call.args[1].includes(path.join(type, folder, '_meta.json'))
-          );
-        expect(contentCall, `Expected ${name} content`).to.exist;
-        expect(metaCall, `Expected ${name} meta`).to.exist;
+        const contentCall = findCall((args) =>
+          args[1].includes(path.join(type, folder, 'content.json')),
+        );
+        const metaCall = findCall((args) =>
+          args[1].includes(path.join(type, folder, '_meta.json')),
+        );
+        expect(contentCall, `Expected ${name} content`).toBeDefined();
+        expect(metaCall, `Expected ${name} meta`).toBeDefined();
       });
     });
 
@@ -282,13 +275,11 @@ describe('DigitalExperienceSiteGenerator', () => {
       const generator = new DigitalExperienceSiteGenerator(options);
       await generator.generate();
 
-      const siteContentCall = renderStub
-        .getCalls()
-        .find((call) =>
-          call.args[0].includes(path.join('sfdc_cms__site', 'content.json'))
-        );
-      expect(siteContentCall).to.exist;
-      expect(siteContentCall!.args[2]).to.deep.equal({
+      const siteContentCall = findCall((args) =>
+        args[0].includes(path.join('sfdc_cms__site', 'content.json')),
+      );
+      expect(siteContentCall).toBeDefined();
+      expect(siteContentCall![2]).toEqual({
         siteName: 'My \\"Test\\" Site!',
         urlName: 'my-test-site',
       });
@@ -296,12 +287,12 @@ describe('DigitalExperienceSiteGenerator', () => {
   });
 
   describe('site name transformations', () => {
-    let renderStub: sinon.SinonStub;
+    let renderSpy: MockInstance;
 
     beforeEach(() => {
-      renderStub = sinon
-        .stub(DigitalExperienceSiteGenerator.prototype as any, 'render')
-        .resolves();
+      renderSpy = vi
+        .spyOn(DigitalExperienceSiteGenerator.prototype as any, 'render')
+        .mockResolvedValue(undefined);
     });
 
     [
@@ -319,15 +310,15 @@ describe('DigitalExperienceSiteGenerator', () => {
           const generator = new DigitalExperienceSiteGenerator(options);
           await generator.generate();
 
-          const networkCall = renderStub
-            .getCalls()
-            .find((call) => call.args[1].includes('network-meta.xml'));
-          expect(networkCall!.args[2].siteDevName).to.equal(expectedDevName);
-          expect(networkCall!.args[2].picassoSiteDevName).to.equal(
-            expectedPicassoDevName
+          const networkCall = renderSpy.mock.calls.find((args) =>
+            args[1].includes('network-meta.xml'),
+          );
+          expect(networkCall![2].siteDevName).toBe(expectedDevName);
+          expect(networkCall![2].picassoSiteDevName).toBe(
+            expectedPicassoDevName,
           );
         });
-      }
+      },
     );
 
     it('should encode special characters in network file name', async () => {
@@ -338,103 +329,82 @@ describe('DigitalExperienceSiteGenerator', () => {
       const generator = new DigitalExperienceSiteGenerator(options);
       await generator.generate();
 
-      const networkCall = renderStub
-        .getCalls()
-        .find((call) => call.args[1].includes('network-meta.xml'));
-      expect(networkCall!.args[1]).to.include(
-        'Site %7E%21%2E%27%28%29%40%23%24%25%26%2B%3D Name.network-meta.xml'
+      const networkCall = renderSpy.mock.calls.find((args) =>
+        args[1].includes('network-meta.xml'),
+      );
+      expect(networkCall![1]).toContain(
+        'Site %7E%21%2E%27%28%29%40%23%24%25%26%2B%3D Name.network-meta.xml',
       );
     });
   });
 
   describe('UUID generation', () => {
-    let renderStub: sinon.SinonStub;
+    let renderSpy: MockInstance;
 
     beforeEach(() => {
-      renderStub = sinon
-        .stub(DigitalExperienceSiteGenerator.prototype as any, 'render')
-        .resolves();
+      renderSpy = vi
+        .spyOn(DigitalExperienceSiteGenerator.prototype as any, 'render')
+        .mockResolvedValue(undefined);
     });
+
+    const getViewContentCalls = () =>
+      renderSpy.mock.calls.filter(
+        (args) =>
+          args[1].includes('sfdc_cms__view') &&
+          args[1].includes('content.json'),
+      );
 
     it('should generate valid UUID format', async () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const viewContentCalls = renderStub
-        .getCalls()
-        .filter(
-          (call) =>
-            call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
-        );
-
-      expect(viewContentCalls.length).to.be.greaterThan(0);
-      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const viewContentCalls = getViewContentCalls();
+      expect(viewContentCalls.length).toBeGreaterThan(0);
+      const uuidFunction = viewContentCalls[0][2].uuid;
       const uuid = uuidFunction();
       const uuidRegex =
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-      expect(uuid).to.match(uuidRegex);
+      expect(uuid).toMatch(uuidRegex);
     });
 
     it('should cache UUIDs by key', async () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const viewContentCalls = renderStub
-        .getCalls()
-        .filter(
-          (call) =>
-            call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
-        );
-
-      expect(viewContentCalls.length).to.be.greaterThan(0);
-      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const viewContentCalls = getViewContentCalls();
+      expect(viewContentCalls.length).toBeGreaterThan(0);
+      const uuidFunction = viewContentCalls[0][2].uuid;
       const key = 'test-key';
       const firstCall = uuidFunction(key);
       const secondCall = uuidFunction(key);
 
-      expect(firstCall).to.equal(secondCall);
+      expect(firstCall).toBe(secondCall);
     });
 
     it('should generate different UUIDs for different keys', async () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const viewContentCalls = renderStub
-        .getCalls()
-        .filter(
-          (call) =>
-            call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
-        );
-
-      expect(viewContentCalls.length).to.be.greaterThan(0);
-      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const viewContentCalls = getViewContentCalls();
+      expect(viewContentCalls.length).toBeGreaterThan(0);
+      const uuidFunction = viewContentCalls[0][2].uuid;
       const firstKey = uuidFunction('key1');
       const secondKey = uuidFunction('key2');
 
-      expect(firstKey).to.not.equal(secondKey);
+      expect(firstKey).not.toBe(secondKey);
     });
 
     it('should generate different UUIDs when called without key', async () => {
       const generator = new DigitalExperienceSiteGenerator(defaultMockInputs);
       await generator.generate();
 
-      const viewContentCalls = renderStub
-        .getCalls()
-        .filter(
-          (call) =>
-            call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
-        );
-
-      expect(viewContentCalls.length).to.be.greaterThan(0);
-      const uuidFunction = viewContentCalls[0].args[2].uuid;
+      const viewContentCalls = getViewContentCalls();
+      expect(viewContentCalls.length).toBeGreaterThan(0);
+      const uuidFunction = viewContentCalls[0][2].uuid;
       const uuid1 = uuidFunction();
       const uuid2 = uuidFunction();
 
-      expect(uuid1).to.not.equal(uuid2);
+      expect(uuid1).not.toBe(uuid2);
     });
   });
 });

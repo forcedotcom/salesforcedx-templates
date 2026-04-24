@@ -7,6 +7,7 @@
 
 import * as assert from 'node:assert';
 import * as path from 'node:path';
+import { describe, it } from 'vitest';
 import {
   ensureLowercaseUrlName,
   toAlphanumericForPath,
@@ -30,7 +31,7 @@ describe('uiBundleTemplateUtils', () => {
     it('WINDOWS_MAX_ALLOWABLE_PATH_LENGTH is positive', () => {
       assert.ok(
         Number.isInteger(WINDOWS_MAX_ALLOWABLE_PATH_LENGTH),
-        'should be integer'
+        'should be integer',
       );
       assert.ok(WINDOWS_MAX_ALLOWABLE_PATH_LENGTH > 0, 'should be positive');
     });
@@ -47,7 +48,7 @@ describe('uiBundleTemplateUtils', () => {
       'MyApp1',
       'sfdc_cms__site',
       'MyApp1',
-      'content.json'
+      'content.json',
     );
 
     it('lowercases urlName in sfdc_cms__site content.json', () => {
@@ -59,7 +60,7 @@ describe('uiBundleTemplateUtils', () => {
           urlName: 'MyApp',
         },
         null,
-        2
+        2,
       );
       const result = ensureLowercaseUrlName(input, siteContentPath);
       const parsed = JSON.parse(result);
@@ -71,7 +72,7 @@ describe('uiBundleTemplateUtils', () => {
       const input = JSON.stringify(
         { type: 'sfdc_cms__site', urlName: 'myapp' },
         null,
-        2
+        2,
       );
       const result = ensureLowercaseUrlName(input, siteContentPath);
       assert.strictEqual(result, input);
@@ -98,7 +99,7 @@ describe('uiBundleTemplateUtils', () => {
       const input = JSON.stringify(
         { type: 'sfdc_cms__site', urlName: 123 },
         null,
-        2
+        2,
       );
       assert.strictEqual(ensureLowercaseUrlName(input, siteContentPath), input);
     });

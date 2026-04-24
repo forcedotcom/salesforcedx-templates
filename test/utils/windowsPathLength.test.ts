@@ -8,6 +8,7 @@
 import * as assert from 'node:assert';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { describe, it } from 'vitest';
 import {
   PLACEHOLDER_KEYS,
   WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
@@ -32,7 +33,7 @@ import {
 
 const copyTemplatesPath = path.join(
   __dirname,
-  '../../scripts/copy-templates.js'
+  '../../scripts/copy-templates.js',
 );
 const { PLACEHOLDERS: copyScriptPlaceholders } = require(copyTemplatesPath);
 
@@ -74,8 +75,8 @@ const getTemplateRoot = (): string => {
   return fs.existsSync(libTemplates)
     ? libTemplates
     : fs.existsSync(srcTemplates)
-    ? srcTemplates
-    : '';
+      ? srcTemplates
+      : '';
 };
 
 describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', () => {
@@ -84,17 +85,17 @@ describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', ()
       assert.strictEqual(
         copyScriptPlaceholders[key],
         UI_BUNDLE_PLACEHOLDERS[key],
-        `Mismatch for ${key}`
+        `Mismatch for ${key}`,
       );
     }
   });
 });
 
 describe('Windows path length (pack:verify)', () => {
-  it('all template files stay within Windows max allowable path length', function () {
+  it('all template files stay within Windows max allowable path length', (ctx) => {
     const templatesRoot = getTemplateRoot();
     if (!templatesRoot) {
-      this.skip();
+      ctx.skip();
       return;
     }
 
@@ -109,14 +110,14 @@ describe('Windows path length (pack:verify)', () => {
         path
           .relative(templatesRoot, path.join(d.parentPath, d.name))
           .split(path.sep)
-          .join('/')
+          .join('/'),
       );
 
     const longPaths = rels
       .map((rel) => ({ rel, packagePath: PACKAGE_TEMPLATES_LIB_PREFIX + rel }))
       .filter(
         ({ packagePath }) =>
-          packagePath.length >= WINDOWS_MAX_ALLOWABLE_PATH_LENGTH
+          packagePath.length >= WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
       )
       .map(({ packagePath }) => ({
         length: packagePath.length,
@@ -131,7 +132,7 @@ describe('Windows path length (pack:verify)', () => {
         longPaths
           .sort((a, b) => b.length - a.length)
           .map((p) => `  ${p.length} - ${p.path}`)
-          .join('\n')
+          .join('\n'),
     );
   });
 });

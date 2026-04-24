@@ -5,18 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import { createNls } from '@salesforce/vscode-i18n';
 import { messages } from './i18n';
-import { Localization, Message } from './localization';
 
-function loadMessageBundle(): Message {
-  try {
-    const layer = new Message(messages);
-    return layer;
-  } catch (e) {
-    console.error('Cannot find messages in i18n module');
-    return new Message({});
-  }
-}
-
-export const nls = new Localization(loadMessageBundle());
-export { Localization, Message } from './localization';
+export const nls = createNls({
+  instanceName: 'salesforcedx-templates',
+  messages,
+});
+export type MessageKey = Parameters<typeof nls.localize>[0];

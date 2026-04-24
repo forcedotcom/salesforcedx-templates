@@ -54,11 +54,11 @@ export const messages = {
   RecordPageRequiresEntityName:
     'RecordPage template requires an entityName option (e.g., "Account", "Opportunity", "Custom_Object__c").',
   TooManySecondaryFields:
-    'Too many secondary fields specified (%s). The Dynamic Highlights Panel supports a maximum of %s secondary fields.',
+    'Too many secondary fields specified (%d). The Dynamic Highlights Panel supports a maximum of %d secondary fields.',
   MissingFlexipageTemplate:
     'FlexiPage template "%s" not found in repository: %s. Please verify the template name is correct.',
   FailedToLoadFlexipageTemplatesRepo:
     'Failed to load the FlexiPage templates repository. Please verify the URL is correct and accessible.',
 
   AlphaNumericValidationError: '%s must contain only alphanumeric characters.',
-};
+} as const;

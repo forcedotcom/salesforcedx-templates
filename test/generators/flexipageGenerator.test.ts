@@ -5,42 +5,33 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as chai from 'chai';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as sinon from 'sinon';
-import { TemplateService, TemplateType } from '../../src';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { TemplateService, TemplateType } from '../../src/index';
 import FlexipageGenerator from '../../src/generators/flexipageGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
 
-chai.config.truncateThreshold = 100000;
-const { expect } = chai;
-
-async function remove(file: string) {
+const remove = async (file: string) => {
   await fs.promises.rm(file, { force: true, recursive: true });
-}
+};
 
-function assertFileExists(file: string) {
-  const exists = fs.existsSync(file);
-  expect(exists, `Expected file to exist: ${file}`).to.be.true;
-}
+const assertFileExists = (file: string) => {
+  expect(fs.existsSync(file), `Expected file to exist: ${file}`).toBe(true);
+};
 
-function assertFileContent(file: string, regex: string | RegExp) {
-  const exists = fs.existsSync(file);
-  expect(exists, `File does not exist: ${file}`).to.be.true;
+const assertFileContent = (file: string, regex: string | RegExp) => {
+  expect(fs.existsSync(file), `File does not exist: ${file}`).toBe(true);
 
   const body = fs.readFileSync(file, 'utf8');
 
-  let match = false;
-  if (typeof regex === 'string') {
-    match = body.indexOf(regex) !== -1;
-  } else {
-    match = regex.test(body);
-  }
+  const match =
+    typeof regex === 'string' ? body.indexOf(regex) !== -1 : regex.test(body);
 
-  expect(match, `${file} did not match '${regex}'. Contained:\n\n${body}`).to.be
-    .true;
-}
+  expect(match, `${file} did not match '${regex}'. Contained:\n\n${body}`).toBe(
+    true,
+  );
+};
 
 describe('FlexipageGenerator', () => {
   const apiVersion = getDefaultApiVersion();
@@ -51,7 +42,7 @@ describe('FlexipageGenerator', () => {
   });
 
   afterEach(() => {
-    sinon.restore();
+    vi.restoreAllMocks();
   });
 
   describe('validateOptions', () => {
@@ -63,7 +54,7 @@ describe('FlexipageGenerator', () => {
           outputdir: outputDir,
           internal: true,
         });
-      }).to.throw();
+      }).toThrow();
     });
 
     it('should validate template is provided', () => {
@@ -74,7 +65,7 @@ describe('FlexipageGenerator', () => {
           outputdir: outputDir,
           internal: true,
         });
-      }).to.throw();
+      }).toThrow();
     });
 
     it('should validate template is one of the valid types', () => {
@@ -85,7 +76,7 @@ describe('FlexipageGenerator', () => {
           outputdir: outputDir,
           internal: true,
         });
-      }).to.throw(/Invalid.*template/i);
+      }).toThrow(/Invalid.*template/i);
     });
 
     it('should validate RecordPage requires entityName', () => {
@@ -96,7 +87,7 @@ describe('FlexipageGenerator', () => {
           outputdir: outputDir,
           internal: true,
         });
-      }).to.throw(/entityName/i);
+      }).toThrow(/entityName/i);
     });
 
     it('should validate max 11 secondary fields', () => {
@@ -122,7 +113,7 @@ describe('FlexipageGenerator', () => {
           ],
           internal: true,
         });
-      }).to.throw(/Too many secondary fields/i);
+      }).toThrow(/Too many secondary fields/i);
     });
 
     it('should allow up to 11 secondary fields', () => {
@@ -147,7 +138,7 @@ describe('FlexipageGenerator', () => {
           ],
           internal: true,
         });
-      }).to.not.throw();
+      }).not.toThrow();
     });
 
     it('should not append flexipages to outputdir when it already contains flexipages', () => {
@@ -159,7 +150,7 @@ describe('FlexipageGenerator', () => {
         internal: true,
       });
       // The outputdir should remain unchanged since it already contains 'flexipages'
-      expect((generator as any).outputdir).to.equal(outputDirWithFlexipages);
+      expect((generator as any).outputdir).toBe(outputDirWithFlexipages);
     });
 
     it('should append flexipages to outputdir when not internal and outputdir does not contain flexipages', () => {
@@ -171,8 +162,8 @@ describe('FlexipageGenerator', () => {
         internal: false,
       });
       // The outputdir should have 'flexipages' appended
-      expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', 'flexipages')
+      expect((generator as any).outputdir).toBe(
+        path.join('testsoutput', 'mydir', 'flexipages'),
       );
     });
   });
@@ -192,10 +183,10 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'MyHomePage.flexipage-meta.xml'
+        'MyHomePage.flexipage-meta.xml',
       );
 
-      expect(result.created).to.have.lengthOf(1);
+      expect(result.created).toHaveLength(1);
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'HomePage');
       assertFileContent(expectedFile, 'home:desktopTemplate');
@@ -214,7 +205,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'DefaultHomePage.flexipage-meta.xml'
+        'DefaultHomePage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
@@ -236,7 +227,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(outputDir, 'MyAppPage.flexipage-meta.xml');
 
-      expect(result.created).to.have.lengthOf(1);
+      expect(result.created).toHaveLength(1);
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'AppPage');
       assertFileContent(expectedFile, 'My App Page');
@@ -259,10 +250,10 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'AccountRecordPage.flexipage-meta.xml'
+        'AccountRecordPage.flexipage-meta.xml',
       );
 
-      expect(result.created).to.have.lengthOf(1);
+      expect(result.created).toHaveLength(1);
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'RecordPage');
       assertFileContent(expectedFile, 'Account');
@@ -284,7 +275,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'OpportunityPage.flexipage-meta.xml'
+        'OpportunityPage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
@@ -310,7 +301,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'CustomObjectPage.flexipage-meta.xml'
+        'CustomObjectPage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
@@ -331,18 +322,18 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'TestNaming.flexipage-meta.xml'
+        'TestNaming.flexipage-meta.xml',
       );
       const unexpectedFile = path.join(
         outputDir,
-        '_flexipage.flexipage-meta.xml'
+        '_flexipage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
       expect(
         fs.existsSync(unexpectedFile),
-        'Template placeholder file should not exist'
-      ).to.be.false;
+        'Template placeholder file should not exist',
+      ).toBe(false);
     });
   });
 
@@ -361,7 +352,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'VariableTest.flexipage-meta.xml'
+        'VariableTest.flexipage-meta.xml',
       );
 
       assertFileContent(expectedFile, 'Variable Test Page');
@@ -393,14 +384,9 @@ describe('FlexipageGenerator', () => {
         internal: true,
       });
 
-      try {
-        await generator.generate();
-        expect.fail('Should have thrown an error');
-      } catch (error: any) {
-        expect(error.message).to.match(
-          /template.*not found|MissingFlexipageTemplate/i
-        );
-      }
+      await expect(generator.generate()).rejects.toThrow(
+        /template.*not found|MissingFlexipageTemplate/i,
+      );
     });
 
     it('should handle subdirectories in custom templates', async () => {
@@ -409,7 +395,7 @@ describe('FlexipageGenerator', () => {
         customTemplatesDir,
         'flexipage',
         'HomePage',
-        'subdir'
+        'subdir',
       );
       await fs.promises.mkdir(customSubdir, { recursive: true });
 
@@ -418,7 +404,7 @@ describe('FlexipageGenerator', () => {
         customTemplatesDir,
         'flexipage',
         'HomePage',
-        '_flexipage.flexipage-meta.xml'
+        '_flexipage.flexipage-meta.xml',
       );
       await fs.promises.writeFile(
         templateFile,
@@ -426,13 +412,13 @@ describe('FlexipageGenerator', () => {
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel><%= masterlabel %></masterLabel>
     <type>HomePage</type>
-</FlexiPage>`
+</FlexiPage>`,
       );
 
       // Create a template file in subdirectory
       const subTemplateFile = path.join(
         customSubdir,
-        '_flexipage.flexipage-meta.xml'
+        '_flexipage.flexipage-meta.xml',
       );
       await fs.promises.writeFile(
         subTemplateFile,
@@ -440,7 +426,7 @@ describe('FlexipageGenerator', () => {
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel><%= masterlabel %> Sub</masterLabel>
     <type>HomePage</type>
-</FlexiPage>`
+</FlexiPage>`,
       );
 
       const generator = new FlexipageGenerator({
@@ -457,7 +443,7 @@ describe('FlexipageGenerator', () => {
       // Check main file was created
       const expectedFile = path.join(
         outputDir,
-        'SubdirTest.flexipage-meta.xml'
+        'SubdirTest.flexipage-meta.xml',
       );
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'Subdir Test Page');
@@ -466,7 +452,7 @@ describe('FlexipageGenerator', () => {
       const expectedSubFile = path.join(
         outputDir,
         'subdir',
-        'SubdirTest.flexipage-meta.xml'
+        'SubdirTest.flexipage-meta.xml',
       );
       assertFileExists(expectedSubFile);
       assertFileContent(expectedSubFile, 'Subdir Test Page Sub');

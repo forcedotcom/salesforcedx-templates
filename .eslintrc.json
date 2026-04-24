@@ -3,16 +3,20 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.eslint.json"
   },
-  "plugins": ["@typescript-eslint", "jsdoc", "eslint-plugin-header"],
-  "extends": ["plugin:@typescript-eslint/recommended"],
+  "plugins": [
+    "@typescript-eslint",
+    "jsdoc",
+    "eslint-plugin-header",
+    "sf-plugin"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:sf-plugin/library"
+  ],
   "rules": {
-    "ban-ts-ignore": "off",
-    "@typescript-eslint/ban-ts-ignore": "off",
-    "camelcase": "off",
-    "@typescript-eslint/camelcase": "off",
-    "constructor-super": "warn",
     "curly": "error",
     "eqeqeq": "error",
     "no-buffer-constructor": "error",
@@ -38,9 +42,8 @@
       "origin",
       "context"
     ], // non-complete list of globals that are easy to access unintentionally
-    "no-var": "error",
     "jsdoc/no-types": "warn",
-    "@typescript-eslint/semi": "warn",
+    "semi": "warn",
     "header/header": [
       2,
       "block",
@@ -56,7 +59,6 @@
         " "
       ]
     ],
-    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["off"],
     "@typescript-eslint/no-empty-function": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
@@ -64,11 +66,23 @@
     "@typescript-eslint/no-non-null-assertion": ["off"],
     "@typescript-eslint/no-var-requires": ["off"]
   },
+  "overrides": [
+    {
+      "files": ["test/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/no-require-imports": "off"
+      }
+    }
+  ],
   "ignorePatterns": [
     "*.js",
     "src/templates/lightningcomponent/lwc/typeScript/*",
     "src/templates/uiBundles/reactbasic/**/*",
     "src/templates/project/reactinternalapp/**/*",
-    "src/templates/project/reactexternalapp/**/*"
+    "src/templates/project/reactexternalapp/**/*",
+    "src/templates/project/reactb2e/**/*",
+    "src/templates/project/reactb2x/**/*",
+    "src/templates/webapplication/**/*"
   ]
 }

@@ -33,7 +33,7 @@ interface FsError extends Error {
 export async function setCustomTemplatesRootPathOrGitRepo(
   pathOrRepoUri?: string,
   forceLoadingRemoteRepo = false,
-  fs: typeof nodeFs = nodeFs
+  fs: typeof nodeFs = nodeFs,
 ): Promise<string | undefined> {
   if (pathOrRepoUri === undefined) {
     return;
@@ -43,9 +43,8 @@ export async function setCustomTemplatesRootPathOrGitRepo(
     // if pathOrRepoUri is valid url, load the repo
     const url = new URL(pathOrRepoUri);
     if (process.env.ESBUILD_PLATFORM !== 'web' && url) {
-      const { loadCustomTemplatesGitRepo } = await import(
-        '../service/gitRepoUtils'
-      );
+      const { loadCustomTemplatesGitRepo } =
+        await import('../service/gitRepoUtils.js');
       return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }
   } catch (error) {
@@ -59,7 +58,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
       return localTemplatesPath;
     } else {
       throw new Error(
-        nls.localize('localCustomTemplateDoNotExist', localTemplatesPath)
+        nls.localize('localCustomTemplateDoNotExist', localTemplatesPath),
       );
     }
   }
@@ -136,7 +135,7 @@ abstract class NotYeoman {
   public async render(
     source: string,
     destination: string,
-    data?: Record<string, unknown>
+    data?: Record<string, unknown>,
   ): Promise<void> {
     const template = await this._fs.promises.readFile(source, 'utf8');
     const rendered = render(template, data ?? {});
@@ -170,7 +169,7 @@ abstract class NotYeoman {
 }
 
 export abstract class BaseGenerator<
-  TOptions extends TemplateOptions
+  TOptions extends TemplateOptions,
 > extends NotYeoman {
   /**
    * Set by sourceRootWithPartialPath called in generator
@@ -190,7 +189,7 @@ export abstract class BaseGenerator<
   constructor(
     public options: TOptions,
     context?: GeneratorContext,
-    cwd?: string
+    cwd?: string,
   ) {
     super(context, cwd);
     this.templatesRootPath = context?.templatesRootPath;
@@ -206,7 +205,7 @@ export abstract class BaseGenerator<
   public sourceRootWithPartialPath(partialPath: string): void {
     this.builtInTemplatesRootPath = path.join(
       this.templatesRootPath ?? dirnameTemplatesDefault ?? '',
-      partialPath
+      partialPath,
     );
     // set generator source directory to custom templates root if available
     if (!this.customTemplatesRootPath) {
@@ -214,7 +213,7 @@ export abstract class BaseGenerator<
     } else {
       if (
         this._fs.existsSync(
-          path.join(this.customTemplatesRootPath, partialPath)
+          path.join(this.customTemplatesRootPath, partialPath),
         )
       ) {
         this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
@@ -232,7 +231,7 @@ export abstract class BaseGenerator<
     } else {
       // files that are builtin and not in the custom template folder
       return super.templatePath(
-        path.join(this.builtInTemplatesRootPath!, ...paths)
+        path.join(this.builtInTemplatesRootPath!, ...paths),
       );
     }
   }
@@ -246,14 +245,15 @@ export abstract class BaseGenerator<
     this.customTemplatesRootPath = await setCustomTemplatesRootPathOrGitRepo(
       opts?.customTemplatesRootPathOrGitRepo,
       false,
-      this._fs
+      this._fs,
     );
 
     await this.generate();
 
     const created = [...this.changes.created, ...this.changes.forced];
     const outputDir = path.resolve(cwd, this.outputdir);
-    const rawOutput = nls.localize('RawOutput', [
+    const rawOutput = nls.localize(
+      'RawOutput',
       outputDir,
       [
         ...(this.changes.created ?? []).map((file) => `  create ${file}`),
@@ -261,7 +261,7 @@ export abstract class BaseGenerator<
         ...(this.changes.conflicted ?? []).map((file) => `  conflict ${file}`),
         ...(this.changes.forced ?? []).map((file) => `  force ${file}`),
       ].join('\n') + '\n',
-    ]);
+    );
 
     return {
       outputDir,

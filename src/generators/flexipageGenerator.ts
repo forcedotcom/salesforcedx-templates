@@ -29,10 +29,11 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
 
     if (!VALID_TEMPLATES.includes(this.options.template as any)) {
       throw new Error(
-        nls.localize('InvalidFlexipageTemplate', [
+        nls.localize(
+          'InvalidFlexipageTemplate',
           this.options.template,
           VALID_TEMPLATES.join(', '),
-        ])
+        ),
       );
     }
 
@@ -44,10 +45,11 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     const secondaryFieldsCount = this.options.secondaryFields?.length ?? 0;
     if (secondaryFieldsCount > MAX_SECONDARY_FIELDS) {
       throw new Error(
-        nls.localize('TooManySecondaryFields', [
-          secondaryFieldsCount.toString(),
-          MAX_SECONDARY_FIELDS.toString(),
-        ])
+        nls.localize(
+          'TooManySecondaryFields',
+          secondaryFieldsCount,
+          MAX_SECONDARY_FIELDS,
+        ),
       );
     }
 
@@ -76,7 +78,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     if (flexipageTemplatesGitRepo) {
       customTemplatesRootPath = await setCustomTemplatesRootPathOrGitRepo(
         flexipageTemplatesGitRepo,
-        forceLoadingRemoteRepo
+        forceLoadingRemoteRepo,
       );
     }
 
@@ -86,14 +88,15 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
       templateRootPath = path.join(
         customTemplatesRootPath,
         'flexipage',
-        template
+        template,
       );
       if (!fs.existsSync(templateRootPath)) {
         throw new Error(
-          nls.localize('MissingFlexipageTemplate', [
+          nls.localize(
+            'MissingFlexipageTemplate',
             template,
             customTemplatesRootPath,
-          ])
+          ),
         );
       }
     } else {
@@ -118,7 +121,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     await this.generateFlexipageFromTemplate(
       templateRootPath,
       this.outputdir,
-      templateVars
+      templateVars,
     );
   }
 
@@ -128,7 +131,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
   private async generateFlexipageFromTemplate(
     sourceDir: string,
     destDir: string,
-    templateVars: Record<string, unknown>
+    templateVars: Record<string, unknown>,
   ): Promise<void> {
     const entries = await readdir(sourceDir, { withFileTypes: true });
 
@@ -140,7 +143,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
       if (destName.includes('_flexipage')) {
         destName = destName.replace(
           /_flexipage/g,
-          templateVars.flexipagename as string
+          templateVars.flexipagename as string,
         );
       }
 
@@ -151,7 +154,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
         await this.generateFlexipageFromTemplate(
           sourcePath,
           destPath,
-          templateVars
+          templateVars,
         );
       } else if (entry.isFile() && this.isTemplateFile(entry.name)) {
         // Render template files only (skip non-template files)

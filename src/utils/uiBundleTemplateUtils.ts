@@ -20,46 +20,14 @@ function sanitizeSegment(name: string): string {
   const trimmed = name.trimEnd();
   if (trimmed !== name) {
     console.warn(
-      `[uiBundleTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`
+      `[uiBundleTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`,
     );
   }
   return trimmed;
 }
 
-/**
- * Recursively copy a directory tree from src to dest, trimming trailing
- * whitespace from every path segment so that upstream filenames with stray
- * spaces never leak into the output.
- *
- * This is a drop-in replacement for `fs.cpSync(src, dest, { recursive: true })`
- * that is resilient to the "trailing-space filename" issue seen in
- * `@salesforce/templates`.
- */
-export function copyTreeSanitized(src: string, dest: string): void {
-  const stat = fs.statSync(src);
-  if (stat.isFile()) {
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.copyFileSync(src, dest);
-    return;
-  }
-  if (!stat.isDirectory()) {
-    return;
-  }
-  fs.mkdirSync(dest, { recursive: true });
-  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
-    const sanitized = sanitizeSegment(entry.name);
-    const srcChild = path.join(src, entry.name);
-    const destChild = path.join(dest, sanitized);
-    if (entry.isDirectory()) {
-      copyTreeSanitized(srcChild, destChild);
-    } else if (entry.isFile()) {
-      fs.copyFileSync(srcChild, destChild);
-    }
-  }
-}
-
 /** File extensions that should be processed as EJS templates */
-export const EJS_EXTENSIONS = new Set([
+const EJS_EXTENSIONS = new Set([
   '.json',
   '.js',
   '.ts',
@@ -87,7 +55,7 @@ export const BUILT_IN_FULL_TEMPLATES = new Set([
  * Default app/site names embedded in each full template; all are renamed to the project name.
  * Order matters: replace longer (suffix) first to avoid partial replacements.
  */
-export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
+const FULL_TEMPLATE_DEFAULT_NAMES: Record<
   string,
   { base: string; withSuffix: string }
 > = {
@@ -102,7 +70,7 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
 };
 
 /** Directories to skip when walking a full template dir (e.g. node_modules) */
-export const FULL_TEMPLATE_SKIP_DIRS = new Set(['node_modules', '.git']);
+const FULL_TEMPLATE_SKIP_DIRS = new Set(['node_modules', '.git']);
 
 /**
  * Max path length for package paths allowed by `sf pack:verify` on Windows.
@@ -194,7 +162,7 @@ const TEMPLATE_PLACEHOLDERS_SPEC =
 
 function resolveReplacement(
   replacement: string,
-  ctx: PlaceholderReplacementCtx
+  ctx: PlaceholderReplacementCtx,
 ): string {
   switch (replacement) {
     case 'defaultpackagedir':
@@ -223,7 +191,7 @@ export function toAlphanumericForPath(name: string): string {
  */
 export function ensureLowercaseUrlName(
   content: string,
-  destPath: string
+  destPath: string,
 ): string {
   if (
     path.basename(destPath) !== 'content.json' ||
@@ -247,7 +215,7 @@ export function ensureLowercaseUrlName(
 }
 
 /** Heuristic: treat as text if no null byte in the first chunk and decodable as UTF-8 */
-export function isLikelyText(filename: string, buffer: Buffer): boolean {
+function isLikelyText(filename: string, buffer: Buffer): boolean {
   const ext = path.extname(filename).toLowerCase();
   const binaryExts = new Set([
     '.png',
@@ -281,7 +249,7 @@ export function isLikelyText(filename: string, buffer: Buffer): boolean {
 /** Renders an EJS template file with the given data (stateless, no generator dependency). */
 export async function renderEjsFile(
   sourcePath: string,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
 ): Promise<string> {
   const { renderFile } = await import('ejs');
   return new Promise((resolve, reject) => {
@@ -295,7 +263,7 @@ export async function renderEjsFile(
   });
 }
 
-export type GenerateBuiltInFullTemplateOptions = {
+type GenerateBuiltInFullTemplateOptions = {
   templateDir: string;
   projectDir: string;
   defaultpackagedir: string;
@@ -305,7 +273,7 @@ export type GenerateBuiltInFullTemplateOptions = {
   /** Renders an EJS template file; use renderEjsFile from this module */
   renderEjs: (
     filePath: string,
-    data: Record<string, unknown>
+    data: Record<string, unknown>,
   ) => Promise<string>;
   /** Called for each file created (e.g. to push to generator changes) */
   onFileCreated: (destPath: string) => void;
@@ -318,7 +286,7 @@ export type GenerateBuiltInFullTemplateOptions = {
 export async function generateBuiltInFullTemplate(
   template: string,
   projectname: string,
-  options: GenerateBuiltInFullTemplateOptions
+  options: GenerateBuiltInFullTemplateOptions,
 ): Promise<void> {
   const {
     templateDir,
@@ -352,19 +320,19 @@ export async function generateBuiltInFullTemplate(
     (entry) => [
       entry.placeholder,
       resolveReplacement(entry.replacement, replacementCtx),
-    ]
+    ],
   );
   // Add template-specific name replacements BEFORE placeholder replacements
   // to avoid double-replacement (e.g., _a_ -> reactexternalapptest, then reactexternalapp -> reactexternalapptest again)
   if (nameReplacementsEntry) {
     nameReplacements.unshift(
       [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],
-      [nameReplacementsEntry.base, projectnameAlphanumeric]
+      [nameReplacementsEntry.base, projectnameAlphanumeric],
     );
   }
   nameReplacements.push(
     [APP_PLACEHOLDER, projectnameAlphanumeric],
-    [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1']
+    [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1'],
   );
 
   await generateFromProjectTemplateDir(templateDir, projectDir, templateVars, {
@@ -387,13 +355,13 @@ export async function generateBuiltInFullTemplate(
   }
 }
 
-export type GenerateFromProjectTemplateDirOptions = {
+type GenerateFromProjectTemplateDirOptions = {
   /** Pairs of [from, to] for renaming template default app/site names to project name */
   nameReplacements?: [string, string][];
   /** Renders an EJS template file with the given data; used for template files */
   renderEjs: (
     filePath: string,
-    data: Record<string, unknown>
+    data: Record<string, unknown>,
   ) => Promise<string>;
   /** Called for each file/dir created under destDir (for change tracking) */
   onFileCreated: (destPath: string) => void;
@@ -404,11 +372,11 @@ export type GenerateFromProjectTemplateDirOptions = {
  * rendering EJS for text files and copying the rest. Renames template default app/site
  * names (e.g. reactinternalapp) to the project name in paths and file contents.
  */
-export async function generateFromProjectTemplateDir(
+async function generateFromProjectTemplateDir(
   sourceDir: string,
   destDir: string,
   templateVars: Record<string, unknown>,
-  options: GenerateFromProjectTemplateDirOptions
+  options: GenerateFromProjectTemplateDirOptions,
 ): Promise<void> {
   const { nameReplacements, renderEjs, onFileCreated } = options;
 
@@ -445,7 +413,7 @@ export async function generateFromProjectTemplateDir(
         sourcePath,
         destPath,
         templateVars,
-        options
+        options,
       );
       continue;
     }
@@ -467,7 +435,7 @@ export async function generateFromProjectTemplateDir(
         const rendered = await renderEjs(sourcePath, templateVars);
         const content = ensureLowercaseUrlName(
           applyReplacements(rendered),
-          destPath
+          destPath,
         );
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
@@ -477,7 +445,7 @@ export async function generateFromProjectTemplateDir(
         const str = raw.toString('utf8');
         const content = ensureLowercaseUrlName(
           applyReplacements(str),
-          destPath
+          destPath,
         );
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
@@ -491,7 +459,7 @@ export async function generateFromProjectTemplateDir(
         const str = content.toString('utf8');
         const replaced = ensureLowercaseUrlName(
           applyReplacements(str),
-          destPath
+          destPath,
         );
         await writeFile(destPath, replaced, 'utf8');
       } else {

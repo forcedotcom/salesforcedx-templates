@@ -42,7 +42,8 @@ const remove = async (file: string) => {
 const assertFileContent = (file: string, regex: string | RegExp) => {
   expect(fs.existsSync(file)).toBe(true);
 
-  const body = fs.readFileSync(file, 'utf8');
+  // normalize line endings.  Respects users gitattributes settings
+  const body = fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
 
   const match =
     typeof regex === 'string' ? body.includes(regex) : regex.test(body);

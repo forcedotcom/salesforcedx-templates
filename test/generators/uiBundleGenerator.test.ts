@@ -1,22 +1,27 @@
 /*
- * Copyright (c) 2026, salesforce.com, inc.
- * All rights reserved.
- * Licensed under the BSD 3-Clause license.
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ * Copyright 2026, Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-import * as chai from 'chai';
-import * as path from 'path';
-import * as sinon from 'sinon';
+import * as path from 'node:path';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import UIBundleGenerator from '../../src/generators/uiBundleGenerator';
 import { UI_BUNDLES_DIR } from '../../src/utils/constants';
 
-chai.config.truncateThreshold = 100000;
-const { expect } = chai;
-
 describe('UIBundleGenerator', () => {
   afterEach(() => {
-    sinon.restore();
+    vi.restoreAllMocks();
   });
 
   describe('validateOptions', () => {
@@ -28,7 +33,7 @@ describe('UIBundleGenerator', () => {
           outputdir: path.join('testsoutput', UI_BUNDLES_DIR),
           internal: true,
         });
-      }).to.throw();
+      }).toThrow();
     });
 
     it('should validate template is provided', () => {
@@ -39,7 +44,7 @@ describe('UIBundleGenerator', () => {
           outputdir: path.join('testsoutput', UI_BUNDLES_DIR),
           internal: true,
         });
-      }).to.throw();
+      }).toThrow();
     });
 
     it('should not append uiBundles to outputdir when it already ends with uiBundles', () => {
@@ -50,8 +55,7 @@ describe('UIBundleGenerator', () => {
         outputdir: outputDirWithUiBundles,
         internal: false,
       });
-      // The outputdir should remain unchanged since it already ends with UI_BUNDLES_DIR
-      expect((generator as any).outputdir).to.equal(outputDirWithUiBundles);
+      expect((generator as any).outputdir).toBe(outputDirWithUiBundles);
     });
 
     it('should append uiBundles to outputdir when not internal and outputdir does not end with uiBundles', () => {
@@ -62,9 +66,8 @@ describe('UIBundleGenerator', () => {
         outputdir: outputDirWithoutUiBundles,
         internal: false,
       });
-      // The outputdir should have UI_BUNDLES_DIR appended
-      expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', UI_BUNDLES_DIR)
+      expect((generator as any).outputdir).toBe(
+        path.join('testsoutput', 'mydir', UI_BUNDLES_DIR),
       );
     });
 
@@ -76,15 +79,14 @@ describe('UIBundleGenerator', () => {
         outputdir: outputDirWithoutUiBundles,
         internal: true,
       });
-      // The outputdir should remain unchanged when internal is true
-      expect((generator as any).outputdir).to.equal(outputDirWithoutUiBundles);
+      expect((generator as any).outputdir).toBe(outputDirWithoutUiBundles);
     });
 
     it('should handle paths with uiBundles in the middle but not at the end', () => {
       const outputDirWithUiBundlesInMiddle = path.join(
         'testsoutput',
         UI_BUNDLES_DIR,
-        'somefolder'
+        'somefolder',
       );
       const generator = new UIBundleGenerator({
         bundlename: 'TestUIBundle',
@@ -92,9 +94,8 @@ describe('UIBundleGenerator', () => {
         outputdir: outputDirWithUiBundlesInMiddle,
         internal: false,
       });
-      // The outputdir should have UI_BUNDLES_DIR appended since it doesn't end with it
-      expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder', UI_BUNDLES_DIR)
+      expect((generator as any).outputdir).toBe(
+        path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder', UI_BUNDLES_DIR),
       );
     });
   });

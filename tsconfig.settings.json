@@ -1,26 +1,14 @@
 {
   "extends": "./node_modules/@salesforce/dev-config/tsconfig",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "noImplicitAny": true,
+    "module": "Node16",
+    "target": "es2022",
+    "lib": ["es2024", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator"],
     "outDir": "./lib",
-    "preserveConstEnums": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
 
-    // We can replace the TS generated snippets with require statements
-    // from the tslib dependency, making our code more efficient
-    "importHelpers": true,
     "resolveJsonModule": true
-
-    // Commenting composite out since it prevents the debugger from working
-    // if we import metadatainfos.json
-    // "composite": true
   },
   "include": ["./src/**/*"]
 }

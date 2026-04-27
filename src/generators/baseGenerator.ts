@@ -1,12 +1,21 @@
 /*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * Licensed under the BSD 3-Clause license.
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ * Copyright 2026, Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-import * as nodeFs from 'fs';
-import * as path from 'path';
+import * as nodeFs from 'node:fs';
+import * as path from 'node:path';
 import { render } from 'ejs';
 import { nls } from '../i18n';
 import {
@@ -26,14 +35,14 @@ type Changes = {
   forced: string[];
 };
 
-interface FsError extends Error {
+type FsError = {
   code: string;
-}
+} & Error;
 
 export async function setCustomTemplatesRootPathOrGitRepo(
   pathOrRepoUri?: string,
   forceLoadingRemoteRepo = false,
-  fs: typeof nodeFs = nodeFs
+  fs: typeof nodeFs = nodeFs,
 ): Promise<string | undefined> {
   if (pathOrRepoUri === undefined) {
     return;
@@ -43,9 +52,8 @@ export async function setCustomTemplatesRootPathOrGitRepo(
     // if pathOrRepoUri is valid url, load the repo
     const url = new URL(pathOrRepoUri);
     if (process.env.ESBUILD_PLATFORM !== 'web' && url) {
-      const { loadCustomTemplatesGitRepo } = await import(
-        '../service/gitRepoUtils'
-      );
+      const { loadCustomTemplatesGitRepo } =
+        await import('../service/gitRepoUtils.js');
       return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }
   } catch (error) {
@@ -59,7 +67,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
       return localTemplatesPath;
     } else {
       throw new Error(
-        nls.localize('localCustomTemplateDoNotExist', localTemplatesPath)
+        nls.localize('localCustomTemplateDoNotExist', localTemplatesPath),
       );
     }
   }
@@ -103,7 +111,7 @@ abstract class NotYeoman {
     return filepath;
   }
 
-  public destinationRoot(rootPath?: string) {
+  public destinationRoot(rootPath?: string): string {
     if (typeof rootPath === 'string') {
       this._destinationRoot = path.resolve(rootPath);
 
@@ -136,7 +144,7 @@ abstract class NotYeoman {
   public async render(
     source: string,
     destination: string,
-    data?: Record<string, unknown>
+    data?: Record<string, unknown>,
   ): Promise<void> {
     const template = await this._fs.promises.readFile(source, 'utf8');
     const rendered = render(template, data ?? {});
@@ -145,7 +153,7 @@ abstract class NotYeoman {
       const relativePath = path.relative(this._cwd, destination);
       const existing = await this._fs.promises
         .readFile(destination, 'utf8')
-        .catch(() => null);
+        .catch(() => undefined);
       if (existing) {
         if (rendered.trim() === existing.trim()) {
           this.register('identical', relativePath);
@@ -170,7 +178,7 @@ abstract class NotYeoman {
 }
 
 export abstract class BaseGenerator<
-  TOptions extends TemplateOptions
+  TOptions extends TemplateOptions,
 > extends NotYeoman {
   /**
    * Set by sourceRootWithPartialPath called in generator
@@ -187,10 +195,10 @@ export abstract class BaseGenerator<
    * @param options SfGenerator specific options.
    * @param context optional generator context for fs and template path injection
    */
-  constructor(
+  public constructor(
     public options: TOptions,
     context?: GeneratorContext,
-    cwd?: string
+    cwd?: string,
   ) {
     super(context, cwd);
     this.templatesRootPath = context?.templatesRootPath;
@@ -201,24 +209,21 @@ export abstract class BaseGenerator<
 
   /**
    * Set source root to built-in templates or custom templates root if available.
+   *
    * @param partialPath the relative path from the templates folder to templates root folder.
    */
   public sourceRootWithPartialPath(partialPath: string): void {
     this.builtInTemplatesRootPath = path.join(
       this.templatesRootPath ?? dirnameTemplatesDefault ?? '',
-      partialPath
+      partialPath,
     );
     // set generator source directory to custom templates root if available
     if (!this.customTemplatesRootPath) {
       this.sourceRoot(path.join(this.builtInTemplatesRootPath));
-    } else {
-      if (
-        this._fs.existsSync(
-          path.join(this.customTemplatesRootPath, partialPath)
-        )
-      ) {
-        this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
-      }
+    } else if (
+      this._fs.existsSync(path.join(this.customTemplatesRootPath, partialPath))
+    ) {
+      this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
     }
   }
 
@@ -232,7 +237,7 @@ export abstract class BaseGenerator<
     } else {
       // files that are builtin and not in the custom template folder
       return super.templatePath(
-        path.join(this.builtInTemplatesRootPath!, ...paths)
+        path.join(this.builtInTemplatesRootPath!, ...paths),
       );
     }
   }
@@ -246,14 +251,15 @@ export abstract class BaseGenerator<
     this.customTemplatesRootPath = await setCustomTemplatesRootPathOrGitRepo(
       opts?.customTemplatesRootPathOrGitRepo,
       false,
-      this._fs
+      this._fs,
     );
 
     await this.generate();
 
     const created = [...this.changes.created, ...this.changes.forced];
     const outputDir = path.resolve(cwd, this.outputdir);
-    const rawOutput = nls.localize('RawOutput', [
+    const rawOutput = nls.localize(
+      'RawOutput',
       outputDir,
       [
         ...(this.changes.created ?? []).map((file) => `  create ${file}`),
@@ -261,7 +267,7 @@ export abstract class BaseGenerator<
         ...(this.changes.conflicted ?? []).map((file) => `  conflict ${file}`),
         ...(this.changes.forced ?? []).map((file) => `  force ${file}`),
       ].join('\n') + '\n',
-    ]);
+    );
 
     return {
       outputDir,

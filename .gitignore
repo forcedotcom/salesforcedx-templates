@@ -15,6 +15,7 @@ lerna-debug.log*
 # Coverage directory used by tools like istanbul
 coverage
 coverage.lcov
+.nyc_output
 
 # Dependency directories
 node_modules/
@@ -37,8 +38,6 @@ analytics1/
 GitIgnoreTest/
 GitIgnoreTest2/
 
-# nyc test coverage
-.nyc_output
 
 # Eclipse
 .project
@@ -67,3 +66,12 @@ src/templates/uiBundles/
 # ignore project templates copied from npm during build (copy-templates)
 src/templates/project/reactinternalapp/
 src/templates/project/reactexternalapp/
+
+# cursor/claude agent session marker
+.claude/.edit-marker
+
+# wireit cache
+.wireit
+
+# eslint cache
+.eslintcache

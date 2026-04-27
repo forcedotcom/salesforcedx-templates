@@ -1,5 +1,2 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-yarn lint && yarn pretty-quick --staged
-node ./scripts/scanTs.js
+yarn pretty-quick --staged
+yarn precommit

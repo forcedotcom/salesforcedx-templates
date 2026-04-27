@@ -1,12 +1,21 @@
 /*
- * Copyright (c) 2025, salesforce.com, inc.
- * All rights reserved.
- * Licensed under the BSD 3-Clause license.
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ * Copyright 2026, Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+import * as path from 'node:path';
 import { camelCaseToTitleCase } from '@salesforce/kit';
-import * as path from 'path';
-import { CreateUtil } from '../utils';
+import { CreateUtil } from '../utils/createUtil';
 import { UI_BUNDLES_DIR } from '../utils/constants';
 import { UIBundleOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -34,7 +43,7 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
     const { bundlename } = this.options;
     const template = this.options.template.toLowerCase();
     const masterLabel =
-      this.options.masterlabel || camelCaseToTitleCase(bundlename);
+      this.options.masterlabel ?? camelCaseToTitleCase(bundlename);
     const bundleDir = path.join(this.outputdir, bundlename);
 
     switch (template) {
@@ -49,59 +58,59 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
   private async generateDefault(
     bundleDir: string,
     bundlename: string,
-    masterLabel: string
+    masterLabel: string,
   ): Promise<void> {
     this.sourceRootWithPartialPath(path.join('uiBundles', 'webappbasic'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`),
       ),
-      { apiVersion: this.apiversion, masterLabel }
+      { apiVersion: this.apiversion, masterLabel },
     );
 
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       bundleDir,
-      new Set(['_uibundle.uibundle-meta.xml'])
+      new Set(['_uibundle.uibundle-meta.xml']),
     );
   }
 
   private async generateReactBasic(
     bundleDir: string,
     bundlename: string,
-    masterLabel: string
+    masterLabel: string,
   ): Promise<void> {
     this.sourceRootWithPartialPath(path.join('uiBundles', 'reactbasic'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`),
       ),
-      { apiVersion: this.apiversion, masterLabel }
+      { apiVersion: this.apiversion, masterLabel },
     );
 
     await this.render(
       this.templatePath('package.json'),
       this.destinationPath(path.join(bundleDir, 'package.json')),
-      { bundlename }
+      { bundlename },
     );
 
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       bundleDir,
-      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json']),
     );
   }
 
   private async copyDirectoryRecursive(
     sourceDir: string,
     destDir: string,
-    excludeFiles: ReadonlySet<string> = new Set()
+    excludeFiles: ReadonlySet<string> = new Set(),
   ): Promise<void> {
     if (!this._fs.existsSync(sourceDir)) {
       return;

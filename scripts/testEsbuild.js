@@ -13,7 +13,7 @@ exec('node ./scripts/esbuild.config.js', (error, stdout, stderr) => {
   // Check if the output contains the error string
   if (output.includes('[require-resolve-not-external]')) {
     console.error(
-      'Error: A dependency that has to be externalized in esbuild process is found. Please resolve it!'
+      'Error: A dependency that has to be externalized in esbuild process is found. Please resolve it!',
     );
     process.exit(1); // Exit with an error code
   }
@@ -53,17 +53,17 @@ exec('node ./scripts/esbuild.config.js', (error, stdout, stderr) => {
 
   if (foundIssues.length > 0) {
     console.error(
-      '\nError: Bundled code contains require.resolve() calls to npm packages!'
+      '\nError: Bundled code contains require.resolve() calls to npm packages!',
     );
     console.error(
-      'These will fail at runtime when bundled in VSCode extension:\n'
+      'These will fail at runtime when bundled in VSCode extension:\n',
     );
     foundIssues.forEach((issue) => {
       console.error(`  Line ${issue.line}: ${issue.package}`);
       console.error(`    ${issue.code}`);
     });
     console.error(
-      '\nSolution: Either externalize these packages in esbuild.config.js'
+      '\nSolution: Either externalize these packages in esbuild.config.js',
     );
     console.error('or use local file paths instead of require.resolve().');
     process.exit(1);

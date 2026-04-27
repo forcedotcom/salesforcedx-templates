@@ -1,5 +1,5 @@
 /* eslint header/header: off */
-/*---------------------------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) 2021 Vercel, Inc. All rights reserved.
  *  Licensed under the MIT License. See OSSREADME.json in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -9,38 +9,39 @@
  * See https://github.com/vercel/next.js for more information
  */
 
-import * as crypto from 'crypto';
-import * as nodeFs from 'fs';
-import got from 'got';
-import * as path from 'path';
-import { extract } from 'tar';
+import * as crypto from 'node:crypto';
+import * as nodeFs from 'node:fs';
+import * as path from 'node:path';
 import * as os from 'node:os';
+import { extract } from 'tar';
+import got, { type Response } from 'got';
 
-import { nls } from '../i18n';
 import { HttpsProxyAgent } from 'hpagent';
 import { getProxyForUrl } from 'proxy-from-env';
+import { nls } from '../i18n';
 
-interface RepoInfo {
+type RepoInfo = {
   username: string;
   name: string;
   branch: string;
   filePath: string;
-}
+};
 
 const SFDX_STATE_FOLDER = '.sfdx';
 
 /**
  * The full system path to the preferred global state folder
  */
-export function DIR(): string {
+export function getGlobalStateDir(): string {
   return path.join(os.homedir(), SFDX_STATE_FOLDER);
 }
 
 /**
  * extract repo info from uri
+ *
  * @param repoUri uri to git repo
  */
-export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
+async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
   const [, username, name, t, branch, ...file] = repoUri.pathname.split('/');
   const filePath = `${file.join('/')}`;
 
@@ -50,41 +51,54 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
     const proxy = getProxyForUrl(url);
 
     // proxy will be empty string if no proxy is set
-    const infoResponse = await (proxy !== ''
-      ? got(url, {
-          agent: {
-            https: new HttpsProxyAgent({
-              keepAlive: true,
-              keepAliveMsecs: 1000,
-              maxSockets: 256,
-              maxFreeSockets: 256,
-              scheduling: 'lifo',
-              proxy,
-            }),
-          },
-        })
-      : got(url)
-    ).catch((e) => e);
-    if (infoResponse.statusCode !== 200) {
+    let infoResponse: Response<string>;
+    try {
+      infoResponse = await (proxy !== ''
+        ? got(url, {
+            agent: {
+              https: new HttpsProxyAgent({
+                keepAlive: true,
+                keepAliveMsecs: 1000,
+                maxSockets: 256,
+                maxFreeSockets: 256,
+                scheduling: 'lifo',
+                proxy,
+              }),
+            },
+          })
+        : got(url));
+    } catch {
       throw new Error(
-        nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href)
+        nls.localize(
+          'customTemplatesCannotRetrieveDefaultBranch',
+          repoUri.href,
+        ),
       );
     }
-    const info = JSON.parse(infoResponse.body);
-    return { username, name, branch: info['default_branch'], filePath };
+    if (infoResponse.statusCode !== 200) {
+      throw new Error(
+        nls.localize(
+          'customTemplatesCannotRetrieveDefaultBranch',
+          repoUri.href,
+        ),
+      );
+    }
+    const info = JSON.parse(infoResponse.body) as { default_branch: string };
+    return { username, name, branch: info.default_branch, filePath };
   }
 
   if (username && name && branch && t === 'tree') {
     return { username, name, branch, filePath };
   } else {
     throw new Error(
-      nls.localize('customTemplatesInvalidRepoUrl', repoUri.href)
+      nls.localize('customTemplatesInvalidRepoUrl', repoUri.href),
     );
   }
 }
 
 /**
  * Returns a path to store custom templates from a Git repo
+ *
  * @param repoUri repository uri
  * @returns path to store custom templates
  */
@@ -94,12 +108,17 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
     .update(repoUri.href)
     .digest('hex');
 
-  const customTemplatesPath = path.join(DIR(), 'custom-templates', folderHash);
+  const customTemplatesPath = path.join(
+    getGlobalStateDir(),
+    'custom-templates',
+    folderHash,
+  );
   return customTemplatesPath;
 }
 
 /**
  * Load custom templates Git repo. Currently only supports GitHub.
+ *
  * @param repoUri repo uri
  * @param forceLoadingRemoteRepo by default do not reload remote repo if the repo is already downloaded
  * @param fs node-fs-compatible object, defaults to node:fs
@@ -108,7 +127,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
 export async function loadCustomTemplatesGitRepo(
   repoUri: URL,
   forceLoadingRemoteRepo = false,
-  fs: typeof nodeFs = nodeFs
+  fs: typeof nodeFs = nodeFs,
 ): Promise<string> {
   const customTemplatesPath = getStoragePathForCustomTemplates(repoUri);
   // Do not load the remote repo if already the repo is already downloaded.
@@ -120,13 +139,13 @@ export async function loadCustomTemplatesGitRepo(
     throw new Error(
       nls.localize(
         'customTemplatesShouldUseHttpsProtocol',
-        `"${repoUri.protocol}"`
-      )
+        `"${repoUri.protocol}"`,
+      ),
     );
   }
   if (repoUri.hostname !== 'github.com') {
     throw new Error(
-      nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href)
+      nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href),
     );
   }
 
@@ -136,7 +155,7 @@ export async function loadCustomTemplatesGitRepo(
 
   // Download the repo and extract to the SFDX global state folder
   const response = await got(
-    `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
+    `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`,
   );
 
   // Create a temporary file to extract from

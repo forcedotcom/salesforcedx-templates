@@ -1,15 +1,24 @@
 /*
- * Copyright (c) 2019, salesforce.com, inc.
- * All rights reserved.
- * Licensed under the BSD 3-Clause license.
- * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ * Copyright 2026, Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 import * as assert from 'node:assert';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { describe, it } from 'vitest';
 import {
-  BUILT_IN_FULL_TEMPLATES,
   PLACEHOLDER_KEYS,
   WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
   PACKAGE_DIR_PLACEHOLDER,
@@ -33,12 +42,15 @@ import {
 
 const copyTemplatesPath = path.join(
   __dirname,
-  '../../scripts/copy-templates.js'
+  '../../scripts/copy-templates.js',
 );
 const { PLACEHOLDERS: copyScriptPlaceholders } = require(copyTemplatesPath);
 
 /** Map of placeholder key → value for sync assertion (single source: uiBundleTemplateUtils). */
-const UI_BUNDLE_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
+const UI_BUNDLE_PLACEHOLDERS: Record<
+  (typeof PLACEHOLDER_KEYS)[number],
+  string
+> = {
   PACKAGE_DIR_PLACEHOLDER,
   MAIN_DEFAULT_PLACEHOLDER,
   UI_BUNDLES_PLACEHOLDER,
@@ -62,37 +74,19 @@ const UI_BUNDLE_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> 
  * Path prefix for template paths as seen by pack:verify in the CLI (tmp/sf).
  * pack:verify measures paths under node_modules, e.g. node_modules/@salesforce/templates/lib/...
  */
-const PACKAGE_TEMPLATES_PREFIX =
-  'node_modules/@salesforce/templates/lib/templates/project/';
+const PACKAGE_TEMPLATES_LIB_PREFIX =
+  'node_modules/@salesforce/templates/lib/templates/';
 
-function* walkFiles(dir: string, relativeTo: string): Generator<string> {
-  if (!fs.existsSync(dir)) {
-    return;
-  }
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const full = path.join(dir, entry.name);
-    const rel = path.relative(relativeTo, full);
-    if (entry.isDirectory()) {
-      yield* walkFiles(full, relativeTo);
-    } else {
-      yield path.posix.normalize(rel.split(path.sep).join(path.posix.sep));
-    }
-  }
-}
-
-function getTemplateRoot(): string {
+const getTemplateRoot = (): string => {
   const fromCwd = process.cwd();
-  const libProject = path.join(fromCwd, 'lib', 'templates', 'project');
-  const srcProject = path.join(fromCwd, 'src', 'templates', 'project');
-  if (fs.existsSync(libProject)) {
-    return path.join(fromCwd, 'lib', 'templates');
-  }
-  if (fs.existsSync(srcProject)) {
-    return path.join(fromCwd, 'src', 'templates');
-  }
-  return '';
-}
+  const libTemplates = path.join(fromCwd, 'lib', 'templates');
+  const srcTemplates = path.join(fromCwd, 'src', 'templates');
+  return fs.existsSync(libTemplates)
+    ? libTemplates
+    : fs.existsSync(srcTemplates)
+      ? srcTemplates
+      : '';
+};
 
 describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', () => {
   it('placeholder constants in copy-templates.js match uiBundleTemplateUtils.ts', () => {
@@ -100,41 +94,43 @@ describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', ()
       assert.strictEqual(
         copyScriptPlaceholders[key],
         UI_BUNDLE_PLACEHOLDERS[key],
-        `Mismatch for ${key}`
+        `Mismatch for ${key}`,
       );
     }
   });
 });
 
 describe('Windows path length (pack:verify)', () => {
-  it('project template paths (reactinternalapp, reactexternalapp) stay within Windows max allowable path length', function () {
+  it('all template files stay within Windows max allowable path length', (ctx) => {
     const templatesRoot = getTemplateRoot();
     if (!templatesRoot) {
-      this.skip();
+      ctx.skip();
       return;
     }
 
-    const projectRoot = path.join(templatesRoot, 'project');
-    if (!fs.existsSync(projectRoot)) {
-      this.skip();
-      return;
-    }
+    const rels = fs
+      .readdirSync(templatesRoot, {
+        recursive: true,
+        withFileTypes: true,
+      })
+      .filter((d) => d.isFile())
+      .map((d) =>
+        path
+          .relative(templatesRoot, path.join(d.parentPath, d.name))
+          .split(path.sep)
+          .join('/'),
+      );
 
-    const longPaths: { length: number; path: string }[] = [];
-
-    for (const templateName of BUILT_IN_FULL_TEMPLATES) {
-      const templateDir = path.join(projectRoot, templateName);
-      if (!fs.existsSync(templateDir)) {
-        continue;
-      }
-
-      for (const rel of walkFiles(templateDir, templateDir)) {
-        const packagePath = PACKAGE_TEMPLATES_PREFIX + templateName + '/' + rel;
-        if (packagePath.length >= WINDOWS_MAX_ALLOWABLE_PATH_LENGTH) {
-          longPaths.push({ length: packagePath.length, path: packagePath });
-        }
-      }
-    }
+    const longPaths = rels
+      .map((rel) => ({ rel, packagePath: PACKAGE_TEMPLATES_LIB_PREFIX + rel }))
+      .filter(
+        ({ packagePath }) =>
+          packagePath.length >= WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
+      )
+      .map(({ packagePath }) => ({
+        length: packagePath.length,
+        path: packagePath,
+      }));
 
     assert.strictEqual(
       longPaths.length,
@@ -144,7 +140,7 @@ describe('Windows path length (pack:verify)', () => {
         longPaths
           .sort((a, b) => b.length - a.length)
           .map((p) => `  ${p.length} - ${p.path}`)
-          .join('\n')
+          .join('\n'),
     );
   });
 });

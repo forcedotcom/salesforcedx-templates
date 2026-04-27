@@ -3,19 +3,42 @@
  * Copies npm-based templates into src/templates/ (uiBundles and project).
  * Run as part of build: yarn build:copy-templates
  */
-const { execSync } = require('child_process');
+const { exec } = require('child_process');
+const { promisify } = require('util');
 const fs = require('fs');
 const path = require('path');
-const shell = require('shelljs');
 
-/** Single source: shared with src/utils/uiBundleTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
-const TEMPLATE_PLACEHOLDERS_SPEC = require(path.join(
-  __dirname,
-  '..',
-  'lib',
-  'utils',
-  'template-placeholders.js'
-)).default;
+const execAsync = promisify(exec);
+
+/**
+ * Recursive copy that trims trailing whitespace from each path segment.
+ * Upstream packages occasionally ship files whose names end with a space
+ * (e.g. "lds-guide-graphql.md "), which produces invalid OPC Part URIs
+ * when vsce builds the .vsix.
+ */
+function cpSyncSanitized(src, dest) {
+  fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const safeName = entry.name.trimEnd();
+    if (safeName !== entry.name) {
+      console.warn(
+        `[copy-templates] Sanitised filename: "${entry.name}" → "${safeName}"`,
+      );
+    }
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, safeName);
+    if (entry.isDirectory()) {
+      cpSyncSanitized(srcPath, destPath);
+    } else if (entry.isFile()) {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+/** Single source: shared with src/utils/uiBundleTemplateUtils.ts (compiled to lib/utils/templatePlaceholders.js) */
+const TEMPLATE_PLACEHOLDERS_SPEC = require(
+  path.join(__dirname, '..', 'lib', 'utils', 'templatePlaceholders.js'),
+).default;
 
 /**
  * Renames a directory to a placeholder name if it exists. Keeps template paths short for Windows.
@@ -65,7 +88,7 @@ const TEMPLATES = [
         'main',
         'default',
         'uiBundles',
-        'base-react-app'
+        'base-react-app',
       ),
     destSubpath: 'uiBundles/reactbasic',
   },
@@ -88,7 +111,7 @@ function copyTemplate(config) {
   try {
     const packageJsonPath = require.resolve(
       `${config.packageName}/package.json`,
-      { paths: [currDir] }
+      { paths: [currDir] },
     );
     const packageDir = path.dirname(packageJsonPath);
     const sourceDir = config.getSourceDir(packageDir);
@@ -100,16 +123,9 @@ function copyTemplate(config) {
 
     const destDir = path.join(templatesRoot, config.destSubpath);
 
-    if (fs.existsSync(destDir)) {
-      shell.rm('-rf', destDir);
-    }
+    fs.rmSync(destDir, { recursive: true, force: true });
 
-    shell.mkdir('-p', destDir);
-    const result = shell.cp('-r', sourceDir + '/.', destDir);
-    if (result.code !== 0) {
-      console.error(`Failed to copy files: ${result.stderr}`);
-      process.exit(1);
-    }
+    cpSyncSanitized(sourceDir, destDir);
 
     // Remove build/test artifacts that may exist in source packages
     const artifactDirs = [
@@ -124,16 +140,10 @@ function copyTemplate(config) {
     ];
     const artifactFiles = ['package-lock.json', 'tsconfig.tsbuildinfo'];
     for (const dir of artifactDirs) {
-      const dirPath = path.join(destDir, dir);
-      if (fs.existsSync(dirPath)) {
-        shell.rm('-rf', dirPath);
-      }
+      fs.rmSync(path.join(destDir, dir), { recursive: true, force: true });
     }
     for (const file of artifactFiles) {
-      const filePath = path.join(destDir, file);
-      if (fs.existsSync(filePath)) {
-        shell.rm('-f', filePath);
-      }
+      fs.rmSync(path.join(destDir, file), { force: true });
     }
 
     // Shorten paths per template-placeholders.json; placeholders replaced at generation in uiBundleTemplateUtils.
@@ -154,7 +164,7 @@ function copyTemplate(config) {
         const newPath = renameDirToPlaceholder(
           parentPath,
           step.dirInNpm,
-          toPath
+          toPath,
         );
         if (newPath) {
           if (!toPath.includes(path.sep)) {
@@ -162,9 +172,7 @@ function copyTemplate(config) {
           }
           if (step.removeEmptySibling) {
             const emptyDir = path.join(parentPath, step.removeEmptySibling);
-            if (fs.existsSync(emptyDir)) {
-              fs.rmSync(emptyDir, { recursive: true });
-            }
+            fs.rmSync(emptyDir, { recursive: true, force: true });
           }
         }
       }
@@ -189,7 +197,7 @@ function copyTemplate(config) {
         const newPath = renameDirToPlaceholder(
           parentPath,
           step.dirInNpm,
-          toPath
+          toPath,
         );
         if (newPath && !toPath.includes(path.sep)) {
           paths[step.placeholder] = newPath;
@@ -198,7 +206,7 @@ function copyTemplate(config) {
     }
 
     console.log(
-      `Copied ${config.packageName} to src/templates/${config.destSubpath}`
+      `Copied ${config.packageName} to src/templates/${config.destSubpath}`,
     );
   } catch (error) {
     console.error(`Failed to copy ${config.packageName}:`, error.message);
@@ -206,12 +214,12 @@ function copyTemplate(config) {
   }
 }
 
-function copyAllTemplates() {
+async function copyAllTemplates() {
   console.log('Copying templates from npm packages...');
   for (const config of TEMPLATES) {
     copyTemplate(config);
   }
-  generateUiBundleLockFiles(templatesRoot);
+  await generateUiBundleLockFiles(templatesRoot);
   console.log('Templates copied successfully.');
 }
 
@@ -220,23 +228,35 @@ function copyAllTemplates() {
  * These directories are under uiBundles/ (standalone templates) or _w_/ (placeholder
  * for uiBundles in project templates). The lock file ships with the template so that
  * `npm ci` works out of the box when users scaffold a new bundle.
+ *
+ * Runs in parallel — each call hits the npm registry for hundreds of transitive deps,
+ * so wall-clock time is dominated by serial HTTP round-trips.
  */
-function generateUiBundleLockFiles(templatesDir) {
+async function generateUiBundleLockFiles(templatesDir) {
   const uiBundleDirs = findUiBundlePackageJsonDirs(templatesDir);
-  for (const dir of uiBundleDirs) {
-    const rel = path.relative(currDir, dir);
-    console.log(`Generating package-lock.json in ${rel}`);
-    try {
-      execSync('npm install --package-lock-only --ignore-scripts', {
+  const results = await Promise.allSettled(
+    uiBundleDirs.map(async (dir) => {
+      const rel = path.relative(currDir, dir);
+      console.log(`Generating package-lock.json in ${rel}`);
+      await execAsync('npm install --package-lock-only --ignore-scripts', {
         cwd: dir,
-        stdio: 'pipe',
       });
-    } catch (error) {
+      return rel;
+    }),
+  );
+  const failures = results
+    .map((r, i) => ({ r, dir: uiBundleDirs[i] }))
+    .filter(({ r }) => r.status === 'rejected');
+  if (failures.length > 0) {
+    for (const { r, dir } of failures) {
       console.error(
-        `Failed to generate package-lock.json in ${rel}: ${error.message}`
+        `Failed to generate package-lock.json in ${path.relative(
+          currDir,
+          dir,
+        )}: ${r.reason.message}`,
       );
-      process.exit(1);
     }
+    process.exit(1);
   }
 }
 
@@ -257,7 +277,7 @@ function findUiBundlePackageJsonDirs(dir) {
     }
 
     const hasPackageJson = entries.some(
-      (e) => e.isFile() && e.name === 'package.json'
+      (e) => e.isFile() && e.name === 'package.json',
     );
     if (insideUiBundles && hasPackageJson) {
       results.push(current);
@@ -270,7 +290,7 @@ function findUiBundlePackageJsonDirs(dir) {
         entry.name === 'uiBundles' || entry.name === '_w_';
       walk(
         path.join(current, entry.name),
-        insideUiBundles || isUiBundleSegment
+        insideUiBundles || isUiBundleSegment,
       );
     }
   }
@@ -289,5 +309,8 @@ const PLACEHOLDERS = Object.fromEntries([
 module.exports = { copyAllTemplates, PLACEHOLDERS };
 
 if (require.main === module) {
-  copyAllTemplates();
+  copyAllTemplates().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 }

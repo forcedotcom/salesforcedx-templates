@@ -14,7 +14,29 @@
  * limitations under the License.
  */
 
-import { TemplateService } from './service/templateService';
-export { TemplateService };
-export * from './utils/types';
-export * from './utils/createUtil';
+export { TemplateService } from './service/templateService';
+export { CreateUtil } from './utils/createUtil';
+export {
+  AnalyticsTemplateOptions,
+  ApexClassOptions,
+  ApexTriggerOptions,
+  CreateOutput,
+  DigitalExperienceSiteOptions,
+  FlexipageOptions,
+  GeneratorClass,
+  GeneratorContext,
+  Generators,
+  generators,
+  LightningAppOptions,
+  LightningComponentOptions,
+  LightningEventOptions,
+  LightningInterfaceOptions,
+  LightningTestOptions,
+  ProjectOptions,
+  StaticResourceOptions,
+  TemplateOptions,
+  TemplateType,
+  UIBundleOptions,
+  VisualforceComponentOptions,
+  VisualforcePageOptions,
+} from './utils/types';

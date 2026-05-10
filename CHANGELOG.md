@@ -1,3 +1,12 @@
+## [66.7.13](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.12...66.7.13) (2026-05-10)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 7.5.13 to 7.5.15 ([63d60af](https://github.com/forcedotcom/salesforcedx-templates/commit/63d60afe5cafaa1d8c1826df9491ffa8636d9833))
+
+
+
 ## [66.7.12](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.11...66.7.12) (2026-04-22)
 
 

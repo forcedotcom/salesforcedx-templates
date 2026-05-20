@@ -41,6 +41,12 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
       case 'reactbasic':
         await this.generateReactBasic(bundleDir, bundlename, masterLabel);
         break;
+      case 'angularbasic':
+        await this.generateAngularBasic(bundleDir, bundlename, masterLabel);
+        break;
+      case 'angularclibasic':
+        await this.generateAngularCliBasic(bundleDir, bundlename, masterLabel);
+        break;
       default:
         await this.generateDefault(bundleDir, bundlename, masterLabel);
     }
@@ -75,6 +81,64 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
     masterLabel: string
   ): Promise<void> {
     this.sourceRootWithPartialPath(path.join('uiBundles', 'reactbasic'));
+
+    await this.render(
+      this.templatePath('_uibundle.uibundle-meta.xml'),
+      this.destinationPath(
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+      ),
+      { apiVersion: this.apiversion, masterLabel }
+    );
+
+    await this.render(
+      this.templatePath('package.json'),
+      this.destinationPath(path.join(bundleDir, 'package.json')),
+      { bundlename }
+    );
+
+    const templatePath = this.sourceRoot();
+    await this.copyDirectoryRecursive(
+      templatePath,
+      bundleDir,
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
+    );
+  }
+
+  private async generateAngularBasic(
+    bundleDir: string,
+    bundlename: string,
+    masterLabel: string
+  ): Promise<void> {
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'angularbasic'));
+
+    await this.render(
+      this.templatePath('_uibundle.uibundle-meta.xml'),
+      this.destinationPath(
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+      ),
+      { apiVersion: this.apiversion, masterLabel }
+    );
+
+    await this.render(
+      this.templatePath('package.json'),
+      this.destinationPath(path.join(bundleDir, 'package.json')),
+      { bundlename }
+    );
+
+    const templatePath = this.sourceRoot();
+    await this.copyDirectoryRecursive(
+      templatePath,
+      bundleDir,
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
+    );
+  }
+
+  private async generateAngularCliBasic(
+    bundleDir: string,
+    bundlename: string,
+    masterLabel: string
+  ): Promise<void> {
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'angularclibasic'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),

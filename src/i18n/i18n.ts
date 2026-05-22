@@ -61,4 +61,13 @@ export const messages = {
     'Failed to load the FlexiPage templates repository. Please verify the URL is correct and accessible.',
 
   AlphaNumericValidationError: '%s must contain only alphanumeric characters.',
+
+  InvalidMicrofrontendSrcUrl:
+    'The --src flag must be an absolute https URL (e.g., https://app.example.com). Plain http is only allowed for localhost or 127.0.0.1.',
+  InvalidMicrofrontendSandboxToken:
+    'Invalid sandbox tokens: %s. Valid tokens are: %s.',
+  MissingMicrofrontendShellTitle:
+    'The --shell-title flag is required and must be a non-empty string used as the iframe accessible name.',
+  MicrofrontendBundle:
+    'A Lightning Web Component that wraps the lightning-mfe-shell base component.',
 };

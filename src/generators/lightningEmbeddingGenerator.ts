@@ -9,7 +9,7 @@ import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { MicrofrontendOptions } from '../utils/types';
+import { LightningEmbeddingOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 function isAllowedSrcUrl(src: string): boolean {
@@ -43,7 +43,7 @@ const VALID_SANDBOX_TOKENS = new Set([
   'allow-top-navigation-by-user-activation',
 ]);
 
-export default class MicrofrontendGenerator extends BaseGenerator<MicrofrontendOptions> {
+export default class LightningEmbeddingGenerator extends BaseGenerator<LightningEmbeddingOptions> {
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.componentname);
 
@@ -53,18 +53,18 @@ export default class MicrofrontendGenerator extends BaseGenerator<MicrofrontendO
     }
 
     if (!isAllowedSrcUrl(this.options.src)) {
-      throw new Error(nls.localize('InvalidMicrofrontendSrcUrl'));
+      throw new Error(nls.localize('InvalidLightningEmbeddingSrcUrl'));
     }
 
     if (!this.options.shellTitle || !this.options.shellTitle.trim()) {
-      throw new Error(nls.localize('MissingMicrofrontendShellTitle'));
+      throw new Error(nls.localize('MissingLightningEmbeddingShellTitle'));
     }
 
     const tokens = this.options.sandbox.split(/\s+/).filter(Boolean);
     const invalid = tokens.filter((t) => !VALID_SANDBOX_TOKENS.has(t));
     if (invalid.length) {
       throw new Error(
-        nls.localize('InvalidMicrofrontendSandboxToken', [
+        nls.localize('InvalidLightningEmbeddingSandboxToken', [
           invalid.join(', '),
           [...VALID_SANDBOX_TOKENS].join(', '),
         ])
@@ -82,7 +82,7 @@ export default class MicrofrontendGenerator extends BaseGenerator<MicrofrontendO
       .substring(0, 1)
       .toLowerCase()}${componentname.substring(1)}`;
 
-    this.sourceRootWithPartialPath(path.join('microfrontend', 'default'));
+    this.sourceRootWithPartialPath(path.join('lightningembedding', 'default'));
 
     await this.render(
       this.templatePath('default.html'),

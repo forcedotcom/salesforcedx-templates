@@ -9,7 +9,7 @@ import * as chai from 'chai';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TemplateService, TemplateType } from '../../src';
-import MicrofrontendGenerator from '../../src/generators/microfrontendGenerator';
+import LightningEmbeddingGenerator from '../../src/generators/lightningEmbeddingGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
 
 chai.config.truncateThreshold = 100000;
@@ -32,10 +32,10 @@ function assertFileContent(file: string, needle: string | RegExp) {
     .be.true;
 }
 
-describe('MicrofrontendGenerator', () => {
+describe('LightningEmbeddingGenerator', () => {
   const apiVersion = getDefaultApiVersion();
   const lwcOutputDir = path.join('testsoutput', 'lwc');
-  const nonLwcOutputDir = path.join('testsoutput', 'mfe');
+  const nonLwcOutputDir = path.join('testsoutput', 'embedding');
 
   beforeEach(async () => {
     await remove(lwcOutputDir);
@@ -46,7 +46,7 @@ describe('MicrofrontendGenerator', () => {
     it('should throw when componentname is empty', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
+          new LightningEmbeddingGenerator({
             componentname: '',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
@@ -60,8 +60,8 @@ describe('MicrofrontendGenerator', () => {
     it('should throw when not internal and outputdir is missing lwc parent', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
             shellTitle: 'Demo',
@@ -74,8 +74,8 @@ describe('MicrofrontendGenerator', () => {
     it('should accept http src on localhost', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'http://localhost:3000',
             sandbox: 'allow-scripts',
             shellTitle: 'Demo',
@@ -88,8 +88,8 @@ describe('MicrofrontendGenerator', () => {
     it('should accept http src on 127.0.0.1', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'http://127.0.0.1:8080',
             sandbox: 'allow-scripts',
             shellTitle: 'Demo',
@@ -102,8 +102,8 @@ describe('MicrofrontendGenerator', () => {
     it('should reject http src on non-localhost host', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'http://app.example.com',
             sandbox: 'allow-scripts',
             shellTitle: 'Demo',
@@ -116,8 +116,8 @@ describe('MicrofrontendGenerator', () => {
     it('should reject non-URL src', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'not a url',
             sandbox: 'allow-scripts',
             shellTitle: 'Demo',
@@ -130,8 +130,8 @@ describe('MicrofrontendGenerator', () => {
     it('should reject non-http(s) protocols', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'ftp://example.com',
             sandbox: 'allow-scripts',
             shellTitle: 'Demo',
@@ -144,8 +144,8 @@ describe('MicrofrontendGenerator', () => {
     it('should reject empty shellTitle', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
             shellTitle: '   ',
@@ -158,8 +158,8 @@ describe('MicrofrontendGenerator', () => {
     it('should reject invalid sandbox tokens', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts allow-everything',
             shellTitle: 'Demo',
@@ -172,8 +172,8 @@ describe('MicrofrontendGenerator', () => {
     it('should accept multiple valid sandbox tokens', () => {
       expect(
         () =>
-          new MicrofrontendGenerator({
-            componentname: 'mfeShell',
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts allow-forms allow-same-origin',
             shellTitle: 'Demo',
@@ -187,30 +187,33 @@ describe('MicrofrontendGenerator', () => {
   describe('generate', () => {
     it('should create the LWC bundle (internal — no meta xml)', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const result = await templateService.create(TemplateType.Microfrontend, {
-        componentname: 'mfeShell',
-        src: 'https://app.example.com',
-        sandbox: 'allow-scripts allow-forms',
-        shellTitle: 'Demo Shell',
-        outputdir: lwcOutputDir,
-        apiversion: apiVersion,
-        internal: true,
-      });
+      const result = await templateService.create(
+        TemplateType.LightningEmbedding,
+        {
+          componentname: 'embeddingDemo',
+          src: 'https://app.example.com',
+          sandbox: 'allow-scripts allow-forms',
+          shellTitle: 'Demo Shell',
+          outputdir: lwcOutputDir,
+          apiversion: apiVersion,
+          internal: true,
+        }
+      );
 
-      const base = path.join(lwcOutputDir, 'mfeShell');
-      assertFileExists(path.join(base, 'mfeShell.html'));
-      assertFileExists(path.join(base, 'mfeShell.js'));
-      assertFileExists(path.join(base, 'mfeShell.css'));
+      const base = path.join(lwcOutputDir, 'embeddingDemo');
+      assertFileExists(path.join(base, 'embeddingDemo.html'));
+      assertFileExists(path.join(base, 'embeddingDemo.js'));
+      assertFileExists(path.join(base, 'embeddingDemo.css'));
       expect(
-        fs.existsSync(path.join(base, 'mfeShell.js-meta.xml')),
+        fs.existsSync(path.join(base, 'embeddingDemo.js-meta.xml')),
         'meta xml should not exist for internal'
       ).to.be.false;
 
-      assertFileContent(path.join(base, 'mfeShell.html'), 'allow-scripts');
-      assertFileContent(path.join(base, 'mfeShell.html'), 'Demo Shell');
-      assertFileContent(path.join(base, 'mfeShell.js'), 'MfeShell');
+      assertFileContent(path.join(base, 'embeddingDemo.html'), 'allow-scripts');
+      assertFileContent(path.join(base, 'embeddingDemo.html'), 'Demo Shell');
+      assertFileContent(path.join(base, 'embeddingDemo.js'), 'EmbeddingDemo');
       assertFileContent(
-        path.join(base, 'mfeShell.js'),
+        path.join(base, 'embeddingDemo.js'),
         'https://app.example.com'
       );
 
@@ -219,8 +222,8 @@ describe('MicrofrontendGenerator', () => {
 
     it('should generate meta xml when not internal', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      await templateService.create(TemplateType.Microfrontend, {
-        componentname: 'mfeShell',
+      await templateService.create(TemplateType.LightningEmbedding, {
+        componentname: 'embeddingDemo',
         src: 'https://app.example.com',
         sandbox: 'allow-scripts',
         shellTitle: 'Public Shell',
@@ -229,9 +232,13 @@ describe('MicrofrontendGenerator', () => {
         internal: false,
       });
 
-      const meta = path.join(lwcOutputDir, 'mfeShell', 'mfeShell.js-meta.xml');
+      const meta = path.join(
+        lwcOutputDir,
+        'embeddingDemo',
+        'embeddingDemo.js-meta.xml'
+      );
       assertFileExists(meta);
-      assertFileContent(meta, 'Mfe Shell');
+      assertFileContent(meta, 'Embedding Demo');
       assertFileContent(meta, apiVersion);
     });
   });

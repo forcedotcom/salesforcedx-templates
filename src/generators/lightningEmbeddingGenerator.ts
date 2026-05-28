@@ -9,39 +9,16 @@ import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
+import {
+  isAllowedLightningEmbeddingSrcUrl,
+  LIGHTNING_EMBEDDING_SANDBOX_TOKENS,
+} from '../utils/lightningEmbedding';
 import { LightningEmbeddingOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
-function isAllowedSrcUrl(src: string): boolean {
-  let parsed: URL;
-  try {
-    parsed = new URL(src);
-  } catch {
-    return false;
-  }
-  if (parsed.protocol === 'https:') {
-    return true;
-  }
-  if (parsed.protocol === 'http:') {
-    return parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1';
-  }
-  return false;
-}
-
-const VALID_SANDBOX_TOKENS = new Set([
-  'allow-forms',
-  'allow-modals',
-  'allow-orientation-lock',
-  'allow-pointer-lock',
-  'allow-popups',
-  'allow-popups-to-escape-sandbox',
-  'allow-presentation',
-  'allow-same-origin',
-  'allow-scripts',
-  'allow-storage-access-by-user-activation',
-  'allow-top-navigation',
-  'allow-top-navigation-by-user-activation',
-]);
+const VALID_SANDBOX_TOKENS: ReadonlySet<string> = new Set(
+  LIGHTNING_EMBEDDING_SANDBOX_TOKENS
+);
 
 export default class LightningEmbeddingGenerator extends BaseGenerator<LightningEmbeddingOptions> {
   public validateOptions(): void {
@@ -52,7 +29,7 @@ export default class LightningEmbeddingGenerator extends BaseGenerator<Lightning
       throw new Error(nls.localize('MissingLWCDir'));
     }
 
-    if (!isAllowedSrcUrl(this.options.src)) {
+    if (!isAllowedLightningEmbeddingSrcUrl(this.options.src)) {
       throw new Error(nls.localize('InvalidLightningEmbeddingSrcUrl'));
     }
 

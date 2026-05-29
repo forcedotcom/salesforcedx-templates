@@ -1,3 +1,12 @@
+# [66.9.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.8.0...66.9.0) (2026-05-29)
+
+
+### Features
+
+* bump @salesforce/ui-bundle-template packages to ^9.16.0 [@W-22568671] ([#825](https://github.com/forcedotcom/salesforcedx-templates/issues/825)) ([a085a51](https://github.com/forcedotcom/salesforcedx-templates/commit/a085a51ba0a6d94118eea946d51f21d5321c8512))
+
+
+
 # [66.8.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.13...66.8.0) (2026-05-29)
 
 

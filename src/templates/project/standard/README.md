@@ -1,6 +1,6 @@
 # Salesforce DX Project
 
-Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.
+Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce Platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.
 
 This project template gets you started with the tools and structure you need to build Salesforce applications using source control, scratch orgs, and the Salesforce CLI.
 
@@ -17,7 +17,7 @@ Before you start, make sure you have:
 
 Your DX project follows this structure:
 
-- **`force-app/main/default/`** - Your metadata source files (for components such as Apex classes and triggers and Lightning Web Components) live in this package directory. You can configure additional ones in the `sfdx-project.json` file.
+- **`force-app/main/default/`** - Your metadata source files live in this default package directory. You can configure additional package directories in the `sfdx-project.json` file.
 - **`config/`** - Scratch org definitions and project settings
 - **`scripts/`** - Automation scripts for common tasks
 - **`sfdx-project.json`** - Project manifest that defines package directories, namespace, API version, and other project-level settings
@@ -37,7 +37,7 @@ Here are common CLI commands that you'll use the most:
 - `sf org create scratch`: Create a scratch org
 - `sf project deploy start`: Deploy metadata to your org
 - `sf project retrieve start`: Retrieve metadata from your org
-- `sf template generate <artifact>`: Scaffold new components, such as Apex classes and triggers, LWC components, Lightning page, and more
+- `sf template generate <artifact>`: Scaffold new components, such as Apex classes and triggers, LWC components, Lightning apps, and more
 - `sf apex <command>`: Run Apex tests, run anonymous Apex blocks, and view logs
 - `sf data <command>`: Work with test data
 - `sf alias <command>`: Manage org aliases

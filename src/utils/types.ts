@@ -11,6 +11,7 @@ import ApexTriggerGenerator from '../generators/apexTriggerGenerator';
 import FlexipageGenerator from '../generators/flexipageGenerator';
 import LightningAppGenerator from '../generators/lightningAppGenerator';
 import LightningComponentGenerator from '../generators/lightningComponentGenerator';
+import LightningEmbeddingGenerator from '../generators/lightningEmbeddingGenerator';
 import LightningEventGenerator from '../generators/lightningEventGenerator';
 import LightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
 import LightningTestGenerator from '../generators/lightningTestGenerator';
@@ -51,6 +52,7 @@ export type Generators =
   | typeof LightningTestGenerator
   | typeof LightningInterfaceGenerator
   | typeof DigitalExperienceSiteGenerator
+  | typeof LightningEmbeddingGenerator
   | typeof ProjectGenerator
   | typeof StaticResourceGenerator
   | typeof VisualforceComponentGenerator
@@ -75,6 +77,7 @@ export enum TemplateType {
   LightningInterface,
   LightningTest,
   DigitalExperienceSite,
+  LightningEmbedding,
   Project,
   VisualforceComponent,
   VisualforcePage,
@@ -93,6 +96,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.LightningInterface, LightningInterfaceGenerator],
   [TemplateType.LightningTest, LightningTestGenerator],
   [TemplateType.DigitalExperienceSite, DigitalExperienceSiteGenerator],
+  [TemplateType.LightningEmbedding, LightningEmbeddingGenerator],
   [TemplateType.Project, ProjectGenerator],
   [TemplateType.StaticResource, StaticResourceGenerator],
   [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
@@ -177,6 +181,14 @@ export interface LightningInterfaceOptions extends TemplateOptions {
 export interface LightningTestOptions extends TemplateOptions {
   template: 'DefaultLightningTest';
   testname: string;
+  internal: boolean;
+}
+
+export interface LightningEmbeddingOptions extends TemplateOptions {
+  componentname: string;
+  src: string;
+  sandbox: string;
+  shellTitle: string;
   internal: boolean;
 }
 

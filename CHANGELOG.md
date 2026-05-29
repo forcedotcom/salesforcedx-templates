@@ -1,3 +1,12 @@
+# [66.8.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.13...66.8.0) (2026-05-29)
+
+
+### Features
+
+* add lightning embedding template generator ([#821](https://github.com/forcedotcom/salesforcedx-templates/issues/821)) ([92374ba](https://github.com/forcedotcom/salesforcedx-templates/commit/92374baf38f8d27782cbe4a947a5ae93e637b026)), closes [plugin-templates#943](https://github.com/plugin-templates/issues/943)
+
+
+
 ## [66.7.13](https://github.com/forcedotcom/salesforcedx-templates/compare/66.7.12...66.7.13) (2026-05-10)
 
 

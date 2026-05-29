@@ -33,8 +33,16 @@ export default class LightningEmbeddingGenerator extends BaseGenerator<Lightning
       throw new Error(nls.localize('InvalidLightningEmbeddingSrcUrl'));
     }
 
+    if (this.options.src.includes("'")) {
+      throw new Error(nls.localize('InvalidLightningEmbeddingSrcChar'));
+    }
+
     if (!this.options.shellTitle || !this.options.shellTitle.trim()) {
       throw new Error(nls.localize('MissingLightningEmbeddingShellTitle'));
+    }
+
+    if (this.options.shellTitle.includes('"')) {
+      throw new Error(nls.localize('InvalidLightningEmbeddingShellTitleChar'));
     }
 
     const tokens = this.options.sandbox.split(/\s+/).filter(Boolean);

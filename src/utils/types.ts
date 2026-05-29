@@ -189,7 +189,7 @@ export interface LightningEmbeddingOptions extends TemplateOptions {
   src: string;
   sandbox: string;
   shellTitle: string;
-  internal?: boolean;
+  internal: boolean;
 }
 
 export interface ProjectOptions extends TemplateOptions {

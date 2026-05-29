@@ -182,6 +182,34 @@ describe('LightningEmbeddingGenerator', () => {
           })
       ).to.not.throw();
     });
+
+    it('should reject a single-quote character in src (would break the generated JS string)', () => {
+      expect(
+        () =>
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
+            src: "https://app.example.com/path?q='foo",
+            sandbox: 'allow-scripts',
+            shellTitle: 'Demo',
+            outputdir: lwcOutputDir,
+            internal: true,
+          })
+      ).to.throw(/single-quote/);
+    });
+
+    it('should reject a double-quote character in shellTitle (would break the generated HTML attribute)', () => {
+      expect(
+        () =>
+          new LightningEmbeddingGenerator({
+            componentname: 'embeddingDemo',
+            src: 'https://app.example.com',
+            sandbox: 'allow-scripts',
+            shellTitle: 'My "App"',
+            outputdir: lwcOutputDir,
+            internal: true,
+          })
+      ).to.throw(/double-quote/);
+    });
   });
 
   describe('generate', () => {

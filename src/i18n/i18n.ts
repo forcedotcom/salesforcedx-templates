@@ -64,10 +64,14 @@ export const messages = {
 
   InvalidLightningEmbeddingSrcUrl:
     'The --src flag must be an absolute https URL (e.g., https://app.example.com). Plain http is only allowed for localhost or 127.0.0.1.',
+  InvalidLightningEmbeddingSrcChar:
+    'The --src flag must not contain a single-quote character; it would break the generated JavaScript string literal.',
   InvalidLightningEmbeddingSandboxToken:
     'Invalid sandbox tokens: %s. Valid tokens are: %s.',
   MissingLightningEmbeddingShellTitle:
     'The --shell-title flag is required and must be a non-empty string used as the iframe accessible name.',
+  InvalidLightningEmbeddingShellTitleChar:
+    'The --shell-title flag must not contain a double-quote character; it would break the generated HTML attribute.',
   LightningEmbeddingBundle:
     'A Lightning Web Component that wraps the lightning-embedding base component.',
 };

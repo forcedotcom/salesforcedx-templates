@@ -1,3 +1,12 @@
+## [66.9.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.9.0...66.9.1) (2026-06-01)
+
+
+### Bug Fixes
+
+* **deps:** bump uibundle sample app and template versions ([#831](https://github.com/forcedotcom/salesforcedx-templates/issues/831)) ([fc9f37f](https://github.com/forcedotcom/salesforcedx-templates/commit/fc9f37f3173772e313f701f47e3e021337e339b0))
+
+
+
 # [66.9.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.8.0...66.9.0) (2026-05-29)
 
 

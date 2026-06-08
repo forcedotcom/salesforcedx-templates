@@ -909,25 +909,25 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.12.tgz#60420622812a7ec7e46d220667bc29b42dc247ff"
   integrity sha512-BIJyduJC18Kc8z+arUm5AZ9VkPRyw1KKAm+Tk+9LT99eOzhNilyfKzhZ4t+tG2lIGgnJpmytZfVDZ0e2kFul8g==
 
-"@salesforce/ui-bundle-template-app-react-template-b2e@^10.2.2":
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-10.2.2.tgz#d34936cacb3c4359c8526f023acbc998fc7eca88"
-  integrity sha512-Bsdop/sh6afY+0zikPGZI/ALx+Ammt/PFuReHmbfn4vwhKZq3cb/xRohNpRehlfHhnQgDG00d2X1C3AjAoUhFw==
+"@salesforce/ui-bundle-template-app-react-template-b2e@^10.6.0":
+  version "10.6.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-10.6.0.tgz#f0a02c36943b1fa8f834ea5b14bf8f80bdcee00f"
+  integrity sha512-U0/bSzw71GJoolYN9UFWaGJDdmzPNcN5NGH/OjZKM1BQ0dHFhfDGRsuonismFT1vWyXksl5AK7Hcp0MhxFVPXQ==
 
-"@salesforce/ui-bundle-template-app-react-template-b2x@^10.2.2":
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-10.2.2.tgz#15672ee535dfb2724546a9bf83c0212c0d8aef5a"
-  integrity sha512-9Kt7RRawtKZmMul5Tp8V9JDtO9TrKMJyOLAoX2HokE9wMEyL+o8STuCjz6TrpgIOvFDKl+Wt1vDgAJisR65AhA==
+"@salesforce/ui-bundle-template-app-react-template-b2x@^10.6.0":
+  version "10.6.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-10.6.0.tgz#e2d4588b0e90dc2b2acd2f4183457a06cde2a87a"
+  integrity sha512-mAqE2FzycDlEP4D+vuVNtp3DbbZqVNrNpVJA3hQ3L1uOkJDHkEe5LkeKaTfi0/BLmMXIrX1ltvDJzvzT/a33Jg==
 
-"@salesforce/ui-bundle-template-base-react-app@^10.2.2":
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-10.2.2.tgz#1900eb497385c00a142d42963abb61642786774b"
-  integrity sha512-W5aqtJeVHqVDcbXayF3sSS4SOH+o6MecYDi3pJ9jBzFm7gCU5euF/Oc0Ip3+O7U3uY4ZGpzCXkfvIuVn49Wfow==
+"@salesforce/ui-bundle-template-base-react-app@^10.6.0":
+  version "10.6.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-10.6.0.tgz#c8ed30942065414e72ee7e235f753c73032b6ce2"
+  integrity sha512-+U2nE8p5LWY/nb968X9FAkkSeZ28YlOcUQ4qOk7IO2uoA3JMJIrOctPNb4CPHES0UMnpgziUrYe86HsoVS7FgA==
 
-"@salesforce/ui-bundle-template-base-web-app@^10.2.2":
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-10.2.2.tgz#ffd34fa2437210ee7f02c9791878495f2bdfacfd"
-  integrity sha512-rjK+SJNTpfGlrfnvr8andKC2w9oIuekx7kqv6qyLBxKLFs1JgxKZcNGLsacni2g2iMTvL7NXzv33t3954cTPCA==
+"@salesforce/ui-bundle-template-base-web-app@^10.6.0":
+  version "10.6.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-10.6.0.tgz#2242845d8d1b336e81d67918f26ad04512a4091a"
+  integrity sha512-StPwFUK0OjSbci74vDA/1aamlRak+vPZHFmZlafHAyuqJneXQcZaMlWbFxTdrwVnWqhh7oYGVPJ+MgfO5BFAiA==
 
 "@shikijs/core@1.29.2":
   version "1.29.2"
@@ -6713,10 +6713,10 @@ table@^6.0.9:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
-tar@^7.5.15:
-  version "7.5.15"
-  resolved "https://registry.npmjs.org/tar/-/tar-7.5.15.tgz#afe6d1316cddf614a566e3813e42fe01aed46fee"
-  integrity sha512-dzGK0boVlC4W5QFuQN1EFSl3bIDYsk7Tj40U6eIBnK2k/8ml7TZ5agbI5j5+qnoVcAA+rNtBml8SEiLxZpNqRQ==
+tar@^7.5.16:
+  version "7.5.16"
+  resolved "https://registry.npmjs.org/tar/-/tar-7.5.16.tgz#f11e063afed4554f758049d082909e37d6b53ced"
+  integrity sha512-56adEpPMouktRlBLXiaYFFzZ/3+JXa8P9n7WbR+ibIjtviN55mEaOkiysCnPnWm+7kkui1Dn8J9l+g6zV8731w==
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"

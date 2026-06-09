@@ -44,8 +44,8 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
       case 'angularbasic':
         await this.generateAngularBasic(bundleDir, bundlename, masterLabel);
         break;
-      case 'angularclibasic':
-        await this.generateAngularCliBasic(bundleDir, bundlename, masterLabel);
+      case 'angularvite':
+        await this.generateAngularVite(bundleDir, bundlename, masterLabel);
         break;
       default:
         await this.generateDefault(bundleDir, bundlename, masterLabel);
@@ -133,12 +133,12 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
     );
   }
 
-  private async generateAngularCliBasic(
+  private async generateAngularVite(
     bundleDir: string,
     bundlename: string,
     masterLabel: string
   ): Promise<void> {
-    this.sourceRootWithPartialPath(path.join('uiBundles', 'angularclibasic'));
+    this.sourceRootWithPartialPath(path.join('uiBundles', 'angularvite'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),
@@ -161,6 +161,7 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
       new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
     );
   }
+
 
   private async copyDirectoryRecursive(
     sourceDir: string,

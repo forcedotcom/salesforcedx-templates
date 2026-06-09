@@ -30,11 +30,21 @@ But you can further configure it by editing the `sfdx-project.json` file. See [S
 
 ## Enable Skills in Agentforce Vibes to Vibe Code Agents
 
-To vibe code agents using Agentforce Vibes, first open the Agentforce Vibes panel. Click the **Manage Agentforce Rules, Workflows, Hooks & Skills** icon, then the **Skills** tab, and ensure the `agentforce-development` skill is enabled.  That's it!
+To vibe code agents using Agentforce Vibes, first open the Agentforce Vibes panel. Click the **Manage Skills, Rules, Workflows, and Hookss** icon, then the **Skills** tab, and ensure these skills are enabled:
+
+- `developing-agentforce`
+- `observing-agentforce`
+- `testing-agentforce`
+
+That's it!
 
 ### Use Other AI Tools
 
-If you prefer to use other AI tools, such as Claude Code or Cursor, copy the [`agentforce-development` skills](https://github.com/forcedotcom/afv-library/tree/main/skills/agentforce-development) from the `afv-library` GitHub repository to the appropriate directory in this DX project. Check your AI tool's documentation for the specific location and how to enable the skills.  
+If you prefer to use other AI tools, such as Claude Code or Cursor, copy these skills from the `sf-skills` GitHub repository to the appropriate directory in this DX project. Check your AI tool's documentation for the specific location and how to enable the skills.  
+
+- [`developing-agentforce`](https://github.com/forcedotcom/sf-skills/tree/main/skills/developing-agentforce)
+- [`observing-agentforce`](https://github.com/forcedotcom/sf-skills/tree/main/skills/observing-agentforce)
+- [`testing-agentforce`](https://github.com/forcedotcom/sf-skills/tree/main/skills/testing-agentforce)
 
 ## Vibe Code the Sample Agent
 

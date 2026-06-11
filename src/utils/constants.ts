@@ -6,7 +6,7 @@
  */
 import * as path from 'path';
 
-export const DEFAULT_API_VERSION = '66.0';
+export const DEFAULT_API_VERSION = '67.0';
 
 export const UI_BUNDLES_DIR = 'uiBundles';
 

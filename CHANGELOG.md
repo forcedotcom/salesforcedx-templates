@@ -1,3 +1,12 @@
+# [66.10.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.9.3...66.10.0) (2026-06-11)
+
+
+### Features
+
+* update default API version to 67.0 - W-22858527 ([#837](https://github.com/forcedotcom/salesforcedx-templates/issues/837)) ([3a5bd16](https://github.com/forcedotcom/salesforcedx-templates/commit/3a5bd16b45f68160e1ca69260e8bc7ceb9a83691))
+
+
+
 ## [66.9.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.9.2...66.9.3) (2026-06-09)
 
 

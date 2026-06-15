@@ -9,7 +9,6 @@ import * as assert from 'node:assert';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import {
-  BUILT_IN_FULL_TEMPLATES,
   PLACEHOLDER_KEYS,
   WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
   PACKAGE_DIR_PLACEHOLDER,
@@ -63,7 +62,7 @@ const UI_BUNDLE_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> 
  * pack:verify measures paths under node_modules, e.g. node_modules/@salesforce/templates/lib/...
  */
 const PACKAGE_TEMPLATES_PREFIX =
-  'node_modules/@salesforce/templates/lib/templates/project/';
+  'node_modules/@salesforce/templates/lib/templates/';
 
 function* walkFiles(dir: string, relativeTo: string): Generator<string> {
   if (!fs.existsSync(dir)) {
@@ -107,32 +106,19 @@ describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', ()
 });
 
 describe('Windows path length (pack:verify)', () => {
-  it('project template paths (reactinternalapp, reactexternalapp) stay within Windows max allowable path length', function () {
+  it('all template files stay within Windows max allowable path length', function () {
     const templatesRoot = getTemplateRoot();
     if (!templatesRoot) {
       this.skip();
       return;
     }
 
-    const projectRoot = path.join(templatesRoot, 'project');
-    if (!fs.existsSync(projectRoot)) {
-      this.skip();
-      return;
-    }
-
     const longPaths: { length: number; path: string }[] = [];
 
-    for (const templateName of BUILT_IN_FULL_TEMPLATES) {
-      const templateDir = path.join(projectRoot, templateName);
-      if (!fs.existsSync(templateDir)) {
-        continue;
-      }
-
-      for (const rel of walkFiles(templateDir, templateDir)) {
-        const packagePath = PACKAGE_TEMPLATES_PREFIX + templateName + '/' + rel;
-        if (packagePath.length >= WINDOWS_MAX_ALLOWABLE_PATH_LENGTH) {
-          longPaths.push({ length: packagePath.length, path: packagePath });
-        }
+    for (const rel of walkFiles(templatesRoot, templatesRoot)) {
+      const packagePath = PACKAGE_TEMPLATES_PREFIX + rel;
+      if (packagePath.length >= WINDOWS_MAX_ALLOWABLE_PATH_LENGTH) {
+        longPaths.push({ length: packagePath.length, path: packagePath });
       }
     }
 

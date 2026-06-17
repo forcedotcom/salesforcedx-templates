@@ -1,3 +1,12 @@
+## [66.10.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.10.1...66.10.2) (2026-06-17)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/core from 7.28.0 to 7.29.7 ([97e2d6a](https://github.com/forcedotcom/salesforcedx-templates/commit/97e2d6ab03e6ebd8f2308b1a7ac2ff86645f4321))
+
+
+
 ## [66.10.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.10.0...66.10.1) (2026-06-17)
 
 

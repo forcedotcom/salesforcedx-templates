@@ -1,3 +1,12 @@
+## [66.10.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.10.0...66.10.1) (2026-06-17)
+
+
+### Bug Fixes
+
+* **deps:** bump markdown-it from 14.1.0 to 14.2.0 ([349b72e](https://github.com/forcedotcom/salesforcedx-templates/commit/349b72ea601389f8e7ad6417450f4d113e822a34))
+
+
+
 # [66.10.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.9.3...66.10.0) (2026-06-11)
 
 

@@ -129,8 +129,12 @@ export interface ApexClassOptions extends TemplateOptions {
     | 'BasicUnitTest'
     | 'ApexUnitTest'
     | 'ApexException'
-    | 'InboundEmailService';
+    | 'InboundEmailService'
+    | 'Queueable'
+    | 'Batchable';
   classname: string;
+  /** SObject type for the Batchable template. Defaults to 'SObject'. */
+  sobjecttype?: string;
 }
 
 type ApexTriggerEvent =

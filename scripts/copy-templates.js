@@ -69,6 +69,20 @@ const TEMPLATES = [
       ),
     destSubpath: 'uiBundles/reactbasic',
   },
+  {
+    packageName: '@salesforce/ui-bundle-template-base-angular-app',
+    getSourceDir: (packageDir) =>
+      path.join(
+        packageDir,
+        'src',
+        'force-app',
+        'main',
+        'default',
+        'uiBundles',
+        'base-angular-app'
+      ),
+    destSubpath: 'uiBundles/angularbasic',
+  },
   // Project templates (reactinternalapp, reactexternalapp)
   {
     packageName: '@salesforce/ui-bundle-template-app-react-template-b2e',

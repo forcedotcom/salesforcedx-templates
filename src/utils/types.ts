@@ -123,19 +123,27 @@ export interface AnalyticsTemplateOptions extends TemplateOptions {
   templatename: string;
 }
 
-export interface ApexClassOptions extends TemplateOptions {
+type ApexClassBaseOptions = TemplateOptions & { classname: string };
+
+type NonBatchableApexClassOptions = ApexClassBaseOptions & {
   template:
     | 'DefaultApexClass'
     | 'BasicUnitTest'
     | 'ApexUnitTest'
     | 'ApexException'
     | 'InboundEmailService'
-    | 'Queueable'
-    | 'Batchable';
-  classname: string;
-  /** SObject type for the Batchable template. Defaults to 'SObject'. */
+    | 'Queueable';
+  sobjecttype?: never;
+};
+
+type BatchableApexClassOptions = ApexClassBaseOptions & {
+  template: 'Batchable';
   sobjecttype?: string;
-}
+};
+
+export type ApexClassOptions =
+  | NonBatchableApexClassOptions
+  | BatchableApexClassOptions;
 
 type ApexTriggerEvent =
   | 'before insert'

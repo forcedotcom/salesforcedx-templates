@@ -113,6 +113,14 @@ describe('TemplateService', () => {
       await remove(outputdir);
     });
 
+    const expectedMetaContent = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">',
+      `    <apiVersion>${apiVersion}</apiVersion>`,
+      '    <status>Active</status>',
+      '</ApexClass>',
+    ].join('\n');
+
     it('should create a Queueable apex class', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
       await templateService.create(TemplateType.ApexClass, {
@@ -123,6 +131,10 @@ describe('TemplateService', () => {
       assertFileContent(
         path.join(outputdir, 'MyQueueable.cls'),
         'public with sharing class MyQueueable implements Queueable, Finalizer'
+      );
+      assertFileContent(
+        path.join(outputdir, 'MyQueueable.cls-meta.xml'),
+        expectedMetaContent
       );
     });
 
@@ -137,6 +149,10 @@ describe('TemplateService', () => {
       assertFileContent(file, 'Database.Batchable<SObject>');
       assertFileContent(file, 'List<SObject> scope');
       assertFileContent(file, 'SELECT Id FROM SObject');
+      assertFileContent(
+        path.join(outputdir, 'MyBatchable.cls-meta.xml'),
+        expectedMetaContent
+      );
     });
 
     it('should create a Batchable apex class with a custom sobjecttype', async () => {
@@ -151,6 +167,10 @@ describe('TemplateService', () => {
       assertFileContent(file, 'Database.Batchable<Account>');
       assertFileContent(file, 'List<Account> scope');
       assertFileContent(file, 'SELECT Id FROM Account');
+      assertFileContent(
+        path.join(outputdir, 'MyBatchable.cls-meta.xml'),
+        expectedMetaContent
+      );
     });
   });
 

@@ -22,7 +22,12 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
     await this.render(
       this.templatePath(`${template}.cls`),
       this.destinationPath(path.join(this.outputdir, `${classname}.cls`)),
-      { apiName: classname, sobjectType: sobjecttype || 'SObject' }
+      {
+        apiName: classname,
+        ...(template === 'Batchable' && {
+          sobjectType: sobjecttype ?? 'SObject',
+        }),
+      }
     );
 
     await this.render(

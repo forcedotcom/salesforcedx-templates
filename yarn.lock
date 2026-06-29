@@ -790,25 +790,25 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.12.tgz#60420622812a7ec7e46d220667bc29b42dc247ff"
   integrity sha512-BIJyduJC18Kc8z+arUm5AZ9VkPRyw1KKAm+Tk+9LT99eOzhNilyfKzhZ4t+tG2lIGgnJpmytZfVDZ0e2kFul8g==
 
-"@salesforce/ui-bundle-template-app-react-template-b2e@^10.19.0":
-  version "10.19.0"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-10.19.0.tgz#daebc63233efc2c572834a09d4b5d66f4dca71bc"
-  integrity sha512-wI54FrDAMO8t5JB7nMgpXZGY6xa331tUbocSEKSBFx01hszlrXse4z1Waont88CBGrX/t4hRHnI5g/y5SVCBnA==
+"@salesforce/ui-bundle-template-app-react-template-b2e@^10.24.0":
+  version "10.24.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-10.24.0.tgz#a8d0c227a7f902fccf17eb72c2f811fe4e73c003"
+  integrity sha512-3uG08RI/WbZBMNKSsmHZGL7mx01LvbztvO7z8POD1NOO5+Z6u8BMaMKyAb2JgfrMbIyhYLuawGN5ntuaTULyjg==
 
 "@salesforce/ui-bundle-template-app-react-template-b2x@^10.12.2":
   version "10.12.2"
   resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-10.12.2.tgz#4a556ee70b5fda5d18f64843ff852f773beed9bb"
   integrity sha512-/phrIV1TzcIf/TgliLq/+OHcF0qUXMSeJX4W3zH+EpYm9p8vTLbUIffQJp184teCZVle2/u1g1cJrM4bIWNMqg==
 
-"@salesforce/ui-bundle-template-base-react-app@^10.19.0":
-  version "10.19.0"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-10.19.0.tgz#8b29e31442527f4d062551150c71df6a0210edaf"
-  integrity sha512-HpulHZeWLdQA4X+uzVe303/R+138egZ887eTZnoQivFVD0brSz0zWzQr7KkiYgpUzMax044mZLbFQvf1QFE9mQ==
+"@salesforce/ui-bundle-template-base-react-app@^10.24.0":
+  version "10.24.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-10.24.0.tgz#5299a27b84ef455036883e0984b485c59eab035e"
+  integrity sha512-QLHmvOkAAC6Qu89fIe/RLUAm/dcFxhYxyTkl2GP/49SIxJP1uypYe1SLETqChCJNGAQhtE+fOb4aVOENx85RTg==
 
-"@salesforce/ui-bundle-template-base-web-app@^10.19.0":
-  version "10.19.0"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-10.19.0.tgz#8ec78de0b58047e0d1111874e88747aa29ee01bc"
-  integrity sha512-PmO8dTGkBGwRx7Y6qHSFduSDvDpbrpfpJNRStCc7YqWPgSqMS6Xc5RJs3p+yXc/LyMkwWLRmi6AKlurdfbXllA==
+"@salesforce/ui-bundle-template-base-web-app@^10.24.0":
+  version "10.24.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-10.24.0.tgz#96e7c730a5ab6fd9aa014ae54b835bba23996615"
+  integrity sha512-+RqgIdWFgZ6XupOq3T+aBvv3AR+4sETDHKK4TieKCHr6ZLstZqBnUBO9YddXjkSr7bLL/ezaIiKEdPbaLma2RA==
 
 "@shikijs/core@1.29.2":
   version "1.29.2"
@@ -6532,10 +6532,10 @@ table@^6.0.9:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
-tar@^7.5.16:
-  version "7.5.16"
-  resolved "https://registry.npmjs.org/tar/-/tar-7.5.16.tgz#f11e063afed4554f758049d082909e37d6b53ced"
-  integrity sha512-56adEpPMouktRlBLXiaYFFzZ/3+JXa8P9n7WbR+ibIjtviN55mEaOkiysCnPnWm+7kkui1Dn8J9l+g6zV8731w==
+tar@^7.5.19:
+  version "7.5.19"
+  resolved "https://registry.npmjs.org/tar/-/tar-7.5.19.tgz#d8915e6b717f8036a79d839ca9448198b002b0a7"
+  integrity sha512-4LeEWl96twnS2Q7Bz4MGqgazLqO+hJN63GZxXoIqh1T3VweYD997gbU1ItNsQafqqXTXd5WFyFdReLtwvRBNiw==
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"

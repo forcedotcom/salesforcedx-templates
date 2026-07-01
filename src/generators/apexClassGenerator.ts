@@ -16,13 +16,18 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
   }
 
   public async generate(): Promise<void> {
-    const { template, classname } = this.options;
+    const { template, classname, sobjecttype } = this.options;
     this.sourceRootWithPartialPath('apexclass');
 
     await this.render(
       this.templatePath(`${template}.cls`),
       this.destinationPath(path.join(this.outputdir, `${classname}.cls`)),
-      { apiName: classname }
+      {
+        apiName: classname,
+        ...(template === 'Batchable' && {
+          sobjectType: sobjecttype ?? 'SObject',
+        }),
+      }
     );
 
     await this.render(

@@ -106,6 +106,74 @@ describe('TemplateService', () => {
     });
   });
 
+  describe('create apex class templates', () => {
+    const outputdir = path.join('testsoutput', 'apexClassTemplates');
+
+    afterEach(async () => {
+      await remove(outputdir);
+    });
+
+    const expectedMetaContent = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">',
+      `    <apiVersion>${apiVersion}</apiVersion>`,
+      '    <status>Active</status>',
+      '</ApexClass>',
+    ].join('\n');
+
+    it('should create a Queueable apex class', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(TemplateType.ApexClass, {
+        template: 'Queueable',
+        classname: 'MyQueueable',
+        outputdir,
+      });
+      assertFileContent(
+        path.join(outputdir, 'MyQueueable.cls'),
+        'public with sharing class MyQueueable implements Queueable, Finalizer'
+      );
+      assertFileContent(
+        path.join(outputdir, 'MyQueueable.cls-meta.xml'),
+        expectedMetaContent
+      );
+    });
+
+    it('should create a Batchable apex class defaulting to SObject', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(TemplateType.ApexClass, {
+        template: 'Batchable',
+        classname: 'MyBatchable',
+        outputdir,
+      });
+      const file = path.join(outputdir, 'MyBatchable.cls');
+      assertFileContent(file, 'Database.Batchable<SObject>');
+      assertFileContent(file, 'List<SObject> scope');
+      assertFileContent(file, 'SELECT Id FROM SObject');
+      assertFileContent(
+        path.join(outputdir, 'MyBatchable.cls-meta.xml'),
+        expectedMetaContent
+      );
+    });
+
+    it('should create a Batchable apex class with a custom sobjecttype', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(TemplateType.ApexClass, {
+        template: 'Batchable',
+        classname: 'MyBatchable',
+        sobjecttype: 'Account',
+        outputdir,
+      });
+      const file = path.join(outputdir, 'MyBatchable.cls');
+      assertFileContent(file, 'Database.Batchable<Account>');
+      assertFileContent(file, 'List<Account> scope');
+      assertFileContent(file, 'SELECT Id FROM Account');
+      assertFileContent(
+        path.join(outputdir, 'MyBatchable.cls-meta.xml'),
+        expectedMetaContent
+      );
+    });
+  });
+
   describe('create custom template', () => {
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/main/test/custom-templates';
@@ -1209,9 +1277,7 @@ describe('TemplateService', () => {
     });
 
     it('should create UIBundle', async () => {
-      await remove(
-        path.join('testsoutput', 'libraryCreate', 'uiBundles')
-      );
+      await remove(path.join('testsoutput', 'libraryCreate', 'uiBundles'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.UIBundle, {
         bundlename: 'LibraryCreateUIBundle',
@@ -1235,9 +1301,7 @@ describe('TemplateService', () => {
     });
 
     it('should create UIBundle (reactbasic)', async () => {
-      await remove(
-        path.join('testsoutput', 'libraryCreate', 'uiBundles')
-      );
+      await remove(path.join('testsoutput', 'libraryCreate', 'uiBundles'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.UIBundle, {
         bundlename: 'LibraryCreateReactApp',

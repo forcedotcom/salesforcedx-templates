@@ -1256,5 +1256,28 @@ describe('TemplateService', () => {
       chai.expect(created).to.include(uiBundleJson);
       chai.expect(created).to.include(uiBundleMetaXml);
     });
+
+    it('should create UIBundle (vuebasic)', async () => {
+      await remove(
+        path.join('testsoutput', 'libraryCreate', 'uiBundles')
+      );
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(TemplateType.UIBundle, {
+        bundlename: 'LibraryCreateVueApp',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'uiBundles'),
+        template: 'vuebasic',
+        internal: true,
+      });
+
+      const created = result.created.map((p) => path.normalize(p));
+      const uiBundleJson = path.normalize(
+        'testsoutput/libraryCreate/uiBundles/LibraryCreateVueApp/ui-bundle.json'
+      );
+      const uiBundleMetaXml = path.normalize(
+        'testsoutput/libraryCreate/uiBundles/LibraryCreateVueApp/LibraryCreateVueApp.uibundle-meta.xml'
+      );
+      chai.expect(created).to.include(uiBundleJson);
+      chai.expect(created).to.include(uiBundleMetaXml);
+    });
   });
 });

@@ -83,6 +83,20 @@ const TEMPLATES = [
       ),
     destSubpath: 'uiBundles/angularbasic',
   },
+  {
+    packageName: '@salesforce/ui-bundle-template-base-vue-app',
+    getSourceDir: (packageDir) =>
+      path.join(
+        packageDir,
+        'src',
+        'force-app',
+        'main',
+        'default',
+        'uiBundles',
+        'base-vue-app'
+      ),
+    destSubpath: 'uiBundles/vuebasic',
+  },
   // Project templates (reactinternalapp, reactexternalapp)
   {
     packageName: '@salesforce/ui-bundle-template-app-react-template-b2e',

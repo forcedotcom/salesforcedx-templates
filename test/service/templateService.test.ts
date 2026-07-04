@@ -1278,6 +1278,14 @@ describe('TemplateService', () => {
       );
       chai.expect(created).to.include(uiBundleJson);
       chai.expect(created).to.include(uiBundleMetaXml);
+
+      const metaContent = fs.readFileSync(uiBundleMetaXml, 'utf8');
+      chai.expect(metaContent).to.include('<isActive>true</isActive>');
+      chai.expect(metaContent).to.include('<version>1</version>');
+      chai
+        .expect(metaContent)
+        .to.include('<masterLabel>Library Create Vue App</masterLabel>');
+      chai.expect(metaContent).to.not.include('<type>');
     });
   });
 });

@@ -20,6 +20,8 @@ const VALID_PROJECT_TEMPLATES = [
   'analytics',
   'reactinternalapp',
   'reactexternalapp',
+  'angularinternalapp',
+  'angularexternalapp',
   'agent',
   'nativemobile',
 ] as const;

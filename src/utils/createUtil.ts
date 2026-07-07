@@ -32,6 +32,14 @@ export class CreateUtil {
     return '';
   }
 
+  /** Validate an SObject API name (e.g. Account, MyObject__c, ns__MyObject__c). */
+  public static checkSObjectType(sobjectType: string): void {
+    const sObjectRegExp = /^[A-Za-z]\w*$/;
+    if (!sObjectRegExp.test(sobjectType) || sobjectType.endsWith('_')) {
+      throw new Error(nls.localize('InvalidSObjectType', sobjectType));
+    }
+  }
+
   // TODO: switch filetype to a string instead of regex
   public static getCommandTemplatesForFiletype(
     filetype: RegExp,

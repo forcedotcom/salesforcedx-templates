@@ -62,6 +62,9 @@ export const messages = {
 
   AlphaNumericValidationError: '%s must contain only alphanumeric characters.',
 
+  InvalidSObjectType:
+    'Invalid sobjecttype "%s". It must be a valid SObject API name: start with a letter, contain only letters, numbers, and underscores, and not end with an underscore.',
+
   InvalidLightningEmbeddingSrcUrl:
     'The --src flag must be an absolute https URL (e.g., https://app.example.com). Plain http is only allowed for localhost or 127.0.0.1.',
   InvalidLightningEmbeddingSrcChar:

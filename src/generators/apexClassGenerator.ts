@@ -13,6 +13,12 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     CreateUtil.checkInputs(this.options.classname);
+    if (
+      this.options.template === 'Batchable' &&
+      this.options.sobjecttype?.trim()
+    ) {
+      CreateUtil.checkSObjectType(this.options.sobjecttype.trim());
+    }
   }
 
   public async generate(): Promise<void> {
@@ -25,7 +31,7 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
       {
         apiName: classname,
         ...(template === 'Batchable' && {
-          sobjectType: sobjecttype ?? 'SObject',
+          sobjectType: sobjecttype?.trim() || 'SObject',
         }),
       }
     );

@@ -172,6 +172,47 @@ describe('TemplateService', () => {
         expectedMetaContent
       );
     });
+
+    it('should create a Batchable apex class with a custom __c sobjecttype', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(TemplateType.ApexClass, {
+        template: 'Batchable',
+        classname: 'MyBatchable',
+        sobjecttype: 'My_Object__c',
+        outputdir,
+      });
+      const file = path.join(outputdir, 'MyBatchable.cls');
+      assertFileContent(file, 'Database.Batchable<My_Object__c>');
+      assertFileContent(file, 'List<My_Object__c> scope');
+      assertFileContent(file, 'SELECT Id FROM My_Object__c');
+    });
+
+    it('should default to SObject when sobjecttype is an empty string', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(TemplateType.ApexClass, {
+        template: 'Batchable',
+        classname: 'MyBatchable',
+        sobjecttype: '   ',
+        outputdir,
+      });
+      const file = path.join(outputdir, 'MyBatchable.cls');
+      assertFileContent(file, 'Database.Batchable<SObject>');
+      assertFileContent(file, 'SELECT Id FROM SObject');
+    });
+
+    it('should reject an invalid sobjecttype', () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      chai
+        .expect(() =>
+          templateService.create(TemplateType.ApexClass, {
+            template: 'Batchable',
+            classname: 'MyBatchable',
+            sobjecttype: 'My Object',
+            outputdir,
+          })
+        )
+        .to.throw(nls.localize('InvalidSObjectType', 'My Object'));
+    });
   });
 
   describe('create custom template', () => {

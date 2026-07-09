@@ -13,16 +13,27 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     CreateUtil.checkInputs(this.options.classname);
+    if (
+      this.options.template === 'Batchable' &&
+      this.options.sobjecttype?.trim()
+    ) {
+      CreateUtil.checkSObjectType(this.options.sobjecttype.trim());
+    }
   }
 
   public async generate(): Promise<void> {
-    const { template, classname } = this.options;
+    const { template, classname, sobjecttype } = this.options;
     this.sourceRootWithPartialPath('apexclass');
 
     await this.render(
       this.templatePath(`${template}.cls`),
       this.destinationPath(path.join(this.outputdir, `${classname}.cls`)),
-      { apiName: classname }
+      {
+        apiName: classname,
+        ...(template === 'Batchable' && {
+          sobjectType: sobjecttype?.trim() || 'SObject',
+        }),
+      }
     );
 
     await this.render(

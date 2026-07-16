@@ -1,3 +1,12 @@
+# [66.11.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.10.4...66.11.0) (2026-07-09)
+
+
+### Features
+
+* add apex templates for common apex class types - W-23219494 ([#860](https://github.com/forcedotcom/salesforcedx-templates/issues/860)) ([24e9cfa](https://github.com/forcedotcom/salesforcedx-templates/commit/24e9cfa9fbce26c7a09fe4dcff6562f6a578345b))
+
+
+
 ## [66.10.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.10.3...66.10.4) (2026-06-30)
 
 

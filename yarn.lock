@@ -790,15 +790,25 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.12.tgz#60420622812a7ec7e46d220667bc29b42dc247ff"
   integrity sha512-BIJyduJC18Kc8z+arUm5AZ9VkPRyw1KKAm+Tk+9LT99eOzhNilyfKzhZ4t+tG2lIGgnJpmytZfVDZ0e2kFul8g==
 
+"@salesforce/ui-bundle-template-app-angular-template-b2e@^11.31.12":
+  version "11.31.13"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-angular-template-b2e/-/ui-bundle-template-app-angular-template-b2e-11.31.13.tgz#128df93a8732812f34e2087fd6c80c9c622dc03b"
+  integrity sha512-inh+46PqepS8+AMciFF6h+2d6lWEi5o1eby3vNvBPH5kKN6B2ifBXGRoKXPFrsJ9xW8ODiNTSPN3s71TqYtv7A==
+
+"@salesforce/ui-bundle-template-app-angular-template-b2x@^11.31.12":
+  version "11.31.13"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-angular-template-b2x/-/ui-bundle-template-app-angular-template-b2x-11.31.13.tgz#1c6183623e25d910a38a69b4bf6512343c86acad"
+  integrity sha512-MQqgDuq3vUO7q6BdNm5/2k/vJ3MRco7hOvpZw5wV84RoFNd8C5b7rVnFoZkCrcc0rySdRI5R3W3chwUHPEEPnw==
+
 "@salesforce/ui-bundle-template-app-react-template-b2e@^10.24.0":
   version "10.24.0"
   resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-10.24.0.tgz#a8d0c227a7f902fccf17eb72c2f811fe4e73c003"
   integrity sha512-3uG08RI/WbZBMNKSsmHZGL7mx01LvbztvO7z8POD1NOO5+Z6u8BMaMKyAb2JgfrMbIyhYLuawGN5ntuaTULyjg==
 
-"@salesforce/ui-bundle-template-app-react-template-b2x@^10.12.2":
-  version "10.12.2"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-10.12.2.tgz#4a556ee70b5fda5d18f64843ff852f773beed9bb"
-  integrity sha512-/phrIV1TzcIf/TgliLq/+OHcF0qUXMSeJX4W3zH+EpYm9p8vTLbUIffQJp184teCZVle2/u1g1cJrM4bIWNMqg==
+"@salesforce/ui-bundle-template-app-react-template-b2x@^10.24.0":
+  version "10.24.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-10.24.0.tgz#fafbedd484d1f9e4d2aaf5f505012d64156c8121"
+  integrity sha512-+YSRQA7I50vKmQU+xFjue9ldavZrimG0LULfTi5X59W4mmfC3FJeqAetuZB/XVy20fY7vmLK/fozCqjQ/FSYrA==
 
 "@salesforce/ui-bundle-template-base-angular-app@^11.31.9":
   version "11.31.9"

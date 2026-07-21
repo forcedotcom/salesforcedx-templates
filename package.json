@@ -28,7 +28,7 @@
     "@salesforce/ui-bundle-template-app-angular-template-b2e": "^11.31.12",
     "@salesforce/ui-bundle-template-app-angular-template-b2x": "^11.31.12",
     "@salesforce/ui-bundle-template-app-react-template-b2e": "^10.24.0",
-    "@salesforce/ui-bundle-template-app-react-template-b2x": "^10.12.2",
+    "@salesforce/ui-bundle-template-app-react-template-b2x": "^10.24.0",
     "@salesforce/ui-bundle-template-base-angular-app": "^11.31.9",
     "@salesforce/ui-bundle-template-base-react-app": "^10.24.0",
     "@salesforce/ui-bundle-template-base-web-app": "^10.24.0",

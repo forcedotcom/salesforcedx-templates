@@ -218,6 +218,8 @@ export interface ProjectOptions extends TemplateOptions {
     | 'analytics'
     | 'reactinternalapp'
     | 'reactexternalapp'
+    | 'angularinternalapp'
+    | 'angularexternalapp'
     | 'agent'
     | 'nativemobile';
   manifest: boolean;

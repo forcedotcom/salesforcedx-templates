@@ -96,6 +96,19 @@ const TEMPLATES = [
     destSubpath: 'project/reactexternalapp',
     appFolderInNpm: 'reactexternalapp',
   },
+  // Angular project templates
+  {
+    packageName: '@salesforce/ui-bundle-template-app-angular-template-b2x',
+    getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
+    destSubpath: 'project/angularextapp',
+    appFolderInNpm: 'angularextapp',
+  },
+    {
+    packageName: '@salesforce/ui-bundle-template-app-angular-template-b2e',
+    getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
+    destSubpath: 'project/angularintapp',
+    appFolderInNpm: 'angularintapp',
+  },
 ];
 
 function copyTemplate(config) {

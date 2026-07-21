@@ -1208,6 +1208,118 @@ describe('TemplateService', () => {
       chai.expect(sampleContent).to.include('MyReactExternalApp');
     });
 
+    it('should create Project (angularinternalapp) from built-in template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'MyAngularInternalApp',
+          template: 'angularinternalapp',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyAngularInternalApp/config/project-scratch-def.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyAngularInternalApp/sfdx-project.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyAngularInternalApp/sample.txt'
+          )
+        );
+      const samplePath = path.join(
+        result.outputDir,
+        'MyAngularInternalApp',
+        'sample.txt'
+      );
+      chai.expect(fs.existsSync(samplePath)).to.be.true;
+      const sampleContent = fs.readFileSync(samplePath, 'utf8');
+      chai.expect(sampleContent).to.include('MyAngularInternalApp');
+    });
+
+    it('should create Project (angularexternalapp) from built-in template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'MyAngularExternalApp',
+          template: 'angularexternalapp',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyAngularExternalApp/config/project-scratch-def.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyAngularExternalApp/sample.txt'
+          )
+        );
+      const samplePath = path.join(
+        result.outputDir,
+        'MyAngularExternalApp',
+        'sample.txt'
+      );
+      chai.expect(fs.existsSync(samplePath)).to.be.true;
+      const sampleContent = fs.readFileSync(samplePath, 'utf8');
+      chai.expect(sampleContent).to.include('MyAngularExternalApp');
+    });
+
+    it('should use alphanumeric name for uiBundles under angularinternalapp template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'My_Angular_Internal_App',
+          template: 'angularinternalapp',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai.expect(result.created).to.not.be.empty;
+      const projectDir = path.join(result.outputDir, 'My_Angular_Internal_App');
+      chai.expect(fs.existsSync(projectDir)).to.be.true;
+      const appnamePath = path.join(projectDir, 'appname.txt');
+      chai.expect(fs.existsSync(appnamePath)).to.be.true;
+      const appnameContent = fs.readFileSync(appnamePath, 'utf8');
+      chai.expect(appnameContent.trim()).to.equal('MyAngularInternalApp');
+    });
+
     it('should use alphanumeric name for uiBundles under reactinternalapp template', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'project'));
       // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser

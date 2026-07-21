@@ -81,6 +81,8 @@ export const EJS_EXTENSIONS = new Set([
 export const BUILT_IN_FULL_TEMPLATES = new Set([
   'reactinternalapp',
   'reactexternalapp',
+  'angularinternalapp',
+  'angularexternalapp',
 ]);
 
 /**
@@ -98,6 +100,14 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
   reactexternalapp: {
     base: 'reactexternalapp',
     withSuffix: 'reactexternalapp1',
+  },
+  angularinternalapp: {
+    base: 'angularintapp',
+    withSuffix: 'angularintapp1',
+  },
+  angularexternalapp: {
+    base: 'angularextapp',
+    withSuffix: 'angularextapp1',
   },
 };
 

@@ -9,6 +9,7 @@ import { CreateUtil } from '../utils';
 import { GeneratorContext, ProjectOptions } from '../utils/types';
 import {
   BUILT_IN_FULL_TEMPLATES,
+  FULL_TEMPLATE_DEFAULT_NAMES,
   generateBuiltInFullTemplate,
   renderEjsFile,
 } from '../utils/uiBundleTemplateUtils';
@@ -20,6 +21,8 @@ const VALID_PROJECT_TEMPLATES = [
   'analytics',
   'reactinternalapp',
   'reactexternalapp',
+  'angularinternalapp',
+  'angularexternalapp',
   'agent',
   'nativemobile',
 ] as const;
@@ -633,7 +636,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
     if (BUILT_IN_FULL_TEMPLATES.has(template)) {
       await generateBuiltInFullTemplate(template, projectname, {
-        templateDir: this.templatePath(template),
+        templateDir: this.templatePath(FULL_TEMPLATE_DEFAULT_NAMES[template]?.base ?? template),
         projectDir: path.join(this.outputdir, projectname),
         defaultpackagedir,
         ns,

@@ -11,7 +11,7 @@ import ApexTriggerGenerator from '../generators/apexTriggerGenerator';
 import FlexipageGenerator from '../generators/flexipageGenerator';
 import LightningAppGenerator from '../generators/lightningAppGenerator';
 import LightningComponentGenerator from '../generators/lightningComponentGenerator';
-import LightningEmbeddingGenerator from '../generators/lightningEmbeddingGenerator';
+import UIEmbeddingGenerator from '../generators/uiEmbeddingGenerator';
 import LightningEventGenerator from '../generators/lightningEventGenerator';
 import LightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
 import LightningTestGenerator from '../generators/lightningTestGenerator';
@@ -52,7 +52,7 @@ export type Generators =
   | typeof LightningTestGenerator
   | typeof LightningInterfaceGenerator
   | typeof DigitalExperienceSiteGenerator
-  | typeof LightningEmbeddingGenerator
+  | typeof UIEmbeddingGenerator
   | typeof ProjectGenerator
   | typeof StaticResourceGenerator
   | typeof VisualforceComponentGenerator
@@ -77,7 +77,7 @@ export enum TemplateType {
   LightningInterface,
   LightningTest,
   DigitalExperienceSite,
-  LightningEmbedding,
+  UIEmbedding,
   Project,
   VisualforceComponent,
   VisualforcePage,
@@ -96,7 +96,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.LightningInterface, LightningInterfaceGenerator],
   [TemplateType.LightningTest, LightningTestGenerator],
   [TemplateType.DigitalExperienceSite, DigitalExperienceSiteGenerator],
-  [TemplateType.LightningEmbedding, LightningEmbeddingGenerator],
+  [TemplateType.UIEmbedding, UIEmbeddingGenerator],
   [TemplateType.Project, ProjectGenerator],
   [TemplateType.StaticResource, StaticResourceGenerator],
   [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
@@ -196,7 +196,7 @@ export interface LightningTestOptions extends TemplateOptions {
   internal: boolean;
 }
 
-export interface LightningEmbeddingOptions extends TemplateOptions {
+export interface UIEmbeddingOptions extends TemplateOptions {
   componentname: string;
   src: string;
   sandbox: string;

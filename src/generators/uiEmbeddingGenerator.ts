@@ -10,17 +10,17 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import {
-  isAllowedLightningEmbeddingSrcUrl,
-  LIGHTNING_EMBEDDING_SANDBOX_TOKENS,
-} from '../utils/lightningEmbedding';
-import { LightningEmbeddingOptions } from '../utils/types';
+  isAllowedUIEmbeddingSrcUrl,
+  UI_EMBEDDING_SANDBOX_TOKENS,
+} from '../utils/uiEmbedding';
+import { UIEmbeddingOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_SANDBOX_TOKENS: ReadonlySet<string> = new Set(
-  LIGHTNING_EMBEDDING_SANDBOX_TOKENS
+  UI_EMBEDDING_SANDBOX_TOKENS
 );
 
-export default class LightningEmbeddingGenerator extends BaseGenerator<LightningEmbeddingOptions> {
+export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptions> {
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.componentname);
 
@@ -29,27 +29,27 @@ export default class LightningEmbeddingGenerator extends BaseGenerator<Lightning
       throw new Error(nls.localize('MissingLWCDir'));
     }
 
-    if (!isAllowedLightningEmbeddingSrcUrl(this.options.src)) {
-      throw new Error(nls.localize('InvalidLightningEmbeddingSrcUrl'));
+    if (!isAllowedUIEmbeddingSrcUrl(this.options.src)) {
+      throw new Error(nls.localize('InvalidUIEmbeddingSrcUrl'));
     }
 
     if (this.options.src.includes("'")) {
-      throw new Error(nls.localize('InvalidLightningEmbeddingSrcChar'));
+      throw new Error(nls.localize('InvalidUIEmbeddingSrcChar'));
     }
 
     if (!this.options.shellTitle || !this.options.shellTitle.trim()) {
-      throw new Error(nls.localize('MissingLightningEmbeddingShellTitle'));
+      throw new Error(nls.localize('MissingUIEmbeddingShellTitle'));
     }
 
     if (this.options.shellTitle.includes('"')) {
-      throw new Error(nls.localize('InvalidLightningEmbeddingShellTitleChar'));
+      throw new Error(nls.localize('InvalidUIEmbeddingShellTitleChar'));
     }
 
     const tokens = this.options.sandbox.split(/\s+/).filter(Boolean);
     const invalid = tokens.filter((t) => !VALID_SANDBOX_TOKENS.has(t));
     if (invalid.length) {
       throw new Error(
-        nls.localize('InvalidLightningEmbeddingSandboxToken', [
+        nls.localize('InvalidUIEmbeddingSandboxToken', [
           invalid.join(', '),
           [...VALID_SANDBOX_TOKENS].join(', '),
         ])
@@ -67,7 +67,7 @@ export default class LightningEmbeddingGenerator extends BaseGenerator<Lightning
       .substring(0, 1)
       .toLowerCase()}${componentname.substring(1)}`;
 
-    this.sourceRootWithPartialPath(path.join('lightningembedding', 'default'));
+    this.sourceRootWithPartialPath(path.join('uiembedding', 'default'));
 
     await this.render(
       this.templatePath('default.html'),

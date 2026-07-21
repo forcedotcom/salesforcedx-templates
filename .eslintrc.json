@@ -70,7 +70,7 @@
     "src/templates/uiBundles/reactbasic/**/*",
     "src/templates/project/reactinternalapp/**/*",
     "src/templates/project/reactexternalapp/**/*",
-    "src/templates/project/angularinternalapp/**/*",
-    "src/templates/project/angularexternalapp/**/*"
+    "src/templates/project/angularintapp/**/*",
+    "src/templates/project/angularextapp/**/*"
   ]
 }

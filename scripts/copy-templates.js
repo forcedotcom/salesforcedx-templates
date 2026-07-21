@@ -100,14 +100,14 @@ const TEMPLATES = [
   {
     packageName: '@salesforce/ui-bundle-template-app-angular-template-b2x',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'project/angularexternalapp',
-    appFolderInNpm: 'angularexternalapp',
+    destSubpath: 'project/angularextapp',
+    appFolderInNpm: 'angularextapp',
   },
     {
     packageName: '@salesforce/ui-bundle-template-app-angular-template-b2e',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'project/angularinternalapp',
-    appFolderInNpm: 'angularinternalapp',
+    destSubpath: 'project/angularintapp',
+    appFolderInNpm: 'angularintapp',
   },
 ];
 

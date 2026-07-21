@@ -102,12 +102,12 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
     withSuffix: 'reactexternalapp1',
   },
   angularinternalapp: {
-    base: 'angularinternalapp',
-    withSuffix: 'angularinternalapp1',
+    base: 'angularintapp',
+    withSuffix: 'angularintapp1',
   },
   angularexternalapp: {
-    base: 'angularexternalapp',
-    withSuffix: 'angularexternalapp1',
+    base: 'angularextapp',
+    withSuffix: 'angularextapp1',
   },
 };
 

@@ -1,3 +1,12 @@
+# [66.13.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.12.0...66.13.0) (2026-07-21)
+
+
+### Features
+
+* rename lightning embedding template to UI embedding ([#868](https://github.com/forcedotcom/salesforcedx-templates/issues/868)) ([b8f41d7](https://github.com/forcedotcom/salesforcedx-templates/commit/b8f41d72addc2a86dec2fd072b947caac7051c5a))
+
+
+
 # [66.12.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.11.1...66.12.0) (2026-07-21)
 
 

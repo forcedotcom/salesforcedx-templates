@@ -1,3 +1,12 @@
+# [66.12.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.11.1...66.12.0) (2026-07-21)
+
+
+### Features
+
+* @W-23301693: add Angular project template support to generators ([#864](https://github.com/forcedotcom/salesforcedx-templates/issues/864)) ([8f233f5](https://github.com/forcedotcom/salesforcedx-templates/commit/8f233f5e4f586abc0c37787962b3576261bb38d3))
+
+
+
 ## [66.11.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.11.0...66.11.1) (2026-07-19)
 
 

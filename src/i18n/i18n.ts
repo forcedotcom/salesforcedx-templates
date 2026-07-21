@@ -65,16 +65,16 @@ export const messages = {
   InvalidSObjectType:
     'Invalid sobjecttype "%s". It must be a valid SObject API name: start with a letter, contain only letters, numbers, and underscores, and not end with an underscore.',
 
-  InvalidLightningEmbeddingSrcUrl:
+  InvalidUIEmbeddingSrcUrl:
     'The --src flag must be an absolute https URL (e.g., https://app.example.com). Plain http is only allowed for localhost or 127.0.0.1.',
-  InvalidLightningEmbeddingSrcChar:
+  InvalidUIEmbeddingSrcChar:
     'The --src flag must not contain a single-quote character; it would break the generated JavaScript string literal.',
-  InvalidLightningEmbeddingSandboxToken:
+  InvalidUIEmbeddingSandboxToken:
     'Invalid sandbox tokens: %s. Valid tokens are: %s.',
-  MissingLightningEmbeddingShellTitle:
+  MissingUIEmbeddingShellTitle:
     'The --shell-title flag is required and must be a non-empty string used as the iframe accessible name.',
-  InvalidLightningEmbeddingShellTitleChar:
+  InvalidUIEmbeddingShellTitleChar:
     'The --shell-title flag must not contain a double-quote character; it would break the generated HTML attribute.',
-  LightningEmbeddingBundle:
-    'A Lightning Web Component that wraps the lightning-embedding base component.',
+  UIEmbeddingBundle:
+    'A Lightning Web Component that wraps the <lightning-ui-embedding> base component.',
 };

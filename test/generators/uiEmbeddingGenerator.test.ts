@@ -9,7 +9,7 @@ import * as chai from 'chai';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TemplateService, TemplateType } from '../../src';
-import LightningEmbeddingGenerator from '../../src/generators/lightningEmbeddingGenerator';
+import UIEmbeddingGenerator from '../../src/generators/uiEmbeddingGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
 
 chai.config.truncateThreshold = 100000;
@@ -32,7 +32,7 @@ function assertFileContent(file: string, needle: string | RegExp) {
     .be.true;
 }
 
-describe('LightningEmbeddingGenerator', () => {
+describe('UIEmbeddingGenerator', () => {
   const apiVersion = getDefaultApiVersion();
   const lwcOutputDir = path.join('testsoutput', 'lwc');
   const nonLwcOutputDir = path.join('testsoutput', 'embedding');
@@ -46,7 +46,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should throw when componentname is empty', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: '',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
@@ -60,7 +60,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should throw when not internal and outputdir is missing lwc parent', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
@@ -74,7 +74,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should accept http src on localhost', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'http://localhost:3000',
             sandbox: 'allow-scripts',
@@ -88,7 +88,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should accept http src on 127.0.0.1', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'http://127.0.0.1:8080',
             sandbox: 'allow-scripts',
@@ -102,7 +102,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should reject http src on non-localhost host', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'http://app.example.com',
             sandbox: 'allow-scripts',
@@ -116,7 +116,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should reject non-URL src', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'not a url',
             sandbox: 'allow-scripts',
@@ -130,7 +130,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should reject non-http(s) protocols', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'ftp://example.com',
             sandbox: 'allow-scripts',
@@ -144,7 +144,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should reject empty shellTitle', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
@@ -158,7 +158,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should reject invalid sandbox tokens', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts allow-everything',
@@ -172,7 +172,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should accept multiple valid sandbox tokens', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts allow-forms allow-same-origin',
@@ -186,7 +186,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should reject a single-quote character in src (would break the generated JS string)', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: "https://app.example.com/path?q='foo",
             sandbox: 'allow-scripts',
@@ -200,7 +200,7 @@ describe('LightningEmbeddingGenerator', () => {
     it('should reject a double-quote character in shellTitle (would break the generated HTML attribute)', () => {
       expect(
         () =>
-          new LightningEmbeddingGenerator({
+          new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
@@ -215,18 +215,15 @@ describe('LightningEmbeddingGenerator', () => {
   describe('generate', () => {
     it('should create the LWC bundle (internal — no meta xml)', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const result = await templateService.create(
-        TemplateType.LightningEmbedding,
-        {
-          componentname: 'embeddingDemo',
-          src: 'https://app.example.com',
-          sandbox: 'allow-scripts allow-forms',
-          shellTitle: 'Demo Shell',
-          outputdir: lwcOutputDir,
-          apiversion: apiVersion,
-          internal: true,
-        }
-      );
+      const result = await templateService.create(TemplateType.UIEmbedding, {
+        componentname: 'embeddingDemo',
+        src: 'https://app.example.com',
+        sandbox: 'allow-scripts allow-forms',
+        shellTitle: 'Demo Shell',
+        outputdir: lwcOutputDir,
+        apiversion: apiVersion,
+        internal: true,
+      });
 
       const base = path.join(lwcOutputDir, 'embeddingDemo');
       assertFileExists(path.join(base, 'embeddingDemo.html'));
@@ -250,7 +247,7 @@ describe('LightningEmbeddingGenerator', () => {
 
     it('should generate meta xml when not internal', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      await templateService.create(TemplateType.LightningEmbedding, {
+      await templateService.create(TemplateType.UIEmbedding, {
         componentname: 'embeddingDemo',
         src: 'https://app.example.com',
         sandbox: 'allow-scripts',

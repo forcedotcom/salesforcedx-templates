@@ -6,10 +6,10 @@
  */
 
 /**
- * W3C-defined iframe sandbox tokens accepted by the lightning-embedding wrapper template.
+ * W3C-defined iframe sandbox tokens accepted by the UI embedding wrapper template.
  * Exposed so CLI plugins can derive their flag `options` list from a single source of truth.
  */
-export const LIGHTNING_EMBEDDING_SANDBOX_TOKENS = [
+export const UI_EMBEDDING_SANDBOX_TOKENS = [
   'allow-forms',
   'allow-modals',
   'allow-orientation-lock',
@@ -24,15 +24,15 @@ export const LIGHTNING_EMBEDDING_SANDBOX_TOKENS = [
   'allow-top-navigation-by-user-activation',
 ] as const;
 
-export type LightningEmbeddingSandboxToken =
-  (typeof LIGHTNING_EMBEDDING_SANDBOX_TOKENS)[number];
+export type UIEmbeddingSandboxToken =
+  (typeof UI_EMBEDDING_SANDBOX_TOKENS)[number];
 
 /**
  * Returns true if `src` is an absolute URL acceptable as the iframe source on the
- * lightning-embedding wrapper. https is accepted everywhere; plain http is permitted
+ * UI embedding wrapper. https is accepted everywhere; plain http is permitted
  * only for localhost / 127.0.0.1 to support local development servers.
  */
-export function isAllowedLightningEmbeddingSrcUrl(src: string): boolean {
+export function isAllowedUIEmbeddingSrcUrl(src: string): boolean {
   let parsed: URL;
   try {
     parsed = new URL(src);

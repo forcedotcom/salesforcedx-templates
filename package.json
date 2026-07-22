@@ -31,6 +31,7 @@
     "@salesforce/ui-bundle-template-app-react-template-b2x": "^10.12.2",
     "@salesforce/ui-bundle-template-base-angular-app": "^11.31.9",
     "@salesforce/ui-bundle-template-base-react-app": "^10.24.0",
+    "@salesforce/ui-bundle-template-base-vue-app": "^11.5.0",
     "@salesforce/ui-bundle-template-base-web-app": "^10.24.0",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",

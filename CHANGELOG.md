@@ -1,3 +1,12 @@
+## [66.13.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.0...66.13.1) (2026-07-25)
+
+
+### Bug Fixes
+
+* **deps:** bump linkify-it from 5.0.1 to 5.0.2 ([4d2af24](https://github.com/forcedotcom/salesforcedx-templates/commit/4d2af24d4c4a2d6bdb311f0662bec419fa8b2dc5))
+
+
+
 # [66.13.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.12.0...66.13.0) (2026-07-21)
 
 

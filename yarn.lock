@@ -790,6 +790,16 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.12.tgz#60420622812a7ec7e46d220667bc29b42dc247ff"
   integrity sha512-BIJyduJC18Kc8z+arUm5AZ9VkPRyw1KKAm+Tk+9LT99eOzhNilyfKzhZ4t+tG2lIGgnJpmytZfVDZ0e2kFul8g==
 
+"@salesforce/ui-bundle-template-app-angular-template-b2e@^11.31.12":
+  version "11.37.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-angular-template-b2e/-/ui-bundle-template-app-angular-template-b2e-11.37.0.tgz#eedee8ab5b126dd84624ebeea6d0f43b03c0debd"
+  integrity sha512-2hw7V9Z/SEGs5tSWR5KDXP8E7euE/LWXiSyhmqTeIhXCI0OTRIoRwlFULnOsm5rcfZL5NaccOn5BMPhgBb0yuQ==
+
+"@salesforce/ui-bundle-template-app-angular-template-b2x@^11.31.12":
+  version "11.37.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-angular-template-b2x/-/ui-bundle-template-app-angular-template-b2x-11.37.0.tgz#797722313f687ddf05d0c2a648ea06c90b0dcbb3"
+  integrity sha512-jaBThOPN/rZm4GoQcoYFiVVO8BDNxSViABdym9vu4cVBco6Ix5VfHp1qligKnUiU2bXsPqkGtEMaxrOV3QVIhA==
+
 "@salesforce/ui-bundle-template-app-react-template-b2e@^10.24.0":
   version "10.24.0"
   resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-10.24.0.tgz#a8d0c227a7f902fccf17eb72c2f811fe4e73c003"
@@ -4621,9 +4631,9 @@ lines-and-columns@^1.1.6:
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
 linkify-it@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/linkify-it/-/linkify-it-5.0.1.tgz#10c4cecbb5c6828eabf81d3c801adc4a542dfb55"
-  integrity sha512-wVoTjP4Q6R0NW5hiZkVJaFZPWgtXfoGF+6LucL3/FtiNjmcHhYjEr5f1Kqjirc1nBW07J/ZuRFumqr2oqccEWg==
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/linkify-it/-/linkify-it-5.0.2.tgz#d3be0a693af3da9df3883f1e346a0e97461a8c19"
+  integrity sha512-ONTm2jCMAVZjgQa/Fy1kScXsuOoF5NPTsoFBdE1KVIZ2vAh/r9+Bqo+0jINCBYnavTPQZz38QzFTme79ENoN3Q==
   dependencies:
     uc.micro "^2.0.0"
 

@@ -11,6 +11,7 @@ import { TemplateOptions } from '../../src';
 import {
   BaseGenerator,
   getDefaultApiVersion,
+  validateCustomTemplate,
 } from '../../src/generators/baseGenerator';
 
 describe('BaseGenerator', () => {
@@ -58,5 +59,102 @@ describe('BaseGenerator', () => {
 
     new MyGenerator(mockMyGeneratorOptions);
     expect(validateOptionsStub.calledOnce).to.be.true;
+  });
+});
+
+describe('validateCustomTemplate', () => {
+  it('should allow safe interpolation-only templates', () => {
+    const template = 'public class <%= apiName %> {\n}';
+    expect(() => validateCustomTemplate(template, 'test.cls')).to.not.throw();
+  });
+
+  it('should allow safe control flow in scriptlet tags', () => {
+    const template = '<% if (primaryField) { %>\n<%= primaryField %>\n<% } %>';
+    expect(() => validateCustomTemplate(template, 'test.xml')).to.not.throw();
+  });
+
+  it('should allow forEach loops', () => {
+    const template = '<% fields.forEach((field) => { %>\n<%= field %>\n<% }); %>';
+    expect(() => validateCustomTemplate(template, 'test.xml')).to.not.throw();
+  });
+
+  it('should block require() calls', () => {
+    const template = '<% require("child_process").execSync("calc") %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block dynamic import()', () => {
+    const template = '<% const m = await import("fs") %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block process.env access', () => {
+    const template = '<% process.env.SECRET %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block eval()', () => {
+    const template = '<% eval("malicious code") %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block Function constructor', () => {
+    const template = '<% Function("return process")() %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block execSync', () => {
+    const template = '<% execSync("whoami") %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block globalThis access', () => {
+    const template = '<% globalThis.process %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block require() in output tags (<%= %>)', () => {
+    const template = '<%= require("child_process").execSync("whoami").toString() %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block require() in unescaped output tags (<%- %>)', () => {
+    const template = '<%- require("fs").readFileSync("/etc/passwd","utf8") %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should block constructor chain prototype traversal', () => {
+    const template = '<% this.constructor.constructor("return process")() %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
+      'disallowed code execution pattern'
+    );
+  });
+
+  it('should not flag safe output tags', () => {
+    const template = '<%= apiName %>';
+    expect(() => validateCustomTemplate(template, 'test.cls')).to.not.throw();
+  });
+
+  it('should not flag comment tags', () => {
+    const template = '<%# require("fs") %>';
+    expect(() => validateCustomTemplate(template, 'test.cls')).to.not.throw();
   });
 });

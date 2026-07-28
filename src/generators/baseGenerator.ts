@@ -169,6 +169,46 @@ abstract class NotYeoman {
   }
 }
 
+// Patterns that indicate code execution attempts in EJS tags.
+// Applied to ALL tag types (<% %>, <%= %>, <%- %>) except comments (<%# %>).
+const DANGEROUS_PATTERNS = [
+  /\brequire\s*\(/,
+  /\bimport\s*\(/,
+  /\bchild_process\b/,
+  /\bprocess\s*\.\s*(?:env|exit|kill|binding|dlopen|mainModule|getBuiltinModule)/,
+  /\bglobal\s*\./,
+  /\bglobalThis\s*\./,
+  /\b(?:eval|Function)\s*\(/,
+  /\bexecSync\b/,
+  /\bexec\s*\(/,
+  /\bspawn(?:Sync)?\s*\(/,
+  /\bfs\b\s*\.\s*(?:read|write|unlink|rm|chmod|chown|mkdir|rename|symlink|link)/,
+  /\b__dirname\b/,
+  /\b__filename\b/,
+  /\bmodule\s*\.\s*(?:constructor|_compile|_resolveFilename)/,
+  /\.constructor\s*\.\s*constructor\s*\(/,
+  /\bReflect\s*\.\s*(?:construct|apply)\s*\(/,
+];
+
+export function validateCustomTemplate(
+  templateContent: string,
+  templatePath: string
+): void {
+  // Match all EJS tags EXCEPT comments (<%# ... %>)
+  const ejsTagRegex = /<%(?!#)[\s\S]*?%>/g;
+  let match;
+  while ((match = ejsTagRegex.exec(templateContent)) !== null) {
+    const code = match[0];
+    for (const pattern of DANGEROUS_PATTERNS) {
+      if (pattern.test(code)) {
+        throw new Error(
+          `Custom template "${templatePath}" contains disallowed code execution pattern: ${pattern.source}`
+        );
+      }
+    }
+  }
+}
+
 export abstract class BaseGenerator<
   TOptions extends TemplateOptions
 > extends NotYeoman {
@@ -235,6 +275,41 @@ export abstract class BaseGenerator<
         path.join(this.builtInTemplatesRootPath!, ...paths)
       );
     }
+  }
+
+  public async render(
+    source: string,
+    destination: string,
+    data?: Record<string, unknown>
+  ): Promise<void> {
+    const isBuiltIn = this.builtInTemplatesRootPath && source.startsWith(this.builtInTemplatesRootPath);
+    if (!isBuiltIn) {
+      const template = await this._fs.promises.readFile(source, 'utf8');
+      validateCustomTemplate(template, source);
+      const rendered = render(template, data ?? {});
+      if (rendered) {
+        const relativePath = path.relative(this._cwd, destination);
+        const existing = await this._fs.promises
+          .readFile(destination, 'utf8')
+          .catch(() => null);
+        if (existing) {
+          if (rendered.trim() === existing.trim()) {
+            this.changes.identical.push(relativePath);
+            return;
+          } else {
+            this.changes.conflicted.push(relativePath);
+            this.changes.forced.push(relativePath);
+          }
+        } else {
+          this.changes.created.push(relativePath);
+        }
+        const dir = path.dirname(destination);
+        await this._fs.promises.mkdir(dir, { recursive: true });
+        await this._fs.promises.writeFile(destination, rendered);
+      }
+      return;
+    }
+    return super.render(source, destination, data);
   }
 
   public async run(opts?: {

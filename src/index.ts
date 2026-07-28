@@ -7,6 +7,7 @@
 
 import { TemplateService } from './service/templateService';
 export { TemplateService };
+export { validateCustomTemplate } from './generators/baseGenerator';
 export * from './utils/types';
 export * from './utils/createUtil';
 export * from './utils/uiEmbedding';

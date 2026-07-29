@@ -1,3 +1,12 @@
+## [66.13.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.3...66.13.4) (2026-07-29)
+
+
+### Bug Fixes
+
+* require Node >=22.0.0, drop EOL Node versions @W-23480655@ ([28206eb](https://github.com/forcedotcom/salesforcedx-templates/commit/28206eb0f5396ca73b223b6fddcba901f3b08d4f))
+
+
+
 ## [66.13.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.2...66.13.3) (2026-07-26)
 
 

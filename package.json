@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@salesforce/dev-config": "^4.3.3",
-    "@salesforce/dev-scripts": "^11.0.2",
+    "@salesforce/dev-scripts": "^11.0.4",
     "@salesforce/prettier-config": "^0.0.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2e": "^11.41.0",
     "@salesforce/ui-bundle-template-app-angular-template-b2x": "^11.41.0",
@@ -65,7 +65,7 @@
     "typescript": "^5.9.3"
   },
   "engines": {
-    "node": ">=18.18.2"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "build": "yarn run clean:lib && yarn compile && yarn build:copy-templates && yarn build:templates",

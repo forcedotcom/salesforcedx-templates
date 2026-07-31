@@ -1,3 +1,12 @@
+## [66.13.5](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.4...66.13.5) (2026-07-31)
+
+
+### Bug Fixes
+
+* validate custom templates for dangerous code execution patterns @W-23595931@ ([#875](https://github.com/forcedotcom/salesforcedx-templates/issues/875)) ([5bb45d1](https://github.com/forcedotcom/salesforcedx-templates/commit/5bb45d19ebdcf1efe2f16db7bdf4825805bd8715))
+
+
+
 ## [66.13.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.3...66.13.4) (2026-07-29)
 
 

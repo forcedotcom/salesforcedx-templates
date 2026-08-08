@@ -11,8 +11,8 @@ import {
   isAllowedLightningOutOrigin,
   isValidMetadataName,
   LIGHTNING_OUT_DISTRIBUTION_STATES,
-  LIGHTNING_OUT_IFRAME_CONTEXT,
   LIGHTNING_OUT_RUNTIMES,
+  mergeIframeEntries,
   sanitizeOrigin,
 } from '../utils/lightningOut';
 import { LightningOutOptions } from '../utils/types';
@@ -107,15 +107,14 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       { name, runtime, components, hostDomains }
     );
 
-    // IframeWhiteListUrlSettings — REPLACE-type on deploy. Because deploying this
-    // artifact REPLACES the org's entire "Trusted Domains for Inline Frames" list
-    // across every IFrame Type (Visualforce, Surveys, Lightning Out, etc.), this
-    // file lists only the app's host domains. The developer must review it against
-    // their org before deploying to avoid wiping existing cross-context entries.
-    const iframeEntries = hostDomains.map((url) => ({
-      url,
-      context: LIGHTNING_OUT_IFRAME_CONTEXT,
-    }));
+    // IframeWhiteListUrlSettings — REPLACE-type on deploy. When the command
+    // supplies existingIframeEntries (Option B, --merge-iframe), re-emit every
+    // existing entry verbatim and ADD the app's host domains, so the deploy
+    // ADDS rather than wipes the org's cross-context list.
+    const iframeEntries = mergeIframeEntries(
+      this.options.existingIframeEntries ?? [],
+      hostDomains
+    );
     await this.render(
       this.templatePath('iframeWhiteListUrlSettings.xml'),
       this.destinationPath(

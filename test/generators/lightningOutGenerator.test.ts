@@ -277,6 +277,37 @@ describe('LightningOutGenerator', () => {
       );
       assertFileContent(iframe, 'https://app.example.com');
     });
+
+    it('should MERGE existing entries + app domains when existingIframeEntries is supplied (Option B)', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir, {
+          hostDomains: ['https://app.example.com'],
+          existingIframeEntries: [
+            // a foreign-context entry that MUST be preserved verbatim
+            { url: 'https://vf.example.com', context: 'Visualforce' },
+            // an existing LightningOut entry that must NOT be duplicated
+            { url: 'https://app.example.com', context: 'LightningOut' },
+          ],
+        })
+      );
+      const iframe = path.join(
+        outputDir,
+        'iframeWhiteListUrlSettings',
+        'IframeWhiteListUrlSettings.iframeWhiteListUrlSettings-meta.xml'
+      );
+      const body = fs.readFileSync(iframe, 'utf8');
+      // the foreign-context entry survives with its own context intact
+      expect(body).to.include('https://vf.example.com');
+      expect(body).to.include('<context>Visualforce</context>');
+      expect(body).to.include('https://app.example.com');
+      // de-duplicated: app.example.com appears exactly once
+      const occurrences = body.split('https://app.example.com').length - 1;
+      expect(occurrences, 'app.example.com should appear exactly once').to.equal(
+        1
+      );
+    });
   });
 
   describe('Option A — no silent overwrite', () => {

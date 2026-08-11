@@ -132,6 +132,8 @@ export const PACKAGE_DIR_PLACEHOLDER = '_p_';
 export const MAIN_DEFAULT_PLACEHOLDER = '_m_';
 /** Replaced with literal "main/default". */
 export const UI_BUNDLES_PLACEHOLDER = '_w_';
+/** Replaced with literal "permissionsets". */
+export const PERMISSIONSETS_PLACEHOLDER = '_ps_';
 /** Replaced with the app folder name. */
 export const APP_PLACEHOLDER = '_a_';
 /** Replaced with project name (alphanumeric) for the UI bundle folder. */
@@ -167,6 +169,7 @@ export const PLACEHOLDER_KEYS = [
   'PACKAGE_DIR_PLACEHOLDER',
   'MAIN_DEFAULT_PLACEHOLDER',
   'UI_BUNDLES_PLACEHOLDER',
+  'PERMISSIONSETS_PLACEHOLDER',
   'APP_PLACEHOLDER',
   'DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER',
   'DIGITAL_EXPERIENCES_PLACEHOLDER',

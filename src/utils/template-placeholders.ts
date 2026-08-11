@@ -33,6 +33,13 @@ export default [
     replacement: 'uiBundles',
   },
   {
+    key: 'PERMISSIONSETS_PLACEHOLDER',
+    placeholder: '_ps_',
+    dirInNpm: 'permissionsets',
+    parent: '_m_',
+    replacement: 'permissionsets',
+  },
+  {
     key: 'DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER',
     placeholder: '_dc_',
     dirInNpm: 'digitalExperienceConfigs',

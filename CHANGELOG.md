@@ -1,3 +1,7 @@
+## [66.13.7](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.6...66.13.7) (2026-08-14)
+
+
+
 ## [66.13.6](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.5...66.13.6) (2026-08-11)
 
 

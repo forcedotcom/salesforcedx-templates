@@ -86,6 +86,13 @@ export default [
     replacement: 'features',
   },
   {
+    key: 'LANGUAGE_SWITCHER_PLACEHOLDER',
+    placeholder: '_ls_',
+    dirInNpm: 'language-switcher',
+    parent: '_f_',
+    replacement: 'language-switcher',
+  },
+  {
     key: 'OBJECT_SEARCH_PLACEHOLDER',
     placeholder: '_os_',
     dirInNpm: 'object-search',

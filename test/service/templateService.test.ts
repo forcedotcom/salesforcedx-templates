@@ -1206,6 +1206,13 @@ describe('TemplateService', () => {
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
       chai.expect(sampleContent).to.include('MyReactExternalApp');
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyReactExternalApp/force-app/main/default/uiBundles/MyReactExternalApp/src/features/language-switcher/sample.txt'
+          )
+        );
     });
 
     it('should create Project (angularinternalapp) from built-in template', async () => {

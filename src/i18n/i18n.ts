@@ -77,4 +77,22 @@ export const messages = {
     'The --shell-title flag must not contain a double-quote character; it would break the generated HTML attribute.',
   UIEmbeddingBundle:
     'A Lightning Web Component that wraps the <lightning-ui-embedding> base component.',
+
+  InvalidLightningOutDefinition:
+    'The Lightning Out definition is invalid:%s',
+  InvalidLightningOutName:
+    'name must be a valid Metadata API name: start with a letter and contain only letters, numbers, and underscores.',
+  InvalidLightningOutRuntime: 'runtime must be one of: %s.',
+  MissingLightningOutComponents:
+    'components must be a non-empty array of Lightning web component names.',
+  MissingLightningOutHostDomains:
+    'hostDomains must be a non-empty array of https origins.',
+  InvalidLightningOutHostDomain:
+    'These hostDomains are not valid https origins: %s. Each must be an https URL with no spaces or wildcards (e.g., https://app.example.com).',
+  InvalidLightningOutContactEmail:
+    'eca.contactEmail is required and must be a valid email address.',
+  InvalidLightningOutDistributionState:
+    'eca.distributionState must be one of: %s.',
+  LightningOutFilesExist:
+    'The following files already exist and would be overwritten:\n%s\nRe-run with --force to overwrite them. Note: the IframeWhiteListUrlSettings file is REPLACE-type on deploy — overwriting it can wipe your org\'s Trusted Domains for Inline Frames list.',
 };

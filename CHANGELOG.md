@@ -1,3 +1,12 @@
+## [66.13.9](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.8...66.13.9) (2026-08-20)
+
+
+### Bug Fixes
+
+* **deps:** bump base-react-app and base-web-app to 11.64.0 @W-23820117@ ([#895](https://github.com/forcedotcom/salesforcedx-templates/issues/895)) ([a375cca](https://github.com/forcedotcom/salesforcedx-templates/commit/a375cca3f932fbc96c94608f1b3c235ead28d1fb))
+
+
+
 ## [66.13.8](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.7...66.13.8) (2026-08-17)
 
 

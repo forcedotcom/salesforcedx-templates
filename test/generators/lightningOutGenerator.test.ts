@@ -229,6 +229,23 @@ describe('LightningOutGenerator', () => {
       assertFileContent(app, 'c-bar');
     });
 
+    it('should mark the consumer secret optional on the ECA global OAuth settings (Auth-Code + PKCE public client — no manual "Require Secret for Web Server Flow" step)', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir)
+      );
+      const glblOauth = path.join(
+        outputDir,
+        'extlClntAppGlobalOauthSets',
+        'MyLoApp.ecaGlblOauth-meta.xml'
+      );
+      assertFileContent(
+        glblOauth,
+        '<isConsumerSecretOptional>true</isConsumerSecretOptional>'
+      );
+    });
+
     it('should not emit a double-hyphen inside the iframe XML comment (invalid XML — rejected by deploy)', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
       await templateService.create(

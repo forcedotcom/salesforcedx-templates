@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  WARNING: Deploying IframeWhiteListUrlSettings REPLACES the org's ENTIRE
+  "Trusted Domains for Inline Frames" list (Setup > Security > Session Settings),
+  across all IFrame Types (Visualforce, Surveys, Lightning Out, UI Embedding).
+  Any pre-existing entries not listed in this file will be removed on deploy.
+  Review this list against your org before deploying. To preserve the org's
+  existing entries, regenerate with the "merge-iframe" flag pointed at a target org.
+-->
+<IframeWhiteListUrlSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+<% iframeEntries.forEach(function (e) { -%>
+    <iframeWhiteListUrls>
+        <context><%= e.context %></context>
+        <url><%= e.url %></url>
+    </iframeWhiteListUrls>
+<% }); -%>
+</IframeWhiteListUrlSettings>

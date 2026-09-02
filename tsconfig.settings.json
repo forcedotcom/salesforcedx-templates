@@ -1,12 +1,14 @@
 {
   "extends": "./node_modules/@salesforce/dev-config/tsconfig",
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "nodenext",
     "target": "es6",
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "declaration": true,
-    "moduleResolution": "node",
+    "rootDir": "./src",
+    "moduleResolution": "nodenext",
+    "types": ["node", "mocha"],
     "noImplicitAny": true,
     "outDir": "./lib",
     "preserveConstEnums": true,

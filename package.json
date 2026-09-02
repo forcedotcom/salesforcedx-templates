@@ -26,7 +26,7 @@
     "@salesforce/dev-scripts": "^14.0.0",
     "@salesforce/prettier-config": "^0.0.4",
     "@tony.ganchev/eslint-plugin-header": "^3.4.4",
-    "@salesforce/ui-bundle-template-app-angular-template-b2e": "^11.62.1",
+    "@salesforce/ui-bundle-template-app-angular-template-b2e": "^11.71.5",
     "@salesforce/ui-bundle-template-app-angular-template-b2x": "^11.62.1",
     "@salesforce/ui-bundle-template-app-react-template-b2e": "^11.57.2",
     "@salesforce/ui-bundle-template-app-react-template-b2x": "^11.64.0",

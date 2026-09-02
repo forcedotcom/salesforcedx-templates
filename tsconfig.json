@@ -5,6 +5,18 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
+  "ts-node": {
+    "transpileOnly": true,
+    "experimentalResolver": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "ignoreDeprecations": "6.0",
+      "rootDir": ".",
+      "declaration": false,
+      "composite": false
+    }
+  },
   "include": ["./src/**/*"],
   "exclude": [
     "./src/templates/lightningcomponent/lwc/typeScript/*",

@@ -8,8 +8,8 @@ import { nls } from '../../src/i18n';
 import { CreateUtil } from '../../src/utils';
 
 import { assert, expect } from 'chai';
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 import { SinonStub, stub } from 'sinon';
 
 describe('CreateUtil', () => {
@@ -54,13 +54,14 @@ describe('CreateUtil', () => {
     );
 
     let readdirStub: SinonStub;
+    let fakeFs: typeof fs;
 
     beforeEach(() => {
-      // @ts-ignore
-      readdirStub = stub(fs, 'readdirSync');
+      // The source accepts an injected `fs`; stub that rather than the real
+      // `fs` namespace, whose members are non-writable under `module: nodenext`.
+      readdirStub = stub();
+      fakeFs = { readdirSync: readdirStub } as unknown as typeof fs;
     });
-
-    afterEach(() => readdirStub.restore());
 
     it('should get template names for a given file suffix and folder name', () => {
       readdirStub
@@ -81,7 +82,8 @@ describe('CreateUtil', () => {
     const assertTemplateNames = (names: string[]) => {
       const templates = CreateUtil.getCommandTemplatesForFiletype(
         /.cls$/,
-        templateType
+        templateType,
+        fakeFs
       );
       expect(templates).to.eql(names);
     };
@@ -105,12 +107,12 @@ describe('CreateUtil', () => {
     }
 
     let readdirStub: SinonStub;
+    let fakeFs: typeof fs;
 
     beforeEach(() => {
-      readdirStub = stub(fs, 'readdirSync');
+      readdirStub = stub();
+      fakeFs = { readdirSync: readdirStub } as unknown as typeof fs;
     });
-
-    afterEach(() => readdirStub.restore());
 
     it('should get template names', () => {
       readdirStub
@@ -121,7 +123,11 @@ describe('CreateUtil', () => {
           dirent('afile.txt', false),
         ]);
 
-      const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType);
+      const templates = CreateUtil.getCommandTemplatesInSubdirs(
+        templateType,
+        {},
+        fakeFs
+      );
       expect(templates).to.eql(['Template1', 'Template2']);
     });
 
@@ -130,9 +136,11 @@ describe('CreateUtil', () => {
         .withArgs(auraPath, { withFileTypes: true })
         .returns([dirent('Template1', true), dirent('Template2', true)]);
 
-      const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {
-        subdir: 'aura',
-      });
+      const templates = CreateUtil.getCommandTemplatesInSubdirs(
+        templateType,
+        { subdir: 'aura' },
+        fakeFs
+      );
       expect(templates).to.eql(['Template1', 'Template2']);
     });
 
@@ -157,10 +165,11 @@ describe('CreateUtil', () => {
         .withArgs(path.join(auraPath, 'Template3'), { withFileTypes: true })
         .returns([]);
 
-      const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {
-        subdir: 'aura',
-        filetype: /\.cmp$/,
-      });
+      const templates = CreateUtil.getCommandTemplatesInSubdirs(
+        templateType,
+        { subdir: 'aura', filetype: /\.cmp$/ },
+        fakeFs
+      );
       expect(templates).to.eql(['Template1']);
     });
   });

@@ -44,7 +44,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
     const url = new URL(pathOrRepoUri);
     if (process.env.ESBUILD_PLATFORM !== 'web' && url) {
       const { loadCustomTemplatesGitRepo } = await import(
-        '../service/gitRepoUtils'
+        '../service/gitRepoUtils.js'
       );
       return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }

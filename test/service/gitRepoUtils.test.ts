@@ -7,8 +7,8 @@
 import { SinonStub, stub } from 'sinon';
 import { expect } from 'chai';
 import { DIR } from '../../src/service/gitRepoUtils';
-import * as os from 'os';
-import * as path from 'path';
+import os from 'os';
+import path from 'path';
 
 describe('DIR', () => {
   let homedirStub: SinonStub;

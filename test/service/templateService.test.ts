@@ -5,13 +5,13 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as chai from 'chai';
-import * as assert from 'node:assert';
-import * as chaiAsPromised from 'chai-as-promised';
-import * as fs from 'fs';
+import chai from 'chai';
+import assert from 'node:assert';
+import chaiAsPromised from 'chai-as-promised';
+import fs from 'fs';
 import got from 'got';
-import * as path from 'path';
-import * as sinon from 'sinon';
+import path from 'path';
+import sinon from 'sinon';
 import { TemplateService, TemplateType } from '../../src';
 import { nls } from '../../src/i18n';
 import { getStoragePathForCustomTemplates } from '../../src/service/gitRepoUtils';

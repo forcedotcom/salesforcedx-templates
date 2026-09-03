@@ -1,3 +1,12 @@
+# [66.14.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.9...66.14.0) (2026-09-03)
+
+
+### Features
+
+* bump Angular template packages to ^12.4.4 @W-23981976@ ([#906](https://github.com/forcedotcom/salesforcedx-templates/issues/906)) ([9329873](https://github.com/forcedotcom/salesforcedx-templates/commit/9329873aa350c8a6b2eb7ededd019c62d163b464))
+
+
+
 ## [66.13.9](https://github.com/forcedotcom/salesforcedx-templates/compare/66.13.8...66.13.9) (2026-08-20)
 
 

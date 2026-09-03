@@ -28,7 +28,7 @@
     "@tony.ganchev/eslint-plugin-header": "^3.4.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2e": "^12.4.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.4.4",
-    "@salesforce/ui-bundle-template-app-react-template-b2e": "^11.57.2",
+    "@salesforce/ui-bundle-template-app-react-template-b2e": "^11.71.5",
     "@salesforce/ui-bundle-template-app-react-template-b2x": "^11.64.0",
     "@salesforce/ui-bundle-template-base-angular-app": "^12.4.4",
     "@salesforce/ui-bundle-template-base-react-app": "^11.64.0",

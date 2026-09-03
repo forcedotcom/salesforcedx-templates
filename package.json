@@ -32,7 +32,7 @@
     "@salesforce/ui-bundle-template-app-react-template-b2x": "^11.64.0",
     "@salesforce/ui-bundle-template-base-angular-app": "^12.4.4",
     "@salesforce/ui-bundle-template-base-react-app": "^11.64.0",
-    "@salesforce/ui-bundle-template-base-web-app": "^11.64.0",
+    "@salesforce/ui-bundle-template-base-web-app": "^11.71.5",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",
     "@types/mime-types": "^3.0.1",

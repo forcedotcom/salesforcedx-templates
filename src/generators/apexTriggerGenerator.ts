@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
+import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { ApexTriggerOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -16,6 +17,13 @@ export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptio
   }
   public async generate(): Promise<void> {
     const { template, triggername, triggerevents, sobject } = this.options;
+
+    this.checkTemplateExists('apextrigger', template, {
+      filetype: /\.trigger$/,
+      onMissing: () =>
+        new Error(nls.localize('MissingApexTriggerTemplate', [template])),
+    });
+
     this.sourceRootWithPartialPath('apextrigger');
 
     await this.render(

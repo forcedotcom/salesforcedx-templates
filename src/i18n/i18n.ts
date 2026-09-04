@@ -81,14 +81,18 @@ export const messages = {
   InvalidLightningOutDefinition:
     'The Lightning Out definition is invalid:%s',
   InvalidLightningOutName:
-    'name must be a valid Metadata API name: start with a letter and contain only letters, numbers, and underscores.',
+    'Invalid %s "%s": must be an ASCII developer name (start with a letter; letters, digits, single underscores; no trailing underscore).',
+  InvalidLightningOutNameLength: '%s exceeds the maximum length of %s characters (got %s).',
   InvalidLightningOutRuntime: 'runtime must be one of: %s.',
   MissingLightningOutComponents:
     'components must be a non-empty array of Lightning web component names.',
   MissingLightningOutHostDomains:
     'hostDomains must be a non-empty array of https origins.',
-  InvalidLightningOutHostDomain:
-    'These hostDomains are not valid https origins: %s. Each must be an https URL with no spaces or wildcards (e.g., https://app.example.com).',
+  InvalidLightningOutHostDomain: 'Invalid host domain "%s": %s.',
+  InvalidLightningOutHostDomainCollision:
+    'Host domains "%s" and "%s" both map to the CorsWhitelistOrigin file name "%s"; use distinct domains.',
+  WarnLightningOutDuplicateHostDomain: 'Duplicate host domain "%s" was ignored.',
+  WarnLightningOutLocalhostHttp: 'Allowing non-https localhost origin "%s" for local development only.',
   InvalidLightningOutContactEmail:
     'eca.contactEmail is required and must be a valid email address.',
   InvalidLightningOutDistributionState:

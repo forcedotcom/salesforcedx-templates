@@ -84,19 +84,20 @@ export const messages = {
     'Invalid %s "%s": must be an ASCII developer name (start with a letter; letters, digits, single underscores; no trailing underscore).',
   InvalidLightningOutNameLength: '%s exceeds the maximum length of %s characters (got %s).',
   InvalidLightningOutRuntime: 'runtime must be one of: %s.',
-  MissingLightningOutComponents:
-    'components must be a non-empty array of Lightning web component names.',
-  MissingLightningOutHostDomains:
-    'hostDomains must be a non-empty array of https origins.',
   InvalidLightningOutHostDomain: 'Invalid host domain "%s": %s.',
   InvalidLightningOutHostDomainCollision:
     'Host domains "%s" and "%s" both map to the CorsWhitelistOrigin file name "%s"; use distinct domains.',
   WarnLightningOutDuplicateHostDomain: 'Duplicate host domain "%s" was ignored.',
   WarnLightningOutLocalhostHttp: 'Allowing non-https localhost origin "%s" for local development only.',
-  InvalidLightningOutContactEmail:
-    'eca.contactEmail is required and must be a valid email address.',
-  InvalidLightningOutDistributionState:
-    'eca.distributionState must be one of: %s.',
-  LightningOutFilesExist:
-    'The following files already exist and would be overwritten:\n%s\nRe-run with --force to overwrite them. Note: the IframeWhiteListUrlSettings file is REPLACE-type on deploy — overwriting it can wipe your org\'s Trusted Domains for Inline Frames list.',
+  MissingLightningOutInputs: 'Missing required input(s): %s.',
+  InvalidLightningOutContactEmail: 'Invalid contact email "%s".',
+  InvalidLightningOutCallbackUrl: 'Invalid callback URL "%s": must be an absolute https URL.',
+  InvalidLightningOutComponent:
+    'Invalid component reference "%s": expected LWC "namespace/name" or Aura "namespace:Name".',
+  WarnLightningOutNoComponents:
+    'No components specified; the LightningOutApp will be generated with an empty component list. Add components later or re-run.',
+  WarnLightningOutClwrExperimental:
+    'runtime=CLWR is experimental: only LWR_CORE is validated end-to-end, and per-Site framing config is not scaffolded.',
+  WarnLightningOutCallbackNotInHostDomains:
+    'The callback URL origin "%s" is not among the host domains; confirm this is intentional.',
 };

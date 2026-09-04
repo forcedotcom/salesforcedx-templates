@@ -6,247 +6,190 @@
  */
 
 import * as path from 'path';
+import { URL } from 'node:url';
 import { nls } from '../i18n';
 import {
-  isAllowedLightningOutOrigin,
-  isValidMetadataName,
-  LIGHTNING_OUT_DISTRIBUTION_STATES,
-  LIGHTNING_OUT_IFRAME_CONTEXT,
+  checkDeveloperName,
+  isValidComponentRef,
   LIGHTNING_OUT_RUNTIMES,
-  sanitizeOrigin,
+  normalizeHostDomains,
+  NormalizedHostDomains,
 } from '../utils/lightningOut';
 import { LightningOutOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_RUNTIMES: ReadonlySet<string> = new Set(LIGHTNING_OUT_RUNTIMES);
-const VALID_DIST_STATES: ReadonlySet<string> = new Set(
-  LIGHTNING_OUT_DISTRIBUTION_STATES
-);
+const APP_NAME_MAX = 64;
+const ECA_NAME_MAX = 80;
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export default class LightningOutGenerator extends BaseGenerator<LightningOutOptions> {
+  private normalizedHostDomains!: NormalizedHostDomains;
+
   public validateOptions(): void {
+    const o = this.options;
     const errors: string[] = [];
 
-    if (!isValidMetadataName(this.options.name)) {
-      errors.push(nls.localize('InvalidLightningOutName'));
+    const missing: string[] = [];
+    if (!o.appName?.trim()) {
+      missing.push('appName');
     }
-    if (!VALID_RUNTIMES.has(this.options.runtime)) {
-      errors.push(
-        nls.localize('InvalidLightningOutRuntime', [
-          [...VALID_RUNTIMES].join(', '),
-        ])
-      );
+    if (!o.eca?.name?.trim()) {
+      missing.push('eca.name');
     }
-    if (
-      !Array.isArray(this.options.components) ||
-      this.options.components.length === 0
-    ) {
-      errors.push(nls.localize('MissingLightningOutComponents'));
+    if (!o.runtime?.toString().trim()) {
+      missing.push('runtime');
     }
-    if (
-      !Array.isArray(this.options.hostDomains) ||
-      this.options.hostDomains.length === 0
-    ) {
-      errors.push(nls.localize('MissingLightningOutHostDomains'));
-    } else {
-      const bad = this.options.hostDomains.filter(
-        (d) => !isAllowedLightningOutOrigin(d)
-      );
-      if (bad.length) {
-        errors.push(
-          nls.localize('InvalidLightningOutHostDomain', [bad.join(', ')])
-        );
+    if (!Array.isArray(o.hostDomains) || o.hostDomains.length === 0) {
+      missing.push('hostDomains');
+    }
+    if (!o.eca?.contactEmail?.trim()) {
+      missing.push('eca.contactEmail');
+    }
+    if (!o.eca?.callbackUrl?.trim()) {
+      missing.push('eca.callbackUrl');
+    }
+    if (missing.length) {
+      errors.push(nls.localize('MissingLightningOutInputs', [missing.join(', ')]));
+    }
+
+    if (o.appName) {
+      const e = checkDeveloperName(o.appName, 'appName', APP_NAME_MAX);
+      if (e) {
+        errors.push(e);
+      }
+    }
+    if (o.eca?.name) {
+      const e = checkDeveloperName(o.eca.name, 'eca.name', ECA_NAME_MAX);
+      if (e) {
+        errors.push(e);
+      }
+    }
+    if (o.runtime && !VALID_RUNTIMES.has(o.runtime)) {
+      errors.push(nls.localize('InvalidLightningOutRuntime', [[...VALID_RUNTIMES].join(', ')]));
+    }
+    if (o.eca?.contactEmail && !EMAIL_RE.test(o.eca.contactEmail)) {
+      errors.push(nls.localize('InvalidLightningOutContactEmail', [o.eca.contactEmail]));
+    }
+    if (o.eca?.callbackUrl) {
+      let ok = false;
+      try {
+        ok = new URL(o.eca.callbackUrl).protocol === 'https:';
+      } catch {
+        ok = false;
+      }
+      if (!ok) {
+        errors.push(nls.localize('InvalidLightningOutCallbackUrl', [o.eca.callbackUrl]));
+      }
+    }
+    for (const c of o.components ?? []) {
+      if (!isValidComponentRef(c)) {
+        errors.push(nls.localize('InvalidLightningOutComponent', [c]));
       }
     }
 
-    const eca = this.options.eca;
-    if (
-      !eca ||
-      !eca.contactEmail ||
-      !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(eca.contactEmail)
-    ) {
-      errors.push(nls.localize('InvalidLightningOutContactEmail'));
-    }
-    if (
-      eca &&
-      eca.distributionState &&
-      !VALID_DIST_STATES.has(eca.distributionState)
-    ) {
-      errors.push(
-        nls.localize('InvalidLightningOutDistributionState', [
-          [...VALID_DIST_STATES].join(', '),
-        ])
-      );
+    let normalized: NormalizedHostDomains | undefined;
+    if (Array.isArray(o.hostDomains) && o.hostDomains.length) {
+      try {
+        normalized = normalizeHostDomains(o.hostDomains);
+        this.warnings.push(...normalized.warnings);
+      } catch (e) {
+        errors.push((e as Error).message);
+      }
     }
 
     if (errors.length) {
-      throw new Error(
-        nls.localize('InvalidLightningOutDefinition', [
-          '\n  - ' + errors.join('\n  - '),
-        ])
-      );
+      throw new Error(nls.localize('InvalidLightningOutDefinition', ['\n  - ' + errors.join('\n  - ')]));
     }
+
+    // Non-fatal advisories (only reached when validation passed).
+    if (!(o.components && o.components.length)) {
+      this.warnings.push(nls.localize('WarnLightningOutNoComponents'));
+    }
+    if (o.runtime === 'CLWR') {
+      this.warnings.push(nls.localize('WarnLightningOutClwrExperimental'));
+    }
+    if (normalized && o.eca?.callbackUrl) {
+      try {
+        const cb = new URL(o.eca.callbackUrl);
+        const scheme = cb.protocol.replace(':', '').toLowerCase();
+        const port = cb.port && cb.port !== '443' ? `:${cb.port}` : '';
+        const cbOrigin = `${scheme}://${cb.hostname.toLowerCase()}${port}`;
+        if (!normalized.origins.includes(cbOrigin)) {
+          this.warnings.push(nls.localize('WarnLightningOutCallbackNotInHostDomains', [cbOrigin]));
+        }
+      } catch {
+        /* invalid callbackUrl already produced an error above */
+      }
+    }
+
+    this.normalizedHostDomains = normalized ?? { origins: [], fileTokens: [], warnings: [] };
   }
 
   public async generate(): Promise<void> {
-    const { name, runtime, components, hostDomains, eca } = this.options;
+    const { appName, runtime, components, eca } = this.options;
+    const { origins, fileTokens } = this.normalizedHostDomains;
 
     this.sourceRootWithPartialPath(path.join('lightningout', 'default'));
-
-    // Option A guardrail: refuse to silently overwrite pre-existing files.
-    // Collect every destination we intend to write, and if any already exists
-    // (and --force was not passed) throw before writing anything.
-    this.assertNoSilentOverwrite();
 
     // LightningOutApp
     await this.render(
       this.templatePath('lightningOutApp.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'lightningOutApps', `${name}.lightningOutApp-meta.xml`)
+        path.join(this.outputdir, 'lightningOutApps', `${appName}.lightningOutApp-meta.xml`)
       ),
-      { name, runtime, components, hostDomains }
+      { name: appName, runtime, components: components ?? [], hostDomains: origins }
     );
 
-    // IframeWhiteListUrlSettings — REPLACE-type on deploy. Because deploying this
-    // artifact REPLACES the org's entire "Trusted Domains for Inline Frames" list
-    // across every IFrame Type (Visualforce, Surveys, Lightning Out, etc.), this
-    // file lists only the app's host domains. The developer must review it against
-    // their org before deploying to avoid wiping existing cross-context entries.
-    const iframeEntries = hostDomains.map((url) => ({
-      url,
-      context: LIGHTNING_OUT_IFRAME_CONTEXT,
-    }));
-    await this.render(
-      this.templatePath('iframeWhiteListUrlSettings.xml'),
-      this.destinationPath(
-        path.join(
-          this.outputdir,
-          'iframeWhiteListUrlSettings',
-          'IframeWhiteListUrlSettings.iframeWhiteListUrlSettings-meta.xml'
-        )
-      ),
-      { iframeEntries }
-    );
-
-    // MyDomainSettings — server-side field merge (safe minimal file).
+    // MyDomainSettings / SecuritySettings — server-side field merge (safe minimal files).
     await this.render(
       this.templatePath('myDomainSettings.xml'),
-      this.destinationPath(
-        path.join(this.outputdir, 'settings', 'MyDomain.settings-meta.xml')
-      ),
+      this.destinationPath(path.join(this.outputdir, 'settings', 'MyDomain.settings-meta.xml')),
       {}
     );
-
-    // SecuritySettings — server-side field merge (safe minimal file).
     await this.render(
       this.templatePath('securitySettings.xml'),
-      this.destinationPath(
-        path.join(this.outputdir, 'settings', 'Security.settings-meta.xml')
-      ),
+      this.destinationPath(path.join(this.outputdir, 'settings', 'Security.settings-meta.xml')),
       {}
     );
 
     // CorsWhitelistOrigin — one independent, per-origin file (never clobbers others).
-    for (const origin of hostDomains) {
+    for (let i = 0; i < origins.length; i++) {
       await this.render(
         this.templatePath('corsWhitelistOrigin.xml'),
         this.destinationPath(
           path.join(
             this.outputdir,
             'corsWhitelistOrigins',
-            `${sanitizeOrigin(origin)}.corsWhitelistOrigin-meta.xml`
+            `${fileTokens[i]}.corsWhitelistOrigin-meta.xml`
           )
         ),
-        { origin }
+        { origin: origins[i] }
       );
     }
 
-    // ExternalClientApplication + OAuth settings trio.
-    const distributionState = eca.distributionState ?? 'Local';
-    const callbackUrl = eca.callbackUrl ?? `${hostDomains[0]}/frontdoor-url.html`;
-    const oauthScopes = (eca.oauthScopes ?? ['Web']).join(', ');
-
+    // ExternalClientApplication + OAuth settings trio. Invariants hardcoded:
+    // distributionState=Local, single OAuth scope "Web".
     await this.render(
       this.templatePath('externalClientApplication.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'externalClientApps', `${name}.eca-meta.xml`)
+        path.join(this.outputdir, 'externalClientApps', `${eca.name}.eca-meta.xml`)
       ),
-      { name, contactEmail: eca.contactEmail, distributionState }
+      { name: eca.name, contactEmail: eca.contactEmail, distributionState: 'Local' }
     );
-
     await this.render(
       this.templatePath('extlClntAppGlobalOauthSettings.xml'),
       this.destinationPath(
-        path.join(
-          this.outputdir,
-          'extlClntAppGlobalOauthSets',
-          `${name}.ecaGlblOauth-meta.xml`
-        )
+        path.join(this.outputdir, 'extlClntAppGlobalOauthSets', `${eca.name}.ecaGlblOauth-meta.xml`)
       ),
-      { name, callbackUrl }
+      { name: eca.name, callbackUrl: eca.callbackUrl }
     );
-
     await this.render(
       this.templatePath('extlClntAppOauthSettings.xml'),
       this.destinationPath(
-        path.join(
-          this.outputdir,
-          'extlClntAppOauthSettings',
-          `${name}.ecaOauth-meta.xml`
-        )
+        path.join(this.outputdir, 'extlClntAppOauthSettings', `${eca.name}.ecaOauth-meta.xml`)
       ),
-      { name, oauthScopes }
+      { name: eca.name, oauthScopes: 'Web' }
     );
-  }
-
-  /**
-   * Option A guardrail. Unless `force` is set, throw if any artifact we are
-   * about to write already exists on disk, so a re-run never silently
-   * overwrites a developer's edits (notably the REPLACE-type iframe file).
-   */
-  private assertNoSilentOverwrite(): void {
-    if (this.options.force) {
-      return;
-    }
-    const { name, hostDomains } = this.options;
-    const destinations = [
-      path.join(this.outputdir, 'lightningOutApps', `${name}.lightningOutApp-meta.xml`),
-      path.join(
-        this.outputdir,
-        'iframeWhiteListUrlSettings',
-        'IframeWhiteListUrlSettings.iframeWhiteListUrlSettings-meta.xml'
-      ),
-      path.join(this.outputdir, 'settings', 'MyDomain.settings-meta.xml'),
-      path.join(this.outputdir, 'settings', 'Security.settings-meta.xml'),
-      ...hostDomains.map((o) =>
-        path.join(
-          this.outputdir,
-          'corsWhitelistOrigins',
-          `${sanitizeOrigin(o)}.corsWhitelistOrigin-meta.xml`
-        )
-      ),
-      path.join(this.outputdir, 'externalClientApps', `${name}.eca-meta.xml`),
-      path.join(
-        this.outputdir,
-        'extlClntAppGlobalOauthSets',
-        `${name}.ecaGlblOauth-meta.xml`
-      ),
-      path.join(
-        this.outputdir,
-        'extlClntAppOauthSettings',
-        `${name}.ecaOauth-meta.xml`
-      ),
-    ];
-
-    const existing = destinations.filter((d) =>
-      this._fs.existsSync(this.destinationPath(d))
-    );
-    if (existing.length) {
-      throw new Error(
-        nls.localize('LightningOutFilesExist', [
-          existing.map((f) => `  - ${f}`).join('\n'),
-        ])
-      );
-    }
   }
 }

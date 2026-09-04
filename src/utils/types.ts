@@ -112,6 +112,8 @@ export type CreateOutput = {
   outputDir: string;
   created: string[];
   rawOutput: string;
+  /** Non-fatal advisories surfaced to the caller (CLI / VS Code). Empty for generators that emit none. */
+  warnings?: string[];
 };
 
 /**
@@ -209,29 +211,26 @@ export interface UIEmbeddingOptions extends TemplateOptions {
 }
 
 export interface LightningOutEcaOptions {
+  /** ECA DeveloperName (≤ 80 chars). */
+  name: string;
+  /** Required contact email. */
   contactEmail: string;
-  distributionState?: 'Local' | 'Packaged';
-  callbackUrl?: string;
-  oauthScopes?: string[];
+  /** Required absolute https callback/redirect URL. */
+  callbackUrl: string;
 }
 
 export interface LightningOutOptions extends TemplateOptions {
-  /** Metadata API name of the Lightning Out app (also the ECA/OAuth member name). */
-  name: string;
+  /** LightningOutApp DeveloperName AND <applicationName> value (≤ 64 chars). */
+  appName: string;
   /** LWR_CORE or CLWR. */
   runtime: 'LWR_CORE' | 'CLWR';
-  /** LWC component names exposed by the app (e.g. "c-my-button"). */
-  components: string[];
-  /** Explicit https origins of the external host pages that embed the app. */
+  /** Explicit https origins of the external host pages that embed the app. Required, ≥ 1. */
   hostDomains: string[];
+  /** Optional component references exposed by the app (LWC "c/x" or Aura "c:X"). */
+  components?: string[];
   /** External Client Application (OAuth) settings. */
   eca: LightningOutEcaOptions;
-  /**
-   * Overwrite existing files without erroring. Off by default: if a target
-   * file already exists with different content, generate() throws rather than
-   * silently clobbering it (Option A — no silent overwrite).
-   */
-  force?: boolean;
+  // apiversion?, outputdir? inherited from TemplateOptions
 }
 
 export interface ProjectOptions extends TemplateOptions {

@@ -26,26 +26,19 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
         throw new Error(nls.localize('MissingAuraDir'));
       }
     }
-
-    if (
-      CreateUtil.getCommandTemplatesInSubdirs(
-        'lightningcomponent',
-        { subdir: this.options.type },
-        this._fs,
-        this.templatesRootPath
-      ).indexOf(this.options.template) < 0
-    ) {
-      throw new Error(
-        nls.localize('MissingLightningComponentTemplate', [
-          this.options.template,
-          this.options.type,
-        ])
-      );
-    }
   }
 
   public async generate(): Promise<void> {
     const { template, componentname, type, internal } = this.options;
+
+    this.checkTemplateExists('lightningcomponent', template, {
+      subdir: type,
+      filetype: /\.html$/,
+      onMissing: () =>
+        new Error(
+          nls.localize('MissingLightningComponentTemplate', [template, type])
+        ),
+    });
 
     if (type === 'aura') {
       this.sourceRootWithPartialPath(

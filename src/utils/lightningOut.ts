@@ -84,7 +84,9 @@ export function normalizeHostDomains(raw: string[]): NormalizedHostDomains {
   const tokenToOrigin = new Map<string, string>();
   for (const entry of raw) {
     const { origin, warning } = normalizeOne(entry);
-    if (warning) warnings.push(warning);
+    if (warning) {
+      warnings.push(warning);
+    }
     if (seen.has(origin)) {
       warnings.push(nls.localize('WarnLightningOutDuplicateHostDomain', [origin]));
       continue;

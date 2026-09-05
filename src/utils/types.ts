@@ -12,6 +12,7 @@ import FlexipageGenerator from '../generators/flexipageGenerator';
 import LightningAppGenerator from '../generators/lightningAppGenerator';
 import LightningComponentGenerator from '../generators/lightningComponentGenerator';
 import UIEmbeddingGenerator from '../generators/uiEmbeddingGenerator';
+import LightningOutGenerator from '../generators/lightningOutGenerator';
 import LightningEventGenerator from '../generators/lightningEventGenerator';
 import LightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
 import LightningTestGenerator from '../generators/lightningTestGenerator';
@@ -53,6 +54,7 @@ export type Generators =
   | typeof LightningInterfaceGenerator
   | typeof DigitalExperienceSiteGenerator
   | typeof UIEmbeddingGenerator
+  | typeof LightningOutGenerator
   | typeof ProjectGenerator
   | typeof StaticResourceGenerator
   | typeof VisualforceComponentGenerator
@@ -78,6 +80,7 @@ export enum TemplateType {
   LightningTest,
   DigitalExperienceSite,
   UIEmbedding,
+  LightningOut,
   Project,
   VisualforceComponent,
   VisualforcePage,
@@ -97,6 +100,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.LightningTest, LightningTestGenerator],
   [TemplateType.DigitalExperienceSite, DigitalExperienceSiteGenerator],
   [TemplateType.UIEmbedding, UIEmbeddingGenerator],
+  [TemplateType.LightningOut, LightningOutGenerator],
   [TemplateType.Project, ProjectGenerator],
   [TemplateType.StaticResource, StaticResourceGenerator],
   [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
@@ -108,6 +112,8 @@ export type CreateOutput = {
   outputDir: string;
   created: string[];
   rawOutput: string;
+  /** Non-fatal advisories surfaced to the caller (CLI / VS Code). Empty for generators that emit none. */
+  warnings?: string[];
 };
 
 /**
@@ -202,6 +208,29 @@ export interface UIEmbeddingOptions extends TemplateOptions {
   sandbox: string;
   shellTitle: string;
   internal: boolean;
+}
+
+export interface LightningOutEcaOptions {
+  /** ECA DeveloperName (≤ 80 chars). */
+  name: string;
+  /** Required contact email. */
+  contactEmail: string;
+  /** Required absolute https callback/redirect URL. */
+  callbackUrl: string;
+}
+
+export interface LightningOutOptions extends TemplateOptions {
+  /** LightningOutApp DeveloperName AND <applicationName> value (≤ 64 chars). */
+  appName: string;
+  /** LWR_CORE or CLWR. */
+  runtime: 'LWR_CORE' | 'CLWR';
+  /** Explicit https origins of the external host pages that embed the app. Required, ≥ 1. */
+  hostDomains: string[];
+  /** Optional component references exposed by the app (LWC "c/x" or Aura "c:X"). */
+  components?: string[];
+  /** External Client Application (OAuth) settings. */
+  eca: LightningOutEcaOptions;
+  // apiversion?, outputdir? inherited from TemplateOptions
 }
 
 export interface ProjectOptions extends TemplateOptions {

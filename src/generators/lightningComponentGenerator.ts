@@ -33,7 +33,7 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
 
     this.checkTemplateExists('lightningcomponent', template, {
       subdir: type,
-      filetype: /\.html$/,
+      filetype: type === 'aura' ? /\.cmp$/ : /\.html$/,
       onMissing: () =>
         new Error(
           nls.localize('MissingLightningComponentTemplate', [template, type])

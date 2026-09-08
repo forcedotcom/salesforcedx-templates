@@ -3,6 +3,7 @@ dist/
 out/
 lib/
 tmp/
+*.tsbuildinfo
 
 # Logs
 logs

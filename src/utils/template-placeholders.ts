@@ -5,8 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import * as path from 'path';
+
 /**
  * Single source for placeholder rename (copy-templates) and replacement (uiBundleTemplateUtils).
+ * Some keys (e.g., FEATURES_PLACEHOLDER, EXAMPLES_PLACEHOLDER) have multiple entries for different app template shapes/layouts.
  * Do not add .json - this .ts is compiled to lib/ so no copy step is needed.
  */
 export default [
@@ -85,6 +88,15 @@ export default [
     subpath: 'src',
     replacement: 'features',
   },
+  // Angular templates (angularextapp/angularintapp) nest features one level deeper, under src/app.
+  {
+    key: 'FEATURES_PLACEHOLDER',
+    placeholder: '_f_',
+    dirInNpm: 'features',
+    parent: '_a_',
+    subpath: path.join('src', 'app'),
+    replacement: 'features',
+  },
   {
     key: 'LANGUAGE_SWITCHER_PLACEHOLDER',
     placeholder: '_ls_',
@@ -104,6 +116,13 @@ export default [
     placeholder: '_ex_',
     dirInNpm: '__examples__',
     parent: '_os_',
+    replacement: '__examples__',
+  },
+  {
+    key: 'EXAMPLES_PLACEHOLDER',
+    placeholder: '_ex_',
+    dirInNpm: '__examples__',
+    parent: '_ls_',
     replacement: '__examples__',
   },
   {

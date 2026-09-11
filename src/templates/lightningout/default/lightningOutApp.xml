@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationName><%= name %></applicationName>
+    <isEnabled>true</isEnabled>
+    <runtime><%= runtime %></runtime>
+    <components>
+<% components.forEach(function (c) { -%>
+        <component>
+            <componentName><%= c %></componentName>
+        </component>
+<% }); -%>
+    </components>
+    <allowedDomains>
+<% hostDomains.forEach(function (d) { -%>
+        <domain>
+            <hostDomain><%= d %></hostDomain>
+        </domain>
+<% }); -%>
+    </allowedDomains>
+</LightningOutApp>

@@ -1,3 +1,12 @@
+# [66.16.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.15.0...66.16.0) (2026-09-11)
+
+
+### Features
+
+* **lightning-out:** add Lightning Out 2.0 template generator @W-24035484@ ([#880](https://github.com/forcedotcom/salesforcedx-templates/issues/880)) ([8999a09](https://github.com/forcedotcom/salesforcedx-templates/commit/8999a092fdba13ba31bc76736d375d88d43ab0e7))
+
+
+
 # [66.15.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.14.0...66.15.0) (2026-09-09)
 
 

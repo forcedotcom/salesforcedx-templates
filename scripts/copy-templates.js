@@ -168,30 +168,44 @@ function copyTemplate(config) {
     if (config.destSubpath.startsWith('project/')) {
       const paths = { dest: destDir };
 
-      function getParentPath(step) {
+      // Candidate parent paths for a step. subpath may be a string or an array
+      // of alternatives (e.g. React keeps features under src/, Angular under src/app/).
+      function getParentPaths(step) {
         const base = paths[step.parent];
-        if (!base) return null;
-        return step.subpath ? path.join(base, step.subpath) : base;
+        if (!base) return [];
+        if (!step.subpath) return [base];
+        const subpaths = Array.isArray(step.subpath)
+          ? step.subpath
+          : [step.subpath];
+        return subpaths.map((sp) => path.join(base, sp));
+      }
+
+      // Rename dirInNpm to a placeholder under the first candidate parent that
+      // contains it. Returns { newPath, parentPath } or null.
+      function renameStep(step) {
+        const toPath = step.toPath ?? step.placeholder;
+        for (const parentPath of getParentPaths(step)) {
+          const newPath = renameDirToPlaceholder(
+            parentPath,
+            step.dirInNpm,
+            toPath
+          );
+          if (newPath) return { newPath, parentPath, toPath };
+        }
+        return null;
       }
 
       for (const step of TEMPLATE_PLACEHOLDERS_SPEC) {
-        const parentPath = getParentPath(step);
-        if (!parentPath) continue;
-        const toPath = step.toPath ?? step.placeholder;
-        const newPath = renameDirToPlaceholder(
-          parentPath,
-          step.dirInNpm,
-          toPath
-        );
-        if (newPath) {
-          if (!toPath.includes(path.sep)) {
-            paths[step.placeholder] = newPath;
-          }
-          if (step.removeEmptySibling) {
-            const emptyDir = path.join(parentPath, step.removeEmptySibling);
-            if (fs.existsSync(emptyDir)) {
-              fs.rmSync(emptyDir, { recursive: true });
-            }
+        const result = renameStep(step);
+        if (!result) continue;
+        const { newPath, parentPath, toPath } = result;
+        if (!toPath.includes(path.sep)) {
+          paths[step.placeholder] = newPath;
+        }
+        if (step.removeEmptySibling) {
+          const emptyDir = path.join(parentPath, step.removeEmptySibling);
+          if (fs.existsSync(emptyDir)) {
+            fs.rmSync(emptyDir, { recursive: true });
           }
         }
       }
@@ -210,15 +224,10 @@ function copyTemplate(config) {
 
       // Path-shortening steps under _a_ (features, global-search, etc.); _a_ is set by optional renames above.
       for (const step of TEMPLATE_PLACEHOLDERS_SPEC) {
-        const parentPath = getParentPath(step);
-        if (!parentPath) continue;
-        const toPath = step.toPath ?? step.placeholder;
-        const newPath = renameDirToPlaceholder(
-          parentPath,
-          step.dirInNpm,
-          toPath
-        );
-        if (newPath && !toPath.includes(path.sep)) {
+        const result = renameStep(step);
+        if (!result) continue;
+        const { newPath, toPath } = result;
+        if (!toPath.includes(path.sep)) {
           paths[step.placeholder] = newPath;
         }
       }

@@ -85,7 +85,9 @@ export default [
     placeholder: '_f_',
     dirInNpm: 'features',
     parent: '_a_',
-    subpath: 'src',
+    // React apps keep features under src/; Angular apps under src/app/.
+    // Try both so the rename applies to either layout.
+    subpath: ['src', 'src/app'],
     replacement: 'features',
   },
   // Angular templates (angularextapp/angularintapp) nest features one level deeper, under src/app.

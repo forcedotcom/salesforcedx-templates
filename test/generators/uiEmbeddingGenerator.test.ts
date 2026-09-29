@@ -50,7 +50,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: '',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -64,7 +64,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: nonLwcOutputDir,
             internal: false,
           })
@@ -78,7 +78,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'http://localhost:3000',
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -92,7 +92,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'http://127.0.0.1:8080',
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -106,7 +106,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'http://app.example.com',
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -120,7 +120,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'not a url',
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -134,25 +134,25 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'ftp://example.com',
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
       ).to.throw(/https/i);
     });
 
-    it('should reject empty shellTitle', () => {
+    it('should reject empty title', () => {
       expect(
         () =>
           new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
-            shellTitle: '   ',
+            title: '   ',
             outputdir: lwcOutputDir,
             internal: true,
           })
-      ).to.throw(/shell-title/i);
+      ).to.throw(/title/i);
     });
 
     it('should reject invalid sandbox tokens', () => {
@@ -162,7 +162,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts allow-everything',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -176,7 +176,7 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts allow-forms allow-same-origin',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -190,21 +190,21 @@ describe('UIEmbeddingGenerator', () => {
             componentname: 'embeddingDemo',
             src: "https://app.example.com/path?q='foo",
             sandbox: 'allow-scripts',
-            shellTitle: 'Demo',
+            title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
           })
       ).to.throw(/single-quote/);
     });
 
-    it('should reject a double-quote character in shellTitle (would break the generated HTML attribute)', () => {
+    it('should reject a double-quote character in title (would break the generated HTML attribute)', () => {
       expect(
         () =>
           new UIEmbeddingGenerator({
             componentname: 'embeddingDemo',
             src: 'https://app.example.com',
             sandbox: 'allow-scripts',
-            shellTitle: 'My "App"',
+            title: 'My "App"',
             outputdir: lwcOutputDir,
             internal: true,
           })
@@ -219,7 +219,7 @@ describe('UIEmbeddingGenerator', () => {
         componentname: 'embeddingDemo',
         src: 'https://app.example.com',
         sandbox: 'allow-scripts allow-forms',
-        shellTitle: 'Demo Shell',
+        title: 'Demo Shell',
         outputdir: lwcOutputDir,
         apiversion: apiVersion,
         internal: true,
@@ -235,7 +235,10 @@ describe('UIEmbeddingGenerator', () => {
       ).to.be.false;
 
       assertFileContent(path.join(base, 'embeddingDemo.html'), 'allow-scripts');
-      assertFileContent(path.join(base, 'embeddingDemo.html'), 'Demo Shell');
+      assertFileContent(
+        path.join(base, 'embeddingDemo.html'),
+        'title="Demo Shell"'
+      );
       assertFileContent(path.join(base, 'embeddingDemo.js'), 'EmbeddingDemo');
       assertFileContent(
         path.join(base, 'embeddingDemo.js'),
@@ -251,7 +254,7 @@ describe('UIEmbeddingGenerator', () => {
         componentname: 'embeddingDemo',
         src: 'https://app.example.com',
         sandbox: 'allow-scripts',
-        shellTitle: 'Public Shell',
+        title: 'Public Shell',
         outputdir: lwcOutputDir,
         apiversion: apiVersion,
         internal: false,

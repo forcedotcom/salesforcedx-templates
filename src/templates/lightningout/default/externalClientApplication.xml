@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalClientApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail><%= contactEmail %></contactEmail>
+    <description>Lightning Out 2.0 application <%= name %> (OAuth Auth-Code + PKCE, no client secret).</description>
+    <distributionState><%= distributionState %></distributionState>
+    <label><%= name %></label>
+</ExternalClientApplication>

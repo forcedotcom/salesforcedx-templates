@@ -37,12 +37,12 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
       throw new Error(nls.localize('InvalidUIEmbeddingSrcChar'));
     }
 
-    if (!this.options.shellTitle || !this.options.shellTitle.trim()) {
-      throw new Error(nls.localize('MissingUIEmbeddingShellTitle'));
+    if (!this.options.title || !this.options.title.trim()) {
+      throw new Error(nls.localize('MissingUIEmbeddingTitle'));
     }
 
-    if (this.options.shellTitle.includes('"')) {
-      throw new Error(nls.localize('InvalidUIEmbeddingShellTitleChar'));
+    if (this.options.title.includes('"')) {
+      throw new Error(nls.localize('InvalidUIEmbeddingTitleChar'));
     }
 
     const tokens = this.options.sandbox.split(/\s+/).filter(Boolean);
@@ -58,7 +58,7 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
   }
 
   public async generate(): Promise<void> {
-    const { componentname, src, sandbox, shellTitle, internal } = this.options;
+    const { componentname, src, sandbox, title, internal } = this.options;
 
     const pascalCaseComponentName = `${componentname
       .substring(0, 1)
@@ -78,7 +78,7 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
           `${camelCaseComponentName}.html`
         )
       ),
-      { sandbox, shellTitle }
+      { sandbox, title }
     );
 
     await this.render(

@@ -24,6 +24,15 @@ export default class LightningInterfaceGenerator extends BaseGenerator<Lightning
 
   public async generate(): Promise<void> {
     const { template, interfacename, internal } = this.options;
+
+    this.checkTemplateExists('lightninginterface', template, {
+      filetype: /\.intf$/,
+      onMissing: () =>
+        new Error(
+          nls.localize('MissingLightningInterfaceTemplate', [template])
+        ),
+    });
+
     this.sourceRootWithPartialPath('lightninginterface');
 
     if (!internal) {

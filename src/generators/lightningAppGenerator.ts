@@ -23,6 +23,13 @@ export default class LightningAppGenerator extends BaseGenerator<LightningAppOpt
 
   public async generate(): Promise<void> {
     const { template, appname, internal } = this.options;
+
+    this.checkTemplateExists('lightningapp', template, {
+      filetype: /\.app$/,
+      onMissing: () =>
+        new Error(nls.localize('MissingLightningAppTemplate', [template])),
+    });
+
     this.sourceRootWithPartialPath('lightningapp');
 
     if (!internal) {

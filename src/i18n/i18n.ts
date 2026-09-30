@@ -34,6 +34,10 @@ export const messages = {
     'Template %s not available for component type %s.',
   MissingApexClassTemplate: 'Template %s not available for Apex classes.',
   MissingApexTriggerTemplate: 'Template %s not available for Apex triggers.',
+  MissingLightningAppTemplate: 'Template %s not available for Aura apps.',
+  MissingLightningEventTemplate: 'Template %s not available for Aura events.',
+  MissingLightningInterfaceTemplate:
+    'Template %s not available for Aura interfaces.',
 
   localCustomTemplateDoNotExist:
     'Local custom templates folder %s does not exist',

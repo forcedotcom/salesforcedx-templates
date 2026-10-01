@@ -38,6 +38,10 @@ export const messages = {
   MissingLightningEventTemplate: 'Template %s not available for Aura events.',
   MissingLightningInterfaceTemplate:
     'Template %s not available for Aura interfaces.',
+  MissingVisualforceComponentTemplate:
+    'Template %s not available for Visualforce components.',
+  MissingVisualforcePageTemplate:
+    'Template %s not available for Visualforce pages.',
 
   localCustomTemplateDoNotExist:
     'Local custom templates folder %s does not exist',

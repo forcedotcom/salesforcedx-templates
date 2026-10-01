@@ -1,3 +1,12 @@
+## [66.16.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.0...66.16.1) (2026-10-01)
+
+
+### Bug Fixes
+
+* **ci:** restore release secrets ([#917](https://github.com/forcedotcom/salesforcedx-templates/issues/917)) ([55a1081](https://github.com/forcedotcom/salesforcedx-templates/commit/55a10816b23cacaa8446d8294b2fc52ff0575772))
+
+
+
 # [66.16.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.15.0...66.16.0) (2026-09-11)
 
 

@@ -28,6 +28,7 @@ jobs:
       id-token: write
       contents: read
     uses: salesforcecli/github-workflows/.github/workflows/npmPublish.yml@main
+    secrets: inherit
     needs: [getDistTag]
     with:
       trustedPublishing: true

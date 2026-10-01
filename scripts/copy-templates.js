@@ -103,7 +103,7 @@ const TEMPLATES = [
     destSubpath: 'project/angularextapp',
     appFolderInNpm: 'angularextapp',
   },
-    {
+  {
     packageName: '@salesforce/ui-bundle-template-app-angular-template-b2e',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/angularintapp',
@@ -251,6 +251,21 @@ function copyAllTemplates() {
   console.log('Templates copied successfully.');
 }
 
+// Node 22 bundles npm 10.9.8. That arborist crashes in #loadPeerSet
+// (`Cannot read properties of null (reading 'edgesOut')`) while resolving
+// vitest's optional peer set: https://github.com/npm/cli/issues/9787
+// Node 24 bundles npm 11.19.0, which writes a lockfile npm 10 can `npm ci`.
+const NPM_LOCKFILE = '11.19.0';
+
+const lockfileInstallCommand = () => {
+  const version = execSync('npm --version', { encoding: 'utf8' }).trim();
+  const major = Number(version.split('.')[0]);
+  const install = 'install --package-lock-only --ignore-scripts';
+  return major >= 11
+    ? `npm ${install}`
+    : `npx --yes npm@${NPM_LOCKFILE} ${install}`;
+};
+
 /**
  * Generate package-lock.json for uibundle directories that contain a package.json.
  * These directories are under uiBundles/ (standalone templates) or _w_/ (placeholder
@@ -259,11 +274,12 @@ function copyAllTemplates() {
  */
 function generateUiBundleLockFiles(templatesDir) {
   const uiBundleDirs = findUiBundlePackageJsonDirs(templatesDir);
+  const command = lockfileInstallCommand();
   for (const dir of uiBundleDirs) {
     const rel = path.relative(currDir, dir);
     console.log(`Generating package-lock.json in ${rel}`);
     try {
-      execSync('npm install --package-lock-only --ignore-scripts', {
+      execSync(command, {
         cwd: dir,
         stdio: 'pipe',
       });

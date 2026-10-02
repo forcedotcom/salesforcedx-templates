@@ -1,3 +1,12 @@
+## [66.16.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.2...66.16.3) (2026-10-02)
+
+
+### Bug Fixes
+
+* **apex, lwc, aura, visualforce:** add proper validation for checking that templates exist before trying to run create using them - W-23688854, W-23950041, W-23950565, W-23950591 ([#919](https://github.com/forcedotcom/salesforcedx-templates/issues/919)) ([1b72c9d](https://github.com/forcedotcom/salesforcedx-templates/commit/1b72c9d5fefee0788c7eafd6049cdaf23d80535c))
+
+
+
 ## [66.16.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.1...66.16.2) (2026-10-01)
 
 

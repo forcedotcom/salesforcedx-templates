@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
+import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { VisualforceComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -17,6 +18,15 @@ export default class VisualforceComponentGenerator extends BaseGenerator<Visualf
 
   public async generate(): Promise<void> {
     const { template, label, componentname } = this.options;
+
+    this.checkTemplateExists('visualforcecomponent', template, {
+      filetype: /\.component$/,
+      onMissing: () =>
+        new Error(
+          nls.localize('MissingVisualforceComponentTemplate', [template])
+        ),
+    });
+
     this.sourceRootWithPartialPath('visualforcecomponent');
 
     await this.render(

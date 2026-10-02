@@ -13,6 +13,7 @@ import {
   DEFAULT_API_VERSION,
   dirnameTemplatesDefault,
 } from '../utils/constants';
+import { CreateUtil } from '../utils/createUtil';
 import {
   CreateOutput,
   GeneratorContext,
@@ -671,6 +672,54 @@ export abstract class BaseGenerator<
       created,
       rawOutput,
     };
+  }
+
+  /**
+   * Verify that a template name exists among the built-in templates or, if configured,
+   * the custom templates. Must be called from generate()/run(), not validateOptions(),
+   * since customTemplatesRootPath is only populated once run() begins.
+   */
+  protected checkTemplateExists(
+    command: string,
+    template: string,
+    opts: {
+      subdir?: string;
+      filetype: RegExp;
+      onMissing: () => Error;
+    }
+  ): void {
+    const existsIn = (templatesRootPath?: string): boolean => {
+      if (!templatesRootPath) {
+        return false;
+      }
+      const basedir = opts.subdir
+        ? path.join(templatesRootPath, command, opts.subdir)
+        : path.join(templatesRootPath, command);
+      if (!this._fs.existsSync(basedir)) {
+        return false;
+      }
+      const templateNames = opts.subdir
+        ? CreateUtil.getCommandTemplatesInSubdirs(
+            command,
+            { filetype: opts.filetype, subdir: opts.subdir },
+            this._fs,
+            templatesRootPath
+          )
+        : CreateUtil.getCommandTemplatesForFiletype(
+            opts.filetype,
+            command,
+            this._fs,
+            templatesRootPath
+          );
+      return templateNames.includes(template);
+    };
+
+    if (
+      !existsIn(this.templatesRootPath ?? dirnameTemplatesDefault) &&
+      !existsIn(this.customTemplatesRootPath)
+    ) {
+      throw opts.onMissing();
+    }
   }
 
   /**

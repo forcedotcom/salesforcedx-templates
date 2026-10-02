@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
+import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { VisualforcePageOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -17,6 +18,13 @@ export default class VisualforcePageGenerator extends BaseGenerator<VisualforceP
 
   public async generate(): Promise<void> {
     const { template, label, pagename } = this.options;
+
+    this.checkTemplateExists('visualforcepage', template, {
+      filetype: /\.page$/,
+      onMissing: () =>
+        new Error(nls.localize('MissingVisualforcePageTemplate', [template])),
+    });
+
     this.sourceRootWithPartialPath('visualforcepage');
 
     await this.render(

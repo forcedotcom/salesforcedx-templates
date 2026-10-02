@@ -867,10 +867,10 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-app-react-template-b2e/-/ui-bundle-template-app-react-template-b2e-12.4.5.tgz#0d5256a3ba835551d436cf43fd153bb274baea8d"
   integrity sha512-uCSwPALYjHakAdLw6vd61cw8oF5/Yvidy5QKuLHUr9k0/0P9AsHIvrC5GiyVFXytuDM2XU7s06TzRC6/eNwsWA==
 
-"@salesforce/ui-bundle-template-app-react-template-b2x@^12.4.4":
-  version "12.4.5"
-  resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-12.4.5.tgz#f2fdc3b5b370d6b5ce7e6b30d6419b59a4f652b1"
-  integrity sha512-SFRISAWL+f23KEQC1EUHXC/lHtat8/wgrwCc1PA3KmBtQ0vGhM/GGZIUhH4Au/Kj6QJ3eEEUkW0hYz2O8PvFPQ==
+"@salesforce/ui-bundle-template-app-react-template-b2x@^12.9.0":
+  version "12.9.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-react-template-b2x/-/ui-bundle-template-app-react-template-b2x-12.9.0.tgz#defe6ec7dff9eb1b0ba3640b553f7ec1bd9cf38e"
+  integrity sha512-qu8sDPN+KW/5g+sYTqATPKUV+/OY+2uk1+SAWBCdGa8ePfTClnuYu8NTXuY+86ZK57dotfnu1LLIFrPga8XIFw==
 
 "@salesforce/ui-bundle-template-base-angular-app@^12.4.4":
   version "12.4.4"

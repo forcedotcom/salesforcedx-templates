@@ -35,13 +35,13 @@ export default class VisualforceComponentGenerator extends BaseGenerator<Visualf
         path.join(this.outputdir, `${componentname}.component`)
       ),
       {}
-    ),
-      await this.render(
-        this.templatePath('_component.component-meta.xml'),
-        this.destinationPath(
-          path.join(this.outputdir, `${componentname}.component-meta.xml`)
-        ),
-        { vfLabel: label, apiVersion: this.apiversion }
-      );
+    );
+    await this.render(
+      this.templatePath('_component.component-meta.xml'),
+      this.destinationPath(
+        path.join(this.outputdir, `${componentname}.component-meta.xml`)
+      ),
+      { vfLabel: label, apiVersion: this.apiversion }
+    );
   }
 }

@@ -1,8 +1,12 @@
 {
   "name": "@salesforce/templates",
-  "version": "66.16.0",
+  "version": "66.16.4",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forcedotcom/salesforcedx-templates.git"
+  },
   "main": "lib/index.js",
   "author": "Salesforce",
   "homepage": "https://github.com/forcedotcom/salesforcedx-templates",

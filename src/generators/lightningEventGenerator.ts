@@ -23,6 +23,13 @@ export default class LightningEventGenerator extends BaseGenerator<LightningEven
 
   public async generate(): Promise<void> {
     const { template, eventname, internal } = this.options;
+
+    this.checkTemplateExists('lightningevent', template, {
+      filetype: /\.evt$/,
+      onMissing: () =>
+        new Error(nls.localize('MissingLightningEventTemplate', [template])),
+    });
+
     this.sourceRootWithPartialPath('lightningevent');
 
     if (!internal) {

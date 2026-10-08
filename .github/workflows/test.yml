@@ -14,6 +14,17 @@ jobs:
   windows-unit-tests:
     needs: yarn-lockfile-check
     uses: salesforcecli/github-workflows/.github/workflows/unitTestsWindows.yml@main
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: yarn
+      - uses: salesforcecli/github-workflows/.github/actions/yarnInstallWithRetries@main
+      - name: Lint
+        run: yarn lint
   test-bundle:
     runs-on: ubuntu-latest
     steps:

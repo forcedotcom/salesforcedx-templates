@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as path from 'path';
+import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { ApexClassOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
@@ -23,6 +24,13 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
 
   public async generate(): Promise<void> {
     const { template, classname, sobjecttype } = this.options;
+
+    this.checkTemplateExists('apexclass', template, {
+      filetype: /\.cls$/,
+      onMissing: () =>
+        new Error(nls.localize('MissingApexClassTemplate', [template])),
+    });
+
     this.sourceRootWithPartialPath('apexclass');
 
     await this.render(

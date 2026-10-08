@@ -1,3 +1,34 @@
+## [66.16.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.3...66.16.4) (2026-10-07)
+
+
+
+## [66.16.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.2...66.16.3) (2026-10-02)
+
+
+### Bug Fixes
+
+* **apex, lwc, aura, visualforce:** add proper validation for checking that templates exist before trying to run create using them - W-23688854, W-23950041, W-23950565, W-23950591 ([#919](https://github.com/forcedotcom/salesforcedx-templates/issues/919)) ([1b72c9d](https://github.com/forcedotcom/salesforcedx-templates/commit/1b72c9d5fefee0788c7eafd6049cdaf23d80535c))
+
+
+
+## [66.16.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.1...66.16.2) (2026-10-01)
+
+
+### Bug Fixes
+
+* add repository.url in package.json so publishing can pass ([#918](https://github.com/forcedotcom/salesforcedx-templates/issues/918)) ([b8476c6](https://github.com/forcedotcom/salesforcedx-templates/commit/b8476c6f5aa53e01b29a964a7c83212da74bdc50))
+
+
+
+## [66.16.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.0...66.16.1) (2026-10-01)
+
+
+### Bug Fixes
+
+* **ci:** restore release secrets ([#917](https://github.com/forcedotcom/salesforcedx-templates/issues/917)) ([55a1081](https://github.com/forcedotcom/salesforcedx-templates/commit/55a10816b23cacaa8446d8294b2fc52ff0575772))
+
+
+
 # [66.16.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.15.0...66.16.0) (2026-09-11)
 
 

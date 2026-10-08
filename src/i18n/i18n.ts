@@ -32,6 +32,16 @@ export const messages = {
     "FlexiPages must have a parent folder named 'flexipages'.",
   MissingLightningComponentTemplate:
     'Template %s not available for component type %s.',
+  MissingApexClassTemplate: 'Template %s not available for Apex classes.',
+  MissingApexTriggerTemplate: 'Template %s not available for Apex triggers.',
+  MissingLightningAppTemplate: 'Template %s not available for Aura apps.',
+  MissingLightningEventTemplate: 'Template %s not available for Aura events.',
+  MissingLightningInterfaceTemplate:
+    'Template %s not available for Aura interfaces.',
+  MissingVisualforceComponentTemplate:
+    'Template %s not available for Visualforce components.',
+  MissingVisualforcePageTemplate:
+    'Template %s not available for Visualforce pages.',
 
   localCustomTemplateDoNotExist:
     'Local custom templates folder %s does not exist',

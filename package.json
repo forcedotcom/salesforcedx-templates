@@ -81,6 +81,7 @@
     "lint": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test",
     "lint:fix": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test --fix",
     "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\" --timeout 600000",
+    "test:ai-auto": "node --test test/ai-auto-approve.test.mjs",
     "prepare": "husky install"
   },
   "config": {

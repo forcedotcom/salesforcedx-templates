@@ -9,6 +9,7 @@ export default tseslint.config(
       '**/*.js',
       'src/templates/lightningcomponent/lwc/typeScript/**',
       'src/templates/uiBundles/reactbasic/**/*',
+      'src/templates/uiBundles/vuebasic/**/*',
       'src/templates/project/reactinternalapp/**/*',
       'src/templates/project/reactexternalapp/**/*',
       'src/templates/project/angularintapp/**/*',

@@ -4,7 +4,14 @@ on:
   schedule:
     - cron: '42 2,5,8,11 * * *'
 
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  actions: read
+
 jobs:
   automerge:
     uses: salesforcecli/github-workflows/.github/workflows/automerge.yml@main
-    secrets: inherit
+    secrets:
+      SVC_CLI_BOT_GITHUB_TOKEN: ${{ secrets.IDEE_GH_TOKEN }}

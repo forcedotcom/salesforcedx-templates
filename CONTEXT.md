@@ -3,7 +3,7 @@
 ## Language
 
 **Release hold**:
-The gate keeping `@salesforce/templates` 67 unpublished through the compatibility work in WIs 14 (ESM), 18 (exports), and 20 (VS Code i18n); no 67 publish until WI 20.
+The gate keeping `@salesforce/templates` 67 unpublished through the compatibility work in WIs 14 (ESM), 18 (exports), 20 (VS Code i18n), and 24 (Effect API); no 67 publish until WI 24.
 
 **test-bundle canary**:
 The esbuild artifact consumed by Salesforce VS Code extensions, used as the bundling canary in WI 15.

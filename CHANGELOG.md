@@ -1,3 +1,25 @@
+## [66.17.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.0...66.17.1) (2026-10-13)
+
+
+### Bug Fixes
+
+* **deps:** bump source-map-js from 1.2.1 to 1.2.2 ([f7e0956](https://github.com/forcedotcom/salesforcedx-templates/commit/f7e09565a08c6957dce6683366bab78488c1101c))
+
+
+
+# [66.17.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.4...66.17.0) (2026-10-13)
+
+
+### Features
+
+* **uibundle:** add base vue app generator - W-24368621 ([#923](https://github.com/forcedotcom/salesforcedx-templates/issues/923)) ([1a66ba4](https://github.com/forcedotcom/salesforcedx-templates/commit/1a66ba46c957f50368eb9e20d6685f69d02b80e2))
+
+
+
+## [66.16.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.3...66.16.4) (2026-10-07)
+
+
+
 ## [66.16.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.16.2...66.16.3) (2026-10-02)
 
 

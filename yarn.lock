@@ -882,6 +882,11 @@
   resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-12.9.0.tgz#39845aa0bc766a14229ba6537138068c48e45ce5"
   integrity sha512-r/iadTTX1Q4G1EX4UHbY4JQWjF7HotTHX1lcjsqNkO+0koyk9jbRp6edxikjYJcjJBnJRQNyrIvtql1T+/WgvA==
 
+"@salesforce/ui-bundle-template-base-vue-app@^12.11.0":
+  version "12.11.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-vue-app/-/ui-bundle-template-base-vue-app-12.11.0.tgz#3aff5a6b6180a3bb1ff0ae8254a72e04087f7037"
+  integrity sha512-YpH5f9CfuV2y/C44yv1cVxymkeJF+IMLjbOBV/Dh65W55WWoVxjkOGnKK4D7x+PLwnf1XrTuYopOrvZARoLZ0w==
+
 "@salesforce/ui-bundle-template-base-web-app@^12.4.4":
   version "12.4.5"
   resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-12.4.5.tgz#b71a679966ea837339dad999bc1ad690fdd8380f"
@@ -6234,9 +6239,9 @@ sinon@^18:
     supports-color "^7"
 
 source-map-js@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz#1ce5650fddd87abc099eda37dcff024c2667ae46"
-  integrity sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.2.tgz#79fb88d97535a21cb27162cb05d211b67acea4ab"
+  integrity sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==
 
 source-map-support@^0.5.21:
   version "0.5.21"

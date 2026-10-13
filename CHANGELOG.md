@@ -1,3 +1,12 @@
+## [66.17.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.1...66.17.2) (2026-10-13)
+
+
+### Bug Fixes
+
+* **deps:** bump browserslist from 4.25.1 to 4.29.3 ([521983f](https://github.com/forcedotcom/salesforcedx-templates/commit/521983f7f5b31ffdbcce4da2d06386ce2bc3afec))
+
+
+
 ## [66.17.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.0...66.17.1) (2026-10-13)
 
 

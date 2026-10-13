@@ -882,6 +882,11 @@
   resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-12.4.5.tgz#0b5000f1caf81a315026b97e90b37969aaa4d0b8"
   integrity sha512-4hXMYtSaL7LYOpxx9CQrEuQDHnay+4QkZNItjY70Hf229e63qSKUal5R6YndBTMj1GJ7LUPLK5m3S19Mj6Oijw==
 
+"@salesforce/ui-bundle-template-base-vue-app@^12.11.0":
+  version "12.11.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-vue-app/-/ui-bundle-template-base-vue-app-12.11.0.tgz#3aff5a6b6180a3bb1ff0ae8254a72e04087f7037"
+  integrity sha512-YpH5f9CfuV2y/C44yv1cVxymkeJF+IMLjbOBV/Dh65W55WWoVxjkOGnKK4D7x+PLwnf1XrTuYopOrvZARoLZ0w==
+
 "@salesforce/ui-bundle-template-base-web-app@^12.4.4":
   version "12.4.5"
   resolved "https://registry.yarnpkg.com/@salesforce/ui-bundle-template-base-web-app/-/ui-bundle-template-base-web-app-12.4.5.tgz#b71a679966ea837339dad999bc1ad690fdd8380f"

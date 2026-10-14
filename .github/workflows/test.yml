@@ -16,10 +16,31 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --lockfile-only --frozen-lockfile --ignore-scripts
+  prevent-typescript-dependency:
+    needs: pnpm-lockfile-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --prod --frozen-lockfile --ignore-scripts
+      - name: Check for a production TypeScript dependency
+        run: |
+          dependencies=$(pnpm list --prod --depth Infinity --parseable)
+          if grep -q '/node_modules/typescript$' <<< "$dependencies"; then
+            echo 'ERROR: TypeScript production dependency found'
+            pnpm why --prod typescript
+            exit 1
+          fi
   linux-unit-tests:
     needs: pnpm-lockfile-check
     uses: salesforcecli/github-workflows/.github/workflows/unitTestsLinux.yml@main
     with:
+      # The shared dependency check uses Yarn; the pnpm check runs above.
+      skipTsDepCheck: true
       package-manager: pnpm
       package-manager-version: 12.8.2
       cache-dependency-path: pnpm-lock.yaml

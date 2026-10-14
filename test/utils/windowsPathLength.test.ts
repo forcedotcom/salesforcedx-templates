@@ -130,7 +130,7 @@ describe('Windows path length (pack:verify)', () => {
       longPaths.length,
       0,
       `Paths exceed Windows max allowable length (${WINDOWS_MAX_ALLOWABLE_PATH_LENGTH}). ` +
-        'Run "yarn build:copy-templates" so placeholders shorten paths. Long paths:\n' +
+        'Run "pnpm build:copy-templates" so placeholders shorten paths. Long paths:\n' +
         longPaths
           .sort((a, b) => b.length - a.length)
           .map((p) => `  ${p.length} - ${p.path}`)

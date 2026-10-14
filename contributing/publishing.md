@@ -12,11 +12,13 @@ Every PR merge to main gets published automatically and follows semantic version
 
 After feature/bug work has been QA'd and closed, it's time to prepare those changes for publishing.
 
-The salesforcedx-templates project uses a two-branch strategy. Work that is currently under development is committed to the 'develop' branch. The 'main' branch is what's currently in production or is being staged for production.
+`main` is the default and release branch. v67 modernization PRs target `v67-modernization`; do not merge them directly to `main`.
 
 ## Publishing to NPM
 
 When a commit is merged to main, we will automatically create the github release, and then publish the changes to npm using our Github Actions. If that fails for any reason and you need to create a manual release, you can do so using the following workflow.
+
+Publishing uses the reusable `npmPublish.yml` workflow with pnpm, the version pinned in `package.json`, and `pnpm install --frozen-lockfile` before building.
 
 ### Publish a release version manually
 

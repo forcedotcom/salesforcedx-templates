@@ -6,75 +6,118 @@ on:
   workflow_dispatch:
 
 jobs:
-  yarn-lockfile-check:
-    uses: salesforcecli/github-workflows/.github/workflows/lockFileCheck.yml@main
+  pnpm-lockfile-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --lockfile-only --frozen-lockfile --ignore-scripts
   linux-unit-tests:
-    needs: yarn-lockfile-check
+    needs: pnpm-lockfile-check
     uses: salesforcecli/github-workflows/.github/workflows/unitTestsLinux.yml@main
+    with:
+      package-manager: pnpm
+      package-manager-version: 12.8.2
+      cache-dependency-path: pnpm-lock.yaml
+      install-command: pnpm install --frozen-lockfile
+      build-command: pnpm build
+      test-command: pnpm test
+      # This repository does not use wireit.
+      wireit-install-command: 'true'
   windows-unit-tests:
-    needs: yarn-lockfile-check
+    needs: pnpm-lockfile-check
     uses: salesforcecli/github-workflows/.github/workflows/unitTestsWindows.yml@main
+    with:
+      package-manager: pnpm
+      package-manager-version: 12.8.2
+      cache-dependency-path: pnpm-lock.yaml
+      install-command: pnpm install --frozen-lockfile
+      build-command: pnpm build
+      test-command: pnpm test
+      wireit-install-command: 'true'
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
-          cache: yarn
-      - uses: salesforcecli/github-workflows/.github/actions/yarnInstallWithRetries@main
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: salesforcecli/github-workflows/.github/actions/retry@main
+        with:
+          command: pnpm install --frozen-lockfile
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
   test-bundle:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
-          cache: yarn
-      - uses: salesforcecli/github-workflows/.github/actions/yarnInstallWithRetries@main
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: salesforcecli/github-workflows/.github/actions/retry@main
+        with:
+          command: pnpm install --frozen-lockfile
       - name: Build the project
-        run: yarn build
+        run: pnpm build
       - name: check if bundling runs into failures
         run: node scripts/testEsbuild.js
   external-test:
     name: run tests in plugin-templates
     runs-on: 'ubuntu-latest'
     steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: salesforcecli/github-workflows/.github/actions/retry@main
+        with:
+          command: pnpm install --frozen-lockfile
+      - name: Build and pack templates
+        run: |
+          pnpm build
+          pnpm pack --out templates.tgz
+      - run: echo "$RUNNER_TEMP/sf-bin" >> "$GITHUB_PATH"
       - name: Install CLI
         uses: salesforcecli/github-workflows/.github/actions/retry@main
         with:
           max_attempts: 3
-          command: npm install -g @salesforce/cli@nightly shx yarn-deduplicate --omit=dev
+          command: pnpm add --global @salesforce/cli@nightly
           timeout_minutes: 20
+        env:
+          PNPM_CONFIG_GLOBAL_BIN_DIR: ${{ runner.temp }}/sf-bin
       - name: Checkout to external project
         uses: actions/checkout@v4
         with:
           repository: 'salesforcecli/plugin-templates'
+          path: plugin-templates
       - name: Swap dependency
+        working-directory: plugin-templates
         run: |
-          yarn install  --network-timeout 600000
-          yarn remove @salesforce/templates
-          yarn add forcedotcom/salesforcedx-templates#${{ github.sha }}
-          npx yarn-deduplicate
-          yarn install  --network-timeout 600000
-      - name: install/build @salesforce/templates in node_modules
-        working-directory: node_modules/@salesforce/templates
-        run: |
-          yarn add husky --dev
-          yarn husky install
-          yarn install  --network-timeout 600000
-          yarn build
+          node -e 'const fs = require("node:fs"); const pkg = JSON.parse(fs.readFileSync("package.json", "utf8")); pkg.dependencies["@salesforce/templates"] = "file:../templates.tgz"; fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");'
+          # Isolate this Yarn-based consumer from the parent pnpm workspace and
+          # skip sf-install, which modifies its manifest and invokes Yarn hooks.
+          printf 'nodeLinker: hoisted\nignoreScripts: true\n' > pnpm-workspace.yaml
+          pnpm import
+      - name: Install external project dependencies
+        working-directory: plugin-templates
+        run: pnpm install --frozen-lockfile
       - name: Build the external project (where the tests are)
-        run: yarn build
+        working-directory: plugin-templates
+        run: pnpm build
       - name: Run tests
         uses: salesforcecli/github-workflows/.github/actions/retry@main
         with:
           max_attempts: 3
-          command: yarn test:nuts
+          command: cd plugin-templates && pnpm test:nuts
           retry_on: error

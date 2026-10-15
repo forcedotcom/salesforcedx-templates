@@ -6,19 +6,12 @@ runs:
   steps:
     - uses: './.github/actions/gh-config'
     - uses: actions/checkout@v4
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
+    - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@1f6324b6c547d6402c6d88d6b82dce36b16c3e24
       with:
-        node-version: latest
-        cache: 'yarn'
-    - run: yarn
-      shell: bash
+        node-version: '24'
     - name: Build project
-      run: yarn build
-      shell: bash
-    - name: Generate plugin manifest
-      run: yarn manifest:generate
+      run: pnpm build
       shell: bash
     - name: Pack Library
-      run: yarn pack
+      run: pnpm pack
       shell: bash

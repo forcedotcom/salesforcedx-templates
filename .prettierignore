@@ -1,2 +1,3 @@
 src/templates/**/*
 command-snapshot.json
+pnpm-lock.yaml

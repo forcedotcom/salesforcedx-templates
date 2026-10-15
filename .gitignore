@@ -19,6 +19,7 @@ coverage.lcov
 
 # Dependency directories
 node_modules/
+.wireit/
 
 # test results
 test-results.xml

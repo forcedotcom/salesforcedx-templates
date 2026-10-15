@@ -32,7 +32,6 @@
     "@salesforce/dev-config": "^4.3.3",
     "@salesforce/dev-scripts": "^14.0.0",
     "@salesforce/prettier-config": "^0.0.4",
-    "@tony.ganchev/eslint-plugin-header": "^3.4.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2e": "^12.4.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.4.4",
     "@salesforce/ui-bundle-template-app-react-template-b2e": "^12.9.0",
@@ -41,6 +40,7 @@
     "@salesforce/ui-bundle-template-base-react-app": "^12.9.0",
     "@salesforce/ui-bundle-template-base-vue-app": "^12.11.0",
     "@salesforce/ui-bundle-template-base-web-app": "^12.9.0",
+    "@tony.ganchev/eslint-plugin-header": "^3.4.4",
     "@types/chai": "^4.3.17",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",
@@ -75,7 +75,8 @@
     "ts-morph": "^24.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^6",
-    "typescript-eslint": "^8.69.0"
+    "typescript-eslint": "^8.69.0",
+    "wireit": "^0.14.12"
   },
   "engines": {
     "node": ">=22"
@@ -89,9 +90,106 @@
     "compile": "tsc -b",
     "lint": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test",
     "lint:fix": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test --fix",
+    "precommit": "wireit",
+    "prepush": "wireit",
     "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\" --timeout 600000",
     "test:ai-auto": "node --test test/ai-auto-approve.test.mjs",
     "prepare": "husky"
+  },
+  "wireit": {
+    "precommit": {
+      "dependencies": [
+        "precommit:scan-ts"
+      ]
+    },
+    "precommit:lint": {
+      "command": "pnpm lint",
+      "files": [
+        "src/**/*",
+        "test/**/*",
+        "eslint.config.mjs",
+        "tsconfig.json",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "output": []
+    },
+    "precommit:format": {
+      "#comment": "Always run because Wireit cannot fingerprint Git's staged index.",
+      "command": "pnpm exec pretty-quick --staged",
+      "dependencies": [
+        "precommit:lint"
+      ]
+    },
+    "precommit:scan-ts": {
+      "command": "node ./scripts/scanTs.js",
+      "dependencies": [
+        "precommit:format"
+      ],
+      "files": [
+        "scripts/scanTs.js",
+        "src/**/*.ts",
+        "tsconfig.json",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "output": []
+    },
+    "prepush": {
+      "dependencies": [
+        "prepush:verify-bundling"
+      ]
+    },
+    "prepush:build": {
+      "command": "pnpm build",
+      "files": [
+        "src/**/*",
+        "!src/templates/uiBundles",
+        "!src/templates/project/reactinternalapp",
+        "!src/templates/project/reactexternalapp",
+        "!src/templates/project/angularintapp",
+        "!src/templates/project/angularextapp",
+        "scripts/**/*",
+        "package.json",
+        "pnpm-lock.yaml",
+        "tsconfig.json"
+      ],
+      "output": [
+        "lib/**/*",
+        "src/templates/uiBundles/**",
+        "src/templates/project/reactinternalapp/**",
+        "src/templates/project/reactexternalapp/**",
+        "src/templates/project/angularintapp/**",
+        "src/templates/project/angularextapp/**"
+      ]
+    },
+    "prepush:test": {
+      "command": "pnpm test",
+      "dependencies": [
+        "prepush:build"
+      ],
+      "files": [
+        "src/**/*",
+        "test/**/*",
+        "scripts/**/*",
+        "package.json",
+        "pnpm-lock.yaml",
+        "tsconfig.json"
+      ],
+      "output": []
+    },
+    "prepush:verify-bundling": {
+      "command": "node scripts/verify-for-bundling.js",
+      "dependencies": [
+        "prepush:test"
+      ],
+      "files": [
+        "scripts/verify-for-bundling.js",
+        "src/templates/**/*",
+        "lib/templates/**/*"
+      ],
+      "output": []
+    }
   },
   "config": {
     "commitizen": {

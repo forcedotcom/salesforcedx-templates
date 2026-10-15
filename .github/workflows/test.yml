@@ -10,22 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@1f6324b6c547d6402c6d88d6b82dce36b16c3e24
         with:
-          node-version-file: .nvmrc
-          cache: pnpm
+          node-version: '24'
+          install: 'false'
       - run: pnpm install --lockfile-only --frozen-lockfile --ignore-scripts
   prevent-typescript-dependency:
     needs: pnpm-lockfile-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@1f6324b6c547d6402c6d88d6b82dce36b16c3e24
         with:
-          node-version-file: .nvmrc
-          cache: pnpm
+          node-version: '24'
+          install: 'false'
       - run: pnpm install --prod --frozen-lockfile --ignore-scripts
       - name: Check for a production TypeScript dependency
         run: |
@@ -62,30 +60,26 @@ jobs:
       wireit-install-command: 'true'
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['22', '24']
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@1f6324b6c547d6402c6d88d6b82dce36b16c3e24
         with:
-          node-version-file: .nvmrc
-          cache: pnpm
-      - uses: salesforcecli/github-workflows/.github/actions/retry@main
-        with:
-          command: pnpm install --frozen-lockfile
+          node-version: ${{ matrix.node-version }}
       - name: Lint
         run: pnpm lint
   test-bundle:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['22', '24']
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@1f6324b6c547d6402c6d88d6b82dce36b16c3e24
         with:
-          node-version-file: .nvmrc
-          cache: pnpm
-      - uses: salesforcecli/github-workflows/.github/actions/retry@main
-        with:
-          command: pnpm install --frozen-lockfile
+          node-version: ${{ matrix.node-version }}
       - name: Build the project
         run: pnpm build
       - name: check if bundling runs into failures
@@ -93,17 +87,14 @@ jobs:
   external-test:
     name: run tests in plugin-templates
     runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        node-version: ['22', '24']
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@1f6324b6c547d6402c6d88d6b82dce36b16c3e24
         with:
-          node-version-file: .nvmrc
-          cache: pnpm
-      - uses: salesforcecli/github-workflows/.github/actions/retry@main
-        with:
-          command: pnpm install --frozen-lockfile
+          node-version: ${{ matrix.node-version }}
       - name: Build and pack templates
         run: |
           pnpm build

@@ -6,15 +6,9 @@ runs:
   steps:
     - uses: './.github/actions/gh-config'
     - uses: actions/checkout@v4
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v4
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
+    - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@1f6324b6c547d6402c6d88d6b82dce36b16c3e24
       with:
-        node-version-file: .nvmrc
-        cache: pnpm
-    - run: pnpm install --frozen-lockfile
-      shell: bash
+        node-version: '24'
     - name: Build project
       run: pnpm build
       shell: bash

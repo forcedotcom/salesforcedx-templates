@@ -8,7 +8,7 @@
 git clone git@github.com:forcedotcom/salesforcedx-templates.git
 ```
 
-2. Use Node.js 22 or newer and [pnpm](https://pnpm.io/installation) at the version pinned in `package.json`. Run the following to build:
+2. Use Node.js 24 (Node.js 22 is the minimum) and [pnpm](https://pnpm.io/installation) at the version pinned in `package.json`. Run the following to build:
 
 ```
 pnpm install

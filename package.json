@@ -51,7 +51,7 @@
     "esbuild": "^0.28.2",
     "eslint": "^10.9.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-config-salesforce": "^2.2.1",
+    "eslint-config-salesforce": "^2.2.2",
     "eslint-config-salesforce-license": "^1.0.2",
     "eslint-config-salesforce-typescript": "^7.0.0",
     "eslint-plugin-import": "^2.32.0",

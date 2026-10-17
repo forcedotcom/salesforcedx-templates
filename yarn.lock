@@ -2894,10 +2894,10 @@ eslint-config-salesforce-typescript@^7.0.0:
     globals "^15.14.0"
     typescript-eslint "^8.66.0"
 
-eslint-config-salesforce@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/eslint-config-salesforce/-/eslint-config-salesforce-2.2.1.tgz#e99bcc820d5fe43652b9f5a4f8e51993fdbedee5"
-  integrity sha512-o/hsimyxzgJihvfwi05P+OeIE2ZpTDfyRAYN/gs0uvoEqb1J6R+uHR0mhw0cXR3GtQocD0bmcMCePHi/+FOCoA==
+eslint-config-salesforce@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/eslint-config-salesforce/-/eslint-config-salesforce-2.2.2.tgz#d32ebb7afb4cfaff3a3206ef460fdaa92c2c82ad"
+  integrity sha512-2NosWp13lNNuomXmKdcXGpxz78Mb1I3yk9FVHudLMyDbA4kWtZRFviZiNKqzOu+k+0X58Xpgc3MWfYBkPTWUwA==
 
 eslint-import-context@^0.1.9:
   version "0.1.9"

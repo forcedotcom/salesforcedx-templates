@@ -8,8 +8,8 @@ export default tseslint.config(
     ignores: [
       '**/*.js',
       'src/templates/lightningcomponent/lwc/typeScript/**',
-      'src/templates/uiBundles/reactbasic/**/*',
-      'src/templates/uiBundles/vuebasic/**/*',
+      // Bundle templates are copied from npm packages during build.
+      'src/templates/uiBundles/**/*',
       'src/templates/project/reactinternalapp/**/*',
       'src/templates/project/reactexternalapp/**/*',
       'src/templates/project/angularintapp/**/*',

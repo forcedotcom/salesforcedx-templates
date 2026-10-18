@@ -1208,7 +1208,21 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-3.0.3.tgz#acaab0f919ce69cce629c2d4ed2eb4adc1b6c20c"
   integrity sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==
 
-"@typescript-eslint/eslint-plugin@8.69.0", "@typescript-eslint/eslint-plugin@^8.69.0":
+"@typescript-eslint/eslint-plugin@8.71.2":
+  version "8.71.2"
+  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.71.2.tgz#fdaac18e9fe84b78652ae4befd2693bdd815fe04"
+  integrity sha512-K72/pvT7qpm8q3k8G5u93NCSN1RcLxX5h7Gw0bQpbMXviBHeY6Nx1WEwmk9wP+eKTSQ8ecxvcgt/ZX/rB938xQ==
+  dependencies:
+    "@eslint-community/regexpp" "^4.12.2"
+    "@typescript-eslint/scope-manager" "8.71.2"
+    "@typescript-eslint/type-utils" "8.71.2"
+    "@typescript-eslint/utils" "8.71.2"
+    "@typescript-eslint/visitor-keys" "8.71.2"
+    ignore "^7.0.5"
+    natural-compare "^1.4.0"
+    ts-api-utils "^2.5.0"
+
+"@typescript-eslint/eslint-plugin@^8.69.0":
   version "8.69.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.69.0.tgz#bf74cc392ebcaaf096bc8b4c4d7bbeb0677687b8"
   integrity sha512-t5jQTKPIgVW1PE6dR6H6Qz5gm8zjMlX5/2gRaOGd9eO6V7J+tQc6iWKukEe7dY8u9HyYasQ0yfF0/FSSTEO2gA==
@@ -1222,7 +1236,18 @@
     natural-compare "^1.4.0"
     ts-api-utils "^2.5.0"
 
-"@typescript-eslint/parser@8.69.0", "@typescript-eslint/parser@^8.69.0":
+"@typescript-eslint/parser@8.71.2":
+  version "8.71.2"
+  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.71.2.tgz#f12dc1d3b26432144319d384273b9c4b6f5c1e99"
+  integrity sha512-aTtmZjp/x3gsGHkDs04/1I8kNogBJkpQaeGaN0PfiG43NzDEmW2n+OP5im9wfsvyX0yP1UZWBrAGtDBfH9jEVw==
+  dependencies:
+    "@typescript-eslint/scope-manager" "8.71.2"
+    "@typescript-eslint/types" "8.71.2"
+    "@typescript-eslint/typescript-estree" "8.71.2"
+    "@typescript-eslint/visitor-keys" "8.71.2"
+    debug "^4.4.3"
+
+"@typescript-eslint/parser@^8.69.0":
   version "8.69.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.69.0.tgz#de3ead2b35e5c71580eda40820adb4fd14834ca1"
   integrity sha512-l4b0DhWioGg6Gt2ebGlvfkFMOjRsauxtsnDRwUSRX1qHq3HdTfQHV8wW9zEXeciai6HfeaKOedQn2Zoofx3WBw==
@@ -1288,6 +1313,17 @@
     debug "^4.4.3"
     ts-api-utils "^2.5.0"
 
+"@typescript-eslint/type-utils@8.71.2":
+  version "8.71.2"
+  resolved "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.71.2.tgz#b7a615036ed59898ed1628ed74fe0b129ba0032f"
+  integrity sha512-cC8UaalCViJkb3rH/xLIvidEwoFRtMZMUqDjjJMGEKaTFwYRHYBcoczlEGHuvkHEO8svRDrgZ0yQgOArFmwang==
+  dependencies:
+    "@typescript-eslint/types" "8.71.2"
+    "@typescript-eslint/typescript-estree" "8.71.2"
+    "@typescript-eslint/utils" "8.71.2"
+    debug "^4.4.3"
+    ts-api-utils "^2.5.0"
+
 "@typescript-eslint/types@8.69.0", "@typescript-eslint/types@^8.56.0", "@typescript-eslint/types@^8.65.0", "@typescript-eslint/types@^8.69.0":
   version "8.69.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.69.0.tgz#5d9ad3f707c2e4f70a2db540031104df3e63bcf5"
@@ -1338,7 +1374,7 @@
     "@typescript-eslint/types" "8.69.0"
     "@typescript-eslint/typescript-estree" "8.69.0"
 
-"@typescript-eslint/utils@^8.70.0":
+"@typescript-eslint/utils@8.71.2", "@typescript-eslint/utils@^8.70.0":
   version "8.71.2"
   resolved "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.71.2.tgz#7c01b239b7cea1310f1793bbb5a02b5f8b74a6b9"
   integrity sha512-RyKa1G1M9rKHDhrk+HJtiF1MvLD5Ux2JW3TSkzw+02pRALdpJb+QzG1Y5em+LvCgzGwgg8H7mBRFKljNz7ImPw==
@@ -2966,10 +3002,10 @@ eslint-config-salesforce-typescript@^6.0.0:
     globals "^15.14.0"
     typescript-eslint "^8.66.0"
 
-eslint-config-salesforce-typescript@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/eslint-config-salesforce-typescript/-/eslint-config-salesforce-typescript-7.0.0.tgz#63f1e4f97bc1746cbf222f2a0a3446ae2fb724ba"
-  integrity sha512-uxYafaxZiUoqE32I5hwnYhYaZ4s24J+YyjSa3xQ5Aw9frS7H0tcXxe2egFDsIOig4JZ3HmDeWesMMaFeawYRXw==
+eslint-config-salesforce-typescript@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.npmjs.org/eslint-config-salesforce-typescript/-/eslint-config-salesforce-typescript-7.0.1.tgz#3cedfdbfa2330251ae3c13cc74a07e93e3b4162d"
+  integrity sha512-jfW/LWhVjPorFFznxOGaMLafB+h4/mqOD7EWQUe7dNqrgVHf95fNlg5+M/YWBkXQQVPra+Gx7SIwgTPEnLS/Bw==
   dependencies:
     "@eslint/js" "^10.0.0"
     "@tony.ganchev/eslint-plugin-header" "^3.4.4"
@@ -2978,7 +3014,7 @@ eslint-config-salesforce-typescript@^7.0.0:
     eslint-plugin-jsdoc "^63.3.2"
     eslint-plugin-unicorn "^72.0.0"
     globals "^15.14.0"
-    typescript-eslint "^8.66.0"
+    typescript-eslint "^8.71.1"
 
 eslint-config-salesforce@^2.2.2:
   version "2.2.2"
@@ -6939,15 +6975,15 @@ typedoc@^0.28.20:
     minimatch "^10.2.5"
     yaml "^2.9.0"
 
-typescript-eslint@^8.66.0:
-  version "8.69.0"
-  resolved "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.69.0.tgz#28a83f296d9c14001ea0691750c90cac8e94ba96"
-  integrity sha512-B3MltX0VqjUBNEe3b3sSuiRbfa6XrfHFtBiPamjT5AsW/dfq+y+bc0wyuS9DxAS1LyzCxRp2+rxzpLUvqM2BvA==
+typescript-eslint@^8.66.0, typescript-eslint@^8.71.1:
+  version "8.71.2"
+  resolved "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.71.2.tgz#3084e83f6061d778077b275f905e5942443bd4be"
+  integrity sha512-Rz4effbMy2g9wnvOJZG6SbVavX313Lap1vNEbk1RUochzickvzP8P4HB+bkNg5e50eVz1hQGjh9K1omI1xB4Bw==
   dependencies:
-    "@typescript-eslint/eslint-plugin" "8.69.0"
-    "@typescript-eslint/parser" "8.69.0"
-    "@typescript-eslint/typescript-estree" "8.69.0"
-    "@typescript-eslint/utils" "8.69.0"
+    "@typescript-eslint/eslint-plugin" "8.71.2"
+    "@typescript-eslint/parser" "8.71.2"
+    "@typescript-eslint/typescript-estree" "8.71.2"
+    "@typescript-eslint/utils" "8.71.2"
 
 "typescript@^4.6.4 || ^5.2.2":
   version "5.9.3"

@@ -31,7 +31,7 @@
     "@salesforce/prettier-config": "^0.0.4",
     "@tony.ganchev/eslint-plugin-header": "^3.4.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2e": "^12.4.4",
-    "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.4.4",
+    "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.12.0",
     "@salesforce/ui-bundle-template-app-react-template-b2e": "^12.9.0",
     "@salesforce/ui-bundle-template-app-react-template-b2x": "^12.9.0",
     "@salesforce/ui-bundle-template-base-angular-app": "^12.4.4",

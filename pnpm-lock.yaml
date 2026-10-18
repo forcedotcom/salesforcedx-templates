@@ -285,8 +285,8 @@ importers:
         specifier: ^10.1.8
         version: 10.1.8(eslint@10.9.1(supports-color@8.1.1))
       eslint-config-salesforce:
-        specifier: ^2.2.1
-        version: 2.2.1
+        specifier: ^2.2.2
+        version: 2.2.2
       eslint-config-salesforce-license:
         specifier: ^1.0.2
         version: 1.0.2
@@ -1817,8 +1817,8 @@ packages:
       eslint: ^10.0.0
       typescript: ^6
 
-  eslint-config-salesforce@2.2.1:
-    resolution: {integrity: sha512-o/hsimyxzgJihvfwi05P+OeIE2ZpTDfyRAYN/gs0uvoEqb1J6R+uHR0mhw0cXR3GtQocD0bmcMCePHi/+FOCoA==}
+  eslint-config-salesforce@2.2.2:
+    resolution: {integrity: sha512-2NosWp13lNNuomXmKdcXGpxz78Mb1I3yk9FVHudLMyDbA4kWtZRFviZiNKqzOu+k+0X58Xpgc3MWfYBkPTWUwA==}
 
   eslint-import-context@0.1.9:
     resolution: {integrity: sha512-K9Hb+yRaGAGUbwjhFNHvSmmkZs9+zbuoe3kFQ4V1wYjrepUFYM2dZAfNtjbbj3qsPfUfsA68Bx/ICWQMi+C8Eg==}
@@ -5507,7 +5507,7 @@ snapshots:
       - eslint-import-resolver-node
       - supports-color
 
-  eslint-config-salesforce@2.2.1: {}
+  eslint-config-salesforce@2.2.2: {}
 
   eslint-import-context@0.1.9(unrs-resolver@1.12.2):
     dependencies:

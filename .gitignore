@@ -71,3 +71,6 @@ src/templates/project/reactinternalapp/
 src/templates/project/reactexternalapp/
 src/templates/project/angularintapp/
 src/templates/project/angularextapp/
+
+# Wireit cache
+.wireit/

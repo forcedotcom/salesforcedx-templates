@@ -39,7 +39,10 @@ const copyTemplatesPath = path.join(
 const { PLACEHOLDERS: copyScriptPlaceholders } = require(copyTemplatesPath);
 
 /** Map of placeholder key → value for sync assertion (single source: uiBundleTemplateUtils). */
-const UI_BUNDLE_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
+const UI_BUNDLE_PLACEHOLDERS: Record<
+  (typeof PLACEHOLDER_KEYS)[number],
+  string
+> = {
   PACKAGE_DIR_PLACEHOLDER,
   MAIN_DEFAULT_PLACEHOLDER,
   UI_BUNDLES_PLACEHOLDER,

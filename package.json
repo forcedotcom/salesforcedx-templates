@@ -1,6 +1,7 @@
 {
   "name": "@salesforce/templates",
-  "version": "66.17.1",
+  "version": "66.17.2",
+  "packageManager": "pnpm@12.8.2",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
   "repository": {
@@ -26,22 +27,28 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.8.1",
+    "@commitlint/config-conventional": "^17.8.1",
     "@salesforce/dev-config": "^4.3.3",
     "@salesforce/dev-scripts": "^14.0.0",
     "@salesforce/prettier-config": "^0.0.4",
-    "@tony.ganchev/eslint-plugin-header": "^3.4.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2e": "^12.4.4",
     "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.4.4",
-    "@salesforce/ui-bundle-template-app-react-template-b2e": "^12.4.4",
-    "@salesforce/ui-bundle-template-app-react-template-b2x": "^12.4.4",
+    "@salesforce/ui-bundle-template-app-react-template-b2e": "^12.9.0",
+    "@salesforce/ui-bundle-template-app-react-template-b2x": "^12.9.0",
     "@salesforce/ui-bundle-template-base-angular-app": "^12.4.4",
-    "@salesforce/ui-bundle-template-base-react-app": "^12.4.4",
+    "@salesforce/ui-bundle-template-base-react-app": "^12.9.0",
     "@salesforce/ui-bundle-template-base-vue-app": "^12.11.0",
-    "@salesforce/ui-bundle-template-base-web-app": "^12.4.4",
+    "@salesforce/ui-bundle-template-base-web-app": "^12.9.0",
+    "@tony.ganchev/eslint-plugin-header": "^3.4.4",
+    "@types/chai": "^4.3.17",
     "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",
     "@types/mime-types": "^3.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22",
     "@types/proxy-from-env": "^1.0.4",
+    "@types/sinon": "^10.0.20",
     "@typescript-eslint/eslint-plugin": "^8.69.0",
     "@typescript-eslint/parser": "^8.69.0",
     "chai": "^4.5.0",
@@ -57,7 +64,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^64.3.4",
     "eslint-plugin-prettier": "^5.5.6",
-    "husky": "^8.0.3",
+    "husky": "^9.1.7",
     "mocha": "^11.8.0",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
@@ -67,13 +74,15 @@
     "sinon": "^18",
     "ts-morph": "^24.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^6"
+    "typescript": "^6",
+    "typescript-eslint": "^8.69.0",
+    "wireit": "^0.14.12"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22"
   },
   "scripts": {
-    "build": "yarn run clean:lib && yarn compile && yarn build:copy-templates && yarn build:templates",
+    "build": "pnpm clean:lib && pnpm compile && pnpm build:copy-templates && pnpm build:templates",
     "build:templates": "node scripts/build-templates",
     "build:copy-templates": "node scripts/copy-templates",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
@@ -81,9 +90,104 @@
     "compile": "tsc -b",
     "lint": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test",
     "lint:fix": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test --fix",
+    "precommit": "wireit",
+    "prepush": "wireit",
     "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\" --timeout 600000",
     "test:ai-auto": "node --test test/ai-auto-approve.test.mjs",
-    "prepare": "husky install"
+    "prepare": "husky"
+  },
+  "wireit": {
+    "precommit": {
+      "dependencies": [
+        "precommit:scan-ts"
+      ]
+    },
+    "precommit:lint": {
+      "command": "pnpm lint",
+      "files": [
+        "src/**/*",
+        "!src/templates/uiBundles",
+        "!src/templates/project/reactinternalapp",
+        "!src/templates/project/reactexternalapp",
+        "!src/templates/project/angularintapp",
+        "!src/templates/project/angularextapp",
+        "test/**/*",
+        "eslint.config.mjs",
+        "tsconfig.json",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "output": []
+    },
+    "precommit:scan-ts": {
+      "command": "node ./scripts/scanTs.js",
+      "dependencies": [
+        "precommit:lint"
+      ],
+      "files": [
+        "scripts/scanTs.js",
+        "src/**/*.ts",
+        "tsconfig.json",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "output": []
+    },
+    "prepush": {
+      "dependencies": [
+        "prepush:verify-bundling"
+      ]
+    },
+    "prepush:build": {
+      "command": "pnpm build",
+      "files": [
+        "src/**/*",
+        "!src/templates/uiBundles",
+        "!src/templates/project/reactinternalapp",
+        "!src/templates/project/reactexternalapp",
+        "!src/templates/project/angularintapp",
+        "!src/templates/project/angularextapp",
+        "scripts/**/*",
+        "package.json",
+        "pnpm-lock.yaml",
+        "tsconfig.json"
+      ],
+      "output": [
+        "lib/**/*",
+        "src/templates/uiBundles/**",
+        "src/templates/project/reactinternalapp/**",
+        "src/templates/project/reactexternalapp/**",
+        "src/templates/project/angularintapp/**",
+        "src/templates/project/angularextapp/**"
+      ]
+    },
+    "prepush:test": {
+      "command": "pnpm test",
+      "dependencies": [
+        "prepush:build"
+      ],
+      "files": [
+        "src/**/*",
+        "test/**/*",
+        "scripts/**/*",
+        "package.json",
+        "pnpm-lock.yaml",
+        "tsconfig.json"
+      ],
+      "output": []
+    },
+    "prepush:verify-bundling": {
+      "command": "node scripts/verify-for-bundling.js",
+      "dependencies": [
+        "prepush:test"
+      ],
+      "files": [
+        "scripts/verify-for-bundling.js",
+        "src/templates/**/*",
+        "lib/templates/**/*"
+      ],
+      "output": []
+    }
   },
   "config": {
     "commitizen": {

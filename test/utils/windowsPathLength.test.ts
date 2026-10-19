@@ -39,7 +39,10 @@ const copyTemplatesPath = path.join(
 const { PLACEHOLDERS: copyScriptPlaceholders } = require(copyTemplatesPath);
 
 /** Map of placeholder key → value for sync assertion (single source: uiBundleTemplateUtils). */
-const UI_BUNDLE_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
+const UI_BUNDLE_PLACEHOLDERS: Record<
+  (typeof PLACEHOLDER_KEYS)[number],
+  string
+> = {
   PACKAGE_DIR_PLACEHOLDER,
   MAIN_DEFAULT_PLACEHOLDER,
   UI_BUNDLES_PLACEHOLDER,
@@ -130,7 +133,7 @@ describe('Windows path length (pack:verify)', () => {
       longPaths.length,
       0,
       `Paths exceed Windows max allowable length (${WINDOWS_MAX_ALLOWABLE_PATH_LENGTH}). ` +
-        'Run "yarn build:copy-templates" so placeholders shorten paths. Long paths:\n' +
+        'Run "pnpm build:copy-templates" so placeholders shorten paths. Long paths:\n' +
         longPaths
           .sort((a, b) => b.length - a.length)
           .map((p) => `  ${p.length} - ${p.path}`)

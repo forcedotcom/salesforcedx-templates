@@ -8,16 +8,17 @@
 git clone git@github.com:forcedotcom/salesforcedx-templates.git
 ```
 
-2. Ensure you have [Yarn](https://yarnpkg.com/) installed and run the following to build:
+2. Use Node.js 24 (Node.js 22 is the minimum) and [pnpm](https://pnpm.io/installation) at the version pinned in `package.json`. Run the following to build:
 
 ```
-yarn install
-yarn build
+pnpm install
+pnpm build
 ```
 
 ## Branches
 
 - We work off of `main` and we release (aka. _production_) branch is `main`.
+- v67 modernization PRs target `v67-modernization`, not `main`. `main` remains the default and release branch.
 - Our work happens in _topic_ branches (feature and/or bug-fix).
   - feature as well as bug-fix branches are based on `main`
     - _Topic_ branches can live in forks (external contributors) or within this repository (committers).
@@ -60,7 +61,7 @@ Consider adding a corresponding command for your new template to be invoked with
 Run the following to test the library:
 
 ```sh
-yarn test
+pnpm test
 ```
 
 If you are using VS Code for development, the following launch configurations are available: "Run All Tests", "Run Current Test", "Run Current Test Without Compile". Have `"debug.javascript.usePreview": true` in your user setting enabled so you can utilize [`vscode-js-debug`](https://github.com/microsoft/vscode-js-debug) debugger. This setting is enabled by default in VS Code version 1.47.

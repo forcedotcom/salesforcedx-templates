@@ -10,6 +10,7 @@ import assert from 'node:assert';
 import chaiAsPromised from 'chai-as-promised';
 import fs from 'fs';
 import got from 'got';
+import os from 'os';
 import path from 'path';
 import sinon from 'sinon';
 import { TemplateService, TemplateType } from '../../src';
@@ -218,17 +219,24 @@ describe('TemplateService', () => {
   describe('create custom template', () => {
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/main/test/custom-templates';
-    const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
-      new URL(TEST_CUSTOM_TEMPLATES_REPO)
-    );
+    let customTemplatesHome: string;
+    let TEST_CUSTOM_TEMPLATES_STORAGE_PATH: string;
 
     beforeEach(async () => {
+      customTemplatesHome = await fs.promises.mkdtemp(
+        path.join(os.tmpdir(), 'custom-templates-home-')
+      );
+      sinon.stub(os, 'homedir').returns(customTemplatesHome);
+      TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
+        new URL(TEST_CUSTOM_TEMPLATES_REPO)
+      );
       await remove(
         path.join('testsoutput', 'customLibraryCreate', 'apexclass')
       );
     });
-    afterEach(() => {
+    afterEach(async () => {
       sinon.restore();
+      await remove(customTemplatesHome);
     });
 
     it('should create custom template from local folder', async () => {
@@ -458,7 +466,7 @@ describe('TemplateService', () => {
       const result = await setCustomTemplatesRootPathOrGitRepo(customTemplates);
 
       // Verify that the function returns a path and the folder exists
-      assert(typeof result === 'string');
+      assert.strictEqual(result, TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       chai.expect(fs.existsSync(result)).to.be.true;
     });
 
@@ -488,7 +496,7 @@ describe('TemplateService', () => {
       );
 
       // Verify that the function returns a path and the folder exists
-      assert(typeof result === 'string');
+      assert.strictEqual(result, TEST_CUSTOM_TEMPLATES_STORAGE_PATH);
       chai.expect(fs.existsSync(result)).to.be.true;
     });
   }).timeout(20000);

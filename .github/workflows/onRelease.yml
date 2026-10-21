@@ -32,5 +32,8 @@ jobs:
     needs: [getDistTag]
     with:
       trustedPublishing: true
+      packageManager: pnpm
+      packageManagerVersion: 12.8.2
+      cacheDependencyPath: pnpm-lock.yaml
       tag: ${{ needs.getDistTag.outputs.tag || 'latest' }}
       githubTag: ${{ github.event.release.tag_name || inputs.tag }}

@@ -18,6 +18,8 @@ After feature/bug work has been QA'd and closed, it's time to prepare those chan
 
 When a commit is merged to main, we will automatically create the github release, and then publish the changes to npm using our Github Actions. If that fails for any reason and you need to create a manual release, you can do so using the following workflow.
 
+Publishing uses the reusable `npmPublish.yml` workflow with pnpm, the version pinned in `package.json`, and `pnpm install --frozen-lockfile` before building.
+
 ### Publish a release version manually
 
 1. Navigate to the `Actions` tab in the repository

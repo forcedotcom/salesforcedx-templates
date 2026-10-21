@@ -67,23 +67,101 @@
     "sinon": "^18",
     "ts-morph": "^24.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^6"
+    "typescript": "^6",
+    "wireit": "^0.14.13"
   },
   "engines": {
     "node": ">=22.0.0"
   },
   "scripts": {
-    "build": "yarn run clean:lib && yarn compile && yarn build:copy-templates && yarn build:templates",
-    "build:templates": "node scripts/build-templates",
-    "build:copy-templates": "node scripts/copy-templates",
+    "build": "wireit",
+    "build:templates": "wireit",
+    "build:copy-templates": "wireit",
     "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
     "commit": "git-cz",
-    "compile": "tsc -b",
-    "lint": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test",
+    "compile": "wireit",
+    "lint": "wireit",
     "lint:fix": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test --fix",
-    "test": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\" --timeout 600000",
+    "test": "wireit",
     "test:ai-auto": "node --test test/ai-auto-approve.test.mjs",
     "prepare": "husky install"
+  },
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "build:templates"
+      ]
+    },
+    "compile": {
+      "command": "tsc -b",
+      "files": [
+        "src/**/*.ts",
+        "src/**/*.json",
+        "!src/templates/**",
+        "tsconfig*.json"
+      ],
+      "output": [
+        "lib/**",
+        "!lib/templates",
+        "tsconfig.tsbuildinfo"
+      ]
+    },
+    "build:copy-templates": {
+      "command": "node scripts/copy-templates",
+      "dependencies": [
+        "compile"
+      ],
+      "files": [
+        "scripts/copy-templates.js"
+      ],
+      "output": [
+        "src/templates/uiBundles/**",
+        "src/templates/project/reactinternalapp/**",
+        "src/templates/project/reactexternalapp/**",
+        "src/templates/project/angularintapp/**",
+        "src/templates/project/angularextapp/**"
+      ]
+    },
+    "build:templates": {
+      "command": "node scripts/build-templates",
+      "dependencies": [
+        "build:copy-templates"
+      ],
+      "files": [
+        "scripts/build-templates.js",
+        "src/templates/**"
+      ],
+      "output": [
+        "lib/templates"
+      ]
+    },
+    "lint": {
+      "command": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test",
+      "files": [
+        "src/**",
+        "test/**",
+        "eslint.config.mjs",
+        ".prettierrc",
+        "tsconfig*.json"
+      ],
+      "output": []
+    },
+    "test": {
+      "command": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\" --timeout 600000",
+      "dependencies": [
+        "build"
+      ],
+      "files": [
+        "test/**",
+        "scripts/**",
+        ".mocharc.json",
+        ".nycrc"
+      ],
+      "output": [
+        "coverage/**",
+        ".nyc_output/**"
+      ]
+    }
   },
   "config": {
     "commitizen": {

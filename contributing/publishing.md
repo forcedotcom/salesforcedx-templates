@@ -2,7 +2,7 @@
 
 This is a guide for publishing Templates to npm. Most contributors don't need to worry about publishing. Publishing can only be done by the Salesforce tooling team. Please contact us if there are changes that you'd like to publish.
 
-Every PR merge to main gets published automatically and follows semantic versioning. The following steps are only when you need a manual release.
+Semantic merges to `main` create a GitHub release, which is then published to npm. The following steps are only when you need a manual release.
 
 ## Prerequisites
 
@@ -12,11 +12,13 @@ Every PR merge to main gets published automatically and follows semantic version
 
 After feature/bug work has been QA'd and closed, it's time to prepare those changes for publishing.
 
-The salesforcedx-templates project uses a two-branch strategy. Work that is currently under development is committed to the 'develop' branch. The 'main' branch is what's currently in production or is being staged for production.
+`main` is the default and release branch; it is in production or staged for production. There is no `develop` branch. The v67 modernization uses a temporary `v67-modernization` branch created from `main` so 66.x maintenance and releases can continue there. Target templates-repo modernization PRs at `v67-modernization`; target normal maintenance PRs at `main`. Periodically merge `main` into `v67-modernization`. After the modernization work and release holds are complete, merge `v67-modernization` into `main` and publish v67.
 
 ## Publishing to NPM
 
 When a commit is merged to main, we will automatically create the github release, and then publish the changes to npm using our Github Actions. If that fails for any reason and you need to create a manual release, you can do so using the following workflow.
+
+Publishing uses the reusable `npmPublish.yml` workflow with pnpm, the version pinned in `package.json`, and `pnpm install --frozen-lockfile` before building.
 
 ### Publish a release version manually
 

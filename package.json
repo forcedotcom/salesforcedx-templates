@@ -197,11 +197,14 @@
     },
     "build": {
       "dependencies": [
+        "compile",
+        "build:copy-templates",
         "build:templates"
       ]
     },
     "compile": {
-      "command": "tsc -b",
+      "command": "tsc --build --pretty",
+      "clean": "if-file-deleted",
       "files": [
         "src/**/*.ts",
         "src/**/*.json",
@@ -244,7 +247,7 @@
       ]
     },
     "lint": {
-      "command": "eslint --config eslint.config.mjs --no-config-lookup ./src ./test",
+      "command": "eslint --color --cache --cache-location .eslintcache --config eslint.config.mjs --no-config-lookup ./src ./test",
       "files": [
         "src/**",
         "test/**",

@@ -45,7 +45,7 @@ jobs:
       install-command: pnpm install --frozen-lockfile
       build-command: pnpm build
       test-command: pnpm test
-      # This repository does not use wireit.
+      # Wireit is already installed by pnpm.
       wireit-install-command: 'true'
   windows-unit-tests:
     needs: pnpm-lockfile-check
@@ -68,6 +68,7 @@ jobs:
       - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@faea38a95d42dd464e254e10579eb910655e468d
         with:
           node-version: ${{ matrix.node-version }}
+      - uses: google/wireit@setup-github-actions-caching/v2
       - name: Lint
         run: pnpm lint
   test-bundle:
@@ -80,6 +81,7 @@ jobs:
       - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@faea38a95d42dd464e254e10579eb910655e468d
         with:
           node-version: ${{ matrix.node-version }}
+      - uses: google/wireit@setup-github-actions-caching/v2
       - name: Build the project
         run: pnpm build
       - name: check if bundling runs into failures
@@ -95,6 +97,7 @@ jobs:
       - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@faea38a95d42dd464e254e10579eb910655e468d
         with:
           node-version: ${{ matrix.node-version }}
+      - uses: google/wireit@setup-github-actions-caching/v2
       - name: Build and pack templates
         run: |
           pnpm build

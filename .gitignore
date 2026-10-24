@@ -4,6 +4,7 @@ out/
 lib/
 tmp/
 *.tsbuildinfo
+.eslintcache
 
 # Logs
 logs

@@ -2,6 +2,7 @@
   "extends": "./tsconfig.settings.json",
   "compilerOptions": {
     "outDir": "./lib",
+    "incremental": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },

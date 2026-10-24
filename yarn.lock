@@ -883,10 +883,10 @@
   resolved "https://registry.npmjs.org/@salesforce/ts-types/-/ts-types-3.2.0.tgz#9e0393cab10d763b89562f0f94515e3cf1efbbe7"
   integrity sha512-3xdKt4nlthDC8nCHVWpVDwM5mmPlk8kDyJ1E3dWMk7FLRdQqhLgaHZgS+AMqcowWiKUC1l1d5YIhGhQM7dw3Bw==
 
-"@salesforce/ui-bundle-template-app-angular-template-b2e@^12.4.4":
-  version "12.4.4"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-angular-template-b2e/-/ui-bundle-template-app-angular-template-b2e-12.4.4.tgz#ba3318e18dde7f88d0a78ec1abe339c7126e4a54"
-  integrity sha512-dfEy36p1f6X3jS+H9HQRLIBIgP5CHfSTMoVj6TP79PAqshSbiMpU7J24Hy3Y0MyAZRwztyZmCAs4yds/HczorQ==
+"@salesforce/ui-bundle-template-app-angular-template-b2e@^12.12.1":
+  version "12.12.1"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-app-angular-template-b2e/-/ui-bundle-template-app-angular-template-b2e-12.12.1.tgz#061e3cf8fe6ca7bd1d63bc7a9375006cecbfb881"
+  integrity sha512-mB55nR9LIDnNW/f/jcbf2C47hJPc3pTbfoTihLCDnvKL5Ng9If5jqXdW3rDZ6QAhwLFNewin2v4rEx9UvT/X4g==
 
 "@salesforce/ui-bundle-template-app-angular-template-b2x@^12.12.0":
   version "12.12.0"

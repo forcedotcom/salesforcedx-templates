@@ -1,3 +1,12 @@
+## [66.17.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.3...66.17.4) (2026-10-25)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/kit from 4.0.0 to 4.0.1 ([bf0f8ef](https://github.com/forcedotcom/salesforcedx-templates/commit/bf0f8efd529922e1604dff0f7aa46f0f34c6bf67))
+
+
+
 ## [66.17.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.2...66.17.3) (2026-10-24)
 
 

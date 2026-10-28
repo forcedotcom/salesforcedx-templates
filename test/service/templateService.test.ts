@@ -1352,6 +1352,78 @@ describe('TemplateService', () => {
       chai.expect(appnameContent.trim()).to.equal('MyReactInternalApp');
     });
 
+    it('should create Project (vueinternalapp) from built-in template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'MyVueInternalApp',
+          template: 'vueinternalapp',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyVueInternalApp/config/project-scratch-def.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyVueInternalApp/sfdx-project.json'
+          )
+        );
+      chai
+        .expect(result.created)
+        .to.include(
+          path.normalize(
+            'testsoutput/libraryCreate/project/MyVueInternalApp/sample.txt'
+          )
+        );
+      const samplePath = path.join(
+        result.outputDir,
+        'MyVueInternalApp',
+        'sample.txt'
+      );
+      chai.expect(fs.existsSync(samplePath)).to.be.true;
+      const sampleContent = fs.readFileSync(samplePath, 'utf8');
+      chai.expect(sampleContent).to.include('MyVueInternalApp');
+    });
+
+    it('should use alphanumeric name for uiBundles under vueinternalapp template', async () => {
+      await remove(path.join('testsoutput', 'libraryCreate', 'project'));
+      // Use relative path so Windows absolute paths (e.g. D:\...) are not passed to URL parser
+      const fixtureRoot = path.join('test', 'fixtures', 'project-templates');
+      const templateService = TemplateService.getInstance();
+      const result = await templateService.create(
+        TemplateType.Project,
+        {
+          outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
+          projectname: 'My_Vue_Internal_App',
+          template: 'vueinternalapp',
+          defaultpackagedir: 'force-app',
+        },
+        fixtureRoot
+      );
+
+      chai.expect(result.created).to.not.be.empty;
+      const projectDir = path.join(result.outputDir, 'My_Vue_Internal_App');
+      chai.expect(fs.existsSync(projectDir)).to.be.true;
+      const appnamePath = path.join(projectDir, 'appname.txt');
+      chai.expect(fs.existsSync(appnamePath)).to.be.true;
+      const appnameContent = fs.readFileSync(appnamePath, 'utf8');
+      chai.expect(appnameContent.trim()).to.equal('MyVueInternalApp');
+    });
+
     it('should create StaticResource', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'staticResource'));
       const templateService = TemplateService.getInstance();

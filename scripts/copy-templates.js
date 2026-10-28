@@ -123,6 +123,13 @@ const TEMPLATES = [
     destSubpath: 'project/angularintapp',
     appFolderInNpm: 'angularintapp',
   },
+  // Vue project templates
+  {
+    packageName: '@salesforce/ui-bundle-template-app-vue-template-b2e',
+    getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
+    destSubpath: 'project/vueinternalapp',
+    appFolderInNpm: 'vueinternalapp',
+  },
 ];
 
 function copyTemplate(config) {

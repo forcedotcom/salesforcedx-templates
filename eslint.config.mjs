@@ -14,6 +14,7 @@ export default tseslint.config(
       'src/templates/project/reactexternalapp/**/*',
       'src/templates/project/angularintapp/**/*',
       'src/templates/project/angularextapp/**/*',
+      'src/templates/project/vueinternalapp/**/*',
     ],
   },
   ...tseslint.configs.recommended,

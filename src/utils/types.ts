@@ -247,6 +247,7 @@ export interface ProjectOptions extends TemplateOptions {
     | 'reactexternalapp'
     | 'angularinternalapp'
     | 'angularexternalapp'
+    | 'vueinternalapp'
     | 'agent'
     | 'nativemobile';
   manifest: boolean;

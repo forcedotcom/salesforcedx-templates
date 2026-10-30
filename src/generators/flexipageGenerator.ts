@@ -7,27 +7,23 @@
 import * as fs from 'fs';
 import { readdir } from 'node:fs/promises';
 import * as path from 'path';
+import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { FlexipageOptions } from '../utils/types';
+import { type FlexipageOptions } from '../utils/types';
 import {
   BaseGenerator,
   setCustomTemplatesRootPathOrGitRepo,
 } from './baseGenerator';
-import { nls } from '../i18n';
 
 const VALID_TEMPLATES = ['RecordPage', 'AppPage', 'HomePage'] as const;
 const MAX_SECONDARY_FIELDS = 11;
 
 export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> {
-  constructor(options: FlexipageOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.flexipagename);
     CreateUtil.checkInputs(this.options.template);
 
-    if (!VALID_TEMPLATES.includes(this.options.template as any)) {
+    if (!VALID_TEMPLATES.includes(this.options.template)) {
       throw new Error(
         nls.localize('InvalidFlexipageTemplate', [
           this.options.template,
@@ -105,11 +101,12 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     // Prepare EJS template variables
     const templateVars = {
       flexipagename,
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- An empty label uses the FlexiPage name too.
       masterlabel: masterlabel || flexipagename,
-      description: description || '',
+      description: description ?? '',
       apiVersion: this.apiversion,
-      entityName: entityName || '',
-      primaryField: primaryField || '',
+      entityName: entityName ?? '',
+      primaryField: primaryField ?? '',
       secondaryFields: Array.isArray(secondaryFields) ? secondaryFields : [],
       detailFields: Array.isArray(detailFields) ? detailFields : [],
     };
@@ -128,7 +125,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
   private async generateFlexipageFromTemplate(
     sourceDir: string,
     destDir: string,
-    templateVars: Record<string, unknown>
+    templateVars: Record<string, unknown> & { flexipagename: string }
   ): Promise<void> {
     const entries = await readdir(sourceDir, { withFileTypes: true });
 
@@ -138,10 +135,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
 
       // Replace _flexipage placeholder with actual flexipage name
       if (destName.includes('_flexipage')) {
-        destName = destName.replace(
-          /_flexipage/g,
-          templateVars.flexipagename as string
-        );
+        destName = destName.replace(/_flexipage/g, templateVars.flexipagename);
       }
 
       const destPath = path.join(destDir, destName);

@@ -8,7 +8,7 @@ import { extension } from 'mime-types';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { StaticResourceOptions } from '../utils/types';
+import { type StaticResourceOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 const EXTENSION_TEMPLATES = ['js', 'css', 'json', 'txt'];

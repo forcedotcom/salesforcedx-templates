@@ -205,8 +205,8 @@ type TemplatePlaceholderEntry = {
   replacement: string;
 };
 
-const TEMPLATE_PLACEHOLDERS_SPEC =
-  templatePlaceholdersSpec as TemplatePlaceholderEntry[];
+const TEMPLATE_PLACEHOLDERS_SPEC: TemplatePlaceholderEntry[] =
+  templatePlaceholdersSpec;
 
 function resolveReplacement(
   replacement: string,
@@ -218,7 +218,7 @@ function resolveReplacement(
     case 'projectname':
       return ctx.projectnameAlphanumeric;
     case 'projectname1':
-      return ctx.projectnameAlphanumeric + '1';
+      return `${ctx.projectnameAlphanumeric}1`;
     default:
       return replacement;
   }
@@ -253,7 +253,7 @@ export function ensureLowercaseUrlName(
       const lower = parsed.urlName.toLowerCase();
       if (lower !== parsed.urlName) {
         parsed.urlName = lower;
-        return JSON.stringify(parsed, null, 2) + '\n';
+        return `${JSON.stringify(parsed, null, 2)}\n`;
       }
     }
   } catch {
@@ -355,7 +355,8 @@ export async function generateBuiltInFullTemplate(
     loginurl,
     apiversion,
     name: projectname,
-    company: (process.env.USER || 'Demo') + ' company',
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- An empty USER uses Demo too.
+    company: `${process.env.USER || 'Demo'} company`,
   };
 
   const nameReplacementsEntry = FULL_TEMPLATE_DEFAULT_NAMES[template];
@@ -374,13 +375,13 @@ export async function generateBuiltInFullTemplate(
   // to avoid double-replacement (e.g., _a_ -> reactexternalapptest, then reactexternalapp -> reactexternalapptest again)
   if (nameReplacementsEntry) {
     nameReplacements.unshift(
-      [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],
+      [nameReplacementsEntry.withSuffix, `${projectnameAlphanumeric}1`],
       [nameReplacementsEntry.base, projectnameAlphanumeric]
     );
   }
   nameReplacements.push(
     [APP_PLACEHOLDER, projectnameAlphanumeric],
-    [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1']
+    [APP_SUFFIX_PLACEHOLDER, `${projectnameAlphanumeric}1`]
   );
 
   await generateFromProjectTemplateDir(templateDir, projectDir, templateVars, {
@@ -449,13 +450,13 @@ export async function generateFromProjectTemplateDir(
     const rawName = entry.name;
     const safeName = sanitizeSegment(rawName);
     const sourcePath = path.join(sourceDir, rawName);
+    const destName = applyReplacements(safeName);
+    const destPath = path.join(destDir, destName);
 
     if (entry.isDirectory()) {
       if (FULL_TEMPLATE_SKIP_DIRS.has(safeName)) {
         continue;
       }
-      const destName = applyReplacements(safeName);
-      const destPath = path.join(destDir, destName);
       await mkdir(destPath, { recursive: true });
       await generateFromProjectTemplateDir(
         sourcePath,
@@ -470,8 +471,6 @@ export async function generateFromProjectTemplateDir(
       continue;
     }
 
-    const destName = applyReplacements(safeName);
-    const destPath = path.join(destDir, destName);
     const ext = path.extname(safeName);
     const isEjsTemplate =
       EJS_EXTENSIONS.has(ext) ||

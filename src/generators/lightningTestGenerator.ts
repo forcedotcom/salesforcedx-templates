@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { LightningTestOptions } from '../utils/types';
+import { type LightningTestOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningTestGenerator extends BaseGenerator<LightningTestOptions> {
@@ -29,7 +29,7 @@ export default class LightningTestGenerator extends BaseGenerator<LightningTestO
         {
           description: nls.localize('LightningTest'),
         },
-        // @ts-ignore
+        // @ts-expect-error -- Legacy render call includes an unused fourth argument.
         { apiName: testname }
       );
     }

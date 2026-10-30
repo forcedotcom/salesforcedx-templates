@@ -347,7 +347,7 @@ describe('TemplateService', () => {
       const mockIt = {
         getProxyForUrl,
       };
-      // @ts-ignore - function signature is not compatible with sinon stub
+      // @ts-expect-error -- Function signature is not compatible with sinon stub.
       sinon.stub(mockIt, 'getProxyForUrl').returns(undefined);
       const templateService = TemplateService.getInstance(process.cwd());
       const customTemplates =
@@ -570,9 +570,7 @@ describe('TemplateService', () => {
           chai.expect(generator).to.not.be.undefined;
         } catch {
           throw new Error(
-            `No generator found for template type: ${
-              TemplateType[templateType as number]
-            }`
+            `No generator found for template type: ${TemplateType[templateType]}`
           );
         }
       }

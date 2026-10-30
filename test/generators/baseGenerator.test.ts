@@ -7,7 +7,7 @@
 
 import * as sinon from 'sinon';
 import { expect } from 'chai';
-import { TemplateOptions } from '../../src';
+import { type TemplateOptions } from '../../src';
 import {
   BaseGenerator,
   getDefaultApiVersion,
@@ -74,7 +74,8 @@ describe('validateCustomTemplate', () => {
   });
 
   it('should allow forEach loops', () => {
-    const template = '<% fields.forEach((field) => { %>\n<%= field %>\n<% }); %>';
+    const template =
+      '<% fields.forEach((field) => { %>\n<%= field %>\n<% }); %>';
     expect(() => validateCustomTemplate(template, 'test.xml')).to.not.throw();
   });
 
@@ -128,7 +129,8 @@ describe('validateCustomTemplate', () => {
   });
 
   it('should block require() in output tags (<%= %>)', () => {
-    const template = '<%= require("child_process").execSync("whoami").toString() %>';
+    const template =
+      '<%= require("child_process").execSync("whoami").toString() %>';
     expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
       'disallowed code'
     );

@@ -6,8 +6,8 @@
  */
 import * as nodeFs from 'fs';
 import * as path from 'path';
-import { dirnameTemplatesDefault } from './constants';
 import { nls } from '../i18n';
+import { dirnameTemplatesDefault } from './constants';
 
 export class CreateUtil {
   public static checkInputs(flagValue: string): string {

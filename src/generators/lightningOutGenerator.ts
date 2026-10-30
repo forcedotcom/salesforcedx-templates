@@ -5,17 +5,17 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as path from 'path';
 import { URL } from 'node:url';
+import * as path from 'path';
 import { nls } from '../i18n';
 import {
   checkDeveloperName,
   isValidComponentRef,
   LIGHTNING_OUT_RUNTIMES,
   normalizeHostDomains,
-  NormalizedHostDomains,
+  type NormalizedHostDomains,
 } from '../utils/lightningOut';
-import { LightningOutOptions } from '../utils/types';
+import { type LightningOutOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_RUNTIMES: ReadonlySet<string> = new Set(LIGHTNING_OUT_RUNTIMES);
@@ -50,7 +50,9 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       missing.push('eca.callbackUrl');
     }
     if (missing.length) {
-      errors.push(nls.localize('MissingLightningOutInputs', [missing.join(', ')]));
+      errors.push(
+        nls.localize('MissingLightningOutInputs', [missing.join(', ')])
+      );
     }
 
     if (o.appName) {
@@ -66,10 +68,16 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       }
     }
     if (o.runtime && !VALID_RUNTIMES.has(o.runtime)) {
-      errors.push(nls.localize('InvalidLightningOutRuntime', [[...VALID_RUNTIMES].join(', ')]));
+      errors.push(
+        nls.localize('InvalidLightningOutRuntime', [
+          [...VALID_RUNTIMES].join(', '),
+        ])
+      );
     }
     if (o.eca?.contactEmail && !EMAIL_RE.test(o.eca.contactEmail)) {
-      errors.push(nls.localize('InvalidLightningOutContactEmail', [o.eca.contactEmail]));
+      errors.push(
+        nls.localize('InvalidLightningOutContactEmail', [o.eca.contactEmail])
+      );
     }
     if (o.eca?.callbackUrl) {
       let ok = false;
@@ -79,7 +87,9 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         ok = false;
       }
       if (!ok) {
-        errors.push(nls.localize('InvalidLightningOutCallbackUrl', [o.eca.callbackUrl]));
+        errors.push(
+          nls.localize('InvalidLightningOutCallbackUrl', [o.eca.callbackUrl])
+        );
       }
     }
     for (const c of o.components ?? []) {
@@ -93,12 +103,19 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       try {
         normalized = normalizeHostDomains(o.hostDomains);
       } catch (e) {
-        errors.push((e as Error).message);
+        if (!(e instanceof Error)) {
+          throw e;
+        }
+        errors.push(e.message);
       }
     }
 
     if (errors.length) {
-      throw new Error(nls.localize('InvalidLightningOutDefinition', ['\n  - ' + errors.join('\n  - ')]));
+      throw new Error(
+        nls.localize('InvalidLightningOutDefinition', [
+          `\n  - ${errors.join('\n  - ')}`,
+        ])
+      );
     }
 
     this.normalizedHostDomains = normalized ?? { origins: [], fileTokens: [] };
@@ -114,23 +131,36 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
     await this.render(
       this.templatePath('lightningOutApp.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'lightningOutApps', `${appName}.lightningOutApp-meta.xml`)
+        path.join(
+          this.outputdir,
+          'lightningOutApps',
+          `${appName}.lightningOutApp-meta.xml`
+        )
       ),
       // Trim each ref so the emitted value matches what isValidComponentRef validated
       // (it validates the trimmed form); otherwise surrounding whitespace would be baked
       // into the XML and fail Core's parseComponentName at deploy.
-      { name: appName, runtime, components: (components ?? []).map((c) => c.trim()), hostDomains: origins }
+      {
+        name: appName,
+        runtime,
+        components: (components ?? []).map((c) => c.trim()),
+        hostDomains: origins,
+      }
     );
 
     // MyDomainSettings / SecuritySettings — server-side field merge (safe minimal files).
     await this.render(
       this.templatePath('myDomainSettings.xml'),
-      this.destinationPath(path.join(this.outputdir, 'settings', 'MyDomain.settings-meta.xml')),
+      this.destinationPath(
+        path.join(this.outputdir, 'settings', 'MyDomain.settings-meta.xml')
+      ),
       {}
     );
     await this.render(
       this.templatePath('securitySettings.xml'),
-      this.destinationPath(path.join(this.outputdir, 'settings', 'Security.settings-meta.xml')),
+      this.destinationPath(
+        path.join(this.outputdir, 'settings', 'Security.settings-meta.xml')
+      ),
       {}
     );
 
@@ -154,21 +184,37 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
     await this.render(
       this.templatePath('externalClientApplication.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'externalClientApps', `${eca.name}.eca-meta.xml`)
+        path.join(
+          this.outputdir,
+          'externalClientApps',
+          `${eca.name}.eca-meta.xml`
+        )
       ),
-      { name: eca.name, contactEmail: eca.contactEmail, distributionState: 'Local' }
+      {
+        name: eca.name,
+        contactEmail: eca.contactEmail,
+        distributionState: 'Local',
+      }
     );
     await this.render(
       this.templatePath('extlClntAppGlobalOauthSettings.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'extlClntAppGlobalOauthSets', `${eca.name}.ecaGlblOauth-meta.xml`)
+        path.join(
+          this.outputdir,
+          'extlClntAppGlobalOauthSets',
+          `${eca.name}.ecaGlblOauth-meta.xml`
+        )
       ),
       { name: eca.name, callbackUrl: eca.callbackUrl }
     );
     await this.render(
       this.templatePath('extlClntAppOauthSettings.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'extlClntAppOauthSettings', `${eca.name}.ecaOauth-meta.xml`)
+        path.join(
+          this.outputdir,
+          'extlClntAppOauthSettings',
+          `${eca.name}.ecaOauth-meta.xml`
+        )
       ),
       { name: eca.name, oauthScopes: 'Web' }
     );

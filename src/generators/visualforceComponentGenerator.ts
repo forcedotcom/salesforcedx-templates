@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { VisualforceComponentOptions } from '../utils/types';
+import { type VisualforceComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class VisualforceComponentGenerator extends BaseGenerator<VisualforceComponentOptions> {

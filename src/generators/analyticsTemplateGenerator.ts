@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { AnalyticsTemplateOptions } from '../utils/types';
+import { type AnalyticsTemplateOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class AnalyticsTemplateGenerator extends BaseGenerator<AnalyticsTemplateOptions> {
@@ -37,7 +37,7 @@ export default class AnalyticsTemplateGenerator extends BaseGenerator<AnalyticsT
           this.outputdir,
           templatename,
           'dashboards',
-          templatename + 'Dashboard.json'
+          `${templatename}Dashboard.json`
         )
       ),
       { templateName: templatename }

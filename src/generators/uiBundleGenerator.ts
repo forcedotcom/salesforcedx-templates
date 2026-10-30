@@ -8,7 +8,7 @@ import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { CreateUtil } from '../utils';
 import { UI_BUNDLES_DIR } from '../utils/constants';
-import { UIBundleOptions } from '../utils/types';
+import { type UIBundleOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
@@ -34,6 +34,7 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
     const { bundlename } = this.options;
     const template = this.options.template.toLowerCase();
     const masterLabel =
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- An empty label uses the generated title too.
       this.options.masterlabel || camelCaseToTitleCase(bundlename);
     const bundleDir = path.join(this.outputdir, bundlename);
 
@@ -198,7 +199,7 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
         await this._fs.promises.mkdir(path.dirname(destPath), {
           recursive: true,
         });
-        await this._fs.promises.writeFile(destPath, content as Uint8Array);
+        await this._fs.promises.writeFile(destPath, new Uint8Array(content));
 
         // Register the created file
         const relativePath = path.relative(this._cwd, destPath);

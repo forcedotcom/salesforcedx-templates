@@ -8,7 +8,7 @@
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 import * as path from 'path';
-import { CreateUtil, DigitalExperienceSiteOptions } from '../../src';
+import { CreateUtil, type DigitalExperienceSiteOptions } from '../../src';
 import DigitalExperienceSiteGenerator from '../../src/generators/digitalExperienceSiteGenerator';
 
 describe('DigitalExperienceSiteGenerator', () => {

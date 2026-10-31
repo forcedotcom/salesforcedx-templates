@@ -1,3 +1,12 @@
+## [66.17.5](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.4...66.17.5) (2026-10-31)
+
+
+### Bug Fixes
+
+* **deps:** bump brace-expansion from 1.1.11 to 1.1.21 ([f186d50](https://github.com/forcedotcom/salesforcedx-templates/commit/f186d502ea518596a5473a571977f85cb4e363c8))
+
+
+
 ## [66.17.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.3...66.17.4) (2026-10-25)
 
 

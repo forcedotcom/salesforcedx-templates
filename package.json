@@ -43,7 +43,7 @@
     "@types/mime-types": "^3.0.1",
     "@types/proxy-from-env": "^1.0.4",
     "@typescript-eslint/eslint-plugin": "^8.69.0",
-    "@typescript-eslint/parser": "^8.69.0",
+    "@typescript-eslint/parser": "^8.72.1",
     "chai": "^4.5.0",
     "chai-as-promised": "^7.1.2",
     "commitizen": "^4.3.2",

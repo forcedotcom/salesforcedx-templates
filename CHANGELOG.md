@@ -1,3 +1,12 @@
+# [66.18.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.5...66.18.0) (2026-11-02)
+
+
+### Features
+
+* add vueinternalapp project template @W-24573583@ ([#939](https://github.com/forcedotcom/salesforcedx-templates/issues/939)) ([06ac656](https://github.com/forcedotcom/salesforcedx-templates/commit/06ac6563e4b831cc62d83c3badbd206a306b6a30))
+
+
+
 ## [66.17.5](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.4...66.17.5) (2026-10-31)
 
 

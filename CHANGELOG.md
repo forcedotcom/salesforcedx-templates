@@ -1,3 +1,12 @@
+# [66.19.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.18.0...66.19.0) (2026-11-02)
+
+
+### Features
+
+* export the list of project templates so salesforcedx-vscode can grab it dynamically ([#947](https://github.com/forcedotcom/salesforcedx-templates/issues/947)) ([5f0f4c3](https://github.com/forcedotcom/salesforcedx-templates/commit/5f0f4c33cc7f47ac3736e5ec9e939fdbfccc5bc1))
+
+
+
 # [66.18.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.5...66.18.0) (2026-11-02)
 
 

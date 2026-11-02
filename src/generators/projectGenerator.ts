@@ -6,6 +6,7 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
+import { PROJECT_TEMPLATES } from '../utils/projectTemplates';
 import { type GeneratorContext, type ProjectOptions } from '../utils/types';
 import {
   BUILT_IN_FULL_TEMPLATES,
@@ -14,19 +15,6 @@ import {
   renderEjsFile,
 } from '../utils/uiBundleTemplateUtils';
 import { BaseGenerator } from './baseGenerator';
-
-const VALID_PROJECT_TEMPLATES = [
-  'standard',
-  'empty',
-  'analytics',
-  'reactinternalapp',
-  'reactexternalapp',
-  'angularinternalapp',
-  'angularexternalapp',
-  'vueinternalapp',
-  'agent',
-  'nativemobile',
-] as const;
 
 const GITIGNORE = 'gitignore';
 const HUSKY_FOLDER = '.husky';
@@ -248,11 +236,11 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
-    if (!VALID_PROJECT_TEMPLATES.includes(this.options.template)) {
+    if (!PROJECT_TEMPLATES.includes(this.options.template)) {
       throw new Error(
         `Invalid project template: ${
           this.options.template
-        }. Valid options: ${VALID_PROJECT_TEMPLATES.join(', ')}`
+        }. Valid options: ${PROJECT_TEMPLATES.join(', ')}`
       );
     }
 

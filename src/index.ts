@@ -13,3 +13,4 @@ export * from './utils/types';
 export * from './utils/createUtil';
 export * from './utils/uiEmbedding';
 export * from './utils/lightningOut';
+export * from './utils/projectTemplates';

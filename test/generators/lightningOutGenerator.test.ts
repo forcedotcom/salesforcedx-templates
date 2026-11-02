@@ -11,7 +11,7 @@ import * as path from 'path';
 import { TemplateService, TemplateType } from '../../src';
 import LightningOutGenerator from '../../src/generators/lightningOutGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
-import { LightningOutOptions } from '../../src/utils/types';
+import { type LightningOutOptions } from '../../src/utils/types';
 
 chai.config.truncateThreshold = 100000;
 const { expect } = chai;

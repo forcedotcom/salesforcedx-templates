@@ -5,24 +5,25 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import type * as nodeFs from 'node:fs';
 import AnalyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
 import ApexClassGenerator from '../generators/apexClassGenerator';
 import ApexTriggerGenerator from '../generators/apexTriggerGenerator';
+import { type BaseGenerator } from '../generators/baseGenerator';
+import DigitalExperienceSiteGenerator from '../generators/digitalExperienceSiteGenerator';
 import FlexipageGenerator from '../generators/flexipageGenerator';
 import LightningAppGenerator from '../generators/lightningAppGenerator';
 import LightningComponentGenerator from '../generators/lightningComponentGenerator';
-import UIEmbeddingGenerator from '../generators/uiEmbeddingGenerator';
-import LightningOutGenerator from '../generators/lightningOutGenerator';
 import LightningEventGenerator from '../generators/lightningEventGenerator';
 import LightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
+import LightningOutGenerator from '../generators/lightningOutGenerator';
 import LightningTestGenerator from '../generators/lightningTestGenerator';
-import DigitalExperienceSiteGenerator from '../generators/digitalExperienceSiteGenerator';
 import ProjectGenerator from '../generators/projectGenerator';
 import StaticResourceGenerator from '../generators/staticResourceGenerator';
+import UIBundleGenerator from '../generators/uiBundleGenerator';
+import UIEmbeddingGenerator from '../generators/uiEmbeddingGenerator';
 import VisualforceComponentGenerator from '../generators/visualforceComponentGenerator';
 import VisualforcePageGenerator from '../generators/visualforcePageGenerator';
-import UIBundleGenerator from '../generators/uiBundleGenerator';
-import { BaseGenerator } from '../generators/baseGenerator';
 
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
   options: TOptions,
@@ -37,7 +38,7 @@ export type GeneratorClass<TOptions extends TemplateOptions> = new (
  */
 export type GeneratorContext = {
   /** Node-fs-compatible object. Defaults to require('node:fs'). Pass memfs for web. */
-  readonly fs?: typeof import('node:fs');
+  readonly fs?: typeof nodeFs;
   /** Absolute path to built-in templates root. Overrides __dirname-based resolution. */
   readonly templatesRootPath?: string;
 };

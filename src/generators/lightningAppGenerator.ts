@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { LightningAppOptions } from '../utils/types';
+import { type LightningAppOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningAppGenerator extends BaseGenerator<LightningAppOptions> {

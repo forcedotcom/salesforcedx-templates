@@ -5,9 +5,9 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import { render } from 'ejs';
 import * as nodeFs from 'fs';
 import * as path from 'path';
-import { render } from 'ejs';
 import { nls } from '../i18n';
 import {
   DEFAULT_API_VERSION,
@@ -15,9 +15,9 @@ import {
 } from '../utils/constants';
 import { CreateUtil } from '../utils/createUtil';
 import {
-  CreateOutput,
-  GeneratorContext,
-  TemplateOptions,
+  type CreateOutput,
+  type GeneratorContext,
+  type TemplateOptions,
 } from '../utils/types';
 
 type Changes = {
@@ -26,10 +26,6 @@ type Changes = {
   identical: string[];
   forced: string[];
 };
-
-interface FsError extends Error {
-  code: string;
-}
 
 export async function setCustomTemplatesRootPathOrGitRepo(
   pathOrRepoUri?: string,
@@ -50,8 +46,12 @@ export async function setCustomTemplatesRootPathOrGitRepo(
       return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }
   } catch (error) {
-    const err = error as FsError;
-    if (err.code !== 'ERR_INVALID_URL') {
+    if (
+      typeof error !== 'object' ||
+      error === null ||
+      !('code' in error) ||
+      error.code !== 'ERR_INVALID_URL'
+    ) {
       throw error;
     }
 
@@ -85,7 +85,7 @@ abstract class NotYeoman {
   private _sourceRoot: string;
   private _destinationRoot: string;
 
-  public constructor(context?: GeneratorContext, cwd?: string) {
+  constructor(context?: GeneratorContext, cwd?: string) {
     this._fs = context?.fs ?? nodeFs;
     this._cwd = cwd ?? process.cwd();
     const defaultTemplatesRoot =
@@ -345,7 +345,10 @@ function isSimpleExpression(code: string): boolean {
 }
 
 function isAllowedScriptlet(code: string): boolean {
-  const statements = code.split(/[;\n]/).map((s) => s.trim()).filter(Boolean);
+  const statements = code
+    .split(/[;\n]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
 
   for (const stmt of statements) {
     if (!isAllowedStatement(stmt)) {
@@ -389,7 +392,11 @@ function isAllowedStatement(stmt: string): boolean {
     return isSimpleForLoop(stmt);
   }
 
-  if (/^\w[\w.]*\s*\.\s*(forEach|map|filter|some|every|find|findIndex)\s*\(/.test(stmt)) {
+  if (
+    /^\w[\w.]*\s*\.\s*(forEach|map|filter|some|every|find|findIndex)\s*\(/.test(
+      stmt
+    )
+  ) {
     return isSimpleIterator(stmt);
   }
 
@@ -432,8 +439,13 @@ function isSimpleCondition(stmt: string): boolean {
 }
 
 function isSimpleForLoop(stmt: string): boolean {
-  if (/^for\s*\(\s*(?:const|let|var)\s+\[?\s*\w+(?:\s*,\s*\w+)*\s*\]?\s+(?:of|in)\s+/.test(stmt)) {
-    const hardBlocked = /\b(process|global|globalThis|require|import|module|eval|Function|Reflect|Proxy|constructor|__proto__)\b/;
+  if (
+    /^for\s*\(\s*(?:const|let|var)\s+\[?\s*\w+(?:\s*,\s*\w+)*\s*\]?\s+(?:of|in)\s+/.test(
+      stmt
+    )
+  ) {
+    const hardBlocked =
+      /\b(process|global|globalThis|require|import|module|eval|Function|Reflect|Proxy|constructor|__proto__)\b/;
     return !hardBlocked.test(stmt);
   }
   return false;
@@ -525,13 +537,19 @@ export function validateCustomTemplate(
     if (tag.type === '=' || tag.type === '-') {
       if (!isSimpleExpression(code)) {
         throw new Error(
-          `Custom template "${templatePath}" contains disallowed code in expression tag: ${tag.code.slice(0, 80)}`
+          `Custom template "${templatePath}" contains disallowed code in expression tag: ${tag.code.slice(
+            0,
+            80
+          )}`
         );
       }
     } else {
       if (!isAllowedScriptlet(code)) {
         throw new Error(
-          `Custom template "${templatePath}" contains disallowed code in scriptlet tag: ${tag.code.slice(0, 80)}`
+          `Custom template "${templatePath}" contains disallowed code in scriptlet tag: ${tag.code.slice(
+            0,
+            80
+          )}`
         );
       }
     }
@@ -611,7 +629,9 @@ export abstract class BaseGenerator<
     destination: string,
     data?: Record<string, unknown>
   ): Promise<void> {
-    const isBuiltIn = this.builtInTemplatesRootPath && source.startsWith(this.builtInTemplatesRootPath);
+    const isBuiltIn =
+      this.builtInTemplatesRootPath &&
+      source.startsWith(this.builtInTemplatesRootPath);
     if (!isBuiltIn) {
       const template = await this._fs.promises.readFile(source, 'utf8');
       validateCustomTemplate(template, source);
@@ -659,12 +679,12 @@ export abstract class BaseGenerator<
     const outputDir = path.resolve(cwd, this.outputdir);
     const rawOutput = nls.localize('RawOutput', [
       outputDir,
-      [
+      `${[
         ...(this.changes.created ?? []).map((file) => `  create ${file}`),
         ...(this.changes.identical ?? []).map((file) => `  identical ${file}`),
         ...(this.changes.conflicted ?? []).map((file) => `  conflict ${file}`),
         ...(this.changes.forced ?? []).map((file) => `  force ${file}`),
-      ].join('\n') + '\n',
+      ].join('\n')}\n`,
     ]);
 
     return {

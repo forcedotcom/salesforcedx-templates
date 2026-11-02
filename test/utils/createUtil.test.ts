@@ -10,7 +10,7 @@ import { CreateUtil } from '../../src/utils';
 import { assert, expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
-import { SinonStub, stub } from 'sinon';
+import { type SinonStub, stub } from 'sinon';
 
 describe('CreateUtil', () => {
   describe('checkInputs', () => {

@@ -12,13 +12,13 @@
 import * as crypto from 'crypto';
 import * as nodeFs from 'fs';
 import got from 'got';
-import * as path from 'path';
-import { extract } from 'tar';
+import { HttpsProxyAgent } from 'hpagent';
 import * as os from 'node:os';
+import * as path from 'path';
+import { getProxyForUrl } from 'proxy-from-env';
+import { extract } from 'tar';
 
 import { nls } from '../i18n';
-import { HttpsProxyAgent } from 'hpagent';
-import { getProxyForUrl } from 'proxy-from-env';
 
 interface RepoInfo {
   username: string;
@@ -32,9 +32,7 @@ const SFDX_STATE_FOLDER = '.sfdx';
 /**
  * The full system path to the preferred global state folder
  */
-export function DIR(): string {
-  return path.join(os.homedir(), SFDX_STATE_FOLDER);
-}
+export const DIR = (): string => path.join(os.homedir(), SFDX_STATE_FOLDER);
 
 /**
  * extract repo info from uri

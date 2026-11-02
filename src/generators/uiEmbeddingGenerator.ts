@@ -9,11 +9,11 @@ import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
+import { type UIEmbeddingOptions } from '../utils/types';
 import {
   isAllowedUIEmbeddingSrcUrl,
   UI_EMBEDDING_SANDBOX_TOKENS,
 } from '../utils/uiEmbedding';
-import { UIEmbeddingOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_SANDBOX_TOKENS: ReadonlySet<string> = new Set(
@@ -37,7 +37,7 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
       throw new Error(nls.localize('InvalidUIEmbeddingSrcChar'));
     }
 
-    if (!this.options.title || !this.options.title.trim()) {
+    if (!this.options.title?.trim()) {
       throw new Error(nls.localize('MissingUIEmbeddingTitle'));
     }
 

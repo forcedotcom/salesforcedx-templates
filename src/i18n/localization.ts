@@ -6,6 +6,7 @@
  */
 
 import * as util from 'util';
+
 const MISSING_LABEL_MSG = '!!! MISSING LABEL !!!';
 export interface LocalizationProvider {
   localize(label: string, args?: string | string[]): string;
@@ -14,7 +15,7 @@ export interface LocalizationProvider {
 export class Localization implements LocalizationProvider {
   private readonly delegate: Message;
 
-  public constructor(delegate: Message) {
+  constructor(delegate: Message) {
     this.delegate = delegate;
   }
 
@@ -30,12 +31,13 @@ export type MessageBundle = {
 export class Message implements LocalizationProvider {
   private readonly messages: MessageBundle;
 
-  public constructor(messages: MessageBundle) {
+  constructor(messages: MessageBundle) {
     this.messages = messages;
   }
 
   public localize(label: string, args?: string | string[]): string {
     let possibleLabel = this.getLabel(label);
+    let formatArgs = args;
 
     if (typeof args === 'undefined' && possibleLabel) {
       return possibleLabel;
@@ -43,36 +45,38 @@ export class Message implements LocalizationProvider {
 
     // Note: We are getting an array of arrays when we want to consume the ...args param
     // e.g. [['value1', 'value2']]
-    if (typeof args !== 'undefined' && Array.isArray(args)) {
-      args = args[0].constructor === Array ? args[0] : args;
-    } else if (typeof args !== 'undefined' && !Array.isArray(args)) {
-      args = [args];
+    if (typeof formatArgs !== 'undefined' && Array.isArray(formatArgs)) {
+      formatArgs = Array.isArray(formatArgs[0]) ? formatArgs[0] : formatArgs;
+    } else if (
+      typeof formatArgs !== 'undefined' &&
+      !Array.isArray(formatArgs)
+    ) {
+      formatArgs = [formatArgs];
     }
 
     if (!possibleLabel) {
       console.warn(`Missing label for key: ${label}`);
       possibleLabel = `${MISSING_LABEL_MSG} ${label}`;
 
-      if (Array.isArray(args) && args.length >= 1) {
-        args.forEach((arg) => {
+      if (Array.isArray(formatArgs) && formatArgs.length >= 1) {
+        formatArgs.forEach((arg) => {
           possibleLabel += ` (${arg})`;
         });
       }
       return possibleLabel;
     }
 
-    if (Array.isArray(args) && args.length >= 1) {
+    if (Array.isArray(formatArgs) && formatArgs.length >= 1) {
       const expectedNumArgs = possibleLabel.split('%s').length - 1;
-      if (args.length !== expectedNumArgs) {
+      if (formatArgs.length !== expectedNumArgs) {
         // just log it, we might want to hide some in some languages on purpose
         console.log(
-          `Arguments do not match for label '${label}', got ${args.length} but want ${expectedNumArgs}`
+          `Arguments do not match for label '${label}', got ${formatArgs.length} but want ${expectedNumArgs}`
         );
       }
 
-      args.unshift(possibleLabel);
-      // eslint-disable-next-line prefer-spread
-      return util.format.apply(util, args as [any, ...any[]]);
+      formatArgs.unshift(possibleLabel);
+      return util.format(...formatArgs);
     }
 
     return possibleLabel;

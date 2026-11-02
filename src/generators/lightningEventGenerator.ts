@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { LightningEventOptions } from '../utils/types';
+import { type LightningEventOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningEventGenerator extends BaseGenerator<LightningEventOptions> {

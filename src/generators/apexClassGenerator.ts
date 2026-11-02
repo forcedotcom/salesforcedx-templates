@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { ApexClassOptions } from '../utils/types';
+import { type ApexClassOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> {
@@ -39,6 +39,7 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
       {
         apiName: classname,
         ...(template === 'Batchable' && {
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- Blank SObject names use the default too.
           sobjectType: sobjecttype?.trim() || 'SObject',
         }),
       }

@@ -6,19 +6,15 @@
  */
 import * as crypto from 'node:crypto';
 import * as path from 'path';
-import { CreateUtil } from '../utils';
-import { DigitalExperienceSiteOptions } from '../utils/types';
-import { BaseGenerator } from './baseGenerator';
 import { nls } from '../i18n';
+import { CreateUtil } from '../utils';
+import { type DigitalExperienceSiteOptions } from '../utils/types';
+import { BaseGenerator } from './baseGenerator';
 
 const TEMPLATE_ROOT = 'digitalexperiencesite';
 
 export default class DigitalExperienceSiteGenerator extends BaseGenerator<DigitalExperienceSiteOptions> {
   private uuidCache: Record<string, string> = {};
-
-  constructor(options: DigitalExperienceSiteOptions) {
-    super(options);
-  }
 
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
@@ -282,12 +278,12 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       'sfdc_cms__site',
       picassoSiteDevName
     );
-    siteName = JSON.stringify(siteName) // escape special characters since this needs to be a JSON string
+    const escapedSiteName = JSON.stringify(siteName) // escape special characters since this needs to be a JSON string
       .slice(1, -1); // remove quotes added by JSON.stringify
     await this.render(
       this.templatePath('sfdc_cms__site', 'content.json'),
       this.destinationPath(path.join(sitePath, 'content.json')),
-      { siteName, urlName }
+      { siteName: escapedSiteName, urlName }
     );
     await this.render(
       this.templatePath('sfdc_cms__site', '_meta.json'),
@@ -369,12 +365,12 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       return crypto.randomUUID();
     }
 
-    key = `${namepsace}:${key}`;
-    if (!this.uuidCache[key]) {
-      this.uuidCache[key] = crypto.randomUUID();
+    const cacheKey = `${namepsace}:${key}`;
+    if (!this.uuidCache[cacheKey]) {
+      this.uuidCache[cacheKey] = crypto.randomUUID();
     }
 
-    return this.uuidCache[key];
+    return this.uuidCache[cacheKey];
   }
 
   private toSiteDevName(sitename: string): string {
@@ -389,7 +385,7 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
   }
 
   private encodeForFileName(str: string): string {
-    const charMap = {
+    const charMap: Record<string, string> = {
       '~': '%7E',
       '!': '%21',
       '.': '%2E',
@@ -402,6 +398,6 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     // encoding from the server
     return encodeURIComponent(str)
       .replace(/%20/g, ' ')
-      .replace(/[~!.'()]/g, (char) => charMap[char as keyof typeof charMap]);
+      .replace(/[~!.'()]/g, (char) => charMap[char]);
   }
 }

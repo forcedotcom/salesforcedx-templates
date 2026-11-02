@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { ApexTriggerOptions } from '../utils/types';
+import { type ApexTriggerOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptions> {

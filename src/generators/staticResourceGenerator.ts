@@ -33,38 +33,38 @@ export default class StaticResourceGenerator extends BaseGenerator<StaticResourc
       await this.render(
         this.templatePath(`empty.${ext}`),
         this.destinationPath(
-          path.join(this.outputdir, `${resourcename}.${ext}`)
+          path.join(this.outputdir, `${resourcename}.${ext}`),
         ),
-        {}
+        {},
       );
     } else if (ext === 'zip') {
       // For zip files, write an empty js file in a folder
       await this.render(
         this.templatePath('_gitkeep'),
         this.destinationPath(
-          path.join(this.outputdir, resourcename, '.gitkeep')
+          path.join(this.outputdir, resourcename, '.gitkeep'),
         ),
-        {}
+        {},
       );
     } else {
       // For all other mime types write a generic .resource file
       await this.render(
         this.templatePath('empty.resource'),
         this.destinationPath(
-          path.join(this.outputdir, `${resourcename}.resource`)
+          path.join(this.outputdir, `${resourcename}.resource`),
         ),
-        {}
+        {},
       );
     }
 
     await this.render(
       this.templatePath('_staticresource.resource-meta.xml'),
       this.destinationPath(
-        path.join(this.outputdir, `${resourcename}.resource-meta.xml`)
+        path.join(this.outputdir, `${resourcename}.resource-meta.xml`),
       ),
       {
         contentType: contenttype,
-      }
+      },
     );
   }
 }

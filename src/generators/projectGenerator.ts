@@ -105,7 +105,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   constructor(
     options: ProjectOptions,
     context?: GeneratorContext,
-    cwd?: string
+    cwd?: string,
   ) {
     super(options, context, cwd);
     this.sourceRootWithPartialPath('project');
@@ -113,10 +113,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
   private async extendJSON(
     filepath: string,
-    replacer?: (this: any, key: string, value: any) => any
+    replacer?: (this: any, key: string, value: any) => any,
   ) {
     const originalContent = JSON.parse(
-      await this._fs.promises.readFile(filepath, 'utf8').catch(() => '{}')
+      await this._fs.promises.readFile(filepath, 'utf8').catch(() => '{}'),
     );
 
     const newContent = JSON.stringify(originalContent, replacer, 2);
@@ -161,15 +161,15 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
   private async generateTypeScriptConfig(
     isTypeScript: boolean,
     projectname: string,
-    defaultpackagedir: string
+    defaultpackagedir: string,
   ): Promise<void> {
     if (isTypeScript) {
       await this.render(
         this.templatePath('tsconfig.json'),
         this.destinationPath(
-          path.join(this.outputdir, projectname, 'tsconfig.json')
+          path.join(this.outputdir, projectname, 'tsconfig.json'),
         ),
-        { defaultpackagedir }
+        { defaultpackagedir },
       );
     }
   }
@@ -179,14 +179,14 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
    */
   private async generateEslintConfig(
     isTypeScript: boolean,
-    projectname: string
+    projectname: string,
   ): Promise<void> {
     await this.render(
       this.getTemplatePath('project.eslint.config.js', isTypeScript),
       this.destinationPath(
-        path.join(this.outputdir, projectname, 'eslint.config.js')
+        path.join(this.outputdir, projectname, 'eslint.config.js'),
       ),
-      {}
+      {},
     );
   }
 
@@ -195,7 +195,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
    */
   private async generateVSCodeSettings(
     isTypeScript: boolean,
-    projectname: string
+    projectname: string,
   ): Promise<void> {
     for (const file of vscodearray) {
       const templateFile = `${file}.json`;
@@ -209,9 +209,9 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.render(
         templatePath,
         this.destinationPath(
-          path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
+          path.join(this.outputdir, projectname, '.vscode', `${file}.json`),
         ),
-        {}
+        {},
       );
     }
   }
@@ -221,7 +221,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
    */
   private async copyProjectFiles(
     isTypeScript: boolean,
-    projectname: string
+    projectname: string,
   ): Promise<void> {
     for (const file of filestocopy) {
       const out = file === GITIGNORE ? `.${file}` : file;
@@ -229,7 +229,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.render(
         this.getTemplatePath(file, isTypeScript),
         this.destinationPath(path.join(this.outputdir, projectname, out)),
-        {}
+        {},
       );
     }
   }
@@ -240,7 +240,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       throw new Error(
         `Invalid project template: ${
           this.options.template
-        }. Valid options: ${PROJECT_TEMPLATES.join(', ')}`
+        }. Valid options: ${PROJECT_TEMPLATES.join(', ')}`,
       );
     }
 
@@ -250,7 +250,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       !['javascript', 'typescript'].includes(this.options.lwcLanguage)
     ) {
       throw new Error(
-        `Invalid lwcLanguage value: '${this.options.lwcLanguage}'. Must be 'javascript' or 'typescript'.`
+        `Invalid lwcLanguage value: '${this.options.lwcLanguage}'. Must be 'javascript' or 'typescript'.`,
       );
     }
   }
@@ -289,24 +289,24 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
           this.outputdir,
           projectname,
           'config',
-          'project-scratch-def.json'
-        )
+          'project-scratch-def.json',
+        ),
       ),
       // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- An empty USER uses Demo too.
-      { company: `${process.env.USER || 'Demo'} company` }
+      { company: `${process.env.USER || 'Demo'} company` },
     );
     await this.render(
       this.templatePathWithFallback(
         `${template}/README.md`,
-        'standard/README.md'
+        'standard/README.md',
       ),
       this.destinationPath(path.join(this.outputdir, projectname, 'README.md')),
-      { projectname }
+      { projectname },
     );
     await this.render(
       this.templatePath('sfdx-project.json'),
       this.destinationPath(
-        path.join(this.outputdir, projectname, 'sfdx-project.json')
+        path.join(this.outputdir, projectname, 'sfdx-project.json'),
       ),
       {
         defaultpackagedir,
@@ -315,16 +315,16 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         apiversion: this.apiversion,
         name: projectname,
         lwcLanguage,
-      }
+      },
     );
 
     if (manifest === true) {
       await this.render(
         this.templatePathWithFallback(manifestFile, 'standard/Manifest.xml'),
         this.destinationPath(
-          path.join(this.outputdir, projectname, 'manifest', 'package.xml')
+          path.join(this.outputdir, projectname, 'manifest', 'package.xml'),
         ),
-        { apiversion: this.apiversion }
+        { apiversion: this.apiversion },
       );
     }
 
@@ -349,10 +349,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             projectname,
             'scripts',
             'soql',
-            soqlQueryFile
-          )
+            soqlQueryFile,
+          ),
         ),
-        {}
+        {},
       );
 
       // Apex sample script
@@ -364,10 +364,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             projectname,
             'scripts',
             'apex',
-            anonApexFile
-          )
+            anonApexFile,
+          ),
         ),
-        {}
+        {},
       );
 
       // Copy project root level files
@@ -377,7 +377,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.generateTypeScriptConfig(
         isTypeScript,
         projectname,
-        defaultpackagedir
+        defaultpackagedir,
       );
     }
 
@@ -402,16 +402,16 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         await this.generateTypeScriptConfig(
           isTypeScript,
           projectname,
-          defaultpackagedir
+          defaultpackagedir,
         );
       } else {
         // For JavaScript projects, just copy .forceignore
         await this.render(
           this.templatePath('.forceignore'),
           this.destinationPath(
-            path.join(this.outputdir, projectname, '.forceignore')
+            path.join(this.outputdir, projectname, '.forceignore'),
           ),
-          {}
+          {},
         );
       }
     }
@@ -421,9 +421,9 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.render(
         this.templatePath('.forceignore'),
         this.destinationPath(
-          path.join(this.outputdir, projectname, '.forceignore')
+          path.join(this.outputdir, projectname, '.forceignore'),
         ),
-        {}
+        {},
       );
 
       // Derive a camelCase app name from the project name for CAMA metadata
@@ -443,16 +443,16 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         ...folderlayout,
         'digitalExperiences',
         'experiencecontainer',
-        appName
+        appName,
       );
 
       // DigitalExperienceBundle meta XML
       await this.render(
         this.templatePath('nativemobile/digitalExperience-meta.xml'),
         this.destinationPath(
-          path.join(ecBase, `${appName}.digitalExperience-meta.xml`)
+          path.join(ecBase, `${appName}.digitalExperience-meta.xml`),
         ),
-        camaData
+        camaData,
       );
 
       // EC Definition
@@ -463,10 +463,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaECDefinition',
             appName,
-            '_meta.json'
-          )
+            '_meta.json',
+          ),
         ),
-        camaData
+        camaData,
       );
       await this.render(
         this.templatePath('nativemobile/ecDefinition-content.json'),
@@ -475,10 +475,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaECDefinition',
             appName,
-            'content.json'
-          )
+            'content.json',
+          ),
         ),
-        camaData
+        camaData,
       );
 
       // App Metadata
@@ -489,10 +489,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaAppMetadata',
             'appMetadata',
-            '_meta.json'
-          )
+            '_meta.json',
+          ),
         ),
-        camaData
+        camaData,
       );
       await this.render(
         this.templatePath('nativemobile/appMetadata-content.json'),
@@ -501,10 +501,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaAppMetadata',
             'appMetadata',
-            'content.json'
-          )
+            'content.json',
+          ),
         ),
-        camaData
+        camaData,
       );
 
       // Build Metadata
@@ -515,10 +515,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaBuildMetadata',
             'buildMetadata',
-            '_meta.json'
-          )
+            '_meta.json',
+          ),
         ),
-        camaData
+        camaData,
       );
       await this.render(
         this.templatePath('nativemobile/buildMetadata-content.json'),
@@ -527,10 +527,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaBuildMetadata',
             'buildMetadata',
-            'content.json'
-          )
+            'content.json',
+          ),
         ),
-        camaData
+        camaData,
       );
 
       // Home Screen
@@ -541,10 +541,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaScreen',
             'homeScreen',
-            '_meta.json'
-          )
+            '_meta.json',
+          ),
         ),
-        camaData
+        camaData,
       );
       await this.render(
         this.templatePath('nativemobile/homeScreen-content.json'),
@@ -553,10 +553,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             ecBase,
             'experience__camaScreen',
             'homeScreen',
-            'content.json'
-          )
+            'content.json',
+          ),
         ),
-        camaData
+        camaData,
       );
     }
 
@@ -581,7 +581,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
             value.push(analyticsVscodeExt);
           }
           return value;
-        }
+        },
       );
 
       // ESLint config
@@ -594,7 +594,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.generateTypeScriptConfig(
         isTypeScript,
         projectname,
-        defaultpackagedir
+        defaultpackagedir,
       );
     }
 
@@ -605,9 +605,9 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         await this.render(
           this.templatePath(`${file}.json`),
           this.destinationPath(
-            path.join(this.outputdir, projectname, '.vscode', `${file}.json`)
+            path.join(this.outputdir, projectname, '.vscode', `${file}.json`),
           ),
-          {}
+          {},
         );
       }
 
@@ -616,7 +616,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         await this.render(
           this.templatePathWithFallback(path.join(template, file), file),
           this.destinationPath(path.join(this.outputdir, projectname, out)),
-          {}
+          {},
         );
       }
 
@@ -625,7 +625,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         await this.render(
           this.templatePath(path.join('agent', 'md', src)),
           this.destinationPath(path.join(...folderlayout, destDir, fileName)),
-          {}
+          {},
         );
       }
     }
@@ -633,7 +633,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     if (BUILT_IN_FULL_TEMPLATES.has(template)) {
       await generateBuiltInFullTemplate(template, projectname, {
         templateDir: this.templatePath(
-          FULL_TEMPLATE_DEFAULT_NAMES[template]?.base ?? template
+          FULL_TEMPLATE_DEFAULT_NAMES[template]?.base ?? template,
         ),
         projectDir: path.join(this.outputdir, projectname),
         defaultpackagedir,
@@ -660,14 +660,14 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.render(
         this.templatePath(path.join(HUSKY_FOLDER, file)),
         this.destinationPath(path.join(huskyDirPath, file)),
-        {}
+        {},
       );
     }
   }
 
   private async makeEmptyFolders(
     toplevelfolders: string[],
-    metadatafolders: string[]
+    metadatafolders: string[],
   ) {
     for (const folder of metadatafolders) {
       await this._fs.promises.mkdir(path.join(...toplevelfolders, folder), {

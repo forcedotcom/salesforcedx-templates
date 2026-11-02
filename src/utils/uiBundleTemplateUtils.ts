@@ -20,7 +20,7 @@ function sanitizeSegment(name: string): string {
   const trimmed = name.trimEnd();
   if (trimmed !== name) {
     console.warn(
-      `[uiBundleTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`
+      `[uiBundleTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`,
     );
   }
   return trimmed;
@@ -215,7 +215,7 @@ const TEMPLATE_PLACEHOLDERS_SPEC: TemplatePlaceholderEntry[] =
 
 function resolveReplacement(
   replacement: string,
-  ctx: PlaceholderReplacementCtx
+  ctx: PlaceholderReplacementCtx,
 ): string {
   switch (replacement) {
     case 'defaultpackagedir':
@@ -244,7 +244,7 @@ export function toAlphanumericForPath(name: string): string {
  */
 export function ensureLowercaseUrlName(
   content: string,
-  destPath: string
+  destPath: string,
 ): string {
   if (
     path.basename(destPath) !== 'content.json' ||
@@ -302,7 +302,7 @@ export function isLikelyText(filename: string, buffer: Buffer): boolean {
 /** Renders an EJS template file with the given data (stateless, no generator dependency). */
 export async function renderEjsFile(
   sourcePath: string,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
 ): Promise<string> {
   const { renderFile } = await import('ejs');
   return new Promise((resolve, reject) => {
@@ -326,7 +326,7 @@ export type GenerateBuiltInFullTemplateOptions = {
   /** Renders an EJS template file; use renderEjsFile from this module */
   renderEjs: (
     filePath: string,
-    data: Record<string, unknown>
+    data: Record<string, unknown>,
   ) => Promise<string>;
   /** Called for each file created (e.g. to push to generator changes) */
   onFileCreated: (destPath: string) => void;
@@ -339,7 +339,7 @@ export type GenerateBuiltInFullTemplateOptions = {
 export async function generateBuiltInFullTemplate(
   template: string,
   projectname: string,
-  options: GenerateBuiltInFullTemplateOptions
+  options: GenerateBuiltInFullTemplateOptions,
 ): Promise<void> {
   const {
     templateDir,
@@ -374,19 +374,19 @@ export async function generateBuiltInFullTemplate(
     (entry) => [
       entry.placeholder,
       resolveReplacement(entry.replacement, replacementCtx),
-    ]
+    ],
   );
   // Add template-specific name replacements BEFORE placeholder replacements
   // to avoid double-replacement (e.g., _a_ -> reactexternalapptest, then reactexternalapp -> reactexternalapptest again)
   if (nameReplacementsEntry) {
     nameReplacements.unshift(
       [nameReplacementsEntry.withSuffix, `${projectnameAlphanumeric}1`],
-      [nameReplacementsEntry.base, projectnameAlphanumeric]
+      [nameReplacementsEntry.base, projectnameAlphanumeric],
     );
   }
   nameReplacements.push(
     [APP_PLACEHOLDER, projectnameAlphanumeric],
-    [APP_SUFFIX_PLACEHOLDER, `${projectnameAlphanumeric}1`]
+    [APP_SUFFIX_PLACEHOLDER, `${projectnameAlphanumeric}1`],
   );
 
   await generateFromProjectTemplateDir(templateDir, projectDir, templateVars, {
@@ -415,7 +415,7 @@ export type GenerateFromProjectTemplateDirOptions = {
   /** Renders an EJS template file with the given data; used for template files */
   renderEjs: (
     filePath: string,
-    data: Record<string, unknown>
+    data: Record<string, unknown>,
   ) => Promise<string>;
   /** Called for each file/dir created under destDir (for change tracking) */
   onFileCreated: (destPath: string) => void;
@@ -430,7 +430,7 @@ export async function generateFromProjectTemplateDir(
   sourceDir: string,
   destDir: string,
   templateVars: Record<string, unknown>,
-  options: GenerateFromProjectTemplateDirOptions
+  options: GenerateFromProjectTemplateDirOptions,
 ): Promise<void> {
   const { nameReplacements, renderEjs, onFileCreated } = options;
 
@@ -467,7 +467,7 @@ export async function generateFromProjectTemplateDir(
         sourcePath,
         destPath,
         templateVars,
-        options
+        options,
       );
       continue;
     }
@@ -487,7 +487,7 @@ export async function generateFromProjectTemplateDir(
         const rendered = await renderEjs(sourcePath, templateVars);
         const content = ensureLowercaseUrlName(
           applyReplacements(rendered),
-          destPath
+          destPath,
         );
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
@@ -497,7 +497,7 @@ export async function generateFromProjectTemplateDir(
         const str = raw.toString('utf8');
         const content = ensureLowercaseUrlName(
           applyReplacements(str),
-          destPath
+          destPath,
         );
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
@@ -511,7 +511,7 @@ export async function generateFromProjectTemplateDir(
         const str = content.toString('utf8');
         const replaced = ensureLowercaseUrlName(
           applyReplacements(str),
-          destPath
+          destPath,
         );
         await writeFile(destPath, replaced, 'utf8');
       } else {

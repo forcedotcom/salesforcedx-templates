@@ -242,5 +242,5 @@ export default defineConfig(
       'no-param-reassign': 'off',
     },
   },
-  eslintConfigPrettier
+  eslintConfigPrettier,
 );

@@ -29,7 +29,7 @@ export default class LightningInterfaceGenerator extends BaseGenerator<Lightning
       filetype: /\.intf$/,
       onMissing: () =>
         new Error(
-          nls.localize('MissingLightningInterfaceTemplate', [template])
+          nls.localize('MissingLightningInterfaceTemplate', [template]),
         ),
     });
 
@@ -42,21 +42,21 @@ export default class LightningInterfaceGenerator extends BaseGenerator<Lightning
           path.join(
             this.outputdir,
             interfacename,
-            `${interfacename}.intf-meta.xml`
-          )
+            `${interfacename}.intf-meta.xml`,
+          ),
         ),
         {
           apiVersion: this.apiversion,
           description: nls.localize('LightningInterfaceBundle'),
-        }
+        },
       );
     }
     await this.render(
       this.templatePath(`${template}.intf`),
       this.destinationPath(
-        path.join(this.outputdir, interfacename, `${interfacename}.intf`)
+        path.join(this.outputdir, interfacename, `${interfacename}.intf`),
       ),
-      {}
+      {},
     );
   }
 }

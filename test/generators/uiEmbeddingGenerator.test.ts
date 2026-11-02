@@ -53,7 +53,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw();
     });
 
@@ -67,7 +67,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: nonLwcOutputDir,
             internal: false,
-          })
+          }),
       ).to.throw(/lwc/i);
     });
 
@@ -81,7 +81,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.not.throw();
     });
 
@@ -95,7 +95,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.not.throw();
     });
 
@@ -109,7 +109,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw(/https/i);
     });
 
@@ -123,7 +123,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw(/https/i);
     });
 
@@ -137,7 +137,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw(/https/i);
     });
 
@@ -151,7 +151,7 @@ describe('UIEmbeddingGenerator', () => {
             title: '   ',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw(/title/i);
     });
 
@@ -165,7 +165,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw(/allow-everything/);
     });
 
@@ -179,7 +179,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.not.throw();
     });
 
@@ -193,7 +193,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'Demo',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw(/single-quote/);
     });
 
@@ -207,7 +207,7 @@ describe('UIEmbeddingGenerator', () => {
             title: 'My "App"',
             outputdir: lwcOutputDir,
             internal: true,
-          })
+          }),
       ).to.throw(/double-quote/);
     });
   });
@@ -231,18 +231,18 @@ describe('UIEmbeddingGenerator', () => {
       assertFileExists(path.join(base, 'embeddingDemo.css'));
       expect(
         fs.existsSync(path.join(base, 'embeddingDemo.js-meta.xml')),
-        'meta xml should not exist for internal'
+        'meta xml should not exist for internal',
       ).to.be.false;
 
       assertFileContent(path.join(base, 'embeddingDemo.html'), 'allow-scripts');
       assertFileContent(
         path.join(base, 'embeddingDemo.html'),
-        'title="Demo Shell"'
+        'title="Demo Shell"',
       );
       assertFileContent(path.join(base, 'embeddingDemo.js'), 'EmbeddingDemo');
       assertFileContent(
         path.join(base, 'embeddingDemo.js'),
-        'https://app.example.com'
+        'https://app.example.com',
       );
 
       expect(result.created.length).to.be.greaterThan(0);
@@ -263,7 +263,7 @@ describe('UIEmbeddingGenerator', () => {
       const meta = path.join(
         lwcOutputDir,
         'embeddingDemo',
-        'embeddingDemo.js-meta.xml'
+        'embeddingDemo.js-meta.xml',
       );
       assertFileExists(meta);
       assertFileContent(meta, 'Embedding Demo');

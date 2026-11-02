@@ -42,15 +42,15 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
           // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- Blank SObject names use the default too.
           sobjectType: sobjecttype?.trim() || 'SObject',
         }),
-      }
+      },
     );
 
     await this.render(
       this.templatePath('_class.cls-meta.xml'),
       this.destinationPath(
-        path.join(this.outputdir, `${classname}.cls-meta.xml`)
+        path.join(this.outputdir, `${classname}.cls-meta.xml`),
       ),
-      { apiName: classname, apiVersion: this.apiversion }
+      { apiName: classname, apiVersion: this.apiversion },
     );
   }
 }

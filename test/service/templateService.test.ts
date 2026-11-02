@@ -80,7 +80,7 @@ describe('TemplateService', () => {
         'testsoutput',
         'libraryCreate',
         'apexClass',
-        'LibraryCreateClass.cls'
+        'LibraryCreateClass.cls',
       );
       const expectedApexClassContent =
         'public with sharing class LibraryCreateClass';
@@ -88,7 +88,7 @@ describe('TemplateService', () => {
         'testsoutput',
         'libraryCreate',
         'apexClass',
-        'LibraryCreateClass.cls-meta.xml'
+        'LibraryCreateClass.cls-meta.xml',
       );
       const expectedApexClassMetaContent = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -101,7 +101,7 @@ describe('TemplateService', () => {
       assertFileContent(expectedApexClassPath, expectedApexClassContent);
       assertFileContent(
         expectedApexClassMetaPath,
-        expectedApexClassMetaContent
+        expectedApexClassMetaContent,
       );
     });
   });
@@ -130,11 +130,11 @@ describe('TemplateService', () => {
       });
       assertFileContent(
         path.join(outputdir, 'MyQueueable.cls'),
-        'public with sharing class MyQueueable implements Queueable, Finalizer'
+        'public with sharing class MyQueueable implements Queueable, Finalizer',
       );
       assertFileContent(
         path.join(outputdir, 'MyQueueable.cls-meta.xml'),
-        expectedMetaContent
+        expectedMetaContent,
       );
     });
 
@@ -151,7 +151,7 @@ describe('TemplateService', () => {
       assertFileContent(file, 'SELECT Id FROM SObject');
       assertFileContent(
         path.join(outputdir, 'MyBatchable.cls-meta.xml'),
-        expectedMetaContent
+        expectedMetaContent,
       );
     });
 
@@ -169,7 +169,7 @@ describe('TemplateService', () => {
       assertFileContent(file, 'SELECT Id FROM Account');
       assertFileContent(
         path.join(outputdir, 'MyBatchable.cls-meta.xml'),
-        expectedMetaContent
+        expectedMetaContent,
       );
     });
 
@@ -209,7 +209,7 @@ describe('TemplateService', () => {
             classname: 'MyBatchable',
             sobjecttype: 'My Object',
             outputdir,
-          })
+          }),
         )
         .to.throw(nls.localize('InvalidSObjectType', 'My Object'));
     });
@@ -219,12 +219,12 @@ describe('TemplateService', () => {
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/main/test/custom-templates';
     const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
-      new URL(TEST_CUSTOM_TEMPLATES_REPO)
+      new URL(TEST_CUSTOM_TEMPLATES_REPO),
     );
 
     beforeEach(async () => {
       await remove(
-        path.join('testsoutput', 'customLibraryCreate', 'apexclass')
+        path.join('testsoutput', 'customLibraryCreate', 'apexclass'),
       );
     });
     afterEach(() => {
@@ -242,16 +242,16 @@ describe('TemplateService', () => {
           outputdir: path.join(
             'testsoutput',
             'customLibraryCreate',
-            'apexClass'
+            'apexClass',
           ),
         },
-        customTemplates
+        customTemplates,
       );
       const expectedApexClassPath = path.join(
         'testsoutput',
         'customLibraryCreate',
         'apexClass',
-        'LibraryCreateClass.cls'
+        'LibraryCreateClass.cls',
       );
       const expectedApexClassContent =
         'public with sharing class CustomLibraryCreateClass';
@@ -259,7 +259,7 @@ describe('TemplateService', () => {
         'testsoutput',
         'customLibraryCreate',
         'apexClass',
-        'LibraryCreateClass.cls-meta.xml'
+        'LibraryCreateClass.cls-meta.xml',
       );
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
@@ -270,7 +270,7 @@ describe('TemplateService', () => {
       assertFileContent(expectedApexClassPath, expectedApexClassContent);
       assertFileContent(
         expectedApexClassMetaPath,
-        expectedApexClassMetaContent
+        expectedApexClassMetaContent,
       );
     });
 
@@ -287,16 +287,16 @@ describe('TemplateService', () => {
           outputdir: path.join(
             'testsoutput',
             'customLibraryCreate',
-            'apexClass'
+            'apexClass',
           ),
         },
-        customTemplates
+        customTemplates,
       );
       const expectedApexClassPath = path.join(
         'testsoutput',
         'customLibraryCreate',
         'apexClass',
-        'LibraryCreateClass.cls'
+        'LibraryCreateClass.cls',
       );
       const expectedApexClassContent =
         'public with sharing class CustomLibraryCreateClass';
@@ -304,7 +304,7 @@ describe('TemplateService', () => {
         'testsoutput',
         'customLibraryCreate',
         'apexClass',
-        'LibraryCreateClass.cls-meta.xml'
+        'LibraryCreateClass.cls-meta.xml',
       );
       const expectedApexClassMetaContent = `<?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
@@ -315,7 +315,7 @@ describe('TemplateService', () => {
       assertFileContent(expectedApexClassPath, expectedApexClassContent);
       assertFileContent(
         expectedApexClassMetaPath,
-        expectedApexClassMetaContent
+        expectedApexClassMetaContent,
       );
     });
 
@@ -332,14 +332,14 @@ describe('TemplateService', () => {
             outputdir: path.join(
               'testsoutput',
               'customLibraryCreate',
-              'apexClass'
+              'apexClass',
             ),
           },
-          customTemplates
+          customTemplates,
         )
         .should.be.rejectedWith(
           Error,
-          nls.localize('localCustomTemplateDoNotExist', localPath)
+          nls.localize('localCustomTemplateDoNotExist', localPath),
         );
     });
 
@@ -361,17 +361,17 @@ describe('TemplateService', () => {
             outputdir: path.join(
               'testsoutput',
               'customLibraryCreate',
-              'apexClass'
+              'apexClass',
             ),
           },
-          customTemplates
+          customTemplates,
         )
         .should.be.rejectedWith(
           Error,
           nls.localize(
             'customTemplatesCannotRetrieveDefaultBranch',
-            customTemplates
-          )
+            customTemplates,
+          ),
         );
     });
 
@@ -388,14 +388,14 @@ describe('TemplateService', () => {
             outputdir: path.join(
               'testsoutput',
               'customLibraryCreate',
-              'apexClass'
+              'apexClass',
             ),
           },
-          customTemplates
+          customTemplates,
         )
         .should.be.rejectedWith(
           Error,
-          nls.localize('customTemplatesInvalidRepoUrl', customTemplates)
+          nls.localize('customTemplatesInvalidRepoUrl', customTemplates),
         );
     });
 
@@ -403,7 +403,7 @@ describe('TemplateService', () => {
       const templateService = TemplateService.getInstance(process.cwd());
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
         'https',
-        'http'
+        'http',
       );
       await templateService
         .create(
@@ -414,14 +414,14 @@ describe('TemplateService', () => {
             outputdir: path.join(
               'testsoutput',
               'customLibraryCreate',
-              'apexClass'
+              'apexClass',
             ),
           },
-          customTemplates
+          customTemplates,
         )
         .should.be.rejectedWith(
           Error,
-          nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"')
+          nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"'),
         );
     });
 
@@ -429,7 +429,7 @@ describe('TemplateService', () => {
       const templateService = TemplateService.getInstance(process.cwd());
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
         'github.com',
-        'gitlab.com'
+        'gitlab.com',
       );
       await templateService
         .create(
@@ -440,14 +440,14 @@ describe('TemplateService', () => {
             outputdir: path.join(
               'testsoutput',
               'customLibraryCreate',
-              'apexClass'
+              'apexClass',
             ),
           },
-          customTemplates
+          customTemplates,
         )
         .should.be.rejectedWith(
           Error,
-          nls.localize('customTemplatesSupportsGitHubOnly', customTemplates)
+          nls.localize('customTemplatesSupportsGitHubOnly', customTemplates),
         );
     });
 
@@ -484,7 +484,7 @@ describe('TemplateService', () => {
       const forceLoadingRemoteRepo = true;
       const result = await setCustomTemplatesRootPathOrGitRepo(
         customTemplates,
-        forceLoadingRemoteRepo
+        forceLoadingRemoteRepo,
       );
 
       // Verify that the function returns a path and the folder exists
@@ -510,7 +510,7 @@ describe('TemplateService', () => {
         .expect(result.outputDir)
         .to.equal(
           path.resolve(process.cwd(), 'testsoutput/libraryCreate/apexClass'),
-          'outputDir property did not match'
+          'outputDir property did not match',
         );
 
       chai
@@ -518,22 +518,22 @@ describe('TemplateService', () => {
         .to.eql(
           [
             path.normalize(
-              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
+              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls',
             ),
             path.normalize(
-              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
+              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml',
             ),
           ],
-          'Created property did not match'
+          'Created property did not match',
         );
 
       const actual = `target dir = ${path.resolve(
         process.cwd(),
-        'testsoutput/libraryCreate/apexClass'
+        'testsoutput/libraryCreate/apexClass',
       )}\n  create ${path.normalize(
-        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
+        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls',
       )}\n  create ${path.normalize(
-        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
+        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml',
       )}\n`;
 
       chai
@@ -561,7 +561,7 @@ describe('TemplateService', () => {
   describe('Generators', () => {
     it('should have a generator for each TemplateType', () => {
       const templateTypes = Object.values(TemplateType).filter(
-        (value) => typeof value === 'number'
+        (value) => typeof value === 'number',
       );
 
       for (const templateType of templateTypes) {
@@ -570,7 +570,7 @@ describe('TemplateService', () => {
           chai.expect(generator).to.not.be.undefined;
         } catch {
           throw new Error(
-            `No generator found for template type: ${TemplateType[templateType]}`
+            `No generator found for template type: ${TemplateType[templateType]}`,
           );
         }
       }
@@ -590,7 +590,7 @@ describe('TemplateService', () => {
         {
           templatename: 'analytics',
           outputdir: path.join('testsoutput', 'libraryCreate', 'waveTemplates'),
-        }
+        },
       );
 
       chai
@@ -607,7 +607,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/waveTemplates/analytics/variables.json',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -628,7 +628,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -651,7 +651,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/apexTrigger/LibraryCreateTrigger.trigger-meta.xml',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -679,7 +679,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.svg',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -693,7 +693,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
           template: 'default',
           type: 'aura',
-        }
+        },
       );
 
       chai
@@ -711,7 +711,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentRenderer.js',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -725,7 +725,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
           template: 'default',
           type: 'lwc',
-        }
+        },
       );
 
       chai
@@ -738,7 +738,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js-meta.xml',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -752,7 +752,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
           template: 'typeScript',
           type: 'lwc',
-        }
+        },
       );
 
       chai
@@ -766,7 +766,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/.gitignore',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -787,7 +787,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/aura/LibraryCreateEvent/LibraryCreateEvent.evt',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -800,7 +800,7 @@ describe('TemplateService', () => {
           interfacename: 'LibraryCreateInterface',
           outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
           template: 'DefaultLightningIntf',
-        }
+        },
       );
 
       chai
@@ -811,7 +811,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/aura/LibraryCreateInterface/LibraryCreateInterface.intf',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -832,7 +832,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/aura/LibraryCreateTest.resource',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -868,7 +868,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/project/LibraryCreateProject/sfdx-project.json',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -892,7 +892,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/project/LibraryCreateProject/.forceignore',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -927,7 +927,7 @@ describe('TemplateService', () => {
             `${ecBase}/experience__camaScreen/homeScreen/content.json`,
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -961,7 +961,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/project/LibraryCreateProject/package.json',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -987,7 +987,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/tsproject/TypeScriptProject/sfdx-project.json',
             'testsoutput/libraryCreate/tsproject/TypeScriptProject/eslint.config.js',
             'testsoutput/libraryCreate/tsproject/TypeScriptProject/.vscode/settings.json',
-          ].map((p) => path.normalize(p))
+          ].map((p) => path.normalize(p)),
         );
 
       // Verify tsconfig.json was created
@@ -996,7 +996,7 @@ describe('TemplateService', () => {
         'libraryCreate',
         'tsproject',
         'TypeScriptProject',
-        'tsconfig.json'
+        'tsconfig.json',
       );
       chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
 
@@ -1006,24 +1006,24 @@ describe('TemplateService', () => {
         'libraryCreate',
         'tsproject',
         'TypeScriptProject',
-        'sfdx-project.json'
+        'sfdx-project.json',
       );
       const projectJsonContent = JSON.parse(
-        fs.readFileSync(projectJsonPath, 'utf-8')
+        fs.readFileSync(projectJsonPath, 'utf-8'),
       );
       chai.expect(projectJsonContent.defaultLwcLanguage).to.equal('typescript');
     });
 
     it('should create Project (analytics) with TypeScript', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'tsanalyticsproject')
+        path.join('testsoutput', 'libraryCreate', 'tsanalyticsproject'),
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.Project, {
         outputdir: path.join(
           'testsoutput',
           'libraryCreate',
-          'tsanalyticsproject'
+          'tsanalyticsproject',
         ),
         projectname: 'TSAnalyticsProject',
         template: 'analytics',
@@ -1040,7 +1040,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/eslint.config.js',
             'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/.vscode/settings.json',
             'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/sfdx-project.json',
-          ].map((p) => path.normalize(p))
+          ].map((p) => path.normalize(p)),
         );
 
       // Verify TypeScript-specific files
@@ -1049,7 +1049,7 @@ describe('TemplateService', () => {
         'libraryCreate',
         'tsanalyticsproject',
         'TSAnalyticsProject',
-        'tsconfig.json'
+        'tsconfig.json',
       );
       chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
     });
@@ -1101,21 +1101,21 @@ describe('TemplateService', () => {
             `${md}/permissionsetgroups/AFDX_User_Perms.permissionsetgroup-meta.xml`,
           ]
             .map((f) => path.normalize(f))
-            .sort()
+            .sort(),
         );
 
       assertFileContent(
         path.join(result.outputDir, 'LibraryCreateProject', 'README.md'),
-        '# Agentforce Project'
+        '# Agentforce Project',
       );
       assertFileContent(
         path.join(
           result.outputDir,
           'LibraryCreateProject',
           'config',
-          'project-scratch-def.json'
+          'project-scratch-def.json',
         ),
-        'einsteinGptSettings'
+        'einsteinGptSettings',
       );
     });
 
@@ -1132,34 +1132,34 @@ describe('TemplateService', () => {
           template: 'reactinternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactInternalApp/config/project-scratch-def.json'
-          )
+            'testsoutput/libraryCreate/project/MyReactInternalApp/config/project-scratch-def.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactInternalApp/sfdx-project.json'
-          )
+            'testsoutput/libraryCreate/project/MyReactInternalApp/sfdx-project.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactInternalApp/sample.txt'
-          )
+            'testsoutput/libraryCreate/project/MyReactInternalApp/sample.txt',
+          ),
         );
       const samplePath = path.join(
         result.outputDir,
         'MyReactInternalApp',
-        'sample.txt'
+        'sample.txt',
       );
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
@@ -1179,27 +1179,27 @@ describe('TemplateService', () => {
           template: 'reactexternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactExternalApp/config/project-scratch-def.json'
-          )
+            'testsoutput/libraryCreate/project/MyReactExternalApp/config/project-scratch-def.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactExternalApp/sample.txt'
-          )
+            'testsoutput/libraryCreate/project/MyReactExternalApp/sample.txt',
+          ),
         );
       const samplePath = path.join(
         result.outputDir,
         'MyReactExternalApp',
-        'sample.txt'
+        'sample.txt',
       );
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
@@ -1208,8 +1208,8 @@ describe('TemplateService', () => {
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyReactExternalApp/force-app/main/default/uiBundles/MyReactExternalApp/src/features/language-switcher/sample.txt'
-          )
+            'testsoutput/libraryCreate/project/MyReactExternalApp/force-app/main/default/uiBundles/MyReactExternalApp/src/features/language-switcher/sample.txt',
+          ),
         );
     });
 
@@ -1226,34 +1226,34 @@ describe('TemplateService', () => {
           template: 'angularinternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularInternalApp/config/project-scratch-def.json'
-          )
+            'testsoutput/libraryCreate/project/MyAngularInternalApp/config/project-scratch-def.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularInternalApp/sfdx-project.json'
-          )
+            'testsoutput/libraryCreate/project/MyAngularInternalApp/sfdx-project.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularInternalApp/sample.txt'
-          )
+            'testsoutput/libraryCreate/project/MyAngularInternalApp/sample.txt',
+          ),
         );
       const samplePath = path.join(
         result.outputDir,
         'MyAngularInternalApp',
-        'sample.txt'
+        'sample.txt',
       );
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
@@ -1273,27 +1273,27 @@ describe('TemplateService', () => {
           template: 'angularexternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularExternalApp/config/project-scratch-def.json'
-          )
+            'testsoutput/libraryCreate/project/MyAngularExternalApp/config/project-scratch-def.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularExternalApp/sample.txt'
-          )
+            'testsoutput/libraryCreate/project/MyAngularExternalApp/sample.txt',
+          ),
         );
       const samplePath = path.join(
         result.outputDir,
         'MyAngularExternalApp',
-        'sample.txt'
+        'sample.txt',
       );
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
@@ -1313,7 +1313,7 @@ describe('TemplateService', () => {
           template: 'angularinternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai.expect(result.created).to.not.be.empty;
@@ -1338,7 +1338,7 @@ describe('TemplateService', () => {
           template: 'reactinternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai.expect(result.created).to.not.be.empty;
@@ -1363,34 +1363,34 @@ describe('TemplateService', () => {
           template: 'vueinternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyVueInternalApp/config/project-scratch-def.json'
-          )
+            'testsoutput/libraryCreate/project/MyVueInternalApp/config/project-scratch-def.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyVueInternalApp/sfdx-project.json'
-          )
+            'testsoutput/libraryCreate/project/MyVueInternalApp/sfdx-project.json',
+          ),
         );
       chai
         .expect(result.created)
         .to.include(
           path.normalize(
-            'testsoutput/libraryCreate/project/MyVueInternalApp/sample.txt'
-          )
+            'testsoutput/libraryCreate/project/MyVueInternalApp/sample.txt',
+          ),
         );
       const samplePath = path.join(
         result.outputDir,
         'MyVueInternalApp',
-        'sample.txt'
+        'sample.txt',
       );
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
@@ -1410,7 +1410,7 @@ describe('TemplateService', () => {
           template: 'vueinternalapp',
           defaultpackagedir: 'force-app',
         },
-        fixtureRoot
+        fixtureRoot,
       );
 
       chai.expect(result.created).to.not.be.empty;
@@ -1440,13 +1440,13 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/staticResource/LibraryCreateResource.resource-meta.xml',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
     it('should create VisualforceComponent', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'visualforceComponent')
+        path.join('testsoutput', 'libraryCreate', 'visualforceComponent'),
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
@@ -1457,10 +1457,10 @@ describe('TemplateService', () => {
           outputdir: path.join(
             'testsoutput',
             'libraryCreate',
-            'visualforceComponent'
+            'visualforceComponent',
           ),
           template: 'DefaultVFComponent',
-        }
+        },
       );
 
       chai
@@ -1471,13 +1471,13 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/visualforceComponent/LibraryCreateComponent.component-meta.xml',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
     it('should create VisualforcePage', async () => {
       await remove(
-        path.join('testsoutput', 'libraryCreate', 'visualforcePage')
+        path.join('testsoutput', 'libraryCreate', 'visualforcePage'),
       );
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(
@@ -1488,10 +1488,10 @@ describe('TemplateService', () => {
           outputdir: path.join(
             'testsoutput',
             'libraryCreate',
-            'visualforcePage'
+            'visualforcePage',
           ),
           template: 'DefaultVFPage',
-        }
+        },
       );
 
       chai
@@ -1502,7 +1502,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/visualforcePage/LibraryCreatePage.page-meta.xml',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -1526,7 +1526,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/uiBundles/LibraryCreateUIBundle/ui-bundle.json',
           ]
             .map((p) => path.normalize(p))
-            .sort()
+            .sort(),
         );
     });
 
@@ -1542,10 +1542,10 @@ describe('TemplateService', () => {
 
       const created = result.created.map((p) => path.normalize(p));
       const uiBundleJson = path.normalize(
-        'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/ui-bundle.json'
+        'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/ui-bundle.json',
       );
       const uiBundleMetaXml = path.normalize(
-        'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/LibraryCreateReactApp.uibundle-meta.xml'
+        'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/LibraryCreateReactApp.uibundle-meta.xml',
       );
       chai.expect(created).to.include(uiBundleJson);
       chai.expect(created).to.include(uiBundleMetaXml);

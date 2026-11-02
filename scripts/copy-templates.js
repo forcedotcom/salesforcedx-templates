@@ -9,13 +9,9 @@ const path = require('path');
 const shell = require('shelljs');
 
 /** Single source: shared with src/utils/uiBundleTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
-const TEMPLATE_PLACEHOLDERS_SPEC = require(path.join(
-  __dirname,
-  '..',
-  'lib',
-  'utils',
-  'template-placeholders.js'
-)).default;
+const TEMPLATE_PLACEHOLDERS_SPEC = require(
+  path.join(__dirname, '..', 'lib', 'utils', 'template-placeholders.js'),
+).default;
 
 /**
  * Renames a directory to a placeholder name if it exists. Keeps template paths short for Windows.
@@ -65,7 +61,7 @@ const TEMPLATES = [
         'main',
         'default',
         'uiBundles',
-        'base-react-app'
+        'base-react-app',
       ),
     destSubpath: 'uiBundles/reactbasic',
   },
@@ -79,7 +75,7 @@ const TEMPLATES = [
         'main',
         'default',
         'uiBundles',
-        'base-angular-app'
+        'base-angular-app',
       ),
     destSubpath: 'uiBundles/angularbasic',
   },
@@ -93,7 +89,7 @@ const TEMPLATES = [
         'main',
         'default',
         'uiBundles',
-        'base-vue-app'
+        'base-vue-app',
       ),
     destSubpath: 'uiBundles/vuebasic',
   },
@@ -136,7 +132,7 @@ function copyTemplate(config) {
   try {
     const packageJsonPath = require.resolve(
       `${config.packageName}/package.json`,
-      { paths: [currDir] }
+      { paths: [currDir] },
     );
     const packageDir = path.dirname(packageJsonPath);
     const sourceDir = config.getSourceDir(packageDir);
@@ -209,7 +205,7 @@ function copyTemplate(config) {
           const newPath = renameDirToPlaceholder(
             parentPath,
             step.dirInNpm,
-            toPath
+            toPath,
           );
           if (newPath) return { newPath, parentPath, toPath };
         }
@@ -255,7 +251,7 @@ function copyTemplate(config) {
     }
 
     console.log(
-      `Copied ${config.packageName} to src/templates/${config.destSubpath}`
+      `Copied ${config.packageName} to src/templates/${config.destSubpath}`,
     );
   } catch (error) {
     console.error(`Failed to copy ${config.packageName}:`, error.message);
@@ -306,7 +302,7 @@ function generateUiBundleLockFiles(templatesDir) {
       });
     } catch (error) {
       console.error(
-        `Failed to generate package-lock.json in ${rel}: ${error.message}`
+        `Failed to generate package-lock.json in ${rel}: ${error.message}`,
       );
       process.exit(1);
     }
@@ -330,7 +326,7 @@ function findUiBundlePackageJsonDirs(dir) {
     }
 
     const hasPackageJson = entries.some(
-      (e) => e.isFile() && e.name === 'package.json'
+      (e) => e.isFile() && e.name === 'package.json',
     );
     if (insideUiBundles && hasPackageJson) {
       results.push(current);
@@ -343,7 +339,7 @@ function findUiBundlePackageJsonDirs(dir) {
         entry.name === 'uiBundles' || entry.name === '_w_';
       walk(
         path.join(current, entry.name),
-        insideUiBundles || isUiBundleSegment
+        insideUiBundles || isUiBundleSegment,
       );
     }
   }

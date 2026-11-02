@@ -29,14 +29,14 @@ export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptio
     await this.render(
       this.templatePath(`${template}.trigger`),
       this.destinationPath(path.join(this.outputdir, `${triggername}.trigger`)),
-      { triggername, sobject, triggerEvents: triggerevents }
+      { triggername, sobject, triggerEvents: triggerevents },
     );
     await this.render(
       this.templatePath('_trigger.trigger-meta.xml'),
       this.destinationPath(
-        path.join(this.outputdir, `${triggername}.trigger-meta.xml`)
+        path.join(this.outputdir, `${triggername}.trigger-meta.xml`),
       ),
-      { apiVersion: this.apiversion }
+      { apiVersion: this.apiversion },
     );
   }
 }

@@ -1,5 +1,10 @@
 #!/usr/bin/env node
-import { decideAiAutoApprove, BOT_LOGIN, TEAM_ORG, TEAM_SLUG } from './ai-auto-approve.mjs';
+import {
+  decideAiAutoApprove,
+  BOT_LOGIN,
+  TEAM_ORG,
+  TEAM_SLUG,
+} from './ai-auto-approve.mjs';
 
 const gh = async (path, { method = 'GET', body, token } = {}) => {
   const response = await fetch(`https://api.github.com${path}`, {
@@ -8,14 +13,16 @@ const gh = async (path, { method = 'GET', body, token } = {}) => {
       Accept: 'application/vnd.github+json',
       Authorization: `Bearer ${token}`,
       'X-GitHub-Api-Version': '2022-11-28',
-      ...(body ? { 'Content-Type': 'application/json' } : {})
+      ...(body ? { 'Content-Type': 'application/json' } : {}),
     },
-    body: body ? JSON.stringify(body) : undefined
+    body: body ? JSON.stringify(body) : undefined,
   });
   const text = await response.text();
   const json = text ? JSON.parse(text) : {};
   if (!response.ok) {
-    const error = new Error(`${method} ${path} ${response.status}: ${json.message ?? text}`);
+    const error = new Error(
+      `${method} ${path} ${response.status}: ${json.message ?? text}`,
+    );
     error.status = response.status;
     throw error;
   }
@@ -24,7 +31,10 @@ const gh = async (path, { method = 'GET', body, token } = {}) => {
 
 const teamMembershipState = async ({ token, login }) => {
   try {
-    const membership = await gh(`/orgs/${TEAM_ORG}/teams/${TEAM_SLUG}/memberships/${login}`, { token });
+    const membership = await gh(
+      `/orgs/${TEAM_ORG}/teams/${TEAM_SLUG}/memberships/${login}`,
+      { token },
+    );
     return membership.state ?? 'none';
   } catch (error) {
     if (error.status === 404) return 'none';
@@ -33,28 +43,33 @@ const teamMembershipState = async ({ token, login }) => {
 };
 
 const listReviews = async ({ token, owner, repo, pullNumber }) => {
-  const reviews = await gh(`/repos/${owner}/${repo}/pulls/${pullNumber}/reviews?per_page=100`, { token });
-  return reviews.map(review => ({
+  const reviews = await gh(
+    `/repos/${owner}/${repo}/pulls/${pullNumber}/reviews?per_page=100`,
+    { token },
+  );
+  return reviews.map((review) => ({
     authorLogin: review.user?.login,
     state: review.state,
-    commitOid: review.commit_id
+    commitOid: review.commit_id,
   }));
 };
 
 const listChecks = async ({ token, owner, repo, headSha }) => {
   const [combined, checkRuns] = await Promise.all([
     gh(`/repos/${owner}/${repo}/commits/${headSha}/status`, { token }),
-    gh(`/repos/${owner}/${repo}/commits/${headSha}/check-runs?per_page=100`, { token })
+    gh(`/repos/${owner}/${repo}/commits/${headSha}/check-runs?per_page=100`, {
+      token,
+    }),
   ]);
-  const statuses = (combined.statuses ?? []).map(status => ({
+  const statuses = (combined.statuses ?? []).map((status) => ({
     name: status.context,
     state: status.state,
-    conclusion: status.state
+    conclusion: status.state,
   }));
-  const runs = (checkRuns.check_runs ?? []).map(run => ({
+  const runs = (checkRuns.check_runs ?? []).map((run) => ({
     name: run.name,
     status: run.status,
-    conclusion: run.conclusion
+    conclusion: run.conclusion,
   }));
   return [...statuses, ...runs];
 };
@@ -65,7 +80,9 @@ const main = async () => {
   if (!token) throw new Error('IDEE_GH_TOKEN is required');
   if (!eventPath) throw new Error('GITHUB_EVENT_PATH is required');
 
-  const event = JSON.parse(await (await import('node:fs/promises')).readFile(eventPath, 'utf8'));
+  const event = JSON.parse(
+    await (await import('node:fs/promises')).readFile(eventPath, 'utf8'),
+  );
   const comment = event.comment;
   const issue = event.issue;
   if (!comment || !issue) {
@@ -89,7 +106,7 @@ const main = async () => {
   const [membership, reviews, checks] = await Promise.all([
     teamMembershipState({ token, login: commenterLogin }),
     listReviews({ token, owner, repo, pullNumber }),
-    listChecks({ token, owner, repo, headSha })
+    listChecks({ token, owner, repo, headSha }),
   ]);
 
   const decision = decideAiAutoApprove({
@@ -103,7 +120,7 @@ const main = async () => {
     headSha,
     checks,
     reviews,
-    botLogin: BOT_LOGIN
+    botLogin: BOT_LOGIN,
   });
 
   console.log(`decision: ${decision.action} (${decision.reason})`);
@@ -115,13 +132,13 @@ const main = async () => {
     body: {
       commit_id: headSha,
       event: 'APPROVE',
-      body: 'Approved by svc-idee-bot after `/ai-auto approve` from the PR author (@forcedotcom/ide-experience).'
-    }
+      body: 'Approved by svc-idee-bot after `/ai-auto approve` from the PR author (@forcedotcom/ide-experience).',
+    },
   });
   console.log(`approved ${owner}/${repo}#${pullNumber} at ${headSha}`);
 };
 
-main().catch(error => {
+main().catch((error) => {
   console.error(error);
   process.exit(1);
 });

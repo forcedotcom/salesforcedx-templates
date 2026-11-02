@@ -48,24 +48,28 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
     const proxy = getProxyForUrl(url);
 
     // proxy will be empty string if no proxy is set
-    const infoResponse = await (proxy !== ''
-      ? got(url, {
-          agent: {
-            https: new HttpsProxyAgent({
-              keepAlive: true,
-              keepAliveMsecs: 1000,
-              maxSockets: 256,
-              maxFreeSockets: 256,
-              scheduling: 'lifo',
-              proxy,
-            }),
-          },
-        })
-      : got(url)
+    const infoResponse = await (
+      proxy !== ''
+        ? got(url, {
+            agent: {
+              https: new HttpsProxyAgent({
+                keepAlive: true,
+                keepAliveMsecs: 1000,
+                maxSockets: 256,
+                maxFreeSockets: 256,
+                scheduling: 'lifo',
+                proxy,
+              }),
+            },
+          })
+        : got(url)
     ).catch((e) => e);
     if (infoResponse.statusCode !== 200) {
       throw new Error(
-        nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href)
+        nls.localize(
+          'customTemplatesCannotRetrieveDefaultBranch',
+          repoUri.href,
+        ),
       );
     }
     const info = JSON.parse(infoResponse.body);
@@ -76,7 +80,7 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
     return { username, name, branch, filePath };
   } else {
     throw new Error(
-      nls.localize('customTemplatesInvalidRepoUrl', repoUri.href)
+      nls.localize('customTemplatesInvalidRepoUrl', repoUri.href),
     );
   }
 }
@@ -106,7 +110,7 @@ export function getStoragePathForCustomTemplates(repoUri: URL): string {
 export async function loadCustomTemplatesGitRepo(
   repoUri: URL,
   forceLoadingRemoteRepo = false,
-  fs: typeof nodeFs = nodeFs
+  fs: typeof nodeFs = nodeFs,
 ): Promise<string> {
   const customTemplatesPath = getStoragePathForCustomTemplates(repoUri);
   // Do not load the remote repo if already the repo is already downloaded.
@@ -118,13 +122,13 @@ export async function loadCustomTemplatesGitRepo(
     throw new Error(
       nls.localize(
         'customTemplatesShouldUseHttpsProtocol',
-        `"${repoUri.protocol}"`
-      )
+        `"${repoUri.protocol}"`,
+      ),
     );
   }
   if (repoUri.hostname !== 'github.com') {
     throw new Error(
-      nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href)
+      nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href),
     );
   }
 
@@ -134,7 +138,7 @@ export async function loadCustomTemplatesGitRepo(
 
   // Download the repo and extract to the SFDX global state folder
   const response = await got(
-    `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
+    `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`,
   );
 
   // Create a temporary file to extract from

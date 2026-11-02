@@ -28,7 +28,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
         nls.localize('InvalidFlexipageTemplate', [
           this.options.template,
           VALID_TEMPLATES.join(', '),
-        ])
+        ]),
       );
     }
 
@@ -43,7 +43,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
         nls.localize('TooManySecondaryFields', [
           secondaryFieldsCount.toString(),
           MAX_SECONDARY_FIELDS.toString(),
-        ])
+        ]),
       );
     }
 
@@ -72,7 +72,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     if (flexipageTemplatesGitRepo) {
       customTemplatesRootPath = await setCustomTemplatesRootPathOrGitRepo(
         flexipageTemplatesGitRepo,
-        forceLoadingRemoteRepo
+        forceLoadingRemoteRepo,
       );
     }
 
@@ -82,14 +82,14 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
       templateRootPath = path.join(
         customTemplatesRootPath,
         'flexipage',
-        template
+        template,
       );
       if (!fs.existsSync(templateRootPath)) {
         throw new Error(
           nls.localize('MissingFlexipageTemplate', [
             template,
             customTemplatesRootPath,
-          ])
+          ]),
         );
       }
     } else {
@@ -115,7 +115,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     await this.generateFlexipageFromTemplate(
       templateRootPath,
       this.outputdir,
-      templateVars
+      templateVars,
     );
   }
 
@@ -125,7 +125,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
   private async generateFlexipageFromTemplate(
     sourceDir: string,
     destDir: string,
-    templateVars: Record<string, unknown> & { flexipagename: string }
+    templateVars: Record<string, unknown> & { flexipagename: string },
   ): Promise<void> {
     const entries = await readdir(sourceDir, { withFileTypes: true });
 
@@ -145,7 +145,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
         await this.generateFlexipageFromTemplate(
           sourcePath,
           destPath,
-          templateVars
+          templateVars,
         );
       } else if (entry.isFile() && this.isTemplateFile(entry.name)) {
         // Render template files only (skip non-template files)

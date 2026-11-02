@@ -29,7 +29,7 @@ import { type ProjectTemplate } from './projectTemplates';
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
   options: TOptions,
   context?: GeneratorContext,
-  cwd?: string
+  cwd?: string,
 ) => BaseGenerator<TOptions>;
 
 /**
@@ -148,8 +148,7 @@ type BatchableApexClassOptions = ApexClassBaseOptions & {
 };
 
 export type ApexClassOptions =
-  | NonBatchableApexClassOptions
-  | BatchableApexClassOptions;
+  NonBatchableApexClassOptions | BatchableApexClassOptions;
 
 type ApexTriggerEvent =
   | 'before insert'

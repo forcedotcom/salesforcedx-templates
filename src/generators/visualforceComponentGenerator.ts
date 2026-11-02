@@ -23,7 +23,7 @@ export default class VisualforceComponentGenerator extends BaseGenerator<Visualf
       filetype: /\.component$/,
       onMissing: () =>
         new Error(
-          nls.localize('MissingVisualforceComponentTemplate', [template])
+          nls.localize('MissingVisualforceComponentTemplate', [template]),
         ),
     });
 
@@ -32,16 +32,16 @@ export default class VisualforceComponentGenerator extends BaseGenerator<Visualf
     await this.render(
       this.templatePath(`${template}.component`),
       this.destinationPath(
-        path.join(this.outputdir, `${componentname}.component`)
+        path.join(this.outputdir, `${componentname}.component`),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('_component.component-meta.xml'),
       this.destinationPath(
-        path.join(this.outputdir, `${componentname}.component-meta.xml`)
+        path.join(this.outputdir, `${componentname}.component-meta.xml`),
       ),
-      { vfLabel: label, apiVersion: this.apiversion }
+      { vfLabel: label, apiVersion: this.apiversion },
     );
   }
 }

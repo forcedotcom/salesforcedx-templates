@@ -50,7 +50,7 @@ describe('CreateUtil', () => {
     const templatesPath = path.resolve(
       __dirname,
       '../../src/templates',
-      templateType
+      templateType,
     );
 
     let readdirStub: SinonStub;
@@ -83,7 +83,7 @@ describe('CreateUtil', () => {
       const templates = CreateUtil.getCommandTemplatesForFiletype(
         /.cls$/,
         templateType,
-        fakeFs
+        fakeFs,
       );
       expect(templates).to.eql(names);
     };
@@ -94,7 +94,7 @@ describe('CreateUtil', () => {
     const templatePath = path.resolve(
       __dirname,
       '../../src/templates',
-      templateType
+      templateType,
     );
     const auraPath = path.join(templatePath, 'aura');
 
@@ -126,7 +126,7 @@ describe('CreateUtil', () => {
       const templates = CreateUtil.getCommandTemplatesInSubdirs(
         templateType,
         {},
-        fakeFs
+        fakeFs,
       );
       expect(templates).to.eql(['Template1', 'Template2']);
     });
@@ -139,7 +139,7 @@ describe('CreateUtil', () => {
       const templates = CreateUtil.getCommandTemplatesInSubdirs(
         templateType,
         { subdir: 'aura' },
-        fakeFs
+        fakeFs,
       );
       expect(templates).to.eql(['Template1', 'Template2']);
     });
@@ -168,7 +168,7 @@ describe('CreateUtil', () => {
       const templates = CreateUtil.getCommandTemplatesInSubdirs(
         templateType,
         { subdir: 'aura', filetype: /\.cmp$/ },
-        fakeFs
+        fakeFs,
       );
       expect(templates).to.eql(['Template1']);
     });

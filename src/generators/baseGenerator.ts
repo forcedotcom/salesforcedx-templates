@@ -30,7 +30,7 @@ type Changes = {
 export async function setCustomTemplatesRootPathOrGitRepo(
   pathOrRepoUri?: string,
   forceLoadingRemoteRepo = false,
-  fs: typeof nodeFs = nodeFs
+  fs: typeof nodeFs = nodeFs,
 ): Promise<string | undefined> {
   if (pathOrRepoUri === undefined) {
     return;
@@ -40,9 +40,8 @@ export async function setCustomTemplatesRootPathOrGitRepo(
     // if pathOrRepoUri is valid url, load the repo
     const url = new URL(pathOrRepoUri);
     if (process.env.ESBUILD_PLATFORM !== 'web' && url) {
-      const { loadCustomTemplatesGitRepo } = await import(
-        '../service/gitRepoUtils.js'
-      );
+      const { loadCustomTemplatesGitRepo } =
+        await import('../service/gitRepoUtils.js');
       return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }
   } catch (error) {
@@ -60,7 +59,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
       return localTemplatesPath;
     } else {
       throw new Error(
-        nls.localize('localCustomTemplateDoNotExist', localTemplatesPath)
+        nls.localize('localCustomTemplateDoNotExist', localTemplatesPath),
       );
     }
   }
@@ -137,7 +136,7 @@ abstract class NotYeoman {
   public async render(
     source: string,
     destination: string,
-    data?: Record<string, unknown>
+    data?: Record<string, unknown>,
   ): Promise<void> {
     const template = await this._fs.promises.readFile(source, 'utf8');
     const rendered = render(template, data ?? {});
@@ -394,7 +393,7 @@ function isAllowedStatement(stmt: string): boolean {
 
   if (
     /^\w[\w.]*\s*\.\s*(forEach|map|filter|some|every|find|findIndex)\s*\(/.test(
-      stmt
+      stmt,
     )
   ) {
     return isSimpleIterator(stmt);
@@ -441,7 +440,7 @@ function isSimpleCondition(stmt: string): boolean {
 function isSimpleForLoop(stmt: string): boolean {
   if (
     /^for\s*\(\s*(?:const|let|var)\s+\[?\s*\w+(?:\s*,\s*\w+)*\s*\]?\s+(?:of|in)\s+/.test(
-      stmt
+      stmt,
     )
   ) {
     const hardBlocked =
@@ -518,18 +517,18 @@ function normalizeCode(code: string): string {
   }
   // Normalize hex escapes in strings: '\x63' -> 'c'
   result = result.replace(/\\x([0-9a-fA-F]{2})/g, (_, hex) =>
-    String.fromCharCode(parseInt(hex, 16))
+    String.fromCharCode(parseInt(hex, 16)),
   );
   // Normalize unicode escapes: '\u0063' -> 'c'
   result = result.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) =>
-    String.fromCharCode(parseInt(hex, 16))
+    String.fromCharCode(parseInt(hex, 16)),
   );
   return result;
 }
 
 export function validateCustomTemplate(
   templateContent: string,
-  templatePath: string
+  templatePath: string,
 ): void {
   const tags = extractEjsTags(templateContent);
   for (const tag of tags) {
@@ -539,8 +538,8 @@ export function validateCustomTemplate(
         throw new Error(
           `Custom template "${templatePath}" contains disallowed code in expression tag: ${tag.code.slice(
             0,
-            80
-          )}`
+            80,
+          )}`,
         );
       }
     } else {
@@ -548,8 +547,8 @@ export function validateCustomTemplate(
         throw new Error(
           `Custom template "${templatePath}" contains disallowed code in scriptlet tag: ${tag.code.slice(
             0,
-            80
-          )}`
+            80,
+          )}`,
         );
       }
     }
@@ -557,7 +556,7 @@ export function validateCustomTemplate(
 }
 
 export abstract class BaseGenerator<
-  TOptions extends TemplateOptions
+  TOptions extends TemplateOptions,
 > extends NotYeoman {
   /**
    * Set by sourceRootWithPartialPath called in generator
@@ -577,7 +576,7 @@ export abstract class BaseGenerator<
   constructor(
     public options: TOptions,
     context?: GeneratorContext,
-    cwd?: string
+    cwd?: string,
   ) {
     super(context, cwd);
     this.templatesRootPath = context?.templatesRootPath;
@@ -593,7 +592,7 @@ export abstract class BaseGenerator<
   public sourceRootWithPartialPath(partialPath: string): void {
     this.builtInTemplatesRootPath = path.join(
       this.templatesRootPath ?? dirnameTemplatesDefault ?? '',
-      partialPath
+      partialPath,
     );
     // set generator source directory to custom templates root if available
     if (!this.customTemplatesRootPath) {
@@ -601,7 +600,7 @@ export abstract class BaseGenerator<
     } else {
       if (
         this._fs.existsSync(
-          path.join(this.customTemplatesRootPath, partialPath)
+          path.join(this.customTemplatesRootPath, partialPath),
         )
       ) {
         this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
@@ -619,7 +618,7 @@ export abstract class BaseGenerator<
     } else {
       // files that are builtin and not in the custom template folder
       return super.templatePath(
-        path.join(this.builtInTemplatesRootPath!, ...paths)
+        path.join(this.builtInTemplatesRootPath!, ...paths),
       );
     }
   }
@@ -627,7 +626,7 @@ export abstract class BaseGenerator<
   public async render(
     source: string,
     destination: string,
-    data?: Record<string, unknown>
+    data?: Record<string, unknown>,
   ): Promise<void> {
     const isBuiltIn =
       this.builtInTemplatesRootPath &&
@@ -670,7 +669,7 @@ export abstract class BaseGenerator<
     this.customTemplatesRootPath = await setCustomTemplatesRootPathOrGitRepo(
       opts?.customTemplatesRootPathOrGitRepo,
       false,
-      this._fs
+      this._fs,
     );
 
     await this.generate();
@@ -706,7 +705,7 @@ export abstract class BaseGenerator<
       subdir?: string;
       filetype: RegExp;
       onMissing: () => Error;
-    }
+    },
   ): void {
     const existsIn = (templatesRootPath?: string): boolean => {
       if (!templatesRootPath) {
@@ -723,13 +722,13 @@ export abstract class BaseGenerator<
             command,
             { filetype: opts.filetype, subdir: opts.subdir },
             this._fs,
-            templatesRootPath
+            templatesRootPath,
           )
         : CreateUtil.getCommandTemplatesForFiletype(
             opts.filetype,
             command,
             this._fs,
-            templatesRootPath
+            templatesRootPath,
           );
       return templateNames.includes(template);
     };

@@ -27,7 +27,7 @@ describe('ESLint flat config', () => {
     for (const filePath of ['src/index.ts', 'test/eslintConfig.test.ts']) {
       const [result] = await eslint.lintText(
         `${header}\nconst unused = 1;\nPromise.resolve('unhandled');\n`,
-        { filePath }
+        { filePath },
       );
       assert.equal(result.fatalErrorCount, 0);
       const rules = result.messages.map((message) => message.ruleId);
@@ -42,15 +42,15 @@ describe('ESLint flat config', () => {
     });
     assert.ok(
       missingHeader.messages.some(
-        (message) => message.ruleId === 'header/header'
-      )
+        (message) => message.ruleId === 'header/header',
+      ),
     );
 
     const [validHeader] = await eslint.lintText(
       `${header}\nexport const value = 1;\n`,
       {
         filePath: 'src/index.ts',
-      }
+      },
     );
     assert.deepEqual(validHeader.messages, []);
   });
@@ -67,8 +67,8 @@ describe('ESLint flat config', () => {
     assert.ok(
       sourceResult.messages.some(
         (message) =>
-          message.ruleId === '@typescript-eslint/no-unused-expressions'
-      )
+          message.ruleId === '@typescript-eslint/no-unused-expressions',
+      ),
     );
   });
 
@@ -81,7 +81,7 @@ describe('ESLint flat config', () => {
     const [result] = await eslint.lintText(source, { filePath });
     assert.equal(result.fatalErrorCount, 0);
     assert.ok(
-      !result.messages.some((message) => message.ruleId === 'header/header')
+      !result.messages.some((message) => message.ruleId === 'header/header'),
     );
   });
 
@@ -95,7 +95,7 @@ describe('ESLint flat config', () => {
     ]) {
       assert.ok(
         await eslint.isPathIgnored(path.join(root, filePath)),
-        filePath
+        filePath,
       );
     }
   });

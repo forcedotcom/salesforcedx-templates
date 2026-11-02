@@ -17,7 +17,7 @@ import {
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_SANDBOX_TOKENS: ReadonlySet<string> = new Set(
-  UI_EMBEDDING_SANDBOX_TOKENS
+  UI_EMBEDDING_SANDBOX_TOKENS,
 );
 
 export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptions> {
@@ -52,7 +52,7 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
         nls.localize('InvalidUIEmbeddingSandboxToken', [
           invalid.join(', '),
           [...VALID_SANDBOX_TOKENS].join(', '),
-        ])
+        ]),
       );
     }
   }
@@ -75,10 +75,10 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
         path.join(
           this.outputdir,
           camelCaseComponentName,
-          `${camelCaseComponentName}.html`
-        )
+          `${camelCaseComponentName}.html`,
+        ),
       ),
-      { sandbox, title }
+      { sandbox, title },
     );
 
     await this.render(
@@ -87,10 +87,10 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
         path.join(
           this.outputdir,
           camelCaseComponentName,
-          `${camelCaseComponentName}.js`
-        )
+          `${camelCaseComponentName}.js`,
+        ),
       ),
-      { pascalCaseComponentName, src }
+      { pascalCaseComponentName, src },
     );
 
     await this.render(
@@ -99,10 +99,10 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
         path.join(
           this.outputdir,
           camelCaseComponentName,
-          `${camelCaseComponentName}.css`
-        )
+          `${camelCaseComponentName}.css`,
+        ),
       ),
-      {}
+      {},
     );
 
     if (!internal) {
@@ -115,10 +115,10 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
           path.join(
             this.outputdir,
             camelCaseComponentName,
-            `${camelCaseComponentName}.js-meta.xml`
-          )
+            `${camelCaseComponentName}.js-meta.xml`,
+          ),
         ),
-        { apiVersion: this.apiversion, masterLabel }
+        { apiVersion: this.apiversion, masterLabel },
       );
     }
   }

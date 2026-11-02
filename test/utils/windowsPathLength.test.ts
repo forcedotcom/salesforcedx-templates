@@ -34,7 +34,7 @@ import {
 
 const copyTemplatesPath = path.join(
   __dirname,
-  '../../scripts/copy-templates.js'
+  '../../scripts/copy-templates.js',
 );
 const { PLACEHOLDERS: copyScriptPlaceholders } = require(copyTemplatesPath);
 
@@ -106,7 +106,7 @@ describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', ()
       assert.strictEqual(
         copyScriptPlaceholders[key],
         UI_BUNDLE_PLACEHOLDERS[key],
-        `Mismatch for ${key}`
+        `Mismatch for ${key}`,
       );
     }
   });
@@ -136,7 +136,7 @@ describe('Windows path length (pack:verify)', () => {
         `Run "yarn build:copy-templates" so placeholders shorten paths. Long paths:\n${longPaths
           .sort((a, b) => b.length - a.length)
           .map((p) => `  ${p.length} - ${p.path}`)
-          .join('\n')}`
+          .join('\n')}`,
     );
   });
 });

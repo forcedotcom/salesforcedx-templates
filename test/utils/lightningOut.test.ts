@@ -15,43 +15,74 @@ import {
 
 describe('normalizeHostDomains', () => {
   it('lowercases scheme+host and strips the default https port', () => {
-    expect(normalizeHostDomains(['HTTPS://Example.COM:443']).origins).to.deep.equal(['https://example.com']);
+    expect(
+      normalizeHostDomains(['HTTPS://Example.COM:443']).origins,
+    ).to.deep.equal(['https://example.com']);
   });
   it('keeps a non-default port', () => {
-    expect(normalizeHostDomains(['https://lo2-local.com:8080']).origins).to.deep.equal(['https://lo2-local.com:8080']);
+    expect(
+      normalizeHostDomains(['https://lo2-local.com:8080']).origins,
+    ).to.deep.equal(['https://lo2-local.com:8080']);
   });
   it('rejects wildcards', () => {
-    expect(() => normalizeHostDomains(['https://*.example.com'])).to.throw(/wildcard/i);
+    expect(() => normalizeHostDomains(['https://*.example.com'])).to.throw(
+      /wildcard/i,
+    );
   });
   it('rejects a path/query/fragment', () => {
-    expect(() => normalizeHostDomains(['https://example.com/app'])).to.throw(/path/i);
+    expect(() => normalizeHostDomains(['https://example.com/app'])).to.throw(
+      /path/i,
+    );
   });
   it('accepts http for any host (not just localhost), mirroring Core isValidHostDomain', () => {
     // Core accepts any http OR https origin; http is not restricted to localhost, so a custom
     // local-dev alias like lo2-local.com over http must be allowed.
-    expect(normalizeHostDomains(['http://example.com']).origins).to.deep.equal(['http://example.com']);
-    expect(normalizeHostDomains(['http://lo2-local.com:8080']).origins).to.deep.equal(['http://lo2-local.com:8080']);
-    expect(normalizeHostDomains(['http://localhost:3000']).origins).to.deep.equal(['http://localhost:3000']);
+    expect(normalizeHostDomains(['http://example.com']).origins).to.deep.equal([
+      'http://example.com',
+    ]);
+    expect(
+      normalizeHostDomains(['http://lo2-local.com:8080']).origins,
+    ).to.deep.equal(['http://lo2-local.com:8080']);
+    expect(
+      normalizeHostDomains(['http://localhost:3000']).origins,
+    ).to.deep.equal(['http://localhost:3000']);
   });
   it('rejects schemes other than http/https', () => {
-    expect(() => normalizeHostDomains(['ftp://example.com'])).to.throw(/http or https/i);
-    expect(() => normalizeHostDomains(['ws://example.com'])).to.throw(/http or https/i);
+    expect(() => normalizeHostDomains(['ftp://example.com'])).to.throw(
+      /http or https/i,
+    );
+    expect(() => normalizeHostDomains(['ws://example.com'])).to.throw(
+      /http or https/i,
+    );
   });
   it('rejects an origin carrying userinfo (mirrors Core isValidHostDomain)', () => {
-    expect(() => normalizeHostDomains(['https://user:pass@example.com'])).to.throw(/user info/i);
-    expect(() => normalizeHostDomains(['https://user@example.com'])).to.throw(/user info/i);
+    expect(() =>
+      normalizeHostDomains(['https://user:pass@example.com']),
+    ).to.throw(/user info/i);
+    expect(() => normalizeHostDomains(['https://user@example.com'])).to.throw(
+      /user info/i,
+    );
   });
   it('rejects a value that is not an absolute URL', () => {
-    expect(() => normalizeHostDomains(['example.com'])).to.throw(/valid absolute URL/i);
-    expect(() => normalizeHostDomains(['not a url'])).to.throw(/valid absolute URL/i);
+    expect(() => normalizeHostDomains(['example.com'])).to.throw(
+      /valid absolute URL/i,
+    );
+    expect(() => normalizeHostDomains(['not a url'])).to.throw(
+      /valid absolute URL/i,
+    );
   });
   it('dedupes case-insensitively', () => {
-    const r = normalizeHostDomains(['https://example.com', 'https://EXAMPLE.com:443']);
+    const r = normalizeHostDomains([
+      'https://example.com',
+      'https://EXAMPLE.com:443',
+    ]);
     expect(r.origins).to.deep.equal(['https://example.com']);
   });
   it('throws when two distinct origins collide on the same file token', () => {
     // https vs http localhost same host+port -> same token
-    expect(() => normalizeHostDomains(['https://localhost:3000', 'http://localhost:3000'])).to.throw(/file name/i);
+    expect(() =>
+      normalizeHostDomains(['https://localhost:3000', 'http://localhost:3000']),
+    ).to.throw(/file name/i);
   });
   it('produces a filesystem-safe, scheme-stripped token per origin', () => {
     const r = normalizeHostDomains(['https://a.com', 'https://b.com:8080']);
@@ -63,7 +94,9 @@ describe('normalizeHostDomains', () => {
 
 describe('originToFileToken', () => {
   it('strips the scheme and non-alphanumerics', () => {
-    expect(originToFileToken('https://lo2-local.com:8080')).to.equal('lo2_local_com_8080');
+    expect(originToFileToken('https://lo2-local.com:8080')).to.equal(
+      'lo2_local_com_8080',
+    );
   });
 });
 
@@ -89,7 +122,9 @@ describe('checkDeveloperName', () => {
   });
   it('allows eca.name up to 80', () => {
     expect(checkDeveloperName('A'.repeat(80), 'eca.name', 80)).to.be.undefined;
-    expect(checkDeveloperName('A'.repeat(81), 'eca.name', 80)).to.be.a('string');
+    expect(checkDeveloperName('A'.repeat(81), 'eca.name', 80)).to.be.a(
+      'string',
+    );
   });
 });
 

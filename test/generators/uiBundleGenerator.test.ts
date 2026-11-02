@@ -64,7 +64,7 @@ describe('UIBundleGenerator', () => {
       });
       // The outputdir should have UI_BUNDLES_DIR appended
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', UI_BUNDLES_DIR)
+        path.join('testsoutput', 'mydir', UI_BUNDLES_DIR),
       );
     });
 
@@ -84,7 +84,7 @@ describe('UIBundleGenerator', () => {
       const outputDirWithUiBundlesInMiddle = path.join(
         'testsoutput',
         UI_BUNDLES_DIR,
-        'somefolder'
+        'somefolder',
       );
       const generator = new UIBundleGenerator({
         bundlename: 'TestUIBundle',
@@ -94,7 +94,7 @@ describe('UIBundleGenerator', () => {
       });
       // The outputdir should have UI_BUNDLES_DIR appended since it doesn't end with it
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder', UI_BUNDLES_DIR)
+        path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder', UI_BUNDLES_DIR),
       );
     });
   });

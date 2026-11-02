@@ -16,7 +16,7 @@ import {
 } from '../utils/types';
 
 export function importGenerator<TOptions extends TemplateOptions>(
-  templateType: TemplateType
+  templateType: TemplateType,
 ): GeneratorClass<TOptions> {
   const generator = generators.get(templateType);
   if (!generator) {
@@ -45,7 +45,7 @@ export class TemplateService {
    */
   public static getInstance(
     cwd?: string,
-    context?: GeneratorContext
+    context?: GeneratorContext,
   ): TemplateService {
     if (!TemplateService.instance) {
       TemplateService.instance = new TemplateService(cwd, context);
@@ -84,7 +84,7 @@ export class TemplateService {
   public create<TOptions extends TemplateOptions>(
     templateType: TemplateType,
     templateOptions: TOptions,
-    customTemplatesRootPathOrGitRepo?: string
+    customTemplatesRootPathOrGitRepo?: string,
   ): Promise<CreateOutput> {
     const runOptions = {
       cwd: this.cwd,

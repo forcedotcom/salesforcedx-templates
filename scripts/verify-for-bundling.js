@@ -48,7 +48,7 @@ function compareDirectories(dir1, dir2) {
       }
     } else {
       console.log(
-        `File or directory exists only in one of the directories: ${file}`
+        `File or directory exists only in one of the directories: ${file}`,
       );
       result = false;
     }

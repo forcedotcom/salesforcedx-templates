@@ -13,7 +13,7 @@ describe('PROJECT_TEMPLATES', () => {
   it('is exported from the package entry point without duplicates', () => {
     assert.strictEqual(
       new Set(PROJECT_TEMPLATES).size,
-      PROJECT_TEMPLATES.length
+      PROJECT_TEMPLATES.length,
     );
   });
 
@@ -22,7 +22,7 @@ describe('PROJECT_TEMPLATES', () => {
     for (const template of BUILT_IN_FULL_TEMPLATES) {
       assert.ok(
         projectTemplates.includes(template),
-        `${template} missing from PROJECT_TEMPLATES`
+        `${template} missing from PROJECT_TEMPLATES`,
       );
     }
   });

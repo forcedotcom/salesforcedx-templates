@@ -35,7 +35,7 @@ describe('DigitalExperienceSiteGenerator', () => {
           urlpathprefix,
         };
         expect(
-          () => new DigitalExperienceSiteGenerator(options)
+          () => new DigitalExperienceSiteGenerator(options),
         ).to.not.throw();
       });
     });
@@ -51,7 +51,7 @@ describe('DigitalExperienceSiteGenerator', () => {
           urlpathprefix,
         };
         expect(() => new DigitalExperienceSiteGenerator(options)).to.throw(
-          'url-path-prefix must contain only alphanumeric characters.'
+          'url-path-prefix must contain only alphanumeric characters.',
         );
       });
     });
@@ -81,7 +81,7 @@ describe('DigitalExperienceSiteGenerator', () => {
         .find((call) => call.args[1].includes('network-meta.xml'));
       expect(networkCall).to.exist;
       expect(networkCall!.args[1]).to.include(
-        path.join('networks', 'TestSite.network-meta.xml')
+        path.join('networks', 'TestSite.network-meta.xml'),
       );
       expect(networkCall!.args[2]).to.deep.equal({
         siteName: 'TestSite',
@@ -101,7 +101,7 @@ describe('DigitalExperienceSiteGenerator', () => {
         .find((call) => call.args[1].includes('site-meta.xml'));
       expect(siteCall).to.exist;
       expect(siteCall!.args[1]).to.include(
-        path.join('sites', 'TestSite.site-meta.xml')
+        path.join('sites', 'TestSite.site-meta.xml'),
       );
       expect(siteCall!.args[2]).to.deep.equal({
         siteName: 'TestSite',
@@ -117,14 +117,14 @@ describe('DigitalExperienceSiteGenerator', () => {
       const configCall = renderStub
         .getCalls()
         .find((call) =>
-          call.args[1].includes('digitalExperienceConfig-meta.xml')
+          call.args[1].includes('digitalExperienceConfig-meta.xml'),
         );
       expect(configCall).to.exist;
       expect(configCall!.args[1]).to.include(
         path.join(
           'digitalExperienceConfigs',
-          'TestSite1.digitalExperienceConfig-meta.xml'
-        )
+          'TestSite1.digitalExperienceConfig-meta.xml',
+        ),
       );
     });
 
@@ -141,8 +141,8 @@ describe('DigitalExperienceSiteGenerator', () => {
           'digitalExperiences',
           'site',
           'TestSite1',
-          'TestSite1.digitalExperience-meta.xml'
-        )
+          'TestSite1.digitalExperience-meta.xml',
+        ),
       );
     });
 
@@ -165,15 +165,15 @@ describe('DigitalExperienceSiteGenerator', () => {
           .getCalls()
           .find((call) =>
             call.args[1].includes(
-              path.join('sfdc_cms__route', route, 'content.json')
-            )
+              path.join('sfdc_cms__route', route, 'content.json'),
+            ),
           );
         const routeMetaCall = renderStub
           .getCalls()
           .find((call) =>
             call.args[1].includes(
-              path.join('sfdc_cms__route', route, '_meta.json')
-            )
+              path.join('sfdc_cms__route', route, '_meta.json'),
+            ),
           );
         expect(routeContentCall, `Expected route content for ${route}`).to
           .exist;
@@ -200,15 +200,15 @@ describe('DigitalExperienceSiteGenerator', () => {
           .getCalls()
           .find((call) =>
             call.args[1].includes(
-              path.join('sfdc_cms__view', view, 'content.json')
-            )
+              path.join('sfdc_cms__view', view, 'content.json'),
+            ),
           );
         const viewMetaCall = renderStub
           .getCalls()
           .find((call) =>
             call.args[1].includes(
-              path.join('sfdc_cms__view', view, '_meta.json')
-            )
+              path.join('sfdc_cms__view', view, '_meta.json'),
+            ),
           );
         expect(viewContentCall, `Expected view content for ${view}`).to.exist;
         expect(viewMetaCall, `Expected view meta for ${view}`).to.exist;
@@ -226,15 +226,15 @@ describe('DigitalExperienceSiteGenerator', () => {
           .getCalls()
           .find((call) =>
             call.args[1].includes(
-              path.join('sfdc_cms__themeLayout', layout, 'content.json')
-            )
+              path.join('sfdc_cms__themeLayout', layout, 'content.json'),
+            ),
           );
         const layoutMetaCall = renderStub
           .getCalls()
           .find((call) =>
             call.args[1].includes(
-              path.join('sfdc_cms__themeLayout', layout, '_meta.json')
-            )
+              path.join('sfdc_cms__themeLayout', layout, '_meta.json'),
+            ),
           );
         expect(layoutContentCall, `Expected layout content for ${layout}`).to
           .exist;
@@ -262,12 +262,12 @@ describe('DigitalExperienceSiteGenerator', () => {
         const contentCall = renderStub
           .getCalls()
           .find((call) =>
-            call.args[1].includes(path.join(type, folder, 'content.json'))
+            call.args[1].includes(path.join(type, folder, 'content.json')),
           );
         const metaCall = renderStub
           .getCalls()
           .find((call) =>
-            call.args[1].includes(path.join(type, folder, '_meta.json'))
+            call.args[1].includes(path.join(type, folder, '_meta.json')),
           );
         expect(contentCall, `Expected ${name} content`).to.exist;
         expect(metaCall, `Expected ${name} meta`).to.exist;
@@ -285,7 +285,7 @@ describe('DigitalExperienceSiteGenerator', () => {
       const siteContentCall = renderStub
         .getCalls()
         .find((call) =>
-          call.args[0].includes(path.join('sfdc_cms__site', 'content.json'))
+          call.args[0].includes(path.join('sfdc_cms__site', 'content.json')),
         );
       expect(siteContentCall).to.exist;
       expect(siteContentCall!.args[2]).to.deep.equal({
@@ -324,10 +324,10 @@ describe('DigitalExperienceSiteGenerator', () => {
             .find((call) => call.args[1].includes('network-meta.xml'));
           expect(networkCall!.args[2].siteDevName).to.equal(expectedDevName);
           expect(networkCall!.args[2].picassoSiteDevName).to.equal(
-            expectedPicassoDevName
+            expectedPicassoDevName,
           );
         });
-      }
+      },
     );
 
     it('should encode special characters in network file name', async () => {
@@ -342,7 +342,7 @@ describe('DigitalExperienceSiteGenerator', () => {
         .getCalls()
         .find((call) => call.args[1].includes('network-meta.xml'));
       expect(networkCall!.args[1]).to.include(
-        'Site %7E%21%2E%27%28%29%40%23%24%25%26%2B%3D Name.network-meta.xml'
+        'Site %7E%21%2E%27%28%29%40%23%24%25%26%2B%3D Name.network-meta.xml',
       );
     });
   });
@@ -365,7 +365,7 @@ describe('DigitalExperienceSiteGenerator', () => {
         .filter(
           (call) =>
             call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
+            call.args[1].includes('content.json'),
         );
 
       expect(viewContentCalls.length).to.be.greaterThan(0);
@@ -385,7 +385,7 @@ describe('DigitalExperienceSiteGenerator', () => {
         .filter(
           (call) =>
             call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
+            call.args[1].includes('content.json'),
         );
 
       expect(viewContentCalls.length).to.be.greaterThan(0);
@@ -406,7 +406,7 @@ describe('DigitalExperienceSiteGenerator', () => {
         .filter(
           (call) =>
             call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
+            call.args[1].includes('content.json'),
         );
 
       expect(viewContentCalls.length).to.be.greaterThan(0);
@@ -426,7 +426,7 @@ describe('DigitalExperienceSiteGenerator', () => {
         .filter(
           (call) =>
             call.args[1].includes('sfdc_cms__view') &&
-            call.args[1].includes('content.json')
+            call.args[1].includes('content.json'),
         );
 
       expect(viewContentCalls.length).to.be.greaterThan(0);

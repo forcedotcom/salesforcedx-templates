@@ -116,7 +116,7 @@ const shellSegments = (command) => {
       quote: undefined,
       escaped: false,
       dynamic: false,
-    }
+    },
   );
   const last = parsed.word
     ? [
@@ -125,7 +125,7 @@ const shellSegments = (command) => {
       ]
     : parsed.segments.at(-1);
   return [...parsed.segments.slice(0, -1), last].filter(
-    (segment) => segment.length
+    (segment) => segment.length,
   );
 };
 
@@ -139,12 +139,12 @@ const gitOperation = (words) =>
       if (word.value.startsWith('-')) return state;
       return { ...state, operation: word.value };
     },
-    { awaiting: false, operation: undefined }
+    { awaiting: false, operation: undefined },
   ).operation;
 
 const unwrapCommand = (tokens) => {
   const start = tokens.findIndex(
-    (token) => !/^[A-Za-z_][A-Za-z0-9_]*=/.test(token.value)
+    (token) => !/^[A-Za-z_][A-Za-z0-9_]*=/.test(token.value),
   );
   const command = tokens.slice(start < 0 ? tokens.length : start);
   if (!command.length) return { command: [] };
@@ -181,7 +181,7 @@ const unwrapCommand = (tokens) => {
       done: false,
       reason: undefined,
       wrapper: command[0].value,
-    }
+    },
   );
   if (wrapped.reason) return { reason: wrapped.reason };
   return wrapped.command.length
@@ -200,7 +200,7 @@ const inspectCommand = (command, inspect) =>
       if (!executable) return state;
       if (SHELL_EXECUTORS.has(executable)) {
         const commandIndex = words.findIndex((token) =>
-          /^-[^-]*c/.test(token.value)
+          /^-[^-]*c/.test(token.value),
         );
         const nested = words[commandIndex + 1];
         return commandIndex >= 0 && nested
@@ -220,7 +220,7 @@ const inspectCommand = (command, inspect) =>
         ? { ...state, reason: inspect(words) }
         : state;
     },
-    { reason: undefined }
+    { reason: undefined },
   );
 
 /**

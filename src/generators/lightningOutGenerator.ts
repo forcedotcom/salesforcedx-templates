@@ -51,7 +51,7 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
     }
     if (missing.length) {
       errors.push(
-        nls.localize('MissingLightningOutInputs', [missing.join(', ')])
+        nls.localize('MissingLightningOutInputs', [missing.join(', ')]),
       );
     }
 
@@ -71,12 +71,12 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       errors.push(
         nls.localize('InvalidLightningOutRuntime', [
           [...VALID_RUNTIMES].join(', '),
-        ])
+        ]),
       );
     }
     if (o.eca?.contactEmail && !EMAIL_RE.test(o.eca.contactEmail)) {
       errors.push(
-        nls.localize('InvalidLightningOutContactEmail', [o.eca.contactEmail])
+        nls.localize('InvalidLightningOutContactEmail', [o.eca.contactEmail]),
       );
     }
     if (o.eca?.callbackUrl) {
@@ -88,7 +88,7 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       }
       if (!ok) {
         errors.push(
-          nls.localize('InvalidLightningOutCallbackUrl', [o.eca.callbackUrl])
+          nls.localize('InvalidLightningOutCallbackUrl', [o.eca.callbackUrl]),
         );
       }
     }
@@ -114,7 +114,7 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       throw new Error(
         nls.localize('InvalidLightningOutDefinition', [
           `\n  - ${errors.join('\n  - ')}`,
-        ])
+        ]),
       );
     }
 
@@ -134,8 +134,8 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         path.join(
           this.outputdir,
           'lightningOutApps',
-          `${appName}.lightningOutApp-meta.xml`
-        )
+          `${appName}.lightningOutApp-meta.xml`,
+        ),
       ),
       // Trim each ref so the emitted value matches what isValidComponentRef validated
       // (it validates the trimmed form); otherwise surrounding whitespace would be baked
@@ -145,23 +145,23 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         runtime,
         components: (components ?? []).map((c) => c.trim()),
         hostDomains: origins,
-      }
+      },
     );
 
     // MyDomainSettings / SecuritySettings — server-side field merge (safe minimal files).
     await this.render(
       this.templatePath('myDomainSettings.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'settings', 'MyDomain.settings-meta.xml')
+        path.join(this.outputdir, 'settings', 'MyDomain.settings-meta.xml'),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('securitySettings.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'settings', 'Security.settings-meta.xml')
+        path.join(this.outputdir, 'settings', 'Security.settings-meta.xml'),
       ),
-      {}
+      {},
     );
 
     // CorsWhitelistOrigin — one independent, per-origin file (never clobbers others).
@@ -172,10 +172,10 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
           path.join(
             this.outputdir,
             'corsWhitelistOrigins',
-            `${fileTokens[i]}.corsWhitelistOrigin-meta.xml`
-          )
+            `${fileTokens[i]}.corsWhitelistOrigin-meta.xml`,
+          ),
         ),
-        { origin: origins[i] }
+        { origin: origins[i] },
       );
     }
 
@@ -187,14 +187,14 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         path.join(
           this.outputdir,
           'externalClientApps',
-          `${eca.name}.eca-meta.xml`
-        )
+          `${eca.name}.eca-meta.xml`,
+        ),
       ),
       {
         name: eca.name,
         contactEmail: eca.contactEmail,
         distributionState: 'Local',
-      }
+      },
     );
     await this.render(
       this.templatePath('extlClntAppGlobalOauthSettings.xml'),
@@ -202,10 +202,10 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         path.join(
           this.outputdir,
           'extlClntAppGlobalOauthSets',
-          `${eca.name}.ecaGlblOauth-meta.xml`
-        )
+          `${eca.name}.ecaGlblOauth-meta.xml`,
+        ),
       ),
-      { name: eca.name, callbackUrl: eca.callbackUrl }
+      { name: eca.name, callbackUrl: eca.callbackUrl },
     );
     await this.render(
       this.templatePath('extlClntAppOauthSettings.xml'),
@@ -213,10 +213,10 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         path.join(
           this.outputdir,
           'extlClntAppOauthSettings',
-          `${eca.name}.ecaOauth-meta.xml`
-        )
+          `${eca.name}.ecaOauth-meta.xml`,
+        ),
       ),
-      { name: eca.name, oauthScopes: 'Web' }
+      { name: eca.name, oauthScopes: 'Web' },
     );
   }
 }

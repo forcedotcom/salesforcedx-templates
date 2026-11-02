@@ -36,62 +36,62 @@ export default class LightningAppGenerator extends BaseGenerator<LightningAppOpt
       await this.render(
         this.templatePath('_auradefinitionbundle.app-meta.xml'),
         this.destinationPath(
-          path.join(this.outputdir, appname, `${appname}.app-meta.xml`)
+          path.join(this.outputdir, appname, `${appname}.app-meta.xml`),
         ),
         {
           apiVersion: this.apiversion,
           description: nls.localize('LightningAppBundle'),
-        }
+        },
       );
     }
     await this.render(
       this.templatePath(`${template}.app`),
       this.destinationPath(
-        path.join(this.outputdir, appname, `${appname}.app`)
+        path.join(this.outputdir, appname, `${appname}.app`),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('DefaultLightningAuradoc.auradoc'),
       this.destinationPath(
-        path.join(this.outputdir, appname, `${appname}.auradoc`)
+        path.join(this.outputdir, appname, `${appname}.auradoc`),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('DefaultLightningController.js'),
       this.destinationPath(
-        path.join(this.outputdir, appname, `${appname}Controller.js`)
+        path.join(this.outputdir, appname, `${appname}Controller.js`),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('DefaultLightningCss.css'),
       this.destinationPath(
-        path.join(this.outputdir, appname, `${appname}.css`)
+        path.join(this.outputdir, appname, `${appname}.css`),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('DefaultLightningHelper.js'),
       this.destinationPath(
-        path.join(this.outputdir, appname, `${appname}Helper.js`)
+        path.join(this.outputdir, appname, `${appname}Helper.js`),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('DefaultLightningRenderer.js'),
       this.destinationPath(
-        path.join(this.outputdir, appname, `${appname}Renderer.js`)
+        path.join(this.outputdir, appname, `${appname}Renderer.js`),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('DefaultLightningSVG.svg'),
       this.destinationPath(
-        path.join(this.outputdir, appname, `${appname}.svg`)
+        path.join(this.outputdir, appname, `${appname}.svg`),
       ),
-      {}
+      {},
     );
   }
 }

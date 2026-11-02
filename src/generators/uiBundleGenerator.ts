@@ -56,123 +56,123 @@ export default class UIBundleGenerator extends BaseGenerator<UIBundleOptions> {
   private async generateDefault(
     bundleDir: string,
     bundlename: string,
-    masterLabel: string
+    masterLabel: string,
   ): Promise<void> {
     this.sourceRootWithPartialPath(path.join('uiBundles', 'webappbasic'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`),
       ),
-      { apiVersion: this.apiversion, masterLabel }
+      { apiVersion: this.apiversion, masterLabel },
     );
 
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       bundleDir,
-      new Set(['_uibundle.uibundle-meta.xml'])
+      new Set(['_uibundle.uibundle-meta.xml']),
     );
   }
 
   private async generateReactBasic(
     bundleDir: string,
     bundlename: string,
-    masterLabel: string
+    masterLabel: string,
   ): Promise<void> {
     this.sourceRootWithPartialPath(path.join('uiBundles', 'reactbasic'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`),
       ),
-      { apiVersion: this.apiversion, masterLabel }
+      { apiVersion: this.apiversion, masterLabel },
     );
 
     await this.render(
       this.templatePath('package.json'),
       this.destinationPath(path.join(bundleDir, 'package.json')),
-      { bundlename }
+      { bundlename },
     );
 
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       bundleDir,
-      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json']),
     );
   }
 
   private async generateVueBasic(
     bundleDir: string,
     bundlename: string,
-    masterLabel: string
+    masterLabel: string,
   ): Promise<void> {
     this.sourceRootWithPartialPath(path.join('uiBundles', 'vuebasic'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`),
       ),
-      { apiVersion: this.apiversion, masterLabel }
+      { apiVersion: this.apiversion, masterLabel },
     );
 
     await this.render(
       this.templatePath('package.json'),
       this.destinationPath(path.join(bundleDir, 'package.json')),
-      { bundlename }
+      { bundlename },
     );
 
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       bundleDir,
-      new Set(['_uibundle.uibundle-meta.xml', 'package.json'])
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json']),
     );
   }
 
   private async generateAngularBasic(
     bundleDir: string,
     bundlename: string,
-    masterLabel: string
+    masterLabel: string,
   ): Promise<void> {
     this.sourceRootWithPartialPath(path.join('uiBundles', 'angularbasic'));
 
     await this.render(
       this.templatePath('_uibundle.uibundle-meta.xml'),
       this.destinationPath(
-        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`)
+        path.join(bundleDir, `${bundlename}.uibundle-meta.xml`),
       ),
-      { apiVersion: this.apiversion, masterLabel }
+      { apiVersion: this.apiversion, masterLabel },
     );
 
     await this.render(
       this.templatePath('package.json'),
       this.destinationPath(path.join(bundleDir, 'package.json')),
-      { bundlename }
+      { bundlename },
     );
 
     await this.render(
       this.templatePath('angular.json'),
       this.destinationPath(path.join(bundleDir, 'angular.json')),
-      { bundlename }
+      { bundlename },
     );
 
     const templatePath = this.sourceRoot();
     await this.copyDirectoryRecursive(
       templatePath,
       bundleDir,
-      new Set(['_uibundle.uibundle-meta.xml', 'package.json', 'angular.json'])
+      new Set(['_uibundle.uibundle-meta.xml', 'package.json', 'angular.json']),
     );
   }
 
   private async copyDirectoryRecursive(
     sourceDir: string,
     destDir: string,
-    excludeFiles: ReadonlySet<string> = new Set()
+    excludeFiles: ReadonlySet<string> = new Set(),
   ): Promise<void> {
     if (!this._fs.existsSync(sourceDir)) {
       return;

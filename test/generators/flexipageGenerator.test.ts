@@ -172,7 +172,7 @@ describe('FlexipageGenerator', () => {
       });
       // The outputdir should have 'flexipages' appended
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', 'flexipages')
+        path.join('testsoutput', 'mydir', 'flexipages'),
       );
     });
   });
@@ -192,7 +192,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'MyHomePage.flexipage-meta.xml'
+        'MyHomePage.flexipage-meta.xml',
       );
 
       expect(result.created).to.have.lengthOf(1);
@@ -214,7 +214,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'DefaultHomePage.flexipage-meta.xml'
+        'DefaultHomePage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
@@ -259,7 +259,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'AccountRecordPage.flexipage-meta.xml'
+        'AccountRecordPage.flexipage-meta.xml',
       );
 
       expect(result.created).to.have.lengthOf(1);
@@ -284,7 +284,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'OpportunityPage.flexipage-meta.xml'
+        'OpportunityPage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
@@ -310,7 +310,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'CustomObjectPage.flexipage-meta.xml'
+        'CustomObjectPage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
@@ -331,17 +331,17 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'TestNaming.flexipage-meta.xml'
+        'TestNaming.flexipage-meta.xml',
       );
       const unexpectedFile = path.join(
         outputDir,
-        '_flexipage.flexipage-meta.xml'
+        '_flexipage.flexipage-meta.xml',
       );
 
       assertFileExists(expectedFile);
       expect(
         fs.existsSync(unexpectedFile),
-        'Template placeholder file should not exist'
+        'Template placeholder file should not exist',
       ).to.be.false;
     });
   });
@@ -361,7 +361,7 @@ describe('FlexipageGenerator', () => {
 
       const expectedFile = path.join(
         outputDir,
-        'VariableTest.flexipage-meta.xml'
+        'VariableTest.flexipage-meta.xml',
       );
 
       assertFileContent(expectedFile, 'Variable Test Page');
@@ -398,7 +398,7 @@ describe('FlexipageGenerator', () => {
         expect.fail('Should have thrown an error');
       } catch (error: any) {
         expect(error.message).to.match(
-          /template.*not found|MissingFlexipageTemplate/i
+          /template.*not found|MissingFlexipageTemplate/i,
         );
       }
     });
@@ -409,7 +409,7 @@ describe('FlexipageGenerator', () => {
         customTemplatesDir,
         'flexipage',
         'HomePage',
-        'subdir'
+        'subdir',
       );
       await fs.promises.mkdir(customSubdir, { recursive: true });
 
@@ -418,7 +418,7 @@ describe('FlexipageGenerator', () => {
         customTemplatesDir,
         'flexipage',
         'HomePage',
-        '_flexipage.flexipage-meta.xml'
+        '_flexipage.flexipage-meta.xml',
       );
       await fs.promises.writeFile(
         templateFile,
@@ -426,13 +426,13 @@ describe('FlexipageGenerator', () => {
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel><%= masterlabel %></masterLabel>
     <type>HomePage</type>
-</FlexiPage>`
+</FlexiPage>`,
       );
 
       // Create a template file in subdirectory
       const subTemplateFile = path.join(
         customSubdir,
-        '_flexipage.flexipage-meta.xml'
+        '_flexipage.flexipage-meta.xml',
       );
       await fs.promises.writeFile(
         subTemplateFile,
@@ -440,7 +440,7 @@ describe('FlexipageGenerator', () => {
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel><%= masterlabel %> Sub</masterLabel>
     <type>HomePage</type>
-</FlexiPage>`
+</FlexiPage>`,
       );
 
       const generator = new FlexipageGenerator({
@@ -457,7 +457,7 @@ describe('FlexipageGenerator', () => {
       // Check main file was created
       const expectedFile = path.join(
         outputDir,
-        'SubdirTest.flexipage-meta.xml'
+        'SubdirTest.flexipage-meta.xml',
       );
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'Subdir Test Page');
@@ -466,7 +466,7 @@ describe('FlexipageGenerator', () => {
       const expectedSubFile = path.join(
         outputDir,
         'subdir',
-        'SubdirTest.flexipage-meta.xml'
+        'SubdirTest.flexipage-meta.xml',
       );
       assertFileExists(expectedSubFile);
       assertFileContent(expectedSubFile, 'Subdir Test Page Sub');

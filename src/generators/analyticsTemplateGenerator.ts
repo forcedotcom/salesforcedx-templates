@@ -29,78 +29,78 @@ export default class AnalyticsTemplateGenerator extends BaseGenerator<AnalyticsT
         path.join(
           'DefaultAnalyticsTemplate',
           'dashboards',
-          'basicDashboard.json'
-        )
+          'basicDashboard.json',
+        ),
       ),
       this.destinationPath(
         path.join(
           this.outputdir,
           templatename,
           'dashboards',
-          `${templatename}Dashboard.json`
-        )
+          `${templatename}Dashboard.json`,
+        ),
       ),
-      { templateName: templatename }
+      { templateName: templatename },
     );
     await this.render(
       this.templatePath(
-        path.join('DefaultAnalyticsTemplate', 'app-to-template-rules.json')
+        path.join('DefaultAnalyticsTemplate', 'app-to-template-rules.json'),
       ),
       this.destinationPath(
-        path.join(this.outputdir, templatename, 'app-to-template-rules.json')
+        path.join(this.outputdir, templatename, 'app-to-template-rules.json'),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'folder.json')),
       this.destinationPath(
-        path.join(this.outputdir, templatename, 'folder.json')
+        path.join(this.outputdir, templatename, 'folder.json'),
       ),
-      { templateName: templatename }
+      { templateName: templatename },
     );
     await this.render(
       this.templatePath(
-        path.join('DefaultAnalyticsTemplate', 'releaseNotes.html')
+        path.join('DefaultAnalyticsTemplate', 'releaseNotes.html'),
       ),
       this.destinationPath(
-        path.join(this.outputdir, templatename, 'releaseNotes.html')
+        path.join(this.outputdir, templatename, 'releaseNotes.html'),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath(
-        path.join('DefaultAnalyticsTemplate', 'template-info.json')
+        path.join('DefaultAnalyticsTemplate', 'template-info.json'),
       ),
       this.destinationPath(
-        path.join(this.outputdir, templatename, 'template-info.json')
+        path.join(this.outputdir, templatename, 'template-info.json'),
       ),
       {
         templateName: templatename,
         sourceApiVersion: this.apiversion,
-      }
+      },
     );
     await this.render(
       this.templatePath(
-        path.join('DefaultAnalyticsTemplate', 'template-to-app-rules.json')
+        path.join('DefaultAnalyticsTemplate', 'template-to-app-rules.json'),
       ),
       this.destinationPath(
-        path.join(this.outputdir, templatename, 'template-to-app-rules.json')
+        path.join(this.outputdir, templatename, 'template-to-app-rules.json'),
       ),
-      {}
+      {},
     );
     await this.render(
       this.templatePath(path.join('DefaultAnalyticsTemplate', 'ui.json')),
       this.destinationPath(path.join(this.outputdir, templatename, 'ui.json')),
-      {}
+      {},
     );
     await this.render(
       this.templatePath(
-        path.join('DefaultAnalyticsTemplate', 'variables.json')
+        path.join('DefaultAnalyticsTemplate', 'variables.json'),
       ),
       this.destinationPath(
-        path.join(this.outputdir, templatename, 'variables.json')
+        path.join(this.outputdir, templatename, 'variables.json'),
       ),
-      {}
+      {},
     );
   }
 }

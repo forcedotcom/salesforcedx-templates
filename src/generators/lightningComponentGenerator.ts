@@ -36,13 +36,13 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
       filetype: type === 'aura' ? /\.cmp$/ : /\.html$/,
       onMissing: () =>
         new Error(
-          nls.localize('MissingLightningComponentTemplate', [template, type])
+          nls.localize('MissingLightningComponentTemplate', [template, type]),
         ),
     });
 
     if (type === 'aura') {
       this.sourceRootWithPartialPath(
-        path.join('lightningcomponent', 'aura', template)
+        path.join('lightningcomponent', 'aura', template),
       );
       if (!internal) {
         await this.render(
@@ -51,50 +51,50 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
             path.join(
               this.outputdir,
               componentname,
-              `${componentname}.cmp-meta.xml`
-            )
+              `${componentname}.cmp-meta.xml`,
+            ),
           ),
           {
             componentname,
             description: nls.localize('LightningComponentBundle'),
             apiVersion: this.apiversion,
-          }
+          },
         );
       }
       await this.render(
         this.templatePath(`${template}.auradoc`),
         this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.auradoc`)
+          path.join(this.outputdir, componentname, `${componentname}.auradoc`),
         ),
-        {}
+        {},
       );
       await this.render(
         this.templatePath(`${template}.cmp`),
         this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.cmp`)
+          path.join(this.outputdir, componentname, `${componentname}.cmp`),
         ),
-        {}
+        {},
       );
       await this.render(
         this.templatePath(`${template}.css`),
         this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.css`)
+          path.join(this.outputdir, componentname, `${componentname}.css`),
         ),
-        {}
+        {},
       );
       await this.render(
         this.templatePath(`${template}.design`),
         this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.design`)
+          path.join(this.outputdir, componentname, `${componentname}.design`),
         ),
-        {}
+        {},
       );
       await this.render(
         this.templatePath(`${template}.svg`),
         this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.svg`)
+          path.join(this.outputdir, componentname, `${componentname}.svg`),
         ),
-        {}
+        {},
       );
       await this.render(
         this.templatePath(`${template}Controller.js`),
@@ -102,17 +102,17 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
           path.join(
             this.outputdir,
             componentname,
-            `${componentname}Controller.js`
-          )
+            `${componentname}Controller.js`,
+          ),
         ),
-        {}
+        {},
       );
       await this.render(
         this.templatePath(`${template}Helper.js`),
         this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}Helper.js`)
+          path.join(this.outputdir, componentname, `${componentname}Helper.js`),
         ),
-        {}
+        {},
       );
       await this.render(
         this.templatePath(`${template}Renderer.js`),
@@ -120,10 +120,10 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
           path.join(
             this.outputdir,
             componentname,
-            `${componentname}Renderer.js`
-          )
+            `${componentname}Renderer.js`,
+          ),
         ),
-        {}
+        {},
       );
     }
 
@@ -136,14 +136,14 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
         .toLowerCase()}${componentname.substring(1)}`;
       const kebabCaseComponentName = componentname
         .match(
-          /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
+          /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g,
         )!
         .join('-')
         .toLowerCase();
       const ext = template === 'typeScript' ? 'ts' : 'js';
 
       this.sourceRootWithPartialPath(
-        path.join('lightningcomponent', 'lwc', template)
+        path.join('lightningcomponent', 'lwc', template),
       );
       await this.render(
         this.templatePath(`${template}.${ext}`),
@@ -151,10 +151,10 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
           path.join(
             this.outputdir,
             camelCaseComponentName,
-            `${camelCaseComponentName}.${ext}`
-          )
+            `${camelCaseComponentName}.${ext}`,
+          ),
         ),
-        { pascalCaseComponentName }
+        { pascalCaseComponentName },
       );
 
       await this.render(
@@ -163,10 +163,10 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
           path.join(
             this.outputdir,
             camelCaseComponentName,
-            `${camelCaseComponentName}.html`
-          )
+            `${camelCaseComponentName}.html`,
+          ),
         ),
-        {}
+        {},
       );
 
       await this.render(
@@ -176,23 +176,23 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
             this.outputdir,
             camelCaseComponentName,
             `__tests__`,
-            `${camelCaseComponentName}.test.${ext}`
-          )
+            `${camelCaseComponentName}.test.${ext}`,
+          ),
         ),
         {
           pascalCaseComponentName,
           camelCaseComponentName,
           kebabCaseComponentName,
-        }
+        },
       );
 
       if (template === 'typeScript') {
         await this.render(
           this.templatePath('gitignore'),
           this.destinationPath(
-            path.join(this.outputdir, camelCaseComponentName, '.gitignore')
+            path.join(this.outputdir, camelCaseComponentName, '.gitignore'),
           ),
-          {}
+          {},
         );
       }
 
@@ -206,10 +206,10 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
             path.join(
               this.outputdir,
               camelCaseComponentName,
-              `${camelCaseComponentName}.js-meta.xml`
-            )
+              `${camelCaseComponentName}.js-meta.xml`,
+            ),
           ),
-          { apiVersion: this.apiversion, masterLabel }
+          { apiVersion: this.apiversion, masterLabel },
         );
       }
     }

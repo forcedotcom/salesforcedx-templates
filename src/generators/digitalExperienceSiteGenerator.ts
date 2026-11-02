@@ -26,7 +26,7 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     const alphaRegExp = /^[a-zA-Z0-9]*$/;
     if (!alphaRegExp.test(this.options.urlpathprefix)) {
       throw new Error(
-        nls.localize('AlphaNumericValidationError', 'url-path-prefix')
+        nls.localize('AlphaNumericValidationError', 'url-path-prefix'),
       );
     }
   }
@@ -44,7 +44,7 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       siteDevName,
       picassoSiteDevName,
       urlpathprefix,
-      adminemail
+      adminemail,
     );
 
     await this.generateCustomSite(sitename, siteDevName, urlpathprefix);
@@ -52,14 +52,14 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     await this.generateDigitalExperienceConfig(
       sitename,
       picassoSiteDevName,
-      urlpathprefix
+      urlpathprefix,
     );
 
     const bundlePath = path.join(
       this.outputdir,
       'digitalExperiences',
       'site',
-      picassoSiteDevName
+      picassoSiteDevName,
     );
     await this.generateDEBMeta(bundlePath, picassoSiteDevName);
     await this.generateDEBAppPage(bundlePath);
@@ -78,36 +78,36 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     siteDevName: string,
     picassoSiteDevName: string,
     urlPathPrefix: string,
-    adminEmail: string
+    adminEmail: string,
   ): Promise<void> {
     const fileName = this.encodeForFileName(siteName);
     await this.render(
       this.templatePath('_network.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'networks', `${fileName}.network-meta.xml`)
+        path.join(this.outputdir, 'networks', `${fileName}.network-meta.xml`),
       ),
-      { siteName, siteDevName, picassoSiteDevName, urlPathPrefix, adminEmail }
+      { siteName, siteDevName, picassoSiteDevName, urlPathPrefix, adminEmail },
     );
   }
 
   private async generateCustomSite(
     siteName: string,
     siteDevName: string,
-    urlPathPrefix: string
+    urlPathPrefix: string,
   ): Promise<void> {
     await this.render(
       this.templatePath('_customSite.xml'),
       this.destinationPath(
-        path.join(this.outputdir, 'sites', `${siteDevName}.site-meta.xml`)
+        path.join(this.outputdir, 'sites', `${siteDevName}.site-meta.xml`),
       ),
-      { siteName, siteDevName, urlPathPrefix }
+      { siteName, siteDevName, urlPathPrefix },
     );
   }
 
   private async generateDigitalExperienceConfig(
     siteName: string,
     picassoSiteDevName: string,
-    urlPathPrefix: string
+    urlPathPrefix: string,
   ): Promise<void> {
     await this.render(
       this.templatePath('_digitalExperienceConfig.xml'),
@@ -115,26 +115,26 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
         path.join(
           this.outputdir,
           'digitalExperienceConfigs',
-          `${picassoSiteDevName}.digitalExperienceConfig-meta.xml`
-        )
+          `${picassoSiteDevName}.digitalExperienceConfig-meta.xml`,
+        ),
       ),
-      { siteName, picassoSiteDevName, urlPathPrefix }
+      { siteName, picassoSiteDevName, urlPathPrefix },
     );
   }
 
   private async generateDEBMeta(
     bundlePath: string,
-    picassoSiteDevName: string
+    picassoSiteDevName: string,
   ): Promise<void> {
     await this.render(
       this.templatePath('_digitalExperience.xml'),
       this.destinationPath(
         path.join(
           bundlePath,
-          `${picassoSiteDevName}.digitalExperience-meta.xml`
-        )
+          `${picassoSiteDevName}.digitalExperience-meta.xml`,
+        ),
       ),
-      { picassoSiteDevName }
+      { picassoSiteDevName },
     );
   }
 
@@ -142,17 +142,17 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     const appPagePath = path.join(
       bundlePath,
       'sfdc_cms__appPage',
-      'mainAppPage'
+      'mainAppPage',
     );
     await this.render(
       this.templatePath('sfdc_cms__appPage', 'mainAppPage', 'content.json'),
       this.destinationPath(path.join(appPagePath, 'content.json')),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('sfdc_cms__appPage', 'mainAppPage', '_meta.json'),
       this.destinationPath(path.join(appPagePath, '_meta.json')),
-      {}
+      {},
     );
   }
 
@@ -160,25 +160,25 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     const brandingPath = path.join(
       bundlePath,
       'sfdc_cms__brandingSet',
-      'Build_Your_Own_LWR'
+      'Build_Your_Own_LWR',
     );
     await this.render(
       this.templatePath(
         'sfdc_cms__brandingSet',
         'Build_Your_Own_LWR',
-        'content.json'
+        'content.json',
       ),
       this.destinationPath(path.join(brandingPath, 'content.json')),
-      {}
+      {},
     );
     await this.render(
       this.templatePath(
         'sfdc_cms__brandingSet',
         'Build_Your_Own_LWR',
-        '_meta.json'
+        '_meta.json',
       ),
       this.destinationPath(path.join(brandingPath, '_meta.json')),
-      {}
+      {},
     );
   }
 
@@ -186,53 +186,53 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     const langPath = path.join(
       bundlePath,
       'sfdc_cms__languageSettings',
-      'languages'
+      'languages',
     );
     await this.render(
       this.templatePath(
         'sfdc_cms__languageSettings',
         'languages',
-        'content.json'
+        'content.json',
       ),
       this.destinationPath(path.join(langPath, 'content.json')),
-      {}
+      {},
     );
     await this.render(
       this.templatePath(
         'sfdc_cms__languageSettings',
         'languages',
-        '_meta.json'
+        '_meta.json',
       ),
       this.destinationPath(path.join(langPath, '_meta.json')),
-      {}
+      {},
     );
   }
 
   private async generateDEBMobilePublisherConfig(
-    bundlePath: string
+    bundlePath: string,
   ): Promise<void> {
     const mobileConfigPath = path.join(
       bundlePath,
       'sfdc_cms__mobilePublisherConfig',
-      'mobilePublisherConfig'
+      'mobilePublisherConfig',
     );
     await this.render(
       this.templatePath(
         'sfdc_cms__mobilePublisherConfig',
         'mobilePublisherConfig',
-        'content.json'
+        'content.json',
       ),
       this.destinationPath(path.join(mobileConfigPath, 'content.json')),
-      {}
+      {},
     );
     await this.render(
       this.templatePath(
         'sfdc_cms__mobilePublisherConfig',
         'mobilePublisherConfig',
-        '_meta.json'
+        '_meta.json',
       ),
       this.destinationPath(path.join(mobileConfigPath, '_meta.json')),
-      {}
+      {},
     );
   }
 
@@ -254,12 +254,12 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       await this.render(
         this.templatePath('sfdc_cms__route', route, 'content.json'),
         this.destinationPath(path.join(routePath, 'content.json')),
-        {}
+        {},
       );
       await this.render(
         this.templatePath('sfdc_cms__route', route, '_meta.json'),
         this.destinationPath(path.join(routePath, '_meta.json')),
-        {}
+        {},
       );
     }
   }
@@ -267,7 +267,7 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
   private async generateDEBSite(
     bundlePath: string,
     siteName: string,
-    picassoSiteDevName: string
+    picassoSiteDevName: string,
   ): Promise<void> {
     const urlName = siteName
       .toLowerCase()
@@ -276,19 +276,19 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     const sitePath = path.join(
       bundlePath,
       'sfdc_cms__site',
-      picassoSiteDevName
+      picassoSiteDevName,
     );
     const escapedSiteName = JSON.stringify(siteName) // escape special characters since this needs to be a JSON string
       .slice(1, -1); // remove quotes added by JSON.stringify
     await this.render(
       this.templatePath('sfdc_cms__site', 'content.json'),
       this.destinationPath(path.join(sitePath, 'content.json')),
-      { siteName: escapedSiteName, urlName }
+      { siteName: escapedSiteName, urlName },
     );
     await this.render(
       this.templatePath('sfdc_cms__site', '_meta.json'),
       this.destinationPath(path.join(sitePath, '_meta.json')),
-      { picassoSiteDevName }
+      { picassoSiteDevName },
     );
   }
 
@@ -296,21 +296,21 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
     const themePath = path.join(
       bundlePath,
       'sfdc_cms__theme',
-      'Build_Your_Own_LWR'
+      'Build_Your_Own_LWR',
     );
     await this.render(
       this.templatePath(
         'sfdc_cms__theme',
         'Build_Your_Own_LWR',
-        'content.json'
+        'content.json',
       ),
       this.destinationPath(path.join(themePath, 'content.json')),
-      {}
+      {},
     );
     await this.render(
       this.templatePath('sfdc_cms__theme', 'Build_Your_Own_LWR', '_meta.json'),
       this.destinationPath(path.join(themePath, '_meta.json')),
-      {}
+      {},
     );
   }
 
@@ -322,12 +322,12 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       await this.render(
         this.templatePath('sfdc_cms__themeLayout', layout, 'content.json'),
         this.destinationPath(path.join(layoutPath, 'content.json')),
-        { uuid: this.generateUUID.bind(this, `themeLayout_${layout}`) }
+        { uuid: this.generateUUID.bind(this, `themeLayout_${layout}`) },
       );
       await this.render(
         this.templatePath('sfdc_cms__themeLayout', layout, '_meta.json'),
         this.destinationPath(path.join(layoutPath, '_meta.json')),
-        {}
+        {},
       );
     }
   }
@@ -350,12 +350,12 @@ export default class DigitalExperienceSiteGenerator extends BaseGenerator<Digita
       await this.render(
         this.templatePath('sfdc_cms__view', view, 'content.json'),
         this.destinationPath(path.join(viewPath, 'content.json')),
-        { uuid: this.generateUUID.bind(this, `view_${view}`) }
+        { uuid: this.generateUUID.bind(this, `view_${view}`) },
       );
       await this.render(
         this.templatePath('sfdc_cms__view', view, '_meta.json'),
         this.destinationPath(path.join(viewPath, '_meta.json')),
-        {}
+        {},
       );
     }
   }

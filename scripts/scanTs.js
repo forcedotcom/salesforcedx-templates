@@ -32,7 +32,7 @@ const analyzeFile = (filePath) => {
     if (exp.getText().startsWith('fs.read')) {
       detected = true;
       console.warn(
-        `Warning: Usage of "${exp.getText()}" in file "${filePath}" at line ${callExpression.getStartLineNumber()}.\n`
+        `Warning: Usage of "${exp.getText()}" in file "${filePath}" at line ${callExpression.getStartLineNumber()}.\n`,
       );
     }
   });
@@ -43,10 +43,10 @@ scanDirectory(SRC_DIR);
 if (detected) {
   console.log('The warnings above do not mean the usages are wrong.');
   console.log(
-    `Avoid reading local artifacts with "fs.read*" since esbuild cannot bundle the artifacts together.`
+    `Avoid reading local artifacts with "fs.read*" since esbuild cannot bundle the artifacts together.`,
   );
   console.log(
-    'Consider using import instead or reach out to IDEx Foundations team'
+    'Consider using import instead or reach out to IDEx Foundations team',
   );
 } else {
   console.log('No fs.read* usages detected.');

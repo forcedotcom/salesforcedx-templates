@@ -21,8 +21,7 @@ export default class VisualforcePageGenerator extends BaseGenerator<VisualforceP
 
     this.checkTemplateExists('visualforcepage', template, {
       filetype: /\.page$/,
-      onMissing: () =>
-        new Error(nls.localize('MissingVisualforcePageTemplate', [template])),
+      onMissing: () => new Error(nls.localize('MissingVisualforcePageTemplate', [template]))
     });
 
     this.sourceRootWithPartialPath('visualforcepage');
@@ -30,14 +29,12 @@ export default class VisualforcePageGenerator extends BaseGenerator<VisualforceP
     await this.render(
       this.templatePath(`${template}.page`),
       this.destinationPath(path.join(this.outputdir, `${pagename}.page`)),
-      {},
+      {}
     );
     await this.render(
       this.templatePath('_page.page-meta.xml'),
-      this.destinationPath(
-        path.join(this.outputdir, `${pagename}.page-meta.xml`),
-      ),
-      { vfLabel: label, apiVersion: this.apiversion },
+      this.destinationPath(path.join(this.outputdir, `${pagename}.page-meta.xml`)),
+      { vfLabel: label, apiVersion: this.apiversion }
     );
   }
 }

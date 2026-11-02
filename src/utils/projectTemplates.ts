@@ -19,7 +19,7 @@ export const PROJECT_TEMPLATES = [
   'angularexternalapp',
   'vueinternalapp',
   'agent',
-  'nativemobile',
+  'nativemobile'
 ] as const;
 
 export type ProjectTemplate = (typeof PROJECT_TEMPLATES)[number];

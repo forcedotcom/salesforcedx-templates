@@ -12,9 +12,7 @@ exec('node ./scripts/esbuild.config.js', (error, stdout, stderr) => {
   }
   // Check if the output contains the error string
   if (output.includes('[require-resolve-not-external]')) {
-    console.error(
-      'Error: A dependency that has to be externalized in esbuild process is found. Please resolve it!',
-    );
+    console.error('Error: A dependency that has to be externalized in esbuild process is found. Please resolve it!');
     process.exit(1); // Exit with an error code
   }
 
@@ -30,8 +28,7 @@ exec('node ./scripts/esbuild.config.js', (error, stdout, stderr) => {
   // Look for require.resolve calls to npm packages (not relative/absolute paths)
   // Pattern matches: require.resolve("package-name") or require.resolve("@scope/package/subpath")
   // Excludes: require.resolve("./relative") or require.resolve("../relative") or require.resolve("/absolute")
-  const requireResolvePattern =
-    /require\.resolve\s*\(\s*['"]((?!\.\/|\.\.\/|\/)[@\w\-\/\.]+)['"]\s*\)/g;
+  const requireResolvePattern = /require\.resolve\s*\(\s*['"]((?!\.\/|\.\.\/|\/)[@\w\-\/\.]+)['"]\s*\)/g;
 
   const foundIssues = [];
   const lines = bundledCode.split('\n');
@@ -46,25 +43,19 @@ exec('node ./scripts/esbuild.config.js', (error, stdout, stderr) => {
       foundIssues.push({
         package: packageName,
         line: i + 1,
-        code: line.trim(),
+        code: line.trim()
       });
     }
   }
 
   if (foundIssues.length > 0) {
-    console.error(
-      '\nError: Bundled code contains require.resolve() calls to npm packages!',
-    );
-    console.error(
-      'These will fail at runtime when bundled in VSCode extension:\n',
-    );
+    console.error('\nError: Bundled code contains require.resolve() calls to npm packages!');
+    console.error('These will fail at runtime when bundled in VSCode extension:\n');
     foundIssues.forEach((issue) => {
       console.error(`  Line ${issue.line}: ${issue.package}`);
       console.error(`    ${issue.code}`);
     });
-    console.error(
-      '\nSolution: Either externalize these packages in esbuild.config.js',
-    );
+    console.error('\nSolution: Either externalize these packages in esbuild.config.js');
     console.error('or use local file paths instead of require.resolve().');
     process.exit(1);
   }

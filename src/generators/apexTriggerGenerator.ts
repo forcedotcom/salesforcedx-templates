@@ -20,8 +20,7 @@ export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptio
 
     this.checkTemplateExists('apextrigger', template, {
       filetype: /\.trigger$/,
-      onMissing: () =>
-        new Error(nls.localize('MissingApexTriggerTemplate', [template])),
+      onMissing: () => new Error(nls.localize('MissingApexTriggerTemplate', [template]))
     });
 
     this.sourceRootWithPartialPath('apextrigger');
@@ -29,14 +28,12 @@ export default class ApexTriggerGenerator extends BaseGenerator<ApexTriggerOptio
     await this.render(
       this.templatePath(`${template}.trigger`),
       this.destinationPath(path.join(this.outputdir, `${triggername}.trigger`)),
-      { triggername, sobject, triggerEvents: triggerevents },
+      { triggername, sobject, triggerEvents: triggerevents }
     );
     await this.render(
       this.templatePath('_trigger.trigger-meta.xml'),
-      this.destinationPath(
-        path.join(this.outputdir, `${triggername}.trigger-meta.xml`),
-      ),
-      { apiVersion: this.apiversion },
+      this.destinationPath(path.join(this.outputdir, `${triggername}.trigger-meta.xml`)),
+      { apiVersion: this.apiversion }
     );
   }
 }

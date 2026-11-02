@@ -35,9 +35,9 @@ const main = async () => {
         hookSpecificOutput: {
           hookEventName: 'PreToolUse',
           permissionDecision: 'deny',
-          permissionDecisionReason: reason,
-        },
-      }),
+          permissionDecisionReason: reason
+        }
+      })
     );
   }
 };

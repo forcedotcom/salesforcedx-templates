@@ -38,8 +38,7 @@ function assertFileContent(file: string, regex: string | RegExp) {
     match = regex.test(body);
   }
 
-  expect(match, `${file} did not match '${regex}'. Contained:\n\n${body}`).to.be
-    .true;
+  expect(match, `${file} did not match '${regex}'. Contained:\n\n${body}`).to.be.true;
 }
 
 describe('FlexipageGenerator', () => {
@@ -61,7 +60,7 @@ describe('FlexipageGenerator', () => {
           flexipagename: '',
           template: 'HomePage',
           outputdir: outputDir,
-          internal: true,
+          internal: true
         });
       }).to.throw();
     });
@@ -72,7 +71,7 @@ describe('FlexipageGenerator', () => {
           flexipagename: 'TestPage',
           template: '' as any,
           outputdir: outputDir,
-          internal: true,
+          internal: true
         });
       }).to.throw();
     });
@@ -83,7 +82,7 @@ describe('FlexipageGenerator', () => {
           flexipagename: 'TestPage',
           template: 'InvalidTemplate' as any,
           outputdir: outputDir,
-          internal: true,
+          internal: true
         });
       }).to.throw(/Invalid.*template/i);
     });
@@ -94,7 +93,7 @@ describe('FlexipageGenerator', () => {
           flexipagename: 'TestPage',
           template: 'RecordPage',
           outputdir: outputDir,
-          internal: true,
+          internal: true
         });
       }).to.throw(/entityName/i);
     });
@@ -118,9 +117,9 @@ describe('FlexipageGenerator', () => {
             'Field9',
             'Field10',
             'Field11',
-            'Field12',
+            'Field12'
           ],
-          internal: true,
+          internal: true
         });
       }).to.throw(/Too many secondary fields/i);
     });
@@ -143,9 +142,9 @@ describe('FlexipageGenerator', () => {
             'Field8',
             'Field9',
             'Field10',
-            'Field11',
+            'Field11'
           ],
-          internal: true,
+          internal: true
         });
       }).to.not.throw();
     });
@@ -156,7 +155,7 @@ describe('FlexipageGenerator', () => {
         flexipagename: 'TestPage',
         template: 'HomePage',
         outputdir: outputDirWithFlexipages,
-        internal: true,
+        internal: true
       });
       // The outputdir should remain unchanged since it already contains 'flexipages'
       expect((generator as any).outputdir).to.equal(outputDirWithFlexipages);
@@ -168,12 +167,10 @@ describe('FlexipageGenerator', () => {
         flexipagename: 'TestPage',
         template: 'HomePage',
         outputdir: outputDirWithoutFlexipages,
-        internal: false,
+        internal: false
       });
       // The outputdir should have 'flexipages' appended
-      expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', 'flexipages'),
-      );
+      expect((generator as any).outputdir).to.equal(path.join('testsoutput', 'mydir', 'flexipages'));
     });
   });
 
@@ -187,13 +184,10 @@ describe('FlexipageGenerator', () => {
         apiversion: apiVersion,
         masterlabel: 'My Home Page',
         description: 'Test home page',
-        internal: true,
+        internal: true
       });
 
-      const expectedFile = path.join(
-        outputDir,
-        'MyHomePage.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'MyHomePage.flexipage-meta.xml');
 
       expect(result.created).to.have.lengthOf(1);
       assertFileExists(expectedFile);
@@ -209,13 +203,10 @@ describe('FlexipageGenerator', () => {
         flexipagename: 'DefaultHomePage',
         template: 'HomePage',
         outputdir: outputDir,
-        internal: true,
+        internal: true
       });
 
-      const expectedFile = path.join(
-        outputDir,
-        'DefaultHomePage.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'DefaultHomePage.flexipage-meta.xml');
 
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'DefaultHomePage');
@@ -231,7 +222,7 @@ describe('FlexipageGenerator', () => {
         outputdir: outputDir,
         masterlabel: 'My App Page',
         description: 'Test app page',
-        internal: true,
+        internal: true
       });
 
       const expectedFile = path.join(outputDir, 'MyAppPage.flexipage-meta.xml');
@@ -254,13 +245,10 @@ describe('FlexipageGenerator', () => {
         entityName: 'Account',
         masterlabel: 'Account Record Page',
         description: 'Test account record page',
-        internal: true,
+        internal: true
       });
 
-      const expectedFile = path.join(
-        outputDir,
-        'AccountRecordPage.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'AccountRecordPage.flexipage-meta.xml');
 
       expect(result.created).to.have.lengthOf(1);
       assertFileExists(expectedFile);
@@ -279,13 +267,10 @@ describe('FlexipageGenerator', () => {
         primaryField: 'Name',
         secondaryFields: ['Stage', 'CloseDate', 'Owner'],
         detailFields: ['Name', 'Amount', 'Stage', 'CloseDate'],
-        internal: true,
+        internal: true
       });
 
-      const expectedFile = path.join(
-        outputDir,
-        'OpportunityPage.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'OpportunityPage.flexipage-meta.xml');
 
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'Opportunity');
@@ -305,13 +290,10 @@ describe('FlexipageGenerator', () => {
         entityName: 'Custom_Object__c',
         primaryFields: ['Name'],
         secondaryFields: ['Custom_Field__c'],
-        internal: true,
+        internal: true
       });
 
-      const expectedFile = path.join(
-        outputDir,
-        'CustomObjectPage.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'CustomObjectPage.flexipage-meta.xml');
 
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'Custom_Object__c');
@@ -326,23 +308,14 @@ describe('FlexipageGenerator', () => {
         flexipagename: 'TestNaming',
         template: 'HomePage',
         outputdir: outputDir,
-        internal: true,
+        internal: true
       });
 
-      const expectedFile = path.join(
-        outputDir,
-        'TestNaming.flexipage-meta.xml',
-      );
-      const unexpectedFile = path.join(
-        outputDir,
-        '_flexipage.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'TestNaming.flexipage-meta.xml');
+      const unexpectedFile = path.join(outputDir, '_flexipage.flexipage-meta.xml');
 
       assertFileExists(expectedFile);
-      expect(
-        fs.existsSync(unexpectedFile),
-        'Template placeholder file should not exist',
-      ).to.be.false;
+      expect(fs.existsSync(unexpectedFile), 'Template placeholder file should not exist').to.be.false;
     });
   });
 
@@ -356,13 +329,10 @@ describe('FlexipageGenerator', () => {
         apiversion: '62.0',
         masterlabel: 'Variable Test Page',
         description: 'Testing EJS variables',
-        internal: true,
+        internal: true
       });
 
-      const expectedFile = path.join(
-        outputDir,
-        'VariableTest.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'VariableTest.flexipage-meta.xml');
 
       assertFileContent(expectedFile, 'Variable Test Page');
       assertFileContent(expectedFile, 'Testing EJS variables');
@@ -390,57 +360,42 @@ describe('FlexipageGenerator', () => {
         template: 'HomePage',
         outputdir: outputDir,
         flexipageTemplatesGitRepo: customTemplatesDir,
-        internal: true,
+        internal: true
       });
 
       try {
         await generator.generate();
         expect.fail('Should have thrown an error');
       } catch (error: any) {
-        expect(error.message).to.match(
-          /template.*not found|MissingFlexipageTemplate/i,
-        );
+        expect(error.message).to.match(/template.*not found|MissingFlexipageTemplate/i);
       }
     });
 
     it('should handle subdirectories in custom templates', async () => {
       // Create custom template with subdirectory structure containing a template file
-      const customSubdir = path.join(
-        customTemplatesDir,
-        'flexipage',
-        'HomePage',
-        'subdir',
-      );
+      const customSubdir = path.join(customTemplatesDir, 'flexipage', 'HomePage', 'subdir');
       await fs.promises.mkdir(customSubdir, { recursive: true });
 
       // Create the main template file
-      const templateFile = path.join(
-        customTemplatesDir,
-        'flexipage',
-        'HomePage',
-        '_flexipage.flexipage-meta.xml',
-      );
+      const templateFile = path.join(customTemplatesDir, 'flexipage', 'HomePage', '_flexipage.flexipage-meta.xml');
       await fs.promises.writeFile(
         templateFile,
         `<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel><%= masterlabel %></masterLabel>
     <type>HomePage</type>
-</FlexiPage>`,
+</FlexiPage>`
       );
 
       // Create a template file in subdirectory
-      const subTemplateFile = path.join(
-        customSubdir,
-        '_flexipage.flexipage-meta.xml',
-      );
+      const subTemplateFile = path.join(customSubdir, '_flexipage.flexipage-meta.xml');
       await fs.promises.writeFile(
         subTemplateFile,
         `<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel><%= masterlabel %> Sub</masterLabel>
     <type>HomePage</type>
-</FlexiPage>`,
+</FlexiPage>`
       );
 
       const generator = new FlexipageGenerator({
@@ -449,25 +404,18 @@ describe('FlexipageGenerator', () => {
         outputdir: outputDir,
         flexipageTemplatesGitRepo: customTemplatesDir,
         masterlabel: 'Subdir Test Page',
-        internal: true,
+        internal: true
       });
 
       await generator.generate();
 
       // Check main file was created
-      const expectedFile = path.join(
-        outputDir,
-        'SubdirTest.flexipage-meta.xml',
-      );
+      const expectedFile = path.join(outputDir, 'SubdirTest.flexipage-meta.xml');
       assertFileExists(expectedFile);
       assertFileContent(expectedFile, 'Subdir Test Page');
 
       // Check subdirectory template file was also processed
-      const expectedSubFile = path.join(
-        outputDir,
-        'subdir',
-        'SubdirTest.flexipage-meta.xml',
-      );
+      const expectedSubFile = path.join(outputDir, 'subdir', 'SubdirTest.flexipage-meta.xml');
       assertFileExists(expectedSubFile);
       assertFileContent(expectedSubFile, 'Subdir Test Page Sub');
     });

@@ -37,19 +37,14 @@ function compareDirectories(dir1, dir2) {
     const filePath2 = path.join(dir2, file);
 
     if (fs.existsSync(filePath1) && fs.existsSync(filePath2)) {
-      if (
-        fs.statSync(filePath1).isDirectory() &&
-        fs.statSync(filePath2).isDirectory()
-      ) {
+      if (fs.statSync(filePath1).isDirectory() && fs.statSync(filePath2).isDirectory()) {
         // Both are directories, compare their contents recursively
         compareDirectories(filePath1, filePath2);
       } else if (!compareFiles(filePath1, filePath2)) {
         console.log(`Difference found in file: ${file}`);
       }
     } else {
-      console.log(
-        `File or directory exists only in one of the directories: ${file}`,
-      );
+      console.log(`File or directory exists only in one of the directories: ${file}`);
       result = false;
     }
   });

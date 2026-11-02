@@ -23,20 +23,18 @@ export default class LightningTestGenerator extends BaseGenerator<LightningTestO
     if (!internal) {
       await this.render(
         this.templatePath('_staticresource.resource-meta.xml'),
-        this.destinationPath(
-          path.join(this.outputdir, `${testname}.resource-meta.xml`),
-        ),
+        this.destinationPath(path.join(this.outputdir, `${testname}.resource-meta.xml`)),
         {
-          description: nls.localize('LightningTest'),
+          description: nls.localize('LightningTest')
         },
         // @ts-expect-error -- Legacy render call includes an unused fourth argument.
-        { apiName: testname },
+        { apiName: testname }
       );
     }
     await this.render(
       this.templatePath(`${template}.resource`),
       this.destinationPath(path.join(this.outputdir, `${testname}.resource`)),
-      { apiName: testname },
+      { apiName: testname }
     );
   }
 }

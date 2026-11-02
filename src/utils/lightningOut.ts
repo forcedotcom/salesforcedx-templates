@@ -38,23 +38,13 @@ export function originToFileToken(origin: string): string {
 function normalizeOne(raw: string): { origin: string } {
   const trimmed = (raw ?? '').trim();
   if (trimmed.includes('*')) {
-    throw new Error(
-      nls.localize('InvalidLightningOutHostDomain', [
-        raw,
-        'wildcards are not allowed',
-      ]),
-    );
+    throw new Error(nls.localize('InvalidLightningOutHostDomain', [raw, 'wildcards are not allowed']));
   }
   let u: URL;
   try {
     u = new URL(trimmed);
   } catch {
-    throw new Error(
-      nls.localize('InvalidLightningOutHostDomain', [
-        raw,
-        'not a valid absolute URL',
-      ]),
-    );
+    throw new Error(nls.localize('InvalidLightningOutHostDomain', [raw, 'not a valid absolute URL']));
   }
   const scheme = u.protocol.replace(':', '').toLowerCase();
   const host = u.hostname.toLowerCase();
@@ -64,27 +54,14 @@ function normalizeOne(raw: string): { origin: string } {
   // can't know whether a domain is dev or prod, so it defers any https-in-production policy
   // (e.g. Secure-cookie requirements) to deploy/runtime rather than rejecting http here.
   if (scheme !== 'https' && scheme !== 'http') {
-    throw new Error(
-      nls.localize('InvalidLightningOutHostDomain', [
-        raw,
-        'must use an http or https scheme',
-      ]),
-    );
+    throw new Error(nls.localize('InvalidLightningOutHostDomain', [raw, 'must use an http or https scheme']));
   }
   if (u.username || u.password) {
-    throw new Error(
-      nls.localize('InvalidLightningOutHostDomain', [
-        raw,
-        'must not contain user info',
-      ]),
-    );
+    throw new Error(nls.localize('InvalidLightningOutHostDomain', [raw, 'must not contain user info']));
   }
   if ((u.pathname && u.pathname !== '/') || u.search || u.hash) {
     throw new Error(
-      nls.localize('InvalidLightningOutHostDomain', [
-        raw,
-        'must not contain a path, query, or fragment',
-      ]),
+      nls.localize('InvalidLightningOutHostDomain', [raw, 'must not contain a path, query, or fragment'])
     );
   }
   const defaultPort = scheme === 'https' ? '443' : '80';
@@ -112,13 +89,7 @@ export function normalizeHostDomains(raw: string[]): NormalizedHostDomains {
     const token = originToFileToken(origin);
     const priorOrigin = tokenToOrigin.get(token);
     if (priorOrigin && priorOrigin !== origin) {
-      throw new Error(
-        nls.localize('InvalidLightningOutHostDomainCollision', [
-          origin,
-          priorOrigin,
-          token,
-        ]),
-      );
+      throw new Error(nls.localize('InvalidLightningOutHostDomainCollision', [origin, priorOrigin, token]));
     }
     seen.add(origin);
     tokenToOrigin.set(token, origin);
@@ -134,24 +105,12 @@ export function normalizeHostDomains(raw: string[]): NormalizedHostDomains {
  * starts with a letter, then letters/digits/single underscores, no consecutive
  * or trailing underscore.
  */
-export function checkDeveloperName(
-  value: string,
-  field: string,
-  maxLength: number,
-): string | undefined {
-  if (
-    !/^[A-Za-z][A-Za-z0-9_]*$/.test(value) ||
-    /__/.test(value) ||
-    value.endsWith('_')
-  ) {
+export function checkDeveloperName(value: string, field: string, maxLength: number): string | undefined {
+  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(value) || /__/.test(value) || value.endsWith('_')) {
     return nls.localize('InvalidLightningOutName', [field, value]);
   }
   if (value.length > maxLength) {
-    return nls.localize('InvalidLightningOutNameLength', [
-      field,
-      String(maxLength),
-      String(value.length),
-    ]);
+    return nls.localize('InvalidLightningOutNameLength', [field, String(maxLength), String(value.length)]);
   }
   return undefined;
 }
@@ -165,7 +124,5 @@ export function checkDeveloperName(
  * always allows the colon (Aura) form and defers the org-policy decision to deploy time.
  */
 export function isValidComponentRef(ref: string): boolean {
-  return /^[a-z][a-zA-Z0-9_]*[-:/][A-Za-z][A-Za-z0-9_-]*[A-Za-z0-9]$/.test(
-    (ref ?? '').trim(),
-  );
+  return /^[a-z][a-zA-Z0-9_]*[-:/][A-Za-z][A-Za-z0-9_-]*[A-Za-z0-9]$/.test((ref ?? '').trim());
 }

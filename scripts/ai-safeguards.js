@@ -13,8 +13,7 @@
  * scripts/ai-safeguards.mjs, trimmed to the no-verify guard this repo needs.
  */
 
-const NO_VERIFY_REASON =
-  'git with --no-verify is blocked. Run without --no-verify so hooks run.';
+const NO_VERIFY_REASON = 'git with --no-verify is blocked. Run without --no-verify so hooks run.';
 const DYNAMIC_GIT_REASON =
   'Git commands assembled with shell expansion are blocked because safeguards cannot verify the resulting command. Use literal Git arguments.';
 const SHELL_EXECUTORS = new Set(['bash', 'sh', 'zsh']);
@@ -27,7 +26,7 @@ const GIT_VALUE_OPTIONS = new Set([
   '--exec-path',
   '--git-dir',
   '--work-tree',
-  '--namespace',
+  '--namespace'
 ]);
 const SUDO_VALUE_OPTIONS = new Set([
   '-C',
@@ -41,7 +40,7 @@ const SUDO_VALUE_OPTIONS = new Set([
   '--group',
   '--host',
   '--prompt',
-  '--user',
+  '--user'
 ]);
 
 const shellSegments = (command) => {
@@ -54,9 +53,7 @@ const shellSegments = (command) => {
       }
       if (character === '\\' && state.quote !== "'") {
         const escapedCharacter = characters[index + 1];
-        return state.quote === '"' &&
-          escapedCharacter &&
-          !['$', '`', '"', '\\', '\n'].includes(escapedCharacter)
+        return state.quote === '"' && escapedCharacter && !['$', '`', '"', '\\', '\n'].includes(escapedCharacter)
           ? { ...state, word: `${state.word}${character}` }
           : { ...state, escaped: true };
       }
@@ -66,48 +63,38 @@ const shellSegments = (command) => {
           : {
               ...state,
               word: `${state.word}${character}`,
-              dynamic:
-                state.dynamic ||
-                (state.quote === '"' &&
-                  (character === '$' || character === '`')),
+              dynamic: state.dynamic || (state.quote === '"' && (character === '$' || character === '`'))
             };
       }
-      if (character === '"' || character === "'")
-        return { ...state, quote: character };
+      if (character === '"' || character === "'") return { ...state, quote: character };
       if (/\s/.test(character)) {
         return state.word
           ? {
               ...state,
               segments: [
                 ...state.segments.slice(0, -1),
-                [
-                  ...state.segments.at(-1),
-                  { dynamic: state.dynamic, value: state.word },
-                ],
+                [...state.segments.at(-1), { dynamic: state.dynamic, value: state.word }]
               ],
               word: '',
-              dynamic: false,
+              dynamic: false
             }
           : state;
       }
       if (';&|'.includes(character)) {
         const segment = state.word
-          ? [
-              ...state.segments.at(-1),
-              { dynamic: state.dynamic, value: state.word },
-            ]
+          ? [...state.segments.at(-1), { dynamic: state.dynamic, value: state.word }]
           : state.segments.at(-1);
         return {
           ...state,
           segments: [...state.segments.slice(0, -1), segment, []],
           word: '',
-          dynamic: false,
+          dynamic: false
         };
       }
       return {
         ...state,
         word: `${state.word}${character}`,
-        dynamic: state.dynamic || character === '$' || character === '`',
+        dynamic: state.dynamic || character === '$' || character === '`'
       };
     },
     {
@@ -115,18 +102,13 @@ const shellSegments = (command) => {
       word: '',
       quote: undefined,
       escaped: false,
-      dynamic: false,
-    },
+      dynamic: false
+    }
   );
   const last = parsed.word
-    ? [
-        ...parsed.segments.at(-1),
-        { dynamic: parsed.dynamic, value: parsed.word },
-      ]
+    ? [...parsed.segments.at(-1), { dynamic: parsed.dynamic, value: parsed.word }]
     : parsed.segments.at(-1);
-  return [...parsed.segments.slice(0, -1), last].filter(
-    (segment) => segment.length,
-  );
+  return [...parsed.segments.slice(0, -1), last].filter((segment) => segment.length);
 };
 
 const gitOperation = (words) =>
@@ -134,18 +116,15 @@ const gitOperation = (words) =>
     (state, word) => {
       if (state.operation) return state;
       if (state.awaiting) return { ...state, awaiting: false };
-      if (GIT_VALUE_OPTIONS.has(word.value))
-        return { ...state, awaiting: true };
+      if (GIT_VALUE_OPTIONS.has(word.value)) return { ...state, awaiting: true };
       if (word.value.startsWith('-')) return state;
       return { ...state, operation: word.value };
     },
-    { awaiting: false, operation: undefined },
+    { awaiting: false, operation: undefined }
   ).operation;
 
 const unwrapCommand = (tokens) => {
-  const start = tokens.findIndex(
-    (token) => !/^[A-Za-z_][A-Za-z0-9_]*=/.test(token.value),
-  );
+  const start = tokens.findIndex((token) => !/^[A-Za-z_][A-Za-z0-9_]*=/.test(token.value));
   const command = tokens.slice(start < 0 ? tokens.length : start);
   if (!command.length) return { command: [] };
   if (command[0].dynamic) return { reason: DYNAMIC_GIT_REASON };
@@ -155,24 +134,16 @@ const unwrapCommand = (tokens) => {
       if (state.done) return state;
       if (state.reason) return state;
       if (state.awaiting) return { ...state, awaiting: false };
-      if (
-        state.wrapper === 'env' &&
-        /^[A-Za-z_][A-Za-z0-9_]*=/.test(token.value)
-      )
-        return state;
-      if (
-        state.wrapper === 'env' &&
-        (token.value === '-S' || token.value === '--split-string')
-      ) {
+      if (state.wrapper === 'env' && /^[A-Za-z_][A-Za-z0-9_]*=/.test(token.value)) return state;
+      if (state.wrapper === 'env' && (token.value === '-S' || token.value === '--split-string')) {
         return { ...state, reason: DYNAMIC_GIT_REASON };
       }
-      if (state.wrapper === 'sudo' && SUDO_VALUE_OPTIONS.has(token.value))
-        return { ...state, awaiting: true };
+      if (state.wrapper === 'sudo' && SUDO_VALUE_OPTIONS.has(token.value)) return { ...state, awaiting: true };
       if (token.value.startsWith('-')) return state;
       return {
         ...state,
         command: command.slice(command.indexOf(token)),
-        done: true,
+        done: true
       };
     },
     {
@@ -180,13 +151,11 @@ const unwrapCommand = (tokens) => {
       command: [],
       done: false,
       reason: undefined,
-      wrapper: command[0].value,
-    },
+      wrapper: command[0].value
+    }
   );
   if (wrapped.reason) return { reason: wrapped.reason };
-  return wrapped.command.length
-    ? unwrapCommand(wrapped.command)
-    : { command: [] };
+  return wrapped.command.length ? unwrapCommand(wrapped.command) : { command: [] };
 };
 
 const inspectCommand = (command, inspect) =>
@@ -199,13 +168,9 @@ const inspectCommand = (command, inspect) =>
       const executable = words[0]?.value;
       if (!executable) return state;
       if (SHELL_EXECUTORS.has(executable)) {
-        const commandIndex = words.findIndex((token) =>
-          /^-[^-]*c/.test(token.value),
-        );
+        const commandIndex = words.findIndex((token) => /^-[^-]*c/.test(token.value));
         const nested = words[commandIndex + 1];
-        return commandIndex >= 0 && nested
-          ? inspectCommand(nested.value, inspect)
-          : state;
+        return commandIndex >= 0 && nested ? inspectCommand(nested.value, inspect) : state;
       }
       if (executable === 'eval') {
         const nested = words
@@ -216,11 +181,9 @@ const inspectCommand = (command, inspect) =>
           ? { ...state, reason: DYNAMIC_GIT_REASON }
           : inspectCommand(nested, inspect);
       }
-      return executable === 'git'
-        ? { ...state, reason: inspect(words) }
-        : state;
+      return executable === 'git' ? { ...state, reason: inspect(words) } : state;
     },
-    { reason: undefined },
+    { reason: undefined }
   );
 
 /**
@@ -231,8 +194,7 @@ const inspectCommand = (command, inspect) =>
 const noVerifyDenial = (command) =>
   inspectCommand(command, (words) => {
     if (words.some((word) => word.dynamic)) return DYNAMIC_GIT_REASON;
-    return BLOCKED_OPERATIONS.has(gitOperation(words)) &&
-      words.some((word) => word.value === '--no-verify')
+    return BLOCKED_OPERATIONS.has(gitOperation(words)) && words.some((word) => word.value === '--no-verify')
       ? NO_VERIFY_REASON
       : undefined;
   }).reason;

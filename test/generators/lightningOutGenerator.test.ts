@@ -27,16 +27,11 @@ function assertFileExists(file: string) {
 function assertFileContent(file: string, needle: string | RegExp) {
   assertFileExists(file);
   const body = fs.readFileSync(file, 'utf8');
-  const match =
-    typeof needle === 'string' ? body.includes(needle) : needle.test(body);
-  expect(match, `${file} did not match '${needle}'. Contained:\n\n${body}`).to
-    .be.true;
+  const match = typeof needle === 'string' ? body.includes(needle) : needle.test(body);
+  expect(match, `${file} did not match '${needle}'. Contained:\n\n${body}`).to.be.true;
 }
 
-const baseOpts = (
-  outputdir: string,
-  overrides: Partial<LightningOutOptions> = {},
-): LightningOutOptions => ({
+const baseOpts = (outputdir: string, overrides: Partial<LightningOutOptions> = {}): LightningOutOptions => ({
   appName: 'MyLoApp',
   runtime: 'LWR_CORE',
   components: ['c/myButton'],
@@ -44,11 +39,11 @@ const baseOpts = (
   eca: {
     name: 'MyLoApp_ECA',
     contactEmail: 'dev@example.com',
-    callbackUrl: 'https://app.example.com/frontdoor.html',
+    callbackUrl: 'https://app.example.com/frontdoor.html'
   },
   outputdir,
   apiversion: getDefaultApiVersion(),
-  ...overrides,
+  ...overrides
 });
 
 describe('LightningOutGenerator', () => {
@@ -65,7 +60,7 @@ describe('LightningOutGenerator', () => {
       let msg = '';
       try {
         new LightningOutGenerator({
-          outputdir: outputDir,
+          outputdir: outputDir
         } as unknown as LightningOutOptions);
       } catch (e) {
         msg = (e as Error).message;
@@ -77,18 +72,10 @@ describe('LightningOutGenerator', () => {
       expect(msg).to.match(/callbackUrl/i);
     });
     it('throws when appName is not a valid DeveloperName', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(baseOpts(outputDir, { appName: '9bad' })),
-      ).to.throw(/appName/i);
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { appName: '9bad' }))).to.throw(/appName/i);
     });
     it('throws when appName exceeds 64 chars', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(
-            baseOpts(outputDir, { appName: 'A'.repeat(65) }),
-          ),
-      ).to.throw(/appName/i);
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { appName: 'A'.repeat(65) }))).to.throw(/appName/i);
     });
     it('throws when eca.name is not a valid DeveloperName', () => {
       expect(
@@ -98,10 +85,10 @@ describe('LightningOutGenerator', () => {
               eca: {
                 name: '1x',
                 contactEmail: 'dev@example.com',
-                callbackUrl: 'https://app.example.com/cb',
-              },
-            }),
-          ),
+                callbackUrl: 'https://app.example.com/cb'
+              }
+            })
+          )
       ).to.throw(/eca\.name/i);
     });
     it('throws when runtime is not LWR_CORE or CLWR', () => {
@@ -109,40 +96,28 @@ describe('LightningOutGenerator', () => {
         () =>
           new LightningOutGenerator(
             baseOpts(outputDir, {
-              runtime: 'NOPE' as LightningOutOptions['runtime'],
-            }),
-          ),
+              runtime: 'NOPE' as LightningOutOptions['runtime']
+            })
+          )
       ).to.throw(/runtime/i);
     });
     it('throws when hostDomains is empty', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(baseOpts(outputDir, { hostDomains: [] })),
-      ).to.throw(/hostDomains/i);
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { hostDomains: [] }))).to.throw(/hostDomains/i);
     });
     it('accepts an http hostDomain (Core allows any http/https origin, not just localhost)', () => {
       expect(
-        () =>
-          new LightningOutGenerator(
-            baseOpts(outputDir, { hostDomains: ['http://app.example.com'] }),
-          ),
+        () => new LightningOutGenerator(baseOpts(outputDir, { hostDomains: ['http://app.example.com'] }))
       ).to.not.throw();
     });
     it('throws when a hostDomain uses a non-http(s) scheme', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(
-            baseOpts(outputDir, { hostDomains: ['ftp://app.example.com'] }),
-          ),
-      ).to.throw(/http or https/i);
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { hostDomains: ['ftp://app.example.com'] }))).to.throw(
+        /http or https/i
+      );
     });
     it('throws when a hostDomain contains a wildcard', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(
-            baseOpts(outputDir, { hostDomains: ['https://*.example.com'] }),
-          ),
-      ).to.throw(/wildcard/i);
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { hostDomains: ['https://*.example.com'] }))).to.throw(
+        /wildcard/i
+      );
     });
     it('throws when contactEmail is invalid', () => {
       expect(
@@ -152,10 +127,10 @@ describe('LightningOutGenerator', () => {
               eca: {
                 name: 'MyLoApp_ECA',
                 contactEmail: 'not-an-email',
-                callbackUrl: 'https://app.example.com/cb',
-              },
-            }),
-          ),
+                callbackUrl: 'https://app.example.com/cb'
+              }
+            })
+          )
       ).to.throw(/email/i);
     });
     it('throws when callbackUrl is not https', () => {
@@ -166,31 +141,20 @@ describe('LightningOutGenerator', () => {
               eca: {
                 name: 'MyLoApp_ECA',
                 contactEmail: 'dev@example.com',
-                callbackUrl: 'http://app.example.com/cb',
-              },
-            }),
-          ),
+                callbackUrl: 'http://app.example.com/cb'
+              }
+            })
+          )
       ).to.throw(/callback/i);
     });
     it('throws when a component reference is malformed', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(
-            baseOpts(outputDir, { components: ['badref'] }),
-          ),
-      ).to.throw(/component/i);
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { components: ['badref'] }))).to.throw(/component/i);
     });
     it('accepts a valid CLWR definition without throwing', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(baseOpts(outputDir, { runtime: 'CLWR' })),
-      ).to.not.throw();
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { runtime: 'CLWR' }))).to.not.throw();
     });
     it('does not throw on empty components', () => {
-      expect(
-        () =>
-          new LightningOutGenerator(baseOpts(outputDir, { components: [] })),
-      ).to.not.throw();
+      expect(() => new LightningOutGenerator(baseOpts(outputDir, { components: [] }))).to.not.throw();
     });
     it('does not throw when the callback URL origin is not among the host domains', () => {
       expect(
@@ -200,10 +164,10 @@ describe('LightningOutGenerator', () => {
               eca: {
                 name: 'MyLoApp_ECA',
                 contactEmail: 'dev@example.com',
-                callbackUrl: 'https://other.example.com/cb',
-              },
-            }),
-          ),
+                callbackUrl: 'https://other.example.com/cb'
+              }
+            })
+          )
       ).to.not.throw();
     });
   });
@@ -214,60 +178,22 @@ describe('LightningOutGenerator', () => {
       const result = await templateService.create(
         TemplateType.LightningOut,
         baseOpts(outputDir, {
-          hostDomains: [
-            'https://app.example.com',
-            'https://portal.example.com:8080',
-          ],
-        }),
+          hostDomains: ['https://app.example.com', 'https://portal.example.com:8080']
+        })
       );
-      assertFileExists(
-        path.join(
-          outputDir,
-          'lightningOutApps',
-          'MyLoApp.lightningOutApp-meta.xml',
-        ),
-      );
-      assertFileExists(
-        path.join(outputDir, 'settings', 'MyDomain.settings-meta.xml'),
-      );
-      assertFileExists(
-        path.join(outputDir, 'settings', 'Security.settings-meta.xml'),
-      );
-      assertFileExists(
-        path.join(outputDir, 'externalClientApps', 'MyLoApp_ECA.eca-meta.xml'),
-      );
-      assertFileExists(
-        path.join(
-          outputDir,
-          'extlClntAppGlobalOauthSets',
-          'MyLoApp_ECA.ecaGlblOauth-meta.xml',
-        ),
-      );
-      assertFileExists(
-        path.join(
-          outputDir,
-          'extlClntAppOauthSettings',
-          'MyLoApp_ECA.ecaOauth-meta.xml',
-        ),
-      );
+      assertFileExists(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'));
+      assertFileExists(path.join(outputDir, 'settings', 'MyDomain.settings-meta.xml'));
+      assertFileExists(path.join(outputDir, 'settings', 'Security.settings-meta.xml'));
+      assertFileExists(path.join(outputDir, 'externalClientApps', 'MyLoApp_ECA.eca-meta.xml'));
+      assertFileExists(path.join(outputDir, 'extlClntAppGlobalOauthSets', 'MyLoApp_ECA.ecaGlblOauth-meta.xml'));
+      assertFileExists(path.join(outputDir, 'extlClntAppOauthSettings', 'MyLoApp_ECA.ecaOauth-meta.xml'));
       // one CORS file per host domain
+      assertFileExists(path.join(outputDir, 'corsWhitelistOrigins', 'app_example_com.corsWhitelistOrigin-meta.xml'));
       assertFileExists(
-        path.join(
-          outputDir,
-          'corsWhitelistOrigins',
-          'app_example_com.corsWhitelistOrigin-meta.xml',
-        ),
-      );
-      assertFileExists(
-        path.join(
-          outputDir,
-          'corsWhitelistOrigins',
-          'portal_example_com_8080.corsWhitelistOrigin-meta.xml',
-        ),
+        path.join(outputDir, 'corsWhitelistOrigins', 'portal_example_com_8080.corsWhitelistOrigin-meta.xml')
       );
       // NO iframe artifact
-      expect(fs.existsSync(path.join(outputDir, 'iframeWhiteListUrlSettings')))
-        .to.be.false;
+      expect(fs.existsSync(path.join(outputDir, 'iframeWhiteListUrlSettings'))).to.be.false;
       expect(result.created.length).to.be.greaterThan(0);
     });
     it('uses appName for the app file and eca.name for the ECA files', async () => {
@@ -279,20 +205,12 @@ describe('LightningOutGenerator', () => {
           eca: {
             name: 'EcaY',
             contactEmail: 'dev@example.com',
-            callbackUrl: 'https://app.example.com/cb',
-          },
-        }),
+            callbackUrl: 'https://app.example.com/cb'
+          }
+        })
       );
-      assertFileExists(
-        path.join(
-          outputDir,
-          'lightningOutApps',
-          'AppX.lightningOutApp-meta.xml',
-        ),
-      );
-      assertFileExists(
-        path.join(outputDir, 'externalClientApps', 'EcaY.eca-meta.xml'),
-      );
+      assertFileExists(path.join(outputDir, 'lightningOutApps', 'AppX.lightningOutApp-meta.xml'));
+      assertFileExists(path.join(outputDir, 'externalClientApps', 'EcaY.eca-meta.xml'));
     });
     it('renders appName, runtime, and component refs into the LightningOutApp', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
@@ -300,14 +218,10 @@ describe('LightningOutGenerator', () => {
         TemplateType.LightningOut,
         baseOpts(outputDir, {
           runtime: 'CLWR',
-          components: ['c/foo', 'c:bar'],
-        }),
+          components: ['c/foo', 'c:bar']
+        })
       );
-      const app = path.join(
-        outputDir,
-        'lightningOutApps',
-        'MyLoApp.lightningOutApp-meta.xml',
-      );
+      const app = path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml');
       assertFileContent(app, 'CLWR');
       assertFileContent(app, 'c/foo');
       assertFileContent(app, 'c:bar');
@@ -315,87 +229,53 @@ describe('LightningOutGenerator', () => {
     });
     it('trims surrounding whitespace from a component ref before emitting it', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      await templateService.create(
-        TemplateType.LightningOut,
-        baseOpts(outputDir, { components: ['  c/foo  '] }),
-      );
-      const app = path.join(
-        outputDir,
-        'lightningOutApps',
-        'MyLoApp.lightningOutApp-meta.xml',
-      );
+      await templateService.create(TemplateType.LightningOut, baseOpts(outputDir, { components: ['  c/foo  '] }));
+      const app = path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml');
       // emitted value must equal the validated (trimmed) value — no space-padded componentName
       assertFileContent(app, '<componentName>c/foo</componentName>');
     });
     it('hardcodes distributionState=Local and OAuth scope Web', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      await templateService.create(
-        TemplateType.LightningOut,
-        baseOpts(outputDir),
-      );
+      await templateService.create(TemplateType.LightningOut, baseOpts(outputDir));
       assertFileContent(
         path.join(outputDir, 'externalClientApps', 'MyLoApp_ECA.eca-meta.xml'),
-        '<distributionState>Local</distributionState>',
+        '<distributionState>Local</distributionState>'
       );
       assertFileContent(
-        path.join(
-          outputDir,
-          'extlClntAppOauthSettings',
-          'MyLoApp_ECA.ecaOauth-meta.xml',
-        ),
-        /<commaSeparatedOauthScopes>Web<\/commaSeparatedOauthScopes>/,
+        path.join(outputDir, 'extlClntAppOauthSettings', 'MyLoApp_ECA.ecaOauth-meta.xml'),
+        /<commaSeparatedOauthScopes>Web<\/commaSeparatedOauthScopes>/
       );
     });
     it('hardcodes the embedding invariants isEnabled/enableOauthCorsPolicy/isFirstPartyCookieUseRequired', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      await templateService.create(
-        TemplateType.LightningOut,
-        baseOpts(outputDir),
-      );
+      await templateService.create(TemplateType.LightningOut, baseOpts(outputDir));
       assertFileContent(
-        path.join(
-          outputDir,
-          'lightningOutApps',
-          'MyLoApp.lightningOutApp-meta.xml',
-        ),
-        '<isEnabled>true</isEnabled>',
+        path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'),
+        '<isEnabled>true</isEnabled>'
       );
       assertFileContent(
         path.join(outputDir, 'settings', 'Security.settings-meta.xml'),
-        '<enableOauthCorsPolicy>true</enableOauthCorsPolicy>',
+        '<enableOauthCorsPolicy>true</enableOauthCorsPolicy>'
       );
       assertFileContent(
         path.join(outputDir, 'settings', 'MyDomain.settings-meta.xml'),
-        '<isFirstPartyCookieUseRequired>false</isFirstPartyCookieUseRequired>',
+        '<isFirstPartyCookieUseRequired>false</isFirstPartyCookieUseRequired>'
       );
     });
     it('keeps the consumer secret optional on the ECA global OAuth settings', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      await templateService.create(
-        TemplateType.LightningOut,
-        baseOpts(outputDir),
-      );
+      await templateService.create(TemplateType.LightningOut, baseOpts(outputDir));
       assertFileContent(
-        path.join(
-          outputDir,
-          'extlClntAppGlobalOauthSets',
-          'MyLoApp_ECA.ecaGlblOauth-meta.xml',
-        ),
-        '<isConsumerSecretOptional>true</isConsumerSecretOptional>',
+        path.join(outputDir, 'extlClntAppGlobalOauthSets', 'MyLoApp_ECA.ecaGlblOauth-meta.xml'),
+        '<isConsumerSecretOptional>true</isConsumerSecretOptional>'
       );
     });
     it('re-run overwrites without error (no silent-overwrite guard)', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      await templateService.create(
-        TemplateType.LightningOut,
-        baseOpts(outputDir),
-      );
+      await templateService.create(TemplateType.LightningOut, baseOpts(outputDir));
       let threw: Error | undefined;
       try {
-        await templateService.create(
-          TemplateType.LightningOut,
-          baseOpts(outputDir),
-        );
+        await templateService.create(TemplateType.LightningOut, baseOpts(outputDir));
       } catch (e) {
         threw = e as Error;
       }

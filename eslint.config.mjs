@@ -15,13 +15,7 @@ import globals from 'globals';
 
 export default defineConfig(
   {
-    ignores: [
-      'lib/**',
-      'coverage/**',
-      '.nyc_output/**',
-      'src/templates/**',
-      'test/fixtures/**',
-    ],
+    ignores: ['lib/**', 'coverage/**', '.nyc_output/**', 'src/templates/**', 'test/fixtures/**']
   },
   {
     files: ['src/**/*.ts', 'test/**/*.ts'],
@@ -29,14 +23,14 @@ export default defineConfig(
     languageOptions: {
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: import.meta.dirname
       },
-      globals: globals.node,
+      globals: globals.node
     },
     plugins: {
       header,
       import: eslintPluginImport,
-      jsdoc,
+      jsdoc
     },
     // General TypeScript rules from salesforcedx-vscode; editor, Effect, and test-runner rules do not apply here.
     rules: {
@@ -47,27 +41,21 @@ export default defineConfig(
           '',
           {
             pattern: ' \\* Copyright \\(c\\) \\d{4}, salesforce\\.com, inc\\.',
-            template: ` * Copyright (c) ${new Date().getFullYear()}, salesforce.com, inc.`,
+            template: ` * Copyright (c) ${new Date().getFullYear()}, salesforce.com, inc.`
           },
           ' * All rights reserved.',
           ' * Licensed under the BSD 3-Clause license.',
           ' * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause',
-          ' ',
-        ],
+          ' '
+        ]
       ],
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_', ignoreRestSiblings: true },
-      ],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', ignoreRestSiblings: true }],
       '@typescript-eslint/adjacent-overload-signatures': 'error',
       '@typescript-eslint/class-literal-property-style': 'error',
-      '@typescript-eslint/consistent-type-assertions': [
-        'error',
-        { assertionStyle: 'never' },
-      ],
+      '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
       '@typescript-eslint/consistent-type-imports': [
         'error',
-        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' }
       ],
       '@typescript-eslint/array-type': ['error', { default: 'array' }],
       '@typescript-eslint/no-restricted-types': [
@@ -76,14 +64,14 @@ export default defineConfig(
           types: {
             Object: { message: 'Use object instead of Object.' },
             Function: {
-              message: 'Use a specific function type instead of Function.',
+              message: 'Use a specific function type instead of Function.'
             },
             Boolean: { message: 'Use boolean instead of Boolean.' },
             Number: { message: 'Use number instead of Number.' },
             String: { message: 'Use string instead of String.' },
-            Symbol: { message: 'Use symbol instead of Symbol.' },
-          },
-        },
+            Symbol: { message: 'Use symbol instead of Symbol.' }
+          }
+        }
       ],
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-misused-promises': 'warn',
@@ -102,7 +90,7 @@ export default defineConfig(
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-member-accessibility': [
         'error',
-        { accessibility: 'explicit', overrides: { constructors: 'no-public' } },
+        { accessibility: 'explicit', overrides: { constructors: 'no-public' } }
       ],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/naming-convention': [
@@ -112,14 +100,14 @@ export default defineConfig(
         {
           selector: 'method',
           format: ['camelCase'],
-          modifiers: ['public', 'protected', 'private'],
+          modifiers: ['public', 'protected', 'private']
         },
         {
           selector: 'variable',
           format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-          leadingUnderscore: 'allow',
+          leadingUnderscore: 'allow'
         },
-        { selector: 'property', format: null, leadingUnderscore: 'allow' },
+        { selector: 'property', format: null, leadingUnderscore: 'allow' }
       ],
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
@@ -130,10 +118,7 @@ export default defineConfig(
       '@typescript-eslint/no-require-imports': 'error',
       '@typescript-eslint/prefer-function-type': 'error',
       '@typescript-eslint/prefer-namespace-keyword': 'error',
-      '@typescript-eslint/triple-slash-reference': [
-        'error',
-        { path: 'always', types: 'prefer-import', lib: 'always' },
-      ],
+      '@typescript-eslint/triple-slash-reference': ['error', { path: 'always', types: 'prefer-import', lib: 'always' }],
       '@typescript-eslint/no-redundant-type-constituents': 'warn',
       '@typescript-eslint/unified-signatures': 'error',
       '@typescript-eslint/restrict-template-expressions': [
@@ -142,8 +127,8 @@ export default defineConfig(
           allowNumber: true,
           allowBoolean: true,
           allowAny: false,
-          allowNullish: true,
-        },
+          allowNullish: true
+        }
       ],
       '@typescript-eslint/no-useless-constructor': 'error',
       'constructor-super': 'error',
@@ -153,22 +138,15 @@ export default defineConfig(
       'import/no-empty-named-blocks': 'error',
       'import/newline-after-import': 'error',
       'import/no-cycle': 'error',
-      'import/no-extraneous-dependencies': [
-        'error',
-        { devDependencies: ['**/test/**', '**/scripts/**'] },
-      ],
+      'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/test/**', '**/scripts/**'] }],
       'import/order': [
         'error',
         {
           alphabetize: { caseInsensitive: true, order: 'asc' },
           'newlines-between': 'ignore',
-          groups: [
-            ['builtin', 'external', 'internal', 'unknown', 'object', 'type'],
-            'parent',
-            ['sibling', 'index'],
-          ],
-          distinctGroup: false,
-        },
+          groups: [['builtin', 'external', 'internal', 'unknown', 'object', 'type'], 'parent', ['sibling', 'index']],
+          distinctGroup: false
+        }
       ],
       'import/no-self-import': 'error',
       'jsdoc/check-alignment': 'error',
@@ -187,11 +165,9 @@ export default defineConfig(
       'no-restricted-syntax': [
         'error',
         {
-          selector:
-            "MemberExpression[object.name='process'][property.name='hrtime']",
-          message:
-            'Do not use process.hrtime(). Use globalThis.performance.now() instead.',
-        },
+          selector: "MemberExpression[object.name='process'][property.name='hrtime']",
+          message: 'Do not use process.hrtime(). Use globalThis.performance.now() instead.'
+        }
       ],
       'no-shadow': 'off',
       'no-self-assign': 'error',
@@ -214,8 +190,8 @@ export default defineConfig(
       'prefer-object-spread': 'error',
       'prefer-template': 'error',
       radix: 'error',
-      'use-isnan': 'error',
-    },
+      'use-isnan': 'error'
+    }
   },
   {
     files: ['test/**/*.ts'],
@@ -230,8 +206,8 @@ export default defineConfig(
         {
           varsIgnorePattern: '.*Mock$|.*Stub$|.*Spy$',
           args: 'none',
-          ignoreRestSiblings: true,
-        },
+          ignoreRestSiblings: true
+        }
       ],
       // Chai property assertions are intentional expressions.
       '@typescript-eslint/no-unused-expressions': 'off',
@@ -239,8 +215,8 @@ export default defineConfig(
       '@typescript-eslint/require-await': 'off',
       '@typescript-eslint/no-require-imports': 'off',
       'import/order': 'off',
-      'no-param-reassign': 'off',
-    },
+      'no-param-reassign': 'off'
+    }
   },
-  eslintConfigPrettier,
+  eslintConfigPrettier
 );

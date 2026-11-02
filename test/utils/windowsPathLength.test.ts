@@ -29,20 +29,14 @@ import {
   GLOBAL_SEARCH_PLACEHOLDER,
   COMPONENTS_PLACEHOLDER,
   DETAIL_PLACEHOLDER,
-  FORMATTED_PLACEHOLDER,
+  FORMATTED_PLACEHOLDER
 } from '../../src/utils/uiBundleTemplateUtils';
 
-const copyTemplatesPath = path.join(
-  __dirname,
-  '../../scripts/copy-templates.js',
-);
+const copyTemplatesPath = path.join(__dirname, '../../scripts/copy-templates.js');
 const { PLACEHOLDERS: copyScriptPlaceholders } = require(copyTemplatesPath);
 
 /** Map of placeholder key → value for sync assertion (single source: uiBundleTemplateUtils). */
-const UI_BUNDLE_PLACEHOLDERS: Record<
-  (typeof PLACEHOLDER_KEYS)[number],
-  string
-> = {
+const UI_BUNDLE_PLACEHOLDERS: Record<(typeof PLACEHOLDER_KEYS)[number], string> = {
   PACKAGE_DIR_PLACEHOLDER,
   MAIN_DEFAULT_PLACEHOLDER,
   UI_BUNDLES_PLACEHOLDER,
@@ -61,15 +55,14 @@ const UI_BUNDLE_PLACEHOLDERS: Record<
   GLOBAL_SEARCH_PLACEHOLDER,
   COMPONENTS_PLACEHOLDER,
   DETAIL_PLACEHOLDER,
-  FORMATTED_PLACEHOLDER,
+  FORMATTED_PLACEHOLDER
 };
 
 /**
  * Path prefix for template paths as seen by pack:verify in the CLI (tmp/sf).
  * pack:verify measures paths under node_modules, e.g. node_modules/@salesforce/templates/lib/...
  */
-const PACKAGE_TEMPLATES_PREFIX =
-  'node_modules/@salesforce/templates/lib/templates/';
+const PACKAGE_TEMPLATES_PREFIX = 'node_modules/@salesforce/templates/lib/templates/';
 
 function* walkFiles(dir: string, relativeTo: string): Generator<string> {
   if (!fs.existsSync(dir)) {
@@ -103,11 +96,7 @@ function getTemplateRoot(): string {
 describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', () => {
   it('placeholder constants in copy-templates.js match uiBundleTemplateUtils.ts', () => {
     for (const key of PLACEHOLDER_KEYS) {
-      assert.strictEqual(
-        copyScriptPlaceholders[key],
-        UI_BUNDLE_PLACEHOLDERS[key],
-        `Mismatch for ${key}`,
-      );
+      assert.strictEqual(copyScriptPlaceholders[key], UI_BUNDLE_PLACEHOLDERS[key], `Mismatch for ${key}`);
     }
   });
 });
@@ -136,7 +125,7 @@ describe('Windows path length (pack:verify)', () => {
         `Run "yarn build:copy-templates" so placeholders shorten paths. Long paths:\n${longPaths
           .sort((a, b) => b.length - a.length)
           .map((p) => `  ${p.length} - ${p.path}`)
-          .join('\n')}`,
+          .join('\n')}`
     );
   });
 });

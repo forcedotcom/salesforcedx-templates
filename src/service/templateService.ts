@@ -12,11 +12,11 @@ import {
   type GeneratorContext,
   generators,
   type TemplateOptions,
-  type TemplateType,
+  type TemplateType
 } from '../utils/types';
 
 export function importGenerator<TOptions extends TemplateOptions>(
-  templateType: TemplateType,
+  templateType: TemplateType
 ): GeneratorClass<TOptions> {
   const generator = generators.get(templateType);
   if (!generator) {
@@ -43,10 +43,7 @@ export class TemplateService {
    * @param cwd cwd of current environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
    * @param context optional generator context with fs and templatesRootPath
    */
-  public static getInstance(
-    cwd?: string,
-    context?: GeneratorContext,
-  ): TemplateService {
+  public static getInstance(cwd?: string, context?: GeneratorContext): TemplateService {
     if (!TemplateService.instance) {
       TemplateService.instance = new TemplateService(cwd, context);
     } else {
@@ -84,11 +81,11 @@ export class TemplateService {
   public create<TOptions extends TemplateOptions>(
     templateType: TemplateType,
     templateOptions: TOptions,
-    customTemplatesRootPathOrGitRepo?: string,
+    customTemplatesRootPathOrGitRepo?: string
   ): Promise<CreateOutput> {
     const runOptions = {
       cwd: this.cwd,
-      customTemplatesRootPathOrGitRepo,
+      customTemplatesRootPathOrGitRepo
     };
 
     const Generator = importGenerator(templateType);

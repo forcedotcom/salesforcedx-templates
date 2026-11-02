@@ -10,7 +10,7 @@ import * as path from 'node:path';
 import {
   ensureLowercaseUrlName,
   toAlphanumericForPath,
-  WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
+  WINDOWS_MAX_ALLOWABLE_PATH_LENGTH
 } from '../../src/utils/uiBundleTemplateUtils';
 
 describe('uiBundleTemplateUtils', () => {
@@ -28,10 +28,7 @@ describe('uiBundleTemplateUtils', () => {
 
   describe('placeholder constants', () => {
     it('WINDOWS_MAX_ALLOWABLE_PATH_LENGTH is positive', () => {
-      assert.ok(
-        Number.isInteger(WINDOWS_MAX_ALLOWABLE_PATH_LENGTH),
-        'should be integer',
-      );
+      assert.ok(Number.isInteger(WINDOWS_MAX_ALLOWABLE_PATH_LENGTH), 'should be integer');
       assert.ok(WINDOWS_MAX_ALLOWABLE_PATH_LENGTH > 0, 'should be positive');
     });
   });
@@ -47,7 +44,7 @@ describe('uiBundleTemplateUtils', () => {
       'MyApp1',
       'sfdc_cms__site',
       'MyApp1',
-      'content.json',
+      'content.json'
     );
 
     it('lowercases urlName in sfdc_cms__site content.json', () => {
@@ -56,10 +53,10 @@ describe('uiBundleTemplateUtils', () => {
           type: 'sfdc_cms__site',
           title: 'MyApp',
           contentBody: { appContainer: true },
-          urlName: 'MyApp',
+          urlName: 'MyApp'
         },
         null,
-        2,
+        2
       );
       const result = ensureLowercaseUrlName(input, siteContentPath);
       const parsed = JSON.parse(result);
@@ -68,11 +65,7 @@ describe('uiBundleTemplateUtils', () => {
     });
 
     it('returns content unchanged when urlName is already lowercase', () => {
-      const input = JSON.stringify(
-        { type: 'sfdc_cms__site', urlName: 'myapp' },
-        null,
-        2,
-      );
+      const input = JSON.stringify({ type: 'sfdc_cms__site', urlName: 'myapp' }, null, 2);
       const result = ensureLowercaseUrlName(input, siteContentPath);
       assert.strictEqual(result, input);
     });
@@ -95,11 +88,7 @@ describe('uiBundleTemplateUtils', () => {
     });
 
     it('returns content unchanged when urlName is not a string', () => {
-      const input = JSON.stringify(
-        { type: 'sfdc_cms__site', urlName: 123 },
-        null,
-        2,
-      );
+      const input = JSON.stringify({ type: 'sfdc_cms__site', urlName: 123 }, null, 2);
       assert.strictEqual(ensureLowercaseUrlName(input, siteContentPath), input);
     });
   });

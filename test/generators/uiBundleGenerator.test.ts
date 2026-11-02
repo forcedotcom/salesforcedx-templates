@@ -26,7 +26,7 @@ describe('UIBundleGenerator', () => {
           bundlename: '',
           template: 'default',
           outputdir: path.join('testsoutput', UI_BUNDLES_DIR),
-          internal: true,
+          internal: true
         });
       }).to.throw();
     });
@@ -37,7 +37,7 @@ describe('UIBundleGenerator', () => {
           bundlename: 'TestUIBundle',
           template: '',
           outputdir: path.join('testsoutput', UI_BUNDLES_DIR),
-          internal: true,
+          internal: true
         });
       }).to.throw();
     });
@@ -48,7 +48,7 @@ describe('UIBundleGenerator', () => {
         bundlename: 'TestUIBundle',
         template: 'default',
         outputdir: outputDirWithUiBundles,
-        internal: false,
+        internal: false
       });
       // The outputdir should remain unchanged since it already ends with UI_BUNDLES_DIR
       expect((generator as any).outputdir).to.equal(outputDirWithUiBundles);
@@ -60,12 +60,10 @@ describe('UIBundleGenerator', () => {
         bundlename: 'TestUIBundle',
         template: 'default',
         outputdir: outputDirWithoutUiBundles,
-        internal: false,
+        internal: false
       });
       // The outputdir should have UI_BUNDLES_DIR appended
-      expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', 'mydir', UI_BUNDLES_DIR),
-      );
+      expect((generator as any).outputdir).to.equal(path.join('testsoutput', 'mydir', UI_BUNDLES_DIR));
     });
 
     it('should not append uiBundles when internal is true', () => {
@@ -74,27 +72,23 @@ describe('UIBundleGenerator', () => {
         bundlename: 'TestUIBundle',
         template: 'default',
         outputdir: outputDirWithoutUiBundles,
-        internal: true,
+        internal: true
       });
       // The outputdir should remain unchanged when internal is true
       expect((generator as any).outputdir).to.equal(outputDirWithoutUiBundles);
     });
 
     it('should handle paths with uiBundles in the middle but not at the end', () => {
-      const outputDirWithUiBundlesInMiddle = path.join(
-        'testsoutput',
-        UI_BUNDLES_DIR,
-        'somefolder',
-      );
+      const outputDirWithUiBundlesInMiddle = path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder');
       const generator = new UIBundleGenerator({
         bundlename: 'TestUIBundle',
         template: 'default',
         outputdir: outputDirWithUiBundlesInMiddle,
-        internal: false,
+        internal: false
       });
       // The outputdir should have UI_BUNDLES_DIR appended since it doesn't end with it
       expect((generator as any).outputdir).to.equal(
-        path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder', UI_BUNDLES_DIR),
+        path.join('testsoutput', UI_BUNDLES_DIR, 'somefolder', UI_BUNDLES_DIR)
       );
     });
   });

@@ -26,10 +26,8 @@ function assertFileExists(file: string) {
 function assertFileContent(file: string, needle: string | RegExp) {
   assertFileExists(file);
   const body = fs.readFileSync(file, 'utf8');
-  const match =
-    typeof needle === 'string' ? body.includes(needle) : needle.test(body);
-  expect(match, `${file} did not match '${needle}'. Contained:\n\n${body}`).to
-    .be.true;
+  const match = typeof needle === 'string' ? body.includes(needle) : needle.test(body);
+  expect(match, `${file} did not match '${needle}'. Contained:\n\n${body}`).to.be.true;
 }
 
 describe('UIEmbeddingGenerator', () => {
@@ -52,8 +50,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw();
     });
 
@@ -66,8 +64,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: nonLwcOutputDir,
-            internal: false,
-          }),
+            internal: false
+          })
       ).to.throw(/lwc/i);
     });
 
@@ -80,8 +78,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.not.throw();
     });
 
@@ -94,8 +92,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.not.throw();
     });
 
@@ -108,8 +106,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw(/https/i);
     });
 
@@ -122,8 +120,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw(/https/i);
     });
 
@@ -136,8 +134,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw(/https/i);
     });
 
@@ -150,8 +148,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: '   ',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw(/title/i);
     });
 
@@ -164,8 +162,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts allow-everything',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw(/allow-everything/);
     });
 
@@ -178,8 +176,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts allow-forms allow-same-origin',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.not.throw();
     });
 
@@ -192,8 +190,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'Demo',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw(/single-quote/);
     });
 
@@ -206,8 +204,8 @@ describe('UIEmbeddingGenerator', () => {
             sandbox: 'allow-scripts',
             title: 'My "App"',
             outputdir: lwcOutputDir,
-            internal: true,
-          }),
+            internal: true
+          })
       ).to.throw(/double-quote/);
     });
   });
@@ -222,28 +220,20 @@ describe('UIEmbeddingGenerator', () => {
         title: 'Demo Shell',
         outputdir: lwcOutputDir,
         apiversion: apiVersion,
-        internal: true,
+        internal: true
       });
 
       const base = path.join(lwcOutputDir, 'embeddingDemo');
       assertFileExists(path.join(base, 'embeddingDemo.html'));
       assertFileExists(path.join(base, 'embeddingDemo.js'));
       assertFileExists(path.join(base, 'embeddingDemo.css'));
-      expect(
-        fs.existsSync(path.join(base, 'embeddingDemo.js-meta.xml')),
-        'meta xml should not exist for internal',
-      ).to.be.false;
+      expect(fs.existsSync(path.join(base, 'embeddingDemo.js-meta.xml')), 'meta xml should not exist for internal').to
+        .be.false;
 
       assertFileContent(path.join(base, 'embeddingDemo.html'), 'allow-scripts');
-      assertFileContent(
-        path.join(base, 'embeddingDemo.html'),
-        'title="Demo Shell"',
-      );
+      assertFileContent(path.join(base, 'embeddingDemo.html'), 'title="Demo Shell"');
       assertFileContent(path.join(base, 'embeddingDemo.js'), 'EmbeddingDemo');
-      assertFileContent(
-        path.join(base, 'embeddingDemo.js'),
-        'https://app.example.com',
-      );
+      assertFileContent(path.join(base, 'embeddingDemo.js'), 'https://app.example.com');
 
       expect(result.created.length).to.be.greaterThan(0);
     });
@@ -257,14 +247,10 @@ describe('UIEmbeddingGenerator', () => {
         title: 'Public Shell',
         outputdir: lwcOutputDir,
         apiversion: apiVersion,
-        internal: false,
+        internal: false
       });
 
-      const meta = path.join(
-        lwcOutputDir,
-        'embeddingDemo',
-        'embeddingDemo.js-meta.xml',
-      );
+      const meta = path.join(lwcOutputDir, 'embeddingDemo', 'embeddingDemo.js-meta.xml');
       assertFileExists(meta);
       assertFileContent(meta, 'Embedding Demo');
       assertFileContent(meta, apiVersion);

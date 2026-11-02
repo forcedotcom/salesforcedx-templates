@@ -45,7 +45,7 @@ export class CreateUtil {
     filetype: RegExp,
     command: string,
     fs: typeof nodeFs = nodeFs,
-    templatesRootPath?: string,
+    templatesRootPath?: string
   ): string[] {
     const basePath = templatesRootPath ?? dirnameTemplatesDefault ?? '';
     const files = fs
@@ -68,7 +68,7 @@ export class CreateUtil {
     command: string,
     { filetype, subdir }: { filetype?: RegExp; subdir?: string } = {},
     fs: typeof nodeFs = nodeFs,
-    templatesRootPath?: string,
+    templatesRootPath?: string
   ): string[] {
     const basePath = templatesRootPath ?? dirnameTemplatesDefault ?? '';
     let basedir = path.resolve(basePath, command);
@@ -83,7 +83,7 @@ export class CreateUtil {
       return subdirs.filter((dir) =>
         fs
           .readdirSync(path.join(basedir, dir), { withFileTypes: true })
-          .some((ent) => ent.isFile() && filetype.test(ent.name)),
+          .some((ent) => ent.isFile() && filetype.test(ent.name))
       );
     }
     return subdirs;

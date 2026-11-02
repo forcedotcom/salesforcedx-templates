@@ -47,10 +47,7 @@ export class Message implements LocalizationProvider {
     // e.g. [['value1', 'value2']]
     if (typeof formatArgs !== 'undefined' && Array.isArray(formatArgs)) {
       formatArgs = Array.isArray(formatArgs[0]) ? formatArgs[0] : formatArgs;
-    } else if (
-      typeof formatArgs !== 'undefined' &&
-      !Array.isArray(formatArgs)
-    ) {
+    } else if (typeof formatArgs !== 'undefined' && !Array.isArray(formatArgs)) {
       formatArgs = [formatArgs];
     }
 
@@ -71,7 +68,7 @@ export class Message implements LocalizationProvider {
       if (formatArgs.length !== expectedNumArgs) {
         // just log it, we might want to hide some in some languages on purpose
         console.log(
-          `Arguments do not match for label '${label}', got ${formatArgs.length} but want ${expectedNumArgs}`,
+          `Arguments do not match for label '${label}', got ${formatArgs.length} but want ${expectedNumArgs}`
         );
       }
 

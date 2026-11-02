@@ -11,19 +11,13 @@ import { BUILT_IN_FULL_TEMPLATES } from '../../src/utils/uiBundleTemplateUtils';
 
 describe('PROJECT_TEMPLATES', () => {
   it('is exported from the package entry point without duplicates', () => {
-    assert.strictEqual(
-      new Set(PROJECT_TEMPLATES).size,
-      PROJECT_TEMPLATES.length,
-    );
+    assert.strictEqual(new Set(PROJECT_TEMPLATES).size, PROJECT_TEMPLATES.length);
   });
 
   it('includes every built-in full template', () => {
     const projectTemplates: readonly string[] = PROJECT_TEMPLATES;
     for (const template of BUILT_IN_FULL_TEMPLATES) {
-      assert.ok(
-        projectTemplates.includes(template),
-        `${template} missing from PROJECT_TEMPLATES`,
-      );
+      assert.ok(projectTemplates.includes(template), `${template} missing from PROJECT_TEMPLATES`);
     }
   });
 });

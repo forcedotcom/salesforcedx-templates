@@ -21,11 +21,10 @@ export const UI_EMBEDDING_SANDBOX_TOKENS = [
   'allow-scripts',
   'allow-storage-access-by-user-activation',
   'allow-top-navigation',
-  'allow-top-navigation-by-user-activation',
+  'allow-top-navigation-by-user-activation'
 ] as const;
 
-export type UIEmbeddingSandboxToken =
-  (typeof UI_EMBEDDING_SANDBOX_TOKENS)[number];
+export type UIEmbeddingSandboxToken = (typeof UI_EMBEDDING_SANDBOX_TOKENS)[number];
 
 /**
  * Returns true if `src` is an absolute URL acceptable as the iframe source on the

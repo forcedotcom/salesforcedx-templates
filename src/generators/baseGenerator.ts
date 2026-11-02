@@ -9,16 +9,9 @@ import { render } from 'ejs';
 import * as nodeFs from 'fs';
 import * as path from 'path';
 import { nls } from '../i18n';
-import {
-  DEFAULT_API_VERSION,
-  dirnameTemplatesDefault,
-} from '../utils/constants';
+import { DEFAULT_API_VERSION, dirnameTemplatesDefault } from '../utils/constants';
 import { CreateUtil } from '../utils/createUtil';
-import {
-  type CreateOutput,
-  type GeneratorContext,
-  type TemplateOptions,
-} from '../utils/types';
+import { type CreateOutput, type GeneratorContext, type TemplateOptions } from '../utils/types';
 
 type Changes = {
   created: string[];
@@ -40,18 +33,11 @@ export async function setCustomTemplatesRootPathOrGitRepo(
     // if pathOrRepoUri is valid url, load the repo
     const url = new URL(pathOrRepoUri);
     if (process.env.ESBUILD_PLATFORM !== 'web' && url) {
-      const { loadCustomTemplatesGitRepo } = await import(
-        '../service/gitRepoUtils.js'
-      );
+      const { loadCustomTemplatesGitRepo } = await import('../service/gitRepoUtils.js');
       return await loadCustomTemplatesGitRepo(url, forceLoadingRemoteRepo, fs);
     }
   } catch (error) {
-    if (
-      typeof error !== 'object' ||
-      error === null ||
-      !('code' in error) ||
-      error.code !== 'ERR_INVALID_URL'
-    ) {
+    if (typeof error !== 'object' || error === null || !('code' in error) || error.code !== 'ERR_INVALID_URL') {
       throw error;
     }
 
@@ -59,9 +45,7 @@ export async function setCustomTemplatesRootPathOrGitRepo(
     if (fs.existsSync(localTemplatesPath)) {
       return localTemplatesPath;
     } else {
-      throw new Error(
-        nls.localize('localCustomTemplateDoNotExist', localTemplatesPath)
-      );
+      throw new Error(nls.localize('localCustomTemplateDoNotExist', localTemplatesPath));
     }
   }
 }
@@ -78,7 +62,7 @@ abstract class NotYeoman {
     created: [],
     conflicted: [],
     identical: [],
-    forced: [],
+    forced: []
   };
   protected readonly _fs: typeof nodeFs;
   protected readonly _cwd: string;
@@ -88,8 +72,7 @@ abstract class NotYeoman {
   constructor(context?: GeneratorContext, cwd?: string) {
     this._fs = context?.fs ?? nodeFs;
     this._cwd = cwd ?? process.cwd();
-    const defaultTemplatesRoot =
-      context?.templatesRootPath ?? dirnameTemplatesDefault;
+    const defaultTemplatesRoot = context?.templatesRootPath ?? dirnameTemplatesDefault;
     this._sourceRoot = this.sourceRoot(defaultTemplatesRoot);
     this._destinationRoot = this.destinationRoot(this._cwd);
   }
@@ -134,19 +117,13 @@ abstract class NotYeoman {
     return filepath;
   }
 
-  public async render(
-    source: string,
-    destination: string,
-    data?: Record<string, unknown>
-  ): Promise<void> {
+  public async render(source: string, destination: string, data?: Record<string, unknown>): Promise<void> {
     const template = await this._fs.promises.readFile(source, 'utf8');
     const rendered = render(template, data ?? {});
 
     if (rendered) {
       const relativePath = path.relative(this._cwd, destination);
-      const existing = await this._fs.promises
-        .readFile(destination, 'utf8')
-        .catch(() => null);
+      const existing = await this._fs.promises.readFile(destination, 'utf8').catch(() => null);
       if (existing) {
         if (rendered.trim() === existing.trim()) {
           this.register('identical', relativePath);
@@ -191,7 +168,7 @@ const ALLOWED_EXPRESSION_CALL_TARGETS = new Set([
   'startsWith',
   'endsWith',
   'padStart',
-  'padEnd',
+  'padEnd'
 ]);
 
 const ALLOWED_SCRIPTLET_METHODS = new Set([
@@ -211,7 +188,7 @@ const ALLOWED_SCRIPTLET_METHODS = new Set([
   'concat',
   'keys',
   'values',
-  'entries',
+  'entries'
 ]);
 
 function extractEjsTags(template: string): { type: string; code: string }[] {
@@ -392,11 +369,7 @@ function isAllowedStatement(stmt: string): boolean {
     return isSimpleForLoop(stmt);
   }
 
-  if (
-    /^\w[\w.]*\s*\.\s*(forEach|map|filter|some|every|find|findIndex)\s*\(/.test(
-      stmt
-    )
-  ) {
+  if (/^\w[\w.]*\s*\.\s*(forEach|map|filter|some|every|find|findIndex)\s*\(/.test(stmt)) {
     return isSimpleIterator(stmt);
   }
 
@@ -439,11 +412,7 @@ function isSimpleCondition(stmt: string): boolean {
 }
 
 function isSimpleForLoop(stmt: string): boolean {
-  if (
-    /^for\s*\(\s*(?:const|let|var)\s+\[?\s*\w+(?:\s*,\s*\w+)*\s*\]?\s+(?:of|in)\s+/.test(
-      stmt
-    )
-  ) {
+  if (/^for\s*\(\s*(?:const|let|var)\s+\[?\s*\w+(?:\s*,\s*\w+)*\s*\]?\s+(?:of|in)\s+/.test(stmt)) {
     const hardBlocked =
       /\b(process|global|globalThis|require|import|module|eval|Function|Reflect|Proxy|constructor|__proto__)\b/;
     return !hardBlocked.test(stmt);
@@ -517,48 +486,33 @@ function normalizeCode(code: string): string {
     result = result.replace(/"([^"\\]*)"\s*\+\s*'([^'\\]*)'/g, '"$1$2"');
   }
   // Normalize hex escapes in strings: '\x63' -> 'c'
-  result = result.replace(/\\x([0-9a-fA-F]{2})/g, (_, hex) =>
-    String.fromCharCode(parseInt(hex, 16))
-  );
+  result = result.replace(/\\x([0-9a-fA-F]{2})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
   // Normalize unicode escapes: '\u0063' -> 'c'
-  result = result.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) =>
-    String.fromCharCode(parseInt(hex, 16))
-  );
+  result = result.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
   return result;
 }
 
-export function validateCustomTemplate(
-  templateContent: string,
-  templatePath: string
-): void {
+export function validateCustomTemplate(templateContent: string, templatePath: string): void {
   const tags = extractEjsTags(templateContent);
   for (const tag of tags) {
     const code = normalizeCode(tag.code);
     if (tag.type === '=' || tag.type === '-') {
       if (!isSimpleExpression(code)) {
         throw new Error(
-          `Custom template "${templatePath}" contains disallowed code in expression tag: ${tag.code.slice(
-            0,
-            80
-          )}`
+          `Custom template "${templatePath}" contains disallowed code in expression tag: ${tag.code.slice(0, 80)}`
         );
       }
     } else {
       if (!isAllowedScriptlet(code)) {
         throw new Error(
-          `Custom template "${templatePath}" contains disallowed code in scriptlet tag: ${tag.code.slice(
-            0,
-            80
-          )}`
+          `Custom template "${templatePath}" contains disallowed code in scriptlet tag: ${tag.code.slice(0, 80)}`
         );
       }
     }
   }
 }
 
-export abstract class BaseGenerator<
-  TOptions extends TemplateOptions
-> extends NotYeoman {
+export abstract class BaseGenerator<TOptions extends TemplateOptions> extends NotYeoman {
   /**
    * Set by sourceRootWithPartialPath called in generator
    */
@@ -591,19 +545,12 @@ export abstract class BaseGenerator<
    * @param partialPath the relative path from the templates folder to templates root folder.
    */
   public sourceRootWithPartialPath(partialPath: string): void {
-    this.builtInTemplatesRootPath = path.join(
-      this.templatesRootPath ?? dirnameTemplatesDefault ?? '',
-      partialPath
-    );
+    this.builtInTemplatesRootPath = path.join(this.templatesRootPath ?? dirnameTemplatesDefault ?? '', partialPath);
     // set generator source directory to custom templates root if available
     if (!this.customTemplatesRootPath) {
       this.sourceRoot(path.join(this.builtInTemplatesRootPath));
     } else {
-      if (
-        this._fs.existsSync(
-          path.join(this.customTemplatesRootPath, partialPath)
-        )
-      ) {
+      if (this._fs.existsSync(path.join(this.customTemplatesRootPath, partialPath))) {
         this.sourceRoot(path.join(this.customTemplatesRootPath, partialPath));
       }
     }
@@ -618,29 +565,19 @@ export abstract class BaseGenerator<
       return customPath;
     } else {
       // files that are builtin and not in the custom template folder
-      return super.templatePath(
-        path.join(this.builtInTemplatesRootPath!, ...paths)
-      );
+      return super.templatePath(path.join(this.builtInTemplatesRootPath!, ...paths));
     }
   }
 
-  public async render(
-    source: string,
-    destination: string,
-    data?: Record<string, unknown>
-  ): Promise<void> {
-    const isBuiltIn =
-      this.builtInTemplatesRootPath &&
-      source.startsWith(this.builtInTemplatesRootPath);
+  public async render(source: string, destination: string, data?: Record<string, unknown>): Promise<void> {
+    const isBuiltIn = this.builtInTemplatesRootPath && source.startsWith(this.builtInTemplatesRootPath);
     if (!isBuiltIn) {
       const template = await this._fs.promises.readFile(source, 'utf8');
       validateCustomTemplate(template, source);
       const rendered = render(template, data ?? {});
       if (rendered) {
         const relativePath = path.relative(this._cwd, destination);
-        const existing = await this._fs.promises
-          .readFile(destination, 'utf8')
-          .catch(() => null);
+        const existing = await this._fs.promises.readFile(destination, 'utf8').catch(() => null);
         if (existing) {
           if (rendered.trim() === existing.trim()) {
             this.changes.identical.push(relativePath);
@@ -683,14 +620,14 @@ export abstract class BaseGenerator<
         ...(this.changes.created ?? []).map((file) => `  create ${file}`),
         ...(this.changes.identical ?? []).map((file) => `  identical ${file}`),
         ...(this.changes.conflicted ?? []).map((file) => `  conflict ${file}`),
-        ...(this.changes.forced ?? []).map((file) => `  force ${file}`),
-      ].join('\n')}\n`,
+        ...(this.changes.forced ?? []).map((file) => `  force ${file}`)
+      ].join('\n')}\n`
     ]);
 
     return {
       outputDir,
       created,
-      rawOutput,
+      rawOutput
     };
   }
 
@@ -725,19 +662,11 @@ export abstract class BaseGenerator<
             this._fs,
             templatesRootPath
           )
-        : CreateUtil.getCommandTemplatesForFiletype(
-            opts.filetype,
-            command,
-            this._fs,
-            templatesRootPath
-          );
+        : CreateUtil.getCommandTemplatesForFiletype(opts.filetype, command, this._fs, templatesRootPath);
       return templateNames.includes(template);
     };
 
-    if (
-      !existsIn(this.templatesRootPath ?? dirnameTemplatesDefault) &&
-      !existsIn(this.customTemplatesRootPath)
-    ) {
+    if (!existsIn(this.templatesRootPath ?? dirnameTemplatesDefault) && !existsIn(this.customTemplatesRootPath)) {
       throw opts.onMissing();
     }
   }

@@ -10,15 +10,10 @@ import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
 import { type UIEmbeddingOptions } from '../utils/types';
-import {
-  isAllowedUIEmbeddingSrcUrl,
-  UI_EMBEDDING_SANDBOX_TOKENS,
-} from '../utils/uiEmbedding';
+import { isAllowedUIEmbeddingSrcUrl, UI_EMBEDDING_SANDBOX_TOKENS } from '../utils/uiEmbedding';
 import { BaseGenerator } from './baseGenerator';
 
-const VALID_SANDBOX_TOKENS: ReadonlySet<string> = new Set(
-  UI_EMBEDDING_SANDBOX_TOKENS
-);
+const VALID_SANDBOX_TOKENS: ReadonlySet<string> = new Set(UI_EMBEDDING_SANDBOX_TOKENS);
 
 export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptions> {
   public validateOptions(): void {
@@ -49,10 +44,7 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
     const invalid = tokens.filter((t) => !VALID_SANDBOX_TOKENS.has(t));
     if (invalid.length) {
       throw new Error(
-        nls.localize('InvalidUIEmbeddingSandboxToken', [
-          invalid.join(', '),
-          [...VALID_SANDBOX_TOKENS].join(', '),
-        ])
+        nls.localize('InvalidUIEmbeddingSandboxToken', [invalid.join(', '), [...VALID_SANDBOX_TOKENS].join(', ')])
       );
     }
   }
@@ -60,63 +52,35 @@ export default class UIEmbeddingGenerator extends BaseGenerator<UIEmbeddingOptio
   public async generate(): Promise<void> {
     const { componentname, src, sandbox, title, internal } = this.options;
 
-    const pascalCaseComponentName = `${componentname
-      .substring(0, 1)
-      .toUpperCase()}${componentname.substring(1)}`;
-    const camelCaseComponentName = `${componentname
-      .substring(0, 1)
-      .toLowerCase()}${componentname.substring(1)}`;
+    const pascalCaseComponentName = `${componentname.substring(0, 1).toUpperCase()}${componentname.substring(1)}`;
+    const camelCaseComponentName = `${componentname.substring(0, 1).toLowerCase()}${componentname.substring(1)}`;
 
     this.sourceRootWithPartialPath(path.join('uiembedding', 'default'));
 
     await this.render(
       this.templatePath('default.html'),
-      this.destinationPath(
-        path.join(
-          this.outputdir,
-          camelCaseComponentName,
-          `${camelCaseComponentName}.html`
-        )
-      ),
+      this.destinationPath(path.join(this.outputdir, camelCaseComponentName, `${camelCaseComponentName}.html`)),
       { sandbox, title }
     );
 
     await this.render(
       this.templatePath('default.js'),
-      this.destinationPath(
-        path.join(
-          this.outputdir,
-          camelCaseComponentName,
-          `${camelCaseComponentName}.js`
-        )
-      ),
+      this.destinationPath(path.join(this.outputdir, camelCaseComponentName, `${camelCaseComponentName}.js`)),
       { pascalCaseComponentName, src }
     );
 
     await this.render(
       this.templatePath('default.css'),
-      this.destinationPath(
-        path.join(
-          this.outputdir,
-          camelCaseComponentName,
-          `${camelCaseComponentName}.css`
-        )
-      ),
+      this.destinationPath(path.join(this.outputdir, camelCaseComponentName, `${camelCaseComponentName}.css`)),
       {}
     );
 
     if (!internal) {
-      const masterLabel = camelCaseToTitleCase(componentname)
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+      const masterLabel = camelCaseToTitleCase(componentname).replace(/</g, '&lt;').replace(/>/g, '&gt;');
       await this.render(
         this.templatePath('default.js-meta.xml'),
         this.destinationPath(
-          path.join(
-            this.outputdir,
-            camelCaseComponentName,
-            `${camelCaseComponentName}.js-meta.xml`
-          )
+          path.join(this.outputdir, camelCaseComponentName, `${camelCaseComponentName}.js-meta.xml`)
         ),
         { apiVersion: this.apiversion, masterLabel }
       );

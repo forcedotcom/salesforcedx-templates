@@ -21,26 +21,19 @@ export default class VisualforceComponentGenerator extends BaseGenerator<Visualf
 
     this.checkTemplateExists('visualforcecomponent', template, {
       filetype: /\.component$/,
-      onMissing: () =>
-        new Error(
-          nls.localize('MissingVisualforceComponentTemplate', [template])
-        ),
+      onMissing: () => new Error(nls.localize('MissingVisualforceComponentTemplate', [template]))
     });
 
     this.sourceRootWithPartialPath('visualforcecomponent');
 
     await this.render(
       this.templatePath(`${template}.component`),
-      this.destinationPath(
-        path.join(this.outputdir, `${componentname}.component`)
-      ),
+      this.destinationPath(path.join(this.outputdir, `${componentname}.component`)),
       {}
     );
     await this.render(
       this.templatePath('_component.component-meta.xml'),
-      this.destinationPath(
-        path.join(this.outputdir, `${componentname}.component-meta.xml`)
-      ),
+      this.destinationPath(path.join(this.outputdir, `${componentname}.component-meta.xml`)),
       { vfLabel: label, apiVersion: this.apiversion }
     );
   }

@@ -87,7 +87,7 @@ export enum TemplateType {
   VisualforceComponent,
   VisualforcePage,
   StaticResource,
-  UIBundle,
+  UIBundle
 }
 
 export const generators = new Map<TemplateType, GeneratorClass<any>>([
@@ -107,7 +107,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.StaticResource, StaticResourceGenerator],
   [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
   [TemplateType.VisualforcePage, VisualforcePageGenerator],
-  [TemplateType.UIBundle, UIBundleGenerator],
+  [TemplateType.UIBundle, UIBundleGenerator]
 ]);
 
 export type CreateOutput = {
@@ -133,12 +133,7 @@ type ApexClassBaseOptions = TemplateOptions & { classname: string };
 
 type NonBatchableApexClassOptions = ApexClassBaseOptions & {
   template:
-    | 'DefaultApexClass'
-    | 'BasicUnitTest'
-    | 'ApexUnitTest'
-    | 'ApexException'
-    | 'InboundEmailService'
-    | 'Queueable';
+    'DefaultApexClass' | 'BasicUnitTest' | 'ApexUnitTest' | 'ApexException' | 'InboundEmailService' | 'Queueable';
   sobjecttype?: never;
 };
 
@@ -147,9 +142,7 @@ type BatchableApexClassOptions = ApexClassBaseOptions & {
   sobjecttype?: string;
 };
 
-export type ApexClassOptions =
-  | NonBatchableApexClassOptions
-  | BatchableApexClassOptions;
+export type ApexClassOptions = NonBatchableApexClassOptions | BatchableApexClassOptions;
 
 type ApexTriggerEvent =
   | 'before insert'
@@ -175,11 +168,7 @@ export interface LightningAppOptions extends TemplateOptions {
 
 export interface LightningComponentOptions extends TemplateOptions {
   componentname: string;
-  template:
-    | 'default'
-    | 'analyticsDashboard'
-    | 'analyticsDashboardWithStep'
-    | 'typeScript';
+  template: 'default' | 'analyticsDashboard' | 'analyticsDashboardWithStep' | 'typeScript';
   type: 'aura' | 'lwc';
   internal: boolean;
 }

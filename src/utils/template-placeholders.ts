@@ -18,7 +18,7 @@ export default [
     placeholder: '_p_',
     dirInNpm: 'force-app',
     parent: 'dest',
-    replacement: 'defaultpackagedir',
+    replacement: 'defaultpackagedir'
   },
   {
     key: 'MAIN_DEFAULT_PLACEHOLDER',
@@ -26,58 +26,57 @@ export default [
     dirInNpm: 'main/default',
     parent: '_p_',
     removeEmptySibling: 'main',
-    replacement: 'main/default',
+    replacement: 'main/default'
   },
   {
     key: 'UI_BUNDLES_PLACEHOLDER',
     placeholder: '_w_',
     dirInNpm: 'uiBundles',
     parent: '_m_',
-    replacement: 'uiBundles',
+    replacement: 'uiBundles'
   },
   {
     key: 'PERMISSIONSETS_PLACEHOLDER',
     placeholder: '_ps_',
     dirInNpm: 'permissionsets',
     parent: '_m_',
-    replacement: 'permissionsets',
+    replacement: 'permissionsets'
   },
   {
     key: 'DIGITAL_EXPERIENCE_CONFIGS_PLACEHOLDER',
     placeholder: '_dc_',
     dirInNpm: 'digitalExperienceConfigs',
     parent: '_m_',
-    replacement: 'digitalExperienceConfigs',
+    replacement: 'digitalExperienceConfigs'
   },
   {
     key: 'DIGITAL_EXPERIENCES_PLACEHOLDER',
     placeholder: '_d_',
     dirInNpm: 'digitalExperiences',
     parent: '_m_',
-    replacement: 'digitalExperiences',
+    replacement: 'digitalExperiences'
   },
   {
     key: 'SITE_PLACEHOLDER',
     placeholder: '_s_',
     dirInNpm: 'site',
     parent: '_d_',
-    replacement: 'site',
+    replacement: 'site'
   },
   {
     key: 'A4DRULES_PLACEHOLDER',
     placeholder: '_r_',
     dirInNpm: '.a4drules',
     parent: 'dest',
-    replacement: '.a4drules',
+    replacement: '.a4drules'
   },
   {
     key: 'A4D_SKILL_AGENTFORCE_PLACEHOLDER',
     placeholder: '_k_',
-    dirInNpm:
-      'skills/feature-react-agentforce-conversation-client-embedded-agent',
+    dirInNpm: 'skills/feature-react-agentforce-conversation-client-embedded-agent',
     parent: '_r_',
     toPath: 'skills/_k_',
-    replacement: 'feature-react-agentforce-conversation-client-embedded-agent',
+    replacement: 'feature-react-agentforce-conversation-client-embedded-agent'
   },
   // Path shortening under app folder (reactinternalapp/reactexternalapp) for Windows path length.
   {
@@ -88,7 +87,7 @@ export default [
     // React apps keep features under src/; Angular apps under src/app/.
     // Try both so the rename applies to either layout.
     subpath: ['src', 'src/app'],
-    replacement: 'features',
+    replacement: 'features'
   },
   // Angular templates (angularextapp/angularintapp) nest features one level deeper, under src/app.
   {
@@ -97,62 +96,62 @@ export default [
     dirInNpm: 'features',
     parent: '_a_',
     subpath: path.join('src', 'app'),
-    replacement: 'features',
+    replacement: 'features'
   },
   {
     key: 'LANGUAGE_SWITCHER_PLACEHOLDER',
     placeholder: '_ls_',
     dirInNpm: 'language-switcher',
     parent: '_f_',
-    replacement: 'language-switcher',
+    replacement: 'language-switcher'
   },
   {
     key: 'OBJECT_SEARCH_PLACEHOLDER',
     placeholder: '_os_',
     dirInNpm: 'object-search',
     parent: '_f_',
-    replacement: 'object-search',
+    replacement: 'object-search'
   },
   {
     key: 'EXAMPLES_PLACEHOLDER',
     placeholder: '_ex_',
     dirInNpm: '__examples__',
     parent: '_os_',
-    replacement: '__examples__',
+    replacement: '__examples__'
   },
   {
     key: 'EXAMPLES_PLACEHOLDER',
     placeholder: '_ex_',
     dirInNpm: '__examples__',
     parent: '_ls_',
-    replacement: '__examples__',
+    replacement: '__examples__'
   },
   {
     key: 'GLOBAL_SEARCH_PLACEHOLDER',
     placeholder: '_gs_',
     dirInNpm: 'global-search',
     parent: '_f_',
-    replacement: 'global-search',
+    replacement: 'global-search'
   },
   {
     key: 'COMPONENTS_PLACEHOLDER',
     placeholder: '_c_',
     dirInNpm: 'components',
     parent: '_gs_',
-    replacement: 'components',
+    replacement: 'components'
   },
   {
     key: 'DETAIL_PLACEHOLDER',
     placeholder: '_det_',
     dirInNpm: 'detail',
     parent: '_c_',
-    replacement: 'detail',
+    replacement: 'detail'
   },
   {
     key: 'FORMATTED_PLACEHOLDER',
     placeholder: '_fmt_',
     dirInNpm: 'formatted',
     parent: '_det_',
-    replacement: 'formatted',
-  },
+    replacement: 'formatted'
+  }
 ];

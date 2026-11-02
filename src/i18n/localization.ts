@@ -47,10 +47,7 @@ export class Message implements LocalizationProvider {
     // e.g. [['value1', 'value2']]
     if (typeof formatArgs !== 'undefined' && Array.isArray(formatArgs)) {
       formatArgs = Array.isArray(formatArgs[0]) ? formatArgs[0] : formatArgs;
-    } else if (
-      typeof formatArgs !== 'undefined' &&
-      !Array.isArray(formatArgs)
-    ) {
+    } else if (typeof formatArgs !== 'undefined' && !Array.isArray(formatArgs)) {
       formatArgs = [formatArgs];
     }
 

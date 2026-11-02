@@ -27,10 +27,7 @@ export default class LightningInterfaceGenerator extends BaseGenerator<Lightning
 
     this.checkTemplateExists('lightninginterface', template, {
       filetype: /\.intf$/,
-      onMissing: () =>
-        new Error(
-          nls.localize('MissingLightningInterfaceTemplate', [template])
-        ),
+      onMissing: () => new Error(nls.localize('MissingLightningInterfaceTemplate', [template]))
     });
 
     this.sourceRootWithPartialPath('lightninginterface');
@@ -38,24 +35,16 @@ export default class LightningInterfaceGenerator extends BaseGenerator<Lightning
     if (!internal) {
       await this.render(
         this.templatePath('_auradefinitionbundle.intf-meta.xml'),
-        this.destinationPath(
-          path.join(
-            this.outputdir,
-            interfacename,
-            `${interfacename}.intf-meta.xml`
-          )
-        ),
+        this.destinationPath(path.join(this.outputdir, interfacename, `${interfacename}.intf-meta.xml`)),
         {
           apiVersion: this.apiversion,
-          description: nls.localize('LightningInterfaceBundle'),
+          description: nls.localize('LightningInterfaceBundle')
         }
       );
     }
     await this.render(
       this.templatePath(`${template}.intf`),
-      this.destinationPath(
-        path.join(this.outputdir, interfacename, `${interfacename}.intf`)
-      ),
+      this.destinationPath(path.join(this.outputdir, interfacename, `${interfacename}.intf`)),
       {}
     );
   }

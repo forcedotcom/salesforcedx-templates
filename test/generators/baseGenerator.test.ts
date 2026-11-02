@@ -8,11 +8,7 @@
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 import { type TemplateOptions } from '../../src';
-import {
-  BaseGenerator,
-  getDefaultApiVersion,
-  validateCustomTemplate,
-} from '../../src/generators/baseGenerator';
+import { BaseGenerator, getDefaultApiVersion, validateCustomTemplate } from '../../src/generators/baseGenerator';
 
 describe('BaseGenerator', () => {
   const API_VERSION = getDefaultApiVersion();
@@ -25,13 +21,13 @@ describe('BaseGenerator', () => {
       this.doWriting({
         ...this.options,
         apiversion: this.apiversion,
-        outputdir: this.outputdir,
+        outputdir: this.outputdir
       });
     }
     public doWriting(options: MyTemplateOptions) {}
   }
   const mockMyGeneratorOptions: MyTemplateOptions = {
-    customProp: true,
+    customProp: true
   };
 
   afterEach(() => {
@@ -47,15 +43,12 @@ describe('BaseGenerator', () => {
     expect(doWritingStub.firstCall.firstArg).to.deep.equal({
       apiversion: API_VERSION,
       outputdir: process.cwd(),
-      customProp: true,
+      customProp: true
     });
   });
 
   it('should call validate options', () => {
-    const validateOptionsStub = sinon.stub(
-      MyGenerator.prototype,
-      'validateOptions'
-    );
+    const validateOptionsStub = sinon.stub(MyGenerator.prototype, 'validateOptions');
 
     new MyGenerator(mockMyGeneratorOptions);
     expect(validateOptionsStub.calledOnce).to.be.true;
@@ -74,80 +67,58 @@ describe('validateCustomTemplate', () => {
   });
 
   it('should allow forEach loops', () => {
-    const template =
-      '<% fields.forEach((field) => { %>\n<%= field %>\n<% }); %>';
+    const template = '<% fields.forEach((field) => { %>\n<%= field %>\n<% }); %>';
     expect(() => validateCustomTemplate(template, 'test.xml')).to.not.throw();
   });
 
   it('should block require() calls', () => {
     const template = '<% require("child_process").execSync("calc") %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block dynamic import()', () => {
     const template = '<% const m = await import("fs") %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block process.env access', () => {
     const template = '<% process.env.SECRET %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block eval()', () => {
     const template = '<% eval("malicious code") %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block Function constructor', () => {
     const template = '<% Function("return process")() %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block execSync', () => {
     const template = '<% execSync("whoami") %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block globalThis access', () => {
     const template = '<% globalThis.process %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block require() in output tags (<%= %>)', () => {
-    const template =
-      '<%= require("child_process").execSync("whoami").toString() %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    const template = '<%= require("child_process").execSync("whoami").toString() %>';
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block require() in unescaped output tags (<%- %>)', () => {
     const template = '<%- require("fs").readFileSync("/etc/passwd","utf8") %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should block constructor chain prototype traversal', () => {
     const template = '<% this.constructor.constructor("return process")() %>';
-    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw(
-      'disallowed code'
-    );
+    expect(() => validateCustomTemplate(template, 'malicious.cls')).to.throw('disallowed code');
   });
 
   it('should not flag safe output tags', () => {

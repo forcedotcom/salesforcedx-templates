@@ -13,17 +13,17 @@ const sharedConfig = {
   keepNames: true,
   plugins: [],
   supported: {
-    'dynamic-import': false,
+    'dynamic-import': false
   },
   logOverride: {
-    'unsupported-dynamic-import': 'error',
-  },
+    'unsupported-dynamic-import': 'error'
+  }
 };
 
 (async () => {
   await build({
     ...sharedConfig,
     entryPoints: ['./lib/index.js'],
-    outdir: 'dist',
+    outdir: 'dist'
   });
 })();

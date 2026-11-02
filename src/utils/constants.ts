@@ -11,6 +11,4 @@ export const DEFAULT_API_VERSION = '68.0';
 export const UI_BUNDLES_DIR = 'uiBundles';
 
 export const dirnameTemplatesDefault =
-  process.env.ESBUILD_PLATFORM !== 'web'
-    ? path.join(__dirname, '..', 'templates')
-    : undefined;
+  process.env.ESBUILD_PLATFORM !== 'web' ? path.join(__dirname, '..', 'templates') : undefined;

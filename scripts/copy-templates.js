@@ -9,13 +9,9 @@ const path = require('path');
 const shell = require('shelljs');
 
 /** Single source: shared with src/utils/uiBundleTemplateUtils.ts (compiled to lib/utils/template-placeholders.js) */
-const TEMPLATE_PLACEHOLDERS_SPEC = require(path.join(
-  __dirname,
-  '..',
-  'lib',
-  'utils',
-  'template-placeholders.js'
-)).default;
+const TEMPLATE_PLACEHOLDERS_SPEC = require(
+  path.join(__dirname, '..', 'lib', 'utils', 'template-placeholders.js')
+).default;
 
 /**
  * Renames a directory to a placeholder name if it exists. Keeps template paths short for Windows.
@@ -36,13 +32,13 @@ const PROJECT_OPTIONAL_RENAMES = [
   {
     parent: '_w_',
     getFrom: (config) => config.appFolderInNpm ?? null,
-    to: '_a_',
+    to: '_a_'
   },
   {
     parent: '_s_',
     getFrom: (config) => config.appSiteFolderInNpm ?? null,
-    to: '_a1_',
-  },
+    to: '_a1_'
+  }
 ];
 
 const currDir = process.cwd();
@@ -53,91 +49,64 @@ const TEMPLATES = [
   {
     packageName: '@salesforce/ui-bundle-template-base-web-app',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
-    destSubpath: 'uiBundles/webappbasic',
+    destSubpath: 'uiBundles/webappbasic'
   },
   {
     packageName: '@salesforce/ui-bundle-template-base-react-app',
     getSourceDir: (packageDir) =>
-      path.join(
-        packageDir,
-        'src',
-        'force-app',
-        'main',
-        'default',
-        'uiBundles',
-        'base-react-app'
-      ),
-    destSubpath: 'uiBundles/reactbasic',
+      path.join(packageDir, 'src', 'force-app', 'main', 'default', 'uiBundles', 'base-react-app'),
+    destSubpath: 'uiBundles/reactbasic'
   },
   {
     packageName: '@salesforce/ui-bundle-template-base-angular-app',
     getSourceDir: (packageDir) =>
-      path.join(
-        packageDir,
-        'src',
-        'force-app',
-        'main',
-        'default',
-        'uiBundles',
-        'base-angular-app'
-      ),
-    destSubpath: 'uiBundles/angularbasic',
+      path.join(packageDir, 'src', 'force-app', 'main', 'default', 'uiBundles', 'base-angular-app'),
+    destSubpath: 'uiBundles/angularbasic'
   },
   {
     packageName: '@salesforce/ui-bundle-template-base-vue-app',
     getSourceDir: (packageDir) =>
-      path.join(
-        packageDir,
-        'src',
-        'force-app',
-        'main',
-        'default',
-        'uiBundles',
-        'base-vue-app'
-      ),
-    destSubpath: 'uiBundles/vuebasic',
+      path.join(packageDir, 'src', 'force-app', 'main', 'default', 'uiBundles', 'base-vue-app'),
+    destSubpath: 'uiBundles/vuebasic'
   },
   // Project templates (reactinternalapp, reactexternalapp)
   {
     packageName: '@salesforce/ui-bundle-template-app-react-template-b2e',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactinternalapp',
-    appFolderInNpm: 'reactinternalapp',
+    appFolderInNpm: 'reactinternalapp'
   },
   {
     packageName: '@salesforce/ui-bundle-template-app-react-template-b2x',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/reactexternalapp',
-    appFolderInNpm: 'reactexternalapp',
+    appFolderInNpm: 'reactexternalapp'
   },
   // Angular project templates
   {
     packageName: '@salesforce/ui-bundle-template-app-angular-template-b2x',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/angularextapp',
-    appFolderInNpm: 'angularextapp',
+    appFolderInNpm: 'angularextapp'
   },
   {
     packageName: '@salesforce/ui-bundle-template-app-angular-template-b2e',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/angularintapp',
-    appFolderInNpm: 'angularintapp',
+    appFolderInNpm: 'angularintapp'
   },
   // Vue project templates
   {
     packageName: '@salesforce/ui-bundle-template-app-vue-template-b2e',
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/vueinternalapp',
-    appFolderInNpm: 'vueinternalapp',
-  },
+    appFolderInNpm: 'vueinternalapp'
+  }
 ];
 
 function copyTemplate(config) {
   try {
-    const packageJsonPath = require.resolve(
-      `${config.packageName}/package.json`,
-      { paths: [currDir] }
-    );
+    const packageJsonPath = require.resolve(`${config.packageName}/package.json`, { paths: [currDir] });
     const packageDir = path.dirname(packageJsonPath);
     const sourceDir = config.getSourceDir(packageDir);
 
@@ -168,7 +137,7 @@ function copyTemplate(config) {
       'playwright-report',
       'test-results',
       'coverage',
-      '.nyc_output',
+      '.nyc_output'
     ];
     const artifactFiles = ['package-lock.json', 'tsconfig.tsbuildinfo'];
     for (const dir of artifactDirs) {
@@ -195,9 +164,7 @@ function copyTemplate(config) {
         const base = paths[step.parent];
         if (!base) return [];
         if (!step.subpath) return [base];
-        const subpaths = Array.isArray(step.subpath)
-          ? step.subpath
-          : [step.subpath];
+        const subpaths = Array.isArray(step.subpath) ? step.subpath : [step.subpath];
         return subpaths.map((sp) => path.join(base, sp));
       }
 
@@ -206,11 +173,7 @@ function copyTemplate(config) {
       function renameStep(step) {
         const toPath = step.toPath ?? step.placeholder;
         for (const parentPath of getParentPaths(step)) {
-          const newPath = renameDirToPlaceholder(
-            parentPath,
-            step.dirInNpm,
-            toPath
-          );
+          const newPath = renameDirToPlaceholder(parentPath, step.dirInNpm, toPath);
           if (newPath) return { newPath, parentPath, toPath };
         }
         return null;
@@ -254,9 +217,7 @@ function copyTemplate(config) {
       }
     }
 
-    console.log(
-      `Copied ${config.packageName} to src/templates/${config.destSubpath}`
-    );
+    console.log(`Copied ${config.packageName} to src/templates/${config.destSubpath}`);
   } catch (error) {
     console.error(`Failed to copy ${config.packageName}:`, error.message);
     process.exit(1);
@@ -282,9 +243,7 @@ const lockfileInstallCommand = () => {
   const version = execSync('npm --version', { encoding: 'utf8' }).trim();
   const major = Number(version.split('.')[0]);
   const install = 'install --package-lock-only --ignore-scripts';
-  return major >= 11
-    ? `npm ${install}`
-    : `npx --yes npm@${NPM_LOCKFILE} ${install}`;
+  return major >= 11 ? `npm ${install}` : `npx --yes npm@${NPM_LOCKFILE} ${install}`;
 };
 
 /**
@@ -302,12 +261,10 @@ function generateUiBundleLockFiles(templatesDir) {
     try {
       execSync(command, {
         cwd: dir,
-        stdio: 'pipe',
+        stdio: 'pipe'
       });
     } catch (error) {
-      console.error(
-        `Failed to generate package-lock.json in ${rel}: ${error.message}`
-      );
+      console.error(`Failed to generate package-lock.json in ${rel}: ${error.message}`);
       process.exit(1);
     }
   }
@@ -329,9 +286,7 @@ function findUiBundlePackageJsonDirs(dir) {
       return;
     }
 
-    const hasPackageJson = entries.some(
-      (e) => e.isFile() && e.name === 'package.json'
-    );
+    const hasPackageJson = entries.some((e) => e.isFile() && e.name === 'package.json');
     if (insideUiBundles && hasPackageJson) {
       results.push(current);
       return; // no need to descend further
@@ -339,12 +294,8 @@ function findUiBundlePackageJsonDirs(dir) {
 
     for (const entry of entries) {
       if (!entry.isDirectory()) continue;
-      const isUiBundleSegment =
-        entry.name === 'uiBundles' || entry.name === '_w_';
-      walk(
-        path.join(current, entry.name),
-        insideUiBundles || isUiBundleSegment
-      );
+      const isUiBundleSegment = entry.name === 'uiBundles' || entry.name === '_w_';
+      walk(path.join(current, entry.name), insideUiBundles || isUiBundleSegment);
     }
   }
 
@@ -356,7 +307,7 @@ function findUiBundlePackageJsonDirs(dir) {
 const PLACEHOLDERS = Object.fromEntries([
   ...TEMPLATE_PLACEHOLDERS_SPEC.map((e) => [e.key, e.placeholder]),
   ['APP_PLACEHOLDER', '_a_'],
-  ['APP_SUFFIX_PLACEHOLDER', '_a1_'],
+  ['APP_SUFFIX_PLACEHOLDER', '_a1_']
 ]);
 
 module.exports = { copyAllTemplates, PLACEHOLDERS };

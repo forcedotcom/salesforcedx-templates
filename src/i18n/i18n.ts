@@ -22,36 +22,25 @@ export const messages = {
   DoubleUnderscoreError: "Name can't contain 2 consecutive underscores.",
   InvalidMimeType: 'The value of this argument must be a valid MIME type.',
 
-  MissingWaveTemplatesDir:
-    "Analytics templates must have a parent folder named 'waveTemplates'.",
+  MissingWaveTemplatesDir: "Analytics templates must have a parent folder named 'waveTemplates'.",
   MissingAuraDir: "Lightning bundles must have a parent folder named 'aura'.",
   MissingLWCDir: "Lightning bundles must have a parent folder named 'lwc'.",
-  MissingUIBundlesDir:
-    "UI bundles must have a parent folder named 'uiBundles'.",
-  MissingFlexipagesDir:
-    "FlexiPages must have a parent folder named 'flexipages'.",
-  MissingLightningComponentTemplate:
-    'Template %s not available for component type %s.',
+  MissingUIBundlesDir: "UI bundles must have a parent folder named 'uiBundles'.",
+  MissingFlexipagesDir: "FlexiPages must have a parent folder named 'flexipages'.",
+  MissingLightningComponentTemplate: 'Template %s not available for component type %s.',
   MissingApexClassTemplate: 'Template %s not available for Apex classes.',
   MissingApexTriggerTemplate: 'Template %s not available for Apex triggers.',
   MissingLightningAppTemplate: 'Template %s not available for Aura apps.',
   MissingLightningEventTemplate: 'Template %s not available for Aura events.',
-  MissingLightningInterfaceTemplate:
-    'Template %s not available for Aura interfaces.',
-  MissingVisualforceComponentTemplate:
-    'Template %s not available for Visualforce components.',
-  MissingVisualforcePageTemplate:
-    'Template %s not available for Visualforce pages.',
+  MissingLightningInterfaceTemplate: 'Template %s not available for Aura interfaces.',
+  MissingVisualforceComponentTemplate: 'Template %s not available for Visualforce components.',
+  MissingVisualforcePageTemplate: 'Template %s not available for Visualforce pages.',
 
-  localCustomTemplateDoNotExist:
-    'Local custom templates folder %s does not exist',
-  customTemplatesShouldUseHttpsProtocol:
-    'Only HTTPS protocol is supported for custom templates. Got %s.',
-  customTemplatesSupportsGitHubOnly:
-    'Unsupported custom templates repo %s. Only GitHub is supported.',
+  localCustomTemplateDoNotExist: 'Local custom templates folder %s does not exist',
+  customTemplatesShouldUseHttpsProtocol: 'Only HTTPS protocol is supported for custom templates. Got %s.',
+  customTemplatesSupportsGitHubOnly: 'Unsupported custom templates repo %s. Only GitHub is supported.',
   customTemplatesInvalidRepoUrl: 'Invalid custom templates repository URL: %s',
-  customTemplatesCannotRetrieveDefaultBranch:
-    'Cannot retrieve default branch for custom templates repository: %s',
+  customTemplatesCannotRetrieveDefaultBranch: 'Cannot retrieve default branch for custom templates repository: %s',
   LightningAppBundle: 'A Lightning Application Bundle',
   LightningComponentBundle: 'A Lightning Component Bundle',
   LightningEventBundle: 'A Lightning Event Bundle',
@@ -59,8 +48,7 @@ export const messages = {
   LightningTest: 'A Lightning Test',
   RawOutput: 'target dir = %s\n%s',
   templateTypeNotFound: 'The template type does not exist',
-  InvalidFlexipageTemplate:
-    'Invalid FlexiPage template "%s". Valid templates are: %s',
+  InvalidFlexipageTemplate: 'Invalid FlexiPage template "%s". Valid templates are: %s',
   RecordPageRequiresEntityName:
     'RecordPage template requires an entityName option (e.g., "Account", "Opportunity", "Custom_Object__c").',
   TooManySecondaryFields:
@@ -79,17 +67,14 @@ export const messages = {
     'The --src flag must be an absolute https URL (e.g., https://app.example.com). Plain http is only allowed for localhost or 127.0.0.1.',
   InvalidUIEmbeddingSrcChar:
     'The --src flag must not contain a single-quote character; it would break the generated JavaScript string literal.',
-  InvalidUIEmbeddingSandboxToken:
-    'Invalid sandbox tokens: %s. Valid tokens are: %s.',
+  InvalidUIEmbeddingSandboxToken: 'Invalid sandbox tokens: %s. Valid tokens are: %s.',
   MissingUIEmbeddingTitle:
     'The --title flag is required and must be a non-empty string used as the iframe accessible name.',
   InvalidUIEmbeddingTitleChar:
     'The --title flag must not contain a double-quote character; it would break the generated HTML attribute.',
-  UIEmbeddingBundle:
-    'A Lightning Web Component that wraps the <lightning-ui-embedding> base component.',
+  UIEmbeddingBundle: 'A Lightning Web Component that wraps the <lightning-ui-embedding> base component.',
 
-  InvalidLightningOutDefinition:
-    'The Lightning Out definition is invalid:%s',
+  InvalidLightningOutDefinition: 'The Lightning Out definition is invalid:%s',
   InvalidLightningOutName:
     'Invalid %s "%s": must be an ASCII developer name (start with a letter; letters, digits, single underscores; no trailing underscore).',
   InvalidLightningOutNameLength: '%s exceeds the maximum length of %s characters (got %s).',
@@ -101,5 +86,5 @@ export const messages = {
   InvalidLightningOutContactEmail: 'Invalid contact email "%s".',
   InvalidLightningOutCallbackUrl: 'Invalid callback URL "%s": must be an absolute https URL.',
   InvalidLightningOutComponent:
-    'Invalid component reference "%s": expected LWC "namespace-my-component" or "namespace/myComponent", or Aura "namespace:Name".',
+    'Invalid component reference "%s": expected LWC "namespace-my-component" or "namespace/myComponent", or Aura "namespace:Name".'
 };

@@ -19,7 +19,7 @@ import { getProxyForUrl } from 'proxy-from-env';
 import {
   BaseGenerator,
   setCustomTemplatesRootPathOrGitRepo,
-  getDefaultApiVersion,
+  getDefaultApiVersion
 } from '../../src/generators/baseGenerator';
 import { importGenerator } from '../../src/service/templateService';
 
@@ -74,16 +74,10 @@ describe('TemplateService', () => {
       await templateService.create(TemplateType.ApexClass, {
         template: 'DefaultApexClass',
         classname: 'LibraryCreateClass',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
-      const expectedApexClassPath = path.join(
-        'testsoutput',
-        'libraryCreate',
-        'apexClass',
-        'LibraryCreateClass.cls'
-      );
-      const expectedApexClassContent =
-        'public with sharing class LibraryCreateClass';
+      const expectedApexClassPath = path.join('testsoutput', 'libraryCreate', 'apexClass', 'LibraryCreateClass.cls');
+      const expectedApexClassContent = 'public with sharing class LibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'libraryCreate',
@@ -95,14 +89,11 @@ describe('TemplateService', () => {
         '<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">',
         `    <apiVersion>${apiVersion}</apiVersion>`,
         '    <status>Active</status>',
-        '</ApexClass>',
+        '</ApexClass>'
       ].join('\n');
 
       assertFileContent(expectedApexClassPath, expectedApexClassContent);
-      assertFileContent(
-        expectedApexClassMetaPath,
-        expectedApexClassMetaContent
-      );
+      assertFileContent(expectedApexClassMetaPath, expectedApexClassMetaContent);
     });
   });
 
@@ -118,7 +109,7 @@ describe('TemplateService', () => {
       '<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">',
       `    <apiVersion>${apiVersion}</apiVersion>`,
       '    <status>Active</status>',
-      '</ApexClass>',
+      '</ApexClass>'
     ].join('\n');
 
     it('should create a Queueable apex class', async () => {
@@ -126,16 +117,13 @@ describe('TemplateService', () => {
       await templateService.create(TemplateType.ApexClass, {
         template: 'Queueable',
         classname: 'MyQueueable',
-        outputdir,
+        outputdir
       });
       assertFileContent(
         path.join(outputdir, 'MyQueueable.cls'),
         'public with sharing class MyQueueable implements Queueable, Finalizer'
       );
-      assertFileContent(
-        path.join(outputdir, 'MyQueueable.cls-meta.xml'),
-        expectedMetaContent
-      );
+      assertFileContent(path.join(outputdir, 'MyQueueable.cls-meta.xml'), expectedMetaContent);
     });
 
     it('should create a Batchable apex class defaulting to SObject', async () => {
@@ -143,16 +131,13 @@ describe('TemplateService', () => {
       await templateService.create(TemplateType.ApexClass, {
         template: 'Batchable',
         classname: 'MyBatchable',
-        outputdir,
+        outputdir
       });
       const file = path.join(outputdir, 'MyBatchable.cls');
       assertFileContent(file, 'Database.Batchable<SObject>');
       assertFileContent(file, 'List<SObject> scope');
       assertFileContent(file, 'SELECT Id FROM SObject');
-      assertFileContent(
-        path.join(outputdir, 'MyBatchable.cls-meta.xml'),
-        expectedMetaContent
-      );
+      assertFileContent(path.join(outputdir, 'MyBatchable.cls-meta.xml'), expectedMetaContent);
     });
 
     it('should create a Batchable apex class with a custom sobjecttype', async () => {
@@ -161,16 +146,13 @@ describe('TemplateService', () => {
         template: 'Batchable',
         classname: 'MyBatchable',
         sobjecttype: 'Account',
-        outputdir,
+        outputdir
       });
       const file = path.join(outputdir, 'MyBatchable.cls');
       assertFileContent(file, 'Database.Batchable<Account>');
       assertFileContent(file, 'List<Account> scope');
       assertFileContent(file, 'SELECT Id FROM Account');
-      assertFileContent(
-        path.join(outputdir, 'MyBatchable.cls-meta.xml'),
-        expectedMetaContent
-      );
+      assertFileContent(path.join(outputdir, 'MyBatchable.cls-meta.xml'), expectedMetaContent);
     });
 
     it('should create a Batchable apex class with a custom __c sobjecttype', async () => {
@@ -179,7 +161,7 @@ describe('TemplateService', () => {
         template: 'Batchable',
         classname: 'MyBatchable',
         sobjecttype: 'My_Object__c',
-        outputdir,
+        outputdir
       });
       const file = path.join(outputdir, 'MyBatchable.cls');
       assertFileContent(file, 'Database.Batchable<My_Object__c>');
@@ -193,7 +175,7 @@ describe('TemplateService', () => {
         template: 'Batchable',
         classname: 'MyBatchable',
         sobjecttype: '   ',
-        outputdir,
+        outputdir
       });
       const file = path.join(outputdir, 'MyBatchable.cls');
       assertFileContent(file, 'Database.Batchable<SObject>');
@@ -208,7 +190,7 @@ describe('TemplateService', () => {
             template: 'Batchable',
             classname: 'MyBatchable',
             sobjecttype: 'My Object',
-            outputdir,
+            outputdir
           })
         )
         .to.throw(nls.localize('InvalidSObjectType', 'My Object'));
@@ -218,14 +200,10 @@ describe('TemplateService', () => {
   describe('create custom template', () => {
     const TEST_CUSTOM_TEMPLATES_REPO =
       'https://github.com/forcedotcom/salesforcedx-templates/tree/main/test/custom-templates';
-    const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(
-      new URL(TEST_CUSTOM_TEMPLATES_REPO)
-    );
+    const TEST_CUSTOM_TEMPLATES_STORAGE_PATH = getStoragePathForCustomTemplates(new URL(TEST_CUSTOM_TEMPLATES_REPO));
 
     beforeEach(async () => {
-      await remove(
-        path.join('testsoutput', 'customLibraryCreate', 'apexclass')
-      );
+      await remove(path.join('testsoutput', 'customLibraryCreate', 'apexclass'));
     });
     afterEach(() => {
       sinon.restore();
@@ -239,11 +217,7 @@ describe('TemplateService', () => {
         {
           template: 'DefaultApexClass',
           classname: 'LibraryCreateClass',
-          outputdir: path.join(
-            'testsoutput',
-            'customLibraryCreate',
-            'apexClass'
-          ),
+          outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass')
         },
         customTemplates
       );
@@ -253,8 +227,7 @@ describe('TemplateService', () => {
         'apexClass',
         'LibraryCreateClass.cls'
       );
-      const expectedApexClassContent =
-        'public with sharing class CustomLibraryCreateClass';
+      const expectedApexClassContent = 'public with sharing class CustomLibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'customLibraryCreate',
@@ -268,10 +241,7 @@ describe('TemplateService', () => {
 </ApexClass>`;
 
       assertFileContent(expectedApexClassPath, expectedApexClassContent);
-      assertFileContent(
-        expectedApexClassMetaPath,
-        expectedApexClassMetaContent
-      );
+      assertFileContent(expectedApexClassMetaPath, expectedApexClassMetaContent);
     });
 
     it('should create custom template from GitHub repository', async () => {
@@ -284,11 +254,7 @@ describe('TemplateService', () => {
         {
           template: 'DefaultApexClass',
           classname: 'LibraryCreateClass',
-          outputdir: path.join(
-            'testsoutput',
-            'customLibraryCreate',
-            'apexClass'
-          ),
+          outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass')
         },
         customTemplates
       );
@@ -298,8 +264,7 @@ describe('TemplateService', () => {
         'apexClass',
         'LibraryCreateClass.cls'
       );
-      const expectedApexClassContent =
-        'public with sharing class CustomLibraryCreateClass';
+      const expectedApexClassContent = 'public with sharing class CustomLibraryCreateClass';
       const expectedApexClassMetaPath = path.join(
         'testsoutput',
         'customLibraryCreate',
@@ -313,10 +278,7 @@ describe('TemplateService', () => {
 </ApexClass>
 `;
       assertFileContent(expectedApexClassPath, expectedApexClassContent);
-      assertFileContent(
-        expectedApexClassMetaPath,
-        expectedApexClassMetaContent
-      );
+      assertFileContent(expectedApexClassMetaPath, expectedApexClassMetaContent);
     });
 
     it('should throw error if local custom templates do not exist', async () => {
@@ -329,126 +291,80 @@ describe('TemplateService', () => {
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            ),
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass')
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('localCustomTemplateDoNotExist', localPath)
-        );
+        .should.be.rejectedWith(Error, nls.localize('localCustomTemplateDoNotExist', localPath));
     });
 
     it('should throw error if cannot retrieve default branch', async () => {
       const mockIt = {
-        getProxyForUrl,
+        getProxyForUrl
       };
       // @ts-expect-error -- Function signature is not compatible with sinon stub.
       sinon.stub(mockIt, 'getProxyForUrl').returns(undefined);
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates =
-        'https://github.com/forcedotcom/this-repo-does-not-exist';
+      const customTemplates = 'https://github.com/forcedotcom/this-repo-does-not-exist';
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            ),
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass')
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize(
-            'customTemplatesCannotRetrieveDefaultBranch',
-            customTemplates
-          )
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesCannotRetrieveDefaultBranch', customTemplates));
     });
 
     it('should throw error if repo url is invalid', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates =
-        'https://github.com/forcedotcom/salesforcedx-templates/invalid-url';
+      const customTemplates = 'https://github.com/forcedotcom/salesforcedx-templates/invalid-url';
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            ),
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass')
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('customTemplatesInvalidRepoUrl', customTemplates)
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesInvalidRepoUrl', customTemplates));
     });
 
     it('should throw error if repo protocol is not https', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
-        'https',
-        'http'
-      );
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace('https', 'http');
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            ),
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass')
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"')
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesShouldUseHttpsProtocol', '"http:"'));
     });
 
     it('should throw error if not a GitHub repo', async () => {
       const templateService = TemplateService.getInstance(process.cwd());
-      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace(
-        'github.com',
-        'gitlab.com'
-      );
+      const customTemplates = TEST_CUSTOM_TEMPLATES_REPO.replace('github.com', 'gitlab.com');
       await templateService
         .create(
           TemplateType.ApexClass,
           {
             template: 'DefaultApexClass',
             classname: 'LibraryCreateClass',
-            outputdir: path.join(
-              'testsoutput',
-              'customLibraryCreate',
-              'apexClass'
-            ),
+            outputdir: path.join('testsoutput', 'customLibraryCreate', 'apexClass')
           },
           customTemplates
         )
-        .should.be.rejectedWith(
-          Error,
-          nls.localize('customTemplatesSupportsGitHubOnly', customTemplates)
-        );
+        .should.be.rejectedWith(Error, nls.localize('customTemplatesSupportsGitHubOnly', customTemplates));
     });
 
     it('should download the repo if the folder does not exist', async () => {
@@ -482,10 +398,7 @@ describe('TemplateService', () => {
       const customTemplates = TEST_CUSTOM_TEMPLATES_REPO;
 
       const forceLoadingRemoteRepo = true;
-      const result = await setCustomTemplatesRootPathOrGitRepo(
-        customTemplates,
-        forceLoadingRemoteRepo
-      );
+      const result = await setCustomTemplatesRootPathOrGitRepo(customTemplates, forceLoadingRemoteRepo);
 
       // Verify that the function returns a path and the folder exists
       assert(typeof result === 'string');
@@ -503,7 +416,7 @@ describe('TemplateService', () => {
       const result = await templateService.create(TemplateType.ApexClass, {
         template: 'DefaultApexClass',
         classname: 'LibraryCreateClass',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
 
       chai
@@ -517,12 +430,8 @@ describe('TemplateService', () => {
         .expect(result.created)
         .to.eql(
           [
-            path.normalize(
-              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
-            ),
-            path.normalize(
-              'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
-            ),
+            path.normalize('testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'),
+            path.normalize('testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml')
           ],
           'Created property did not match'
         );
@@ -532,13 +441,9 @@ describe('TemplateService', () => {
         'testsoutput/libraryCreate/apexClass'
       )}\n  create ${path.normalize(
         'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls'
-      )}\n  create ${path.normalize(
-        'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
-      )}\n`;
+      )}\n  create ${path.normalize('testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml')}\n`;
 
-      chai
-        .expect(result.rawOutput)
-        .to.equal(actual, 'Actual property did not match');
+      chai.expect(result.rawOutput).to.equal(actual, 'Actual property did not match');
     });
 
     it('should reject if create template fails', async () => {
@@ -548,7 +453,7 @@ describe('TemplateService', () => {
         await templateService.create(TemplateType.ApexClass, {
           template: 'DefaultApexClass',
           classname: 'LibraryCreateClass',
-          outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
+          outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
         });
         throw new Error('should have thrown an error');
       } catch (error) {
@@ -560,38 +465,29 @@ describe('TemplateService', () => {
 
   describe('Generators', () => {
     it('should have a generator for each TemplateType', () => {
-      const templateTypes = Object.values(TemplateType).filter(
-        (value) => typeof value === 'number'
-      );
+      const templateTypes = Object.values(TemplateType).filter((value) => typeof value === 'number');
 
       for (const templateType of templateTypes) {
         try {
           const generator = importGenerator(templateType);
           chai.expect(generator).to.not.be.undefined;
         } catch {
-          throw new Error(
-            `No generator found for template type: ${TemplateType[templateType]}`
-          );
+          throw new Error(`No generator found for template type: ${TemplateType[templateType]}`);
         }
       }
     });
 
     it('should return an error if the generator does not exist', () => {
-      chai
-        .expect(() => importGenerator(20 as TemplateType))
-        .to.throw(Error, nls.localize('templateTypeNotFound'));
+      chai.expect(() => importGenerator(20 as TemplateType)).to.throw(Error, nls.localize('templateTypeNotFound'));
     });
 
     it('should create AnalyticsTemplate', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'waveTemplates'));
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(
-        TemplateType.AnalyticsTemplate,
-        {
-          templatename: 'analytics',
-          outputdir: path.join('testsoutput', 'libraryCreate', 'waveTemplates'),
-        }
-      );
+      const result = await templateService.create(TemplateType.AnalyticsTemplate, {
+        templatename: 'analytics',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'waveTemplates')
+      });
 
       chai
         .expect(result.created.sort())
@@ -604,7 +500,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/waveTemplates/analytics/template-info.json',
             'testsoutput/libraryCreate/waveTemplates/analytics/template-to-app-rules.json',
             'testsoutput/libraryCreate/waveTemplates/analytics/ui.json',
-            'testsoutput/libraryCreate/waveTemplates/analytics/variables.json',
+            'testsoutput/libraryCreate/waveTemplates/analytics/variables.json'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -617,7 +513,7 @@ describe('TemplateService', () => {
       const result = await templateService.create(TemplateType.ApexClass, {
         template: 'DefaultApexClass',
         classname: 'LibraryCreateClass',
-        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass'),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'apexClass')
       });
 
       chai
@@ -625,7 +521,7 @@ describe('TemplateService', () => {
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls',
-            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml',
+            'testsoutput/libraryCreate/apexClass/LibraryCreateClass.cls-meta.xml'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -640,7 +536,7 @@ describe('TemplateService', () => {
         sobject: 'Account',
         event: 'before insert',
         outputdir: path.join('testsoutput', 'libraryCreate', 'apexTrigger'),
-        template: 'ApexTrigger',
+        template: 'ApexTrigger'
       });
 
       chai
@@ -648,7 +544,7 @@ describe('TemplateService', () => {
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/apexTrigger/LibraryCreateTrigger.trigger',
-            'testsoutput/libraryCreate/apexTrigger/LibraryCreateTrigger.trigger-meta.xml',
+            'testsoutput/libraryCreate/apexTrigger/LibraryCreateTrigger.trigger-meta.xml'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -662,7 +558,7 @@ describe('TemplateService', () => {
         appname: 'LibraryCreateApp',
         internal: false,
         outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
-        template: 'DefaultLightningApp',
+        template: 'DefaultLightningApp'
       });
 
       chai
@@ -676,7 +572,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.css',
             'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateAppHelper.js',
             'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateAppRenderer.js',
-            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.svg',
+            'testsoutput/libraryCreate/aura/LibraryCreateApp/LibraryCreateApp.svg'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -686,15 +582,12 @@ describe('TemplateService', () => {
     it('should create LightningComponent (aura)', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(
-        TemplateType.LightningComponent,
-        {
-          componentname: 'LibraryCreateComponent',
-          outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
-          template: 'default',
-          type: 'aura',
-        }
-      );
+      const result = await templateService.create(TemplateType.LightningComponent, {
+        componentname: 'LibraryCreateComponent',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
+        template: 'default',
+        type: 'aura'
+      });
 
       chai
         .expect(result.created.sort())
@@ -708,7 +601,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponent.svg',
             'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentController.js',
             'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentHelper.js',
-            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentRenderer.js',
+            'testsoutput/libraryCreate/aura/LibraryCreateComponent/LibraryCreateComponentRenderer.js'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -718,15 +611,12 @@ describe('TemplateService', () => {
     it('should create LightningComponent (lwc)', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(
-        TemplateType.LightningComponent,
-        {
-          componentname: 'LibraryCreateComponent',
-          outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
-          template: 'default',
-          type: 'lwc',
-        }
-      );
+      const result = await templateService.create(TemplateType.LightningComponent, {
+        componentname: 'LibraryCreateComponent',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
+        template: 'default',
+        type: 'lwc'
+      });
 
       chai
         .expect(result.created.sort())
@@ -735,7 +625,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js',
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.html',
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/__tests__/libraryCreateComponent.test.js',
-            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js-meta.xml',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js-meta.xml'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -745,15 +635,12 @@ describe('TemplateService', () => {
     it('should create LightningComponent (lwc) with TypeScript', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(
-        TemplateType.LightningComponent,
-        {
-          componentname: 'LibraryCreateComponent',
-          outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
-          template: 'typeScript',
-          type: 'lwc',
-        }
-      );
+      const result = await templateService.create(TemplateType.LightningComponent, {
+        componentname: 'LibraryCreateComponent',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
+        template: 'typeScript',
+        type: 'lwc'
+      });
 
       chai
         .expect(result.created.sort())
@@ -763,7 +650,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.html',
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/__tests__/libraryCreateComponent.test.ts',
             'testsoutput/libraryCreate/lwc/libraryCreateComponent/libraryCreateComponent.js-meta.xml',
-            'testsoutput/libraryCreate/lwc/libraryCreateComponent/.gitignore',
+            'testsoutput/libraryCreate/lwc/libraryCreateComponent/.gitignore'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -776,7 +663,7 @@ describe('TemplateService', () => {
       const result = await templateService.create(TemplateType.LightningEvent, {
         eventname: 'LibraryCreateEvent',
         outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
-        template: 'DefaultLightningEvt',
+        template: 'DefaultLightningEvt'
       });
 
       chai
@@ -784,7 +671,7 @@ describe('TemplateService', () => {
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/aura/LibraryCreateEvent/LibraryCreateEvent.evt-meta.xml',
-            'testsoutput/libraryCreate/aura/LibraryCreateEvent/LibraryCreateEvent.evt',
+            'testsoutput/libraryCreate/aura/LibraryCreateEvent/LibraryCreateEvent.evt'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -794,21 +681,18 @@ describe('TemplateService', () => {
     it('should create LightningInterface', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'aura'));
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(
-        TemplateType.LightningInterface,
-        {
-          interfacename: 'LibraryCreateInterface',
-          outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
-          template: 'DefaultLightningIntf',
-        }
-      );
+      const result = await templateService.create(TemplateType.LightningInterface, {
+        interfacename: 'LibraryCreateInterface',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
+        template: 'DefaultLightningIntf'
+      });
 
       chai
         .expect(result.created.sort())
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/aura/LibraryCreateInterface/LibraryCreateInterface.intf-meta.xml',
-            'testsoutput/libraryCreate/aura/LibraryCreateInterface/LibraryCreateInterface.intf',
+            'testsoutput/libraryCreate/aura/LibraryCreateInterface/LibraryCreateInterface.intf'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -821,7 +705,7 @@ describe('TemplateService', () => {
       const result = await templateService.create(TemplateType.LightningTest, {
         testname: 'LibraryCreateTest',
         outputdir: path.join('testsoutput', 'libraryCreate', 'aura'),
-        template: 'DefaultLightningTest',
+        template: 'DefaultLightningTest'
       });
 
       chai
@@ -829,7 +713,7 @@ describe('TemplateService', () => {
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/aura/LibraryCreateTest.resource-meta.xml',
-            'testsoutput/libraryCreate/aura/LibraryCreateTest.resource',
+            'testsoutput/libraryCreate/aura/LibraryCreateTest.resource'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -843,7 +727,7 @@ describe('TemplateService', () => {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
         projectname: 'LibraryCreateProject',
         template: 'standard',
-        defaultpackagedir: 'force-app',
+        defaultpackagedir: 'force-app'
       });
 
       chai
@@ -865,7 +749,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/project/LibraryCreateProject/package.json',
             'testsoutput/libraryCreate/project/LibraryCreateProject/scripts/apex/hello.apex',
             'testsoutput/libraryCreate/project/LibraryCreateProject/scripts/soql/account.soql',
-            'testsoutput/libraryCreate/project/LibraryCreateProject/sfdx-project.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/sfdx-project.json'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -879,7 +763,7 @@ describe('TemplateService', () => {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
         projectname: 'LibraryCreateProject',
         template: 'empty',
-        defaultpackagedir: 'force-app',
+        defaultpackagedir: 'force-app'
       });
 
       chai
@@ -889,7 +773,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/project/LibraryCreateProject/config/project-scratch-def.json',
             'testsoutput/libraryCreate/project/LibraryCreateProject/README.md',
             'testsoutput/libraryCreate/project/LibraryCreateProject/sfdx-project.json',
-            'testsoutput/libraryCreate/project/LibraryCreateProject/.forceignore',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/.forceignore'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -903,7 +787,7 @@ describe('TemplateService', () => {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
         projectname: 'LibraryCreateNativeMobile',
         template: 'nativemobile',
-        defaultpackagedir: 'force-app',
+        defaultpackagedir: 'force-app'
       });
 
       const ecBase =
@@ -924,7 +808,7 @@ describe('TemplateService', () => {
             `${ecBase}/experience__camaBuildMetadata/buildMetadata/_meta.json`,
             `${ecBase}/experience__camaBuildMetadata/buildMetadata/content.json`,
             `${ecBase}/experience__camaScreen/homeScreen/_meta.json`,
-            `${ecBase}/experience__camaScreen/homeScreen/content.json`,
+            `${ecBase}/experience__camaScreen/homeScreen/content.json`
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -938,7 +822,7 @@ describe('TemplateService', () => {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
         projectname: 'LibraryCreateProject',
         template: 'analytics',
-        defaultpackagedir: 'force-app',
+        defaultpackagedir: 'force-app'
       });
 
       chai
@@ -958,7 +842,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/project/LibraryCreateProject/.prettierignore',
             'testsoutput/libraryCreate/project/LibraryCreateProject/.prettierrc',
             'testsoutput/libraryCreate/project/LibraryCreateProject/jest.config.js',
-            'testsoutput/libraryCreate/project/LibraryCreateProject/package.json',
+            'testsoutput/libraryCreate/project/LibraryCreateProject/package.json'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -973,7 +857,7 @@ describe('TemplateService', () => {
         projectname: 'TypeScriptProject',
         template: 'standard',
         defaultpackagedir: 'force-app',
-        lwcLanguage: 'typescript',
+        lwcLanguage: 'typescript'
       });
 
       chai
@@ -986,18 +870,12 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/tsproject/TypeScriptProject/package.json',
             'testsoutput/libraryCreate/tsproject/TypeScriptProject/sfdx-project.json',
             'testsoutput/libraryCreate/tsproject/TypeScriptProject/eslint.config.js',
-            'testsoutput/libraryCreate/tsproject/TypeScriptProject/.vscode/settings.json',
+            'testsoutput/libraryCreate/tsproject/TypeScriptProject/.vscode/settings.json'
           ].map((p) => path.normalize(p))
         );
 
       // Verify tsconfig.json was created
-      const tsconfigPath = path.join(
-        'testsoutput',
-        'libraryCreate',
-        'tsproject',
-        'TypeScriptProject',
-        'tsconfig.json'
-      );
+      const tsconfigPath = path.join('testsoutput', 'libraryCreate', 'tsproject', 'TypeScriptProject', 'tsconfig.json');
       chai.expect(fs.existsSync(tsconfigPath)).to.be.true;
 
       // Verify sfdx-project.json has defaultLwcLanguage
@@ -1008,27 +886,19 @@ describe('TemplateService', () => {
         'TypeScriptProject',
         'sfdx-project.json'
       );
-      const projectJsonContent = JSON.parse(
-        fs.readFileSync(projectJsonPath, 'utf-8')
-      );
+      const projectJsonContent = JSON.parse(fs.readFileSync(projectJsonPath, 'utf-8'));
       chai.expect(projectJsonContent.defaultLwcLanguage).to.equal('typescript');
     });
 
     it('should create Project (analytics) with TypeScript', async () => {
-      await remove(
-        path.join('testsoutput', 'libraryCreate', 'tsanalyticsproject')
-      );
+      await remove(path.join('testsoutput', 'libraryCreate', 'tsanalyticsproject'));
       const templateService = TemplateService.getInstance();
       const result = await templateService.create(TemplateType.Project, {
-        outputdir: path.join(
-          'testsoutput',
-          'libraryCreate',
-          'tsanalyticsproject'
-        ),
+        outputdir: path.join('testsoutput', 'libraryCreate', 'tsanalyticsproject'),
         projectname: 'TSAnalyticsProject',
         template: 'analytics',
         defaultpackagedir: 'force-app',
-        lwcLanguage: 'typescript',
+        lwcLanguage: 'typescript'
       });
 
       chai
@@ -1039,7 +909,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/.forceignore',
             'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/eslint.config.js',
             'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/.vscode/settings.json',
-            'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/sfdx-project.json',
+            'testsoutput/libraryCreate/tsanalyticsproject/TSAnalyticsProject/sfdx-project.json'
           ].map((p) => path.normalize(p))
         );
 
@@ -1060,7 +930,7 @@ describe('TemplateService', () => {
         outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
         projectname: 'LibraryCreateProject',
         template: 'agent',
-        defaultpackagedir: 'force-app',
+        defaultpackagedir: 'force-app'
       });
 
       const p = 'testsoutput/libraryCreate/project/LibraryCreateProject';
@@ -1098,23 +968,15 @@ describe('TemplateService', () => {
             `${md}/permissionsets/Resort_Agent.permissionset-meta.xml`,
             `${md}/permissionsets/Resort_Admin.permissionset-meta.xml`,
             `${md}/permissionsetgroups/AFDX_Agent_Perms.permissionsetgroup-meta.xml`,
-            `${md}/permissionsetgroups/AFDX_User_Perms.permissionsetgroup-meta.xml`,
+            `${md}/permissionsetgroups/AFDX_User_Perms.permissionsetgroup-meta.xml`
           ]
             .map((f) => path.normalize(f))
             .sort()
         );
 
+      assertFileContent(path.join(result.outputDir, 'LibraryCreateProject', 'README.md'), '# Agentforce Project');
       assertFileContent(
-        path.join(result.outputDir, 'LibraryCreateProject', 'README.md'),
-        '# Agentforce Project'
-      );
-      assertFileContent(
-        path.join(
-          result.outputDir,
-          'LibraryCreateProject',
-          'config',
-          'project-scratch-def.json'
-        ),
+        path.join(result.outputDir, 'LibraryCreateProject', 'config', 'project-scratch-def.json'),
         'einsteinGptSettings'
       );
     });
@@ -1130,7 +992,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'MyReactInternalApp',
           template: 'reactinternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1138,29 +1000,15 @@ describe('TemplateService', () => {
       chai
         .expect(result.created)
         .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyReactInternalApp/config/project-scratch-def.json'
-          )
+          path.normalize('testsoutput/libraryCreate/project/MyReactInternalApp/config/project-scratch-def.json')
         );
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyReactInternalApp/sfdx-project.json'
-          )
-        );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyReactInternalApp/sfdx-project.json'));
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyReactInternalApp/sample.txt'
-          )
-        );
-      const samplePath = path.join(
-        result.outputDir,
-        'MyReactInternalApp',
-        'sample.txt'
-      );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyReactInternalApp/sample.txt'));
+      const samplePath = path.join(result.outputDir, 'MyReactInternalApp', 'sample.txt');
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
       chai.expect(sampleContent).to.include('MyReactInternalApp');
@@ -1177,7 +1025,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'MyReactExternalApp',
           template: 'reactexternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1185,22 +1033,12 @@ describe('TemplateService', () => {
       chai
         .expect(result.created)
         .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyReactExternalApp/config/project-scratch-def.json'
-          )
+          path.normalize('testsoutput/libraryCreate/project/MyReactExternalApp/config/project-scratch-def.json')
         );
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyReactExternalApp/sample.txt'
-          )
-        );
-      const samplePath = path.join(
-        result.outputDir,
-        'MyReactExternalApp',
-        'sample.txt'
-      );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyReactExternalApp/sample.txt'));
+      const samplePath = path.join(result.outputDir, 'MyReactExternalApp', 'sample.txt');
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
       chai.expect(sampleContent).to.include('MyReactExternalApp');
@@ -1224,7 +1062,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'MyAngularInternalApp',
           template: 'angularinternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1232,29 +1070,15 @@ describe('TemplateService', () => {
       chai
         .expect(result.created)
         .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularInternalApp/config/project-scratch-def.json'
-          )
+          path.normalize('testsoutput/libraryCreate/project/MyAngularInternalApp/config/project-scratch-def.json')
         );
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularInternalApp/sfdx-project.json'
-          )
-        );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyAngularInternalApp/sfdx-project.json'));
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularInternalApp/sample.txt'
-          )
-        );
-      const samplePath = path.join(
-        result.outputDir,
-        'MyAngularInternalApp',
-        'sample.txt'
-      );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyAngularInternalApp/sample.txt'));
+      const samplePath = path.join(result.outputDir, 'MyAngularInternalApp', 'sample.txt');
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
       chai.expect(sampleContent).to.include('MyAngularInternalApp');
@@ -1271,7 +1095,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'MyAngularExternalApp',
           template: 'angularexternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1279,22 +1103,12 @@ describe('TemplateService', () => {
       chai
         .expect(result.created)
         .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularExternalApp/config/project-scratch-def.json'
-          )
+          path.normalize('testsoutput/libraryCreate/project/MyAngularExternalApp/config/project-scratch-def.json')
         );
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyAngularExternalApp/sample.txt'
-          )
-        );
-      const samplePath = path.join(
-        result.outputDir,
-        'MyAngularExternalApp',
-        'sample.txt'
-      );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyAngularExternalApp/sample.txt'));
+      const samplePath = path.join(result.outputDir, 'MyAngularExternalApp', 'sample.txt');
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
       chai.expect(sampleContent).to.include('MyAngularExternalApp');
@@ -1311,7 +1125,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'My_Angular_Internal_App',
           template: 'angularinternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1336,7 +1150,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'My_React_Internal_App',
           template: 'reactinternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1361,7 +1175,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'MyVueInternalApp',
           template: 'vueinternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1369,29 +1183,15 @@ describe('TemplateService', () => {
       chai
         .expect(result.created)
         .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyVueInternalApp/config/project-scratch-def.json'
-          )
+          path.normalize('testsoutput/libraryCreate/project/MyVueInternalApp/config/project-scratch-def.json')
         );
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyVueInternalApp/sfdx-project.json'
-          )
-        );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyVueInternalApp/sfdx-project.json'));
       chai
         .expect(result.created)
-        .to.include(
-          path.normalize(
-            'testsoutput/libraryCreate/project/MyVueInternalApp/sample.txt'
-          )
-        );
-      const samplePath = path.join(
-        result.outputDir,
-        'MyVueInternalApp',
-        'sample.txt'
-      );
+        .to.include(path.normalize('testsoutput/libraryCreate/project/MyVueInternalApp/sample.txt'));
+      const samplePath = path.join(result.outputDir, 'MyVueInternalApp', 'sample.txt');
       chai.expect(fs.existsSync(samplePath)).to.be.true;
       const sampleContent = fs.readFileSync(samplePath, 'utf8');
       chai.expect(sampleContent).to.include('MyVueInternalApp');
@@ -1408,7 +1208,7 @@ describe('TemplateService', () => {
           outputdir: path.join('testsoutput', 'libraryCreate', 'project'),
           projectname: 'My_Vue_Internal_App',
           template: 'vueinternalapp',
-          defaultpackagedir: 'force-app',
+          defaultpackagedir: 'force-app'
         },
         fixtureRoot
       );
@@ -1429,7 +1229,7 @@ describe('TemplateService', () => {
         resourcename: 'LibraryCreateResource',
         outputdir: path.join('testsoutput', 'libraryCreate', 'staticResource'),
         template: 'empty',
-        contenttype: 'application/zip',
+        contenttype: 'application/zip'
       });
 
       chai
@@ -1437,7 +1237,7 @@ describe('TemplateService', () => {
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/staticResource/LibraryCreateResource/.gitkeep',
-            'testsoutput/libraryCreate/staticResource/LibraryCreateResource.resource-meta.xml',
+            'testsoutput/libraryCreate/staticResource/LibraryCreateResource.resource-meta.xml'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -1445,30 +1245,21 @@ describe('TemplateService', () => {
     });
 
     it('should create VisualforceComponent', async () => {
-      await remove(
-        path.join('testsoutput', 'libraryCreate', 'visualforceComponent')
-      );
+      await remove(path.join('testsoutput', 'libraryCreate', 'visualforceComponent'));
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(
-        TemplateType.VisualforceComponent,
-        {
-          componentname: 'LibraryCreateComponent',
-          label: 'LibraryCreateComponent',
-          outputdir: path.join(
-            'testsoutput',
-            'libraryCreate',
-            'visualforceComponent'
-          ),
-          template: 'DefaultVFComponent',
-        }
-      );
+      const result = await templateService.create(TemplateType.VisualforceComponent, {
+        componentname: 'LibraryCreateComponent',
+        label: 'LibraryCreateComponent',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'visualforceComponent'),
+        template: 'DefaultVFComponent'
+      });
 
       chai
         .expect(result.created.sort())
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/visualforceComponent/LibraryCreateComponent.component',
-            'testsoutput/libraryCreate/visualforceComponent/LibraryCreateComponent.component-meta.xml',
+            'testsoutput/libraryCreate/visualforceComponent/LibraryCreateComponent.component-meta.xml'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -1476,30 +1267,21 @@ describe('TemplateService', () => {
     });
 
     it('should create VisualforcePage', async () => {
-      await remove(
-        path.join('testsoutput', 'libraryCreate', 'visualforcePage')
-      );
+      await remove(path.join('testsoutput', 'libraryCreate', 'visualforcePage'));
       const templateService = TemplateService.getInstance();
-      const result = await templateService.create(
-        TemplateType.VisualforcePage,
-        {
-          pagename: 'LibraryCreatePage',
-          label: 'LibraryCreatePage',
-          outputdir: path.join(
-            'testsoutput',
-            'libraryCreate',
-            'visualforcePage'
-          ),
-          template: 'DefaultVFPage',
-        }
-      );
+      const result = await templateService.create(TemplateType.VisualforcePage, {
+        pagename: 'LibraryCreatePage',
+        label: 'LibraryCreatePage',
+        outputdir: path.join('testsoutput', 'libraryCreate', 'visualforcePage'),
+        template: 'DefaultVFPage'
+      });
 
       chai
         .expect(result.created.sort())
         .to.deep.equal(
           [
             'testsoutput/libraryCreate/visualforcePage/LibraryCreatePage.page',
-            'testsoutput/libraryCreate/visualforcePage/LibraryCreatePage.page-meta.xml',
+            'testsoutput/libraryCreate/visualforcePage/LibraryCreatePage.page-meta.xml'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -1513,7 +1295,7 @@ describe('TemplateService', () => {
         bundlename: 'LibraryCreateUIBundle',
         outputdir: path.join('testsoutput', 'libraryCreate', 'uiBundles'),
         template: 'default',
-        internal: true,
+        internal: true
       });
 
       chai
@@ -1523,7 +1305,7 @@ describe('TemplateService', () => {
             'testsoutput/libraryCreate/uiBundles/LibraryCreateUIBundle/LibraryCreateUIBundle.uibundle-meta.xml',
             'testsoutput/libraryCreate/uiBundles/LibraryCreateUIBundle/README.md',
             'testsoutput/libraryCreate/uiBundles/LibraryCreateUIBundle/src/index.html',
-            'testsoutput/libraryCreate/uiBundles/LibraryCreateUIBundle/ui-bundle.json',
+            'testsoutput/libraryCreate/uiBundles/LibraryCreateUIBundle/ui-bundle.json'
           ]
             .map((p) => path.normalize(p))
             .sort()
@@ -1537,13 +1319,11 @@ describe('TemplateService', () => {
         bundlename: 'LibraryCreateReactApp',
         outputdir: path.join('testsoutput', 'libraryCreate', 'uiBundles'),
         template: 'reactbasic',
-        internal: true,
+        internal: true
       });
 
       const created = result.created.map((p) => path.normalize(p));
-      const uiBundleJson = path.normalize(
-        'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/ui-bundle.json'
-      );
+      const uiBundleJson = path.normalize('testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/ui-bundle.json');
       const uiBundleMetaXml = path.normalize(
         'testsoutput/libraryCreate/uiBundles/LibraryCreateReactApp/LibraryCreateReactApp.uibundle-meta.xml'
       );

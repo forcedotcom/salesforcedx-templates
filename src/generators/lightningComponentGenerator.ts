@@ -34,180 +34,112 @@ export default class LightningComponentGenerator extends BaseGenerator<Lightning
     this.checkTemplateExists('lightningcomponent', template, {
       subdir: type,
       filetype: type === 'aura' ? /\.cmp$/ : /\.html$/,
-      onMissing: () =>
-        new Error(
-          nls.localize('MissingLightningComponentTemplate', [template, type])
-        ),
+      onMissing: () => new Error(nls.localize('MissingLightningComponentTemplate', [template, type]))
     });
 
     if (type === 'aura') {
-      this.sourceRootWithPartialPath(
-        path.join('lightningcomponent', 'aura', template)
-      );
+      this.sourceRootWithPartialPath(path.join('lightningcomponent', 'aura', template));
       if (!internal) {
         await this.render(
           this.templatePath(`${template}.cmp-meta.xml`),
-          this.destinationPath(
-            path.join(
-              this.outputdir,
-              componentname,
-              `${componentname}.cmp-meta.xml`
-            )
-          ),
+          this.destinationPath(path.join(this.outputdir, componentname, `${componentname}.cmp-meta.xml`)),
           {
             componentname,
             description: nls.localize('LightningComponentBundle'),
-            apiVersion: this.apiversion,
+            apiVersion: this.apiversion
           }
         );
       }
       await this.render(
         this.templatePath(`${template}.auradoc`),
-        this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.auradoc`)
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}.auradoc`)),
         {}
       );
       await this.render(
         this.templatePath(`${template}.cmp`),
-        this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.cmp`)
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}.cmp`)),
         {}
       );
       await this.render(
         this.templatePath(`${template}.css`),
-        this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.css`)
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}.css`)),
         {}
       );
       await this.render(
         this.templatePath(`${template}.design`),
-        this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.design`)
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}.design`)),
         {}
       );
       await this.render(
         this.templatePath(`${template}.svg`),
-        this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}.svg`)
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}.svg`)),
         {}
       );
       await this.render(
         this.templatePath(`${template}Controller.js`),
-        this.destinationPath(
-          path.join(
-            this.outputdir,
-            componentname,
-            `${componentname}Controller.js`
-          )
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}Controller.js`)),
         {}
       );
       await this.render(
         this.templatePath(`${template}Helper.js`),
-        this.destinationPath(
-          path.join(this.outputdir, componentname, `${componentname}Helper.js`)
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}Helper.js`)),
         {}
       );
       await this.render(
         this.templatePath(`${template}Renderer.js`),
-        this.destinationPath(
-          path.join(
-            this.outputdir,
-            componentname,
-            `${componentname}Renderer.js`
-          )
-        ),
+        this.destinationPath(path.join(this.outputdir, componentname, `${componentname}Renderer.js`)),
         {}
       );
     }
 
     if (type === 'lwc') {
-      const pascalCaseComponentName = `${componentname
-        .substring(0, 1)
-        .toUpperCase()}${componentname.substring(1)}`;
-      const camelCaseComponentName = `${componentname
-        .substring(0, 1)
-        .toLowerCase()}${componentname.substring(1)}`;
+      const pascalCaseComponentName = `${componentname.substring(0, 1).toUpperCase()}${componentname.substring(1)}`;
+      const camelCaseComponentName = `${componentname.substring(0, 1).toLowerCase()}${componentname.substring(1)}`;
       const kebabCaseComponentName = componentname
-        .match(
-          /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
-        )!
+        .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)!
         .join('-')
         .toLowerCase();
       const ext = template === 'typeScript' ? 'ts' : 'js';
 
-      this.sourceRootWithPartialPath(
-        path.join('lightningcomponent', 'lwc', template)
-      );
+      this.sourceRootWithPartialPath(path.join('lightningcomponent', 'lwc', template));
       await this.render(
         this.templatePath(`${template}.${ext}`),
-        this.destinationPath(
-          path.join(
-            this.outputdir,
-            camelCaseComponentName,
-            `${camelCaseComponentName}.${ext}`
-          )
-        ),
+        this.destinationPath(path.join(this.outputdir, camelCaseComponentName, `${camelCaseComponentName}.${ext}`)),
         { pascalCaseComponentName }
       );
 
       await this.render(
         this.templatePath(`${template}.html`),
-        this.destinationPath(
-          path.join(
-            this.outputdir,
-            camelCaseComponentName,
-            `${camelCaseComponentName}.html`
-          )
-        ),
+        this.destinationPath(path.join(this.outputdir, camelCaseComponentName, `${camelCaseComponentName}.html`)),
         {}
       );
 
       await this.render(
         this.templatePath(path.join(`__tests__`, `${template}.test.${ext}`)),
         this.destinationPath(
-          path.join(
-            this.outputdir,
-            camelCaseComponentName,
-            `__tests__`,
-            `${camelCaseComponentName}.test.${ext}`
-          )
+          path.join(this.outputdir, camelCaseComponentName, `__tests__`, `${camelCaseComponentName}.test.${ext}`)
         ),
         {
           pascalCaseComponentName,
           camelCaseComponentName,
-          kebabCaseComponentName,
+          kebabCaseComponentName
         }
       );
 
       if (template === 'typeScript') {
         await this.render(
           this.templatePath('gitignore'),
-          this.destinationPath(
-            path.join(this.outputdir, camelCaseComponentName, '.gitignore')
-          ),
+          this.destinationPath(path.join(this.outputdir, camelCaseComponentName, '.gitignore')),
           {}
         );
       }
 
       if (!internal) {
-        const masterLabel = camelCaseToTitleCase(componentname)
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
+        const masterLabel = camelCaseToTitleCase(componentname).replace(/</g, '&lt;').replace(/>/g, '&gt;');
         await this.render(
           this.templatePath(`${template}.js-meta.xml`),
           this.destinationPath(
-            path.join(
-              this.outputdir,
-              camelCaseComponentName,
-              `${camelCaseComponentName}.js-meta.xml`
-            )
+            path.join(this.outputdir, camelCaseComponentName, `${camelCaseComponentName}.js-meta.xml`)
           ),
           { apiVersion: this.apiversion, masterLabel }
         );

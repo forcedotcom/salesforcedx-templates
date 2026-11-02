@@ -23,6 +23,7 @@ const VALID_PROJECT_TEMPLATES = [
   'reactexternalapp',
   'angularinternalapp',
   'angularexternalapp',
+  'vueinternalapp',
   'agent',
   'nativemobile',
 ] as const;

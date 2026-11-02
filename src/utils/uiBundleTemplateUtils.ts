@@ -83,6 +83,7 @@ export const BUILT_IN_FULL_TEMPLATES = new Set([
   'reactexternalapp',
   'angularinternalapp',
   'angularexternalapp',
+  'vueinternalapp',
 ]);
 
 /**
@@ -108,6 +109,10 @@ export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
   angularexternalapp: {
     base: 'angularextapp',
     withSuffix: 'angularextapp1',
+  },
+  vueinternalapp: {
+    base: 'vueinternalapp',
+    withSuffix: 'vueinternalapp1',
   },
 };
 

@@ -26,6 +26,7 @@
     "./src/templates/project/reactinternalapp/**/*",
     "./src/templates/project/reactexternalapp/**/*",
     "./src/templates/project/angularintapp/**/*",
-    "./src/templates/project/angularextapp/**/*"
+    "./src/templates/project/angularextapp/**/*",
+    "./src/templates/project/vueinternalapp/**/*"
   ]
 }

@@ -154,6 +154,16 @@ describe('LightningOutGenerator', () => {
           )
       ).to.throw(/callback/i);
     });
+    it('throws when callbackUrl is not a parsable URL', () => {
+      expect(
+        () =>
+          new LightningOutGenerator(
+            baseOpts(outputDir, {
+              eca: { name: 'MyLoApp_ECA', contactEmail: 'dev@example.com', callbackUrl: 'not a url' }
+            })
+          )
+      ).to.throw(/callback/i);
+    });
     it('throws when a component reference is malformed', () => {
       expect(() => new LightningOutGenerator(baseOpts(outputDir, { components: ['badref'] }))).to.throw(/component/i);
     });
@@ -323,6 +333,60 @@ describe('LightningOutGenerator', () => {
         }
         expect(msg).to.match(/hostDomains/);
         expect(msg).to.match(/eca\.name/);
+      });
+      describe('additional site/access validation', () => {
+        const clwr = (o: Partial<LightningOutOptions> = {}) => baseOpts(outputDir, { runtime: 'CLWR', ...o });
+        for (const bad of ['\r', '\u0000', '\u001f', '\u009f', '\ufffe']) {
+          it(`rejects a site containing control-char boundary ${JSON.stringify(bad)}`, () => {
+            expect(errorOf(clwr({ site: `a${bad}b` }))).to.include(nls.localize('InvalidLightningOutSiteName'));
+          });
+        }
+        it('accepts a non-breaking space and a normal internal space in a site name', () => {
+          expect(errorOf(clwr({ site: 'My Site' }))).to.equal('');
+          expect(errorOf(clwr({ site: 'My Site' }))).to.equal('');
+        });
+        for (const bad of [123, {}, true]) {
+          it(`rejects a non-string site ${JSON.stringify(bad)}`, () => {
+            expect(errorOf(clwr({ site: bad as unknown as string }))).to.include(
+              nls.localize('InvalidLightningOutSiteName')
+            );
+          });
+        }
+        it('site: "" on LWR_CORE reports the CLWR-only error, not the blank-site error', () => {
+          const msg = errorOf(baseOpts(outputDir, { site: '' }));
+          expect(msg).to.include(nls.localize('InvalidLightningOutClwrOnly', ['site', 'LWR_CORE']));
+          expect(msg).to.not.include(nls.localize('InvalidLightningOutSiteName'));
+        });
+        it('site with a missing runtime reports the missing runtime (and validates the site as CLWR would)', () => {
+          const ok = errorOf(baseOpts(outputDir, { runtime: undefined as unknown as 'CLWR', site: 'my_site' }));
+          expect(ok).to.include(nls.localize('MissingLightningOutInputs', ['runtime']));
+          expect(ok).to.not.include('applies only to runtime CLWR');
+          expect(ok).to.not.include(nls.localize('InvalidLightningOutSiteName'));
+          const bad = errorOf(baseOpts(outputDir, { runtime: undefined as unknown as 'CLWR', site: '  ' }));
+          expect(bad).to.include(nls.localize('MissingLightningOutInputs', ['runtime']));
+          expect(bad).to.include(nls.localize('InvalidLightningOutSiteName'));
+        });
+        for (const bad of ['', 'Guest', 'GUEST', 123]) {
+          it(`rejects access ${JSON.stringify(bad)} on CLWR`, () => {
+            expect(errorOf(clwr({ access: bad as unknown as LightningOutOptions['access'] }))).to.include(
+              nls.localize('InvalidLightningOutAccess', ['guest, authenticated'])
+            );
+          });
+        }
+        it('reports appName, blank site, access and hostDomain errors together in one error', () => {
+          const msg = errorOf(
+            clwr({
+              appName: '9bad',
+              site: '  ',
+              access: 'public' as LightningOutOptions['access'],
+              hostDomains: ['ftp://x.example.com']
+            })
+          );
+          expect(msg).to.match(/appName/);
+          expect(msg).to.include(nls.localize('InvalidLightningOutSiteName'));
+          expect(msg).to.include(nls.localize('InvalidLightningOutAccess', ['guest, authenticated']));
+          expect(msg).to.match(/http or https/i);
+        });
       });
     });
     it('does not throw when the callback URL origin is not among the host domains', () => {
@@ -616,6 +680,112 @@ describe('LightningOutGenerator', () => {
         threw = e as Error;
       }
       expect(threw, 're-run should not throw').to.be.undefined;
+    });
+    describe('site/access generation (additional coverage)', () => {
+      const appPath = () => path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml');
+      const readApp = () => fs.readFileSync(appPath(), 'utf8');
+      const create = (o: LightningOutOptions) =>
+        TemplateService.getInstance(process.cwd()).create(TemplateType.LightningOut, o);
+      const gOpts = (o: Partial<LightningOutOptions> = {}): LightningOutOptions =>
+        baseOpts(outputDir, { runtime: 'CLWR', access: 'guest', hostDomains: undefined, ...o });
+      const header = `<?xml version="1.0" encoding="UTF-8"?>
+<LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationName>MyLoApp</applicationName>
+    <isEnabled>true</isEnabled>
+`;
+
+      it('CLWR authenticated without a site equals the LWR_CORE golden with only runtime changed', async () => {
+        await create(baseOpts(outputDir, { runtime: 'CLWR' }));
+        expect(readApp()).to.equal(`${header}    <runtime>CLWR</runtime>
+    <components>
+        <component>
+            <componentName>c/myButton</componentName>
+        </component>
+    </components>
+    <allowedDomains>
+        <domain>
+            <hostDomain>https://app.example.com</hostDomain>
+        </domain>
+    </allowedDomains>
+</LightningOutApp>
+`);
+        expect(readApp()).to.not.include('<sites>');
+      });
+      it('guest without a site emits no <sites>', async () => {
+        await create(gOpts());
+        expect(readApp()).to.not.include('<sites>');
+      });
+      for (const [label, components] of [
+        ['undefined', undefined],
+        ['empty', [] as string[]]
+      ] as const) {
+        it(`guest with no hosts and ${label} components emits only a minimal app file`, async () => {
+          await create(gOpts({ hostDomains: [], components }));
+          expect(listFiles(outputDir)).to.deep.equal([
+            path.join('lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml')
+          ]);
+          expect(readApp()).to.equal(`${header}    <runtime>CLWR</runtime>
+    <components>
+    </components>
+</LightningOutApp>
+`);
+          expect(readApp()).to.not.include('<allowedDomains>');
+        });
+      }
+      for (const access of ['guest', 'authenticated'] as const) {
+        it(`site: null through generate() emits no <sites> (${access})`, async () => {
+          await create(baseOpts(outputDir, { runtime: 'CLWR', access, site: null as unknown as string }));
+          expect(readApp()).to.not.include('<sites>');
+        });
+      }
+      it('emits site names verbatim or escaped in <siteName>', async () => {
+        const cases: [string, string][] = [
+          ['My Site', 'My Site'],
+          ['Café Site', 'Café Site'],
+          [`A "q" 'x'`, 'A &#34;q&#34; &#39;x&#39;']
+        ];
+        for (const [site, expected] of cases) {
+          await remove(outputDir);
+          await create(gOpts({ site }));
+          expect(readApp(), site).to.include(`<siteName>${expected}</siteName>`);
+        }
+      });
+      it('re-run: CLWR+site then LWR_CORE rewrites the app file without <sites>', async () => {
+        await create(baseOpts(outputDir, { runtime: 'CLWR', site: 'my_site' }));
+        expect(readApp()).to.include('<siteName>my_site</siteName>');
+        await create(baseOpts(outputDir));
+        expect(readApp()).to.include('<runtime>LWR_CORE</runtime>');
+        expect(readApp()).to.not.include('<sites>');
+      });
+      it('re-run: authenticated then guest leaves the old files on disk and writes the guest app file', async () => {
+        await create(baseOpts(outputDir, { runtime: 'CLWR' }));
+        const before = listFiles(outputDir);
+        expect(before).to.have.length(7);
+        await create(baseOpts(outputDir, { runtime: 'CLWR', access: 'guest', site: 'my_site' }));
+        expect(listFiles(outputDir)).to.deep.equal(before);
+        expect(readApp()).to.include('<siteName>my_site</siteName>');
+      });
+      it('re-run: guest then authenticated yields the full set', async () => {
+        await create(gOpts({ site: 'my_site' }));
+        expect(listFiles(outputDir)).to.have.length(1);
+        await create(baseOpts(outputDir, { runtime: 'CLWR', site: 'my_site' }));
+        expect(listFiles(outputDir)).to.have.length(7);
+      });
+      it('authenticated CLWR with a site and 2 hosts emits 2 CORS files and <sites> after the last domain', async () => {
+        await create(
+          baseOpts(outputDir, {
+            runtime: 'CLWR',
+            site: 'my_site',
+            hostDomains: ['https://app.example.com', 'https://portal.example.com:8080']
+          })
+        );
+        const files = listFiles(outputDir);
+        expect(files.filter((f) => f.startsWith('corsWhitelistOrigins'))).to.have.length(2);
+        expect(files).to.have.length(8);
+        const body = readApp();
+        expect(body.indexOf('<sites>')).to.be.greaterThan(body.lastIndexOf('</domain>'));
+        expect(body.indexOf('<sites>')).to.be.greaterThan(body.indexOf('</allowedDomains>'));
+      });
     });
   });
 });

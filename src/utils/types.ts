@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import type { LIGHTNING_OUT_ACCESS_MODES } from './lightningOut';
 import type * as nodeFs from 'node:fs';
 import AnalyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
 import ApexClassGenerator from '../generators/apexClassGenerator';
@@ -208,7 +209,8 @@ export interface LightningOutEcaOptions {
   callbackUrl: string;
 }
 
-export type LightningOutAccess = 'guest' | 'authenticated';
+/** 'guest' | 'authenticated' — derived from the runtime list so the two cannot drift. */
+export type LightningOutAccess = (typeof LIGHTNING_OUT_ACCESS_MODES)[number];
 
 export interface LightningOutOptions extends TemplateOptions {
   /** LightningOutApp DeveloperName AND <applicationName> value (≤ 64 chars). */

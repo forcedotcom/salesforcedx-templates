@@ -11,6 +11,7 @@ import * as path from 'path';
 import { TemplateService, TemplateType } from '../../src';
 import LightningOutGenerator from '../../src/generators/lightningOutGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
+import { nls } from '../../src/i18n';
 import { type LightningOutOptions } from '../../src/utils/types';
 
 chai.config.truncateThreshold = 100000;
@@ -224,6 +225,56 @@ describe('LightningOutGenerator', () => {
           /http or https/i
         );
       });
+      const errorOf = (opts: LightningOutOptions): string => {
+        try {
+          new LightningOutGenerator(opts);
+        } catch (e) {
+          return (e as Error).message;
+        }
+        return '';
+      };
+      it('reports both site and access on LWR_CORE in one error', () => {
+        const msg = errorOf(baseOpts(outputDir, { site: 's', access: 'guest' }));
+        expect(msg).to.include(nls.localize('InvalidLightningOutClwrOnly', ['site', 'LWR_CORE']));
+        expect(msg).to.include(nls.localize('InvalidLightningOutClwrOnly', ['access', 'LWR_CORE']));
+      });
+      it('does not add CLWR-only errors on top of an invalid runtime', () => {
+        const msg = errorOf(baseOpts(outputDir, { runtime: 'NOPE' as LightningOutOptions['runtime'], site: 's' }));
+        expect(msg).to.include(nls.localize('InvalidLightningOutRuntime', ['LWR_CORE, CLWR']));
+        expect(msg).to.not.include('applies only to runtime CLWR');
+      });
+      it('missing runtime with access=guest reports only the missing runtime', () => {
+        const msg = errorOf(guestOpts({ runtime: undefined as unknown as LightningOutOptions['runtime'] }));
+        expect(msg).to.include(nls.localize('MissingLightningOutInputs', ['runtime']));
+        expect(msg).to.not.match(/eca\.name|hostDomains/);
+      });
+      it('rejects " guest" (no trimming of the access enum)', () => {
+        expect(
+          errorOf(baseOpts(outputDir, { runtime: 'CLWR', access: ' guest' as LightningOutOptions['access'] }))
+        ).to.include(nls.localize('InvalidLightningOutAccess', ['guest, authenticated']));
+      });
+      it('rejects a site name with control characters', () => {
+        expect(errorOf(guestOpts({ site: 'my\nsite' }))).to.include(nls.localize('InvalidLightningOutSiteName'));
+      });
+      it('treats null site/access as absent', () => {
+        expect(
+          errorOf(
+            baseOpts(outputDir, {
+              site: null as unknown as string,
+              access: null as unknown as LightningOutOptions['access']
+            })
+          )
+        ).to.equal('');
+      });
+      it('rejects a non-array hostDomains in guest mode too', () => {
+        const msg = errorOf(guestOpts({ hostDomains: 'https://a.example.com' as unknown as string[] }));
+        expect(msg).to.include(nls.localize('InvalidLightningOutHostDomainsType'));
+      });
+      it('reports a non-array hostDomains as a type error, not as missing', () => {
+        const msg = errorOf(baseOpts(outputDir, { hostDomains: 'https://a.example.com' as unknown as string[] }));
+        expect(msg).to.include(nls.localize('InvalidLightningOutHostDomainsType'));
+        expect(msg).to.not.include('Missing required input');
+      });
       it('authenticated CLWR still requires eca and hostDomains', () => {
         let msg = '';
         try {
@@ -415,6 +466,55 @@ describe('LightningOutGenerator', () => {
     </sites>
 </LightningOutApp>
 `);
+    });
+    it('CLWR authenticated with a site (golden): app literal, other files identical to LWR_CORE', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      const snapshot = async (o: Partial<LightningOutOptions>) => {
+        await remove(outputDir);
+        await templateService.create(TemplateType.LightningOut, baseOpts(outputDir, o));
+        return Object.fromEntries(
+          listFiles(outputDir).map((f) => [f, fs.readFileSync(path.join(outputDir, f), 'utf8')])
+        );
+      };
+      const lwr = await snapshot({});
+      const clwr = await snapshot({ runtime: 'CLWR', access: 'authenticated', site: 'my_site' });
+      const appFile = path.join('lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml');
+      expect(Object.keys(clwr)).to.deep.equal(Object.keys(lwr));
+      for (const f of Object.keys(lwr).filter((k) => k !== appFile)) {
+        expect(clwr[f], f).to.equal(lwr[f]);
+      }
+      expect(clwr[appFile]).to.equal(`<?xml version="1.0" encoding="UTF-8"?>
+<LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationName>MyLoApp</applicationName>
+    <isEnabled>true</isEnabled>
+    <runtime>CLWR</runtime>
+    <components>
+        <component>
+            <componentName>c/myButton</componentName>
+        </component>
+    </components>
+    <allowedDomains>
+        <domain>
+            <hostDomain>https://app.example.com</hostDomain>
+        </domain>
+    </allowedDomains>
+    <sites>
+        <siteName>my_site</siteName>
+    </sites>
+</LightningOutApp>
+`);
+    });
+    it('guest ignores a valid eca block and trims the site name', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir, { runtime: 'CLWR', access: 'guest', site: '  my_site  ' })
+      );
+      expect(listFiles(outputDir)).to.deep.equal([path.join('lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml')]);
+      assertFileContent(
+        path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'),
+        '<siteName>my_site</siteName>'
+      );
     });
     it('guest with host domains keeps allowedDomains but emits no CORS/ECA/settings files', async () => {
       const templateService = TemplateService.getInstance(process.cwd());

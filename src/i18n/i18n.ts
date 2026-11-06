@@ -81,7 +81,8 @@ export const messages = {
   InvalidLightningOutRuntime: 'runtime must be one of: %s.',
   InvalidLightningOutAccess: 'access must be one of: %s.',
   InvalidLightningOutClwrOnly: '%s applies only to runtime CLWR; remove it for runtime %s.',
-  InvalidLightningOutSiteName: 'site must be a non-empty Experience site name.',
+  InvalidLightningOutSiteName: 'site must be a non-empty Experience site name with no control characters.',
+  InvalidLightningOutHostDomainsType: 'hostDomains must be an array of origins.',
   InvalidLightningOutHostDomain: 'Invalid host domain "%s": %s.',
   InvalidLightningOutHostDomainCollision:
     'Host domains "%s" and "%s" both map to the CorsWhitelistOrigin file name "%s"; use distinct domains.',

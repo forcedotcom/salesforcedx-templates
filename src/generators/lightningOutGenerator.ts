@@ -24,19 +24,30 @@ const VALID_ACCESS: ReadonlySet<string> = new Set(LIGHTNING_OUT_ACCESS_MODES);
 const APP_NAME_MAX = 64;
 const ECA_NAME_MAX = 80;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const CONTROL_CHARS_RE = /[\u0000-\u001f\u007f]/;
 
 export default class LightningOutGenerator extends BaseGenerator<LightningOutOptions> {
   private normalizedHostDomains!: NormalizedHostDomains;
 
-  /** CLWR guest: only the LightningOutApp file is emitted, so eca/hostDomains are not required. */
+  /**
+   * CLWR guest: only the LightningOutApp file is emitted, so eca/hostDomains are not required.
+   * A missing runtime with access=guest is treated as guest too, so the only error reported is
+   * the missing runtime rather than a cascade of eca/hostDomains errors that would not apply.
+   */
   private get isGuest(): boolean {
-    return this.options.runtime === 'CLWR' && this.options.access === 'guest';
+    const { runtime, access } = this.options;
+    return access === 'guest' && (runtime === 'CLWR' || !runtime);
   }
 
   public validateOptions(): void {
     const o = this.options;
     const errors: string[] = [];
     const guest = this.isGuest;
+    // JSON definitions may carry explicit nulls; treat them as absent.
+    const site = o.site ?? undefined;
+    const access = o.access ?? undefined;
+    const hostDomains = o.hostDomains ?? undefined;
+    const hostDomainsIsArray = Array.isArray(hostDomains);
 
     const missing: string[] = [];
     if (!o.appName?.trim()) {
@@ -48,7 +59,7 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
     if (!o.runtime?.toString().trim()) {
       missing.push('runtime');
     }
-    if (!guest && (!Array.isArray(o.hostDomains) || o.hostDomains.length === 0)) {
+    if (!guest && (hostDomains === undefined || (hostDomainsIsArray && hostDomains.length === 0))) {
       missing.push('hostDomains');
     }
     if (!guest && !o.eca?.contactEmail?.trim()) {
@@ -76,19 +87,22 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
     if (o.runtime && !VALID_RUNTIMES.has(o.runtime)) {
       errors.push(nls.localize('InvalidLightningOutRuntime', [[...VALID_RUNTIMES].join(', ')]));
     }
-    if (o.runtime && o.runtime !== 'CLWR') {
+    if (hostDomains !== undefined && !hostDomainsIsArray) {
+      errors.push(nls.localize('InvalidLightningOutHostDomainsType'));
+    }
+    if (o.runtime && VALID_RUNTIMES.has(o.runtime) && o.runtime !== 'CLWR') {
       // Both are CLWR-only concepts; LWR_CORE is always authenticated with no site.
-      if (o.site !== undefined) {
+      if (site !== undefined) {
         errors.push(nls.localize('InvalidLightningOutClwrOnly', ['site', o.runtime]));
       }
-      if (o.access !== undefined) {
+      if (access !== undefined) {
         errors.push(nls.localize('InvalidLightningOutClwrOnly', ['access', o.runtime]));
       }
     } else {
-      if (o.access !== undefined && !VALID_ACCESS.has(o.access)) {
+      if (access !== undefined && !VALID_ACCESS.has(access)) {
         errors.push(nls.localize('InvalidLightningOutAccess', [[...VALID_ACCESS].join(', ')]));
       }
-      if (o.site !== undefined && (typeof o.site !== 'string' || !o.site.trim())) {
+      if (site !== undefined && (typeof site !== 'string' || !site.trim() || CONTROL_CHARS_RE.test(site))) {
         errors.push(nls.localize('InvalidLightningOutSiteName'));
       }
     }
@@ -113,9 +127,9 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
     }
 
     let normalized: NormalizedHostDomains | undefined;
-    if (Array.isArray(o.hostDomains) && o.hostDomains.length) {
+    if (hostDomainsIsArray && hostDomains.length) {
       try {
-        normalized = normalizeHostDomains(o.hostDomains);
+        normalized = normalizeHostDomains(hostDomains);
       } catch (e) {
         if (!(e instanceof Error)) {
           throw e;

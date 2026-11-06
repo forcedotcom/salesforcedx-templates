@@ -24,19 +24,20 @@ const VALID_ACCESS: ReadonlySet<string> = new Set(LIGHTNING_OUT_ACCESS_MODES);
 const APP_NAME_MAX = 64;
 const ECA_NAME_MAX = 80;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-const CONTROL_CHARS_RE = /[\u0000-\u001f\u007f]/;
+// C0/C1 controls, DEL, and the XML 1.0 non-characters U+FFFE/U+FFFF.
+const CONTROL_CHARS_RE = /[\u0000-\u001f\u007f-\u009f\ufffe\uffff]/;
 
 export default class LightningOutGenerator extends BaseGenerator<LightningOutOptions> {
   private normalizedHostDomains!: NormalizedHostDomains;
 
   /**
    * CLWR guest: only the LightningOutApp file is emitted, so eca/hostDomains are not required.
-   * A missing runtime with access=guest is treated as guest too, so the only error reported is
-   * the missing runtime rather than a cascade of eca/hostDomains errors that would not apply.
+   * A missing or invalid runtime with access=guest is treated as guest too, so the only error
+   * reported is the runtime one rather than a cascade of eca/hostDomains errors that would not apply.
    */
   private get isGuest(): boolean {
     const { runtime, access } = this.options;
-    return access === 'guest' && (runtime === 'CLWR' || !runtime);
+    return access === 'guest' && runtime !== 'LWR_CORE';
   }
 
   public validateOptions(): void {
@@ -120,14 +121,20 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         errors.push(nls.localize('InvalidLightningOutCallbackUrl', [o.eca.callbackUrl]));
       }
     }
-    for (const c of o.components ?? []) {
-      if (!isValidComponentRef(c)) {
+    const components = o.components ?? undefined;
+    if (components !== undefined && !Array.isArray(components)) {
+      errors.push(nls.localize('InvalidLightningOutComponentsType'));
+    }
+    for (const c of Array.isArray(components) ? components : []) {
+      if (typeof c !== 'string' || !isValidComponentRef(c)) {
         errors.push(nls.localize('InvalidLightningOutComponent', [c]));
       }
     }
 
     let normalized: NormalizedHostDomains | undefined;
-    if (hostDomainsIsArray && hostDomains.length) {
+    if (hostDomainsIsArray && hostDomains.some((h) => typeof h !== 'string')) {
+      errors.push(nls.localize('InvalidLightningOutHostDomainsType'));
+    } else if (hostDomainsIsArray && hostDomains.length) {
       try {
         normalized = normalizeHostDomains(hostDomains);
       } catch (e) {

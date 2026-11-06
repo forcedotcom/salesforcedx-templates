@@ -253,8 +253,42 @@ describe('LightningOutGenerator', () => {
           errorOf(baseOpts(outputDir, { runtime: 'CLWR', access: ' guest' as LightningOutOptions['access'] }))
         ).to.include(nls.localize('InvalidLightningOutAccess', ['guest, authenticated']));
       });
-      it('rejects a site name with control characters', () => {
-        expect(errorOf(guestOpts({ site: 'my\nsite' }))).to.include(nls.localize('InvalidLightningOutSiteName'));
+      for (const bad of ['my\nsite', 'my\tsite', 'my\u007fsite', 'my\u0085site', 'my\uffffsite']) {
+        it(`rejects a site name with a control/non-XML character (${JSON.stringify(bad)})`, () => {
+          expect(errorOf(guestOpts({ site: bad }))).to.include(nls.localize('InvalidLightningOutSiteName'));
+        });
+      }
+      it('invalid runtime with access=guest reports only the runtime error', () => {
+        const msg = errorOf(guestOpts({ runtime: 'clwr' as LightningOutOptions['runtime'] }));
+        expect(msg).to.include(nls.localize('InvalidLightningOutRuntime', ['LWR_CORE, CLWR']));
+        expect(msg).to.not.match(/eca\.name|hostDomains|Missing required/);
+      });
+      it('missing runtime with access=authenticated still reports the eca/hostDomains inputs', () => {
+        const msg = errorOf({
+          appName: 'A',
+          access: 'authenticated',
+          outputdir: outputDir
+        } as unknown as LightningOutOptions);
+        expect(msg).to.match(/runtime/);
+        expect(msg).to.match(/eca\.name/);
+        expect(msg).to.match(/hostDomains/);
+      });
+      it('hostDomains: null is absent — fine for guest, missing for authenticated', () => {
+        const nul = null as unknown as string[];
+        expect(errorOf(guestOpts({ hostDomains: nul }))).to.equal('');
+        expect(errorOf(baseOpts(outputDir, { runtime: 'CLWR', hostDomains: nul }))).to.include(
+          nls.localize('MissingLightningOutInputs', ['hostDomains'])
+        );
+      });
+      it('rejects non-string hostDomains elements without a raw TypeError', () => {
+        const msg = errorOf(guestOpts({ hostDomains: [123] as unknown as string[] }));
+        expect(msg).to.include(nls.localize('InvalidLightningOutHostDomainsType'));
+        expect(msg).to.not.match(/is not a function/);
+      });
+      it('rejects a non-array components value', () => {
+        const msg = errorOf(guestOpts({ components: 'c/foo' as unknown as string[] }));
+        expect(msg).to.include(nls.localize('InvalidLightningOutComponentsType'));
+        expect(msg).to.not.include('c"');
       });
       it('treats null site/access as absent', () => {
         expect(
@@ -503,6 +537,14 @@ describe('LightningOutGenerator', () => {
     </sites>
 </LightningOutApp>
 `);
+    });
+    it('access: null on CLWR emits the full authenticated set', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir, { runtime: 'CLWR', access: null as unknown as LightningOutOptions['access'] })
+      );
+      expect(listFiles(outputDir)).to.have.length(7);
     });
     it('guest ignores a valid eca block and trims the site name', async () => {
       const templateService = TemplateService.getInstance(process.cwd());

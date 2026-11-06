@@ -26,6 +26,8 @@ const ECA_NAME_MAX = 80;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 // C0/C1 controls, DEL, and the XML 1.0 non-characters U+FFFE/U+FFFF.
 const CONTROL_CHARS_RE = /[\u0000-\u001f\u007f-\u009f\ufffe\uffff]/;
+// A lone (unpaired) UTF-16 surrogate: it cannot be UTF-8 encoded and would be written as U+FFFD.
+const LONE_SURROGATE_RE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/;
 
 export default class LightningOutGenerator extends BaseGenerator<LightningOutOptions> {
   private normalizedHostDomains!: NormalizedHostDomains;
@@ -103,17 +105,27 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       if (access !== undefined && !VALID_ACCESS.has(access)) {
         errors.push(nls.localize('InvalidLightningOutAccess', [[...VALID_ACCESS].join(', ')]));
       }
-      if (site !== undefined && (typeof site !== 'string' || !site.trim() || CONTROL_CHARS_RE.test(site))) {
+      if (
+        site !== undefined &&
+        (typeof site !== 'string' || !site.trim() || CONTROL_CHARS_RE.test(site) || LONE_SURROGATE_RE.test(site))
+      ) {
         errors.push(nls.localize('InvalidLightningOutSiteName'));
       }
     }
-    if (!guest && o.eca?.contactEmail && !EMAIL_RE.test(o.eca.contactEmail)) {
+    if (
+      !guest &&
+      o.eca?.contactEmail &&
+      (!EMAIL_RE.test(o.eca.contactEmail) || CONTROL_CHARS_RE.test(o.eca.contactEmail))
+    ) {
       errors.push(nls.localize('InvalidLightningOutContactEmail', [o.eca.contactEmail]));
     }
     if (!guest && o.eca?.callbackUrl) {
-      let ok = false;
+      // The raw value is written to the file, so reject what URL parsing would silently strip
+      // (surrounding whitespace, tab/CR/LF) or what XML 1.0 cannot hold (control characters).
+      const cb = o.eca.callbackUrl;
+      let ok = cb.trim() === cb && !CONTROL_CHARS_RE.test(cb);
       try {
-        ok = new URL(o.eca.callbackUrl).protocol === 'https:';
+        ok = ok && new URL(cb).protocol === 'https:';
       } catch {
         ok = false;
       }

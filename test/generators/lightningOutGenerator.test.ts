@@ -342,8 +342,42 @@ describe('LightningOutGenerator', () => {
           });
         }
         it('accepts a non-breaking space and a normal internal space in a site name', () => {
-          expect(errorOf(clwr({ site: 'My Site' }))).to.equal('');
+          expect(errorOf(clwr({ site: 'My\u00a0Site' }))).to.equal('');
           expect(errorOf(clwr({ site: 'My Site' }))).to.equal('');
+        });
+        for (const bad of ['a\ud800b', 'a\udc00b', 'trailing\ud83d']) {
+          it(`rejects a site with a lone surrogate ${JSON.stringify(bad)}`, () => {
+            expect(errorOf(clwr({ site: bad }))).to.include(nls.localize('InvalidLightningOutSiteName'));
+          });
+        }
+        it('accepts a site with a valid surrogate pair (emoji)', () => {
+          expect(errorOf(clwr({ site: 'Site \ud83d\ude00' }))).to.equal('');
+        });
+        const eca = (e: Partial<NonNullable<LightningOutOptions['eca']>>) =>
+          baseOpts(outputDir, {
+            eca: {
+              name: 'MyLoApp_ECA',
+              contactEmail: 'dev@example.com',
+              callbackUrl: 'https://app.example.com/cb',
+              ...e
+            }
+          });
+        for (const bad of [
+          ' https://app.example.com/cb',
+          'https://app.example.com/cb\n',
+          'https://app.example.com/c\tb',
+          'https://app.example.com/cb\u0000'
+        ]) {
+          it(`rejects a callbackUrl with whitespace/control chars ${JSON.stringify(bad)}`, () => {
+            expect(errorOf(eca({ callbackUrl: bad }))).to.include(
+              nls.localize('InvalidLightningOutCallbackUrl', [bad])
+            );
+          });
+        }
+        it('rejects a contactEmail with a control character', () => {
+          expect(errorOf(eca({ contactEmail: 'dev@exam\u0001ple.com' }))).to.include(
+            nls.localize('InvalidLightningOutContactEmail', ['dev@exam\u0001ple.com'])
+          );
         });
         for (const bad of [123, {}, true]) {
           it(`rejects a non-string site ${JSON.stringify(bad)}`, () => {

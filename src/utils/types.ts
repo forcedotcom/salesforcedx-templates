@@ -229,6 +229,8 @@ export interface LightningOutOptions extends TemplateOptions {
   /**
    * CLWR only. Experience site (Network) name to link the app to; emitted as <sites><siteName>.
    * Deployable at API 69.0+; the caller owns any API-version policy.
+   * Omitting it for CLWR writes no <sites>, and deploying that file at API 69.0+ removes the app's
+   * existing site link (including one made in Setup), so callers should require it for CLWR.
    */
   site?: string;
   /**

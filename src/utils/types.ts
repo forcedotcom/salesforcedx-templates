@@ -208,17 +208,32 @@ export interface LightningOutEcaOptions {
   callbackUrl: string;
 }
 
+export type LightningOutAccess = 'guest' | 'authenticated';
+
 export interface LightningOutOptions extends TemplateOptions {
   /** LightningOutApp DeveloperName AND <applicationName> value (≤ 64 chars). */
   appName: string;
   /** LWR_CORE or CLWR. */
   runtime: 'LWR_CORE' | 'CLWR';
-  /** Explicit https origins of the external host pages that embed the app. Required, ≥ 1. */
-  hostDomains: string[];
+  /**
+   * Explicit https origins of the external host pages that embed the app.
+   * Required (≥ 1) except for CLWR guest, where they are optional and only populate <allowedDomains>.
+   */
+  hostDomains?: string[];
   /** Optional component references exposed by the app (LWC "c/x" or Aura "c:X"). */
   components?: string[];
-  /** External Client Application (OAuth) settings. */
-  eca: LightningOutEcaOptions;
+  /** External Client Application (OAuth) settings. Required except for CLWR guest (ignored there). */
+  eca?: LightningOutEcaOptions;
+  /**
+   * CLWR only. Experience site (Network) name to link the app to; emitted as <sites><siteName>.
+   * Deployable at API 69.0+; the caller owns any API-version policy.
+   */
+  site?: string;
+  /**
+   * CLWR only. 'authenticated' (default) emits the full app + ECA + CORS + settings set;
+   * 'guest' emits only the LightningOutApp file.
+   */
+  access?: LightningOutAccess;
   // apiversion?, outputdir? inherited from TemplateOptions
 }
 

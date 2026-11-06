@@ -79,6 +79,9 @@ export const messages = {
     'Invalid %s "%s": must be an ASCII developer name (start with a letter; letters, digits, single underscores; no trailing underscore).',
   InvalidLightningOutNameLength: '%s exceeds the maximum length of %s characters (got %s).',
   InvalidLightningOutRuntime: 'runtime must be one of: %s.',
+  InvalidLightningOutAccess: 'access must be one of: %s.',
+  InvalidLightningOutClwrOnly: '%s applies only to runtime CLWR; remove it for runtime %s.',
+  InvalidLightningOutSiteName: 'site must be a non-empty Experience site name.',
   InvalidLightningOutHostDomain: 'Invalid host domain "%s": %s.',
   InvalidLightningOutHostDomainCollision:
     'Host domains "%s" and "%s" both map to the CorsWhitelistOrigin file name "%s"; use distinct domains.',

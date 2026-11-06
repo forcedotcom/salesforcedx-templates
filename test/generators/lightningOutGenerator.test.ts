@@ -24,6 +24,12 @@ function assertFileExists(file: string) {
   expect(fs.existsSync(file), `Expected file to exist: ${file}`).to.be.true;
 }
 
+function listFiles(dir: string): string[] {
+  return (fs.readdirSync(dir, { recursive: true }) as string[])
+    .filter((f) => fs.statSync(path.join(dir, f)).isFile())
+    .sort();
+}
+
 function assertFileContent(file: string, needle: string | RegExp) {
   assertFileExists(file);
   const body = fs.readFileSync(file, 'utf8');
@@ -156,6 +162,84 @@ describe('LightningOutGenerator', () => {
     it('does not throw on empty components', () => {
       expect(() => new LightningOutGenerator(baseOpts(outputDir, { components: [] }))).to.not.throw();
     });
+
+    describe('site and access (CLWR only)', () => {
+      const guestOpts = (overrides: Partial<LightningOutOptions> = {}): LightningOutOptions => ({
+        appName: 'MyLoApp',
+        runtime: 'CLWR',
+        access: 'guest',
+        components: ['c/myButton'],
+        outputdir: outputDir,
+        apiversion: getDefaultApiVersion(),
+        ...overrides
+      });
+
+      it('throws when site is set on an LWR_CORE definition', () => {
+        expect(() => new LightningOutGenerator(baseOpts(outputDir, { site: 'my_site' }))).to.throw(/site.*CLWR/i);
+      });
+      it('throws when access is set on an LWR_CORE definition, even "authenticated"', () => {
+        expect(() => new LightningOutGenerator(baseOpts(outputDir, { access: 'authenticated' }))).to.throw(
+          /access.*CLWR/i
+        );
+      });
+      it('throws when access is not guest or authenticated', () => {
+        expect(
+          () =>
+            new LightningOutGenerator(
+              baseOpts(outputDir, { runtime: 'CLWR', access: 'public' as LightningOutOptions['access'] })
+            )
+        ).to.throw(/access must be one of: guest, authenticated/);
+      });
+      it('throws when site is blank', () => {
+        expect(() => new LightningOutGenerator(baseOpts(outputDir, { runtime: 'CLWR', site: '   ' }))).to.throw(
+          /site/i
+        );
+      });
+      it('throws when site is not a string', () => {
+        expect(
+          () =>
+            new LightningOutGenerator(
+              baseOpts(outputDir, { runtime: 'CLWR', site: ['a'] as unknown as LightningOutOptions['site'] })
+            )
+        ).to.throw(/site/i);
+      });
+      it('accepts site on an authenticated CLWR definition', () => {
+        expect(
+          () => new LightningOutGenerator(baseOpts(outputDir, { runtime: 'CLWR', access: 'authenticated', site: 's' }))
+        ).to.not.throw();
+      });
+      it('guest needs neither eca nor hostDomains', () => {
+        expect(() => new LightningOutGenerator(guestOpts({ site: 'my_site' }))).to.not.throw();
+      });
+      it('guest does not validate an eca block it will not emit', () => {
+        expect(
+          () =>
+            new LightningOutGenerator(
+              guestOpts({ eca: { name: '1bad', contactEmail: 'nope', callbackUrl: 'http://x' } })
+            )
+        ).to.not.throw();
+      });
+      it('guest still validates hostDomains when given', () => {
+        expect(() => new LightningOutGenerator(guestOpts({ hostDomains: ['ftp://x.example.com'] }))).to.throw(
+          /http or https/i
+        );
+      });
+      it('authenticated CLWR still requires eca and hostDomains', () => {
+        let msg = '';
+        try {
+          new LightningOutGenerator({
+            appName: 'MyLoApp',
+            runtime: 'CLWR',
+            access: 'authenticated',
+            outputdir: outputDir
+          } as unknown as LightningOutOptions);
+        } catch (e) {
+          msg = (e as Error).message;
+        }
+        expect(msg).to.match(/hostDomains/);
+        expect(msg).to.match(/eca\.name/);
+      });
+    });
     it('does not throw when the callback URL origin is not among the host domains', () => {
       expect(
         () =>
@@ -233,6 +317,116 @@ describe('LightningOutGenerator', () => {
       const app = path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml');
       // emitted value must equal the validated (trimmed) value — no space-padded componentName
       assertFileContent(app, '<componentName>c/foo</componentName>');
+    });
+    it('LWR_CORE app file is unchanged (golden)', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir, { hostDomains: ['https://app.example.com', 'https://portal.example.com:8080'] })
+      );
+      expect(fs.readFileSync(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'), 'utf8')).to
+        .equal(`<?xml version="1.0" encoding="UTF-8"?>
+<LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationName>MyLoApp</applicationName>
+    <isEnabled>true</isEnabled>
+    <runtime>LWR_CORE</runtime>
+    <components>
+        <component>
+            <componentName>c/myButton</componentName>
+        </component>
+    </components>
+    <allowedDomains>
+        <domain>
+            <hostDomain>https://app.example.com</hostDomain>
+        </domain>
+        <domain>
+            <hostDomain>https://portal.example.com:8080</hostDomain>
+        </domain>
+    </allowedDomains>
+</LightningOutApp>
+`);
+    });
+    it('CLWR with no access emits the same files as access=authenticated', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      const read = async (o: Partial<LightningOutOptions>) => {
+        await remove(outputDir);
+        await templateService.create(TemplateType.LightningOut, baseOpts(outputDir, { runtime: 'CLWR', ...o }));
+        const files = listFiles(outputDir);
+        return files.map((f) => [f, fs.readFileSync(path.join(outputDir, f), 'utf8')]);
+      };
+      const implicit = await read({});
+      const explicit = await read({ access: 'authenticated' });
+      expect(explicit).to.deep.equal(implicit);
+      expect(implicit.map(([f]) => f)).to.have.length(7); // 6 + 1 CORS file
+    });
+    it('emits <sites> as the last element for an authenticated CLWR site, trimmed', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir, { runtime: 'CLWR', site: '  my_site ' })
+      );
+      const body = fs.readFileSync(
+        path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'),
+        'utf8'
+      );
+      expect(body).to.include(
+        '    </allowedDomains>\n    <sites>\n        <siteName>my_site</siteName>\n    </sites>\n</LightningOutApp>\n'
+      );
+      expect(body.match(/<sites>/g)).to.have.length(1);
+      // authenticated keeps the full set
+      assertFileExists(path.join(outputDir, 'externalClientApps', 'MyLoApp_ECA.eca-meta.xml'));
+    });
+    it('XML-escapes the site name', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir, { runtime: 'CLWR', site: 'A & <B>' })
+      );
+      assertFileContent(
+        path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'),
+        '<siteName>A &amp; &lt;B&gt;</siteName>'
+      );
+    });
+    it('guest emits only the app file, with <sites> and no allowedDomains when no host domains', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(TemplateType.LightningOut, {
+        appName: 'MyLoApp',
+        runtime: 'CLWR',
+        access: 'guest',
+        site: 'my_site',
+        components: ['c/myButton'],
+        outputdir: outputDir,
+        apiversion: getDefaultApiVersion()
+      });
+      expect(listFiles(outputDir)).to.deep.equal([path.join('lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml')]);
+      expect(fs.readFileSync(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'), 'utf8')).to
+        .equal(`<?xml version="1.0" encoding="UTF-8"?>
+<LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationName>MyLoApp</applicationName>
+    <isEnabled>true</isEnabled>
+    <runtime>CLWR</runtime>
+    <components>
+        <component>
+            <componentName>c/myButton</componentName>
+        </component>
+    </components>
+    <sites>
+        <siteName>my_site</siteName>
+    </sites>
+</LightningOutApp>
+`);
+    });
+    it('guest with host domains keeps allowedDomains but emits no CORS/ECA/settings files', async () => {
+      const templateService = TemplateService.getInstance(process.cwd());
+      await templateService.create(
+        TemplateType.LightningOut,
+        baseOpts(outputDir, { runtime: 'CLWR', access: 'guest', site: 'my_site' })
+      );
+      expect(listFiles(outputDir)).to.deep.equal([path.join('lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml')]);
+      assertFileContent(
+        path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'),
+        '<hostDomain>https://app.example.com</hostDomain>'
+      );
     });
     it('hardcodes distributionState=Local and OAuth scope Web', async () => {
       const templateService = TemplateService.getInstance(process.cwd());

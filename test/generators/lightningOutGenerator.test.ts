@@ -366,7 +366,8 @@ describe('LightningOutGenerator', () => {
           ' https://app.example.com/cb',
           'https://app.example.com/cb\n',
           'https://app.example.com/c\tb',
-          'https://app.example.com/cb\u0000'
+          'https://app.example.com/cb\u0000',
+          'https://app.example.com/c\ud800b'
         ]) {
           it(`rejects a callbackUrl with whitespace/control chars ${JSON.stringify(bad)}`, () => {
             expect(errorOf(eca({ callbackUrl: bad }))).to.include(
@@ -374,6 +375,11 @@ describe('LightningOutGenerator', () => {
             );
           });
         }
+        it('rejects a contactEmail with a lone surrogate', () => {
+          expect(errorOf(eca({ contactEmail: 'dev@ex\ud800.com' }))).to.include(
+            nls.localize('InvalidLightningOutContactEmail', ['dev@ex\ud800.com'])
+          );
+        });
         it('rejects a contactEmail with a control character', () => {
           expect(errorOf(eca({ contactEmail: 'dev@exam\u0001ple.com' }))).to.include(
             nls.localize('InvalidLightningOutContactEmail', ['dev@exam\u0001ple.com'])

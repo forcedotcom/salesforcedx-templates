@@ -115,15 +115,17 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
     if (
       !guest &&
       o.eca?.contactEmail &&
-      (!EMAIL_RE.test(o.eca.contactEmail) || CONTROL_CHARS_RE.test(o.eca.contactEmail))
+      (!EMAIL_RE.test(o.eca.contactEmail) ||
+        CONTROL_CHARS_RE.test(o.eca.contactEmail) ||
+        LONE_SURROGATE_RE.test(o.eca.contactEmail))
     ) {
       errors.push(nls.localize('InvalidLightningOutContactEmail', [o.eca.contactEmail]));
     }
     if (!guest && o.eca?.callbackUrl) {
       // The raw value is written to the file, so reject what URL parsing would silently strip
-      // (surrounding whitespace, tab/CR/LF) or what XML 1.0 cannot hold (control characters).
+      // (surrounding whitespace, tab/CR/LF) or what XML 1.0 / UTF-8 cannot hold (controls, lone surrogates).
       const cb = o.eca.callbackUrl;
-      let ok = cb.trim() === cb && !CONTROL_CHARS_RE.test(cb);
+      let ok = cb.trim() === cb && !CONTROL_CHARS_RE.test(cb) && !LONE_SURROGATE_RE.test(cb);
       try {
         ok = ok && new URL(cb).protocol === 'https:';
       } catch {

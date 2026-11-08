@@ -861,22 +861,22 @@
     typescript "^6.0.0"
     wireit "^0.14.13"
 
-"@salesforce/kit@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/@salesforce/kit/-/kit-4.0.1.tgz#436cf4b3ecdc97b4654cc8266e6484e8805e57ed"
-  integrity sha512-gEqWxNsouii5bFRpmLGOO93ndiL0Ds3UOuu2JLTfyZGgezQxg8wEUnnYzV2trZsrlptvarj94AfiQvWI5WkjAw==
+"@salesforce/kit@^4.0.9":
+  version "4.0.9"
+  resolved "https://registry.npmjs.org/@salesforce/kit/-/kit-4.0.9.tgz#2f9af0c0a21edff06e35a6e0d04eda7de658ce46"
+  integrity sha512-51uNidO4FDPnAydHSG4LnUV8CGixpUJ5e++XZh3TCR6VFUidxKIQVRrIWIebcD9yLc13DMhkqt74ofZC3Fu1Kg==
   dependencies:
-    "@salesforce/ts-types" "^3.2.0"
+    "@salesforce/ts-types" "^3.2.3"
 
 "@salesforce/prettier-config@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@salesforce/prettier-config/-/prettier-config-0.0.4.tgz#fc84ea1585b2eb4bf156514911bac17b7f7e434c"
   integrity sha512-GBjR7f/jv7rcSrTvNgbkWvOykXg/PZqL7TztylKwaogWdrCbypJE8qEfBy9nILkICrwmDbQApOC8TqoO3bQKSw==
 
-"@salesforce/ts-types@^3.2.0":
-  version "3.2.3"
-  resolved "https://registry.npmjs.org/@salesforce/ts-types/-/ts-types-3.2.3.tgz#ba7055b4f3fbcf546bd7b9b9288f95c3640d1ea6"
-  integrity sha512-re+ceqPAgBXdgml1bTPoetNb6UfDwh54Gi6USRvPLK6/iV5P9rrLp4d7Ee2UDs/rw80V3nCjfASacpARRDaLRw==
+"@salesforce/ts-types@^3.2.3":
+  version "3.2.4"
+  resolved "https://registry.npmjs.org/@salesforce/ts-types/-/ts-types-3.2.4.tgz#783db051f0f95a23647934efc521cf1ad31dcdbd"
+  integrity sha512-kTzgXQbOdon0gJFwdHQ+A+UvMR/E3zzlj6O1Wyl5//waq7OSNjspB49y9LrZefIyqHV+ACfB9/aWBJ9aSKMrvQ==
 
 "@salesforce/ui-bundle-template-app-angular-template-b2e@^12.13.0":
   version "12.13.0"

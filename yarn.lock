@@ -913,10 +913,10 @@
   resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-react-app/-/ui-bundle-template-base-react-app-12.13.0.tgz#7a667e7788b8472cfa7777917823885e01c71ee7"
   integrity sha512-PZCGjGCMcmyTMGr+WuPwy+J0DwWB0P+EbFBVoOTiFEI+jnrMNRWhnKc8GD6MMevi/6NznBzT3Q+KcuEGQdL9wQ==
 
-"@salesforce/ui-bundle-template-base-vue-app@^12.13.0":
-  version "12.13.0"
-  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-vue-app/-/ui-bundle-template-base-vue-app-12.13.0.tgz#f2646d3445a65b68b5313880061896dd3622e36f"
-  integrity sha512-BJVhVmUeMFmBOvuBZAp9NvFhPg7Ug+4tf7QHUMQyxgNnuWB/n+9fWFaTQ89F4l8G57QDGwe0OSTyHmynXPS+Ig==
+"@salesforce/ui-bundle-template-base-vue-app@^12.17.0":
+  version "12.17.0"
+  resolved "https://registry.npmjs.org/@salesforce/ui-bundle-template-base-vue-app/-/ui-bundle-template-base-vue-app-12.17.0.tgz#636dd1e5226be3d4945baedc60eacecd115f72e7"
+  integrity sha512-PCYzqBkLdpU+Kt+dKLvZ0jyK4vH+bMMwQ8WzcmTatieKuZaUUALgLk4m2Lz0jr+NDDU7m56IguI4h3h91pb6bg==
 
 "@salesforce/ui-bundle-template-base-web-app@^12.9.0":
   version "12.9.0"

@@ -26,18 +26,23 @@ const ECA_NAME_MAX = 80;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 // C0/C1 controls, DEL, and the XML 1.0 non-characters U+FFFE/U+FFFF.
 const CONTROL_CHARS_RE = /[\u0000-\u001f\u007f-\u009f\ufffe\uffff]/;
+// A lone UTF-16 surrogate cannot be encoded as UTF-8 and would be written as U+FFFD, naming a different site.
+const LONE_SURROGATE_RE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/;
 
 export default class LightningOutGenerator extends BaseGenerator<LightningOutOptions> {
   private normalizedHostDomains!: NormalizedHostDomains;
 
   /**
    * CLWR guest: only the LightningOutApp file is emitted, so eca/hostDomains are not required.
-   * A missing or invalid runtime with access=guest is treated as guest too, so the only error
-   * reported is the runtime one rather than a cascade of eca/hostDomains errors that would not apply.
+   * A missing or invalid runtime with access=guest is treated as guest too, and so is an invalid
+   * access value (for example "Guest"): the only error reported is then the runtime or access one,
+   * rather than a cascade of eca/hostDomains errors that would send the user off to supply inputs
+   * they may not need.
    */
   private get isGuest(): boolean {
     const { runtime, access } = this.options;
-    return access === 'guest' && runtime !== 'LWR_CORE';
+    if (runtime === 'LWR_CORE') return false;
+    return access === 'guest' || (access != null && !VALID_ACCESS.has(access));
   }
 
   public validateOptions(): void {
@@ -103,7 +108,10 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
       if (access !== undefined && !VALID_ACCESS.has(access)) {
         errors.push(nls.localize('InvalidLightningOutAccess', [[...VALID_ACCESS].join(', ')]));
       }
-      if (site !== undefined && (typeof site !== 'string' || !site.trim() || CONTROL_CHARS_RE.test(site))) {
+      if (
+        site !== undefined &&
+        (typeof site !== 'string' || !site.trim() || CONTROL_CHARS_RE.test(site) || LONE_SURROGATE_RE.test(site))
+      ) {
         errors.push(nls.localize('InvalidLightningOutSiteName'));
       }
     }

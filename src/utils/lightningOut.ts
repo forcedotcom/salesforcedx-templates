@@ -14,6 +14,7 @@ import { nls } from '../i18n';
  */
 export const LIGHTNING_OUT_RUNTIMES = ['LWR_CORE', 'CLWR'] as const;
 export type LightningOutRuntime = (typeof LIGHTNING_OUT_RUNTIMES)[number];
+export const LIGHTNING_OUT_ACCESS_MODES = ['guest', 'authenticated'] as const;
 
 /** Result of normalizing a raw host-domain list. Arrays are index-aligned. */
 export interface NormalizedHostDomains {

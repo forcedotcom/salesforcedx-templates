@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import type { LIGHTNING_OUT_ACCESS_MODES } from './lightningOut';
 import type * as nodeFs from 'node:fs';
 import AnalyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
 import ApexClassGenerator from '../generators/apexClassGenerator';
@@ -208,19 +209,46 @@ export interface LightningOutEcaOptions {
   callbackUrl: string;
 }
 
-export interface LightningOutOptions extends TemplateOptions {
+/** 'guest' | 'authenticated' — derived from the runtime list so the two cannot drift. */
+export type LightningOutAccess = (typeof LIGHTNING_OUT_ACCESS_MODES)[number];
+
+interface LightningOutBaseOptions extends TemplateOptions {
   /** LightningOutApp DeveloperName AND <applicationName> value (≤ 64 chars). */
   appName: string;
-  /** LWR_CORE or CLWR. */
-  runtime: 'LWR_CORE' | 'CLWR';
-  /** Explicit https origins of the external host pages that embed the app. Required, ≥ 1. */
-  hostDomains: string[];
   /** Optional component references exposed by the app (LWC "c/x" or Aura "c:X"). */
   components?: string[];
-  /** External Client Application (OAuth) settings. */
-  eca: LightningOutEcaOptions;
-  // apiversion?, outputdir? inherited from TemplateOptions
+  /**
+   * CLWR only. Experience site (Network) name, emitted as <sites><siteName>.
+   * Deployable at API 69.0+; the caller owns any API-version policy.
+   * Omitting it for CLWR writes no <sites>, and deploying that file at API 69.0+ removes the app's
+   * existing site link (including one made in Setup), so callers should require it for CLWR.
+   */
+  site?: string;
 }
+
+/** Authenticated Lightning Out options; required fields preserve the existing public contract. */
+export interface LightningOutOptions extends LightningOutBaseOptions {
+  /** LWR_CORE or CLWR. */
+  runtime: 'LWR_CORE' | 'CLWR';
+  /** Required explicit http(s) origins for external host pages that embed the app. */
+  hostDomains: string[];
+  /** Required External Client Application (OAuth) settings. */
+  eca: LightningOutEcaOptions;
+  /** CLWR only. 'authenticated' (default); LWR_CORE is always authenticated. */
+  access?: LightningOutAccess;
+}
+
+/** CLWR guest options; ECA and host domains are optional, and only the app file is emitted. */
+export interface LightningOutGuestOptions extends LightningOutBaseOptions {
+  runtime: 'CLWR';
+  access: Extract<LightningOutAccess, 'guest'>;
+  /** Optional explicit http(s) embed origins; when supplied, they populate <allowedDomains>. */
+  hostDomains?: string[];
+  /** Ignored for guest access; no ECA files are emitted. */
+  eca?: LightningOutEcaOptions;
+}
+
+export type LightningOutGeneratorOptions = LightningOutOptions | LightningOutGuestOptions;
 
 export interface ProjectOptions extends TemplateOptions {
   projectname: string;

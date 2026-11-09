@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import type { LIGHTNING_OUT_ACCESS_MODES } from './lightningOut';
 import type * as nodeFs from 'node:fs';
 import AnalyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
 import ApexClassGenerator from '../generators/apexClassGenerator';
@@ -208,17 +209,35 @@ export interface LightningOutEcaOptions {
   callbackUrl: string;
 }
 
+/** 'guest' | 'authenticated' — derived from the runtime list so the two cannot drift. */
+export type LightningOutAccess = (typeof LIGHTNING_OUT_ACCESS_MODES)[number];
+
 export interface LightningOutOptions extends TemplateOptions {
   /** LightningOutApp DeveloperName AND <applicationName> value (≤ 64 chars). */
   appName: string;
   /** LWR_CORE or CLWR. */
   runtime: 'LWR_CORE' | 'CLWR';
-  /** Explicit https origins of the external host pages that embed the app. Required, ≥ 1. */
-  hostDomains: string[];
+  /**
+   * Explicit https origins of the external host pages that embed the app.
+   * Required (≥ 1) except for CLWR guest, where they are optional and only populate <allowedDomains>.
+   */
+  hostDomains?: string[];
   /** Optional component references exposed by the app (LWC "c/x" or Aura "c:X"). */
   components?: string[];
-  /** External Client Application (OAuth) settings. */
-  eca: LightningOutEcaOptions;
+  /** External Client Application (OAuth) settings. Required except for CLWR guest (ignored there). */
+  eca?: LightningOutEcaOptions;
+  /**
+   * CLWR only. Experience site (Network) name to link the app to; emitted as <sites><siteName>.
+   * Deployable at API 69.0+; the caller owns any API-version policy.
+   * Omitting it for CLWR writes no <sites>, and deploying that file at API 69.0+ removes the app's
+   * existing site link (including one made in Setup), so callers should require it for CLWR.
+   */
+  site?: string;
+  /**
+   * CLWR only. 'authenticated' (default) emits the full app + ECA + CORS + settings set;
+   * 'guest' emits only the LightningOutApp file.
+   */
+  access?: LightningOutAccess;
   // apiversion?, outputdir? inherited from TemplateOptions
 }
 

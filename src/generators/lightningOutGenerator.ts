@@ -168,7 +168,8 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
   }
 
   public async generate(): Promise<void> {
-    const { appName, runtime, components, eca, site } = this.options;
+    const options = this.options;
+    const { appName, runtime, components, site } = options;
     const { origins, fileTokens } = this.normalizedHostDomains;
 
     this.sourceRootWithPartialPath(path.join('lightningout', 'default'));
@@ -188,17 +189,17 @@ export default class LightningOutGenerator extends BaseGenerator<LightningOutOpt
         // Authenticated always has ≥ 1 origin; guest omits the element when none were given.
         emitAllowedDomains: origins.length > 0,
         // Core resolves <siteName> trimmed; emit the trimmed form. Omitted when no site.
-        site: site?.trim() ?? ''
+        site: site?.trim()
       }
     );
 
-    if (this.isGuest) {
+    if (runtime === 'CLWR' && options.access === 'guest') {
       // Guest users reach the app through the Experience site's guest profile: no ECA,
       // no OAuth CORS, no cookie settings, and no per-origin CORS entries are needed.
       return;
     }
     // validateOptions guarantees eca is present for every non-guest definition.
-    const ecaOpts = eca!;
+    const ecaOpts = options.eca;
 
     // MyDomainSettings / SecuritySettings — server-side field merge (safe minimal files).
     await this.render(

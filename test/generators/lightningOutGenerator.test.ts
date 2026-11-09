@@ -341,6 +341,12 @@ describe('LightningOutGenerator', () => {
             expect(errorOf(clwr({ site: `a${bad}b` }))).to.include(nls.localize('InvalidLightningOutSiteName'));
           });
         }
+        it('rejects a lone surrogate in a site but accepts a valid surrogate pair', () => {
+          for (const bad of ['a\ud800b', '\udfff', 'a\ud800']) {
+            expect(errorOf(clwr({ site: bad }))).to.include(nls.localize('InvalidLightningOutSiteName'));
+          }
+          expect(errorOf(clwr({ site: 'Site 😀' }))).to.equal('');
+        });
         it('accepts a non-breaking space and a normal internal space in a site name', () => {
           expect(errorOf(clwr({ site: 'My\u00a0Site' }))).to.equal('');
           expect(errorOf(clwr({ site: 'My Site' }))).to.equal('');
@@ -399,6 +405,20 @@ describe('LightningOutGenerator', () => {
             );
           });
         }
+        it('an invalid access value reports only the access error, not missing ECA inputs', () => {
+          const msg = errorOf(
+            baseOpts(outputDir, {
+              runtime: 'CLWR',
+              access: 'Guest' as LightningOutOptions['access'],
+              site: 'my_site',
+              hostDomains: undefined,
+              eca: undefined
+            })
+          );
+          expect(msg).to.include(nls.localize('InvalidLightningOutAccess', ['guest, authenticated']));
+          expect(msg).to.not.include('eca.name');
+          expect(msg).to.not.include('hostDomains');
+        });
         it('reports appName, blank site, access and hostDomain errors together in one error', () => {
           const msg = errorOf(
             clwr({

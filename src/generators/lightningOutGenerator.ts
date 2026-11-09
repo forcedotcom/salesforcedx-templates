@@ -16,7 +16,7 @@ import {
   normalizeHostDomains,
   type NormalizedHostDomains
 } from '../utils/lightningOut';
-import { type LightningOutOptions } from '../utils/types';
+import { type LightningOutGeneratorOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 const VALID_RUNTIMES: ReadonlySet<string> = new Set(LIGHTNING_OUT_RUNTIMES);
@@ -29,7 +29,7 @@ const CONTROL_CHARS_RE = /[\u0000-\u001f\u007f-\u009f\ufffe\uffff]/;
 // A lone UTF-16 surrogate cannot be encoded as UTF-8 and would be written as U+FFFD, naming a different site.
 const LONE_SURROGATE_RE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/;
 
-export default class LightningOutGenerator extends BaseGenerator<LightningOutOptions> {
+export default class LightningOutGenerator extends BaseGenerator<LightningOutGeneratorOptions> {
   private normalizedHostDomains!: NormalizedHostDomains;
 
   /**

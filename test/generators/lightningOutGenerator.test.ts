@@ -12,7 +12,11 @@ import { TemplateService, TemplateType } from '../../src';
 import LightningOutGenerator from '../../src/generators/lightningOutGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
 import { nls } from '../../src/i18n';
-import { type LightningOutOptions } from '../../src/utils/types';
+import {
+  type LightningOutGeneratorOptions,
+  type LightningOutGuestOptions,
+  type LightningOutOptions
+} from '../../src/utils/types';
 
 chai.config.truncateThreshold = 100000;
 const { expect } = chai;
@@ -25,6 +29,10 @@ function assertFileExists(file: string) {
   expect(fs.existsSync(file), `Expected file to exist: ${file}`).to.be.true;
 }
 
+function readFileContent(file: string): string {
+  return fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
+}
+
 function listFiles(dir: string): string[] {
   return (fs.readdirSync(dir, { recursive: true }) as string[])
     .filter((f) => fs.statSync(path.join(dir, f)).isFile())
@@ -33,7 +41,7 @@ function listFiles(dir: string): string[] {
 
 function assertFileContent(file: string, needle: string | RegExp) {
   assertFileExists(file);
-  const body = fs.readFileSync(file, 'utf8');
+  const body = readFileContent(file);
   const match = typeof needle === 'string' ? body.includes(needle) : needle.test(body);
   expect(match, `${file} did not match '${needle}'. Contained:\n\n${body}`).to.be.true;
 }
@@ -175,7 +183,7 @@ describe('LightningOutGenerator', () => {
     });
 
     describe('site and access (CLWR only)', () => {
-      const guestOpts = (overrides: Partial<LightningOutOptions> = {}): LightningOutOptions => ({
+      const guestOpts = (overrides: Partial<LightningOutGuestOptions> = {}): LightningOutGuestOptions => ({
         appName: 'MyLoApp',
         runtime: 'CLWR',
         access: 'guest',
@@ -235,7 +243,7 @@ describe('LightningOutGenerator', () => {
           /http or https/i
         );
       });
-      const errorOf = (opts: LightningOutOptions): string => {
+      const errorOf = (opts: LightningOutGeneratorOptions): string => {
         try {
           new LightningOutGenerator(opts);
         } catch (e) {
@@ -519,7 +527,7 @@ describe('LightningOutGenerator', () => {
         TemplateType.LightningOut,
         baseOpts(outputDir, { hostDomains: ['https://app.example.com', 'https://portal.example.com:8080'] })
       );
-      expect(fs.readFileSync(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'), 'utf8')).to
+      expect(readFileContent(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'))).to
         .equal(`<?xml version="1.0" encoding="UTF-8"?>
 <LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationName>MyLoApp</applicationName>
@@ -547,7 +555,7 @@ describe('LightningOutGenerator', () => {
         await remove(outputDir);
         await templateService.create(TemplateType.LightningOut, baseOpts(outputDir, { runtime: 'CLWR', ...o }));
         const files = listFiles(outputDir);
-        return files.map((f) => [f, fs.readFileSync(path.join(outputDir, f), 'utf8')]);
+        return files.map((f) => [f, readFileContent(path.join(outputDir, f))]);
       };
       const implicit = await read({});
       const explicit = await read({ access: 'authenticated' });
@@ -560,10 +568,7 @@ describe('LightningOutGenerator', () => {
         TemplateType.LightningOut,
         baseOpts(outputDir, { runtime: 'CLWR', site: '  my_site ' })
       );
-      const body = fs.readFileSync(
-        path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'),
-        'utf8'
-      );
+      const body = readFileContent(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'));
       expect(body).to.include(
         '    </allowedDomains>\n    <sites>\n        <siteName>my_site</siteName>\n    </sites>\n</LightningOutApp>\n'
       );
@@ -594,7 +599,7 @@ describe('LightningOutGenerator', () => {
         apiversion: getDefaultApiVersion()
       });
       expect(listFiles(outputDir)).to.deep.equal([path.join('lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml')]);
-      expect(fs.readFileSync(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'), 'utf8')).to
+      expect(readFileContent(path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml'))).to
         .equal(`<?xml version="1.0" encoding="UTF-8"?>
 <LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationName>MyLoApp</applicationName>
@@ -616,9 +621,7 @@ describe('LightningOutGenerator', () => {
       const snapshot = async (o: Partial<LightningOutOptions>) => {
         await remove(outputDir);
         await templateService.create(TemplateType.LightningOut, baseOpts(outputDir, o));
-        return Object.fromEntries(
-          listFiles(outputDir).map((f) => [f, fs.readFileSync(path.join(outputDir, f), 'utf8')])
-        );
+        return Object.fromEntries(listFiles(outputDir).map((f) => [f, readFileContent(path.join(outputDir, f))]));
       };
       const lwr = await snapshot({});
       const clwr = await snapshot({ runtime: 'CLWR', access: 'authenticated', site: 'my_site' });
@@ -729,10 +732,10 @@ describe('LightningOutGenerator', () => {
     });
     describe('site/access generation (additional coverage)', () => {
       const appPath = () => path.join(outputDir, 'lightningOutApps', 'MyLoApp.lightningOutApp-meta.xml');
-      const readApp = () => fs.readFileSync(appPath(), 'utf8');
-      const create = (o: LightningOutOptions) =>
+      const readApp = () => readFileContent(appPath());
+      const create = (o: LightningOutGeneratorOptions) =>
         TemplateService.getInstance(process.cwd()).create(TemplateType.LightningOut, o);
-      const gOpts = (o: Partial<LightningOutOptions> = {}): LightningOutOptions =>
+      const gOpts = (o: Partial<LightningOutGuestOptions> = {}): LightningOutGuestOptions =>
         baseOpts(outputDir, { runtime: 'CLWR', access: 'guest', hostDomains: undefined, ...o });
       const header = `<?xml version="1.0" encoding="UTF-8"?>
 <LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">

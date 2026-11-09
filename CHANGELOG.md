@@ -1,3 +1,12 @@
+# [66.20.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.19.1...66.20.0) (2026-11-09)
+
+
+### Features
+
+* **lightning-out:** CLWR site and access options - W-24812373 ([#955](https://github.com/forcedotcom/salesforcedx-templates/issues/955)) ([1d292ec](https://github.com/forcedotcom/salesforcedx-templates/commit/1d292ecad12f0d41b8427f211a9ff3e866fda584))
+
+
+
 ## [66.19.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.19.0...66.19.1) (2026-11-08)
 
 

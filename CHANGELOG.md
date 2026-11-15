@@ -1,3 +1,12 @@
+## [66.20.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.2...66.20.3) (2026-11-15)
+
+
+### Bug Fixes
+
+* **deps:** bump picomatch from 2.3.1 to 2.3.2 ([aadc8b9](https://github.com/forcedotcom/salesforcedx-templates/commit/aadc8b99471805f38506cd7228a95c6552d81269))
+
+
+
 ## [66.20.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.1...66.20.2) (2026-11-15)
 
 

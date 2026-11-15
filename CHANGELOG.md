@@ -1,3 +1,12 @@
+## [66.20.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.1...66.20.2) (2026-11-15)
+
+
+### Bug Fixes
+
+* **deps:** bump js-yaml from 3.14.1 to 3.15.2 ([3338f1b](https://github.com/forcedotcom/salesforcedx-templates/commit/3338f1baf360efc29a23ccb54490a4d9962cac95))
+
+
+
 ## [66.20.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.0...66.20.1) (2026-11-10)
 
 

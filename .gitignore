@@ -20,6 +20,9 @@ coverage.lcov
 # Dependency directories
 node_modules/
 
+# Claude verification state
+.claude/.edit-marker
+
 # test results
 test-results.xml
 xunit.xml

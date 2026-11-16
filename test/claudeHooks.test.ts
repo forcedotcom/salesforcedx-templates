@@ -27,7 +27,8 @@ describe('Claude verification hooks', () => {
   let log: string;
 
   beforeEach(() => {
-    root = realpathSync(mkdtempSync(path.join(tmpdir(), 'templates hooks ')));
+    // Expand Windows 8.3 temp paths to match the child process's cwd.
+    root = realpathSync.native(mkdtempSync(path.join(tmpdir(), 'templates hooks ')));
     marker = path.join(root, '.claude/.edit-marker');
     log = path.join(root, 'yarn-calls.jsonl');
     mkdirSync(path.join(root, 'nested'));

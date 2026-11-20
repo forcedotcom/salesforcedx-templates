@@ -18,6 +18,7 @@ export const PROJECT_TEMPLATES = [
   'angularinternalapp',
   'angularexternalapp',
   'vueinternalapp',
+  'vueexternalapp',
   'agent',
   'nativemobile'
 ] as const;

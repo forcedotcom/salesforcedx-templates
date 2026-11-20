@@ -1,3 +1,12 @@
+# [66.21.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.4...66.21.0) (2026-11-20)
+
+
+### Features
+
+* add vueexternalapp project template - W-24953179 ([#965](https://github.com/forcedotcom/salesforcedx-templates/issues/965)) ([5523eee](https://github.com/forcedotcom/salesforcedx-templates/commit/5523eee697db8a7be96d75d2a6d0280b2b25a21d))
+
+
+
 ## [66.20.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.3...66.20.4) (2026-11-16)
 
 

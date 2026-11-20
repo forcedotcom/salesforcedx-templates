@@ -101,6 +101,12 @@ const TEMPLATES = [
     getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
     destSubpath: 'project/vueinternalapp',
     appFolderInNpm: 'vueinternalapp'
+  },
+  {
+    packageName: '@salesforce/ui-bundle-template-app-vue-template-b2x',
+    getSourceDir: (packageDir) => path.join(packageDir, 'dist'),
+    destSubpath: 'project/vueexternalapp',
+    appFolderInNpm: 'vueexternalapp'
   }
 ];
 

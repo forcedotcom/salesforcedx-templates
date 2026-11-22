@@ -150,17 +150,14 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
    * TypeScript-specific templates are organized in a typescript/ subdirectory.
    * Only files that have TypeScript-specific variants are looked up there.
    */
-  private getTemplatePath(
-    file: string,
-    isTypeScript: boolean
-  ): string {
+  private getTemplatePath(file: string, isTypeScript: boolean): string {
     // Files that have TypeScript-specific variants
     const tsSpecificFiles = [
       'package.json',
       '.forceignore',
       GITIGNORE,
       'project.eslint.config.js',
-      'settings.json'
+      'settings.json',
     ];
 
     const hasTypescriptVariant = tsSpecificFiles.includes(file);
@@ -215,9 +212,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       const templateFile = `${file}.json`;
 
       // Use TypeScript directory for settings file when TypeScript is enabled
-      const templatePath = isTypeScript && file === 'settings'
-        ? this.getTemplatePath(templateFile, true)
-        : this.templatePath(templateFile);
+      const templatePath =
+        isTypeScript && file === 'settings'
+          ? this.getTemplatePath(templateFile, true)
+          : this.templatePath(templateFile);
 
       await this.render(
         templatePath,
@@ -390,7 +388,11 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.copyProjectFiles(isTypeScript, projectname);
 
       // Generate TypeScript configuration files if TypeScript is selected
-      await this.generateTypeScriptConfig(isTypeScript, projectname, defaultpackagedir);
+      await this.generateTypeScriptConfig(
+        isTypeScript,
+        projectname,
+        defaultpackagedir
+      );
     }
 
     if (template === 'empty') {
@@ -411,7 +413,11 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         await this.copyProjectFiles(isTypeScript, projectname);
 
         // Generate TypeScript configuration
-        await this.generateTypeScriptConfig(isTypeScript, projectname, defaultpackagedir);
+        await this.generateTypeScriptConfig(
+          isTypeScript,
+          projectname,
+          defaultpackagedir
+        );
       } else {
         // For JavaScript projects, just copy .forceignore
         await this.render(
@@ -599,7 +605,11 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
       await this.copyProjectFiles(isTypeScript, projectname);
 
       // Generate TypeScript configuration files if TypeScript is selected
-      await this.generateTypeScriptConfig(isTypeScript, projectname, defaultpackagedir);
+      await this.generateTypeScriptConfig(
+        isTypeScript,
+        projectname,
+        defaultpackagedir
+      );
     }
 
     if (template === 'agent') {
@@ -636,7 +646,9 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
 
     if (BUILT_IN_FULL_TEMPLATES.has(template)) {
       await generateBuiltInFullTemplate(template, projectname, {
-        templateDir: this.templatePath(FULL_TEMPLATE_DEFAULT_NAMES[template]?.base ?? template),
+        templateDir: this.templatePath(
+          FULL_TEMPLATE_DEFAULT_NAMES[template]?.base ?? template
+        ),
         projectDir: path.join(this.outputdir, projectname),
         defaultpackagedir,
         ns,

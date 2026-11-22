@@ -345,7 +345,10 @@ function isSimpleExpression(code: string): boolean {
 }
 
 function isAllowedScriptlet(code: string): boolean {
-  const statements = code.split(/[;\n]/).map((s) => s.trim()).filter(Boolean);
+  const statements = code
+    .split(/[;\n]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
 
   for (const stmt of statements) {
     if (!isAllowedStatement(stmt)) {
@@ -389,7 +392,11 @@ function isAllowedStatement(stmt: string): boolean {
     return isSimpleForLoop(stmt);
   }
 
-  if (/^\w[\w.]*\s*\.\s*(forEach|map|filter|some|every|find|findIndex)\s*\(/.test(stmt)) {
+  if (
+    /^\w[\w.]*\s*\.\s*(forEach|map|filter|some|every|find|findIndex)\s*\(/.test(
+      stmt
+    )
+  ) {
     return isSimpleIterator(stmt);
   }
 
@@ -432,8 +439,13 @@ function isSimpleCondition(stmt: string): boolean {
 }
 
 function isSimpleForLoop(stmt: string): boolean {
-  if (/^for\s*\(\s*(?:const|let|var)\s+\[?\s*\w+(?:\s*,\s*\w+)*\s*\]?\s+(?:of|in)\s+/.test(stmt)) {
-    const hardBlocked = /\b(process|global|globalThis|require|import|module|eval|Function|Reflect|Proxy|constructor|__proto__)\b/;
+  if (
+    /^for\s*\(\s*(?:const|let|var)\s+\[?\s*\w+(?:\s*,\s*\w+)*\s*\]?\s+(?:of|in)\s+/.test(
+      stmt
+    )
+  ) {
+    const hardBlocked =
+      /\b(process|global|globalThis|require|import|module|eval|Function|Reflect|Proxy|constructor|__proto__)\b/;
     return !hardBlocked.test(stmt);
   }
   return false;
@@ -525,13 +537,19 @@ export function validateCustomTemplate(
     if (tag.type === '=' || tag.type === '-') {
       if (!isSimpleExpression(code)) {
         throw new Error(
-          `Custom template "${templatePath}" contains disallowed code in expression tag: ${tag.code.slice(0, 80)}`
+          `Custom template "${templatePath}" contains disallowed code in expression tag: ${tag.code.slice(
+            0,
+            80
+          )}`
         );
       }
     } else {
       if (!isAllowedScriptlet(code)) {
         throw new Error(
-          `Custom template "${templatePath}" contains disallowed code in scriptlet tag: ${tag.code.slice(0, 80)}`
+          `Custom template "${templatePath}" contains disallowed code in scriptlet tag: ${tag.code.slice(
+            0,
+            80
+          )}`
         );
       }
     }
@@ -611,7 +629,9 @@ export abstract class BaseGenerator<
     destination: string,
     data?: Record<string, unknown>
   ): Promise<void> {
-    const isBuiltIn = this.builtInTemplatesRootPath && source.startsWith(this.builtInTemplatesRootPath);
+    const isBuiltIn =
+      this.builtInTemplatesRootPath &&
+      source.startsWith(this.builtInTemplatesRootPath);
     if (!isBuiltIn) {
       const template = await this._fs.promises.readFile(source, 'utf8');
       validateCustomTemplate(template, source);

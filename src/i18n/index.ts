@@ -12,7 +12,7 @@ function loadMessageBundle(): Message {
   try {
     const layer = new Message(messages);
     return layer;
-  } catch (e) {
+  } catch {
     console.error('Cannot find messages in i18n module');
     return new Message({});
   }

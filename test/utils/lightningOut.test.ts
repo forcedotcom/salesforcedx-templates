@@ -10,7 +10,7 @@ import {
   normalizeHostDomains,
   originToFileToken,
   checkDeveloperName,
-  isValidComponentRef,
+  isValidComponentRef
 } from '../../src/utils/lightningOut';
 
 describe('normalizeHostDomains', () => {

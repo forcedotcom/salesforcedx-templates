@@ -34,7 +34,7 @@ const teamMembershipState = async ({ token, login }) => {
 
 const listReviews = async ({ token, owner, repo, pullNumber }) => {
   const reviews = await gh(`/repos/${owner}/${repo}/pulls/${pullNumber}/reviews?per_page=100`, { token });
-  return reviews.map(review => ({
+  return reviews.map((review) => ({
     authorLogin: review.user?.login,
     state: review.state,
     commitOid: review.commit_id
@@ -44,14 +44,16 @@ const listReviews = async ({ token, owner, repo, pullNumber }) => {
 const listChecks = async ({ token, owner, repo, headSha }) => {
   const [combined, checkRuns] = await Promise.all([
     gh(`/repos/${owner}/${repo}/commits/${headSha}/status`, { token }),
-    gh(`/repos/${owner}/${repo}/commits/${headSha}/check-runs?per_page=100`, { token })
+    gh(`/repos/${owner}/${repo}/commits/${headSha}/check-runs?per_page=100`, {
+      token
+    })
   ]);
-  const statuses = (combined.statuses ?? []).map(status => ({
+  const statuses = (combined.statuses ?? []).map((status) => ({
     name: status.context,
     state: status.state,
     conclusion: status.state
   }));
-  const runs = (checkRuns.check_runs ?? []).map(run => ({
+  const runs = (checkRuns.check_runs ?? []).map((run) => ({
     name: run.name,
     status: run.status,
     conclusion: run.conclusion
@@ -121,7 +123,7 @@ const main = async () => {
   console.log(`approved ${owner}/${repo}#${pullNumber} at ${headSha}`);
 };
 
-main().catch(error => {
+main().catch((error) => {
   console.error(error);
   process.exit(1);
 });

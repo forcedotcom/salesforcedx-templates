@@ -10,6 +10,7 @@
         </component>
 <% }); -%>
     </components>
+<% if (emitAllowedDomains) { -%>
     <allowedDomains>
 <% hostDomains.forEach(function (d) { -%>
         <domain>
@@ -17,4 +18,10 @@
         </domain>
 <% }); -%>
     </allowedDomains>
+<% } -%>
+<% if (site) { -%>
+    <sites>
+        <siteName><%= site %></siteName>
+    </sites>
+<% } -%>
 </LightningOutApp>

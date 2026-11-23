@@ -5,15 +5,15 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import { nls } from '../i18n';
 import {
   type CreateOutput,
   type GeneratorClass,
   type GeneratorContext,
   generators,
   type TemplateOptions,
-  TemplateType,
+  type TemplateType
 } from '../utils/types';
-import { nls } from '../i18n';
 
 export function importGenerator<TOptions extends TemplateOptions>(
   templateType: TemplateType
@@ -43,10 +43,7 @@ export class TemplateService {
    * @param cwd cwd of current environment. CLI: don't need to set explicitly. VS Code: it's typically the root workspace path
    * @param context optional generator context with fs and templatesRootPath
    */
-  public static getInstance(
-    cwd?: string,
-    context?: GeneratorContext
-  ): TemplateService {
+  public static getInstance(cwd?: string, context?: GeneratorContext): TemplateService {
     if (!TemplateService.instance) {
       TemplateService.instance = new TemplateService(cwd, context);
     } else {
@@ -88,7 +85,7 @@ export class TemplateService {
   ): Promise<CreateOutput> {
     const runOptions = {
       cwd: this.cwd,
-      customTemplatesRootPathOrGitRepo,
+      customTemplatesRootPathOrGitRepo
     };
 
     const Generator = importGenerator(templateType);

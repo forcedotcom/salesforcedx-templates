@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { VisualforceComponentOptions } from '../utils/types';
+import { type VisualforceComponentOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class VisualforceComponentGenerator extends BaseGenerator<VisualforceComponentOptions> {
@@ -21,26 +21,19 @@ export default class VisualforceComponentGenerator extends BaseGenerator<Visualf
 
     this.checkTemplateExists('visualforcecomponent', template, {
       filetype: /\.component$/,
-      onMissing: () =>
-        new Error(
-          nls.localize('MissingVisualforceComponentTemplate', [template])
-        ),
+      onMissing: () => new Error(nls.localize('MissingVisualforceComponentTemplate', [template]))
     });
 
     this.sourceRootWithPartialPath('visualforcecomponent');
 
     await this.render(
       this.templatePath(`${template}.component`),
-      this.destinationPath(
-        path.join(this.outputdir, `${componentname}.component`)
-      ),
+      this.destinationPath(path.join(this.outputdir, `${componentname}.component`)),
       {}
     );
     await this.render(
       this.templatePath('_component.component-meta.xml'),
-      this.destinationPath(
-        path.join(this.outputdir, `${componentname}.component-meta.xml`)
-      ),
+      this.destinationPath(path.join(this.outputdir, `${componentname}.component-meta.xml`)),
       { vfLabel: label, apiVersion: this.apiversion }
     );
   }

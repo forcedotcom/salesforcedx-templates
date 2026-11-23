@@ -7,7 +7,7 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { LightningEventOptions } from '../utils/types';
+import { type LightningEventOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class LightningEventGenerator extends BaseGenerator<LightningEventOptions> {
@@ -26,8 +26,7 @@ export default class LightningEventGenerator extends BaseGenerator<LightningEven
 
     this.checkTemplateExists('lightningevent', template, {
       filetype: /\.evt$/,
-      onMissing: () =>
-        new Error(nls.localize('MissingLightningEventTemplate', [template])),
+      onMissing: () => new Error(nls.localize('MissingLightningEventTemplate', [template]))
     });
 
     this.sourceRootWithPartialPath('lightningevent');
@@ -35,21 +34,17 @@ export default class LightningEventGenerator extends BaseGenerator<LightningEven
     if (!internal) {
       await this.render(
         this.templatePath('_auradefinitionbundle.evt-meta.xml'),
-        this.destinationPath(
-          path.join(this.outputdir, eventname, `${eventname}.evt-meta.xml`)
-        ),
+        this.destinationPath(path.join(this.outputdir, eventname, `${eventname}.evt-meta.xml`)),
         {
           eventname,
           apiVersion: this.apiversion,
-          description: nls.localize('LightningEventBundle'),
+          description: nls.localize('LightningEventBundle')
         }
       );
     }
     await this.render(
       this.templatePath(`${template}.evt`),
-      this.destinationPath(
-        path.join(this.outputdir, eventname, `${eventname}.evt`)
-      ),
+      this.destinationPath(path.join(this.outputdir, eventname, `${eventname}.evt`)),
       {}
     );
   }

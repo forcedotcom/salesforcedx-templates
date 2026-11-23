@@ -7,33 +7,21 @@
 import * as fs from 'fs';
 import { readdir } from 'node:fs/promises';
 import * as path from 'path';
-import { CreateUtil } from '../utils';
-import { FlexipageOptions } from '../utils/types';
-import {
-  BaseGenerator,
-  setCustomTemplatesRootPathOrGitRepo,
-} from './baseGenerator';
 import { nls } from '../i18n';
+import { CreateUtil } from '../utils';
+import { type FlexipageOptions } from '../utils/types';
+import { BaseGenerator, setCustomTemplatesRootPathOrGitRepo } from './baseGenerator';
 
 const VALID_TEMPLATES = ['RecordPage', 'AppPage', 'HomePage'] as const;
 const MAX_SECONDARY_FIELDS = 11;
 
 export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> {
-  constructor(options: FlexipageOptions) {
-    super(options);
-  }
-
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.flexipagename);
     CreateUtil.checkInputs(this.options.template);
 
-    if (!VALID_TEMPLATES.includes(this.options.template as any)) {
-      throw new Error(
-        nls.localize('InvalidFlexipageTemplate', [
-          this.options.template,
-          VALID_TEMPLATES.join(', '),
-        ])
-      );
+    if (!VALID_TEMPLATES.includes(this.options.template)) {
+      throw new Error(nls.localize('InvalidFlexipageTemplate', [this.options.template, VALID_TEMPLATES.join(', ')]));
     }
 
     if (this.options.template === 'RecordPage' && !this.options.entityName) {
@@ -44,10 +32,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     const secondaryFieldsCount = this.options.secondaryFields?.length ?? 0;
     if (secondaryFieldsCount > MAX_SECONDARY_FIELDS) {
       throw new Error(
-        nls.localize('TooManySecondaryFields', [
-          secondaryFieldsCount.toString(),
-          MAX_SECONDARY_FIELDS.toString(),
-        ])
+        nls.localize('TooManySecondaryFields', [secondaryFieldsCount.toString(), MAX_SECONDARY_FIELDS.toString()])
       );
     }
 
@@ -68,7 +53,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
       secondaryFields = [],
       detailFields = [],
       flexipageTemplatesGitRepo,
-      forceLoadingRemoteRepo,
+      forceLoadingRemoteRepo
     } = this.options;
 
     // Set up custom templates if provided
@@ -83,18 +68,9 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     // Determine template root path
     let templateRootPath: string;
     if (customTemplatesRootPath) {
-      templateRootPath = path.join(
-        customTemplatesRootPath,
-        'flexipage',
-        template
-      );
+      templateRootPath = path.join(customTemplatesRootPath, 'flexipage', template);
       if (!fs.existsSync(templateRootPath)) {
-        throw new Error(
-          nls.localize('MissingFlexipageTemplate', [
-            template,
-            customTemplatesRootPath,
-          ])
-        );
+        throw new Error(nls.localize('MissingFlexipageTemplate', [template, customTemplatesRootPath]));
       }
     } else {
       // Use built-in templates
@@ -105,21 +81,18 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
     // Prepare EJS template variables
     const templateVars = {
       flexipagename,
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- An empty label uses the FlexiPage name too.
       masterlabel: masterlabel || flexipagename,
-      description: description || '',
+      description: description ?? '',
       apiVersion: this.apiversion,
-      entityName: entityName || '',
-      primaryField: primaryField || '',
+      entityName: entityName ?? '',
+      primaryField: primaryField ?? '',
       secondaryFields: Array.isArray(secondaryFields) ? secondaryFields : [],
-      detailFields: Array.isArray(detailFields) ? detailFields : [],
+      detailFields: Array.isArray(detailFields) ? detailFields : []
     };
 
     // Recursively process template directory
-    await this.generateFlexipageFromTemplate(
-      templateRootPath,
-      this.outputdir,
-      templateVars
-    );
+    await this.generateFlexipageFromTemplate(templateRootPath, this.outputdir, templateVars);
   }
 
   /**
@@ -128,7 +101,7 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
   private async generateFlexipageFromTemplate(
     sourceDir: string,
     destDir: string,
-    templateVars: Record<string, unknown>
+    templateVars: Record<string, unknown> & { flexipagename: string }
   ): Promise<void> {
     const entries = await readdir(sourceDir, { withFileTypes: true });
 
@@ -138,21 +111,14 @@ export default class FlexipageGenerator extends BaseGenerator<FlexipageOptions> 
 
       // Replace _flexipage placeholder with actual flexipage name
       if (destName.includes('_flexipage')) {
-        destName = destName.replace(
-          /_flexipage/g,
-          templateVars.flexipagename as string
-        );
+        destName = destName.replace(/_flexipage/g, templateVars.flexipagename);
       }
 
       const destPath = path.join(destDir, destName);
 
       if (entry.isDirectory()) {
         // Recursively process subdirectories
-        await this.generateFlexipageFromTemplate(
-          sourcePath,
-          destPath,
-          templateVars
-        );
+        await this.generateFlexipageFromTemplate(sourcePath, destPath, templateVars);
       } else if (entry.isFile() && this.isTemplateFile(entry.name)) {
         // Render template files only (skip non-template files)
         await this.render(sourcePath, destPath, templateVars);

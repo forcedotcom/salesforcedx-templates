@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/templates",
-  "version": "66.17.2",
+  "version": "66.21.1",
   "packageManager": "pnpm@12.8.2",
   "description": "Salesforce JS library for templates",
   "bugs": "https://github.com/forcedotcom/salesforcedx-templates/issues",
@@ -17,14 +17,14 @@
     "/messages"
   ],
   "dependencies": {
-    "@salesforce/kit": "^4.0.0",
+    "@salesforce/kit": "^4.0.10",
     "ejs": "^3.1.10",
     "got": "^11.8.6",
     "hpagent": "^1.2.0",
     "mime-types": "^3.0.2",
     "proxy-from-env": "^1.1.0",
-    "tar": "^7.5.22",
-    "tslib": "^2.8.1"
+    "tar": "^7.5.23",
+    "tslib": "^2.9.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
@@ -32,14 +32,14 @@
     "@salesforce/dev-config": "^4.3.3",
     "@salesforce/dev-scripts": "^14.0.0",
     "@salesforce/prettier-config": "^0.0.4",
-    "@salesforce/ui-bundle-template-app-angular-template-b2e": "^12.4.4",
-    "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.12.0",
-    "@salesforce/ui-bundle-template-app-react-template-b2e": "^12.9.0",
-    "@salesforce/ui-bundle-template-app-react-template-b2x": "^12.9.0",
-    "@salesforce/ui-bundle-template-base-angular-app": "^12.4.4",
-    "@salesforce/ui-bundle-template-base-react-app": "^12.9.0",
-    "@salesforce/ui-bundle-template-base-vue-app": "^12.11.0",
-    "@salesforce/ui-bundle-template-base-web-app": "^12.9.0",
+    "@salesforce/ui-bundle-template-app-angular-template-b2e": "^12.13.0",
+    "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.18.0",
+    "@salesforce/ui-bundle-template-app-react-template-b2e": "^12.17.0",
+    "@salesforce/ui-bundle-template-app-react-template-b2x": "^12.18.0",
+    "@salesforce/ui-bundle-template-base-angular-app": "^12.18.0",
+    "@salesforce/ui-bundle-template-base-react-app": "^12.18.0",
+    "@salesforce/ui-bundle-template-base-vue-app": "^12.17.0",
+    "@salesforce/ui-bundle-template-base-web-app": "^12.18.0",
     "@tony.ganchev/eslint-plugin-header": "^3.4.4",
     "@types/chai": "^4.3.17",
     "@types/chai-as-promised": "^7.1.8",
@@ -49,8 +49,8 @@
     "@types/node": "^22",
     "@types/proxy-from-env": "^1.0.4",
     "@types/sinon": "^10.0.20",
-    "@typescript-eslint/eslint-plugin": "^8.69.0",
-    "@typescript-eslint/parser": "^8.69.0",
+    "@typescript-eslint/eslint-plugin": "^8.72.1",
+    "@typescript-eslint/parser": "^8.72.1",
     "chai": "^4.5.0",
     "chai-as-promised": "^7.1.2",
     "commitizen": "^4.3.2",
@@ -67,8 +67,8 @@
     "husky": "^9.1.7",
     "mocha": "^11.8.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.0.5",
-    "pretty-quick": "^3.3.1",
+    "prettier": "^3.9.10",
+    "pretty-quick": "^4.2.2",
     "shelljs": "^0.10.0",
     "shx": "^0.4.0",
     "sinon": "^18",
@@ -76,7 +76,11 @@
     "ts-node": "^10.9.2",
     "typescript": "^6",
     "typescript-eslint": "^8.69.0",
-    "wireit": "^0.14.13"
+    "wireit": "^0.14.13",
+    "@salesforce/ui-bundle-template-app-vue-template-b2e": "^12.14.0",
+    "@salesforce/ui-bundle-template-app-vue-template-b2x": "^13.1.0",
+    "eslint-plugin-import-x": "^4.18.1",
+    "globals": "^17.14.0"
   },
   "engines": {
     "node": ">=22"
@@ -94,7 +98,8 @@
     "prepush": "wireit",
     "test": "wireit",
     "test:ai-auto": "node --test test/ai-auto-approve.test.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:format": "prettier --check ."
   },
   "wireit": {
     "precommit": {
@@ -111,6 +116,8 @@
         "!src/templates/project/reactexternalapp",
         "!src/templates/project/angularintapp",
         "!src/templates/project/angularextapp",
+        "!src/templates/project/vueinternalapp",
+        "!src/templates/project/vueexternalapp",
         "test/**/*",
         "eslint.config.mjs",
         "tsconfig.json",
@@ -154,6 +161,8 @@
         "!src/templates/project/reactexternalapp",
         "!src/templates/project/angularintapp",
         "!src/templates/project/angularextapp",
+        "!src/templates/project/vueinternalapp",
+        "!src/templates/project/vueexternalapp",
         "scripts/**/*",
         "package.json",
         "pnpm-lock.yaml",
@@ -165,7 +174,9 @@
         "src/templates/project/reactinternalapp/**",
         "src/templates/project/reactexternalapp/**",
         "src/templates/project/angularintapp/**",
-        "src/templates/project/angularextapp/**"
+        "src/templates/project/angularextapp/**",
+        "src/templates/project/vueinternalapp/**",
+        "src/templates/project/vueexternalapp/**"
       ]
     },
     "prepush:test": {
@@ -230,7 +241,9 @@
         "src/templates/project/reactinternalapp/**",
         "src/templates/project/reactexternalapp/**",
         "src/templates/project/angularintapp/**",
-        "src/templates/project/angularextapp/**"
+        "src/templates/project/angularextapp/**",
+        "src/templates/project/vueinternalapp/**",
+        "src/templates/project/vueexternalapp/**"
       ]
     },
     "build:templates": {
@@ -252,7 +265,7 @@
         "src/**",
         "test/**",
         "eslint.config.mjs",
-        ".prettierrc",
+        ".prettierrc.js",
         "tsconfig*.json"
       ],
       "output": []

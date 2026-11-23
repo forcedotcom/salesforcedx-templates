@@ -12,13 +12,13 @@
 import * as crypto from 'crypto';
 import * as nodeFs from 'fs';
 import got from 'got';
-import * as path from 'path';
-import { extract } from 'tar';
+import { HttpsProxyAgent } from 'hpagent';
 import * as os from 'node:os';
+import * as path from 'path';
+import { getProxyForUrl } from 'proxy-from-env';
+import { extract } from 'tar';
 
 import { nls } from '../i18n';
-import { HttpsProxyAgent } from 'hpagent';
-import { getProxyForUrl } from 'proxy-from-env';
 
 interface RepoInfo {
   username: string;
@@ -32,9 +32,7 @@ const SFDX_STATE_FOLDER = '.sfdx';
 /**
  * The full system path to the preferred global state folder
  */
-export function DIR(): string {
-  return path.join(os.homedir(), SFDX_STATE_FOLDER);
-}
+export const DIR = (): string => path.join(os.homedir(), SFDX_STATE_FOLDER);
 
 /**
  * extract repo info from uri
@@ -50,25 +48,24 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
     const proxy = getProxyForUrl(url);
 
     // proxy will be empty string if no proxy is set
-    const infoResponse = await (proxy !== ''
-      ? got(url, {
-          agent: {
-            https: new HttpsProxyAgent({
-              keepAlive: true,
-              keepAliveMsecs: 1000,
-              maxSockets: 256,
-              maxFreeSockets: 256,
-              scheduling: 'lifo',
-              proxy,
-            }),
-          },
-        })
-      : got(url)
+    const infoResponse = await (
+      proxy !== ''
+        ? got(url, {
+            agent: {
+              https: new HttpsProxyAgent({
+                keepAlive: true,
+                keepAliveMsecs: 1000,
+                maxSockets: 256,
+                maxFreeSockets: 256,
+                scheduling: 'lifo',
+                proxy
+              })
+            }
+          })
+        : got(url)
     ).catch((e) => e);
     if (infoResponse.statusCode !== 200) {
-      throw new Error(
-        nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href)
-      );
+      throw new Error(nls.localize('customTemplatesCannotRetrieveDefaultBranch', repoUri.href));
     }
     const info = JSON.parse(infoResponse.body);
     return { username, name, branch: info['default_branch'], filePath };
@@ -77,9 +74,7 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
   if (username && name && branch && t === 'tree') {
     return { username, name, branch, filePath };
   } else {
-    throw new Error(
-      nls.localize('customTemplatesInvalidRepoUrl', repoUri.href)
-    );
+    throw new Error(nls.localize('customTemplatesInvalidRepoUrl', repoUri.href));
   }
 }
 
@@ -89,10 +84,7 @@ export async function getRepoInfo(repoUri: URL): Promise<RepoInfo> {
  * @returns path to store custom templates
  */
 export function getStoragePathForCustomTemplates(repoUri: URL): string {
-  const folderHash = crypto
-    .createHash('md5')
-    .update(repoUri.href)
-    .digest('hex');
+  const folderHash = crypto.createHash('md5').update(repoUri.href).digest('hex');
 
   const customTemplatesPath = path.join(DIR(), 'custom-templates', folderHash);
   return customTemplatesPath;
@@ -117,17 +109,10 @@ export async function loadCustomTemplatesGitRepo(
   }
 
   if (repoUri.protocol !== 'https:') {
-    throw new Error(
-      nls.localize(
-        'customTemplatesShouldUseHttpsProtocol',
-        `"${repoUri.protocol}"`
-      )
-    );
+    throw new Error(nls.localize('customTemplatesShouldUseHttpsProtocol', `"${repoUri.protocol}"`));
   }
   if (repoUri.hostname !== 'github.com') {
-    throw new Error(
-      nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href)
-    );
+    throw new Error(nls.localize('customTemplatesSupportsGitHubOnly', repoUri.href));
   }
 
   const { username, name, branch, filePath } = await getRepoInfo(repoUri);
@@ -135,9 +120,7 @@ export async function loadCustomTemplatesGitRepo(
   await fs.promises.mkdir(customTemplatesPath, { recursive: true });
 
   // Download the repo and extract to the SFDX global state folder
-  const response = await got(
-    `https://codeload.github.com/${username}/${name}/tar.gz/${branch}`
-  );
+  const response = await got(`https://codeload.github.com/${username}/${name}/tar.gz/${branch}`);
 
   // Create a temporary file to extract from
   const tempFile = path.join(customTemplatesPath, 'temp.tar.gz');
@@ -147,7 +130,7 @@ export async function loadCustomTemplatesGitRepo(
     await extract({
       cwd: customTemplatesPath,
       strip: filePath ? filePath.split('/').length + 1 : 1,
-      file: tempFile,
+      file: tempFile
     });
   } finally {
     // Clean up the temporary file

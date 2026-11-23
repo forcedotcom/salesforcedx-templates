@@ -11,10 +11,7 @@ import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 
-const buildTemplatesScript = path.resolve(
-  __dirname,
-  '../../scripts/build-templates.js'
-);
+const buildTemplatesScript = path.resolve(__dirname, '../../scripts/build-templates.js');
 
 describe('build-templates', () => {
   let root: string;
@@ -26,15 +23,9 @@ describe('build-templates', () => {
     source = path.join(root, 'src', 'templates');
     destination = path.join(root, 'lib', 'templates');
     fs.mkdirSync(path.join(source, 'project'), { recursive: true });
-    fs.writeFileSync(
-      path.join(source, 'project', 'config.json'),
-      '{"name":"template"}'
-    );
+    fs.writeFileSync(path.join(source, 'project', 'config.json'), '{"name":"template"}');
     fs.writeFileSync(path.join(source, '.hidden'), 'hidden template');
-    fs.writeFileSync(
-      path.join(source, 'image.bin'),
-      Buffer.from([0, 128, 255])
-    );
+    fs.writeFileSync(path.join(source, 'image.bin'), Buffer.from([0, 128, 255]));
   });
 
   afterEach(() => {
@@ -51,10 +42,7 @@ describe('build-templates', () => {
       fs.readdirSync(source, { recursive: true }).sort()
     );
     for (const file of ['project/config.json', '.hidden', 'image.bin']) {
-      assert.deepStrictEqual(
-        fs.readFileSync(path.join(destination, file)),
-        fs.readFileSync(path.join(source, file))
-      );
+      assert.deepStrictEqual(fs.readFileSync(path.join(destination, file)), fs.readFileSync(path.join(source, file)));
     }
   };
 
@@ -65,10 +53,7 @@ describe('build-templates', () => {
 
   it('copies into an existing template directory without nesting templates', () => {
     fs.mkdirSync(path.join(destination, 'project'), { recursive: true });
-    fs.copyFileSync(
-      path.join(source, 'project', 'config.json'),
-      path.join(destination, 'project', 'config.json')
-    );
+    fs.copyFileSync(path.join(source, 'project', 'config.json'), path.join(destination, 'project', 'config.json'));
 
     build();
     assertTemplatesCopied();

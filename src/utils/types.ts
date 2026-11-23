@@ -5,24 +5,27 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import type { LIGHTNING_OUT_ACCESS_MODES } from './lightningOut';
+import type * as nodeFs from 'node:fs';
 import AnalyticsTemplateGenerator from '../generators/analyticsTemplateGenerator';
 import ApexClassGenerator from '../generators/apexClassGenerator';
 import ApexTriggerGenerator from '../generators/apexTriggerGenerator';
+import { type BaseGenerator } from '../generators/baseGenerator';
+import DigitalExperienceSiteGenerator from '../generators/digitalExperienceSiteGenerator';
 import FlexipageGenerator from '../generators/flexipageGenerator';
 import LightningAppGenerator from '../generators/lightningAppGenerator';
 import LightningComponentGenerator from '../generators/lightningComponentGenerator';
-import UIEmbeddingGenerator from '../generators/uiEmbeddingGenerator';
-import LightningOutGenerator from '../generators/lightningOutGenerator';
 import LightningEventGenerator from '../generators/lightningEventGenerator';
 import LightningInterfaceGenerator from '../generators/lightningInterfaceGenerator';
+import LightningOutGenerator from '../generators/lightningOutGenerator';
 import LightningTestGenerator from '../generators/lightningTestGenerator';
-import DigitalExperienceSiteGenerator from '../generators/digitalExperienceSiteGenerator';
 import ProjectGenerator from '../generators/projectGenerator';
 import StaticResourceGenerator from '../generators/staticResourceGenerator';
+import UIBundleGenerator from '../generators/uiBundleGenerator';
+import UIEmbeddingGenerator from '../generators/uiEmbeddingGenerator';
 import VisualforceComponentGenerator from '../generators/visualforceComponentGenerator';
 import VisualforcePageGenerator from '../generators/visualforcePageGenerator';
-import UIBundleGenerator from '../generators/uiBundleGenerator';
-import { BaseGenerator } from '../generators/baseGenerator';
+import { type ProjectTemplate } from './projectTemplates';
 
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
   options: TOptions,
@@ -37,7 +40,7 @@ export type GeneratorClass<TOptions extends TemplateOptions> = new (
  */
 export type GeneratorContext = {
   /** Node-fs-compatible object. Defaults to require('node:fs'). Pass memfs for web. */
-  readonly fs?: typeof import('node:fs');
+  readonly fs?: typeof nodeFs;
   /** Absolute path to built-in templates root. Overrides __dirname-based resolution. */
   readonly templatesRootPath?: string;
 };
@@ -85,7 +88,7 @@ export enum TemplateType {
   VisualforceComponent,
   VisualforcePage,
   StaticResource,
-  UIBundle,
+  UIBundle
 }
 
 export const generators = new Map<TemplateType, GeneratorClass<any>>([
@@ -105,7 +108,7 @@ export const generators = new Map<TemplateType, GeneratorClass<any>>([
   [TemplateType.StaticResource, StaticResourceGenerator],
   [TemplateType.VisualforceComponent, VisualforceComponentGenerator],
   [TemplateType.VisualforcePage, VisualforcePageGenerator],
-  [TemplateType.UIBundle, UIBundleGenerator],
+  [TemplateType.UIBundle, UIBundleGenerator]
 ]);
 
 export type CreateOutput = {
@@ -131,12 +134,7 @@ type ApexClassBaseOptions = TemplateOptions & { classname: string };
 
 type NonBatchableApexClassOptions = ApexClassBaseOptions & {
   template:
-    | 'DefaultApexClass'
-    | 'BasicUnitTest'
-    | 'ApexUnitTest'
-    | 'ApexException'
-    | 'InboundEmailService'
-    | 'Queueable';
+    'DefaultApexClass' | 'BasicUnitTest' | 'ApexUnitTest' | 'ApexException' | 'InboundEmailService' | 'Queueable';
   sobjecttype?: never;
 };
 
@@ -145,9 +143,7 @@ type BatchableApexClassOptions = ApexClassBaseOptions & {
   sobjecttype?: string;
 };
 
-export type ApexClassOptions =
-  | NonBatchableApexClassOptions
-  | BatchableApexClassOptions;
+export type ApexClassOptions = NonBatchableApexClassOptions | BatchableApexClassOptions;
 
 type ApexTriggerEvent =
   | 'before insert'
@@ -173,11 +169,7 @@ export interface LightningAppOptions extends TemplateOptions {
 
 export interface LightningComponentOptions extends TemplateOptions {
   componentname: string;
-  template:
-    | 'default'
-    | 'analyticsDashboard'
-    | 'analyticsDashboardWithStep'
-    | 'typeScript';
+  template: 'default' | 'analyticsDashboard' | 'analyticsDashboardWithStep' | 'typeScript';
   type: 'aura' | 'lwc';
   internal: boolean;
 }
@@ -217,19 +209,46 @@ export interface LightningOutEcaOptions {
   callbackUrl: string;
 }
 
-export interface LightningOutOptions extends TemplateOptions {
+/** 'guest' | 'authenticated' — derived from the runtime list so the two cannot drift. */
+export type LightningOutAccess = (typeof LIGHTNING_OUT_ACCESS_MODES)[number];
+
+interface LightningOutBaseOptions extends TemplateOptions {
   /** LightningOutApp DeveloperName AND <applicationName> value (≤ 64 chars). */
   appName: string;
-  /** LWR_CORE or CLWR. */
-  runtime: 'LWR_CORE' | 'CLWR';
-  /** Explicit https origins of the external host pages that embed the app. Required, ≥ 1. */
-  hostDomains: string[];
   /** Optional component references exposed by the app (LWC "c/x" or Aura "c:X"). */
   components?: string[];
-  /** External Client Application (OAuth) settings. */
-  eca: LightningOutEcaOptions;
-  // apiversion?, outputdir? inherited from TemplateOptions
+  /**
+   * CLWR only. Experience site (Network) name, emitted as <sites><siteName>.
+   * Deployable at API 69.0+; the caller owns any API-version policy.
+   * Omitting it for CLWR writes no <sites>, and deploying that file at API 69.0+ removes the app's
+   * existing site link (including one made in Setup), so callers should require it for CLWR.
+   */
+  site?: string;
 }
+
+/** Authenticated Lightning Out options; required fields preserve the existing public contract. */
+export interface LightningOutOptions extends LightningOutBaseOptions {
+  /** LWR_CORE or CLWR. */
+  runtime: 'LWR_CORE' | 'CLWR';
+  /** Required explicit http(s) origins for external host pages that embed the app. */
+  hostDomains: string[];
+  /** Required External Client Application (OAuth) settings. */
+  eca: LightningOutEcaOptions;
+  /** CLWR only. 'authenticated' (default); LWR_CORE is always authenticated. */
+  access?: LightningOutAccess;
+}
+
+/** CLWR guest options; ECA and host domains are optional, and only the app file is emitted. */
+export interface LightningOutGuestOptions extends LightningOutBaseOptions {
+  runtime: 'CLWR';
+  access: Extract<LightningOutAccess, 'guest'>;
+  /** Optional explicit http(s) embed origins; when supplied, they populate <allowedDomains>. */
+  hostDomains?: string[];
+  /** Ignored for guest access; no ECA files are emitted. */
+  eca?: LightningOutEcaOptions;
+}
+
+export type LightningOutGeneratorOptions = LightningOutOptions | LightningOutGuestOptions;
 
 export interface ProjectOptions extends TemplateOptions {
   projectname: string;
@@ -239,16 +258,7 @@ export interface ProjectOptions extends TemplateOptions {
    * Note that namespace is a reserved keyword for yeoman generator
    */
   ns: string;
-  template:
-    | 'standard'
-    | 'empty'
-    | 'analytics'
-    | 'reactinternalapp'
-    | 'reactexternalapp'
-    | 'angularinternalapp'
-    | 'angularexternalapp'
-    | 'agent'
-    | 'nativemobile';
+  template: ProjectTemplate;
   manifest: boolean;
   loginurl: string;
   lwcLanguage?: 'javascript' | 'typescript';

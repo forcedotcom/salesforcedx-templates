@@ -33,7 +33,10 @@ test('token is exact standalone /ai-auto approve', () => {
 });
 
 test('approves when all gates pass', () => {
-  assert.deepEqual(decideAiAutoApprove(base), { action: 'approve', reason: 'gates passed' });
+  assert.deepEqual(decideAiAutoApprove(base), {
+    action: 'approve',
+    reason: 'gates passed'
+  });
 });
 
 test('skips issue comments that are not on a pull request', () => {
@@ -59,9 +62,18 @@ test('skips draft and closed PRs', () => {
 test('skips when CI is empty, pending, or failed', () => {
   assert.equal(allChecksGreen([]), false);
   assert.equal(decideAiAutoApprove({ ...base, checks: [] }).action, 'skip');
-  assert.equal(decideAiAutoApprove({ ...base, checks: [{ status: 'in_progress', conclusion: null }] }).action, 'skip');
   assert.equal(
-    decideAiAutoApprove({ ...base, checks: [{ status: 'completed', conclusion: 'FAILURE' }] }).action,
+    decideAiAutoApprove({
+      ...base,
+      checks: [{ status: 'in_progress', conclusion: null }]
+    }).action,
+    'skip'
+  );
+  assert.equal(
+    decideAiAutoApprove({
+      ...base,
+      checks: [{ status: 'completed', conclusion: 'FAILURE' }]
+    }).action,
     'skip'
   );
 });

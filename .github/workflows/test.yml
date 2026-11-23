@@ -59,7 +59,7 @@ jobs:
       build-command: pnpm build
       test-command: pnpm test
       wireit-install-command: 'true'
-  lint:
+  quality:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -69,9 +69,17 @@ jobs:
       - uses: forcedotcom/salesforcedx-vscode/.github/actions/setup-pnpm@faea38a95d42dd464e254e10579eb910655e468d
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: google/wireit@setup-github-actions-caching/v2
+      - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2
       - name: Lint
         run: pnpm lint
+      - name: Check formatting
+        run: pnpm exec prettier --check .
+      - name: Lint commit message
+        run: git log -1 --format=%B | pnpm exec commitlint
+      - name: Validate GitHub Actions
+        uses: mpalmer/action-validator@c994f427b7c42cd5ecb1bc9315cb91c3d7d72e3d
+        with:
+          version: '0.9.0'
   test-bundle:
     runs-on: ubuntu-latest
     strategy:

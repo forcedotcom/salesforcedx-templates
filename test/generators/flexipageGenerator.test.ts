@@ -5,16 +5,12 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as chai from 'chai';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as sinon from 'sinon';
 import { TemplateService, TemplateType } from '../../src';
 import FlexipageGenerator from '../../src/generators/flexipageGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
-
-chai.config.truncateThreshold = 100000;
-const { expect } = chai;
 
 async function remove(file: string) {
   await fs.promises.rm(file, { force: true, recursive: true });
@@ -47,10 +43,6 @@ describe('FlexipageGenerator', () => {
 
   beforeEach(async () => {
     await remove(outputDir);
-  });
-
-  afterEach(() => {
-    sinon.restore();
   });
 
   describe('validateOptions', () => {

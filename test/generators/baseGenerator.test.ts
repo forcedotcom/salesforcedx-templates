@@ -5,8 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as sinon from 'sinon';
-import { expect } from 'chai';
+import { describe, expect, it, vi } from 'vitest';
 import { type TemplateOptions } from '../../src';
 import { BaseGenerator, getDefaultApiVersion, validateCustomTemplate } from '../../src/generators/baseGenerator';
 
@@ -30,17 +29,13 @@ describe('BaseGenerator', () => {
     customProp: true
   };
 
-  afterEach(() => {
-    sinon.restore();
-  });
-
   it('should set default api version and output dir', async () => {
-    const doWritingStub = sinon.stub(MyGenerator.prototype, 'doWriting');
+    const doWritingStub = vi.spyOn(MyGenerator.prototype, 'doWriting').mockImplementation(() => {});
 
     const generator = new MyGenerator(mockMyGeneratorOptions);
     await generator.generate();
 
-    expect(doWritingStub.firstCall.firstArg).to.deep.equal({
+    expect(doWritingStub.mock.calls[0][0]).to.deep.equal({
       apiversion: API_VERSION,
       outputdir: process.cwd(),
       customProp: true
@@ -48,10 +43,10 @@ describe('BaseGenerator', () => {
   });
 
   it('should call validate options', () => {
-    const validateOptionsStub = sinon.stub(MyGenerator.prototype, 'validateOptions');
+    const validateOptionsStub = vi.spyOn(MyGenerator.prototype, 'validateOptions').mockImplementation(() => {});
 
     new MyGenerator(mockMyGeneratorOptions);
-    expect(validateOptionsStub.calledOnce).to.be.true;
+    expect(validateOptionsStub).toHaveBeenCalledTimes(1);
   });
 });
 

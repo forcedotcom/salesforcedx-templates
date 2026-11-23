@@ -36,23 +36,20 @@
     "@salesforce/ui-bundle-template-app-angular-template-b2x": "^12.18.0",
     "@salesforce/ui-bundle-template-app-react-template-b2e": "^12.17.0",
     "@salesforce/ui-bundle-template-app-react-template-b2x": "^12.18.0",
+    "@salesforce/ui-bundle-template-app-vue-template-b2e": "^12.14.0",
+    "@salesforce/ui-bundle-template-app-vue-template-b2x": "^13.1.0",
     "@salesforce/ui-bundle-template-base-angular-app": "^12.18.0",
     "@salesforce/ui-bundle-template-base-react-app": "^12.18.0",
     "@salesforce/ui-bundle-template-base-vue-app": "^12.17.0",
     "@salesforce/ui-bundle-template-base-web-app": "^12.18.0",
     "@tony.ganchev/eslint-plugin-header": "^3.4.4",
-    "@types/chai": "^4.3.17",
-    "@types/chai-as-promised": "^7.1.8",
     "@types/ejs": "^3.1.5",
     "@types/mime-types": "^3.0.1",
-    "@types/mocha": "^10.0.10",
     "@types/node": "^22",
     "@types/proxy-from-env": "^1.0.4",
-    "@types/sinon": "^10.0.20",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.72.1",
-    "chai": "^4.5.0",
-    "chai-as-promised": "^7.1.2",
+    "@vitest/coverage-v8": "^4.1.12",
     "commitizen": "^4.3.2",
     "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.28.2",
@@ -62,25 +59,21 @@
     "eslint-config-salesforce-license": "^1.0.2",
     "eslint-config-salesforce-typescript": "^7.0.1",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-import-x": "^4.18.1",
     "eslint-plugin-jsdoc": "^64.5.4",
     "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.14.0",
     "husky": "^9.1.7",
-    "mocha": "^11.8.0",
-    "nyc": "^15.1.0",
     "prettier": "^3.9.10",
     "pretty-quick": "^4.2.2",
     "shelljs": "^0.10.0",
     "shx": "^0.4.0",
-    "sinon": "^18",
     "ts-morph": "^24.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^6",
     "typescript-eslint": "^8.69.0",
-    "wireit": "^0.14.13",
-    "@salesforce/ui-bundle-template-app-vue-template-b2e": "^12.14.0",
-    "@salesforce/ui-bundle-template-app-vue-template-b2x": "^13.1.0",
-    "eslint-plugin-import-x": "^4.18.1",
-    "globals": "^17.14.0"
+    "vitest": "^4.1.12",
+    "wireit": "^0.14.13"
   },
   "engines": {
     "node": ">=22"
@@ -89,7 +82,7 @@
     "build": "wireit",
     "build:templates": "wireit",
     "build:copy-templates": "wireit",
-    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output",
+    "clean:lib": "shx rm -rf lib && shx rm -rf coverage",
     "commit": "git-cz",
     "compile": "wireit",
     "lint": "wireit",
@@ -271,19 +264,19 @@
       "output": []
     },
     "test": {
-      "command": "nyc --exclude src/i18n/localization.ts --extension .ts mocha --parallel --forbid-only \"test/**/*.test.ts\" --timeout 600000",
+      "command": "vitest run --coverage",
       "dependencies": [
         "build"
       ],
       "files": [
         "test/**",
         "scripts/**",
-        ".mocharc.json",
-        ".nycrc"
+        "vitest.config.mjs",
+        "package.json",
+        "pnpm-lock.yaml"
       ],
       "output": [
-        "coverage/**",
-        ".nyc_output/**"
+        "coverage/**"
       ]
     }
   },

@@ -5,20 +5,12 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as chai from 'chai';
+import { describe, expect, it } from 'vitest';
 import * as path from 'path';
-import * as sinon from 'sinon';
 import UIBundleGenerator from '../../src/generators/uiBundleGenerator';
 import { UI_BUNDLES_DIR } from '../../src/utils/constants';
 
-chai.config.truncateThreshold = 100000;
-const { expect } = chai;
-
 describe('UIBundleGenerator', () => {
-  afterEach(() => {
-    sinon.restore();
-  });
-
   describe('validateOptions', () => {
     it('should validate bundlename is provided', () => {
       expect(() => {

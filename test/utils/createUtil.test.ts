@@ -7,10 +7,9 @@
 import { nls } from '../../src/i18n';
 import { CreateUtil } from '../../src/utils';
 
-import { assert, expect } from 'chai';
+import { assert, beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { type SinonStub, stub } from 'sinon';
 
 describe('CreateUtil', () => {
   describe('checkInputs', () => {
@@ -49,30 +48,31 @@ describe('CreateUtil', () => {
     const templateType = 'apexclass';
     const templatesPath = path.resolve(__dirname, '../../src/templates', templateType);
 
-    let readdirStub: SinonStub;
+    let readdirStub: Mock;
     let fakeFs: typeof fs;
 
     beforeEach(() => {
-      // The source accepts an injected `fs`; stub that rather than the real
+      // The source accepts an injected `fs`; mock that rather than the real
       // `fs` namespace, whose members are non-writable under `module: nodenext`.
-      readdirStub = stub();
+      readdirStub = vi.fn();
       fakeFs = { readdirSync: readdirStub } as unknown as typeof fs;
     });
 
     it('should get template names for a given file suffix and folder name', () => {
-      readdirStub.withArgs(templatesPath).returns(['Template.cls', 'Template2.cls']);
+      readdirStub.mockReturnValue(['Template.cls', 'Template2.cls']);
 
       assertTemplateNames(['Template', 'Template2']);
     });
 
     it('should ignore files that do not have the given suffix', () => {
-      readdirStub.withArgs(templatesPath).returns(['Template.cls', '_class.cls-meta.xml']);
+      readdirStub.mockReturnValue(['Template.cls', '_class.cls-meta.xml']);
 
       assertTemplateNames(['Template']);
     });
 
     const assertTemplateNames = (names: string[]) => {
       const templates = CreateUtil.getCommandTemplatesForFiletype(/.cls$/, templateType, fakeFs);
+      expect(readdirStub).toHaveBeenCalledExactlyOnceWith(templatesPath);
       expect(templates).to.eql(names);
     };
   });
@@ -90,49 +90,47 @@ describe('CreateUtil', () => {
       return ent;
     }
 
-    let readdirStub: SinonStub;
+    let readdirStub: Mock;
     let fakeFs: typeof fs;
 
     beforeEach(() => {
-      readdirStub = stub();
+      readdirStub = vi.fn();
       fakeFs = { readdirSync: readdirStub } as unknown as typeof fs;
     });
 
     it('should get template names', () => {
-      readdirStub
-        .withArgs(templatePath, { withFileTypes: true })
-        .returns([dirent('Template1', true), dirent('Template2', true), dirent('afile.txt', false)]);
+      readdirStub.mockReturnValue([dirent('Template1', true), dirent('Template2', true), dirent('afile.txt', false)]);
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, {}, fakeFs);
+      expect(readdirStub).toHaveBeenCalledExactlyOnceWith(templatePath, { withFileTypes: true });
       expect(templates).to.eql(['Template1', 'Template2']);
     });
 
     it('should get template names for given subdir', () => {
-      readdirStub
-        .withArgs(auraPath, { withFileTypes: true })
-        .returns([dirent('Template1', true), dirent('Template2', true)]);
+      readdirStub.mockReturnValue([dirent('Template1', true), dirent('Template2', true)]);
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(templateType, { subdir: 'aura' }, fakeFs);
+      expect(readdirStub).toHaveBeenCalledExactlyOnceWith(auraPath, { withFileTypes: true });
       expect(templates).to.eql(['Template1', 'Template2']);
     });
 
     it('should ignore subdirs that do not have the given file suffix', () => {
-      readdirStub
-        .withArgs(auraPath, { withFileTypes: true })
-        .returns([dirent('Template1', true), dirent('Template2', true), dirent('Template3', true)]);
-      readdirStub
-        .withArgs(path.join(auraPath, 'Template1'), { withFileTypes: true })
-        .returns([dirent('Template1.cmp', false), dirent('Template1Controller.js', false)]);
-      readdirStub
-        .withArgs(path.join(auraPath, 'Template2'), { withFileTypes: true })
-        .returns([dirent('randomfile.html', false)]);
-      readdirStub.withArgs(path.join(auraPath, 'Template3'), { withFileTypes: true }).returns([]);
+      const directories = new Map([
+        [auraPath, [dirent('Template1', true), dirent('Template2', true), dirent('Template3', true)]],
+        [path.join(auraPath, 'Template1'), [dirent('Template1.cmp', false), dirent('Template1Controller.js', false)]],
+        [path.join(auraPath, 'Template2'), [dirent('randomfile.html', false)]],
+        [path.join(auraPath, 'Template3'), []]
+      ]);
+      readdirStub.mockImplementation((directory: string) => directories.get(directory));
 
       const templates = CreateUtil.getCommandTemplatesInSubdirs(
         templateType,
         { subdir: 'aura', filetype: /\.cmp$/ },
         fakeFs
       );
+      for (const directory of directories.keys()) {
+        expect(readdirStub).toHaveBeenCalledWith(directory, { withFileTypes: true });
+      }
       expect(templates).to.eql(['Template1']);
     });
   });

@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { ESLint } from 'eslint';
+import { describe, it } from 'vitest';
 
 const root = path.resolve(__dirname, '..');
 const eslint = new ESLint({
@@ -47,8 +48,8 @@ describe('ESLint flat config', () => {
     assert.deepEqual(validHeader.messages, []);
   });
 
-  it('allows Chai assertions in tests, not in source', async () => {
-    const code = `${header}\nimport { expect } from 'chai';\n\nexpect(true).to.be.true;\n`;
+  it('allows Vitest property assertions in tests, not in source', async () => {
+    const code = `${header}\nimport { expect } from 'vitest';\n\nexpect(true).to.be.true;\n`;
     const [testResult] = await eslint.lintText(code, {
       filePath: 'test/eslintConfig.test.ts'
     });

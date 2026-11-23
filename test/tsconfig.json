@@ -1,8 +1,0 @@
-{
-  "extends": "../tsconfig",
-  "compilerOptions": {
-    "rootDir": "../"
-  },
-  "include": ["./**/*.ts"],
-  "exclude": ["./fixtures/**"]
-}

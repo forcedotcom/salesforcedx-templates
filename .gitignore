@@ -43,9 +43,6 @@ analytics1/
 GitIgnoreTest/
 GitIgnoreTest2/
 
-# nyc test coverage
-.nyc_output
-
 # Eclipse
 .project
 

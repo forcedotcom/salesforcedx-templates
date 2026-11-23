@@ -7,4 +7,4 @@ After making changes, check your changes
 `pnpm lint` // linter can have warnings
 `pnpm test` // unit/local tests
 
-You can run a single unit test like `pnpm exec mocha <pathToTest>`
+You can run a single unit test like `pnpm exec vitest run <pathToTest>`

@@ -7,6 +7,7 @@
 
 import * as assert from 'node:assert';
 import * as path from 'node:path';
+import { describe, it } from 'vitest';
 import {
   ensureLowercaseUrlName,
   toAlphanumericForPath,

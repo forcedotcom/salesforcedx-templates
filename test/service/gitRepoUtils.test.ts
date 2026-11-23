@@ -4,23 +4,17 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { type SinonStub, stub } from 'sinon';
-import { expect } from 'chai';
+import { describe, expect, it, vi } from 'vitest';
 import { DIR } from '../../src/service/gitRepoUtils';
-import os from 'os';
+import * as os from 'node:os';
 import path from 'path';
 
+vi.mock('node:os', { spy: true });
+
 describe('DIR', () => {
-  let homedirStub: SinonStub;
-  beforeEach(() => {
-    homedirStub = stub(os, 'homedir');
-  });
-  afterEach(() => {
-    homedirStub.restore();
-  });
   it('should return DIR', () => {
     const homedir = '/Users/johndoe';
-    homedirStub.returns(homedir);
+    vi.mocked(os.homedir).mockReturnValue(homedir);
     const sfdxStateFolder = '.sfdx';
     const dir = DIR();
     expect(dir).to.eql(path.join(homedir, sfdxStateFolder));

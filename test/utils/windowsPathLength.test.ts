@@ -8,6 +8,7 @@
 import * as assert from 'node:assert';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { describe, it } from 'vitest';
 import {
   PLACEHOLDER_KEYS,
   WINDOWS_MAX_ALLOWABLE_PATH_LENGTH,
@@ -102,10 +103,10 @@ describe('Placeholder sync (copy-templates.js ↔ uiBundleTemplateUtils.ts)', ()
 });
 
 describe('Windows path length (pack:verify)', () => {
-  it('all template files stay within Windows max allowable path length', function () {
+  it('all template files stay within Windows max allowable path length', (context) => {
     const templatesRoot = getTemplateRoot();
     if (!templatesRoot) {
-      this.skip();
+      context.skip();
       return;
     }
 

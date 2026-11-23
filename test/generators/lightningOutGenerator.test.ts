@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as chai from 'chai';
+import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TemplateService, TemplateType } from '../../src';
@@ -17,9 +17,6 @@ import {
   type LightningOutGuestOptions,
   type LightningOutOptions
 } from '../../src/utils/types';
-
-chai.config.truncateThreshold = 100000;
-const { expect } = chai;
 
 async function remove(file: string) {
   await fs.promises.rm(file, { force: true, recursive: true });
@@ -66,7 +63,7 @@ describe('LightningOutGenerator', () => {
   beforeEach(async () => {
     await remove(outputDir);
   });
-  after(async () => {
+  afterAll(async () => {
     await remove(outputDir);
   });
 
@@ -262,7 +259,7 @@ describe('LightningOutGenerator', () => {
         expect(msg).to.not.include('applies only to runtime CLWR');
       });
       it('missing runtime with access=guest reports only the missing runtime', () => {
-        const msg = errorOf(guestOpts({ runtime: undefined as unknown as LightningOutOptions['runtime'] }));
+        const msg = errorOf(guestOpts({ runtime: undefined as unknown as LightningOutGuestOptions['runtime'] }));
         expect(msg).to.include(nls.localize('MissingLightningOutInputs', ['runtime']));
         expect(msg).to.not.match(/eca\.name|hostDomains/);
       });
@@ -277,7 +274,7 @@ describe('LightningOutGenerator', () => {
         });
       }
       it('invalid runtime with access=guest reports only the runtime error', () => {
-        const msg = errorOf(guestOpts({ runtime: 'clwr' as LightningOutOptions['runtime'] }));
+        const msg = errorOf(guestOpts({ runtime: 'clwr' as LightningOutGuestOptions['runtime'] }));
         expect(msg).to.include(nls.localize('InvalidLightningOutRuntime', ['LWR_CORE, CLWR']));
         expect(msg).to.not.match(/eca\.name|hostDomains|Missing required/);
       });
@@ -735,8 +732,13 @@ describe('LightningOutGenerator', () => {
       const readApp = () => readFileContent(appPath());
       const create = (o: LightningOutGeneratorOptions) =>
         TemplateService.getInstance(process.cwd()).create(TemplateType.LightningOut, o);
-      const gOpts = (o: Partial<LightningOutGuestOptions> = {}): LightningOutGuestOptions =>
-        baseOpts(outputDir, { runtime: 'CLWR', access: 'guest', hostDomains: undefined, ...o });
+      const gOpts = (o: Partial<LightningOutGuestOptions> = {}): LightningOutGuestOptions => ({
+        ...baseOpts(outputDir),
+        runtime: 'CLWR',
+        access: 'guest',
+        hostDomains: undefined,
+        ...o
+      });
       const header = `<?xml version="1.0" encoding="UTF-8"?>
 <LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationName>MyLoApp</applicationName>

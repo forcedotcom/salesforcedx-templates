@@ -15,6 +15,7 @@ jobs:
           node-version: '24'
           install: 'false'
       - run: pnpm install --lockfile-only --frozen-lockfile --ignore-scripts
+      - run: mkdir -p "$(pnpm store path --silent)"
   prevent-typescript-dependency:
     needs: pnpm-lockfile-check
     runs-on: ubuntu-latest

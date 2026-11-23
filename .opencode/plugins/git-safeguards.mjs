@@ -8,5 +8,5 @@ export const GitSafeguards = async () => ({
     if (input.tool !== 'bash' && input.tool !== 'shell') return;
     const reason = noVerifyDenial(String(output.args.command ?? ''));
     if (reason) throw new Error(reason);
-  },
+  }
 });

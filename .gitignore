@@ -22,6 +22,9 @@ coverage.lcov
 node_modules/
 .wireit/
 
+# Claude verification state
+.claude/.edit-marker
+
 # test results
 test-results.xml
 xunit.xml
@@ -72,6 +75,5 @@ src/templates/project/reactinternalapp/
 src/templates/project/reactexternalapp/
 src/templates/project/angularintapp/
 src/templates/project/angularextapp/
-
-# Wireit cache
-.wireit/
+src/templates/project/vueinternalapp/
+src/templates/project/vueexternalapp/

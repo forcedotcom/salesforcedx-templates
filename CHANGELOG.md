@@ -1,3 +1,81 @@
+## [66.21.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.21.0...66.21.1) (2026-11-22)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/kit from 4.0.9 to 4.0.10 ([5ebb5d0](https://github.com/forcedotcom/salesforcedx-templates/commit/5ebb5d089ddc58116518144d1b25efb59cbf7ee9))
+
+# [66.21.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.4...66.21.0) (2026-11-20)
+
+### Features
+
+- add vueexternalapp project template - W-24953179 ([#965](https://github.com/forcedotcom/salesforcedx-templates/issues/965)) ([5523eee](https://github.com/forcedotcom/salesforcedx-templates/commit/5523eee697db8a7be96d75d2a6d0280b2b25a21d))
+
+## [66.20.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.3...66.20.4) (2026-11-16)
+
+### Bug Fixes
+
+- **deps:** bump tar from 7.5.22 to 7.5.23 ([97b7a05](https://github.com/forcedotcom/salesforcedx-templates/commit/97b7a05496c44571c11650062f52796b5c6b6651))
+
+## [66.20.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.2...66.20.3) (2026-11-15)
+
+### Bug Fixes
+
+- **deps:** bump picomatch from 2.3.1 to 2.3.2 ([aadc8b9](https://github.com/forcedotcom/salesforcedx-templates/commit/aadc8b99471805f38506cd7228a95c6552d81269))
+
+## [66.20.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.1...66.20.2) (2026-11-15)
+
+### Bug Fixes
+
+- **deps:** bump js-yaml from 3.14.1 to 3.15.2 ([3338f1b](https://github.com/forcedotcom/salesforcedx-templates/commit/3338f1baf360efc29a23ccb54490a4d9962cac95))
+
+## [66.20.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.20.0...66.20.1) (2026-11-10)
+
+### Bug Fixes
+
+- **deps:** bump tslib from 2.8.1 to 2.9.1 ([ea492bc](https://github.com/forcedotcom/salesforcedx-templates/commit/ea492bcf166e23c9e0a9cf32adb3cb535f4beb3e))
+
+# [66.20.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.19.1...66.20.0) (2026-11-09)
+
+### Features
+
+- **lightning-out:** CLWR site and access options - W-24812373 ([#955](https://github.com/forcedotcom/salesforcedx-templates/issues/955)) ([1d292ec](https://github.com/forcedotcom/salesforcedx-templates/commit/1d292ecad12f0d41b8427f211a9ff3e866fda584))
+
+## [66.19.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.19.0...66.19.1) (2026-11-08)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/kit from 4.0.1 to 4.0.9 ([4ba1da5](https://github.com/forcedotcom/salesforcedx-templates/commit/4ba1da59dde6d9bce9d3659620b0a0ae3d533603))
+
+# [66.19.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.18.0...66.19.0) (2026-11-02)
+
+### Features
+
+- export the list of project templates so salesforcedx-vscode can grab it dynamically ([#947](https://github.com/forcedotcom/salesforcedx-templates/issues/947)) ([5f0f4c3](https://github.com/forcedotcom/salesforcedx-templates/commit/5f0f4c33cc7f47ac3736e5ec9e939fdbfccc5bc1))
+
+# [66.18.0](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.5...66.18.0) (2026-11-02)
+
+### Features
+
+- add vueinternalapp project template @W-24573583@ ([#939](https://github.com/forcedotcom/salesforcedx-templates/issues/939)) ([06ac656](https://github.com/forcedotcom/salesforcedx-templates/commit/06ac6563e4b831cc62d83c3badbd206a306b6a30))
+
+## [66.17.5](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.4...66.17.5) (2026-10-31)
+
+### Bug Fixes
+
+- **deps:** bump brace-expansion from 1.1.11 to 1.1.21 ([f186d50](https://github.com/forcedotcom/salesforcedx-templates/commit/f186d502ea518596a5473a571977f85cb4e363c8))
+
+## [66.17.4](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.3...66.17.4) (2026-10-25)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/kit from 4.0.0 to 4.0.1 ([bf0f8ef](https://github.com/forcedotcom/salesforcedx-templates/commit/bf0f8efd529922e1604dff0f7aa46f0f34c6bf67))
+
+## [66.17.3](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.2...66.17.3) (2026-10-24)
+
+### Bug Fixes
+
+- **deps:** bump markdown-it from 14.3.1 to 14.3.3 ([ce962e3](https://github.com/forcedotcom/salesforcedx-templates/commit/ce962e3660fd3a47badff2b4d2a77325d02a9cf6))
+
 ## [66.17.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.17.1...66.17.2) (2026-10-13)
 
 ### Bug Fixes

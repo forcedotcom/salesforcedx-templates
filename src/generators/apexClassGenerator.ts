@@ -7,17 +7,14 @@
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
-import { ApexClassOptions } from '../utils/types';
+import { type ApexClassOptions } from '../utils/types';
 import { BaseGenerator } from './baseGenerator';
 
 export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> {
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     CreateUtil.checkInputs(this.options.classname);
-    if (
-      this.options.template === 'Batchable' &&
-      this.options.sobjecttype?.trim()
-    ) {
+    if (this.options.template === 'Batchable' && this.options.sobjecttype?.trim()) {
       CreateUtil.checkSObjectType(this.options.sobjecttype.trim());
     }
   }
@@ -27,8 +24,7 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
 
     this.checkTemplateExists('apexclass', template, {
       filetype: /\.cls$/,
-      onMissing: () =>
-        new Error(nls.localize('MissingApexClassTemplate', [template])),
+      onMissing: () => new Error(nls.localize('MissingApexClassTemplate', [template]))
     });
 
     this.sourceRootWithPartialPath('apexclass');
@@ -39,16 +35,15 @@ export default class ApexClassGenerator extends BaseGenerator<ApexClassOptions> 
       {
         apiName: classname,
         ...(template === 'Batchable' && {
-          sobjectType: sobjecttype?.trim() || 'SObject',
-        }),
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- Blank SObject names use the default too.
+          sobjectType: sobjecttype?.trim() || 'SObject'
+        })
       }
     );
 
     await this.render(
       this.templatePath('_class.cls-meta.xml'),
-      this.destinationPath(
-        path.join(this.outputdir, `${classname}.cls-meta.xml`)
-      ),
+      this.destinationPath(path.join(this.outputdir, `${classname}.cls-meta.xml`)),
       { apiName: classname, apiVersion: this.apiversion }
     );
   }

@@ -19,9 +19,7 @@ import templatePlaceholdersSpec from './template-placeholders';
 function sanitizeSegment(name: string): string {
   const trimmed = name.trimEnd();
   if (trimmed !== name) {
-    console.warn(
-      `[uiBundleTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`
-    );
+    console.warn(`[uiBundleTemplateUtils] Sanitised filename: "${name}" → "${trimmed}"`);
   }
   return trimmed;
 }
@@ -74,7 +72,7 @@ export const EJS_EXTENSIONS = new Set([
   '.env',
   '.cfg',
   '.config.js',
-  '.config.ts',
+  '.config.ts'
 ]);
 
 /** Templates that have a full folder under src/templates/project/ (populated at build time from npm) */
@@ -83,32 +81,39 @@ export const BUILT_IN_FULL_TEMPLATES = new Set([
   'reactexternalapp',
   'angularinternalapp',
   'angularexternalapp',
+  'vueinternalapp',
+  'vueexternalapp'
 ]);
 
 /**
  * Default app/site names embedded in each full template; all are renamed to the project name.
  * Order matters: replace longer (suffix) first to avoid partial replacements.
  */
-export const FULL_TEMPLATE_DEFAULT_NAMES: Record<
-  string,
-  { base: string; withSuffix: string }
-> = {
+export const FULL_TEMPLATE_DEFAULT_NAMES: Record<string, { base: string; withSuffix: string }> = {
   reactinternalapp: {
     base: 'reactinternalapp',
-    withSuffix: 'reactinternalapp1',
+    withSuffix: 'reactinternalapp1'
   },
   reactexternalapp: {
     base: 'reactexternalapp',
-    withSuffix: 'reactexternalapp1',
+    withSuffix: 'reactexternalapp1'
   },
   angularinternalapp: {
     base: 'angularintapp',
-    withSuffix: 'angularintapp1',
+    withSuffix: 'angularintapp1'
   },
   angularexternalapp: {
     base: 'angularextapp',
-    withSuffix: 'angularextapp1',
+    withSuffix: 'angularextapp1'
   },
+  vueinternalapp: {
+    base: 'vueinternalapp',
+    withSuffix: 'vueinternalapp1'
+  },
+  vueexternalapp: {
+    base: 'vueexternalapp',
+    withSuffix: 'vueexternalapp1'
+  }
 };
 
 /** Directories to skip when walking a full template dir (e.g. node_modules) */
@@ -186,7 +191,7 @@ export const PLACEHOLDER_KEYS = [
   'GLOBAL_SEARCH_PLACEHOLDER',
   'COMPONENTS_PLACEHOLDER',
   'DETAIL_PLACEHOLDER',
-  'FORMATTED_PLACEHOLDER',
+  'FORMATTED_PLACEHOLDER'
 ] as const;
 
 type PlaceholderReplacementCtx = {
@@ -205,20 +210,16 @@ type TemplatePlaceholderEntry = {
   replacement: string;
 };
 
-const TEMPLATE_PLACEHOLDERS_SPEC =
-  templatePlaceholdersSpec as TemplatePlaceholderEntry[];
+const TEMPLATE_PLACEHOLDERS_SPEC: TemplatePlaceholderEntry[] = templatePlaceholdersSpec;
 
-function resolveReplacement(
-  replacement: string,
-  ctx: PlaceholderReplacementCtx
-): string {
+function resolveReplacement(replacement: string, ctx: PlaceholderReplacementCtx): string {
   switch (replacement) {
     case 'defaultpackagedir':
       return ctx.defaultpackagedir;
     case 'projectname':
       return ctx.projectnameAlphanumeric;
     case 'projectname1':
-      return ctx.projectnameAlphanumeric + '1';
+      return `${ctx.projectnameAlphanumeric}1`;
     default:
       return replacement;
   }
@@ -237,14 +238,8 @@ export function toAlphanumericForPath(name: string): string {
  * Name replacements preserve casing from the project name, so we need to
  * post-process the JSON to enforce this constraint.
  */
-export function ensureLowercaseUrlName(
-  content: string,
-  destPath: string
-): string {
-  if (
-    path.basename(destPath) !== 'content.json' ||
-    !destPath.includes(`sfdc_cms__site${path.sep}`)
-  ) {
+export function ensureLowercaseUrlName(content: string, destPath: string): string {
+  if (path.basename(destPath) !== 'content.json' || !destPath.includes(`sfdc_cms__site${path.sep}`)) {
     return content;
   }
   try {
@@ -253,7 +248,7 @@ export function ensureLowercaseUrlName(
       const lower = parsed.urlName.toLowerCase();
       if (lower !== parsed.urlName) {
         parsed.urlName = lower;
-        return JSON.stringify(parsed, null, 2) + '\n';
+        return `${JSON.stringify(parsed, null, 2)}\n`;
       }
     }
   } catch {
@@ -277,7 +272,7 @@ export function isLikelyText(filename: string, buffer: Buffer): boolean {
     '.ttf',
     '.eot',
     '.pdf',
-    '.zip',
+    '.zip'
   ]);
   if (binaryExts.has(ext)) {
     return false;
@@ -295,10 +290,7 @@ export function isLikelyText(filename: string, buffer: Buffer): boolean {
 }
 
 /** Renders an EJS template file with the given data (stateless, no generator dependency). */
-export async function renderEjsFile(
-  sourcePath: string,
-  data: Record<string, unknown>
-): Promise<string> {
+export async function renderEjsFile(sourcePath: string, data: Record<string, unknown>): Promise<string> {
   const { renderFile } = await import('ejs');
   return new Promise((resolve, reject) => {
     renderFile(sourcePath, data, (err, str) => {
@@ -319,10 +311,7 @@ export type GenerateBuiltInFullTemplateOptions = {
   loginurl: string;
   apiversion: string;
   /** Renders an EJS template file; use renderEjsFile from this module */
-  renderEjs: (
-    filePath: string,
-    data: Record<string, unknown>
-  ) => Promise<string>;
+  renderEjs: (filePath: string, data: Record<string, unknown>) => Promise<string>;
   /** Called for each file created (e.g. to push to generator changes) */
   onFileCreated: (destPath: string) => void;
 };
@@ -336,16 +325,7 @@ export async function generateBuiltInFullTemplate(
   projectname: string,
   options: GenerateBuiltInFullTemplateOptions
 ): Promise<void> {
-  const {
-    templateDir,
-    projectDir,
-    defaultpackagedir,
-    ns,
-    loginurl,
-    apiversion,
-    renderEjs,
-    onFileCreated,
-  } = options;
+  const { templateDir, projectDir, defaultpackagedir, ns, loginurl, apiversion, renderEjs, onFileCreated } = options;
 
   const templateVars = {
     projectname,
@@ -355,38 +335,37 @@ export async function generateBuiltInFullTemplate(
     loginurl,
     apiversion,
     name: projectname,
-    company: (process.env.USER || 'Demo') + ' company',
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- An empty USER uses Demo too.
+    company: `${process.env.USER || 'Demo'} company`
   };
 
   const nameReplacementsEntry = FULL_TEMPLATE_DEFAULT_NAMES[template];
   const projectnameAlphanumeric = toAlphanumericForPath(projectname);
   const replacementCtx: PlaceholderReplacementCtx = {
     defaultpackagedir,
-    projectnameAlphanumeric,
+    projectnameAlphanumeric
   };
-  const nameReplacements: [string, string][] = TEMPLATE_PLACEHOLDERS_SPEC.map(
-    (entry) => [
-      entry.placeholder,
-      resolveReplacement(entry.replacement, replacementCtx),
-    ]
-  );
+  const nameReplacements: [string, string][] = TEMPLATE_PLACEHOLDERS_SPEC.map((entry) => [
+    entry.placeholder,
+    resolveReplacement(entry.replacement, replacementCtx)
+  ]);
   // Add template-specific name replacements BEFORE placeholder replacements
   // to avoid double-replacement (e.g., _a_ -> reactexternalapptest, then reactexternalapp -> reactexternalapptest again)
   if (nameReplacementsEntry) {
     nameReplacements.unshift(
-      [nameReplacementsEntry.withSuffix, projectnameAlphanumeric + '1'],
+      [nameReplacementsEntry.withSuffix, `${projectnameAlphanumeric}1`],
       [nameReplacementsEntry.base, projectnameAlphanumeric]
     );
   }
   nameReplacements.push(
     [APP_PLACEHOLDER, projectnameAlphanumeric],
-    [APP_SUFFIX_PLACEHOLDER, projectnameAlphanumeric + '1']
+    [APP_SUFFIX_PLACEHOLDER, `${projectnameAlphanumeric}1`]
   );
 
   await generateFromProjectTemplateDir(templateDir, projectDir, templateVars, {
     nameReplacements,
     renderEjs,
-    onFileCreated,
+    onFileCreated
   });
 
   // npm renames .gitignore → .npmignore on install, so template packages
@@ -407,10 +386,7 @@ export type GenerateFromProjectTemplateDirOptions = {
   /** Pairs of [from, to] for renaming template default app/site names to project name */
   nameReplacements?: [string, string][];
   /** Renders an EJS template file with the given data; used for template files */
-  renderEjs: (
-    filePath: string,
-    data: Record<string, unknown>
-  ) => Promise<string>;
+  renderEjs: (filePath: string, data: Record<string, unknown>) => Promise<string>;
   /** Called for each file/dir created under destDir (for change tracking) */
   onFileCreated: (destPath: string) => void;
 };
@@ -449,20 +425,15 @@ export async function generateFromProjectTemplateDir(
     const rawName = entry.name;
     const safeName = sanitizeSegment(rawName);
     const sourcePath = path.join(sourceDir, rawName);
+    const destName = applyReplacements(safeName);
+    const destPath = path.join(destDir, destName);
 
     if (entry.isDirectory()) {
       if (FULL_TEMPLATE_SKIP_DIRS.has(safeName)) {
         continue;
       }
-      const destName = applyReplacements(safeName);
-      const destPath = path.join(destDir, destName);
       await mkdir(destPath, { recursive: true });
-      await generateFromProjectTemplateDir(
-        sourcePath,
-        destPath,
-        templateVars,
-        options
-      );
+      await generateFromProjectTemplateDir(sourcePath, destPath, templateVars, options);
       continue;
     }
 
@@ -470,31 +441,20 @@ export async function generateFromProjectTemplateDir(
       continue;
     }
 
-    const destName = applyReplacements(safeName);
-    const destPath = path.join(destDir, destName);
     const ext = path.extname(safeName);
-    const isEjsTemplate =
-      EJS_EXTENSIONS.has(ext) ||
-      safeName.endsWith('.config.js') ||
-      safeName.endsWith('.config.ts');
+    const isEjsTemplate = EJS_EXTENSIONS.has(ext) || safeName.endsWith('.config.js') || safeName.endsWith('.config.ts');
 
     if (isEjsTemplate) {
       try {
         const rendered = await renderEjs(sourcePath, templateVars);
-        const content = ensureLowercaseUrlName(
-          applyReplacements(rendered),
-          destPath
-        );
+        const content = ensureLowercaseUrlName(applyReplacements(rendered), destPath);
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
         onFileCreated(destPath);
       } catch {
         const raw = await readFile(sourcePath);
         const str = raw.toString('utf8');
-        const content = ensureLowercaseUrlName(
-          applyReplacements(str),
-          destPath
-        );
+        const content = ensureLowercaseUrlName(applyReplacements(str), destPath);
         await mkdir(path.dirname(destPath), { recursive: true });
         await writeFile(destPath, content, 'utf8');
         onFileCreated(destPath);
@@ -505,10 +465,7 @@ export async function generateFromProjectTemplateDir(
       const isText = isLikelyText(entry.name, content);
       if (isText && nameReplacements?.length) {
         const str = content.toString('utf8');
-        const replaced = ensureLowercaseUrlName(
-          applyReplacements(str),
-          destPath
-        );
+        const replaced = ensureLowercaseUrlName(applyReplacements(str), destPath);
         await writeFile(destPath, replaced, 'utf8');
       } else {
         await writeFile(destPath, new Uint8Array(content));

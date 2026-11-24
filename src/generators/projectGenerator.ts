@@ -6,7 +6,7 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { PROJECT_TEMPLATES } from '../utils/projectTemplates';
+import { COMPUTE_LANGUAGES, type ComputeLanguage, PROJECT_TEMPLATES } from '../utils/projectTemplates';
 import { type GeneratorContext, type ProjectOptions } from '../utils/types';
 import {
   BUILT_IN_FULL_TEMPLATES,
@@ -189,6 +189,44 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     }
   }
 
+  /**
+   * Generates the starter compute app under <defaultpackagedir>/main/default/computeApps/<projectname>/.
+   * The project name is also the app name, so it is validated as a DeveloperName in validateOptions().
+   * Files are rendered from compute/<computeLanguage>/ (bundled snapshots, see compute/SOURCE.md).
+   */
+  private async generateComputeApp(projectname: string, language: ComputeLanguage, appDir: string): Promise<void> {
+    const data = { appname: projectname };
+
+    await this.render(
+      this.templatePath('compute', 'computeApp-meta.xml'),
+      this.destinationPath(path.join(appDir, `${projectname}.computeApp-meta.xml`)),
+      data
+    );
+
+    const languageRoot = this.templatePath('compute', language);
+    for (const relativePath of this.listFilesRecursively(languageRoot)) {
+      // npm drops .gitignore files when publishing, so the template is stored without the dot
+      const out = relativePath === GITIGNORE ? `.${GITIGNORE}` : relativePath;
+      const destination = this.destinationPath(path.join(appDir, out));
+      await this.render(path.join(languageRoot, relativePath), destination, data);
+      // bin/ holds helper scripts that are run directly (./bin/invoke.sh), so keep them executable
+      if (relativePath.split(path.sep)[0] === 'bin') {
+        await this._fs.promises.chmod(destination, 0o755);
+      }
+    }
+  }
+
+  /** Lists files under root as sorted paths relative to root, descending into subdirectories. */
+  private listFilesRecursively(root: string, relativeDir = ''): string[] {
+    return this._fs
+      .readdirSync(path.join(root, relativeDir), { withFileTypes: true })
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .flatMap((entry) => {
+        const relativePath = path.join(relativeDir, entry.name);
+        return entry.isDirectory() ? this.listFilesRecursively(root, relativePath) : [relativePath];
+      });
+  }
+
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     if (!PROJECT_TEMPLATES.includes(this.options.template)) {
@@ -203,13 +241,30 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         `Invalid lwcLanguage value: '${this.options.lwcLanguage}'. Must be 'javascript' or 'typescript'.`
       );
     }
+
+    if (this.options.template === 'compute') {
+      // The project name is also the app name: it ends up in file paths, XML, and source code.
+      CreateUtil.checkInputs(this.options.projectname);
+      const { computeLanguage } = this.options;
+      if (!computeLanguage) {
+        throw new Error(
+          `The compute template requires computeLanguage. Must be one of: ${COMPUTE_LANGUAGES.join(', ')}.`
+        );
+      }
+      if (!COMPUTE_LANGUAGES.includes(computeLanguage)) {
+        throw new Error(
+          `Invalid computeLanguage value: '${String(computeLanguage)}'. Must be one of: ${COMPUTE_LANGUAGES.join(', ')}.`
+        );
+      }
+    }
   }
 
   public async generate(): Promise<void> {
     // Re-apply source root so customTemplatesRootPath (set in run()) is used when provided
     this.sourceRootWithPartialPath('project');
 
-    const { projectname, template, defaultpackagedir, manifest, ns, loginurl, lwcLanguage } = this.options;
+    const { projectname, template, defaultpackagedir, manifest, ns, loginurl, lwcLanguage, computeLanguage } =
+      this.options;
     const isTypeScript = lwcLanguage === 'typescript';
     const folderlayout = [this.outputdir, projectname, defaultpackagedir, 'main', 'default'];
 
@@ -227,7 +282,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     await this.render(
       this.templatePathWithFallback(`${template}/README.md`, 'standard/README.md'),
       this.destinationPath(path.join(this.outputdir, projectname, 'README.md')),
-      { projectname }
+      { projectname, defaultpackagedir }
     );
     await this.render(
       this.templatePath('sfdx-project.json'),
@@ -386,6 +441,20 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         this.templatePath('nativemobile/homeScreen-content.json'),
         this.destinationPath(path.join(ecBase, 'experience__camaScreen', 'homeScreen', 'content.json')),
         camaData
+      );
+    }
+
+    // validateOptions() guarantees computeLanguage is set for this template
+    if (template === 'compute' && computeLanguage) {
+      await this.render(
+        this.templatePath('.forceignore'),
+        this.destinationPath(path.join(this.outputdir, projectname, '.forceignore')),
+        {}
+      );
+      await this.generateComputeApp(
+        projectname,
+        computeLanguage,
+        path.join(...folderlayout, 'computeApps', projectname)
       );
     }
 

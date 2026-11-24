@@ -25,7 +25,7 @@ import UIBundleGenerator from '../generators/uiBundleGenerator';
 import UIEmbeddingGenerator from '../generators/uiEmbeddingGenerator';
 import VisualforceComponentGenerator from '../generators/visualforceComponentGenerator';
 import VisualforcePageGenerator from '../generators/visualforcePageGenerator';
-import { type ProjectTemplate } from './projectTemplates';
+import { type ComputeLanguage, type ProjectTemplate } from './projectTemplates';
 
 export type GeneratorClass<TOptions extends TemplateOptions> = new (
   options: TOptions,
@@ -262,6 +262,10 @@ export interface ProjectOptions extends TemplateOptions {
   manifest: boolean;
   loginurl: string;
   lwcLanguage?: 'javascript' | 'typescript';
+  /**
+   * Language of the starter app. Required when template is 'compute'; ignored otherwise.
+   */
+  computeLanguage?: ComputeLanguage;
 }
 
 export interface VisualforceComponentOptions extends TemplateOptions {

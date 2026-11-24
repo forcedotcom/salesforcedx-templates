@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: <%- appname %> API
+  description: <%- appname %> compute app, exposing APIs in Node.js with Fastify to connected Salesforce and Data Cloud orgs.
+servers:
+  - url: http://127.0.0.1:3000
+# Add your operations under `paths` below - one entry per route registered in
+# src/routes/. Every operation that touches Salesforce data needs an
+# x-sfdc.heroku.authorization block naming the External Client App (and, for
+# elevated access, a session-based Permission Set) that grants it access. For
+# example, matching the /hello route sketched in src/routes/index.js:
+#
+# paths:
+#   /hello:
+#     get:
+#       operationId: Hello
+#       x-sfdc:
+#         heroku:
+#           authorization:
+#             externalClientApp: 'MyAppLinkExternalClientApp'
+#       responses:
+#         '200':
+#           description: Successful response
+paths: {}

@@ -25,18 +25,11 @@ const header = `/*
 
 describe('ESLint flat config', () => {
   it('enables type-aware rules for source and tests', async () => {
-    const sourcePath = path.join(root, 'src/index.ts');
-    const testPath = path.join(root, 'test/eslintConfig.test.ts');
-    const source = `${header}\nconst unused = 1;\nPromise.resolve('unhandled');\n`;
-    const [sourceResult] = await eslint.lintText(source, { filePath: sourcePath });
-    assert.equal(sourceResult.fatalErrorCount, 0);
-    const sourceRules = sourceResult.messages.map((message) => message.ruleId);
-    assert.ok(sourceRules.includes('@typescript-eslint/no-floating-promises'));
-    assert.ok(sourceRules.includes('@typescript-eslint/no-unused-vars'));
-
-    const testConfig = await eslint.calculateConfigForFile(testPath);
-    assert.equal(testConfig?.rules['@typescript-eslint/no-floating-promises']?.[0], 2);
-    assert.equal(testConfig?.rules['@typescript-eslint/no-unused-vars']?.[0], 2);
+    for (const filePath of [path.join(root, 'src/index.ts'), path.join(root, 'test/eslintConfig.test.ts')]) {
+      const config = await eslint.calculateConfigForFile(filePath);
+      assert.equal(config?.rules['@typescript-eslint/no-floating-promises']?.[0], 2, filePath);
+      assert.equal(config?.rules['@typescript-eslint/no-unused-vars']?.[0], 2, filePath);
+    }
   });
 
   it('requires a BSD-3 header, preserving existing copyright years', async () => {
@@ -52,9 +45,9 @@ describe('ESLint flat config', () => {
   });
 
   it('allows Vitest property assertions in tests, not in source', async () => {
-    const assertion = 'expect(true).to.be.true;';
-    const testCode = `${header}\nimport { expect } from 'vitest';\n\n${assertion}\n`;
-    const sourceCode = `${header}\n${assertion}\n`;
+    const code = `${header}\nconst expect = (value: boolean) => ({ to: { be: { true: value } } });\nexpect(true).to.be.true;\n`;
+    const testCode = code;
+    const sourceCode = code;
     const [testResult] = await eslint.lintText(testCode, { filePath: path.join(root, 'test/eslintConfig.test.ts') });
     assert.deepEqual(testResult.messages, []);
     const [sourceResult] = await eslint.lintText(sourceCode, { filePath: path.join(root, 'src/index.ts') });

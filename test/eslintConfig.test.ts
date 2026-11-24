@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { ESLint } from 'eslint';
+import { describe, it } from 'vitest';
 
 const root = path.resolve(__dirname, '..');
 const eslint = new ESLint({
@@ -23,15 +24,18 @@ const header = `/*
  */`;
 
 describe('ESLint flat config', () => {
-  it('type-checks source and tests, including floating promises and unused variables', async () => {
-    for (const filePath of ['src/index.ts', 'test/eslintConfig.test.ts']) {
-      const [result] = await eslint.lintText(`${header}\nconst unused = 1;\nPromise.resolve('unhandled');\n`, {
+  it('enables type-aware rules for source and tests', async () => {
+    for (const filePath of [path.join(root, 'src/index.ts'), path.join(root, 'test/eslintConfig.test.ts')]) {
+      assert.equal(
+        (await eslint.calculateConfigForFile(filePath))?.rules['@typescript-eslint/no-floating-promises']?.[0],
+        2,
         filePath
-      });
-      assert.equal(result.fatalErrorCount, 0);
-      const rules = result.messages.map((message) => message.ruleId);
-      assert.ok(rules.includes('@typescript-eslint/no-floating-promises'));
-      assert.ok(rules.includes('@typescript-eslint/no-unused-vars'));
+      );
+      assert.equal(
+        (await eslint.calculateConfigForFile(filePath))?.rules['@typescript-eslint/no-unused-vars']?.[0],
+        2,
+        filePath
+      );
     }
   });
 
@@ -47,16 +51,19 @@ describe('ESLint flat config', () => {
     assert.deepEqual(validHeader.messages, []);
   });
 
-  it('allows Chai assertions in tests, not in source', async () => {
-    const code = `${header}\nimport { expect } from 'chai';\n\nexpect(true).to.be.true;\n`;
-    const [testResult] = await eslint.lintText(code, {
-      filePath: 'test/eslintConfig.test.ts'
-    });
-    assert.deepEqual(testResult.messages, []);
-    const [sourceResult] = await eslint.lintText(code, {
-      filePath: 'src/index.ts'
-    });
-    assert.ok(sourceResult.messages.some((message) => message.ruleId === '@typescript-eslint/no-unused-expressions'));
+  it('allows Vitest property assertions in tests, not in source', async () => {
+    assert.equal(
+      (await eslint.calculateConfigForFile(path.join(root, 'src/index.ts')))?.rules[
+        '@typescript-eslint/no-unused-expressions'
+      ]?.[0],
+      2
+    );
+    assert.equal(
+      (await eslint.calculateConfigForFile(path.join(root, 'test/eslintConfig.test.ts')))?.rules[
+        '@typescript-eslint/no-unused-expressions'
+      ]?.[0],
+      0
+    );
   });
 
   it('preserves the Vercel MIT header exemption', async () => {

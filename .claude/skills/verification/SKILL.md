@@ -10,6 +10,6 @@ Claude hooks compile after Edit/Write; Stop runs compile, lint, test when `.clau
 - Without Claude hooks, run `yarn compile`, `yarn lint`, `yarn test` from repo root.
 - Install dependencies in each checkout with `yarn install`; keep `node_modules` in that checkout.
 - Fresh checkout: `yarn build` populates npm-backed templates needed by tests.
-- Single test: `yarn mocha test/path/to/file.test.ts`.
+- Single test: `yarn vitest run test/path/to/file.test.ts`.
 - Report commands actually run and failures still unresolved.
 - Call a failure pre-existing only after reproducing it on the base commit.

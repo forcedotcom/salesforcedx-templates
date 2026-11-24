@@ -15,14 +15,14 @@ import globals from 'globals';
 
 export default defineConfig(
   {
-    ignores: ['lib/**', 'coverage/**', '.nyc_output/**', 'src/templates/**', 'test/fixtures/**']
+    ignores: ['lib/**', 'coverage/**', 'src/templates/**', 'test/fixtures/**']
   },
   {
     files: ['src/**/*.ts', 'test/**/*.ts'],
     extends: [typescriptEslint.configs['flat/recommended-type-checked']],
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        project: './tsconfig.eslint.json',
         tsconfigRootDir: import.meta.dirname
       },
       globals: globals.node
@@ -195,7 +195,6 @@ export default defineConfig(
   },
   {
     files: ['test/**/*.ts'],
-    languageOptions: { globals: globals.mocha },
     rules: {
       '@typescript-eslint/consistent-type-assertions': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
@@ -209,7 +208,7 @@ export default defineConfig(
           ignoreRestSiblings: true
         }
       ],
-      // Chai property assertions are intentional expressions.
+      // Vitest supports property assertions as intentional expressions.
       '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/require-await': 'off',

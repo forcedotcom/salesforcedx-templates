@@ -8,7 +8,7 @@
     "declaration": true,
     "rootDir": "./src",
     "moduleResolution": "nodenext",
-    "types": ["node", "mocha"],
+    "types": ["node"],
     "noImplicitAny": true,
     "outDir": "./lib",
     "preserveConstEnums": true,

@@ -6,6 +6,7 @@
  */
 
 import * as assert from 'node:assert';
+import { describe, it } from 'vitest';
 import { PROJECT_TEMPLATES } from '../../src';
 import { BUILT_IN_FULL_TEMPLATES } from '../../src/utils/uiBundleTemplateUtils';
 

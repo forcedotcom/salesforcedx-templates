@@ -32,5 +32,7 @@ jobs:
     needs: [getDistTag]
     with:
       trustedPublishing: true
+      packageManager: pnpm
+      packageManagerVersion: 12.8.2
       tag: ${{ needs.getDistTag.outputs.tag || 'latest' }}
       githubTag: ${{ github.event.release.tag_name || inputs.tag }}

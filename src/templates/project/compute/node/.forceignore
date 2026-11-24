@@ -1,0 +1,6 @@
+node_modules/
+.tap/
+.git/
+__pycache__/
+target/
+vendor/

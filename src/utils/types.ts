@@ -266,6 +266,11 @@ export interface ProjectOptions extends TemplateOptions {
    * Language of the starter app. Required when template is 'compute'; ignored otherwise.
    */
   computeLanguage?: ComputeLanguage;
+  /**
+   * Contact email for the compute app's External Client App. When set with the 'compute' template, the
+   * External Client App metadata that AppLink callouts need is also generated; ignored otherwise.
+   */
+  computeContactEmail?: string;
 }
 
 export interface VisualforceComponentOptions extends TemplateOptions {

@@ -17,6 +17,8 @@ import {
 import { BaseGenerator } from './baseGenerator';
 
 const GITIGNORE = 'gitignore';
+// Deliberately simple: one @, no whitespace, and no characters that are special in XML
+const CONTACT_EMAIL_PATTERN = /^[^\s@<>&"']+@[^\s@<>&"']+\.[^\s@<>&"']+$/;
 const HUSKY_FOLDER = '.husky';
 const huskyhookarray = ['pre-commit'];
 const vscodearray = ['extensions', 'launch', 'settings'];
@@ -216,6 +218,32 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     }
   }
 
+  /**
+   * Generates the four External Client App metadata files that AppLink callouts need, next to the
+   * computeApps/ folder. The app, its OAuth settings and its policies are all named after the compute app,
+   * which is how the app's api-spec.yaml refers to it (x-sfdc.heroku.authorization.externalClientApp).
+   */
+  private async generateComputeExternalClientApp(
+    appname: string,
+    contactEmail: string,
+    sourceDir: string
+  ): Promise<void> {
+    const data = { appname, contactEmail };
+    const files: [template: string, folder: string, file: string][] = [
+      ['eca.eca-meta.xml', 'externalClientApps', `${appname}.eca-meta.xml`],
+      ['ecaGlblOauth-meta.xml', 'extlClntAppGlobalOauthSets', `${appname}.ecaGlblOauth-meta.xml`],
+      ['ecaOauth-meta.xml', 'extlClntAppOauthSettings', `${appname}_oauth.ecaOauth-meta.xml`],
+      ['ecaOauthPlcy-meta.xml', 'extlClntAppOauthPolicies', `${appname}_oauthPlcy.ecaOauthPlcy-meta.xml`]
+    ];
+    for (const [template, folder, file] of files) {
+      await this.render(
+        this.templatePath('compute', 'eca', template),
+        this.destinationPath(path.join(sourceDir, folder, file)),
+        data
+      );
+    }
+  }
+
   /** Lists files under root as sorted paths relative to root, descending into subdirectories. */
   private listFilesRecursively(root: string, relativeDir = ''): string[] {
     return this._fs
@@ -256,6 +284,10 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
           `Invalid computeLanguage value: '${String(computeLanguage)}'. Must be one of: ${COMPUTE_LANGUAGES.join(', ')}.`
         );
       }
+      const { computeContactEmail } = this.options;
+      if (computeContactEmail !== undefined && !CONTACT_EMAIL_PATTERN.test(computeContactEmail)) {
+        throw new Error(`Invalid computeContactEmail value: '${computeContactEmail}'. Must be an email address.`);
+      }
     }
   }
 
@@ -263,8 +295,17 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     // Re-apply source root so customTemplatesRootPath (set in run()) is used when provided
     this.sourceRootWithPartialPath('project');
 
-    const { projectname, template, defaultpackagedir, manifest, ns, loginurl, lwcLanguage, computeLanguage } =
-      this.options;
+    const {
+      projectname,
+      template,
+      defaultpackagedir,
+      manifest,
+      ns,
+      loginurl,
+      lwcLanguage,
+      computeLanguage,
+      computeContactEmail
+    } = this.options;
     const isTypeScript = lwcLanguage === 'typescript';
     const folderlayout = [this.outputdir, projectname, defaultpackagedir, 'main', 'default'];
 
@@ -456,6 +497,9 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         computeLanguage,
         path.join(...folderlayout, 'computeApps', projectname)
       );
+      if (computeContactEmail) {
+        await this.generateComputeExternalClientApp(projectname, computeContactEmail, path.join(...folderlayout));
+      }
     }
 
     if (template === 'analytics') {

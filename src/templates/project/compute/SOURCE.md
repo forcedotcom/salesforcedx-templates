@@ -18,6 +18,10 @@ Changes from upstream (matching the deprecated `sf compute generate` command):
   These use the EJS variable `appname` for the app name.
 - `bin/invoke.sh` / `bin/invoke.py`: default endpoints repointed from the example routes to routes that exist
   in the starter (`/api/accounts/` -> `/health`, `/accounts` -> `/healthcheck`, `/unitofwork` -> `/hello`).
+- Added what the `compute-develop` skill's scaffold script (`generate.py`) adds on top of `sf compute generate`, so the
+  skill can rely on this template alone: an app-level `.forceignore` (`node_modules/`, `.tap/`, `.git/`,
+  `__pycache__/`, `target/`, `vendor/`); python `.python-version` is 3.12 (upstream pins 3.13). The External Client App files in `eca/` are written only when a
+  contact email is given.
 - `.gitignore` is stored as `gitignore` (npm drops `.gitignore` files when publishing); the generator
   writes it back as `.gitignore`.
 

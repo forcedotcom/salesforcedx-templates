@@ -36,6 +36,7 @@ const DENIED_FILES = [
 
 const EXPECTED_FILES = {
   node: [
+    '.forceignore',
     '.gitignore',
     '.prettierignore',
     '.prettierrc.json',
@@ -56,6 +57,7 @@ const EXPECTED_FILES = {
     path.join('test', 'routes', 'healthcheck.test.js')
   ],
   python: [
+    '.forceignore',
     '.gitignore',
     '.python-version',
     'MyComputeApp.computeApp-meta.xml',
@@ -207,6 +209,69 @@ describe('compute project template', () => {
     await createCompute({ computeLanguage: 'python' });
     expect(fs.existsSync(path.join(appDir, 'requirements.txt'))).to.be.true;
     expect(fs.existsSync(path.join(appDir, 'package.json'))).to.be.false;
+  });
+
+  describe('skill-expected extras', () => {
+    it('ignores build output and dependencies when deploying the app', async () => {
+      await createCompute({ computeLanguage: 'node' });
+      const ignored = read(appDir, '.forceignore').split('\n');
+      ['node_modules/', '.tap/', '.git/', '__pycache__/', 'target/', 'vendor/'].forEach((entry) =>
+        expect(ignored).to.include(entry)
+      );
+    });
+
+    it('pins Python 3.12', async () => {
+      await createCompute({ computeLanguage: 'python' });
+      expect(read(appDir, '.python-version').trim()).to.equal('3.12');
+    });
+
+    it('does not write External Client App metadata without a contact email', async () => {
+      await createCompute({ computeLanguage: 'node' });
+      expect(fs.existsSync(path.join(projectDir, 'force-app', 'main', 'default', 'externalClientApps'))).to.be.false;
+    });
+
+    (['node', 'python'] as const).forEach((computeLanguage) => {
+      it(`writes the four External Client App files named after the app (${computeLanguage})`, async () => {
+        await createCompute({ computeLanguage, computeContactEmail: 'dev@example.com' });
+        const source = path.join(projectDir, 'force-app', 'main', 'default');
+
+        const eca = read(source, 'externalClientApps', `${APP_NAME}.eca-meta.xml`);
+        expect(eca).to.contain('<contactEmail>dev@example.com</contactEmail>');
+        expect(eca).to.contain(`<label>${APP_NAME}</label>`);
+        expect(read(source, 'extlClntAppGlobalOauthSets', `${APP_NAME}.ecaGlblOauth-meta.xml`)).to.contain(
+          `<externalClientApplication>${APP_NAME}</externalClientApplication>`
+        );
+        expect(read(source, 'extlClntAppOauthSettings', `${APP_NAME}_oauth.ecaOauth-meta.xml`)).to.contain(
+          'Basic, Api, RefreshToken'
+        );
+        expect(read(source, 'extlClntAppOauthPolicies', `${APP_NAME}_oauthPlcy.ecaOauthPlcy-meta.xml`)).to.contain(
+          'ManageHerokuCompute'
+        );
+      });
+    });
+
+    it('writes the External Client App files under a custom default package directory', async () => {
+      await createCompute({
+        computeLanguage: 'node',
+        computeContactEmail: 'dev@example.com',
+        defaultpackagedir: 'compute-src'
+      });
+      expect(
+        fs.existsSync(
+          path.join(projectDir, 'compute-src', 'main', 'default', 'externalClientApps', `${APP_NAME}.eca-meta.xml`)
+        )
+      ).to.be.true;
+    });
+
+    ['not-an-email', 'a@b', 'a b@example.com', 'a@exa<mple.com', '<x>@example.com'].forEach((email) => {
+      it(`rejects the contact email '${email}'`, async () => {
+        await createCompute({ computeLanguage: 'node', computeContactEmail: email }).should.be.rejectedWith(
+          Error,
+          'Invalid computeContactEmail value'
+        );
+        expect(fs.existsSync(projectDir)).to.be.false;
+      });
+    });
   });
 
   describe('validation', () => {

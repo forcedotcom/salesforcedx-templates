@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtlClntAppGlobalOauthSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <callbackUrl>https://localhost</callbackUrl>
+    <externalClientApplication><%- appname %></externalClientApplication>
+    <isConsumerSecretOptional>false</isConsumerSecretOptional>
+    <isPkceRequired>true</isPkceRequired>
+    <isSecretRequiredForRefreshToken>true</isSecretRequiredForRefreshToken>
+    <label><%- appname %> Global OAuth</label>
+</ExtlClntAppGlobalOauthSettings>

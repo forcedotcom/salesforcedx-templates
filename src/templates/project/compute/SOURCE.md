@@ -20,7 +20,9 @@ Changes from upstream (matching the deprecated `sf compute generate` command):
   in the starter (`/api/accounts/` -> `/health`, `/accounts` -> `/healthcheck`, `/unitofwork` -> `/hello`).
 - Added what the `compute-develop` skill's scaffold script (`generate.py`) adds on top of `sf compute generate`, so the
   skill can rely on this template alone: an app-level `.forceignore` (`node_modules/`, `.tap/`, `.git/`,
-  `__pycache__/`, `target/`, `vendor/`); python `.python-version` is 3.12 (upstream pins 3.13). The External Client App files in `eca/` are written only when a
+  `__pycache__/`, `target/`, `vendor/`); node `package.json` sets tap's `allow-incomplete-coverage` (tap
+  defaults to requiring 100% coverage, so `npm test` exits 1 on the starter); python `.python-version` is 3.12
+  (upstream pins 3.13). The External Client App files in `eca/` are written only when a
   contact email is given.
 - `.gitignore` is stored as `gitignore` (npm drops `.gitignore` files when publishing); the generator
   writes it back as `.gitignore`.

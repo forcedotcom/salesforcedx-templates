@@ -225,6 +225,13 @@ describe('compute project template', () => {
       expect(read(appDir, '.python-version').trim()).to.equal('3.12');
     });
 
+    it('lets the node starter pass npm test without full coverage', async () => {
+      await createCompute({ computeLanguage: 'node' });
+      const pkg = JSON.parse(read(appDir, 'package.json')) as { tap: Record<string, unknown> };
+      // tap defaults to requiring 100% coverage, which the starter does not have
+      expect(pkg.tap).to.deep.equal({ 'allow-incomplete-coverage': true });
+    });
+
     it('does not write External Client App metadata without a contact email', async () => {
       await createCompute({ computeLanguage: 'node' });
       expect(fs.existsSync(path.join(projectDir, 'force-app', 'main', 'default', 'externalClientApps'))).to.be.false;

@@ -37,5 +37,8 @@
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
     "tap": "^21.1.0"
+  },
+  "tap": {
+    "allow-incomplete-coverage": true
   }
 }

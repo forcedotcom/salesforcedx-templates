@@ -25,7 +25,7 @@ const header = `/*
 
 describe('ESLint flat config', () => {
   it('type-checks source and tests, including floating promises and unused variables', async () => {
-    for (const filePath of ['src/index.ts', 'test/eslintConfig.test.ts']) {
+    for (const filePath of [path.join(root, 'src/index.ts'), path.join(root, 'test/eslintConfig.test.ts')]) {
       const [result] = await eslint.lintText(`${header}\nconst unused = 1;\nPromise.resolve('unhandled');\n`, {
         filePath
       });
@@ -51,11 +51,11 @@ describe('ESLint flat config', () => {
   it('allows Vitest property assertions in tests, not in source', async () => {
     const code = `${header}\nimport { expect } from 'vitest';\n\nexpect(true).to.be.true;\n`;
     const [testResult] = await eslint.lintText(code, {
-      filePath: 'test/eslintConfig.test.ts'
+      filePath: path.join(root, 'test/eslintConfig.test.ts')
     });
     assert.deepEqual(testResult.messages, []);
     const [sourceResult] = await eslint.lintText(code, {
-      filePath: 'src/index.ts'
+      filePath: path.join(root, 'src/index.ts')
     });
     assert.ok(sourceResult.messages.some((message) => message.ruleId === '@typescript-eslint/no-unused-expressions'));
   });

@@ -31,7 +31,7 @@ function assertFileContent(file: string, regex: string | RegExp) {
   const exists = fs.existsSync(file);
   expect(exists).to.be.true;
 
-  const body = fs.readFileSync(file, 'utf8');
+  const body = fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
 
   let match = false;
   if (typeof regex === 'string') {

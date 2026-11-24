@@ -1,0 +1,44 @@
+{
+  "name": "applink-getting-started-nodejs",
+  "version": "1.0.0",
+  "description": "Heroku AppLink Sample App with Fastify",
+  "type": "module",
+  "main": "src/app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap \"test/**/*.test.js\"",
+    "start": "fastify start -o -a 0.0.0.0 -p $APP_PORT -l info src/app.js",
+    "dev": "fastify start -o -w -l debug -d -P src/app.js",
+    "lint": "eslint src test",
+    "lint:fix": "eslint src test --fix",
+    "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\" \"*.js\" \"*.json\" \"*.md\"",
+    "format:check": "prettier --check \"src/**/*.js\" \"test/**/*.js\" \"*.js\" \"*.json\" \"*.md\""
+  },
+  "keywords": [],
+  "author": "Heroku DevRel <heroku-dev-advocacy@salesforce.com>",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20.0.0 <24.0.0"
+  },
+  "dependencies": {
+    "@fastify/autoload": "^6.3.1",
+    "@fastify/swagger": "^9.5.1",
+    "@fastify/swagger-ui": "^5.2.3",
+    "@heroku/applink": "^1.0.0-ea.2",
+    "fastify": "^5.4.0",
+    "fastify-cli": "^7.4.0",
+    "fastify-plugin": "^5.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "tap": "^21.1.0"
+  },
+  "tap": {
+    "allow-incomplete-coverage": true
+  }
+}

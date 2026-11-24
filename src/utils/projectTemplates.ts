@@ -20,7 +20,15 @@ export const PROJECT_TEMPLATES = [
   'vueinternalapp',
   'vueexternalapp',
   'agent',
-  'nativemobile'
+  'nativemobile',
+  'compute'
 ] as const;
+
+/**
+ * Languages supported by the compute project template (required when the template is 'compute').
+ */
+export const COMPUTE_LANGUAGES = ['node', 'python'] as const;
+
+export type ComputeLanguage = (typeof COMPUTE_LANGUAGES)[number];
 
 export type ProjectTemplate = (typeof PROJECT_TEMPLATES)[number];

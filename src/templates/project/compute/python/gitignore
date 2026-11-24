@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+htmlcov/
+.coverage
+commit-message.txt

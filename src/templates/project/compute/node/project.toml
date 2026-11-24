@@ -1,0 +1,11 @@
+[_]
+schema-version = "0.2"
+
+[[io.buildpacks.group]]
+id = "heroku/nodejs"
+
+[[io.buildpacks.group]]
+id = "heroku/heroku-applink"
+
+[[io.buildpacks.group]]
+id = "heroku/procfile"

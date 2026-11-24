@@ -6,7 +6,7 @@
  */
 import * as path from 'path';
 import { CreateUtil } from '../utils';
-import { PROJECT_TEMPLATES } from '../utils/projectTemplates';
+import { COMPUTE_LANGUAGES, type ComputeLanguage, PROJECT_TEMPLATES } from '../utils/projectTemplates';
 import { type GeneratorContext, type ProjectOptions } from '../utils/types';
 import {
   BUILT_IN_FULL_TEMPLATES,
@@ -17,6 +17,8 @@ import {
 import { BaseGenerator } from './baseGenerator';
 
 const GITIGNORE = 'gitignore';
+// Deliberately simple: one @, no whitespace, and no characters that are special in XML
+const CONTACT_EMAIL_PATTERN = /^[^\s@<>&"']+@[^\s@<>&"']+\.[^\s@<>&"']+$/;
 const HUSKY_FOLDER = '.husky';
 const huskyhookarray = ['pre-commit'];
 const vscodearray = ['extensions', 'launch', 'settings'];
@@ -189,6 +191,70 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     }
   }
 
+  /**
+   * Generates the starter compute app under <defaultpackagedir>/main/default/computeApps/<projectname>/.
+   * The project name is also the app name, so it is validated as a DeveloperName in validateOptions().
+   * Files are rendered from compute/<computeLanguage>/ (bundled snapshots, see compute/SOURCE.md).
+   */
+  private async generateComputeApp(projectname: string, language: ComputeLanguage, appDir: string): Promise<void> {
+    const data = { appname: projectname };
+
+    await this.render(
+      this.templatePath('compute', 'computeApp-meta.xml'),
+      this.destinationPath(path.join(appDir, `${projectname}.computeApp-meta.xml`)),
+      data
+    );
+
+    const languageRoot = this.templatePath('compute', language);
+    for (const relativePath of this.listFilesRecursively(languageRoot)) {
+      // npm drops .gitignore files when publishing, so the template is stored without the dot
+      const out = relativePath === GITIGNORE ? `.${GITIGNORE}` : relativePath;
+      const destination = this.destinationPath(path.join(appDir, out));
+      await this.render(path.join(languageRoot, relativePath), destination, data);
+      // bin/ holds helper scripts that are run directly (./bin/invoke.sh), so keep them executable
+      if (relativePath.split(path.sep)[0] === 'bin') {
+        await this._fs.promises.chmod(destination, 0o755);
+      }
+    }
+  }
+
+  /**
+   * Generates the four External Client App metadata files that AppLink callouts need, next to the
+   * computeApps/ folder. The app, its OAuth settings and its policies are all named after the compute app,
+   * which is how the app's api-spec.yaml refers to it (x-sfdc.heroku.authorization.externalClientApp).
+   */
+  private async generateComputeExternalClientApp(
+    appname: string,
+    contactEmail: string,
+    sourceDir: string
+  ): Promise<void> {
+    const data = { appname, contactEmail };
+    const files: [template: string, folder: string, file: string][] = [
+      ['eca.eca-meta.xml', 'externalClientApps', `${appname}.eca-meta.xml`],
+      ['ecaGlblOauth-meta.xml', 'extlClntAppGlobalOauthSets', `${appname}.ecaGlblOauth-meta.xml`],
+      ['ecaOauth-meta.xml', 'extlClntAppOauthSettings', `${appname}_oauth.ecaOauth-meta.xml`],
+      ['ecaOauthPlcy-meta.xml', 'extlClntAppOauthPolicies', `${appname}_oauthPlcy.ecaOauthPlcy-meta.xml`]
+    ];
+    for (const [template, folder, file] of files) {
+      await this.render(
+        this.templatePath('compute', 'eca', template),
+        this.destinationPath(path.join(sourceDir, folder, file)),
+        data
+      );
+    }
+  }
+
+  /** Lists files under root as sorted paths relative to root, descending into subdirectories. */
+  private listFilesRecursively(root: string, relativeDir = ''): string[] {
+    return this._fs
+      .readdirSync(path.join(root, relativeDir), { withFileTypes: true })
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .flatMap((entry) => {
+        const relativePath = path.join(relativeDir, entry.name);
+        return entry.isDirectory() ? this.listFilesRecursively(root, relativePath) : [relativePath];
+      });
+  }
+
   public validateOptions(): void {
     CreateUtil.checkInputs(this.options.template);
     if (!PROJECT_TEMPLATES.includes(this.options.template)) {
@@ -203,13 +269,43 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         `Invalid lwcLanguage value: '${this.options.lwcLanguage}'. Must be 'javascript' or 'typescript'.`
       );
     }
+
+    if (this.options.template === 'compute') {
+      // The project name is also the app name: it ends up in file paths, XML, and source code.
+      CreateUtil.checkInputs(this.options.projectname);
+      const { computeLanguage } = this.options;
+      if (!computeLanguage) {
+        throw new Error(
+          `The compute template requires computeLanguage. Must be one of: ${COMPUTE_LANGUAGES.join(', ')}.`
+        );
+      }
+      if (!COMPUTE_LANGUAGES.includes(computeLanguage)) {
+        throw new Error(
+          `Invalid computeLanguage value: '${String(computeLanguage)}'. Must be one of: ${COMPUTE_LANGUAGES.join(', ')}.`
+        );
+      }
+      const { computeContactEmail } = this.options;
+      if (computeContactEmail !== undefined && !CONTACT_EMAIL_PATTERN.test(computeContactEmail)) {
+        throw new Error(`Invalid computeContactEmail value: '${computeContactEmail}'. Must be an email address.`);
+      }
+    }
   }
 
   public async generate(): Promise<void> {
     // Re-apply source root so customTemplatesRootPath (set in run()) is used when provided
     this.sourceRootWithPartialPath('project');
 
-    const { projectname, template, defaultpackagedir, manifest, ns, loginurl, lwcLanguage } = this.options;
+    const {
+      projectname,
+      template,
+      defaultpackagedir,
+      manifest,
+      ns,
+      loginurl,
+      lwcLanguage,
+      computeLanguage,
+      computeContactEmail
+    } = this.options;
     const isTypeScript = lwcLanguage === 'typescript';
     const folderlayout = [this.outputdir, projectname, defaultpackagedir, 'main', 'default'];
 
@@ -227,7 +323,7 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
     await this.render(
       this.templatePathWithFallback(`${template}/README.md`, 'standard/README.md'),
       this.destinationPath(path.join(this.outputdir, projectname, 'README.md')),
-      { projectname }
+      { projectname, defaultpackagedir }
     );
     await this.render(
       this.templatePath('sfdx-project.json'),
@@ -387,6 +483,23 @@ export default class ProjectGenerator extends BaseGenerator<ProjectOptions> {
         this.destinationPath(path.join(ecBase, 'experience__camaScreen', 'homeScreen', 'content.json')),
         camaData
       );
+    }
+
+    // validateOptions() guarantees computeLanguage is set for this template
+    if (template === 'compute' && computeLanguage) {
+      await this.render(
+        this.templatePath('.forceignore'),
+        this.destinationPath(path.join(this.outputdir, projectname, '.forceignore')),
+        {}
+      );
+      await this.generateComputeApp(
+        projectname,
+        computeLanguage,
+        path.join(...folderlayout, 'computeApps', projectname)
+      );
+      if (computeContactEmail) {
+        await this.generateComputeExternalClientApp(projectname, computeContactEmail, path.join(...folderlayout));
+      }
     }
 
     if (template === 'analytics') {

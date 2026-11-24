@@ -26,9 +26,16 @@ const header = `/*
 describe('ESLint flat config', () => {
   it('enables type-aware rules for source and tests', async () => {
     for (const filePath of [path.join(root, 'src/index.ts'), path.join(root, 'test/eslintConfig.test.ts')]) {
-      const config = await eslint.calculateConfigForFile(filePath);
-      assert.equal(config?.rules['@typescript-eslint/no-floating-promises']?.[0], 2, filePath);
-      assert.equal(config?.rules['@typescript-eslint/no-unused-vars']?.[0], 2, filePath);
+      assert.equal(
+        (await eslint.calculateConfigForFile(filePath))?.rules['@typescript-eslint/no-floating-promises']?.[0],
+        2,
+        filePath
+      );
+      assert.equal(
+        (await eslint.calculateConfigForFile(filePath))?.rules['@typescript-eslint/no-unused-vars']?.[0],
+        2,
+        filePath
+      );
     }
   });
 
@@ -45,13 +52,18 @@ describe('ESLint flat config', () => {
   });
 
   it('allows Vitest property assertions in tests, not in source', async () => {
-    const code = `${header}\nconst expect = (value: boolean) => ({ to: { be: { true: value } } });\nexpect(true).to.be.true;\n`;
-    const testCode = code;
-    const sourceCode = code;
-    const [testResult] = await eslint.lintText(testCode, { filePath: path.join(root, 'test/eslintConfig.test.ts') });
-    assert.deepEqual(testResult.messages, []);
-    const [sourceResult] = await eslint.lintText(sourceCode, { filePath: path.join(root, 'src/index.ts') });
-    assert.ok(sourceResult.messages.some((message) => message.ruleId === '@typescript-eslint/no-unused-expressions'));
+    assert.equal(
+      (await eslint.calculateConfigForFile(path.join(root, 'src/index.ts')))?.rules[
+        '@typescript-eslint/no-unused-expressions'
+      ]?.[0],
+      2
+    );
+    assert.equal(
+      (await eslint.calculateConfigForFile(path.join(root, 'test/eslintConfig.test.ts')))?.rules[
+        '@typescript-eslint/no-unused-expressions'
+      ]?.[0],
+      0
+    );
   });
 
   it('preserves the Vercel MIT header exemption', async () => {

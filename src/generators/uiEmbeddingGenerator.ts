@@ -5,10 +5,10 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { camelCaseToTitleCase } from '@salesforce/kit';
 import * as path from 'path';
 import { nls } from '../i18n';
 import { CreateUtil } from '../utils';
+import { camelCaseToTitleCase } from '../utils/camelCaseToTitleCase';
 import { type UIEmbeddingOptions } from '../utils/types';
 import { isAllowedUIEmbeddingSrcUrl, UI_EMBEDDING_SANDBOX_TOKENS } from '../utils/uiEmbedding';
 import { BaseGenerator } from './baseGenerator';

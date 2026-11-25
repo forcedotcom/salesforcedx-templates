@@ -207,32 +207,32 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       '@salesforce/ui-bundle-template-app-angular-template-b2e':
-        specifier: ^12.13.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-app-angular-template-b2x':
-        specifier: ^12.18.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-app-react-template-b2e':
-        specifier: ^12.17.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-app-react-template-b2x':
-        specifier: ^12.18.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-app-vue-template-b2e':
-        specifier: ^12.14.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-app-vue-template-b2x':
-        specifier: ^13.1.0
-        version: 13.2.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-base-angular-app':
-        specifier: ^12.18.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-base-react-app':
-        specifier: ^12.18.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-base-vue-app':
-        specifier: ^12.17.0
-        version: 12.18.0
+        specifier: ^13.2.1
+        version: 13.2.1
       '@salesforce/ui-bundle-template-base-web-app':
         specifier: ^12.18.0
         version: 12.18.0
@@ -965,32 +965,32 @@ packages:
     resolution: {integrity: sha512-kTzgXQbOdon0gJFwdHQ+A+UvMR/E3zzlj6O1Wyl5//waq7OSNjspB49y9LrZefIyqHV+ACfB9/aWBJ9aSKMrvQ==}
     engines: {node: '>=22.0.0'}
 
-  '@salesforce/ui-bundle-template-app-angular-template-b2e@12.18.0':
-    resolution: {integrity: sha512-+3dRdNC20M2fMP8AD5wJzwidZsBJJYXv/QCJu8d9sUFMv+msj145bSZIhPjFmmEyItTownFU/ncQ57eHsEuztw==}
+  '@salesforce/ui-bundle-template-app-angular-template-b2e@13.2.1':
+    resolution: {integrity: sha512-Qw2WWOLBlnBt/l6EK7k+OaY5FPkmNK1pYK+ES7rbmwY1It6Nl0f4FlwgdpO084EYH1mHgAPI78FWWK0odL1d9g==}
 
-  '@salesforce/ui-bundle-template-app-angular-template-b2x@12.18.0':
-    resolution: {integrity: sha512-fG7i7Tapzbt/Y4YNk7mSx061P2i+4THEOPcKEd5ppOwnp9LODsK1RIPIcGoc7s0Im5ldvwRJIz480BC4EPEUPg==}
+  '@salesforce/ui-bundle-template-app-angular-template-b2x@13.2.1':
+    resolution: {integrity: sha512-5LP4SpmTU6SXJb7b2IF7eFQl0biY7BHv+Qj/m0576lqFAHo/lsaqKtstNg4RCcKmzXn2n08zquqAh9zl8X0H2g==}
 
-  '@salesforce/ui-bundle-template-app-react-template-b2e@12.18.0':
-    resolution: {integrity: sha512-nLdwpcVvUNXQmxvP0p1DI+GzA+2NPprgxmBHRw8c67sPaqwx3MWUKmEbiGzAca8xO5JV/l/sj6qYs9b0pT3TPA==}
+  '@salesforce/ui-bundle-template-app-react-template-b2e@13.2.1':
+    resolution: {integrity: sha512-or2Hc0tbqmaespB3X9KEhG+HvIVIey/4u4ISfH9s4y0icIhAQQc/wxKrcJH47kw4DG7G88OKeKs/hucJKowsaw==}
 
-  '@salesforce/ui-bundle-template-app-react-template-b2x@12.18.0':
-    resolution: {integrity: sha512-WP09uII4MilCivub6BrZbCjNqG5B2+kHeLLtHwBi3gQIP82GX5Q7TX7ScCIOdB7oyve3sv0/J6+mzU3QMCl4qQ==}
+  '@salesforce/ui-bundle-template-app-react-template-b2x@13.2.1':
+    resolution: {integrity: sha512-gflzSgkZ4URN4PFKKqFooYcRYDHD/HHPjEP59ERkuqlFQKlVv2TSswdYeSAWe5+s+ME/1EAcKFWL2dots1HPGg==}
 
-  '@salesforce/ui-bundle-template-app-vue-template-b2e@12.18.0':
-    resolution: {integrity: sha512-SEL3U41Hd63Tt6moBREFN1GWQJ7NskE2T2UKlUKxNMZZqeuIAf+ciRpqE3875djiEFveMdibNsU3BLTROMggXQ==}
+  '@salesforce/ui-bundle-template-app-vue-template-b2e@13.2.1':
+    resolution: {integrity: sha512-IiQqk8kvSZmA7cant4G3otggfiZ41AY76qzO+m1zhRkC6G/NXxbgstZEtYWrKIEqGYGGX4sJgoIqr3iKjkKw2w==}
 
-  '@salesforce/ui-bundle-template-app-vue-template-b2x@13.2.0':
-    resolution: {integrity: sha512-A8saQkt3Ypi/BhPDLBahYkXcSSdp5p3O221FUoFrthD/mtdsph1PUR4OZhiEn5fI38btnkqJ8w6d+b74rmbpOg==}
+  '@salesforce/ui-bundle-template-app-vue-template-b2x@13.2.1':
+    resolution: {integrity: sha512-k2SyNXwDYhql5nDZu5vl4HFqET2G8C/StpUWrsFpDMDfWoXYLj0a0orf6O6GaLkHa8xi12pwZiEVJfG1gv5a1g==}
 
-  '@salesforce/ui-bundle-template-base-angular-app@12.18.0':
-    resolution: {integrity: sha512-WqoOCnMwQipL6Ft5VSSLB4xoWX5ii35QZzU9/xz6Gy1SlnmLRSOyn71fxJfdRkK70LkZuMC3vBlKmrE/eC6wSA==}
+  '@salesforce/ui-bundle-template-base-angular-app@13.2.1':
+    resolution: {integrity: sha512-5TPz1NnQNiRjytvshTwfM83UFaY3C80rFpkUTUjRvAHjSFCE6S0GRg+2gPw7D/n7ZYNFiIFMJaqJdggPxt/ilQ==}
 
-  '@salesforce/ui-bundle-template-base-react-app@12.18.0':
-    resolution: {integrity: sha512-iiY25bX9nYKF+8lhaP7JaraHx4UwmLF5g/XYd78caxKOby5mVQ1j3inyH2Oppfp384ymnYVOUwmJcaTvCTIvwg==}
+  '@salesforce/ui-bundle-template-base-react-app@13.2.1':
+    resolution: {integrity: sha512-34i32TnmnwV/S2Nod3SUrqNAsYlWwOomCu7639gRp5ViYWLema+idQR2VjEFqI7+ja2MYP3WUZiAWksRqmkVsQ==}
 
-  '@salesforce/ui-bundle-template-base-vue-app@12.18.0':
-    resolution: {integrity: sha512-T+Oz0oWPoa367hBRJRmMgouhamWJv+Z3G2juiL0H6g6YDuUZCzTxvIo6VL6klw77AQh5K04h2uSyZKRQO8e3rw==}
+  '@salesforce/ui-bundle-template-base-vue-app@13.2.1':
+    resolution: {integrity: sha512-ESU6MbaoJcyk/DM7ZJhiup0Et+SV3OcXPiVfcBbAMkkHVGe10qeCz3/sPtVmSpUr6VuCbRT2JCgkHzTTVdkIjw==}
 
   '@salesforce/ui-bundle-template-base-web-app@12.18.0':
     resolution: {integrity: sha512-OGKHrxae9m0JygOsLa5tnB+Hin9gO4B4y/Ui7FX8HjUPKCk2E/RFFEaFLlmtNk2eckmucN7BTfB0sGc6ktDZLQ==}
@@ -5061,23 +5061,23 @@ snapshots:
 
   '@salesforce/ts-types@3.2.4': {}
 
-  '@salesforce/ui-bundle-template-app-angular-template-b2e@12.18.0': {}
+  '@salesforce/ui-bundle-template-app-angular-template-b2e@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-app-angular-template-b2x@12.18.0': {}
+  '@salesforce/ui-bundle-template-app-angular-template-b2x@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-app-react-template-b2e@12.18.0': {}
+  '@salesforce/ui-bundle-template-app-react-template-b2e@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-app-react-template-b2x@12.18.0': {}
+  '@salesforce/ui-bundle-template-app-react-template-b2x@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-app-vue-template-b2e@12.18.0': {}
+  '@salesforce/ui-bundle-template-app-vue-template-b2e@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-app-vue-template-b2x@13.2.0': {}
+  '@salesforce/ui-bundle-template-app-vue-template-b2x@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-base-angular-app@12.18.0': {}
+  '@salesforce/ui-bundle-template-base-angular-app@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-base-react-app@12.18.0': {}
+  '@salesforce/ui-bundle-template-base-react-app@13.2.1': {}
 
-  '@salesforce/ui-bundle-template-base-vue-app@12.18.0': {}
+  '@salesforce/ui-bundle-template-base-vue-app@13.2.1': {}
 
   '@salesforce/ui-bundle-template-base-web-app@12.18.0': {}
 

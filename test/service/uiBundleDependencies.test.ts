@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { expect } from 'chai';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { readFile, rm } from 'node:fs/promises';
 import * as path from 'node:path';
 import { TemplateService, TemplateType } from '../../src';
@@ -51,7 +51,7 @@ describe('Generated UI bundle dependencies', () => {
   const outputdir = path.join('testsoutput', 'uiBundleDependencies');
   const appname = 'DependencyCheck';
 
-  before(async () => {
+  beforeAll(async () => {
     await rm(outputdir, { recursive: true, force: true });
   });
 

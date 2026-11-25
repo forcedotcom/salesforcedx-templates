@@ -5,15 +5,12 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as chai from 'chai';
+import { beforeEach, describe, expect, it } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TemplateService, TemplateType } from '../../src';
 import UIEmbeddingGenerator from '../../src/generators/uiEmbeddingGenerator';
 import { getDefaultApiVersion } from '../../src/generators/baseGenerator';
-
-chai.config.truncateThreshold = 100000;
-const { expect } = chai;
 
 async function remove(file: string) {
   await fs.promises.rm(file, { force: true, recursive: true });

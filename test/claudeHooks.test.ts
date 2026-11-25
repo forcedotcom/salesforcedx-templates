@@ -10,6 +10,7 @@ import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { afterEach, beforeEach, describe, it } from 'vitest';
 
 const repoRoot = path.resolve(__dirname, '..');
 const settings = JSON.parse(readFileSync(path.join(repoRoot, '.claude/settings.json'), 'utf8')) as {

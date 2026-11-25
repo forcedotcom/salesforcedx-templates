@@ -3,8 +3,8 @@ name: PR Validation
 on:
   pull_request:
     types: [opened, reopened, edited, synchronize]
-    # only applies to PRs that want to merge to main
-    branches: [main]
+    # Main is the default/release branch; v67 work is isolated until the release hold clears.
+    branches: [main, v67-modernization]
 
 jobs:
   pr-validation:

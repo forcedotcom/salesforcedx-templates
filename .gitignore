@@ -4,6 +4,7 @@ out/
 lib/
 tmp/
 *.tsbuildinfo
+.eslintcache
 
 # Logs
 logs
@@ -19,6 +20,7 @@ coverage.lcov
 
 # Dependency directories
 node_modules/
+.wireit/
 
 # Claude verification state
 .claude/.edit-marker
@@ -40,9 +42,6 @@ foo*
 analytics1/
 GitIgnoreTest/
 GitIgnoreTest2/
-
-# nyc test coverage
-.nyc_output
 
 # Eclipse
 .project

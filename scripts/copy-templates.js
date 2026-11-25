@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
  * Copies npm-based templates into src/templates/ (uiBundles and project).
- * Run as part of build: yarn build:copy-templates
+ * Run as part of build: pnpm build:copy-templates
  */
 const { execSync } = require('child_process');
 const fs = require('fs');

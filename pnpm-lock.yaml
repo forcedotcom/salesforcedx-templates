@@ -166,9 +166,6 @@ importers:
 
   .:
     dependencies:
-      '@salesforce/kit':
-        specifier: ^4.0.10
-        version: 4.0.10
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
@@ -954,16 +951,8 @@ packages:
     resolution: {integrity: sha512-bO/bKROQfEHFIV9PJF8H34VmCPSqfKArfdpSyDKo/oKoL572w9nCH3TfV7ri19YW8TrxOEoP3WdesWgNk9skMg==}
     hasBin: true
 
-  '@salesforce/kit@4.0.10':
-    resolution: {integrity: sha512-LXCswafab7AYmpaEvjHmpI3Ueg4dk9c/vFfHSEenVyx/dF1ABlxmf8kpVyox6iRBBh3RvM5/LkQMtXUv7iSd7w==}
-    engines: {node: '>=22.0.0'}
-
   '@salesforce/prettier-config@0.0.4':
     resolution: {integrity: sha512-GBjR7f/jv7rcSrTvNgbkWvOykXg/PZqL7TztylKwaogWdrCbypJE8qEfBy9nILkICrwmDbQApOC8TqoO3bQKSw==}
-
-  '@salesforce/ts-types@3.2.4':
-    resolution: {integrity: sha512-kTzgXQbOdon0gJFwdHQ+A+UvMR/E3zzlj6O1Wyl5//waq7OSNjspB49y9LrZefIyqHV+ACfB9/aWBJ9aSKMrvQ==}
-    engines: {node: '>=22.0.0'}
 
   '@salesforce/ui-bundle-template-app-angular-template-b2e@13.2.1':
     resolution: {integrity: sha512-Qw2WWOLBlnBt/l6EK7k+OaY5FPkmNK1pYK+ES7rbmwY1It6Nl0f4FlwgdpO084EYH1mHgAPI78FWWK0odL1d9g==}
@@ -5053,13 +5042,7 @@ snapshots:
       - eslint-import-resolver-node
       - supports-color
 
-  '@salesforce/kit@4.0.10':
-    dependencies:
-      '@salesforce/ts-types': 3.2.4
-
   '@salesforce/prettier-config@0.0.4': {}
-
-  '@salesforce/ts-types@3.2.4': {}
 
   '@salesforce/ui-bundle-template-app-angular-template-b2e@13.2.1': {}
 

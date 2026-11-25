@@ -607,6 +607,31 @@ describe('TemplateService', () => {
       );
     });
 
+    it.each(['analyticsDashboard', 'analyticsDashboardWithStep'])(
+      'should generate a title-case label for the %s LWC template',
+      async (template) => {
+        await remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
+        const templateService = TemplateService.getInstance();
+        await templateService.create(TemplateType.LightningComponent, {
+          componentname: 'LibraryCreateComponent',
+          outputdir: path.join('testsoutput', 'libraryCreate', 'lwc'),
+          template,
+          type: 'lwc'
+        });
+
+        assertFileContent(
+          path.join(
+            'testsoutput',
+            'libraryCreate',
+            'lwc',
+            'libraryCreateComponent',
+            'libraryCreateComponent.js-meta.xml'
+          ),
+          '<masterLabel>Library Create Component</masterLabel>'
+        );
+      }
+    );
+
     it('should create LightningComponent (lwc) with TypeScript', async () => {
       await remove(path.join('testsoutput', 'libraryCreate', 'lwc'));
       const templateService = TemplateService.getInstance();
@@ -1242,6 +1267,16 @@ describe('TemplateService', () => {
         ]
           .map((p) => path.normalize(p))
           .sort()
+      );
+      assertFileContent(
+        path.join(
+          'testsoutput',
+          'libraryCreate',
+          'uiBundles',
+          'LibraryCreateUIBundle',
+          'LibraryCreateUIBundle.uibundle-meta.xml'
+        ),
+        '<masterLabel>Library CreateUI Bundle</masterLabel>'
       );
     });
 

@@ -13,5 +13,7 @@ permissions:
 jobs:
   automerge:
     uses: salesforcecli/github-workflows/.github/workflows/automerge.yml@main
+    with:
+      package-manager-version: '12.8.2'
     secrets:
       SVC_CLI_BOT_GITHUB_TOKEN: ${{ secrets.IDEE_GH_TOKEN }}

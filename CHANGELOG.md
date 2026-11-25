@@ -1,3 +1,9 @@
+## [66.21.2](https://github.com/forcedotcom/salesforcedx-templates/compare/66.21.1...66.21.2) (2026-11-24)
+
+### Bug Fixes
+
+- **deps:** bump glob from 10.4.5 to 10.5.0 ([#974](https://github.com/forcedotcom/salesforcedx-templates/issues/974)) ([f56e5f9](https://github.com/forcedotcom/salesforcedx-templates/commit/f56e5f98043749f150d5ad45077b1643155a2994))
+
 ## [66.21.1](https://github.com/forcedotcom/salesforcedx-templates/compare/66.21.0...66.21.1) (2026-11-22)
 
 ### Bug Fixes
